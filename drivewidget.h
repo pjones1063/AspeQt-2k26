@@ -2,10 +2,13 @@
  * drivewidget.h
  */
 
+
 #ifndef DRIVEWIDGET_H
 #define DRIVEWIDGET_H
 
+#include <QAction>
 #include <QFrame>
+#include <QAction>
 
 namespace Ui {
 class DriveWidget;

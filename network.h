@@ -9,8 +9,8 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <qnetworkinterface.h>
-#include <qnetworksession.h>
-#include <qnetworkconfigmanager.h>
+// #include <qnetworksession.h>
+// #include <qnetworkconfigmanager.h>
 
 
 class Network : public QMainWindow
@@ -24,8 +24,8 @@ public:
 public slots:
     bool openConnection(QString &netInterface);
 
-private:
-    QPointer<QNetworkSession> m_session;
+//private:
+//    QPointer<QNetworkSession> m_session;
 
 };
 #endif // NETWORK_H

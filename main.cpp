@@ -3,7 +3,6 @@
  */
 
 #include <QtWidgets/QApplication>
-#include <QTextCodec>
 #include <QLibraryInfo>
 #include "mainwindow.h"
 
@@ -20,7 +19,9 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication a(argc, argv);
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
+//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
     MainWindow w;
     w.show();
     ret = a.exec();

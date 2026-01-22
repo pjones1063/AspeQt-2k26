@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>638</width>
-    <height>465</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -92,7 +92,7 @@
      <x>306</x>
      <y>9</y>
      <width>320</width>
-     <height>400</height>
+     <height>480</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -781,8 +781,81 @@
        </layout>
       </widget>
      </item>
-    </layout>
+
+
+<item>
+      <widget class="QGroupBox" name="rs232Group">
+       <property name="title">
+        <string>Atari 850 Interface Emulation (R: Devices)</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_850">
+
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_mode_header"><property name="text"><string>Mode</string></property></widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_port_header"><property name="text"><string>Physical Port / Device</string></property></widget>
+        </item>
+
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_r1"><property name="text"><string>R1:</string></property></widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="rs232Mode1Combo">
+          <item><property name="text"><string>Physical Serial Port</string></property></item>
+          <item><property name="text"><string>Internet Modem (Telnet)</string></property></item>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QComboBox" name="rs232Port1Combo"><property name="editable"><bool>true</bool></property></widget>
+        </item>
+
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_r2"><property name="text"><string>R2:</string></property></widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="rs232Mode2Combo">
+          <item><property name="text"><string>Physical Serial Port</string></property></item>
+          <item><property name="text"><string>Internet Modem (Telnet)</string></property></item>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QComboBox" name="rs232Port2Combo"><property name="editable"><bool>true</bool></property></widget>
+        </item>
+
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_r3"><property name="text"><string>R3:</string></property></widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="rs232Mode3Combo">
+          <item><property name="text"><string>Physical Serial Port</string></property></item>
+          <item><property name="text"><string>Internet Modem (Telnet)</string></property></item>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QComboBox" name="rs232Port3Combo"><property name="editable"><bool>true</bool></property></widget>
+        </item>
+
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_r4"><property name="text"><string>R4:</string></property></widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QComboBox" name="rs232Mode4Combo">
+          <item><property name="text"><string>Physical Serial Port</string></property></item>
+          <item><property name="text"><string>Internet Modem (Telnet)</string></property></item>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QComboBox" name="rs232Port4Combo"><property name="editable"><bool>true</bool></property></widget>
+        </item>
+
+       </layout>
+      </widget>
+     </item>
+     </layout>
    </widget>
+
+
    <widget class="QWidget" name="page_i18n">
     <layout class="QGridLayout" name="gridLayout">
      <property name="leftMargin">

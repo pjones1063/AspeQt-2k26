@@ -1,7 +1,8 @@
 #ifndef DISKIMAGEATX_H
 #define DISKIMAGEATX_H
-
+#include <QAction>
 #include "diskimage.h"
+
 
 class DiskImageAtx : public SimpleDiskImage
 {

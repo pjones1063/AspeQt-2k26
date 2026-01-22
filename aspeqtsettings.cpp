@@ -828,6 +828,32 @@ bool AspeQtSettings::isURLSubmitEnabled()
     return mUseURLSubmit;
 }
 
+// --- Corrected block for aspeqtsettings.cpp ---
+
+void AspeQtSettings::setRs232PortName(int deviceIdx, const QString &portName)
+{
+    // Use mSettings-> instead of settings.
+    mSettings->setValue(QString("Rs232/Port%1").arg(deviceIdx + 1), portName);
+}
+
+QString AspeQtSettings::rs232PortName(int deviceIdx)
+{
+    // Use mSettings-> instead of settings.
+    return mSettings->value(QString("Rs232/Port%1").arg(deviceIdx + 1), "").toString();
+}
+
+void AspeQtSettings::setRs232Mode(int deviceIdx, int mode)
+{
+    mSettings->setValue(QString("Rs232/Mode%1").arg(deviceIdx + 1), mode);
+}
+
+int AspeQtSettings::rs232Mode(int deviceIdx)
+{
+    // Default to 0 (Physical)
+    return mSettings->value(QString("Rs232/Mode%1").arg(deviceIdx + 1), 0).toInt();
+}
+
+
 void AspeQtSettings::setURLSubmit(bool enabled)
 {
     mUseURLSubmit = enabled;

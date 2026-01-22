@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "AspeQt",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "AspeQt::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AspeQt-Debug-8dcd1bbac2f9db0434ec.json",
+					"name" : "AspeQt",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "AspeQt_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AspeQt_autogen-Debug-a7dae73b056dec25c9e0.json",
+					"name" : "AspeQt_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "AspeQt_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AspeQt_autogen_timestamp_deps-Debug-4353737e4f8f3b2dd39a.json",
+					"name" : "AspeQt_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Debug",
+		"source" : "/home/paul/eclipse-workspace/AspeQt-2K26-master"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

@@ -85,7 +85,8 @@ void TextPrinterWindow::closeEvent(QCloseEvent *e)
 
     int n = text.size();
     QByteArray textASCII;
-    textASCII.append(text);
+    // Explicitly convert to UTF-8
+    textASCII.append(text.toUtf8());
 
     // Disable ATASCII Inverse Video for ASCII window // 
     for (int x = 0; x <= n-1; ++x){

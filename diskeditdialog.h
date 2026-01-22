@@ -15,6 +15,7 @@ namespace Ui {
 #include <QAbstractTableModel>
 #include <QMimeData>
 #include <QItemSelection>
+#include <QAction>
 
 #include "atarifilesystem.h"
 

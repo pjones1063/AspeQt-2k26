@@ -18,13 +18,15 @@ Network::Network(QWidget *parent)
 
 Network::~Network()
 {
-    if (m_session)
-        m_session->close();
+//    if (m_session)
+//        m_session->close();
 }
 
 bool Network::openConnection(QString &netInterface)
 {
-    // Internet Access Point
+
+/*
+        // Internet Access Point
     QNetworkConfigurationManager manager;
 
     const bool canStartIAP = (manager.capabilities()
@@ -32,6 +34,7 @@ bool Network::openConnection(QString &netInterface)
 
     // If there is a default access point, use it
     QNetworkConfiguration cfg = manager.defaultConfiguration();
+
 
     if (!cfg.isValid() || !canStartIAP) {
         return false;
@@ -43,8 +46,10 @@ bool Network::openConnection(QString &netInterface)
     // Waits for session to be open and continues after that
     m_session->waitForOpened();
 
+*/
+
     // Show interface name to the user
-    QNetworkInterface iff = m_session->interface();
-    netInterface = iff.humanReadableName();
+//    QNetworkInterface iff = m_session->interface();
+//    netInterface = iff.humanReadableName();
     return true;
 }

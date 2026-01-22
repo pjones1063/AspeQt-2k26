@@ -5,6 +5,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QAction>
 #include <QtWidgets/QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>

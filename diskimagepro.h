@@ -6,6 +6,7 @@
 #define DISKIMAGEPRO_H
 
 #include "diskimage.h"
+#include <QAction>
 
 class DiskImagePro : public SimpleDiskImage
 {

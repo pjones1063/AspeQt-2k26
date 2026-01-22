@@ -35,6 +35,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     /* Retrieve application settings */
 
+    // --- Standard Serial Port Combo Setup ---
     m_ui->serialPortComboBox->clear();
     const QList<QSerialPortInfo>& infos = QSerialPortInfo::availablePorts();
 
@@ -55,6 +56,54 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     {
         m_ui->serialPortComboBox->addItem(tr("Custom"));
     }
+
+    // --- NEW: Populate Atari 850 Port & Mode Combos ---
+    // This is the clean, consolidated logic for R1-R4
+    QComboBox* rs232Combos[4] = {
+        m_ui->rs232Port1Combo, m_ui->rs232Port2Combo,
+        m_ui->rs232Port3Combo, m_ui->rs232Port4Combo
+    };
+    QComboBox* rs232Modes[4] = {
+        m_ui->rs232Mode1Combo, m_ui->rs232Mode2Combo,
+        m_ui->rs232Mode3Combo, m_ui->rs232Mode4Combo
+    };
+
+    // Pre-fetch available ports for the R: devices
+    const QList<QSerialPortInfo> rInfos = QSerialPortInfo::availablePorts();
+
+    for (int i = 0; i < 4; i++) {
+        // 1. Setup Port Combo
+        rs232Combos[i]->clear();
+        rs232Combos[i]->addItem(tr("None"), ""); // Option to disable the port
+        for (const QSerialPortInfo &info : rInfos) {
+            rs232Combos[i]->addItem(info.portName(), info.systemLocation());
+        }
+
+        // Restore saved port selection
+        QString savedPort = respeqtSettings->rs232PortName(i);
+        rs232Combos[i]->setCurrentText(savedPort);
+
+        // Handle custom text (if user typed a path manually)
+        if (rs232Combos[i]->findText(savedPort) == -1 && !savedPort.isEmpty()) {
+            rs232Combos[i]->addItem(savedPort);
+            rs232Combos[i]->setCurrentText(savedPort);
+        }
+
+        // 2. Setup Mode Combo (Physical vs Telnet)
+        int savedMode = respeqtSettings->rs232Mode(i);
+        rs232Modes[i]->setCurrentIndex(savedMode); // 0=Physical, 1=Telnet
+
+        // Enable/Disable the physical port dropdown based on mode
+        // If Telnet (1) is selected, physical port box is disabled
+        rs232Combos[i]->setEnabled(savedMode == 0);
+
+        // Connect signal to toggle enabled state dynamically when user changes mode
+        connect(rs232Modes[i], static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+                [=](int index){
+                    rs232Combos[i]->setEnabled(index == 0);
+                });
+    }
+
     m_ui->serialPortHandshakeCombo->setCurrentIndex(respeqtSettings->serialPortHandshakingMethod());
     m_ui->serialPortFallingEdge->setChecked(respeqtSettings->serialPortTriggerOnFallingEdge());
     m_ui->serialPortWriteDelayCombo->setCurrentIndex(respeqtSettings->serialPortWriteDelay());
@@ -79,29 +128,29 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->RclCommand->setText(respeqtSettings->lastRclCommand());
 
     switch (respeqtSettings->backend()) {
-        case SERIAL_BACKEND_STANDARD:
-            itemStandard->setCheckState(0, Qt::Checked);
-            itemAtariSio->setCheckState(0, Qt::Unchecked);
-            m_ui->treeWidget->setCurrentItem(itemStandard);
-            break;
-        case SERIAL_BACKEND_SIO_DRIVER:
-            itemStandard->setCheckState(0, Qt::Unchecked);
-            itemAtariSio->setCheckState(0, Qt::Checked);
-            m_ui->treeWidget->setCurrentItem(itemAtariSio);
-            break;
+    case SERIAL_BACKEND_STANDARD:
+        itemStandard->setCheckState(0, Qt::Checked);
+        itemAtariSio->setCheckState(0, Qt::Unchecked);
+        m_ui->treeWidget->setCurrentItem(itemStandard);
+        break;
+    case SERIAL_BACKEND_SIO_DRIVER:
+        itemStandard->setCheckState(0, Qt::Unchecked);
+        itemAtariSio->setCheckState(0, Qt::Checked);
+        m_ui->treeWidget->setCurrentItem(itemAtariSio);
+        break;
     }
     m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
     m_ui->atariSioBox->setCheckState(itemAtariSio->checkState(0));
-    
+
     /* list available translations */
     QTranslator local_translator;
     m_ui->i18nLanguageCombo->clear();
     m_ui->i18nLanguageCombo->addItem(tr("Automatic"), "auto");
     if (respeqtSettings->i18nLanguage().compare("auto") == 0)
-      m_ui->i18nLanguageCombo->setCurrentIndex(0);
+        m_ui->i18nLanguageCombo->setCurrentIndex(0);
     m_ui->i18nLanguageCombo->addItem(QT_TR_NOOP("English"), "en");
     if (respeqtSettings->i18nLanguage().compare("en") == 0)
-      m_ui->i18nLanguageCombo->setCurrentIndex(1);
+        m_ui->i18nLanguageCombo->setCurrentIndex(1);
     QDir dir(":/translations/i18n/");
     QStringList filters;
     filters << "respeqt_*.qm";
@@ -217,7 +266,7 @@ void OptionsDialog::on_treeWidget_itemClicked(QTreeWidgetItem* item, int /*colum
         }
     }
     else if ((itemStandard->checkState(0) == Qt::Unchecked) &&
-            (itemAtariSio->checkState(0) == Qt::Unchecked))
+             (itemAtariSio->checkState(0) == Qt::Unchecked))
     {
         item->setCheckState(0, Qt::Checked);
     }
@@ -234,7 +283,7 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
     } else if (current == itemEmulation) {
         m_ui->stackedWidget->setCurrentIndex(2);
     } else if (current == itemI18n) {
-    m_ui->stackedWidget->setCurrentIndex(3);
+        m_ui->stackedWidget->setCurrentIndex(3);
     }
 }
 
@@ -269,6 +318,17 @@ void OptionsDialog::OptionsDialog_accepted()
     {
         backend = SERIAL_BACKEND_SIO_DRIVER;
     }
+
+    // --- NEW: Save Atari 850 Port Names & Modes ---
+    respeqtSettings->setRs232PortName(0, m_ui->rs232Port1Combo->currentText());
+    respeqtSettings->setRs232PortName(1, m_ui->rs232Port2Combo->currentText());
+    respeqtSettings->setRs232PortName(2, m_ui->rs232Port3Combo->currentText());
+    respeqtSettings->setRs232PortName(3, m_ui->rs232Port4Combo->currentText());
+
+    respeqtSettings->setRs232Mode(0, m_ui->rs232Mode1Combo->currentIndex());
+    respeqtSettings->setRs232Mode(1, m_ui->rs232Mode2Combo->currentIndex());
+    respeqtSettings->setRs232Mode(2, m_ui->rs232Mode3Combo->currentIndex());
+    respeqtSettings->setRs232Mode(3, m_ui->rs232Mode4Combo->currentIndex());
 
     respeqtSettings->setBackend(backend);
 

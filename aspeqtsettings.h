@@ -24,6 +24,13 @@ public:
 
     bool isFirstTime();
 
+    void setRs232PortName(int deviceIdx, const QString &portName);
+    QString rs232PortName(int deviceIdx);
+
+    void setRs232Mode(int deviceIdx, int mode); // 0 = Physical, 1 = Telnet
+    int rs232Mode(int deviceIdx);
+
+
     QString serialPortName();
     void setSerialPortName(const QString &name);
 
@@ -194,6 +201,8 @@ public:
 // Explorer Window On Top
     bool explorerOnTop();
     void setExplorerOnTop(bool expOnTop);
+
+
 
 private:
     QSettings *mSettings;

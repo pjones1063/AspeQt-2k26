@@ -30,7 +30,8 @@
 #include <QWidget>
 #include <QDrag>
 #include <QtDebug>
-#include <QDesktopWidget>
+#include <QScreen>
+#include <QWindow>
 #include <QFont>
 
 #include "atarifilesystem.h"

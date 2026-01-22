@@ -7,6 +7,8 @@
 
 #include <QFileInfoList>
 #include <QtDebug>
+#include <QRegularExpression>
+
 
 // CIRCULAR SECTORS USED FOR SERVING FILES FROM FOLDER IMAGES
 // ==========================================================
@@ -70,9 +72,9 @@ void FolderImage::buildDirectory()
             longName = info.completeBaseName();
             name = longName.toUpper();
             if(respeqtSettings->filterUnderscore()) {
-                name.remove(QRegExp("[^A-Z0-9]"));
+                name.remove(QRegularExpression("[^A-Z0-9]"));
             } else {
-                name.remove(QRegExp("[^A-Z0-9_]"));
+                name.remove(QRegularExpression("[^A-Z0-9_]"));
             }
             name = name.left(8);
             if (name.isEmpty()) {
@@ -81,9 +83,9 @@ void FolderImage::buildDirectory()
             longName += "." + info.suffix();
             ext = info.suffix().toUpper();
             if(respeqtSettings->filterUnderscore()) {
-                ext.remove(QRegExp("[^A-Z0-9]"));
+                ext.remove(QRegularExpression("[^A-Z0-9]"));
             } else {
-                ext.remove(QRegExp("[^A-Z0-9_]"));
+                ext.remove(QRegularExpression("[^A-Z0-9_]"));
             }
             ext = ext.left(3);
             QString baseName = name.left(7);
@@ -207,13 +209,14 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                      QFile picoName(dir.path() + "/piconame.txt");
                      picoName.open(QFile::WriteOnly);
                      QByteArray nameLine;
-                     nameLine.append(dir.dirName() + '\x9B');
+                     // Explicitly convert the string to UTF-8 bytes before appending
+                     nameLine.append((dir.dirName() + '\x9B').toUtf8());
                      picoName.write(nameLine);
                      for(int i=0; i<64; i++){
                      if(atariFiles[i].exists) {
                          if(atariFiles[i].longName != "$boot.bin") {
                                  nameLine.clear();
-                                 nameLine.append(atariFiles[i].atariName);
+                                 nameLine.append(atariFiles[i].atariName.toUtf8());
                                  QByteArray space;
                                  int size;
                                  size = atariFiles[i].atariName.size();
@@ -221,9 +224,9 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                                      space[j] = '\x20';
                                  }
                                  nameLine.append(space);
-                                 nameLine.append(atariFiles[i].atariExt);
+                                 nameLine.append(atariFiles[i].atariExt.toUtf8());
                                  nameLine.append('\x20');
-                                 nameLine.append(atariFiles[i].longName.mid(0, atariFiles[i].longName.indexOf(".", -1)-1));
+                                 nameLine.append(atariFiles[i].longName.mid(0, atariFiles[i].longName.indexOf(".", -1)-1).toUtf8());
                                  nameLine.append('\x9B');
                                  picoName.write(nameLine);
                          }

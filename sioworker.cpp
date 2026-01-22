@@ -34,7 +34,8 @@ QString SioDevice::deviceName()
 SioWorker::SioWorker()
         : QThread()
 {
-    deviceMutex = new QMutex(QMutex::Recursive);
+    // Use the dedicated class for recursive mutexes
+    deviceMutex = new QRecursiveMutex();
     for (int i=0; i <= 255; i++) {
         devices[i] = 0;
     }

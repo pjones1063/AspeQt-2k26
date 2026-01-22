@@ -152,7 +152,7 @@ QString AtariDirEntry::attributeNames() const
 void AtariDirEntry::makeFromAtariDosEntry(const QByteArray &entry, int aNo, int aDir, bool dd)
 {
     // Translate the attributes
-    attributes = 0;
+    attributes = {};
 
     internalData = entry;
 
@@ -201,7 +201,7 @@ void AtariDirEntry::makeFromAtariDosEntry(const QByteArray &entry, int aNo, int 
 void AtariDirEntry::makeFromSpartaDosEntry(const QByteArray &entry, int aNo, int aDir)
 {
     // Translate the attributes
-    attributes = 0;
+    attributes = {};
 
     internalData = entry;
 
@@ -328,12 +328,12 @@ QByteArray AtariFileSystem::findName(quint16 dir, QString name)
     QString atariName, pfx;
     QByteArray result;
 
-    baseName.remove(QRegExp("[^A-Z0-9]"));
+   baseName.remove(QRegularExpression("[^A-Z0-9]"));
     baseName = baseName.left(8);
     if (baseName.isEmpty()) {
         baseName = "BADNAME";
     }
-    extension.remove(QRegExp("[^A-Z0-9]"));
+    extension.remove(QRegularExpression("[^A-Z0-9]"));;
     extension = extension.left(3);
     while (extension.count() < 3) {
         extension.append(" ");
