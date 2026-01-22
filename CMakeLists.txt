@@ -68,3 +68,7 @@ endif()
 
 # Note: We removed qt_finalize_executable() because qt_add_executable() 
 # does it automatically now.
+
+
+# Auto-added by cleanup script
+include_directories(${CMAKE_SOURCE_DIR}/src)
