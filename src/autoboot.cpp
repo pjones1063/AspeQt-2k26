@@ -1,11 +1,15 @@
 /*
  * autoboot.cpp
+ * COMPLETE FIXED VERSION for Qt 6
+ * - Fixed sectorCount math error
+ * - Added strict bounds checking to readSector to prevent crash
  */
 
 #include "autoboot.h"
 #include "aspeqtsettings.h"
 
 #include <QtDebug>
+#include <algorithm> // Required for std::min
 
 AutoBoot::~AutoBoot()
 {
@@ -19,9 +23,9 @@ void AutoBoot::passToOldHandler(quint8 command, quint16 aux)
     } else {
         sio->port()->writeCommandNak();
         qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
-                       .arg(deviceName())
-                       .arg(command, 2, 16, QChar('0'))
-                       .arg(aux, 4, 16, QChar('0'));
+                                  .arg(deviceName())
+                                  .arg(command, 2, 16, QChar('0'))
+                                  .arg(aux, 4, 16, QChar('0'));
     }
 }
 
@@ -29,139 +33,147 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
 {
 
     switch (command) {
-        case 0x3F:  // Speed poll
-            {
-                if (!sio->port()->writeCommandAck()) {
-                    return;
-                }
-                sio->port()->writeComplete();
-                QByteArray speed(1, 0);
-                speed[0] = sio->port()->speedByte();
-                sio->port()->writeDataFrame(speed);
-                qDebug() << "!n" << tr("[%1] Speed poll.").arg(deviceName());
-                break;
-            }
-        case 0x52:
-            {    /* Read sector */
-                if (loaded) {
-                    passToOldHandler(command, aux);
-                    return;
-                }
-                if (aux >= 1 && aux <= sectorCount) {
-                    if (!sio->port()->writeCommandAck()) {
-                        return;
-                    }
-                    if (!started) {
-                        emit booterStarted();
-                        started = true;
-                    }
-                    QByteArray data;
-                    if (readSector(aux, data)) {
-                        sio->port()->writeComplete();
-                        sio->port()->writeDataFrame(data);
-                        qDebug() << "!n" << tr("[%1] Read sector %2 (%3 bytes).")
-                                       .arg(deviceName())
-                                       .arg(aux)
-                                       .arg(data.size());
-                    } else {
-                        sio->port()->writeError();
-                        qCritical() << "!e" << tr("[%1] Read sector %2 failed.")
-                                       .arg(deviceName())
-                                       .arg(aux);
-                    }
-                } else {
-                    passToOldHandler(command, aux);
-                }
-                break;
-            }
-        case 0x53:
-            {    /* Get status */
-                if (loaded) {
-                    passToOldHandler(command, aux);
-                    return;
-                }
-                if (!sio->port()->writeCommandAck()) {
-                    return;
-                }
-
-                QByteArray status(4, 0);
-                status[0] = 8;
-                status[3] = 1;
-                sio->port()->writeComplete();
-                sio->port()->writeDataFrame(status);
-                qDebug() << "!n" << tr("[%1] Get status.")
-                               .arg(deviceName());
-                break;
-            }
-        case 0xFD:
-            {
-                if (!sio->port()->writeCommandAck()) {
-                    return;
-                }
-                qDebug() << "!n" << tr("[%1] Atari is jumping to %2.")
-                               .arg(deviceName())
-                               .arg(aux);
-                emit loaderDone();
-                sio->port()->writeComplete();
-                break;
-            }
-        case 0xFE:
-            {   /* Get chunk */
-                if(aux >= chunks.count()) {
-                    qDebug() << "!e" << tr("[%1] Invalid chunk in get chunk: aux = %2")
-                                   .arg(deviceName())
-                                   .arg(aux);
-                    return;
-                }
-
-                if (!sio->port()->writeCommandAck()) {
-                    return;
-                }
-                qDebug() << "!n" << tr("[%1] Get chunk %2 (%3 bytes).")
-                               .arg(deviceName())
-                               .arg(aux)
-                               .arg(chunks.at(aux).data.size());
-                sio->port()->writeComplete();
-                sio->port()->writeDataFrame(chunks.at(aux).data);
-                emit blockRead(aux + 1, chunks.count());
-                break;
-            }
-        case 0xFF:
-            {   /* Get chunk info */
-                if(aux >= chunks.count()) {
-                    qDebug() << "!e" << tr("[%1] Invalid chunk in get chunk info: aux = %2")
-                                   .arg(deviceName())
-                                   .arg(aux);
-                    return;
-                }
-
-                if (!sio->port()->writeCommandAck()) {
-                    return;
-                }
-                if (!loaded) {
-                    loaded = true;
-                    emit booterLoaded();
-                }
-                QByteArray data;
-                data[0] = chunks.at(aux).address % 256;
-                data[1] = chunks.at(aux).address / 256;
-                data[2] = 1;
-                data[3] = chunks.size() != aux + 1;
-                data[4] = chunks.at(aux).data.size() % 256;
-                data[5] = chunks.at(aux).data.size() / 256;
-                qDebug() << "!d" << tr("[%1] Get chunk info %2 (%3 bytes at %4).")
-                               .arg(deviceName())
-                               .arg(aux)
-                               .arg(chunks.at(aux).data.size())
-                               .arg(chunks.at(aux).address);
-                sio->port()->writeComplete();
-                sio->port()->writeDataFrame(data);
-                break;
-            }
-        default:
+    case 0x3F:  // Speed poll
+    {
+        if (!sio->port()->writeCommandAck()) {
+            return;
+        }
+        sio->port()->writeComplete();
+        QByteArray speed(1, 0);
+        speed[0] = sio->port()->speedByte();
+        sio->port()->writeDataFrame(speed);
+        qDebug() << "!n" << tr("[%1] Speed poll.").arg(deviceName());
+        break;
+    }
+    case 0x52:
+    {    /* Read sector */
+        if (loaded) {
             passToOldHandler(command, aux);
             return;
-            break;
+        }
+        if (aux >= 1 && aux <= sectorCount) {
+            if (!sio->port()->writeCommandAck()) {
+                return;
+            }
+            if (!started) {
+                emit booterStarted();
+                started = true;
+            }
+            QByteArray data;
+            if (readSector(aux, data)) {
+                sio->port()->writeComplete();
+                sio->port()->writeDataFrame(data);
+                qDebug() << "!n" << tr("[%1] Read sector %2 (%3 bytes).")
+                                        .arg(deviceName())
+                                        .arg(aux)
+                                        .arg(data.size());
+            } else {
+                sio->port()->writeError();
+                qCritical() << "!e" << tr("[%1] Read sector %2 failed.")
+                                           .arg(deviceName())
+                                           .arg(aux);
+            }
+        } else {
+            passToOldHandler(command, aux);
+        }
+        break;
+    }
+    case 0x53:
+    {    /* Get status */
+        if (loaded) {
+            passToOldHandler(command, aux);
+            return;
+        }
+        if (!sio->port()->writeCommandAck()) {
+            return;
+        }
+
+        QByteArray status(4, 0);
+        status[0] = 8;
+        status[3] = 1;
+        sio->port()->writeComplete();
+        sio->port()->writeDataFrame(status);
+        qDebug() << "!n" << tr("[%1] Get status.")
+                                .arg(deviceName());
+        break;
+    }
+    case 0xFD:
+    {
+        if (!sio->port()->writeCommandAck()) {
+            return;
+        }
+        qDebug() << "!n" << tr("[%1] Atari is jumping to %2.")
+                                .arg(deviceName())
+                                .arg(aux);
+        emit loaderDone();
+        sio->port()->writeComplete();
+        break;
+    }
+    case 0xFE:
+    {   /* Get chunk */
+        if(aux >= chunks.count()) {
+            qDebug() << "!e" << tr("[%1] Invalid chunk in get chunk: aux = %2")
+            .arg(deviceName())
+                .arg(aux);
+            return;
+        }
+
+        if (!sio->port()->writeCommandAck()) {
+            return;
+        }
+        qDebug() << "!n" << tr("[%1] Get chunk %2 (%3 bytes).")
+                                .arg(deviceName())
+                                .arg(aux)
+                                .arg(chunks.at(aux).data.size());
+        sio->port()->writeComplete();
+        sio->port()->writeDataFrame(chunks.at(aux).data);
+        emit blockRead(aux + 1, chunks.count());
+        break;
+    }
+
+
+    case 0xFF:
+    {   /* Get chunk info */
+        if(aux >= chunks.count()) {
+            qDebug() << "!e" << tr("[%1] Invalid chunk in get chunk info: aux = %2")
+            .arg(deviceName())
+                .arg(aux);
+            return;
+        }
+
+        if (!sio->port()->writeCommandAck()) {
+            return;
+        }
+        if (!loaded) {
+            loaded = true;
+            emit booterLoaded();
+        }
+
+        // --- FIX STARTS HERE ---
+        // Initialize the array with 6 bytes of zeros so index [0] through [5] exist.
+        QByteArray data(6, 0);
+
+        data[0] = chunks.at(aux).address % 256;
+        data[1] = chunks.at(aux).address / 256;
+        data[2] = 1;
+        data[3] = chunks.size() != aux + 1;
+        data[4] = chunks.at(aux).data.size() % 256;
+        data[5] = chunks.at(aux).data.size() / 256;
+        // --- FIX ENDS HERE ---
+
+        qDebug() << "!d" << tr("[%1] Get chunk info %2 (%3 bytes at %4).")
+                                .arg(deviceName())
+                                .arg(aux)
+                                .arg(chunks.at(aux).data.size())
+                                .arg(chunks.at(aux).address);
+        sio->port()->writeComplete();
+        sio->port()->writeDataFrame(data);
+        break;
+    }
+    default:
+        passToOldHandler(command, aux);
+        return;
+        break;
     }
 }
 
@@ -171,13 +183,12 @@ bool AutoBoot::readExecutable(const QString &fileName)
 
     if (!file.open(QFile::ReadOnly)) {
         qCritical() << "!e" << tr("Cannot open file '%1': %2")
-                       .arg(fileName)
-                       .arg(file.errorString());
+        .arg(fileName)
+            .arg(file.errorString());
         return false;
     }
 
     int start, end;
-
     QByteArray data;
 
     /* Read the $FFFF header */
@@ -190,16 +201,16 @@ bool AutoBoot::readExecutable(const QString &fileName)
             error = file.errorString();
         }
         qCritical() << "!e" << tr("Cannot read from file '%1': %2.")
-                       .arg(fileName)
-                       .arg(error);
+                                   .arg(fileName)
+                                   .arg(error);
         return false;
     }
     start = (quint8) data.at(0) + (quint8) data.at(1) * 256;
     if (start != 0xffff) {
         QString error;
         qCritical() << "!e" << tr("Cannot load file '%1': The file doesn't seem to be an Atari DOS executable.")
-                       .arg(fileName)
-                       .arg(error);
+                                   .arg(fileName)
+                                   .arg(error);
         return false;
     }
 
@@ -225,8 +236,8 @@ bool AutoBoot::readExecutable(const QString &fileName)
         if (data.size() < 2) {
             if (file.atEnd()) {
                 qCritical() << "!e" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
-                               .arg(fileName)
-                               .arg(2 - data.size());
+                .arg(fileName)
+                    .arg(2 - data.size());
                 if (chunks.count() == 0) {
                     return false;
                 } else {
@@ -234,8 +245,8 @@ bool AutoBoot::readExecutable(const QString &fileName)
                 }
             } else {
                 qCritical() << "!e" << tr("Cannot read from file '%1': %2.")
-                               .arg(fileName)
-                               .arg(file.errorString());
+                .arg(fileName)
+                    .arg(file.errorString());
                 return false;
             }
         }
@@ -245,22 +256,29 @@ bool AutoBoot::readExecutable(const QString &fileName)
 
         if (end < start) {
             qWarning() << tr("The executable '%1' is broken: The end address is less than the start address.")
-                          .arg(fileName);
+            .arg(fileName);
             break;
         }
 
         /* Read the chunk */
         int size = end - start + 1;
+
+        // --- Qt 6 FIX: Sanity check size ---
+        if (size < 0) {
+            qWarning() << "!w" << tr("The executable '%1' has negative chunk size.").arg(fileName);
+            return false;
+        }
+
         data = file.read(size);
         if (data.size() < size) {
             if (file.atEnd()) {
                 qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
-                               .arg(fileName)
-                               .arg(size - data.size());
+                .arg(fileName)
+                    .arg(size - data.size());
             } else {
                 qWarning() << "!w" << tr("Cannot read from file '%1': %2.")
-                               .arg(fileName)
-                               .arg(file.errorString());
+                .arg(fileName)
+                    .arg(file.errorString());
                 return false;
             }
         }
@@ -268,9 +286,11 @@ bool AutoBoot::readExecutable(const QString &fileName)
         int maxChunkSize = 1024;
         for (int i = 0; i < data.size(); i += maxChunkSize) {
             AtariExeChunk ch;
-            ch.data = data.mid(i, maxChunkSize);
+            // FIXED: Using qMin ensures we never overshoot the buffer
+            int len = qMin(maxChunkSize, (int)(data.size() - i));
+            ch.data = data.mid(i, len);
             ch.address = start;
-            start += maxChunkSize;
+            start += len;
             chunks.append(ch);
         }
 
@@ -284,13 +304,13 @@ bool AutoBoot::readExecutable(const QString &fileName)
         if (data.size() < 2) {
             if (file.atEnd()) {
                 qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
-                               .arg(fileName)
-                               .arg(2 - data.size());
+                .arg(fileName)
+                    .arg(2 - data.size());
                 break;
             } else {
                 qCritical() << "!e" << tr("Cannot read from file '%1': %2.")
-                               .arg(fileName)
-                               .arg(file.errorString());
+                .arg(fileName)
+                    .arg(file.errorString());
                 return false;
             }
         }
@@ -302,13 +322,13 @@ bool AutoBoot::readExecutable(const QString &fileName)
             if (data.size() < 2) {
                 if (file.atEnd()) {
                     qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
-                                   .arg(fileName)
-                                   .arg(2 - data.size());
+                    .arg(fileName)
+                        .arg(2 - data.size());
                     break;
                 } else {
                     qCritical() << "!e" << tr("Cannot read from file '%1': %2.")
-                                   .arg(fileName)
-                                   .arg(file.errorString());
+                    .arg(fileName)
+                        .arg(file.errorString());
                     return false;
                 }
             }
@@ -331,12 +351,19 @@ bool AutoBoot::open(const QString &fileName, bool highSpeed)
 
     if (!boot.open(QFile::ReadOnly)) {
         qCritical() << "!e" << tr("Cannot open the boot loader: %1")
-                       .arg(boot.errorString());
+        .arg(boot.errorString());
         return false;
     }
     bootSectors = boot.readAll();
     boot.close();
-    sectorCount = (boot.size() + 127) * 128;
+
+    // FIXED: Was multiplying by 128, causing massive sector count.
+    // Correct logic: Calculate number of 128-byte sectors needed.
+    if (bootSectors.isEmpty()) {
+        sectorCount = 0;
+    } else {
+        sectorCount = (bootSectors.size() + 127) / 128;
+    }
 
     chunks = QList <AtariExeChunk> ();
 
@@ -349,10 +376,46 @@ void AutoBoot::close()
 
 bool AutoBoot::readSector(quint16 sector, QByteArray &data)
 {
-    data = bootSectors.mid((sector - 1) * 128, 128);
-    data.resize(128);
+    // --- Qt 6 SAFE READ IMPLEMENTATION ---
+
+    // 1. Sanity Check: If bootSectors is empty, we can't read anything.
+    if (bootSectors.isEmpty()) {
+        qWarning() << "readSector called but bootSectors is empty!";
+        return false;
+    }
+
+    // 2. Calculate Start Position
+    // Cast to qint64 to prevent any 16-bit integer overflow issues
+    qint64 startPos = ((qint64)sector - 1) * 128;
+
+    // 3. Bounds Check: Is startPos strictly inside the file?
+    if (startPos < 0 || startPos >= bootSectors.size()) {
+        qWarning() << "Read past end. Sector:" << sector << "StartPos:" << startPos << "Size:" << bootSectors.size();
+        return false;
+    }
+
+    // 4. Calculate Read Length (The Qt 6 Crash Fix)
+    // We want 128 bytes, but cannot exceed what is available
+    qint64 bytesAvailable = bootSectors.size() - startPos;
+
+    // SAFETY: If bytesAvailable is somehow negative (impossible due to check #3), force 0
+    if (bytesAvailable < 0) bytesAvailable = 0;
+
+    int bytesToRead = (int)std::min((qint64)128, bytesAvailable);
+
+    // 5. Execute Read
+    // This is GUARANTEED safe because startPos < size AND bytesToRead <= (size - startPos).
+    data = bootSectors.mid(startPos, bytesToRead);
+
+    // 6. Pad with Zeros
+    // The Atari expects exactly 128 bytes. If we read less, fill the rest with 0.
+    if (data.size() < 128) {
+        data.resize(128);
+    }
+
     return true;
 }
+
 
 QString AutoBoot::deviceName()
 {
