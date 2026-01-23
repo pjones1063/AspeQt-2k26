@@ -333,7 +333,6 @@
 #define __cpp_inline_variables 201606L
 #define __INT_MAX__ 0x7fffffff
 #define __linux__ 1
-#define QT_NO_DEBUG_OUTPUT 1
 #define __INT64_TYPE__ long int
 #define __FLT_MAX_EXP__ 128
 #define __ORDER_BIG_ENDIAN__ 4321
@@ -437,7 +436,7 @@
 #define __DEC128_MANT_DIG__ 34
 #define __LDBL_MIN_10_EXP__ (-4931)
 #define __cpp_generic_lambdas 201304L
-#define VERSION "r2k26"
+#define VERSION "1.0.0"
 #define __SSE_MATH__ 1
 #define __SIZEOF_LONG_LONG__ 8
 #define __cpp_user_defined_literals 200809L

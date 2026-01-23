@@ -1,0 +1,29 @@
+{
+	"BUILD_DIR" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Release/AspeQt_autogen",
+	"CMAKE_BINARY_DIR" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Release",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Release",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/paul/eclipse-workspace/AspeQt-2K26-master",
+	"CMAKE_SOURCE_DIR" : "/home/paul/eclipse-workspace/AspeQt-2K26-master",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Ninja",
+	"INCLUDE_DIR" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Release/AspeQt_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/paul/eclipse-workspace/AspeQt-2K26-master/res/history.txt",
+		"/home/paul/eclipse-workspace/AspeQt-2K26-master/res/about_spanish.html",
+		"/home/paul/eclipse-workspace/AspeQt-2K26-master/res/license.txt",
+		"/home/paul/eclipse-workspace/AspeQt-2K26-master/res/AspeQt User Manual-English.html",
+		"/home/paul/eclipse-workspace/AspeQt-2K26-master/res/about.html"
+	],
+	"LOCK_FILE" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Release/CMakeFiles/AspeQt_autogen.dir/AutoRcc_documentation_PNK5WDWK6L_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "documentation" ],
+	"OUTPUT_CHECKSUM" : "PNK5WDWK6L",
+	"OUTPUT_NAME" : "qrc_documentation.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt6/libexec/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Release/CMakeFiles/AspeQt_autogen.dir/AutoRcc_documentation_PNK5WDWK6L_Used.txt",
+	"SOURCE" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/res/documentation.qrc",
+	"USE_BETTER_GRAPH" : true,
+	"VERBOSITY" : 0
+}

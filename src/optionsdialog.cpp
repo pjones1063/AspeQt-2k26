@@ -58,7 +58,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     }
 
     // --- NEW: Populate Atari 850 Port & Mode Combos ---
-    // This is the clean, consolidated logic for R1-R4
     QComboBox* rs232Combos[4] = {
         m_ui->rs232Port1Combo, m_ui->rs232Port2Combo,
         m_ui->rs232Port3Combo, m_ui->rs232Port4Combo
@@ -68,7 +67,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         m_ui->rs232Mode3Combo, m_ui->rs232Mode4Combo
     };
 
-    // Pre-fetch available ports for the R: devices
+    // Pre-fetch available ports
     const QList<QSerialPortInfo> rInfos = QSerialPortInfo::availablePorts();
 
     for (int i = 0; i < 4; i++) {
@@ -94,10 +93,9 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         rs232Modes[i]->setCurrentIndex(savedMode); // 0=Physical, 1=Telnet
 
         // Enable/Disable the physical port dropdown based on mode
-        // If Telnet (1) is selected, physical port box is disabled
         rs232Combos[i]->setEnabled(savedMode == 0);
 
-        // Connect signal to toggle enabled state dynamically when user changes mode
+        // Connect signal to toggle enabled state dynamically
         connect(rs232Modes[i], static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
                 [=](int index){
                     rs232Combos[i]->setEnabled(index == 0);

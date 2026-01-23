@@ -4,7 +4,7 @@
 
 #include "serialport.h"
 #include "sioworker.h"
-#include "headers/atarisio.h"
+#include "atarisio.h"
 #include "aspeqtsettings.h"
 #include <QTime>
 #include <QtDebug>

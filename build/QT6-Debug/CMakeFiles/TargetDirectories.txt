@@ -1,5 +1,0 @@
-/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Debug/CMakeFiles/AspeQt.dir
-/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Debug/CMakeFiles/edit_cache.dir
-/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Debug/CMakeFiles/rebuild_cache.dir
-/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Debug/CMakeFiles/AspeQt_autogen_timestamp_deps.dir
-/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Debug/CMakeFiles/AspeQt_autogen.dir

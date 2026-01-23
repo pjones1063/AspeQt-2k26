@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-849a021c8cafa757ebf5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "AspeQt",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "AspeQt::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AspeQt-Release-feb7cf656c4c4e5142b2.json",
+					"name" : "AspeQt",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "AspeQt_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AspeQt_autogen-Release-1847ef1fa6d34752b7f1.json",
+					"name" : "AspeQt_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "AspeQt_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-AspeQt_autogen_timestamp_deps-Release-4353737e4f8f3b2dd39a.json",
+					"name" : "AspeQt_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/paul/eclipse-workspace/AspeQt-2K26-master/build/QT6-Release",
+		"source" : "/home/paul/eclipse-workspace/AspeQt-2K26-master"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
