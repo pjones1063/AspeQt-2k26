@@ -1,50 +1,51 @@
-#  Atari AspeQt-2k26
+# Atari AspeQt-2K26
 
-###  Atari 8-bit in 2026 - 45+ years after the 400/800 first release!
+### The Modern Atari 8-bit Serial Peripheral Emulator
+**Built for 2026 and beyond | Powered by Qt 6**
 
-
-
-### Atari Serial Peripheral Emulator for Qt With 8bit Cartridge
+---
 
 ### Summary
+AspeQt-2K26 is a modernized fork of the classic AspeQt/RespeQt emulator. It emulates Atari SIO peripherals (Disk Drives, Printers, etc.) when connected to an Atari 8-bit computer (400/800/XL/XE) via an SIO2PC cable.
 
-AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable.
-In that respect it's similar to programs like APE and Atari810. The main difference is that it's free
-(unlike APE) and it's cross-platform (unlike Atari810 and APE).
+While preserving the classic functionality, **AspeQt-2K26** migrates the codebase to **Qt 6**, fixing critical stability issues and adding support for modern large-capacity storage and current operating systems.
 
-See readme.txt for more info
+### What's New in AspeQt-2K26
+This version includes significant architectural improvements over previous forks:
 
+* **Qt 6 Native:** Fully ported to the Qt 6 framework for modern UI support, High-DPI scaling, and future-proofing on Windows, Linux, and macOS.
+* **Large Hard Disk Support:** Fixed integer overflow logic to support **16MB+ Hard Disk Images** (up to 65,535 sectors) correctly.
+* **Stability Fixes:**
+    * Fixed **Autoboot crashes** (memory safety improvements).
+    * Fixed **Double Density (180KB)** geometry detection (correct handling of padded vs. unpadded images).
+* **Modern Desktop Integration:** Restored and fixed **Drag & Drop** functionality for Qt 6 environments.
+* **Enhanced Linux/Unix Support:** Implemented proper serial port flushing (`tcdrain`) to prevent SIO timeouts and NAKs on Linux and macOS.
 
-#### * AspeQt Client module MENU.COM. Runs on the Atari and is used to get/set Date/Time (SpartaDos) on the Atari plus a variety of other remote tasks (on any DOS). 
+### Features
+* **Emulation:** Emulates up to 8 disk drives (D1:-D8:) and printers.
+* **File Formats:** Supports `.ATR`, 'ATX',`.XEX`, `.CAS`, and `.XFD`.
+* **Client Tools:** Includes `MENU.COM` (AspeQt Client) for the Atari to set Date/Time from the PC and perform remote file management.
+* **Cross-Platform:** Runs on Windows, Linux, macOS, and Raspberry Pi.
 
-#### * Package builds for Windows, Linux, MacOS, and RasPi at:  https://sourceforge.net/projects/respeqt/files/
+---
 
-#### * Do it yourself Atari SIO2PC cable - see: SIO2PC__Build_Instructions.pdf (for under $20.00!)
+### Support & Community
+Support and inquiries can be made on our BBS. We love talking Atari!
+* **Telnet:** `telnet 13leader.net 8023`
+* **Web:** [http://13leader.net](http://13leader.net)
 
+---
 
-#### Support and other inquiries can be made on our BBS at:   $ telnet 13leader.net 8023 or http://13leader.net
+### Building from Source
 
- 
-* NOTE: If you installed Raspbian Lite onto your Micro-SD card you will probably get an error saying
-"unable to open x display", you will likely need to run the following commands to load ldxe, x11 & lightdm:
+**Requirements:**
+* CMake
+* Qt 6 Development Libraries (qt6-base-dev / qt6-serialport-dev)
+* C++ Compiler (GCC, Clang, or MSVC)
 
-
-  $ sudo apt-get install lxde lxde-core lxterminal lxappearance
-	(answer Y for y/n question... this takes a loooong time to install)
-     
-  $ sudo apt-get install lightdm
- 	(this also takes a long time to load - be patient)
- 
-  $ sudo apt-get install xserver-xorg 
-  
-  $ sudo apt-get install xinit
-  
-  $ sudo apt-get install x11-xserver-utils
- 	(answer Y for y/n question)
- 
-  $ sudo apt-get install xterm
- 
-  $ startx
- 	(Opens X window) 
- 
-   
+**Build Steps:**
+```bash
+mkdir build
+cd build
+cmake ..
+make
