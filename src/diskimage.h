@@ -96,6 +96,8 @@ protected:
     bool m_gzipped;
     DiskEditDialog *m_editDialog;
 
+    bool m_isPaddedDD;
+
     bool seekToSector(quint16 sector);
     void refreshNewGeometry();
 

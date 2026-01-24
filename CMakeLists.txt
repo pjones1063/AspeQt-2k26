@@ -37,6 +37,7 @@ qt_add_executable(AspeQt
     "res/atarifiles.qrc"
     "res/icons.qrc"
     "res/documentation.qrc"
+    "res/i18n.qrc"
 )
 
 # --- 4. Include Directories ---

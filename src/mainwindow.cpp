@@ -129,6 +129,8 @@ MainWindow::MainWindow(QWidget *parent)
     
     logWindow_ = NULL;
 
+    setAcceptDrops(true);
+
     /* Remove old temporaries */
     QDir tempDir = QDir::temp();
     QStringList filters;
@@ -409,23 +411,15 @@ void MainWindow::createDeviceWidgets()
      }
 }
 
-void MainWindow::dragEnterEvent(QDragEnterEvent *event)
-{
-    int i = containingDiskSlot(event->pos());
-    if (i >= 0 && (event->mimeData()->hasUrls() ||
-                   event->mimeData()->hasFormat("application/x-respeqt-disk-image"))) {
-        event->acceptProposedAction();
-    } else {
-        i = -1;
-    }
-    for (int j = 0; j < DISK_COUNT; j++) { //
-        if (i == j) {
-            diskWidgets[j]->setFrameShadow(QFrame::Sunken);
-        } else {
-            diskWidgets[j]->setFrameShadow(QFrame::Raised);
-        }
-    }
-}
+ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+ {
+     // Qt 6 Fix: explicit check for URLs (file paths)
+     if (event->mimeData()->hasUrls()) {
+         event->acceptProposedAction();
+     } else {
+         event->ignore();
+     }
+ }
 
 void MainWindow::dragMoveEvent(QDragMoveEvent *event)
 {
@@ -533,6 +527,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     foreach(QString file, files) {
         qCritical() << "!e" << tr("Cannot mount '%1': No empty disk slots.").arg(file);
     }
+    event->acceptProposedAction();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

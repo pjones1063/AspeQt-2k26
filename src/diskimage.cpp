@@ -245,6 +245,7 @@ SimpleDiskImage::SimpleDiskImage(SioWorker *worker)
     : SioDevice(worker)
 {
     m_editDialog = 0;
+    m_isPaddedDD = false;
 }
 
 SimpleDiskImage::~SimpleDiskImage()
@@ -369,11 +370,12 @@ bool SimpleDiskImage::openAtr(const QString &fileName)
             }
         } else {
             // Handle double density images with 4 or more sectors
-            if ((size + 384) % 256 != 0) {
-                // 
-                if (size / 256 < 720 ) {
-                    sizeValid = false;
-                }
+            if ((size + 384) % 256 == 0) {
+                m_isPaddedDD = false;
+            } else if (size % 256 == 0) {
+                m_isPaddedDD = true;
+            } else {
+                if (size / 256 < 720 ) sizeValid = false;
             }
         }
     } else {
@@ -1063,23 +1065,33 @@ bool SimpleDiskImage::seekToSector(quint16 sector)
 {
     if (sector < 1 || sector > m_geometry.sectorCount()) {
         qCritical() << "!e" << tr("[%1] Cannot seek to sector %2: %3")
-                       .arg(deviceName())
-                       .arg(sector)
-		       .arg(tr("Sector number is out of bounds."));
+        .arg(deviceName())
+            .arg(sector)
+            .arg(tr("Sector number is out of bounds."));
+        return false;
     }
-    qint64 pos = (sector - 1) * m_geometry.bytesPerSector();
-    if (m_geometry.bytesPerSector() == 256) {
+
+    // FIX #1: Cast to qint64 BEFORE multiplying.
+    // Without this, (sector * bytes) overflows at 2GB (or 16MB depending on int size)
+    // even though 'pos' is 64-bit.
+    qint64 pos = ((qint64)sector - 1) * (qint64)m_geometry.bytesPerSector();
+
+    // FIX #2: Double Density Padding Logic
+    // If it's a standard (non-padded) DD disk, we must adjust offsets for the first 3 sectors.
+    if (m_geometry.bytesPerSector() == 256 && !m_isPaddedDD) {
         if (sector <= 3) {
-            pos = (sector - 1) * 128;
+            // Cast here too for consistency/safety
+            pos = ((qint64)sector - 1) * 128;
         } else {
             pos -= 384;
         }
     }
+
     if (!file.seek(pos)) {
         qCritical() << "!e" << tr("[%1] Cannot seek to sector %2: %3")
-                       .arg(deviceName())
-                       .arg(sector)
-                       .arg(file.errorString());
+        .arg(deviceName())
+            .arg(sector)
+            .arg(file.errorString());
         return false;
     }
     return true;
