@@ -14,10 +14,12 @@ While preserving the classic functionality, **AspeQt-2K26** migrates the codebas
 This version includes significant architectural improvements over previous forks:
 
 * **Qt 6 Native:** Fully ported to the Qt 6 framework for modern UI support, High-DPI scaling, and future-proofing on Windows, Linux, and macOS.
+* **Self-Contained Firmware:** All necessary boot firmware (MyDOS, Atari DOS, etc.) is now embedded within the executable. Folders can be mounted and booted immediately—no manual copying of `DOS.SYS` or `$BOOT.BIN` required.
 * **Large Hard Disk Support:** Fixed integer overflow logic to support **16MB+ Hard Disk Images** (up to 65,535 sectors) correctly.
 * **Stability Fixes:**
-    * Fixed **Autoboot crashes** (memory safety improvements).
-    * Fixed **Double Density (180KB)** geometry detection (correct handling of padded vs. unpadded images).
+    * **Crash-Proof UI:** Added robust safety checks to prevent crashes when clicking actions (Save, Edit, Revert) on empty drive slots.
+    * **Autoboot Fixes:** resolved memory safety issues in the autoboot loader.
+    * **Geometry Detection:** Fixed detection for padded vs. unpadded Double Density (180KB) images.
 * **Modern Desktop Integration:** Restored and fixed **Drag & Drop** functionality for Qt 6 environments.
 * **Enhanced Linux/Unix Support:** Implemented proper serial port flushing (`tcdrain`) to prevent SIO timeouts and NAKs on Linux and macOS.
 
@@ -47,5 +49,6 @@ Support and inquiries can be made on our BBS. We love talking Atari!
 ```bash
 mkdir build
 cd build
-cmake ..
-make
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . --parallel
+
