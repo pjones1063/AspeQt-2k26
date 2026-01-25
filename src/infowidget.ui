@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>InfoWidget</class>
  <widget class="QWidget" name="InfoWidget">
@@ -16,16 +16,10 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>330</width>
-    <height>37</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
  </widget>
- <resources/>
- <connections/>
+ <resources />
+ <connections />
 </ui>

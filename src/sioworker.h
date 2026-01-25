@@ -85,6 +85,15 @@ signals:
     void statusChanged(QString status);
 public slots:
     void start(Priority p = InheritPriority);
+
+public:
+    void setHappyMode(int deviceId, bool enabled);
+    void setHighSpeed(bool enabled);
+
+
+private:
+    bool happyMode[DISK_COUNT]; // Array to track state for D1-D15
+
 };
 
 class CassetteRecord {

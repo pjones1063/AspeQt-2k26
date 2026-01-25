@@ -128,8 +128,44 @@ void FolderImage::buildDirectory()
         atariFiles[i].lastSector = 0;
         atariFiles[i].pos = 0;
         atariFiles[i].sectPass = 0;
-
     }
+
+    // --- VIRTUAL FIRMWARE INJECTION ---
+    bool foundDos = false;
+    bool foundDup = false;
+
+    // 1. Scan what we just built
+    for (int k = 0; k < i; k++) {
+        if (atariFiles[k].atariName == "DOS" && atariFiles[k].atariExt == "SYS") foundDos = true;
+        if (atariFiles[k].atariName == "DUP" && atariFiles[k].atariExt == "SYS") foundDup = true;
+    }
+
+    // 2. Inject DOS.SYS if missing
+    if (!foundDos && i < 64) {
+        atariFiles[i].exists = true;
+        atariFiles[i].atariName = "DOS";
+        atariFiles[i].atariExt = "SYS";
+        atariFiles[i].longName = "DOS.SYS";
+        atariFiles[i].original = QFileInfo(":/boot_templates/$bootmyd/dos.sys");
+        atariFiles[i].lastSector = 0;
+        atariFiles[i].pos = 0;
+        atariFiles[i].sectPass = 0;
+        i++;
+    }
+
+    // 3. Inject DUP.SYS if missing
+    if (!foundDup && i < 64) {
+        atariFiles[i].exists = true;
+        atariFiles[i].atariName = "DUP";
+        atariFiles[i].atariExt = "SYS";
+        atariFiles[i].longName = "DUP.SYS";
+        atariFiles[i].original = QFileInfo(":/boot_templates/$bootmyd/dup.sys");
+        atariFiles[i].lastSector = 0;
+        atariFiles[i].pos = 0;
+        atariFiles[i].sectPass = 0;
+        i++;
+    }
+    // ---------------------------------
 
     if (i < infos.count()) {
         qWarning() << "!w" << tr("Cannot mirror %1 of %2 files in '%3': Atari directory is full.")
@@ -161,86 +197,43 @@ bool FolderImage::open(const QString &fileName, FileTypes::FileType /* type */)
 bool FolderImage::readSector(quint16 sector, QByteArray &data)
 {
     /* Boot */
-
     QFile boot(dir.path() + "/$boot.bin");
     data = QByteArray(128, 0);
     int bootFileSector;
 
     if (sector == 1) {
          if (!boot.open(QFile::ReadOnly)) {
-             data[1] = 0x01;
-             data[3] = 0x07;
-             data[4] = 0x40;
-             data[5] = 0x15;
-             data[6] = 0x4c;
-             data[7] = 0x14;
-             data[8] = 0x07;     // JMP 0x0714
-             data[0x14] = 0x38;  // SEC
-             data[0x15] = 0x60;  // RTS
-         } else {
-             data = boot.read(128);
-             buildDirectory();
-             for(int i=0; i<64; i++) {
-                 // AtariDOS, MyDos, SmartDOS  and DosXL
-                 if(atariFiles[i].longName.toUpper() == "DOS.SYS") {
-                     bootFileSector = 369 + i;
-                     data[15] = bootFileSector % 256;
-                     data[16] = bootFileSector / 256;
-                     break;
+             boot.setFileName(":/boot_templates/$bootmyd/$boot.bin");
+             if (!boot.open(QFile::ReadOnly)) {
+                 return true; 
+             }
+         }
+
+         data = boot.read(128);
+         // SAFETY: Ensure data is exactly 128 bytes to prevent crashes on access
+         if (data.size() < 128) data.resize(128);
+
+         buildDirectory();
+
+         for(int i=0; i<64; i++) {
+             if(atariFiles[i].longName.toUpper() == "DOS.SYS") {
+                 bootFileSector = 369 + i;
+                 data[15] = bootFileSector % 256;
+                 data[16] = bootFileSector / 256;
+                 break;
+             }
+             if(atariFiles[i].longName.toUpper() == "PICODOS.SYS") {
+                 bootFileSector = 369 + i;
+                 if(g_disablePicoHiSpeed) {
+                     data[15] = 0;
                  }
-                 // MyPicoDOS
-                 if(atariFiles[i].longName.toUpper() == "PICODOS.SYS") {
-                     bootFileSector = 369 + i;
-                     if(g_disablePicoHiSpeed) {
-                         data[15] = 0;
-                         QFile boot(dir.path() + "/$boot.bin");
-                         QByteArray speed;
-                         boot.open(QFile::ReadWrite);
-                         boot.seek(15);
-                         speed = boot.read(1);
-                         speed[0] = '\x30';
-                         boot.seek(15);
-                         boot.write(speed);
-                         boot.close();
-                     }
-                     data[9] = bootFileSector % 256;
-                     data[10] = bootFileSector / 256;
-                     // Create the piconame.txt file
-                     QFile picoName(dir.path() + "/piconame.txt");
-                     picoName.open(QFile::WriteOnly);
-                     QByteArray nameLine;
-                     // Explicitly convert the string to UTF-8 bytes before appending
-                     nameLine.append((dir.dirName() + '\x9B').toUtf8());
-                     picoName.write(nameLine);
-                     for(int i=0; i<64; i++){
-                     if(atariFiles[i].exists) {
-                         if(atariFiles[i].longName != "$boot.bin") {
-                                 nameLine.clear();
-                                 nameLine.append(atariFiles[i].atariName.toUtf8());
-                                 QByteArray space;
-                                 int size;
-                                 size = atariFiles[i].atariName.size();
-                                 for(int j=0; j<=8-size-1; j++) {
-                                     space[j] = '\x20';
-                                 }
-                                 nameLine.append(space);
-                                 nameLine.append(atariFiles[i].atariExt.toUtf8());
-                                 nameLine.append('\x20');
-                                 nameLine.append(atariFiles[i].longName.mid(0, atariFiles[i].longName.indexOf(".", -1)-1).toUtf8());
-                                 nameLine.append('\x9B');
-                                 picoName.write(nameLine);
-                         }
-                      } else {
-                             picoName.close();
-                             break;
-                      }
-                     }
-                     break;
-                 }
-                 // SpartaDOS, force it to change to AtariDOS format after the boot
-                 if(atariFiles[i].longName.toUpper() == "X32.DOS") {
-                     QFile x32Dos(dir.path() + "/x32.dos");
-                     x32Dos.open(QFile::ReadOnly);
+                 data[9] = bootFileSector % 256;
+                 data[10] = bootFileSector / 256;
+                 break;
+             }
+             if(atariFiles[i].longName.toUpper() == "X32.DOS") {
+                 QFile x32Dos(dir.path() + "/x32.dos");
+                 if(x32Dos.open(QFile::ReadOnly)) {
                      QByteArray flag;
                      flag = x32Dos.readAll();
                      if(flag[0] == '\xFF') {
@@ -255,42 +248,34 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                          data[0x14] = 0x38;
                          data[0x15] = 0x60;
                      }
-                   break;
                  }
+               break;
              }
          }
          return true;
     }
-    if (sector == 2) {
-        boot.open(QFile::ReadOnly);
-        boot.seek(128);
-        data = boot.read(128);
-        return true;
-    }
-    if (sector == 3) {
-        boot.open(QFile::ReadOnly);
-        boot.seek(256);
-        data = boot.read(128);
-        return true;
-    }
-    // SpartaDOS Boot
-    if ((sector >= 32 && sector <= 134) ||
-        sector == 5 || sector == 6) {
+
+    if (sector == 2 || sector == 3) {
+        if (!QFile::exists(dir.path() + "/$boot.bin")) {
+             boot.setFileName(":/boot_templates/$bootmyd/$boot.bin");
+        }
         boot.open(QFile::ReadOnly);
         boot.seek((sector-1)*128);
         data = boot.read(128);
-        if(sector == 134) {
-            QFile x32Dos(dir.path() + "/x32.dos");
-            x32Dos.open(QFile::ReadWrite);
-            QByteArray flag;
-            flag = x32Dos.readAll();
-            if(flag[0] == '\x00') {
-                flag[0] = '\xFF';
-                x32Dos.seek(0);
-                x32Dos.write(flag);
-                x32Dos.close();
-            }
+        // SAFETY: Ensure data is exactly 128 bytes
+        if (data.size() < 128) data.resize(128);
+        return true;
+    }
+    
+    // SpartaDOS Boot
+    if ((sector >= 32 && sector <= 134) || sector == 5 || sector == 6) {
+        if (!QFile::exists(dir.path() + "/$boot.bin")) {
+             boot.setFileName(":/boot_templates/$bootmyd/$boot.bin");
         }
+        boot.open(QFile::ReadOnly);
+        boot.seek((sector-1)*128);
+        data = boot.read(128);
+        if (data.size() < 128) data.resize(128);
         return true;
     }
 
@@ -318,9 +303,18 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
             if (!atariFiles[i].exists) {
                 entry = QByteArray(16, 0);
             } else {
-                entry = "";
+                // --- CRITICAL FIX FOR SIGABRT CRASH ---
+                // Old code used entry = ""; entry[0] = 0x42; which crashes because size is 0.
+                entry = QByteArray(16, 0); // Initialize with 16 bytes of zeros
+                // --------------------------------------
+                
                 entry[0] = 0x42;
                 QFileInfo info = atariFiles[i].original;;
+                
+                // If it is our injected resource, get size correctly
+                if (atariFiles[i].longName == "DOS.SYS") info.setFile(":/boot_templates/$bootmyd/dos.sys");
+                if (atariFiles[i].longName == "DUP.SYS") info.setFile(":/boot_templates/$bootmyd/dup.sys");
+
                 int size = (info.size() + 124) / 125;
                 if (size > 999) {
                     size = 999;
@@ -330,14 +324,13 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                 int first = 369 + i;
                 entry[3] = first % 256;
                 entry[4] = first / 256;
-                entry += atariFiles[i].atariName.toLatin1();
-                while (entry.count() < 13) {
-                    entry += 32;
-                }
-                entry += atariFiles[i].atariExt.toLatin1();
-                while (entry.count() < 16) {
-                    entry += 32;
-                }
+                entry.replace(5, atariFiles[i].atariName.length(), atariFiles[i].atariName.toLatin1());
+                // Ensure spaces padding
+                for(int x=5+atariFiles[i].atariName.length(); x<13; x++) entry[x] = 32;
+
+                entry.replace(13, atariFiles[i].atariExt.length(), atariFiles[i].atariExt.toLatin1());
+                // Ensure spaces padding
+                for(int x=13+atariFiles[i].atariExt.length(); x<16; x++) entry[x] = 32;
             }
             data += entry;
         }
@@ -354,8 +347,19 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                 data = QByteArray(128, 0);
                 return true;
             }
-            QFile file(atariFiles[atariFileNo].original.absoluteFilePath());
-            file.open(QFile::ReadOnly);
+
+            // --- INJECTION HANDLING ---
+            QString loadPath = atariFiles[atariFileNo].original.absoluteFilePath();
+            if (atariFiles[atariFileNo].longName == "DOS.SYS") loadPath = ":/boot_templates/$bootmyd/dos.sys";
+            if (atariFiles[atariFileNo].longName == "DUP.SYS") loadPath = ":/boot_templates/$bootmyd/dup.sys";
+            // --------------------------
+
+            QFile file(loadPath);
+            if (!file.open(QFile::ReadOnly)) {
+                 data = QByteArray(128, 0);
+                 return true;
+            }
+
             data = file.read(125);
             size = data.size();
             data.resize(128);
@@ -373,8 +377,16 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
 
     /* Rest of the file sectors */
         if ((sector >= 433 && sector <= 1023)) {
-            QFile file(atariFiles[atariFileNo].original.absoluteFilePath());
-            file.open(QFile::ReadOnly);
+            QString loadPath = atariFiles[atariFileNo].original.absoluteFilePath();
+            if (atariFiles[atariFileNo].longName == "DOS.SYS") loadPath = ":/boot_templates/$bootmyd/dos.sys";
+            if (atariFiles[atariFileNo].longName == "DUP.SYS") loadPath = ":/boot_templates/$bootmyd/dup.sys";
+
+            QFile file(loadPath);
+            if (!file.open(QFile::ReadOnly)) {
+                data = QByteArray(128, 0);
+                return true;
+            }
+            
             atariFiles[atariFileNo].pos = (125+((sector-433)*125))+(atariFiles[atariFileNo].sectPass*73875);
             file.seek(atariFiles[atariFileNo].pos);
             data = file.read(125);

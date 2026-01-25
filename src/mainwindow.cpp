@@ -357,6 +357,9 @@ void MainWindow::createDeviceWidgets()
             ui->rightColumn->addWidget( deviceWidget );
         }
 
+        const AspeQtSettings::ImageSettings& is = respeqtSettings->mountedImageSetting(i);
+        deviceWidget->setHappyMode(is.isHappyMode);
+
         deviceWidget->setup();
         diskWidgets[i] = deviceWidget;
 
@@ -374,6 +377,8 @@ void MainWindow::createDeviceWidgets()
         connect(deviceWidget, SIGNAL(actionBootOptions(int)),this, SLOT(on_actionBootOption_triggered()));
 
         connect(this, SIGNAL(setFont(const QFont&)),deviceWidget, SLOT(setFont(const QFont&)));
+        connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(on_actionHappyMode_triggered(int,bool)));
+
     }
 
     changeFonts();
@@ -413,7 +418,6 @@ void MainWindow::createDeviceWidgets()
 
  void MainWindow::dragEnterEvent(QDragEnterEvent *event)
  {
-     // Qt 6 Fix: explicit check for URLs (file paths)
      if (event->mimeData()->hasUrls()) {
          event->acceptProposedAction();
      } else {
@@ -1137,6 +1141,8 @@ bool MainWindow::ejectImage(int no, bool ask)
 
     sio->uninstallDevice(no + DISK_BASE_CDEVIC);
     if (img) {
+        // Reset the SIO hardware speed to 19200 immediately upon eject
+        sio->setHighSpeed(false);
         delete img;
         diskWidgets[no]->showAsEmpty();
         respeqtSettings->unmountImage(no);
@@ -1296,6 +1302,9 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 
         sio->installDevice(DISK_BASE_CDEVIC + no, disk);
 
+        bool happy = respeqtSettings->mountedImageSetting(no).isHappyMode;
+        disk->setHappyMode(happy);
+
         PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(PCLINK_CDEVIC));
         if(isDir || pclink->hasLink(no+1))
         {
@@ -1379,6 +1388,11 @@ void MainWindow::mountFolderImage(int no)
 void MainWindow::toggleWriteProtection(int no, bool protectionEnabled)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
+    
+    // --- SAFETY CHECK ---
+    if (!img) return; 
+    // --------------------
+
     img->setReadOnly(protectionEnabled);
     respeqtSettings->setMountedImageProtection(no, protectionEnabled);
 }
@@ -1386,6 +1400,11 @@ void MainWindow::toggleWriteProtection(int no, bool protectionEnabled)
 void MainWindow::openEditor(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
+    
+    // --- SAFETY CHECK ---
+    if (!img) return; 
+    // --------------------
+
     if (img->editDialog()) {
         img->editDialog()->close();
     } else {
@@ -1440,6 +1459,10 @@ void MainWindow::saveDisk(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
 
+    // --- SAFETY CHECK ---
+    if (!img) return; 
+    // --------------------
+
     if (img->isUnnamed()) {
         saveDiskAs(no);
     } else {
@@ -1467,6 +1490,10 @@ void MainWindow::autoCommit(int no, bool st)
 void MainWindow::autoSaveDisk(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
+    
+    // --- SAFETY CHECK ---
+    if (!img) return; 
+    // --------------------
 
     DriveWidget* widget = diskWidgets[no];
 
@@ -1501,6 +1528,11 @@ void MainWindow::autoSaveDisk(int no)
 void MainWindow::saveDiskAs(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
+    
+    // --- SAFETY CHECK ---
+    if (!img) return; 
+    // --------------------
+
     QString dir, fileName;
     bool saved = false;
 
@@ -1548,6 +1580,11 @@ void MainWindow::saveDiskAs(int no)
 void MainWindow::revertDisk(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
+    
+    // --- SAFETY CHECK ---
+    if (!img) return; 
+    // --------------------
+
     if (QMessageBox::question(this, tr("Revert to last saved"),
             tr("Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.")
             .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
@@ -1594,6 +1631,8 @@ void MainWindow::on_actionEjectAll_triggered()
         }
         return;
     }
+
+    sio->setHighSpeed(false);
 
     bool wasRunning = ui->actionStartEmulation->isChecked();
     if (wasRunning) {
@@ -1833,3 +1872,23 @@ void MainWindow::on_actionBootOption_triggered()
     BootOptionsDialog bod(folderPath, this);
     bod.exec();
 }
+
+
+
+void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
+{
+    // 1. Update the internal Disk Image object if it exists
+    SimpleDiskImage *img = qobject_cast<SimpleDiskImage*>(sio->getDevice(deviceId + DISK_BASE_CDEVIC));
+    if (img) {
+        img->setHappyMode(enabled);
+    }
+
+    // 2. Save to settings so it's remembered next time (persistence)
+    const AspeQtSettings::ImageSettings& is = respeqtSettings->mountedImageSetting(deviceId);
+    respeqtSettings->setMountedImageSetting(deviceId, is.fileName, is.isWriteProtected, enabled);
+
+    qDebug() << "!i" << tr("Drive %1 Happy Mode %2.")
+                            .arg(deviceId + 1)
+                            .arg(enabled ? tr("Enabled") : tr("Disabled"));
+}
+

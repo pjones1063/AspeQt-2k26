@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>TextPrinterWindow</class>
  <widget class="QMainWindow" name="TextPrinterWindow">
@@ -56,7 +56,7 @@
        <bool>true</bool>
       </property>
       <property name="plainText">
-       <string/>
+       <string />
       </property>
      </widget>
     </item>
@@ -84,14 +84,8 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
-      </property>
       <property name="text">
-       <string/>
+       <string />
       </property>
      </widget>
     </item>
@@ -112,7 +106,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar" />
   <widget class="QToolBar" name="toolBar">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -141,15 +135,15 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionSave"/>
-   <addaction name="actionPrint"/>
-   <addaction name="actionAtasciiFont"/>
-   <addaction name="actionFont_Size"/>
-   <addaction name="actionHideShow_Atascii"/>
-   <addaction name="actionHideShow_Ascii"/>
-   <addaction name="actionStrip_Line_Numbers"/>
-   <addaction name="actionWord_wrap"/>
-   <addaction name="actionClear"/>
+   <addaction name="actionSave" />
+   <addaction name="actionPrint" />
+   <addaction name="actionAtasciiFont" />
+   <addaction name="actionFont_Size" />
+   <addaction name="actionHideShow_Atascii" />
+   <addaction name="actionHideShow_Ascii" />
+   <addaction name="actionStrip_Line_Numbers" />
+   <addaction name="actionWord_wrap" />
+   <addaction name="actionClear" />
   </widget>
   <action name="actionSave">
    <property name="icon">
@@ -358,7 +352,7 @@
   </action>
  </widget>
  <resources>
-  <include location="icons.qrc"/>
+  <include location="icons.qrc" />
  </resources>
- <connections/>
+ <connections />
 </ui>

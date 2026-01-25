@@ -53,13 +53,13 @@ void BootOptionsDialog::accept()
     QStringList allFiles;
     QString fileName;
 
-    if(m_ui->atariDOS->isChecked()) selectedDOS = "$bootata";
-    if(m_ui->myDOS->isChecked()) selectedDOS = "$bootmyd";
-    if(m_ui->dosXL->isChecked()) selectedDOS = "$bootdxl";
-    if(m_ui->smartDOS->isChecked()) selectedDOS = "$bootsma";
-    if(m_ui->spartaDOS->isChecked()) selectedDOS = "$bootspa";
+    if(m_ui->atariDOS->isChecked()) selectedDOS = ":/boot_templates/$bootata";
+    if(m_ui->myDOS->isChecked()) selectedDOS = ":/boot_templates/$bootmyd";
+    if(m_ui->dosXL->isChecked()) selectedDOS = ":/boot_templates/$bootdxl";
+    if(m_ui->smartDOS->isChecked()) selectedDOS = ":/boot_templates/$bootsma";
+    if(m_ui->spartaDOS->isChecked()) selectedDOS = ":/boot_templates/$bootspa";
     if(m_ui->myPicoDOS->isChecked()) {
-        selectedDOS = "$bootpic";
+        selectedDOS = ":/boot_templates/$bootpic";
         g_disablePicoHiSpeed = m_ui->disablePicoHiSpeed->isChecked();
     }
 

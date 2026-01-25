@@ -69,7 +69,12 @@ void DriveWidget::setup()
     ui->buttonSave->setDefaultAction(ui->actionSave);
     ui->autoSave->setDefaultAction(ui->actionAutoSave);
     ui->buttonEditDisk->setDefaultAction(ui->actionEditDisk);
-
+    // 1. Fixup the status tip
+    FormatStatusTip(ui->actionHappyMode, driveTxt);
+    // 2. Add to context menu (placing it near Write Protect)
+    insertAction(0, ui->actionHappyMode);
+    // 3. Connect the widget button to the action
+    ui->buttonHappyMode->setDefaultAction(ui->actionHappyMode);
 }
 
 void DriveWidget::updateFromImage(SimpleDiskImage *diskImage)
@@ -198,5 +203,5 @@ void DriveWidget::on_actionRevert_triggered()       { emit actionRevert(driveNo_
 void DriveWidget::on_actionSaveAs_triggered()       { emit actionSaveAs(driveNo_); }
 void DriveWidget::on_actionAutoSave_toggled(bool state) { emit actionAutoSave(driveNo_, state); }
 void DriveWidget::on_actionBootOption_triggered()   { emit actionBootOptions(driveNo_); }
-
-
+void DriveWidget::on_actionHappyMode_toggled(bool state) {  emit actionHappyMode(driveNo_, state); }
+void DriveWidget::setHappyMode(bool enabled) { ui->buttonHappyMode->setChecked(enabled); }

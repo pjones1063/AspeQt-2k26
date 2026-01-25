@@ -19,6 +19,7 @@ void DiskImageAtx::close()
 
 bool DiskImageAtx::format(quint16, quint16)
 {
+    // ATX images typically cannot be formatted via SIO
     return false;
 }
 
@@ -43,14 +44,13 @@ bool DiskImageAtx::open(const QString &fileName, FileTypes::FileType /* type */)
     header = sourceFile->read(48);
     if (header.size() != 48) {
         qCritical() << "!e" << tr("Cannot open '%1': %2")
-                      .arg(fileName)
-                      .arg(tr("Cannot read the header: %1.").arg(sourceFile->errorString()));
+        .arg(fileName)
+            .arg(tr("Cannot read the header: %1.").arg(sourceFile->errorString()));
         delete sourceFile;
         return false;
     }
 
     // Validate the magic number
-    //quint16 magic = ((quint8)header[0]) * 256 + ((quint8)header[1]);
     if (header[0] != 'A' || header[1] != 'T' || header[2] != '8' || header[3] != 'X') {
         qCritical() << "!e" << tr("Cannot open '%1': %2").arg(fileName).arg(tr("Not a valid ATX file."));
         delete sourceFile;
@@ -65,7 +65,8 @@ bool DiskImageAtx::open(const QString &fileName, FileTypes::FileType /* type */)
     quint8 track = 0;
     quint8 sector;
     quint16 sectorcount = 0;
-    while (start < sourceFile->size())
+
+    while (start < sourceFile->size() && track < 100)
     {
         sourceFile->seek(start);
         header = sourceFile->read(32);
@@ -89,29 +90,29 @@ bool DiskImageAtx::open(const QString &fileName, FileTypes::FileType /* type */)
             atx.tracks[track].sectors[sector].status   = ~VAPI_8 (header, 1);
             atx.tracks[track].sectors[sector].position =  VAPI_16(header, 2);
             atx.tracks[track].sectors[sector].start    =  VAPI_32(header, 4);
-
-            qDebug() << "!d" << tr("  sector number=%1 status=%2 position=%3 start=%4")
-                .arg(atx.tracks[track].sectors[sector].number)
-                .arg(atx.tracks[track].sectors[sector].status)
-                .arg(atx.tracks[track].sectors[sector].position)
-                .arg(atx.tracks[track].sectors[sector].start);
         }
 
         sectorcount += atx.tracks[track].numsectors;
         start += atx.tracks[track].next;
         track++;
     }
+
+    // Safety check for empty image
+    if (track == 0) track = 1;
+
     qDebug() << "!i" << tr("Tracks=%1 Sectors=%2")
-        .arg(track)
-        .arg(sectorcount);
+                            .arg(track)
+                            .arg(sectorcount);
 
     // Validate disk geometry
+    // Note: We use sectorcount/track to determine sectors-per-track dynamically (e.g. 18 for SD, 26 for ED)
     DiskGeometry geometry;
     geometry.initialize(0, track, sectorcount/track, 128);
+
     if (geometry.sectorCount() > 65535) {
         qCritical() << "!e" << tr("Cannot open '%1': %2")
-                      .arg(fileName)
-                      .arg(tr("Too many sectors in the image (%1).").arg(geometry.sectorCount()));
+        .arg(fileName)
+            .arg(tr("Too many sectors in the image (%1).").arg(geometry.sectorCount()));
         file.close();
         delete sourceFile;
         return false;
@@ -133,37 +134,58 @@ bool DiskImageAtx::open(const QString &fileName, FileTypes::FileType /* type */)
 bool DiskImageAtx::seekToSector(quint16 sector)
 {
     quint8 track, tracksector, trackindex, tracktemp;
-    trackindex = 0; // Ray A.
+    trackindex = 0;
+
     if (sector < 1 || sector > m_geometry.sectorCount()) {
         qCritical() << "!e" << tr("[%1] Cannot seek to sector %2: %3")
-                       .arg(deviceName())
-                       .arg(sector)
-           .arg(tr("Sector number is out of bounds."));
+        .arg(deviceName())
+            .arg(sector)
+            .arg(tr("Sector number is out of bounds."));
+        return false;
     }
 
-    track = (sector-1)/18; //m_geometry.sectorsPerTrack();
-    tracksector = (sector-1)%18; //m_geometry.sectorsPerTrack();
+    // FIX: Use actual geometry instead of hardcoded 18 sectors
+    quint16 spt = m_geometry.sectorsPerTrack();
+    if (spt == 0) spt = 18; // Fallback safety
 
-    // because we don't calc timings we return first and last sector on each read. KP
-    for (tracktemp = 0; tracktemp <= 17; tracktemp++) {
-      if (atx.tracks[track].sectors[tracktemp].number == (tracksector+1))
-      {
-    trackindex = tracktemp;
-    if (phantomflip)
-      break;
-      }
+    track = (sector - 1) / spt;
+    tracksector = (sector - 1) % spt;
+
+    // Safety: Prevent array overflow if track index is bogus
+    if (track >= 100) {
+        qCritical() << "!e" << tr("[%1] Track %2 out of bounds").arg(deviceName()).arg(track);
+        return false;
+    }
+
+    // FIX: Loop based on actual sectors in this specific track, not hardcoded 17
+    int actualSectorsInTrack = atx.tracks[track].numsectors;
+
+    for (tracktemp = 0; tracktemp < actualSectorsInTrack; tracktemp++) {
+        // Match logical sector to physical ATX sector
+        if (atx.tracks[track].sectors[tracktemp].number == (tracksector + 1))
+        {
+            trackindex = tracktemp;
+
+            // "Phantom" Sector Logic:
+            // If phantomflip is TRUE, we stop at the first match.
+            // If phantomflip is FALSE, we continue looping to see if there is a
+            // duplicate sector later in the track (common protection scheme).
+            if (phantomflip)
+                break;
+        }
     }
 
     phantomflip = !phantomflip;
+
     qint64 pos = (atx.tracks[track].pos + atx.tracks[track].sectors[trackindex].start);
     wd1772status = atx.tracks[track].sectors[trackindex].status;
     lastsector = sector;
 
     if (!sourceFile->seek(pos)) {
         qCritical() << "!e" << tr("[%1] Cannot seek to sector %2: %3")
-                       .arg(deviceName())
-                       .arg(sector)
-                       .arg(sourceFile->error());
+        .arg(deviceName())
+            .arg(sector)
+            .arg(sourceFile->error());
         return false;
     }
     return true;
@@ -179,26 +201,27 @@ bool DiskImageAtx::readSector(quint16 sector, QByteArray &data)
     {
         qDebug() << "!e" << tr("Bad sector");
 
-    data = sourceFile->read(m_geometry.bytesPerSector(sector));
-    // return random data on error like in Atari800 - boots Zorro. :) KP
-    int i;
-    if (wd1772status == 0xB7) {
-        for (i=0;i<128;i++) {
-        //qDebug() << "!e" << tr("0x%02x").arg(data[i]);
+        data = sourceFile->read(m_geometry.bytesPerSector(sector));
+
+        // Zorro Protection Hack
+        // Return random data on error like in Atari800 to satisfy checks
+        int i;
+        if (wd1772status == 0xB7) {
+            for (i=0; i<128; i++) {
                 if (data[i] == '\x33')
-            data[i] = rand() & 0xFF;
+                    data[i] = rand() & 0xFF;
+            }
+            return true;
         }
-        return true;
-    }
-    return false;
+        return false;
     }
 
     data = sourceFile->read(m_geometry.bytesPerSector(sector));
     if (data.size() != m_geometry.bytesPerSector(sector)) {
         qCritical() << "!e" << tr("[%1] Cannot read from sector %2: %3.")
-                       .arg(deviceName())
-                       .arg(sector)
-                       .arg(sourceFile->errorString());
+        .arg(deviceName())
+            .arg(sector)
+            .arg(sourceFile->errorString());
         return false;
     }
     return true;

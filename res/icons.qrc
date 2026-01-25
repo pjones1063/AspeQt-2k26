@@ -59,5 +59,6 @@
         <file>other-icons/run.ico</file>
         <file>silk-icons/icons/arrow_right.png</file>
         <file>main-icon/icon.jpeg</file>
+        <file>oxygen-icons/16x16/actions/get_hot_new_stuff.png</file>
     </qresource>
 </RCC>

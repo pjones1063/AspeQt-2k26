@@ -17,6 +17,7 @@ public:
     public:
         QString fileName;
         bool isWriteProtected;
+        bool isHappyMode;
     };
 
     AspeQtSettings();
@@ -80,7 +81,7 @@ public:
 
     const ImageSettings& mountedImageSetting(int no);
 
-    void setMountedImageSetting(int no, const QString &fileName, bool prot);
+    void setMountedImageSetting(int no, const QString &fileName, bool prot, bool happy = false);
     void setMountedImageProtection(int no, bool prot);
     const ImageSettings& recentImageSetting(int no);
 

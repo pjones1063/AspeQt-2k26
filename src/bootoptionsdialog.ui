@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>BootOptionsDialog</class>
  <widget class="QDialog" name="BootOptionsDialog">
@@ -9,18 +9,6 @@
     <width>319</width>
     <height>294</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>319</width>
-    <height>294</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>319</width>
-    <height>294</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Folder Boot Options</string>
@@ -196,7 +184,7 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources />
  <connections>
   <connection>
    <sender>buttonBox</sender>

@@ -48,12 +48,6 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>16</height>
-       </size>
-      </property>
       <property name="contextMenuPolicy">
        <enum>Qt::DefaultContextMenu</enum>
       </property>
@@ -120,6 +114,7 @@
     <property name="title">
      <string>&amp;Tools</string>
     </property>
+    <addaction name="actionBootOption"/>
     <addaction name="actionOptions"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -553,6 +548,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionBootOption">
+   <property name="text">
+    <string>Boot Options...</string>
+   </property>
+   <property name="toolTip">
+    <string>Configure firmware and boot options</string>
+   </property>
+   <property name="statusTip">
+    <string>Configure firmware and boot options</string>
    </property>
   </action>
  </widget>

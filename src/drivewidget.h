@@ -38,6 +38,7 @@ public:
     void setLabelToolTips(const QString &one, const QString &two, const QString &three);
 
     void triggerAutoSaveClickIfEnabled();
+    void setHappyMode(bool enabled); // Add this line
 
 signals:
     void actionMountDisk(int deviceId);
@@ -51,6 +52,7 @@ signals:
     void actionSaveAs(int deviceId);
     void actionRevert(int deviceId);
     void actionBootOptions(int deviceId);
+    void actionHappyMode(int deviceId, bool enabled); // Must be here!
 
 private slots:
     void setFont(const QFont& font);
@@ -73,9 +75,14 @@ private slots:
 
     void on_actionBootOption_triggered();
 
+    void on_actionHappyMode_toggled(bool state);
+
+
 private:
     Ui::DriveWidget *ui;
     int driveNo_;
 };
+
+
 
 #endif // DRIVEWIDGET_H

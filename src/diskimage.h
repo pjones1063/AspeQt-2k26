@@ -53,6 +53,13 @@ class SimpleDiskImage: public SioDevice
     Q_OBJECT
 
 public:
+    void setHappyMode(bool enabled) { m_happyModeEnabled = enabled; }
+    bool isHappyMode() const { return m_happyModeEnabled; }
+
+protected:
+    bool m_happyModeEnabled = false; // Add to the protected members section
+
+public:
     SimpleDiskImage(SioWorker *worker);
     ~SimpleDiskImage();
 

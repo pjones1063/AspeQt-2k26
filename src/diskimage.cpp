@@ -880,6 +880,28 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                                .arg(m_newGeometry.humanReadable());
                 break;
             }
+
+        case 0x48: // Happy Identification Query ('H')
+        {
+            if (!sio->port()->writeCommandAck()) {
+                return;
+            }
+
+            if (m_happyModeEnabled) {
+                sio->port()->writeComplete();
+                // Return the Happy 1050 Rev 7 ID
+                uint8_t resp[4] = {0x00, 0x00, 0x00, 0x07};
+                sio->port()->writeDataFrame(QByteArray(reinterpret_cast<const char*>(resp), 4));
+                qDebug() << "!n" << tr("[%1] Happy ID Query - Rev 7.").arg(deviceName());
+            } else {
+                // Standard drives NAK this specific command
+                sio->port()->writeCommandNak();
+                qWarning() << "!w" << tr("[%1] Happy ID Query - NAKed (Standard Mode).").arg(deviceName());
+            }
+            break;
+        }
+
+
         case 0x4f:  // Set PERCOM block
             {
                 if (!sio->port()->writeCommandAck()) {
@@ -949,44 +971,63 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
 
                 break;
             }
-        case 0x50:  // Write sector and verify
-        case 0x57:  // Write sector without verifying
-            {
-                if (aux >= 1 && aux <= m_geometry.sectorCount()) {
-                    if (!sio->port()->writeCommandAck()) {
-                        return;
-                    }
-                    QByteArray data = sio->port()->readDataFrame(m_geometry.bytesPerSector(aux));
-                    if (!data.isEmpty()) {
-                        sio->port()->writeDataAck();
-                        if (m_isReadOnly) {
-                            sio->port()->writeError();
-                            qWarning() << "!w" << tr("[%1] Write sector %2 denied.").arg(deviceName()).arg(aux);
-                            break;
-                        }
-                        if (writeSector(aux, data)) {
-                            sio->port()->writeComplete();
-                            qDebug() << "!n" << tr("[%1] Write sector %2 (%3 bytes).").arg(deviceName()).arg(aux).arg(data.size());
-                        } else {
-                            sio->port()->writeError();
-                            qCritical() << "!e" << tr("[%1] Write sector %2 failed.")
-                                           .arg(deviceName())
-                                           .arg(aux);
-                        }
-                    } else {
-                        qCritical() << "!e" << tr("[%1] Write sector %2 data frame failed.")
-                                       .arg(deviceName())
-                                       .arg(aux);
-                        sio->port()->writeDataNak();
-                    }
-                } else {
-                    sio->port()->writeCommandNak();
-                    qWarning() << "!w" << tr("[%1] Write sector %2 NAKed.")
-                                   .arg(deviceName())
-                                   .arg(aux);
-                }
+        case 0x50:  // Write sector and verify ('P')
+        {
+            // Standard Write Logic remains the same
+            goto handle_standard_write;
+        }
+
+        case 0x57:  // Write sector without verifying ('W') OR Happy Warp Negotiation
+        {
+            // 1. If Happy Mode is ON, handle the Warp Speed handshake first
+            if (m_happyModeEnabled) {
+                if (!sio->port()->writeCommandAck()) return;
+                sio->port()->writeComplete();
+
+                // Shift the physical hardware baud rate to ~52kbps
+                sio->setHighSpeed(true);
+
+                qDebug() << "!n" << tr("[%1] Happy Warp Speed Handshake Successful.").arg(deviceName());
                 break;
             }
+
+            // 2. If Happy Mode is OFF, proceed with a standard Write command
+        handle_standard_write:
+            if (aux >= 1 && aux <= m_geometry.sectorCount()) {
+                if (!sio->port()->writeCommandAck()) {
+                    return;
+                }
+                QByteArray data = sio->port()->readDataFrame(m_geometry.bytesPerSector(aux));
+                if (!data.isEmpty()) {
+                    sio->port()->writeDataAck();
+                    if (m_isReadOnly) {
+                        sio->port()->writeError();
+                        qWarning() << "!w" << tr("[%1] Write sector %2 denied.").arg(deviceName()).arg(aux);
+                        break;
+                    }
+                    if (writeSector(aux, data)) {
+                        sio->port()->writeComplete();
+                        qDebug() << "!n" << tr("[%1] Write sector %2 (%3 bytes).").arg(deviceName()).arg(aux).arg(data.size());
+                    } else {
+                        sio->port()->writeError();
+                        qCritical() << "!e" << tr("[%1] Write sector %2 failed.")
+                                                   .arg(deviceName())
+                                                   .arg(aux);
+                    }
+                } else {
+                    qCritical() << "!e" << tr("[%1] Write sector %2 data frame failed.")
+                    .arg(deviceName())
+                        .arg(aux);
+                    sio->port()->writeDataNak();
+                }
+            } else {
+                sio->port()->writeCommandNak();
+                qWarning() << "!w" << tr("[%1] Write sector %2 NAKed.")
+                                          .arg(deviceName())
+                                          .arg(aux);
+            }
+            break;
+        }
         case 0x52:  // Read sector
             {
                 if (aux >= 1 && aux <= m_geometry.sectorCount()) {

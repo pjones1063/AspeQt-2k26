@@ -69,6 +69,7 @@ AspeQtSettings::AspeQtSettings()
         mSettings->setArrayIndex(i);
         mMountedImageSettings[i].fileName = mSettings->value("FileName", QString()).toString();
         mMountedImageSettings[i].isWriteProtected = mSettings->value("IsWriteProtected", false).toBool();
+        mMountedImageSettings[i].isHappyMode = mSettings->value("IsHappyMode", false).toBool();
     }
     mSettings->endArray();
 
@@ -173,6 +174,7 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
         s.setArrayIndex(i);
         s.setValue("FileName", is.fileName);
         s.setValue("IsWriteProtected", is.isWriteProtected);
+        s.setValue("IsHappyMode", is.isHappyMode);
     }
     s.endArray();
 }
@@ -225,7 +227,10 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.beginReadArray("MountedImageSettings");
     for (int i = 0; i < 15; i++) {              //
         s.setArrayIndex(i);
-        setMountedImageSetting(i, s.value("FileName", "").toString(), s.value("IsWriteProtected", false).toBool());
+        setMountedImageSetting(i,
+                               s.value("FileName", "").toString(),
+                               s.value("IsWriteProtected", false).toBool(),
+                               s.value("IsHappyMode", false).toBool());
     }
     s.endArray();
 }
@@ -446,14 +451,20 @@ void AspeQtSettings::setMountedImageProtection(int no, bool prot)
     if(mSessionFileName == "") mSettings->setValue(QString("MountedImageSettings/%1/IsWriteProtected").arg(no+1), prot);
 }
 
-void AspeQtSettings::setMountedImageSetting(int no, const QString &fileName, bool prot)
+void AspeQtSettings::setMountedImageSetting(int no, const QString &fileName, bool prot, bool happy)
 {
-
     mMountedImageSettings[no].fileName = fileName;
     mMountedImageSettings[no].isWriteProtected = prot;
-    if(mSessionFileName == "") mSettings->setValue(QString("MountedImageSettings/%1/FileName").arg(no+1), fileName);
-    if(mSessionFileName == "") mSettings->setValue(QString("MountedImageSettings/%1/IsWriteProtected").arg(no+1), prot);
+    mMountedImageSettings[no].isHappyMode = happy; // Store in memory
+
+    if(mSessionFileName == "") {
+        mSettings->setValue(QString("MountedImageSettings/%1/FileName").arg(no+1), fileName);
+        mSettings->setValue(QString("MountedImageSettings/%1/IsWriteProtected").arg(no+1), prot);
+        mSettings->setValue(QString("MountedImageSettings/%1/IsHappyMode").arg(no+1), happy); // Persist to disk
+    }
 }
+
+
 
 void AspeQtSettings::mountImage(int no, const QString &fileName, bool prot)
 {

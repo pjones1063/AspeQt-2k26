@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>AutoBootDialog</class>
  <widget class="QDialog" name="AutoBootDialog">
@@ -9,18 +9,6 @@
     <width>400</width>
     <height>140</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>400</width>
-    <height>140</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>400</width>
-    <height>140</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Boot executable</string>
@@ -33,18 +21,6 @@
      <width>380</width>
      <height>21</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>380</width>
-     <height>21</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>380</width>
-     <height>21</height>
-    </size>
    </property>
    <property name="value">
     <number>0</number>
@@ -71,18 +47,6 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>381</width>
-     <height>66</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>381</width>
-     <height>66</height>
-    </size>
-   </property>
    <property name="text">
     <string>Please reboot your Atari.
 
@@ -107,12 +71,6 @@ Don't forget to remove any cartridges and disable BASIC by holding down the Atar
      <height>23</height>
     </rect>
    </property>
-   <property name="maximumSize">
-    <size>
-     <width>75</width>
-     <height>23</height>
-    </size>
-   </property>
    <property name="toolTip">
     <string>Use this button to re-load the executable 
 if it has been changed since the last re-boot 
@@ -131,12 +89,6 @@ of your Atari computer - Useful for developers </string>
      <height>23</height>
     </rect>
    </property>
-   <property name="maximumSize">
-    <size>
-     <width>75</width>
-     <height>23</height>
-    </size>
-   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
@@ -145,7 +97,7 @@ of your Atari computer - Useful for developers </string>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources />
  <connections>
   <connection>
    <sender>buttonBox</sender>

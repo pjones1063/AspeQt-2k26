@@ -192,6 +192,7 @@ private slots:
     void saveMiniWindowGeometry();
     void logChanged(QString text);
     void changeFonts();
+    void on_actionHappyMode_triggered(int deviceId, bool enabled);
 };
 
 #endif // MAINWINDOW_H

@@ -143,7 +143,21 @@ void SioWorker::run()
         deviceMutex->unlock();
         cmd.clear();
     }
+    setHighSpeed(false);
     mPort->close();
+}
+
+void SioWorker::setHighSpeed(bool enabled)
+{
+    if (!mPort) return;
+
+    if (enabled) {
+        // Happy Warp Speed is approx 52,631 bps
+        mPort->setSpeed(52631);
+    } else {
+        // Standard Atari SIO speed
+        mPort->setSpeed(19200);
+    }
 }
 
 void SioWorker::installDevice(quint8 no, SioDevice *device)
@@ -217,6 +231,20 @@ SioDevice* SioWorker::getDevice(quint8 no)
     deviceMutex->unlock();
     return result;
 }
+
+void SioWorker::setHappyMode(int deviceId, bool enabled)
+{
+    // Adjust deviceId if it's passed as 0-indexed (0 for D1:)
+    int index = deviceId - DISK_BASE_CDEVIC;
+
+    deviceMutex->lock();
+    if (index >= 0 && index < DISK_COUNT) {
+        happyMode[index] = enabled;
+    }
+    deviceMutex->unlock();
+}
+
+
 
 QString SioWorker::deviceName(int device)
 {
