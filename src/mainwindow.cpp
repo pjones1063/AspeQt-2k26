@@ -5,6 +5,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QToolButton>
+#include <QLayout>
+#include "tnfsbrowser.h"
+#include "tnfsimage.h"
+
 #include "diskimage.h"
 #include "diskimagepro.h"
 #include "diskimageatx.h"
@@ -36,6 +41,7 @@
 
 #include "atarifilesystem.h"
 #include "miscutils.h"
+
 
 
 AspeQtSettings *respeqtSettings;
@@ -128,7 +134,7 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
     
     logWindow_ = NULL;
-
+    tnfsClient = new TnfsClient(this);
     setAcceptDrops(true);
 
     /* Remove old temporaries */
@@ -147,7 +153,6 @@ MainWindow::MainWindow(QWidget *parent)
        
     /* Load translators */
     loadTranslators();
-
 
     /* Setup UI */
     ui->setupUi(this);
@@ -362,6 +367,37 @@ void MainWindow::createDeviceWidgets()
 
         deviceWidget->setup();
         diskWidgets[i] = deviceWidget;
+
+        // --- NEW: Mount TNFS Action ---
+        QAction *mountTnfsAction = new QAction(QIcon(":icons/silk-icons/icons/world.png"), tr("Mount from TNFS Network..."), this);
+
+        if (mountTnfsAction->icon().isNull()) {
+            mountTnfsAction->setIcon(QIcon(":icons/silk-icons/icons/connect.png"));
+        }
+
+        connect(mountTnfsAction, &QAction::triggered, this, [this, i]() {
+            on_actionMountTnfs_triggered(i);
+        });
+
+        // 1. Add to Context Menu (Right Click)
+        diskWidgets[i]->addAction(mountTnfsAction);
+
+        // 2. Add a VISIBLE Button to the Drive Slot
+        // -  create a tool button and inject it into the widget's existing layout.
+        QToolButton *btnTnfs = new QToolButton(diskWidgets[i]);
+        btnTnfs->setDefaultAction(mountTnfsAction);
+        btnTnfs->setAutoRaise(false);   // Keeps the border visible
+        btnTnfs->setFixedSize(22, 22);  // Forces it to match neighbors if they are small
+        btnTnfs->setToolTip(tr("Mount TNFS"));
+        if (diskWidgets[i]->layout()) {
+            QBoxLayout *layout = qobject_cast<QBoxLayout*>(diskWidgets[i]->layout());
+            if (layout) {
+                layout->insertWidget(1, btnTnfs);
+            } else {
+                diskWidgets[i]->layout()->addWidget(btnTnfs);
+            }
+        }
+
 
         // connect signals to slots
         connect(deviceWidget, SIGNAL(actionMountDisk(int)),this, SLOT(on_actionMountDisk_triggered(int)));
@@ -896,6 +932,16 @@ void MainWindow::deviceStatusChanged(int deviceNo)
         SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(deviceNo));
 
         DriveWidget *diskWidget = diskWidgets[deviceNo - DISK_BASE_CDEVIC];
+        SioDevice *device = sio->getDevice(deviceNo);
+
+        TnfsImage *tnfsImg = qobject_cast<TnfsImage*>(device);
+        if (tnfsImg) {
+            DriveWidget *diskWidget = diskWidgets[deviceNo - DISK_BASE_CDEVIC];
+            // Force Save and Edit to FALSE
+            diskWidget->setLabelToolTips(tnfsImg->originalFileName(), tnfsImg->originalFileName(), tr("TNFS Network Stream"));
+            diskWidget->showAsImageMounted(tnfsImg->originalFileName(), tr("TNFS Stream"), false, false);
+            return; // Exit early so standard logic doesn't override this
+        }
 
         if (img) {
 
@@ -1460,8 +1506,9 @@ void MainWindow::saveDisk(int no)
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
 
     // --- SAFETY CHECK ---
-    if (!img) return; 
-    // --------------------
+    if (!img) return;
+    SioDevice *device = sio->getDevice(no);
+    if (qobject_cast<TnfsImage*>(device))  return;
 
     if (img->isUnnamed()) {
         saveDiskAs(no);
@@ -1480,6 +1527,10 @@ void MainWindow::saveDisk(int no)
 //
 void MainWindow::autoCommit(int no, bool st)
 {
+
+    SioDevice *device = sio->getDevice(no + DISK_BASE_CDEVIC);
+    if (qobject_cast<TnfsImage*>(device)) return;
+
     if( no < DISK_COUNT )
     {
         if ( (diskWidgets[no]->isAutoSaveEnabled() && st) || (!diskWidgets[no]->isAutoSaveEnabled() && !st) )
@@ -1492,8 +1543,9 @@ void MainWindow::autoSaveDisk(int no)
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
     
     // --- SAFETY CHECK ---
-    if (!img) return; 
-    // --------------------
+    if (!img) return;
+    SioDevice *device = sio->getDevice(no + DISK_BASE_CDEVIC);
+    if (qobject_cast<TnfsImage*>(device)) return;
 
     DriveWidget* widget = diskWidgets[no];
 
@@ -1582,8 +1634,9 @@ void MainWindow::revertDisk(int no)
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
     
     // --- SAFETY CHECK ---
-    if (!img) return; 
-    // --------------------
+    if (!img) return;
+    SioDevice *device = sio->getDevice(no + DISK_BASE_CDEVIC);
+    if (qobject_cast<TnfsImage*>(device)) return;
 
     if (QMessageBox::question(this, tr("Revert to last saved"),
             tr("Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.")
@@ -1892,3 +1945,36 @@ void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
                             .arg(enabled ? tr("Enabled") : tr("Disabled"));
 }
 
+void MainWindow::on_actionMountTnfs_triggered(int deviceId)
+{
+    // 1. Launch the thread-safe browser
+    TnfsBrowser browser(this);
+
+    if (browser.exec() == QDialog::Accepted) {
+        QString url = browser.getSelectedUrl(); // e.g., "tnfs://13leader.net/games/star_trek.xex"
+
+        // 2. Eject whatever is currently in that slot
+        if (!ejectImage(deviceId)) return;
+
+        // 3. Create the streaming device
+        // This is a specialized SioDevice that reads over UDP
+        TnfsImage *tnfs = new TnfsImage(sio);
+
+        // 4. Connect/Open the stream
+        if (tnfs->openUrl(url)) {
+            // Install into the SIO chain (Disk slots are 0x31, 0x32, etc.)
+            sio->installDevice(DISK_BASE_CDEVIC + deviceId, tnfs);
+
+            // 5. Update the UI DriveWidget
+            // We use the URL as the filename so you can see where it's coming from
+            QString shortName = QUrl(url).fileName();
+            if (shortName.isEmpty()) shortName = url;
+            diskWidgets[deviceId]->showAsImageMounted(shortName, tr("TNFS Stream"), false, false);
+
+            qDebug() << "!i" << tr("Mounted TNFS Stream: %1").arg(url);
+        } else {
+            QMessageBox::critical(this, tr("Mount Error"), tr("Could not open TNFS stream from 13leader.net"));
+            delete tnfs;
+        }
+    }
+}

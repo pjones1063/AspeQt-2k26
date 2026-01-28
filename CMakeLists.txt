@@ -11,7 +11,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # --- Find Qt 6 Components ---
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent)
 find_package(ZLIB REQUIRED)
 
 # --- 1. Find ALL source files in src/ ---
@@ -55,6 +55,7 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::Network
     Qt6::SerialPort
     Qt6::PrintSupport
+    Qt6::Concurrent
     ZLIB::ZLIB
 )
 

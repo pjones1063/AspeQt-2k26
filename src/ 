@@ -1,0 +1,10 @@
+#ifndef _
+#define _
+
+class tnfsclient
+{
+public:
+    tnfsclient();
+};
+
+#endif // _

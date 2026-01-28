@@ -22,6 +22,8 @@
         <file>silk-icons/icons/add.png</file>
         <file>silk-icons/icons/delete.png</file>
         <file>silk-icons/icons/printer.png</file>
+        <file>silk-icons/icons/world.png</file>
+        <file>silk-icons/icons/connect.png</file>
         <file>silk-icons/icons/text_align_left.png</file>
         <file>oxygen-icons/16x16/actions/format_font_size_more.png</file>
         <file>oxygen-icons/16x16/actions/view_right_close.png</file>
@@ -58,6 +60,8 @@
         <file>other-icons/fade.png</file>
         <file>other-icons/run.ico</file>
         <file>silk-icons/icons/arrow_right.png</file>
+        <file>silk-icons/icons/disk.png</file>
+        <file>silk-icons/icons/folder.png</file>
         <file>main-icon/icon.jpeg</file>
         <file>oxygen-icons/16x16/actions/get_hot_new_stuff.png</file>
     </qresource>

@@ -1,198 +1,221 @@
-      org $3000       ; Load address (Safe area)
+  org $4000       ; Load at 16384
 
 ; --- EQUATES ---
 HATABS  = $031A     ; Handler Table
 CIOV    = $E456     ; CIO Vector
 SIOV    = $E459     ; SIO Vector
+RTCLOK  = $14       ; Real Time Clock
+COLOR4  = $02C8     ; Shadow Register for Background Color (STICKS!)
 
-; SIO Device Control Block (DCB)
-DDEVIC  = $0300     ; Device ID
-DUNIT   = $0301     ; Unit Number
-DCOMND  = $0302     ; Command
-DSTATS  = $0303     ; Status (Direction)
-DBUFLO  = $0304     ; Buffer Low
-DBUFHI  = $0305     ; Buffer High
-DTIMLO  = $0306     ; Timeout Low
-DRESLO  = $0308     ; Byte Count Low
-DRESHI  = $0309     ; Byte Count High
-DAUX1   = $030A     ; Aux 1
-DAUX2   = $030B     ; Aux 2
-
-; --- HEADER FOR DOS ---
-    dta $FF,$FF     ; Header
-    dta <START, >START
-    dta <END_ASM, >END_ASM
+; SIO DCB
+DDEVIC  = $0300
+DUNIT   = $0301
+DCOMND  = $0302
+DSTATS  = $0303
+DBUFLO  = $0304
+DBUFHI  = $0305
+DTIMLO  = $0306
+DRESLO  = $0308
+DRESHI  = $0309
+DAUX1   = $030A
+DAUX2   = $030B
 
 START:
     ; --- INSTALLATION ROUTINE ---
-    ; We scan HATABS for a free slot ($00) or an existing 'R' entry
     ldx #0
 FindSlot:
-    lda HATABS,x    ; Load entry ID
-    cmp #'R'        ; Is it already 'R'?
-    beq FoundSlot   ; Yes, overwrite it
-    cmp #0          ; Is it empty?
-    beq FoundSlot   ; Yes, take it
+    lda HATABS,x
+    cmp #'R'
+    beq FoundSlot
+    cmp #0
+    beq FoundSlot
     inx
     inx
     inx
-    cpx #36         ; End of table?
+    cpx #36
     bne FindSlot
-    
-    ; Table full? Just exit (or print error, but we keep it simple)
     rts
 
 FoundSlot:
     lda #'R'
-    sta HATABS,x    ; Set ID
+    sta HATABS,x
     
-    lda <HANDLER_TABLE
-    sta HATABS+1,x  ; Set Low Byte of our table
-    lda >HANDLER_TABLE
-    sta HATABS+2,x  ; Set High Byte
+    lda #<HANDLER_TABLE  
+    sta HATABS+1,x  
+    lda #>HANDLER_TABLE  
+    sta HATABS+2,x  
     
-    ; Print a message using CIO (ID 0 - Editor)
-    ldx #0          ; IOCB 0
-    lda #11         ; PUT CHARS
-    sta $0342,x     ; ICCOM
-    lda <MSG
-    sta $0344,x     ; ICBAL
-    lda >MSG
-    sta $0345,x     ; ICBAH
-    lda <MSG_LEN
-    sta $0348,x     ; ICBLL
-    lda >MSG_LEN
-    sta $0349,x     ; ICBLH
+    ; --- PRINT MESSAGE ---
+    ldx #0
+    lda #11
+    sta $0342,x
+    lda #<MSG
+    sta $0344,x
+    lda #>MSG
+    sta $0345,x
+    lda #<MSG_LEN
+    sta $0348,x
+    lda #>MSG_LEN
+    sta $0349,x
     jsr CIOV
+
+    ; --- DELAY LOOP ---
+    lda RTCLOK
+    clc
+    adc #60
+WaitLoop:
+    cmp RTCLOK
+    bne WaitLoop
+
     rts
 
-; --- HANDLER TABLE (Standard CIO Interface) ---
+; --- HANDLER TABLE ---
+; FIX: Removed "-1". CIO uses JMP Indirect, so we need exact addresses.
 HANDLER_TABLE:
-    dta <H_OPEN-1,  >H_OPEN-1
-    dta <H_CLOSE-1, >H_CLOSE-1
-    dta <H_GET-1,   >H_GET-1
-    dta <H_PUT-1,   >H_PUT-1
-    dta <H_STAT-1,  >H_STAT-1
-    dta <H_SPEC-1,  >H_SPEC-1
-    jmp H_INIT      ; Initialization (not used here)
-    nop             ; Padding
+    dta <H_OPEN,  >H_OPEN
+    dta <H_CLOSE, >H_CLOSE
+    dta <H_GET,   >H_GET
+    dta <H_PUT,   >H_PUT
+    dta <H_STAT,  >H_STAT
+    dta <H_SPEC,  >H_SPEC
+    jmp H_INIT      
+    nop             
 
 ; --- CIO FUNCTIONS ---
 
 ; -----------------------------------------------------
-; OPEN: Just return Success
+; OPEN: TURN SCREEN RED
 ; -----------------------------------------------------
 H_OPEN:
-    ldy #1          ; Success Code
+    lda #$24        ; RED
+    sta COLOR4      ; Write to SHADOW (Persists!)
+    ldy #1          ; Success
     rts
 
 ; -----------------------------------------------------
-; CLOSE: Just return Success
+; CLOSE: TURN SCREEN WHITE
 ; -----------------------------------------------------
 H_CLOSE:
+    lda #$0F        ; WHITE
+    sta COLOR4
     ldy #1
     rts
 
 ; -----------------------------------------------------
-; PUT BYTE: Send Accumulator to SIO Device $50
+; PUT BYTE: TURN SCREEN GREEN
 ; -----------------------------------------------------
 H_PUT:
-    pha             ; Save the character
-    sta IO_BUFFER   ; Store it in our buffer
-    
-    ; Setup SIO for Write (Cmd 'W' $57)
-    lda #$50        ; Device ID (R:)
+    pha             
+    sta IO_BUFFER   
+
+    lda #$C4        ; GREEN
+    sta COLOR4
+
+    ; Setup SIO
+    lda #$50        ; Device R1
     sta DDEVIC
-    lda #1          ; Unit 1
+    lda #1          
     sta DUNIT
-    lda #$57        ; Command 'W' (Write)
+    lda #$57        ; Write
     sta DCOMND
-    lda #$80        ; Status (Write / Computer -> Device)
+    lda #$80        ; Send
     sta DSTATS
     
-    lda <IO_BUFFER
+    lda #<IO_BUFFER 
     sta DBUFLO
-    lda >IO_BUFFER
+    lda #>IO_BUFFER 
     sta DBUFHI
     
-    lda #7          ; Timeout (approx 7 seconds, usually shorter)
+    lda #$80        ; Timeout (~2s)
     sta DTIMLO
     
-    lda #1          ; Length = 1 Byte
+    lda #1          ; Len 1
     sta DRESLO
     lda #0
     sta DRESHI
+
+    sta DAUX2       ; Aux2 = 0
+    lda #1          ; Aux1 = 1
+    sta DAUX1
     
-    jsr SIOV        ; Call SIO!
+    jsr SIOV        
     
-    pla             ; Restore character (CIO expects this)
-    ldy #1          ; Success
+    pla             
+    ldy #1          
     rts
 
 ; -----------------------------------------------------
-; GET BYTE: Read into Accumulator from SIO Device $50
+; GET BYTE
 ; -----------------------------------------------------
 H_GET:
-    ; Setup SIO for Read (Cmd 'R' $52)
-    lda #$50        ; Device ID
+    lda #$50        
     sta DDEVIC
-    lda #1          ; Unit 1
+    lda #1          
     sta DUNIT
-    lda #$52        ; Command 'R' (Read)
+    lda #$52        ; Read
     sta DCOMND
-    lda #$40        ; Status (Read / Device -> Computer)
+    lda #$40        ; Receive
     sta DSTATS
     
-    lda <IO_BUFFER
+    lda #<IO_BUFFER 
     sta DBUFLO
-    lda >IO_BUFFER
+    lda #>IO_BUFFER 
     sta DBUFHI
     
-    lda #15         ; Timeout
+    lda #$80        
     sta DTIMLO
     
-    lda #1          ; Length = 1 Byte
+    lda #1          
     sta DRESLO
     lda #0
     sta DRESHI
+
+    sta DAUX2       
+    lda #1          
+    sta DAUX1
     
-    jsr SIOV        ; Call SIO!
-    bmi SioError    ; If Negative flag set, SIO failed
+    jsr SIOV        
+    bmi SioError    
     
-    lda IO_BUFFER   ; Load the byte we got
-    ldy #1          ; Success
+    lda IO_BUFFER   
+    ldy #1          
     rts
 
 SioError:
-    ldy #$88        ; EOF or Device Error
+    ldy #$88        ; Device Error
     rts
 
 ; -----------------------------------------------------
-; STATUS: Check if data is waiting (Cmd 'S' $53)
+; STATUS
 ; -----------------------------------------------------
 H_STAT:
     lda #$50
     sta DDEVIC
     lda #1
     sta DUNIT
-    lda #$53        ; Command 'S' (Status)
+    lda #$53
     sta DCOMND
-    lda #$40        ; Read
+    lda #$40
     sta DSTATS
     
-    lda <STAT_BUF
+    lda #<STAT_BUF
     sta DBUFLO
-    lda >STAT_BUF
+    lda #>STAT_BUF
     sta DBUFHI
     
-    lda #4          ; Length = 4 Bytes
+    lda #$20
+    sta DTIMLO
+
+    lda #4
     sta DRESLO
     lda #0
     sta DRESHI
+
+    sta DAUX1
+    sta DAUX2
     
     jsr SIOV
     
-    ; CIO expects status bytes in locations $2EA-$2ED
     ldx #0
 CopyStat:
     lda STAT_BUF,x
@@ -204,19 +227,21 @@ CopyStat:
     ldy #1
     rts
 
-; -----------------------------------------------------
-; SPECIAL / INIT: Stubs
-; -----------------------------------------------------
 H_SPEC:
 H_INIT:
     ldy #1
     rts
 
-; --- DATA STORAGE ---
-MSG:        dta c'AspeQt Driver Loaded', $9B
+; --- DATA ---
+MSG:        dta c'AspeQt Driver Loaded (Rainbow V2)', $9B
 MSG_LEN     = *-MSG
 
-IO_BUFFER:  dta 0   ; 1-byte buffer for Get/Put
-STAT_BUF:   dta 0,0,0,0 ; 4-byte buffer for Status
+IO_BUFFER:  dta 0   
+STAT_BUF:   dta 0,0,0,0 
 
 END_ASM:
+
+; --- RUN VECTOR ---
+    org $02E2       
+    dta <START, >START
+    

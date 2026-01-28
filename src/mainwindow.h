@@ -17,6 +17,7 @@
 #include <QSystemTrayIcon>
 #include <QTextEdit>
 
+
 #include "optionsdialog.h"
 #include "aboutdialog.h"
 #include "createimagedialog.h"
@@ -28,6 +29,7 @@
 #include "network.h"
 #include "drivewidget.h"
 #include "infowidget.h"
+#include "tnfsclient.h"
 
 namespace Ui
 {
@@ -62,6 +64,7 @@ public:
     QString g_sessionFilePath;
     QString g_mainWindowTitle;
 
+
 public slots:
     void show();
     int  firstEmptyDiskSlot(int startFrom = 0, bool createOne = true);
@@ -89,11 +92,10 @@ private:
     Qt::WindowStates oldWindowStates;
     QString lastMessage;
     int lastMessageRepeat;
+    TnfsClient *tnfsClient;
     bool isClosing;
 
     QDialog *logWindow_;
-
-
     QList<QAction*> recentFilesActions_;
 
 
@@ -159,6 +161,7 @@ private slots:
     void on_actionQuit_triggered();
     void on_actionAbout_triggered();
     void on_actionDocumentation_triggered();
+    void on_actionMountTnfs_triggered(int deviceId);
 
     // Device widget events
     void on_actionMountDisk_triggered(int deviceId);
@@ -192,7 +195,8 @@ private slots:
     void saveMiniWindowGeometry();
     void logChanged(QString text);
     void changeFonts();
-    void on_actionHappyMode_triggered(int deviceId, bool enabled);
+    void on_actionHappyMode_triggered(int deviceId, bool enabled); 
+
 };
 
 #endif // MAINWINDOW_H

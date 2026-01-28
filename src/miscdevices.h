@@ -9,6 +9,7 @@
 #include <QAction>
 #include <QSerialPort>
 #include <QTcpSocket>
+#include "tnfsclient.h"
 
 // The Rs232 class now handles both Physical Serial Ports and Telnet Emulation
 class Rs232: public SioDevice
