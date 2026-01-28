@@ -36,8 +36,8 @@ public:
     QList<DirectoryEntry> listDirectory(const QString &path);
 
     quint8 openFile(const QString &path);
-    QByteArray readFile(quint8 handle, quint32 offset, quint16 size);
-    void closeFile(quint8 handle);
+    Q_INVOKABLE QByteArray readFile(quint8 handle, quint32 offset, quint16 size);
+    Q_INVOKABLE void closeFile(quint8 handle);
 
 private:
     QUdpSocket *socket;

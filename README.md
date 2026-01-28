@@ -11,23 +11,43 @@ AspeQt-2K26 is a modernized fork of the classic AspeQt/RespeQt emulator. It emul
 While preserving the classic functionality, **AspeQt-2K26** migrates the codebase to **Qt 6**, fixing critical stability issues and adding support for modern large-capacity storage and current operating systems.
 
 ### What's New in AspeQt-2K26
-This version includes significant architectural improvements over previous forks:
-
-* **Qt 6 Native:** Fully ported to the Qt 6 framework for modern UI support, High-DPI scaling, and future-proofing on Windows, Linux, and macOS.
-* **Self-Contained Firmware:** All necessary boot firmware (MyDOS, Atari DOS, etc.) is now embedded within the executable. Folders can be mounted and booted immediately—no manual copying of `DOS.SYS` or `$BOOT.BIN` required.
+* **Qt 6 Native:** Fully ported to the Qt 6 framework for modern UI support and High-DPI scaling.
+* **Self-Contained Firmware:** All necessary boot firmware (MyDOS, Atari DOS, etc.) is now embedded within the executable.
 * **Large Hard Disk Support:** Fixed integer overflow logic to support **16MB+ Hard Disk Images** (up to 65,535 sectors) correctly.
-* **Stability Fixes:**
-    * **Crash-Proof UI:** Added robust safety checks to prevent crashes when clicking actions (Save, Edit, Revert) on empty drive slots.
-    * **Autoboot Fixes:** resolved memory safety issues in the autoboot loader.
-    * **Geometry Detection:** Fixed detection for padded vs. unpadded Double Density (180KB) images.
+* **"Happy Mode" Improvements:** Enhanced handshake logic and proper Windows timing via `winmm`.
+* **Stability Fixes:** Crash-proof UI actions on empty slots and resolved memory safety issues in the autoboot loader.
 * **Modern Desktop Integration:** Restored and fixed **Drag & Drop** functionality for Qt 6 environments.
-* **Enhanced Linux/Unix Support:** Implemented proper serial port flushing (`tcdrain`) to prevent SIO timeouts and NAKs on Linux and macOS.
+* **Enhanced Linux/Unix Support:** Implemented proper serial port flushing (`tcdrain`) to prevent SIO timeouts and NAKs.
 
-### Features
-* **Emulation:** Emulates up to 8 disk drives (D1:-D8:) and printers.
-* **File Formats:** Supports `.ATR`, 'ATX',`.XEX`, `.CAS`, and `.XFD`.
-* **Client Tools:** Includes `MENU.COM` (AspeQt Client) for the Atari to set Date/Time from the PC and perform remote file management.
-* **Cross-Platform:** Runs on Windows, Linux, macOS, and Raspberry Pi.
+---
+
+### Automated Deployment
+This project includes automated scripts to generate production-ready installers for all major platforms.
+
+#### **Windows (QEMU/Native)**
+The Windows script builds the project using MinGW and generates both a portable ZIP and a professional installer.
+* **Requirements:** Qt 6.10.2, MinGW 13.1.0, and Inno Setup 6.
+* **Command:** Run `powershell ./release/deploy_win.ps1`.
+
+#### **Linux (Debian/Ubuntu)**
+The Linux script generates a `.deb` package and a portable `.tar.gz`.
+* **Requirements:** CMake, CPack, and Qt 6 development libraries.
+* **Command:** Run `bash ./release/deploy_linux.sh`.
+
+#### **macOS**
+Standard build process for modern Apple Silicon (M3) environments.
+* **Requirements:** Xcode or Clang, and Qt 6.
+* **Command:** Use `macdeployqt` to wrap the `.app` bundle into a `.dmg`.
+
+---
+
+### Troubleshooting (Windows/MinGW)
+If the Windows build fails, check the following common roadblocks:
+
+* **Stale Cache:** If moving the project from Linux to Windows, you MUST delete the `build/` folder entirely to clear Linux-specific paths from `CMakeCache.txt`.
+* **Missing windres:** If you see `'windres' is not recognized`, ensure `CMAKE_RC_COMPILER` is explicitly set in the deployment script to point to the MinGW `bin` folder.
+* **sh.exe Conflict:** If the build fails with `sh.exe was found in your PATH`, remove Git Bash from your system PATH temporarily.
+* **-j Invalid Number:** Ensure the multi-core flag is passed as a sub-expression: `-j ($env:NUMBER_OF_PROCESSORS)`.
 
 ---
 
@@ -38,14 +58,12 @@ Support and inquiries can be made on our BBS. We love talking Atari!
 
 ---
 
-### Building from Source
-
+### Building from Source (Manual)
 **Requirements:**
-* CMake
-* Qt 6 Development Libraries (qt6-base-dev / qt6-serialport-dev)
-* C++ Compiler (GCC, Clang, or MSVC)
+* CMake 3.16+
+* Qt 6.x Development Libraries
+* C++17 Compiler
 
-**Build Steps:**
 ```bash
 mkdir build
 cd build
