@@ -18,18 +18,20 @@ public:
         bool isDirectory;
     };
 
+    // --- STANDARD TNFS PROTOCOL OPCODES ---
     enum TnfsCommands {
-        CMD_MOUNT    = 0x00, // <--- REVERT THIS TO 0x00
-        CMD_UMOUNT   = 0x01, // Unmount is 0x01
+        CMD_MOUNT    = 0x00,
+        CMD_UMOUNT   = 0x01,
         CMD_OPENDIR  = 0x10,
         CMD_READDIR  = 0x11,
         CMD_CLOSEDIR = 0x12,
-        CMD_OPEN     = 0x24,
-        CMD_READ     = 0x25,
-        CMD_CLOSE    = 0x26, // Close file (often 0x26 or 0x27)
-        CMD_STAT     = 0x27
+        CMD_STAT     = 0x20,
+        CMD_READ     = 0x21,
+        CMD_WRITE    = 0x23,
+        CMD_CLOSE    = 0x22,
+        CMD_OPEN     = 0x29, // Corrected from 0x24
+        CMD_LSEEK    = 0x24  // 0x24 is actually LSEEK
     };
-
 
     bool connectToHost(const QString &host, quint16 port = 16384);
     bool mount(const QString &remotePath);
@@ -45,7 +47,9 @@ private:
     quint16 serverPort;
     QMutex netMutex;
 
+    // The Session ID assigned by the server
     quint16 m_sessionId = 0;
+    // Sequence number for UDP packet tracking
     quint8 m_sequence = 0;
 
     QByteArray sendCommand(quint8 cmd, const QByteArray &data);

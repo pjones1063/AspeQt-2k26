@@ -1,111 +1,493 @@
 #include "tnfsimage.h"
+#include "tnfsclient.h"
 #include <QUrl>
-#include <QMetaObject>
-#include <QDebug> // Ensure this is included
+#include <QDebug>
+#include <QApplication>
+#include <QFile>
+#include <QtGlobal>
+#include <QRandomGenerator>
 
-TnfsImage::TnfsImage(SioWorker *worker) : SimpleDiskImage(worker)
+TnfsImage::TnfsImage(SioWorker *worker) : SioDevice(worker)
 {
-    m_fileHandle = 0xFF;
-    m_worker = worker;
     m_headerSkip = 0;
-    m_client = new TnfsClient(nullptr); // Heap allocation, No Parent
+    m_tnfsSectorSize = 128;
+    m_isAtx = false;
+    m_isXex = false;
+
+    // Initialize ATX pointers
+    for(int i=0; i<100; i++) atx.tracks[i].sectors = nullptr;
 }
 
 TnfsImage::~TnfsImage()
 {
-    if (m_client) {
-        if (m_fileHandle != 0xFF) {
-            QMetaObject::invokeMethod(m_client, "closeFile", Qt::QueuedConnection, Q_ARG(quint8, m_fileHandle));
+    cleanupAtx();
+}
+
+void TnfsImage::cleanupAtx()
+{
+    for(int i=0; i<100; i++) {
+        if(atx.tracks[i].sectors) {
+            delete[] atx.tracks[i].sectors;
+            atx.tracks[i].sectors = nullptr;
         }
-        m_client->deleteLater();
     }
 }
 
 bool TnfsImage::openUrl(const QString &url)
 {
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
     QUrl qurl(url);
     QString fullPath = qurl.path(QUrl::ComponentFormattingOption::FullyDecoded);
+    QString host = qurl.host();
 
-    m_host = qurl.host();
+    // --- RESET STATE ---
+    m_imgData.clear();
+    m_bootSectors.clear();
+    m_chunks.clear();
+    m_isAtx = false;
+    m_isXex = false;
+    cleanupAtx();
 
-    // 1. Setup (Main Thread)
-    if (!m_client->connectToHost(m_host)) return false;
+    qDebug() << "!n" << "TNFS: Connecting to" << host << "...";
 
-    if (!m_client->mount("/")) {
-        qWarning() << "TNFS: Mount Root Failed";
+    // --- DOWNLOAD PHASE ---
+    TnfsClient client;
+    if (!client.connectToHost(host)) {
+        qWarning() << "!e" << "TNFS: Host Connection Failed:" << host;
+        QApplication::restoreOverrideCursor();
         return false;
     }
 
-    if (fullPath.startsWith("/")) fullPath.remove(0, 1);
+    if (!client.mount("/")) {
+        qWarning() << "!e" << "TNFS: Mount Session Failed";
+        QApplication::restoreOverrideCursor();
+        return false;
+    }
 
-    m_fileHandle = m_client->openFile(fullPath);
+    quint8 handle = client.openFile(fullPath.startsWith("/") ? fullPath.mid(1) : fullPath);
+    if (handle == 0xFF && fullPath.startsWith("/")) {
+        handle = client.openFile(fullPath);
+    }
 
-    if (m_fileHandle == 0xFF) {
-        qWarning() << "TNFS: Open Failed for:" << fullPath;
+    if (handle == 0xFF) {
+        qWarning() << "!e" << "TNFS: Failed to open:" << fullPath;
+        QApplication::restoreOverrideCursor();
         return false;
     }
 
     this->m_originalFileName = url;
 
-    // --- ATR DETECTION ---
-    m_headerSkip = 0;
-    if (fullPath.endsWith(".atr", Qt::CaseInsensitive)) {
-        m_headerSkip = 16;
-        qWarning() << "TNFS: ATR Detected. Offset set to 16.";
+    qDebug() << "!n" << "TNFS: Downloading image to RAM...";
+
+    quint32 offset = 0;
+    while (true) {
+        QByteArray chunk = client.readFile(handle, offset, 1024);
+        if (chunk.isEmpty()) break;
+
+        m_imgData.append(chunk);
+        offset += chunk.size();
+
+        if (m_imgData.size() > 16 * 1024 * 1024) {
+            qWarning() << "!e" << "TNFS: File too large (>16MB). Aborting.";
+            client.closeFile(handle);
+            QApplication::restoreOverrideCursor();
+            return false;
+        }
     }
 
-    // --- SANITY CHECK (The new test) ---
-    // We try to read the first 16 bytes RIGHT NOW in the Main Thread.
-    // This proves if the handle works before we even try the Thread Bridge.
-    qWarning() << "TNFS: Performing sanity check read on handle" << m_fileHandle;
-    QByteArray header = m_client->readFile(m_fileHandle, 0, 16);
+    client.closeFile(handle);
+    qDebug() << "!n" << "TNFS: Download Complete. Size:" << m_imgData.size();
 
-    if (header.isEmpty()) {
-        qWarning() << "TNFS: FATAL - Sanity check read FAILED. Handle is bad or network is down.";
-        return false; // Fail early
-    } else {
-        qWarning() << "TNFS: Sanity check PASSED. First 4 bytes:" << header.left(4).toHex();
-        // If this prints '9602...', it is definitely an ATR.
+    // --- FORMAT AUTO-DETECTION & VALIDATION ---
+
+    // 1. ATX Format (Copy Protected)
+    if (fullPath.endsWith(".atx", Qt::CaseInsensitive)) {
+        if (!parseAtx()) {
+            qWarning() << "!e" << "TNFS: Invalid ATX Header or Corrupt File.";
+            QApplication::restoreOverrideCursor();
+            return false;
+        }
+        m_isAtx = true;
+        qDebug() << "!n" << "TNFS: ATX Protection Loaded.";
+    }
+    // 2. XEX Format (Executable)
+    else if (fullPath.endsWith(".xex", Qt::CaseInsensitive) || fullPath.endsWith(".exe", Qt::CaseInsensitive)) {
+        if (!parseXex()) {
+            qWarning() << "!e" << "TNFS: Invalid XEX Executable.";
+            QApplication::restoreOverrideCursor();
+            return false;
+        }
+        m_isXex = true;
+        m_booterLoaded = false;
+        qDebug() << "!n" << "TNFS: XEX Loader Prepared.";
+    }
+    // 3. Standard ATR Format
+    else {
+        m_headerSkip = 0;
+        m_tnfsSectorSize = 128;
+
+        // Validate Magic Number (0x96 0x02)
+        if (m_imgData.size() >= 16) {
+            quint16 magic = (quint8)m_imgData[0] + ((quint8)m_imgData[1] << 8);
+            quint16 secSz = (quint8)m_imgData[4] + ((quint8)m_imgData[5] << 8);
+
+            if (magic == 0x0296) {
+                m_headerSkip = 16;
+                m_tnfsSectorSize = secSz;
+                qDebug() << "!n" << "TNFS: ATR Header Valid. Sector Size:" << m_tnfsSectorSize;
+            }
+        }
+
+        if (m_imgData.size() < 128) {
+            qWarning() << "!e" << "TNFS: Image too small!";
+            QApplication::restoreOverrideCursor();
+            return false;
+        }
+    }
+
+    QApplication::restoreOverrideCursor();
+    return true;
+}
+
+// --- XEX PARSER ---
+bool TnfsImage::parseXex()
+{
+    // Load the internal AspeQt loader binary
+    // Try High Speed first if available, otherwise standard
+    QFile boot(":/binaries/atari/autoboot/autoboot.bin");
+
+    if (!boot.open(QFile::ReadOnly)) {
+        qCritical() << "!e" << "TNFS: Missing internal resource 'autoboot.bin'!";
+        return false;
+    }
+    m_bootSectors = boot.readAll();
+    boot.close();
+
+    int cursor = 0;
+    int size = m_imgData.size();
+
+    // Check Header (0xFF 0xFF)
+    if (size < 2) return false;
+    int start = (quint8)m_imgData[0] + (quint8)m_imgData[1] * 256;
+    cursor += 2;
+
+    if (start != 0xFFFF) {
+        qCritical() << "!e" << "TNFS: XEX missing $FFFF header.";
+        return false;
+    }
+
+    // Read First Segment Start
+    if (cursor + 2 > size) return false;
+    start = (quint8)m_imgData[cursor] + (quint8)m_imgData[cursor+1] * 256;
+    cursor += 2;
+
+    // Segment Loop
+    while (true) {
+        // Read Segment End
+        if (cursor + 2 > size) break;
+        int end = (quint8)m_imgData[cursor] + (quint8)m_imgData[cursor+1] * 256;
+        cursor += 2;
+
+        if (end < start) break; // Invalid
+
+        int segLen = end - start + 1;
+        if (cursor + segLen > size) break;
+
+        // Split large segments into SIO-friendly chunks (max 1024)
+        QByteArray segData = m_imgData.mid(cursor, segLen);
+        cursor += segLen;
+
+        int maxChunkSize = 1024;
+        for (int i = 0; i < segData.size(); i += maxChunkSize) {
+            TnfsExeChunk ch;
+            // Use qMin to avoid overrun
+            int len = 0;
+            if (i + maxChunkSize > segData.size()) len = segData.size() - i;
+            else len = maxChunkSize;
+
+            ch.data = segData.mid(i, len);
+            ch.address = start;
+            start += len;
+            m_chunks.append(ch);
+        }
+
+        if (cursor >= size) break;
+
+        // Read Next Segment Header
+        if (cursor + 2 > size) break;
+        start = (quint8)m_imgData[cursor] + (quint8)m_imgData[cursor+1] * 256;
+        cursor += 2;
+
+        // Handle optional internal $FFFF headers
+        if (start == 0xFFFF) {
+            if (cursor + 2 > size) break;
+            start = (quint8)m_imgData[cursor] + (quint8)m_imgData[cursor+1] * 256;
+            cursor += 2;
+        }
     }
 
     return true;
 }
 
-bool TnfsImage::readSector(quint16 sector, QByteArray &data)
+// --- ATX PARSER ---
+bool TnfsImage::parseAtx()
 {
-    if (!m_client || m_fileHandle == 0xFF) {
-        qWarning() << "TNFS: readSector failed - Invalid Handle!";
-        return false;
+    if (m_imgData.size() < 48) return false;
+
+    // Check Header "AT8X"
+    if (m_imgData[0] != 'A' || m_imgData[1] != 'T' || m_imgData[2] != '8' || m_imgData[3] != 'X') return false;
+
+    atx.version = VAPI_16(m_imgData, 4);
+    atx.start = VAPI_32(m_imgData, 28);
+
+    quint32 start = atx.start;
+    quint8 track = 0;
+
+    while (start < (quint32)m_imgData.size() && track < 100) {
+        if (start + 32 > (quint32)m_imgData.size()) break;
+
+        atx.tracks[track].pos     = start;
+        atx.tracks[track].next    = VAPI_32(m_imgData, start + 0);
+        atx.tracks[track].type    = VAPI_16(m_imgData, start + 4);
+        atx.tracks[track].track   = VAPI_8 (m_imgData, start + 8);
+        atx.tracks[track].numsectors = VAPI_16(m_imgData, start + 10);
+        atx.tracks[track].start   = VAPI_32(m_imgData, start + 20);
+
+        quint32 sectorListPos = start + atx.tracks[track].start;
+        if (sectorListPos + 8 > (quint32)m_imgData.size()) break;
+
+        atx.tracks[track].sector_list_header.size = VAPI_32(m_imgData, sectorListPos);
+        atx.tracks[track].sector_list_header.type = VAPI_8 (m_imgData, sectorListPos + 4);
+
+        atx.tracks[track].sectors = new atx_sector[atx.tracks[track].numsectors];
+        quint32 currentSectorPos = sectorListPos + 8;
+
+        for (int s = 0; s < atx.tracks[track].numsectors; s++) {
+            if (currentSectorPos + 8 > (quint32)m_imgData.size()) break;
+
+            atx.tracks[track].sectors[s].number   = VAPI_8 (m_imgData, currentSectorPos + 0);
+            atx.tracks[track].sectors[s].status   = ~VAPI_8 (m_imgData, currentSectorPos + 1);
+            atx.tracks[track].sectors[s].position = VAPI_16(m_imgData, currentSectorPos + 2);
+            atx.tracks[track].sectors[s].start    = VAPI_32(m_imgData, currentSectorPos + 4);
+
+            currentSectorPos += 8;
+        }
+
+        start += atx.tracks[track].next;
+        track++;
     }
 
-    // Apply Offset
-    quint32 offset = ((sector - 1) * 128) + m_headerSkip;
+    phantomflip = 0;
+    return true;
+}
 
-    QByteArray result;
+// --- SIO COMMAND HANDLER ---
+void TnfsImage::handleCommand(quint8 command, quint16 aux)
+{
+    // --- SPECIAL COMMANDS (Speed Poll / XEX Loader) ---
+    switch (command) {
+    // --- FIX: SPEED POLL HANDLER ---
+    case 0x3F:
+    {
+        if (!sio->port()->writeCommandAck()) return;
+        sio->port()->writeComplete();
+        QByteArray speed(1, 0);
+        speed[0] = sio->port()->speedByte();
+        sio->port()->writeDataFrame(speed);
+        // qDebug() << "!n" << "TNFS: Speed Poll.";
+        return;
+    }
 
-    // We explicitly cast the arguments to ensure Q_ARG matches the signature perfectly
-    bool success = QMetaObject::invokeMethod(m_client, "readFile",
-                                             Qt::BlockingQueuedConnection,
-                                             Q_RETURN_ARG(QByteArray, result),
-                                             Q_ARG(quint8, m_fileHandle),
-                                             Q_ARG(quint32, offset),
-                                             Q_ARG(quint16, (quint16)128));
+    // --- XEX PROTOCOL ---
+    case 0xFE: // Get Chunk Data
+    {
+        if (!m_isXex || aux >= m_chunks.count()) {
+            sio->port()->writeCommandNak();
+            return;
+        }
+        sio->port()->writeCommandAck();
+        sio->port()->writeComplete();
+        sio->port()->writeDataFrame(m_chunks.at(aux).data);
+        qDebug() << "!n" << "TNFS: XEX Chunk" << aux << "sent.";
+        return;
+    }
+    case 0xFF: // Get Chunk Info
+    {
+        if (!m_isXex || aux >= m_chunks.count()) {
+            sio->port()->writeCommandNak();
+            return;
+        }
+        sio->port()->writeCommandAck();
 
-    if (success && result.size() == 128) {
-        data = result;
-        // Success log only for sector 1 to avoid spam
-        if (sector == 1) {
-            qWarning() << "TNFS: Sector 1 Read SUCCESS. Data[0-3]:" << result.left(4).toHex();
+        QByteArray info(6, 0);
+        info[0] = m_chunks.at(aux).address % 256;
+        info[1] = m_chunks.at(aux).address / 256;
+        info[2] = 1;
+        info[3] = (aux + 1 < m_chunks.size());
+        info[4] = m_chunks.at(aux).data.size() % 256;
+        info[5] = m_chunks.at(aux).data.size() / 256;
+
+        sio->port()->writeComplete();
+        sio->port()->writeDataFrame(info);
+        return;
+    }
+    case 0xFD: // Loader Done
+    {
+        if (!m_isXex) { sio->port()->writeCommandNak(); return; }
+        sio->port()->writeCommandAck();
+        sio->port()->writeComplete();
+        qDebug() << "!n" << "TNFS: XEX Boot Complete.";
+        return;
+    }
+    }
+
+    // --- STANDARD SIO (ATR / ATX / BOOT SECTORS) ---
+    switch (command) {
+    case 0x53: // STATUS
+        sio->port()->writeCommandAck();
+        sendStatus();
+        break;
+
+    case 0x52: // READ
+    {
+        sio->port()->writeCommandAck();
+        QByteArray data;
+        if (readSector(aux, data)) {
+            sio->port()->writeComplete();
+            sio->port()->writeDataFrame(data);
+        } else {
+            sio->port()->writeError();
+        }
+        break;
+    }
+
+    default:
+        sio->port()->writeCommandNak();
+        break;
+    }
+}
+
+void TnfsImage::sendStatus()
+{
+    QByteArray status;
+    status.append((char)0x10);
+    status.append((char)0xFF);
+    status.append((char)0xE0);
+    status.append((char)0x00);
+
+    // Inject WD1772 status if ATX
+    if (m_isAtx) status[1] = wd1772status;
+
+    sio->port()->writeComplete();
+    sio->port()->writeDataFrame(status);
+}
+
+bool TnfsImage::readSector(quint16 sector, QByteArray &data)
+{
+    // --- XEX MODE (Serve Loader) ---
+    if (m_isXex) {
+        if (m_bootSectors.isEmpty()) return false;
+
+        quint32 offset = (sector - 1) * 128;
+
+        // --- FIX: Bounds Checking & Padding ---
+        // If the start of the sector is beyond the file, just return zeros
+        if (offset >= (quint32)m_bootSectors.size()) {
+            data.fill(0, 128);
+            return true;
+        }
+
+        // Calculate actual bytes available to read
+        int bytesAvailable = m_bootSectors.size() - offset;
+        int bytesToRead = qMin(128, bytesAvailable);
+
+        data = m_bootSectors.mid(offset, bytesToRead);
+
+        // Pad with zeros if we read less than 128 bytes
+        if (data.size() < 128) {
+            data.append(QByteArray(128 - data.size(), 0));
         }
         return true;
     }
 
-    // FAILURE LOGGING (Visible via qWarning)
-    if (!success) {
-        qWarning() << "TNFS: BRIDGE FAILED for Sector" << sector << "- invokeMethod returned false.";
-    } else {
-        qWarning() << "TNFS: SIZE MISMATCH for Sector" << sector << "- Got" << result.size() << "bytes.";
+    // --- ATX MODE ---
+    if (m_isAtx) {
+        bool result = readSectorAtx(sector, data);
+        if (result) qDebug() << "!n" << "TNFS: Read ATX Sector" << sector;
+        return result;
     }
 
-    return false;
+    // --- ATR MODE ---
+    quint16 bytesToRead = m_tnfsSectorSize;
+    if (m_tnfsSectorSize == 256 && sector <= 3) bytesToRead = 128;
+
+    quint32 offset;
+    if (m_tnfsSectorSize == 256) {
+        if (sector <= 3) offset = m_headerSkip + (sector - 1) * 128;
+        else offset = m_headerSkip + 384 + (sector - 4) * 256;
+    } else {
+        offset = ((sector - 1) * 128) + m_headerSkip;
+    }
+
+    if (offset + bytesToRead > (quint32)m_imgData.size()) {
+        qWarning() << "!e" << "TNFS: Read past EOF. Sector:" << sector;
+        return false;
+    }
+
+    data = m_imgData.mid(offset, bytesToRead);
+    qDebug() << "!n" << "TNFS: Read Sector" << sector;
+    return true;
+}
+
+// --- ATX HELPERS ---
+bool TnfsImage::seekToSectorAtx(quint16 sector, quint32 &offset)
+{
+    int track = (sector - 1) / 18;
+    int tracksector = (sector - 1) % 18;
+    int trackindex = 0;
+
+    if (track >= 100) return false;
+
+    int actualSectors = atx.tracks[track].numsectors;
+    bool found = false;
+
+    for (int i = 0; i < actualSectors; i++) {
+        if (atx.tracks[track].sectors[i].number == (tracksector + 1)) {
+            trackindex = i;
+            found = true;
+            if (phantomflip) break;
+        }
+    }
+
+    if (found) phantomflip = !phantomflip;
+    else return false;
+
+    offset = atx.tracks[track].pos + atx.tracks[track].sectors[trackindex].start;
+    wd1772status = atx.tracks[track].sectors[trackindex].status;
+
+    return true;
+}
+
+bool TnfsImage::readSectorAtx(quint16 sector, QByteArray &data)
+{
+    quint32 offset = 0;
+    if (!seekToSectorAtx(sector, offset)) return false;
+
+    if (wd1772status != 0xff) {
+        data = m_imgData.mid(offset, 128);
+        // Zorro Hack
+        if (wd1772status == 0xB7) {
+            for (int i=0; i<data.size(); i++) {
+                if (data[i] == '\x33') {
+                    data[i] = QRandomGenerator::global()->generate() & 0xFF;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    data = m_imgData.mid(offset, 128);
+    return true;
 }

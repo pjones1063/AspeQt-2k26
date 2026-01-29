@@ -69,7 +69,7 @@ public:
     virtual void close();
     bool save();
     bool saveAs(const QString &fileName);
-    inline bool isOpen() const {return file.isOpen();}
+    virtual inline bool isOpen() const {return file.isOpen();}
     inline bool isReadOnly() const {return m_isReadOnly;}
     inline void setReadOnly(bool readOnly) {m_isReadOnly = readOnly;}
     inline bool isModified() const {return m_isModified;}

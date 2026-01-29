@@ -1174,9 +1174,12 @@ bool MainWindow::ejectImage(int no, bool ask)
         pclink->resetLink(no+1);
         sio->installDevice(PCLINK_CDEVIC,pclink);
     }
-    
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
 
+    // --- FIX: Handle generic SioDevice (Supports TNFS + Disk Images) ---
+    SioDevice *device = sio->getDevice(no + DISK_BASE_CDEVIC);
+    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (device);
+
+    // Only ask to save if it is a Disk Image AND has modifications
     if (ask && img && img->isModified()) {
         QMessageBox::StandardButton answer;
         answer = saveImageWhenClosing(no, QMessageBox::No, 0);
@@ -1185,11 +1188,16 @@ bool MainWindow::ejectImage(int no, bool ask)
         }
     }
 
-    sio->uninstallDevice(no + DISK_BASE_CDEVIC);
-    if (img) {
-        // Reset the SIO hardware speed to 19200 immediately upon eject
+    // If ANY device exists in this slot (TNFS or Disk), remove it
+    if (device) {
+        sio->uninstallDevice(no + DISK_BASE_CDEVIC);
+
         sio->setHighSpeed(false);
-        delete img;
+
+        // This virtual destructor cleans up TnfsImage OR SimpleDiskImage
+        delete device;
+
+        // Force UI update
         diskWidgets[no]->showAsEmpty();
         respeqtSettings->unmountImage(no);
         updateRecentFileActions();
@@ -1198,6 +1206,7 @@ bool MainWindow::ejectImage(int no, bool ask)
     }
     return true;
 }
+
 
 int MainWindow::containingDiskSlot(const QPoint &point)
 {
