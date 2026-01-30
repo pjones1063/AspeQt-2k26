@@ -113,131 +113,164 @@ void Rs232::handleTelnet(quint8 command, quint16 aux)
 {
     switch(command)
     {
-    case 0x57: // 'W' Write (Atari -> Modem)
+    case 0x26: // Download Handler (The Bootloader)
+    case 0x3C: // Alternative Boot Command
     {
-        qDebug() << "[DEBUG-R1] Handling WRITE (57). Sending Command ACK...";
-        if (!sio->port()->writeCommandAck()) {
-             qDebug() << "[DEBUG-R1] Failed to send Command ACK (Write).";
-             return;
+        qDebug() << "[R:] Booting Driver to Atari...";
+        if (!sio->port()->writeCommandAck()) return;
+
+        // [CRITICAL] You must insert your compiled 6502 binary here.
+        // This is just a placeholder example.
+        QByteArray handlerBinary;
+        handlerBinary.append((char)0x00); // ... Insert 500+ bytes of 6502 code
+
+        // Send the driver payload
+        sio->port()->writeComplete();
+        sio->port()->writeDataFrame(handlerBinary);
+        break;
+    }
+
+    case 0x20: // Start Concurrent Mode (Stream)
+        qDebug() << "[R:] Entering Concurrent Mode...";
+        if (!sio->port()->writeCommandAck()) return;
+        sio->port()->writeComplete();
+
+        // This function will BLOCK until the mode ends
+        enterConcurrentMode();
+        break;
+
+    case 0x57: // Write (Packet Mode - Keep your existing logic here)
+        // ... (Your existing 0x57 code) ...
+        break;
+
+    case 0x52: // Read (Packet Mode - Keep your existing logic here)
+        // ... (Your existing 0x52 code) ...
+        break;
+
+        // ... Keep Status (0x53) and others ...
+    }
+}
+
+void Rs232::enterConcurrentMode()
+{
+    m_isConcurrentMode = true;
+    m_escapeBuffer.clear();
+    // Use a separate buffer for AT commands while in concurrent mode
+    QByteArray lineBuffer;
+    m_lastCharTime = QDateTime::currentMSecsSinceEpoch();
+
+    bool useHardwareCheck = (respeqtSettings->serialPortHandshakingMethod() != HANDSHAKE_SOFTWARE
+                             && respeqtSettings->serialPortHandshakingMethod() != HANDSHAKE_NO_HANDSHAKE);
+
+    while (m_isConcurrentMode)
+    {
+        QCoreApplication::processEvents();
+
+        // 1. HARDWARE BREAK CHECK
+        if (useHardwareCheck && checkHardwareBreak()) {
+            qDebug() << "[R:] Hardware Break. Exiting.";
+            m_isConcurrentMode = false;
+            break;
         }
 
-        qDebug() << "[DEBUG-R1] Waiting for Data Frame (Len: " << aux << ")...";
-        QByteArray data = sio->port()->readDataFrame(aux);
-        
-        if (data.isEmpty()) { 
-            qDebug() << "[DEBUG-R1] Data Frame Empty/Timeout! Sending NAK.";
-            sio->port()->writeDataNak(); 
-            return; 
-        }
+        // 2. READ FROM ATARI (User Typing)
+         QByteArray dataFromAtari = sio->port()->readAll();   ** TO FIX 1 **
 
-        qDebug() << "[DEBUG-R1] Data Received: " << data.toHex() << " (" << data << ")";
+        if (!dataFromAtari.isEmpty()) {
+            for (char c : dataFromAtari) {
 
-        if (m_isTcpConnected) {
-            qDebug() << "[DEBUG-R1] Socket Open. Writing to TCP.";
-            m_tcpSocket->write(data);
-        }
-        else {
-            qDebug() << "[DEBUG-R1] Socket Closed. Buffering Command.";
-            m_rxBuffer.append(data);
-
-            for (char c : data) {
-                // Check for CR (13) or ATARI EOL (155/$9B)
-                if (c == '\r' || c == (char)155) { 
-                    QString cmd = QString::fromLatin1(m_atCommandBuffer).trimmed();
-                    qDebug() << "[DEBUG-R1] EOL Detected. Processing Command: " << cmd;
-                    m_atCommandBuffer.clear();
-                    processAtCommand(cmd);
+                // A. Check for Escape Sequence (+++)
+                if (checkForEscapeSequence(c)) {
+                    m_isConcurrentMode = false;
+                    sendToAtari("\r\nOK\r\n");
+                    break;
                 }
-                else if (c == '\n') { /* ignore */ }
-                else if (c == 0x7F || c == 0x08) { 
-                    if (!m_atCommandBuffer.isEmpty()) m_atCommandBuffer.chop(1);
+
+                // B. Logic: Are we Connected or Offline?
+                if (m_isTcpConnected) {
+                    // ONLINE: Send keystrokes to the BBS
+                    m_tcpSocket->write(&c, 1);
                 }
                 else {
-                    m_atCommandBuffer.append(c);
+                    // OFFLINE: Buffer keystrokes to parse "AT" commands locally
+                    // Echo back to user (Half Duplex/Local Echo) if needed
+                    // sendToAtari(QString(c));
+
+                    if (c == '\r' || c == (char)155) { // Return key hit
+                        QString cmd = QString::fromLatin1(lineBuffer).trimmed();
+                        lineBuffer.clear();
+
+                        // Parse the Command (Reuse your existing processAtCommand)
+                        // This handles the "ATDT bbs.com" logic!
+                        processAtCommand(cmd);
+                    }
+                    else if (c == 0x7F || c == 0x08) { // Backspace
+                        if (!lineBuffer.isEmpty()) lineBuffer.chop(1);
+                    }
+                    else {
+                        lineBuffer.append(c);
+                    }
                 }
             }
         }
 
-        qDebug() << "[DEBUG-R1] Sending Data ACK...";
-        sio->port()->writeDataAck();
-        qDebug() << "[DEBUG-R1] Sending Complete...";
-        sio->port()->writeComplete();
-        qDebug() << "[DEBUG-R1] Write Transaction Finished.";
-        break;
-    }
-
-    case 0x52: // 'R' Read (Modem -> Atari)
-    {
-        qDebug() << "[DEBUG-R1] Handling READ (52). Sending Command ACK...";
-        if (!sio->port()->writeCommandAck()) {
-            qDebug() << "[DEBUG-R1] Failed to send Command ACK (Read).";
-            return;
+        // 3. READ FROM INTERNET (BBS Data)
+        // Only valid if connected
+        if (m_isTcpConnected && m_tcpSocket->bytesAvailable()) {
+            QByteArray dataFromNet = m_tcpSocket->readAll();
+          sio->port()->write(dataFromNet);     ** To Fix **
         }
 
-        QByteArray chunk;
-        if (m_rxBuffer.size() >= aux) {
-            chunk = m_rxBuffer.left(aux);
-            m_rxBuffer.remove(0, aux);
+        // 4. Prevent CPU Hogging
+        QThread::msleep(1);
+    }
+}
+bool Rs232::checkForEscapeSequence(char c)
+{
+    qint64 now = QDateTime::currentMSecsSinceEpoch();
+    qint64 delta = now - m_lastCharTime;
+    m_lastCharTime = now;
+
+    // Guard Time: Silence before the sequence (e.g., 1000ms)
+    // If a character comes in too fast, reset buffer.
+    if (m_escapeBuffer.isEmpty()) {
+        if (c == '+' && delta > 1000) {
+            m_escapeBuffer.append(c);
+        }
+    }
+    else {
+        // We are in the middle of a sequence
+        if (c == '+' && delta < 1000) { // Must be typed relatively quickly
+            m_escapeBuffer.append(c);
+            if (m_escapeBuffer.size() == 3) {
+                // We have "+++". Now we need to wait 1s for the trailing silence.
+                // We can cheat here: Return true, but in the main loop,
+                // wait 1s before processing any more data.
+                return true;
+            }
         } else {
-            chunk = m_rxBuffer;
-            m_rxBuffer.clear();
-            while (chunk.size() < aux) chunk.append((char)0);
+            // Invalid char or too slow, reset
+            m_escapeBuffer.clear();
         }
-        
-        qDebug() << "[DEBUG-R1] Buffer State: Sending chunk " << chunk.toHex() << ". Remaining in Buffer: " << m_rxBuffer.size();
-
-        qDebug() << "[DEBUG-R1] Sending Complete...";
-        sio->port()->writeComplete();
-        qDebug() << "[DEBUG-R1] Sending Data Frame...";
-        sio->port()->writeDataFrame(chunk);
-        qDebug() << "[DEBUG-R1] Read Transaction Finished.";
-        break;
     }
+    return false;
+}
 
-    case 0x53: // 'S' Status
-    {
-        qDebug() << "[DEBUG-R1] Handling STATUS (53).";
-        if (!sio->port()->writeCommandAck()) return;
-        QByteArray status(4, 0);
-        quint8 bits = 0xBF; // DSR|CTS|DCD|Idle
-        status[0] = 0xFF; // Force everything ON
-        sio->port()->writeComplete();
-        sio->port()->writeDataFrame(status);
-        break;
-    }
+bool Rs232::checkHardwareBreak()
+{
+    QSerialPort::PinoutSignals pins = sio->port()->pinoutSignals();  ** TO FIX  2 **
 
-    case 0x43: // 'C' Control
-        sio->port()->writeCommandAck();
-        sio->port()->writeComplete();
-        break;
+    int method = respeqtSettings->serialPortHandshakingMethod();
 
-    case 0x58: 
-    case 0x41: 
-    case 0x3F: 
-    case 0xF3: 
-        if (!sio->port()->writeCommandAck()) return;
-        if (aux > 0) {
-            QByteArray emptyData(aux, 0);
-            sio->port()->writeComplete();
-            sio->port()->writeDataFrame(emptyData);
-        } else {
-            sio->port()->writeComplete();
-        }
-        break;
+    // Check logical alignment with Option Constants (check your aspeqtsettings.h)
+    if (method == HANDSHAKE_CTS && (pins & QSerialPort::ClearToSendSignal)) return true;
+    if (method == HANDSHAKE_DSR && (pins & QSerialPort::DataSetReadySignal)) return true;
 
-    default:
-        qCritical() << "!!! UNKNOWN COMMAND DETECTED: $"
-                    << QString::number(command, 16).toUpper();
-        sio->port()->writeCommandAck();
-        if (aux > 0) {
-            QByteArray fakeData(aux, 0);
-            sio->port()->writeComplete();
-            sio->port()->writeDataFrame(fakeData);
-        } else {
-            sio->port()->writeComplete();
-        }
-        break;
-    }
+    // Note: The logic is usually "Active Low" implies command mode.
+    // You may need to invert this depending on your specific SIO2PC wiring.
+    // Usually: If Pin is ACTIVE (Command Line Low), we break.
+
+    return false;
 }
 
 // --- AT Command Parser ---

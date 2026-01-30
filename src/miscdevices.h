@@ -27,11 +27,22 @@ private:
     QByteArray m_atCommandBuffer; // Buffer for incoming AT commands
     QByteArray m_rxBuffer;        // Buffer for data going TO the Atari
 
+    bool m_isConcurrentMode;
+    QByteArray m_escapeBuffer;
+    qint64 m_lastCharTime;
+
+
     // Helpers
     void handlePhysical(quint8 command, quint16 aux);
     void handleTelnet(quint8 command, quint16 aux);
     void processAtCommand(QString cmd);
     void sendToAtari(QString text);
+
+    void enterConcurrentMode();
+    bool checkForEscapeSequence(char c);
+    bool checkHardwareBreak(); // Checks CTS/DSR based on settings
+
+
 
 private slots:
     void onSocketReadyRead();
