@@ -31,7 +31,7 @@ public:
     void showAsEmpty();
     void showAsFolderMounted(const QString &fileName, const QString &description, bool editEnabled);
     void showAsImageMounted(const QString &fileName, const QString &description, bool editEnabled, bool enableSave);
-
+    void showAsTNFSMounted(const QString &fileName, const QString &description);
     void updateFromImage(SimpleDiskImage* diskImage);
 
     bool isAutoSaveEnabled();

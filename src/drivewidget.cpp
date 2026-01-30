@@ -175,6 +175,37 @@ void DriveWidget::showAsImageMounted(const QString &fileName, const QString &des
     ui->actionRevert->setEnabled(enableSave);
 }
 
+void DriveWidget::showAsTNFSMounted(const QString &fileName, const QString &description)
+{
+    // 1. Set Visuals
+    ui->labelFileName->setText(fileName);
+    ui->labelImageProperties->setText(description);
+
+    // Set text color to differentiate (Optional: Blue-ish to indicate network?)
+    ui->labelFileName->setStyleSheet("color: rgb(0, 0, 150); font-weight: normal");
+
+    // 2. DISABLE Incompatible Actions
+    ui->actionSave->setEnabled(false);
+    ui->actionSaveAs->setEnabled(false);
+    ui->actionRevert->setEnabled(false);
+
+    ui->actionAutoSave->setChecked(false); // Uncheck it first
+    ui->actionAutoSave->setEnabled(false); // Then disable it
+
+    ui->actionEditDisk->setEnabled(false); // Disable "Explore"
+
+    // Disable Happy Mode toggle
+    ui->actionHappyMode->setEnabled(false);
+
+    // 3. ENABLE Navigation Actions
+    ui->actionEject->setEnabled(true);
+    ui->actionMountDisk->setEnabled(true);   // Allow swapping
+    ui->actionMountFolder->setEnabled(true); // Allow swapping
+
+    // 4. Update Status Tips
+    setLabelToolTips(fileName, fileName, description);
+}
+
 bool DriveWidget::isAutoSaveEnabled()
 {
     return ui->actionAutoSave->isChecked();

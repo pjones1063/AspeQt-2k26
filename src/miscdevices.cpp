@@ -10,12 +10,15 @@
 
 #include "miscdevices.h"
 #include "aspeqtsettings.h"
-#include "mainwindow.h"
 #include <QDateTime>
 #include <QtDebug>
 #include <QDesktopServices>
 #include <QUrl>
 #include <QLocale>
+#include <QDir>
+#include <QFileInfo>
+#include "diskimage.h"
+
 
 extern char g_rclSlotNo;
 bool conversionMsgdisplayedOnce;
@@ -25,333 +28,13 @@ QByteArray  commandOutput;
 
 QHash <quint8, QString> files;
 
-
-// ==========================================
-// RS232 Implementation (Dual Mode: Physical & Telnet)
-// ==========================================
-
-Rs232::Rs232(SioWorker *worker) : SioDevice(worker)
-{
-    // Init Physical
-    m_serialPort = new QSerialPort(this);
-#ifdef Q_OS_LINUX
-    m_portName = "ttyUSB";
-#else
-    m_portName = "COM";
-#endif
-
-    // Init Telnet
-    m_tcpSocket = new QTcpSocket(this);
-    m_isTcpConnected = false;
-
-    connect(m_tcpSocket, &QTcpSocket::readyRead, this, &Rs232::onSocketReadyRead);
-    connect(m_tcpSocket, &QTcpSocket::connected, this, &Rs232::onSocketConnected);
-    connect(m_tcpSocket, &QTcpSocket::disconnected, this, &Rs232::onSocketDisconnected);
-    connect(m_tcpSocket, &QTcpSocket::errorOccurred, this, &Rs232::onSocketError);
-}
-
-Rs232::~Rs232()
-{
-    if (m_serialPort->isOpen()) m_serialPort->close();
-    m_tcpSocket->abort();
-}
-
-// --------------------------------------------------------------------------
-// THE MAIN TRIGGER
-// --------------------------------------------------------------------------
-void Rs232::handleCommand(quint8 command, quint16 aux)
-{
-    int index = m_deviceNo - RS232_BASE_CDEVIC;
-    if (index < 0) index = 0;
-
-    int mode = respeqtSettings->rs232Mode(index); 
-
-    // LOG COMMAND ARRIVAL
-    qDebug() << "!n" << tr("[DEBUG-R1] Command Arrival: $%1 Aux: $%2 Mode: %3")
-                            .arg(command, 2, 16, QChar('0'))
-                            .arg(aux, 4, 16, QChar('0'))
-                            .arg(mode == 1 ? "Telnet" : "Physical");
-
-    if (mode == 1) {
-        if (m_serialPort->isOpen()) m_serialPort->close();
-        handleTelnet(command, aux);
-    }
-    else {
-        if (m_tcpSocket->state() != QAbstractSocket::UnconnectedState)
-            m_tcpSocket->abort();
-        handlePhysical(command, aux);
-    }
-}
-
-void Rs232::handlePhysical(quint8 command, quint16 aux)
-{
-    // Keeping Physical logic brief to focus on Telnet debugging
-    if (command == 0x53)
-    {
-        if (!sio->port()->writeCommandAck()) return;
-        QByteArray status(4, 0);
-        quint8 bits = 0x0F; 
-        if (!m_serialPort->isOpen()) bits = 0x3F; // Fake Ready
-        status[0] = bits; 
-        sio->port()->writeComplete();
-        sio->port()->writeDataFrame(status);
-        return;
-    }
-    // ... (Lazy init logic omitted for brevity in this debug paste, standard implementation applies) ...
-    sio->port()->writeCommandNak(); // Fallback if used by accident
-}
-
-void Rs232::configurePort(quint16 val1, quint16 /*val2*/)
-{
-    // ... Standard implementation ...
-}
-
-// --------------------------------------------------------------------------
-// TELNET MODEM LOGIC (DEBUGGED)
-// --------------------------------------------------------------------------
-void Rs232::handleTelnet(quint8 command, quint16 aux)
-{
-    switch(command)
-    {
-    case 0x26: // Download Handler (The Bootloader)
-    case 0x3C: // Alternative Boot Command
-    {
-        qDebug() << "[R:] Booting Driver to Atari...";
-        if (!sio->port()->writeCommandAck()) return;
-
-        // [CRITICAL] You must insert your compiled 6502 binary here.
-        // This is just a placeholder example.
-        QByteArray handlerBinary;
-        handlerBinary.append((char)0x00); // ... Insert 500+ bytes of 6502 code
-
-        // Send the driver payload
-        sio->port()->writeComplete();
-        sio->port()->writeDataFrame(handlerBinary);
-        break;
-    }
-
-    case 0x20: // Start Concurrent Mode (Stream)
-        qDebug() << "[R:] Entering Concurrent Mode...";
-        if (!sio->port()->writeCommandAck()) return;
-        sio->port()->writeComplete();
-
-        // This function will BLOCK until the mode ends
-        enterConcurrentMode();
-        break;
-
-    case 0x57: // Write (Packet Mode - Keep your existing logic here)
-        // ... (Your existing 0x57 code) ...
-        break;
-
-    case 0x52: // Read (Packet Mode - Keep your existing logic here)
-        // ... (Your existing 0x52 code) ...
-        break;
-
-        // ... Keep Status (0x53) and others ...
-    }
-}
-
-void Rs232::enterConcurrentMode()
-{
-    m_isConcurrentMode = true;
-    m_escapeBuffer.clear();
-    // Use a separate buffer for AT commands while in concurrent mode
-    QByteArray lineBuffer;
-    m_lastCharTime = QDateTime::currentMSecsSinceEpoch();
-
-    bool useHardwareCheck = (respeqtSettings->serialPortHandshakingMethod() != HANDSHAKE_SOFTWARE
-                             && respeqtSettings->serialPortHandshakingMethod() != HANDSHAKE_NO_HANDSHAKE);
-
-    while (m_isConcurrentMode)
-    {
-        QCoreApplication::processEvents();
-
-        // 1. HARDWARE BREAK CHECK
-        if (useHardwareCheck && checkHardwareBreak()) {
-            qDebug() << "[R:] Hardware Break. Exiting.";
-            m_isConcurrentMode = false;
-            break;
-        }
-
-        // 2. READ FROM ATARI (User Typing)
-         QByteArray dataFromAtari = sio->port()->readAll();   ** TO FIX 1 **
-
-        if (!dataFromAtari.isEmpty()) {
-            for (char c : dataFromAtari) {
-
-                // A. Check for Escape Sequence (+++)
-                if (checkForEscapeSequence(c)) {
-                    m_isConcurrentMode = false;
-                    sendToAtari("\r\nOK\r\n");
-                    break;
-                }
-
-                // B. Logic: Are we Connected or Offline?
-                if (m_isTcpConnected) {
-                    // ONLINE: Send keystrokes to the BBS
-                    m_tcpSocket->write(&c, 1);
-                }
-                else {
-                    // OFFLINE: Buffer keystrokes to parse "AT" commands locally
-                    // Echo back to user (Half Duplex/Local Echo) if needed
-                    // sendToAtari(QString(c));
-
-                    if (c == '\r' || c == (char)155) { // Return key hit
-                        QString cmd = QString::fromLatin1(lineBuffer).trimmed();
-                        lineBuffer.clear();
-
-                        // Parse the Command (Reuse your existing processAtCommand)
-                        // This handles the "ATDT bbs.com" logic!
-                        processAtCommand(cmd);
-                    }
-                    else if (c == 0x7F || c == 0x08) { // Backspace
-                        if (!lineBuffer.isEmpty()) lineBuffer.chop(1);
-                    }
-                    else {
-                        lineBuffer.append(c);
-                    }
-                }
-            }
-        }
-
-        // 3. READ FROM INTERNET (BBS Data)
-        // Only valid if connected
-        if (m_isTcpConnected && m_tcpSocket->bytesAvailable()) {
-            QByteArray dataFromNet = m_tcpSocket->readAll();
-          sio->port()->write(dataFromNet);     ** To Fix **
-        }
-
-        // 4. Prevent CPU Hogging
-        QThread::msleep(1);
-    }
-}
-bool Rs232::checkForEscapeSequence(char c)
-{
-    qint64 now = QDateTime::currentMSecsSinceEpoch();
-    qint64 delta = now - m_lastCharTime;
-    m_lastCharTime = now;
-
-    // Guard Time: Silence before the sequence (e.g., 1000ms)
-    // If a character comes in too fast, reset buffer.
-    if (m_escapeBuffer.isEmpty()) {
-        if (c == '+' && delta > 1000) {
-            m_escapeBuffer.append(c);
-        }
-    }
-    else {
-        // We are in the middle of a sequence
-        if (c == '+' && delta < 1000) { // Must be typed relatively quickly
-            m_escapeBuffer.append(c);
-            if (m_escapeBuffer.size() == 3) {
-                // We have "+++". Now we need to wait 1s for the trailing silence.
-                // We can cheat here: Return true, but in the main loop,
-                // wait 1s before processing any more data.
-                return true;
-            }
-        } else {
-            // Invalid char or too slow, reset
-            m_escapeBuffer.clear();
-        }
-    }
-    return false;
-}
-
-bool Rs232::checkHardwareBreak()
-{
-    QSerialPort::PinoutSignals pins = sio->port()->pinoutSignals();  ** TO FIX  2 **
-
-    int method = respeqtSettings->serialPortHandshakingMethod();
-
-    // Check logical alignment with Option Constants (check your aspeqtsettings.h)
-    if (method == HANDSHAKE_CTS && (pins & QSerialPort::ClearToSendSignal)) return true;
-    if (method == HANDSHAKE_DSR && (pins & QSerialPort::DataSetReadySignal)) return true;
-
-    // Note: The logic is usually "Active Low" implies command mode.
-    // You may need to invert this depending on your specific SIO2PC wiring.
-    // Usually: If Pin is ACTIVE (Command Line Low), we break.
-
-    return false;
-}
-
-// --- AT Command Parser ---
-void Rs232::processAtCommand(QString cmd)
-{
-    qDebug() << "[DEBUG-R1] Executing AT Command Logic for: " << cmd;
-    cmd = cmd.toUpper();
-
-    if (cmd == "AT") {
-        sendToAtari("OK\r\n");
-    }
-    else if (cmd == "ATI") {
-        sendToAtari("AspeQt Wifi Modem V1.0\r\nOK\r\n");
-    }
-    else if (cmd.startsWith("ATDT")) {
-        QString target = cmd.mid(4).trimmed();
-        int port = 23;
-        QString host = target;
-
-        if (target.contains(":")) {
-            QStringList parts = target.split(":");
-            host = parts[0];
-            port = parts[1].toInt();
-        }
-
-        if (host.isEmpty()) {
-            sendToAtari("ERROR\r\n");
-        } else {
-            sendToAtari("DIALING " + host + "...\r\n");
-            m_tcpSocket->connectToHost(host, port);
-        }
-    }
-    else if (cmd == "ATH") {
-        if (m_isTcpConnected) m_tcpSocket->disconnectFromHost();
-        else sendToAtari("OK\r\n");
-    }
-    else if (cmd == "ATZ") {
-        if (m_isTcpConnected) m_tcpSocket->disconnectFromHost();
-        sendToAtari("OK\r\n");
-    }
-    else {
-        sendToAtari("ERROR\r\n");
-    }
-}
-
-void Rs232::sendToAtari(QString text)
-{
-    qDebug() << "[DEBUG-R1] Queuing response to Atari: " << text;
-    m_rxBuffer.append(text.toLatin1());
-}
-
-// --- Socket Slots ---
-void Rs232::onSocketConnected() {
-    m_isTcpConnected = true;
-    sendToAtari("CONNECT\r\n");
-    qDebug() << "!n" << tr("[%1] Telnet Connected.").arg(deviceName());
-}
-
-void Rs232::onSocketDisconnected() {
-    m_isTcpConnected = false;
-    sendToAtari("\r\nNO CARRIER\r\n");
-    qDebug() << "!n" << tr("[%1] Telnet Disconnected.").arg(deviceName());
-}
-
-void Rs232::onSocketReadyRead() {
-    QByteArray data = m_tcpSocket->readAll();
-    m_rxBuffer.append(data);
-}
-
-void Rs232::onSocketError(QAbstractSocket::SocketError) {
-    qDebug() << "!e" << tr("[%1] Socket Error: %2").arg(deviceName()).arg(m_tcpSocket->errorString());
-    if (!m_isTcpConnected) sendToAtari("BUSY\r\n");
-}
-
 // ==========================================
 // PRINTER IMPLEMENTATION
 // ==========================================
 
 void Printer::handleCommand(quint8 command, quint16 aux)
 {
-    if(respeqtSettings->printerEmulation()) {
+    if(aspeqtSettings->printerEmulation()) {
         switch(command) {
         case 0x53:
         {
@@ -436,7 +119,7 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
     }
     case 0x55: // Submit URL
     {
-        if(respeqtSettings->isURLSubmitEnabled() && aux!=0 && aux<=2000)
+        if(aspeqtSettings->isURLSubmitEnabled() && aux!=0 && aux<=2000)
         {
             if (!sio->port()->writeCommandAck()) return;
             QByteArray data = sio->port()->readDataFrame(aux);
@@ -477,7 +160,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
         if (!sio->port()->writeCommandAck()) return;
 
         QByteArray  fdata(255, 0);
-        QString cmd = respeqtSettings->lastRclCommand();
+        QString cmd = aspeqtSettings->lastRclCommand();
         QByteArray cm = cmd.toUtf8();
         if(cm.length() < 1) cm = "";
         for(int i=0; i < 253; i++)
@@ -496,14 +179,14 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
         QByteArray  fdata(255, 0);
         fdata = sio->port()->readDataFrame(32);
         QString cmd =  fdata;
-        if (cmd.isEmpty()) cmd = respeqtSettings->lastRclCommand();
+        if (cmd.isEmpty()) cmd = aspeqtSettings->lastRclCommand();
 
 #if defined(Q_OS_WIN)
         process.start( "cmd ",  QStringList() <<"/c" << cmd  );
 #else
         process.start( "sh", QStringList() <<"-c" << cmd  );
 #endif
-        respeqtSettings->setRclCommand(cmd);
+        aspeqtSettings->setRclCommand(cmd);
         qCritical().noquote() << "!i" << tr("[%1]").arg(cmd);
         qCritical() << "!i" << tr("Command Complete [%1]").arg("--");
 
@@ -585,7 +268,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
         if (!sio->port()->writeCommandAck()) return;
 
         QByteArray  ddata(255, 0);
-        QString pth = respeqtSettings->lastRclDir() + fPath;
+        QString pth = aspeqtSettings->lastRclDir() + fPath;
         if(pth.trimmed().isEmpty()) {
             QByteArray fn = QString("Home not set in Options>Emulation").toUtf8();
             for(int i=0; i < 253; i++)
@@ -698,7 +381,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
         if (swapDisk2 > 9) swapDisk2 -= 16;
         if (swapDisk1 >= 0 and swapDisk1 < 15 and swapDisk2 >=0 and swapDisk2 < 15 and swapDisk1 != swapDisk2) {
             sio->swapDevices(swapDisk1 + DISK_BASE_CDEVIC, swapDisk2 + DISK_BASE_CDEVIC);
-            respeqtSettings->swapImages(swapDisk1, swapDisk2);
+            aspeqtSettings->swapImages(swapDisk1, swapDisk2);
             qDebug() << "!n" << tr("[%1] Swapped disk %2 with disk %3.").arg(deviceName()).arg(swapDisk2 + 1).arg(swapDisk1 + 1);
         } else {
             sio->port()->writeCommandNak();
@@ -724,7 +407,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
                     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + DISK_BASE_CDEVIC));
                     sio->uninstallDevice(i + DISK_BASE_CDEVIC);
                     delete img;
-                    respeqtSettings->unmountImage(i);
+                    aspeqtSettings->unmountImage(i);
                 }
                 qDebug() << "!n" << tr("[%1] ALL images were remotely unmounted").arg(deviceName());
             } else {
@@ -733,7 +416,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
                 if (img && img->isModified() && !img->isUnnamed()) img->save();
                 sio->uninstallDevice(unmountDisk - 1 + DISK_BASE_CDEVIC);
                 delete img;
-                respeqtSettings->unmountImage(unmountDisk - 1);
+                aspeqtSettings->unmountImage(unmountDisk - 1);
                 qDebug() << "!n" << tr("[%1] Remotely unmounted disk %2").arg(deviceName()).arg(unmountDisk);
             }
         } else {
@@ -747,7 +430,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
     case 0x97 :   // Create and Mount a new Disk Image
     {
         if (!sio->port()->writeCommandAck()) return;
-        if(respeqtSettings->lastRclDir() == "") {
+        if(aspeqtSettings->lastRclDir() == "") {
             qCritical() << "!e" << tr("[%1] AspeQt can't determine the folder where the image file must be created/mounted!").arg(deviceName());
             sio->port()->writeDataNak();
             sio->port()->writeError();
@@ -775,7 +458,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
                 return;
             }
             imageFileName = imageFileName.left(i);
-            QFile file(respeqtSettings->lastRclDir() + "/" + imageFileName);
+            QFile file(aspeqtSettings->lastRclDir() + "/" + imageFileName);
             if (!file.open(QIODevice::WriteOnly)) {
                 sio->port()->writeDataNak();
                 sio->port()->writeError();
@@ -871,7 +554,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
         if (mountDisk > 9) mountDisk -= 16;
         if (mountDisk != -7 && (mountDisk <0 || mountDisk > 14)) mountDisk = 0;
 
-        if(respeqtSettings->lastRclDir() == "") {
+        if(aspeqtSettings->lastRclDir() == "") {
             sio->port()->writeDataNak();
             sio->port()->writeError();
             return;
@@ -921,7 +604,7 @@ void Mnu::handleCommand(quint8 command, quint16 aux)
     {
         if (!sio->port()->writeCommandAck()) return;
         QByteArray  fdata(255, 0);
-        QString pth = respeqtSettings->lastRclDir() + fPath;
+        QString pth = aspeqtSettings->lastRclDir() + fPath;
         QByteArray fn = pth.toUtf8();
         if(fn.length() < 5) {
             qCritical() << "!e" << tr("** AspeQT home folder not set - Goto Tools>Options>Emulation");

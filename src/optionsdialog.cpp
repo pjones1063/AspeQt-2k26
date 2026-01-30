@@ -45,87 +45,46 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     {
         m_ui->serialPortComboBox->addItem(it->portName(),it->systemLocation());
     }
-    m_ui->serialPortComboBox->setCurrentText(respeqtSettings->serialPortName());
-    if(0 != m_ui->serialPortComboBox->currentText().compare(respeqtSettings->serialPortName(),Qt::CaseInsensitive))
+    m_ui->serialPortComboBox->setCurrentText(aspeqtSettings->serialPortName());
+    if(0 != m_ui->serialPortComboBox->currentText().compare(aspeqtSettings->serialPortName(),Qt::CaseInsensitive))
     {
         m_ui->serialPortComboBox->setEditable(true);
-        m_ui->serialPortComboBox->addItem(respeqtSettings->serialPortName());
-        m_ui->serialPortComboBox->setCurrentText(respeqtSettings->serialPortName());
+        m_ui->serialPortComboBox->addItem(aspeqtSettings->serialPortName());
+        m_ui->serialPortComboBox->setCurrentText(aspeqtSettings->serialPortName());
     }
     else
     {
         m_ui->serialPortComboBox->addItem(tr("Custom"));
     }
 
-    // --- NEW: Populate Atari 850 Port & Mode Combos ---
-    QComboBox* rs232Combos[4] = {
-        m_ui->rs232Port1Combo, m_ui->rs232Port2Combo,
-        m_ui->rs232Port3Combo, m_ui->rs232Port4Combo
-    };
-    QComboBox* rs232Modes[4] = {
-        m_ui->rs232Mode1Combo, m_ui->rs232Mode2Combo,
-        m_ui->rs232Mode3Combo, m_ui->rs232Mode4Combo
-    };
 
     // Pre-fetch available ports
     const QList<QSerialPortInfo> rInfos = QSerialPortInfo::availablePorts();
 
-    for (int i = 0; i < 4; i++) {
-        // 1. Setup Port Combo
-        rs232Combos[i]->clear();
-        rs232Combos[i]->addItem(tr("None"), ""); // Option to disable the port
-        for (const QSerialPortInfo &info : rInfos) {
-            rs232Combos[i]->addItem(info.portName(), info.systemLocation());
-        }
+    m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
+    m_ui->serialPortFallingEdge->setChecked(aspeqtSettings->serialPortTriggerOnFallingEdge());
+    m_ui->serialPortWriteDelayCombo->setCurrentIndex(aspeqtSettings->serialPortWriteDelay());
+    m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
+    m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
+    m_ui->serialPortDivisorEdit->setValue(aspeqtSettings->serialPortPokeyDivisor());
+    m_ui->serialPortCompErrDelayBox->setValue(aspeqtSettings->serialPortCompErrDelay());
+    m_ui->atariSioDriverNameEdit->setText(aspeqtSettings->atariSioDriverName());
+    m_ui->atariSioHandshakingMethodCombo->setCurrentIndex(aspeqtSettings->atariSioHandshakingMethod());
+    m_ui->emulationHighSpeedExeLoaderBox->setChecked(aspeqtSettings->useHighSpeedExeLoader());
+    m_ui->emulationUseCustomCasBaudBox->setChecked(aspeqtSettings->useCustomCasBaud());
+    m_ui->emulationCustomCasBaudSpin->setValue(aspeqtSettings->customCasBaud());
+    m_ui->minimizeToTrayBox->setChecked(aspeqtSettings->minimizeToTray());
+    m_ui->saveWinPosBox->setChecked(aspeqtSettings->saveWindowsPos());
+    m_ui->saveDiskVisBox->setChecked(aspeqtSettings->saveDiskVis());
+    m_ui->filterUscore->setChecked(aspeqtSettings->filterUnderscore());
+    m_ui->capitalLettersPCLINK->setChecked(aspeqtSettings->capitalLettersInPCLINK());
+    m_ui->URLSubmit->setChecked(aspeqtSettings->isURLSubmitEnabled());
+    m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
+    m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
+    m_ui->RclNameEdit->setText(aspeqtSettings->lastRclDir());
+    m_ui->RclCommand->setText(aspeqtSettings->lastRclCommand());
 
-        // Restore saved port selection
-        QString savedPort = respeqtSettings->rs232PortName(i);
-        rs232Combos[i]->setCurrentText(savedPort);
-
-        // Handle custom text (if user typed a path manually)
-        if (rs232Combos[i]->findText(savedPort) == -1 && !savedPort.isEmpty()) {
-            rs232Combos[i]->addItem(savedPort);
-            rs232Combos[i]->setCurrentText(savedPort);
-        }
-
-        // 2. Setup Mode Combo (Physical vs Telnet)
-        int savedMode = respeqtSettings->rs232Mode(i);
-        rs232Modes[i]->setCurrentIndex(savedMode); // 0=Physical, 1=Telnet
-
-        // Enable/Disable the physical port dropdown based on mode
-        rs232Combos[i]->setEnabled(savedMode == 0);
-
-        // Connect signal to toggle enabled state dynamically
-        connect(rs232Modes[i], static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-                [=](int index){
-                    rs232Combos[i]->setEnabled(index == 0);
-                });
-    }
-
-    m_ui->serialPortHandshakeCombo->setCurrentIndex(respeqtSettings->serialPortHandshakingMethod());
-    m_ui->serialPortFallingEdge->setChecked(respeqtSettings->serialPortTriggerOnFallingEdge());
-    m_ui->serialPortWriteDelayCombo->setCurrentIndex(respeqtSettings->serialPortWriteDelay());
-    m_ui->serialPortBaudCombo->setCurrentIndex(respeqtSettings->serialPortMaximumSpeed());
-    m_ui->serialPortUseDivisorsBox->setChecked(respeqtSettings->serialPortUsePokeyDivisors());
-    m_ui->serialPortDivisorEdit->setValue(respeqtSettings->serialPortPokeyDivisor());
-    m_ui->serialPortCompErrDelayBox->setValue(respeqtSettings->serialPortCompErrDelay());
-    m_ui->atariSioDriverNameEdit->setText(respeqtSettings->atariSioDriverName());
-    m_ui->atariSioHandshakingMethodCombo->setCurrentIndex(respeqtSettings->atariSioHandshakingMethod());
-    m_ui->emulationHighSpeedExeLoaderBox->setChecked(respeqtSettings->useHighSpeedExeLoader());
-    m_ui->emulationUseCustomCasBaudBox->setChecked(respeqtSettings->useCustomCasBaud());
-    m_ui->emulationCustomCasBaudSpin->setValue(respeqtSettings->customCasBaud());
-    m_ui->minimizeToTrayBox->setChecked(respeqtSettings->minimizeToTray());
-    m_ui->saveWinPosBox->setChecked(respeqtSettings->saveWindowsPos());
-    m_ui->saveDiskVisBox->setChecked(respeqtSettings->saveDiskVis());
-    m_ui->filterUscore->setChecked(respeqtSettings->filterUnderscore());
-    m_ui->capitalLettersPCLINK->setChecked(respeqtSettings->capitalLettersInPCLINK());
-    m_ui->URLSubmit->setChecked(respeqtSettings->isURLSubmitEnabled());
-    m_ui->useLargerFont->setChecked(respeqtSettings->useLargeFont());
-    m_ui->enableShade->setChecked(respeqtSettings->enableShade());
-    m_ui->RclNameEdit->setText(respeqtSettings->lastRclDir());
-    m_ui->RclCommand->setText(respeqtSettings->lastRclCommand());
-
-    switch (respeqtSettings->backend()) {
+    switch (aspeqtSettings->backend()) {
     case SERIAL_BACKEND_STANDARD:
         itemStandard->setCheckState(0, Qt::Checked);
         itemAtariSio->setCheckState(0, Qt::Unchecked);
@@ -144,26 +103,26 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     QTranslator local_translator;
     m_ui->i18nLanguageCombo->clear();
     m_ui->i18nLanguageCombo->addItem(tr("Automatic"), "auto");
-    if (respeqtSettings->i18nLanguage().compare("auto") == 0)
+    if (aspeqtSettings->i18nLanguage().compare("auto") == 0)
         m_ui->i18nLanguageCombo->setCurrentIndex(0);
     m_ui->i18nLanguageCombo->addItem(QT_TR_NOOP("English"), "en");
-    if (respeqtSettings->i18nLanguage().compare("en") == 0)
+    if (aspeqtSettings->i18nLanguage().compare("en") == 0)
         m_ui->i18nLanguageCombo->setCurrentIndex(1);
     QDir dir(":/translations/i18n/");
     QStringList filters;
-    filters << "respeqt_*.qm";
+    filters << "aspeqt_*.qm";
     dir.setNameFilters(filters);
     for (int i = 0; i < dir.entryList().size(); ++i) {
         local_translator.load(":/translations/i18n/" + dir.entryList()[i]);
-        m_ui->i18nLanguageCombo->addItem(local_translator.translate("OptionsDialog", "English"), dir.entryList()[i].replace("respeqt_", "").replace(".qm", ""));
-        if (dir.entryList()[i].replace("respeqt_", "").replace(".qm", "").compare(respeqtSettings->i18nLanguage()) == 0) {
+        m_ui->i18nLanguageCombo->addItem(local_translator.translate("OptionsDialog", "English"), dir.entryList()[i].replace("aspeqt_", "").replace(".qm", ""));
+        if (dir.entryList()[i].replace("aspeqt_", "").replace(".qm", "").compare(aspeqtSettings->i18nLanguage()) == 0) {
             m_ui->i18nLanguageCombo->setCurrentIndex(i+2);
         }
     }
 
     m_ui->buttonRclFolder->setIcon(QIcon(":/icons/silk-icons/icons/folder.png").pixmap(16, 16, QIcon::Normal, QIcon::On));
-    bool no_handshake = (respeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_NO_HANDSHAKE);
-    bool software_handshake = (respeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_SOFTWARE);
+    bool no_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_NO_HANDSHAKE);
+    bool software_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_SOFTWARE);
     m_ui->serialPortWriteDelayLabel->setVisible(software_handshake);
     m_ui->serialPortWriteDelayCombo->setVisible(software_handshake);
     m_ui->serialPortBaudLabel->setVisible(!software_handshake);
@@ -179,7 +138,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->serialPortFallingEdge->setVisible(false);
 #endif
 
-    if((SERIAL_BACKEND_STANDARD == respeqtSettings->backend()) && software_handshake)
+    if((SERIAL_BACKEND_STANDARD == aspeqtSettings->backend()) && software_handshake)
     {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(false);
     }
@@ -287,29 +246,29 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
 
 void OptionsDialog::OptionsDialog_accepted()
 {
-    respeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
-    respeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
-    respeqtSettings->setSerialPortTriggerOnFallingEdge(m_ui->serialPortFallingEdge->isChecked());
-    respeqtSettings->setSerialPortWriteDelay(m_ui->serialPortWriteDelayCombo->currentIndex());
-    respeqtSettings->setSerialPortCompErrDelay(m_ui->serialPortCompErrDelayBox->value());
-    respeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
-    respeqtSettings->setSerialPortUsePokeyDivisors(m_ui->serialPortUseDivisorsBox->isChecked());
-    respeqtSettings->setSerialPortPokeyDivisor(m_ui->serialPortDivisorEdit->value());
-    respeqtSettings->setAtariSioDriverName(m_ui->atariSioDriverNameEdit->text());
-    respeqtSettings->setAtariSioHandshakingMethod(m_ui->atariSioHandshakingMethodCombo->currentIndex());
-    respeqtSettings->setUseHighSpeedExeLoader(m_ui->emulationHighSpeedExeLoaderBox->isChecked());
-    respeqtSettings->setUseCustomCasBaud(m_ui->emulationUseCustomCasBaudBox->isChecked());
-    respeqtSettings->setCustomCasBaud(m_ui->emulationCustomCasBaudSpin->value());
-    respeqtSettings->setMinimizeToTray(m_ui->minimizeToTrayBox->isChecked());
-    respeqtSettings->setsaveWindowsPos(m_ui->saveWinPosBox->isChecked());
-    respeqtSettings->setsaveDiskVis(m_ui->saveDiskVisBox->isChecked());
-    respeqtSettings->setfilterUnderscore(m_ui->filterUscore->isChecked());
-    respeqtSettings->setCapitalLettersInPCLINK(m_ui->capitalLettersPCLINK->isChecked());
-    respeqtSettings->setURLSubmit(m_ui->URLSubmit->isChecked());
-    respeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
-    respeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
-    respeqtSettings->setRclDir(m_ui->RclNameEdit->text());
-    respeqtSettings->setRclCommand(m_ui->RclCommand->text());
+    aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
+    aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
+    aspeqtSettings->setSerialPortTriggerOnFallingEdge(m_ui->serialPortFallingEdge->isChecked());
+    aspeqtSettings->setSerialPortWriteDelay(m_ui->serialPortWriteDelayCombo->currentIndex());
+    aspeqtSettings->setSerialPortCompErrDelay(m_ui->serialPortCompErrDelayBox->value());
+    aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
+    aspeqtSettings->setSerialPortUsePokeyDivisors(m_ui->serialPortUseDivisorsBox->isChecked());
+    aspeqtSettings->setSerialPortPokeyDivisor(m_ui->serialPortDivisorEdit->value());
+    aspeqtSettings->setAtariSioDriverName(m_ui->atariSioDriverNameEdit->text());
+    aspeqtSettings->setAtariSioHandshakingMethod(m_ui->atariSioHandshakingMethodCombo->currentIndex());
+    aspeqtSettings->setUseHighSpeedExeLoader(m_ui->emulationHighSpeedExeLoaderBox->isChecked());
+    aspeqtSettings->setUseCustomCasBaud(m_ui->emulationUseCustomCasBaudBox->isChecked());
+    aspeqtSettings->setCustomCasBaud(m_ui->emulationCustomCasBaudSpin->value());
+    aspeqtSettings->setMinimizeToTray(m_ui->minimizeToTrayBox->isChecked());
+    aspeqtSettings->setsaveWindowsPos(m_ui->saveWinPosBox->isChecked());
+    aspeqtSettings->setsaveDiskVis(m_ui->saveDiskVisBox->isChecked());
+    aspeqtSettings->setfilterUnderscore(m_ui->filterUscore->isChecked());
+    aspeqtSettings->setCapitalLettersInPCLINK(m_ui->capitalLettersPCLINK->isChecked());
+    aspeqtSettings->setURLSubmit(m_ui->URLSubmit->isChecked());
+    aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
+    aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
+    aspeqtSettings->setRclDir(m_ui->RclNameEdit->text());
+    aspeqtSettings->setRclCommand(m_ui->RclCommand->text());
 
     int backend = SERIAL_BACKEND_STANDARD;
     if (itemAtariSio->checkState(0) == Qt::Checked)
@@ -317,20 +276,9 @@ void OptionsDialog::OptionsDialog_accepted()
         backend = SERIAL_BACKEND_SIO_DRIVER;
     }
 
-    // --- NEW: Save Atari 850 Port Names & Modes ---
-    respeqtSettings->setRs232PortName(0, m_ui->rs232Port1Combo->currentText());
-    respeqtSettings->setRs232PortName(1, m_ui->rs232Port2Combo->currentText());
-    respeqtSettings->setRs232PortName(2, m_ui->rs232Port3Combo->currentText());
-    respeqtSettings->setRs232PortName(3, m_ui->rs232Port4Combo->currentText());
+    aspeqtSettings->setBackend(backend);
 
-    respeqtSettings->setRs232Mode(0, m_ui->rs232Mode1Combo->currentIndex());
-    respeqtSettings->setRs232Mode(1, m_ui->rs232Mode2Combo->currentIndex());
-    respeqtSettings->setRs232Mode(2, m_ui->rs232Mode3Combo->currentIndex());
-    respeqtSettings->setRs232Mode(3, m_ui->rs232Mode4Combo->currentIndex());
-
-    respeqtSettings->setBackend(backend);
-
-    respeqtSettings->setI18nLanguage(m_ui->i18nLanguageCombo->itemData(m_ui->i18nLanguageCombo->currentIndex()).toString());
+    aspeqtSettings->setI18nLanguage(m_ui->i18nLanguageCombo->itemData(m_ui->i18nLanguageCombo->currentIndex()).toString());
 }
 
 void OptionsDialog::on_useEmulationCustomCasBaudBox_toggled(bool checked)
@@ -342,13 +290,13 @@ void OptionsDialog::on_useEmulationCustomCasBaudBox_toggled(bool checked)
 void OptionsDialog::on_buttonRclFolder_clicked()
 {
     QString dir;
-    dir = respeqtSettings->lastRclDir();
+    dir = aspeqtSettings->lastRclDir();
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
     fileName = QDir::fromNativeSeparators(fileName);    //
     if (fileName.isEmpty()) {
         return;
     }
-    respeqtSettings->setRclDir(fileName);
+    aspeqtSettings->setRclDir(fileName);
     m_ui->RclNameEdit->setText(fileName);
 
 }

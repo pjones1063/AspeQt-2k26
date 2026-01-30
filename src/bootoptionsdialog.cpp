@@ -9,7 +9,7 @@
 #include <QTranslator>
 #include <QDir>
 
-extern QString g_respeQtAppPath;
+extern QString g_aspeQtAppPath;
 extern bool g_disablePicoHiSpeed;
 
 QString selectedDOS, bootDir;
@@ -63,7 +63,7 @@ void BootOptionsDialog::accept()
         g_disablePicoHiSpeed = m_ui->disablePicoHiSpeed->isChecked();
     }
 
-    bootDir = g_respeQtAppPath + "/" + selectedDOS;
+    bootDir = g_aspeQtAppPath + "/" + selectedDOS;
 
     // First delete existing boot files in the Folder Image
     // then copy new boot files from the appropriate DOS directory
@@ -76,7 +76,7 @@ void BootOptionsDialog::accept()
     foreach(fileName, allFiles) {
         file.remove(bootFolderPath_ + "/" + fileName);
     }
-    dir.setPath(g_respeQtAppPath + "/" + selectedDOS);
+    dir.setPath(g_aspeQtAppPath + "/" + selectedDOS);
     allFiles =  dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
     foreach(fileName, allFiles) {
         file.copy(dir.path() + "/" + fileName, bootFolderPath_ + "/" + fileName);

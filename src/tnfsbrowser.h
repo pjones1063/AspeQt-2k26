@@ -14,7 +14,7 @@ class TnfsBrowser : public QDialog
     Q_OBJECT
 
 public:
-    explicit TnfsBrowser(QWidget *parent = nullptr);
+    explicit TnfsBrowser(QWidget *parent = nullptr, const QString &initialUrl = "");
     ~TnfsBrowser();
     QString getSelectedUrl() const;
 

@@ -9,52 +9,7 @@
 #include <QAction>
 #include <QSerialPort>
 #include <QTcpSocket>
-#include "tnfsclient.h"
 
-// The Rs232 class now handles both Physical Serial Ports and Telnet Emulation
-class Rs232: public SioDevice
-{
-    Q_OBJECT
-private:
-    // --- Physical Hardware ---
-    QSerialPort *m_serialPort;
-    QString m_portName;
-    void configurePort(quint16 aux1, quint16 aux2);
-
-    // --- Telnet / Wifi Modem ---
-    QTcpSocket *m_tcpSocket;
-    bool m_isTcpConnected;
-    QByteArray m_atCommandBuffer; // Buffer for incoming AT commands
-    QByteArray m_rxBuffer;        // Buffer for data going TO the Atari
-
-    bool m_isConcurrentMode;
-    QByteArray m_escapeBuffer;
-    qint64 m_lastCharTime;
-
-
-    // Helpers
-    void handlePhysical(quint8 command, quint16 aux);
-    void handleTelnet(quint8 command, quint16 aux);
-    void processAtCommand(QString cmd);
-    void sendToAtari(QString text);
-
-    void enterConcurrentMode();
-    bool checkForEscapeSequence(char c);
-    bool checkHardwareBreak(); // Checks CTS/DSR based on settings
-
-
-
-private slots:
-    void onSocketReadyRead();
-    void onSocketConnected();
-    void onSocketDisconnected();
-    void onSocketError(QAbstractSocket::SocketError socketError);
-
-public:
-    Rs232(SioWorker *worker);
-    virtual ~Rs232();
-    void handleCommand(quint8 command, quint16 aux);
-};
 
 // ... (Keep Printer, SmartDevice, and Mnu classes exactly as they were below) ...
 class Printer: public SioDevice

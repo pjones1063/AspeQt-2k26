@@ -49,11 +49,11 @@ bool StandardSerialPortBackend::open()
 //    qDebug() << "!d" << tr("DBG -- Serial Port Open...");
 
     QString name(SERIAL_PORT_LOCATION);
-    name.append(respeqtSettings->serialPortName());
+    name.append(aspeqtSettings->serialPortName());
 
-    mMethod = respeqtSettings->serialPortHandshakingMethod();
-    mWriteDelay = SLEEP_FACTOR * respeqtSettings->serialPortWriteDelay();
-    mCompErrDelay = respeqtSettings->serialPortCompErrDelay();
+    mMethod = aspeqtSettings->serialPortHandshakingMethod();
+    mWriteDelay = SLEEP_FACTOR * aspeqtSettings->serialPortWriteDelay();
+    mCompErrDelay = aspeqtSettings->serialPortCompErrDelay();
 
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
@@ -67,7 +67,7 @@ bool StandardSerialPortBackend::open()
             0
         ));
         if (mHandle == INVALID_HANDLE_VALUE) {
-            qCritical() << "!e" << tr("Cannot open serial port '%1': %2").arg(respeqtSettings->serialPortName(), lastErrorMessage());
+            qCritical() << "!e" << tr("Cannot open serial port '%1': %2").arg(aspeqtSettings->serialPortName(), lastErrorMessage());
             return false;
         }
     }
@@ -83,15 +83,15 @@ bool StandardSerialPortBackend::open()
             0
         ));
         if (mHandle == INVALID_HANDLE_VALUE) {
-            qCritical() << "!e" << tr("Cannot open serial port '%1': %2").arg(respeqtSettings->serialPortName(), lastErrorMessage());
+            qCritical() << "!e" << tr("Cannot open serial port '%1': %2").arg(aspeqtSettings->serialPortName(), lastErrorMessage());
             return false;
         }
         if (!EscapeCommFunction(mHandle, SETDTR)) {
-            qCritical() << "!e" << tr("Cannot set DTR line in serial port '%1': %2").arg(respeqtSettings->serialPortName(), lastErrorMessage());
+            qCritical() << "!e" << tr("Cannot set DTR line in serial port '%1': %2").arg(aspeqtSettings->serialPortName(), lastErrorMessage());
             return false;
         }
         if (!EscapeCommFunction(mHandle, SETRTS)) {
-            qCritical() << "!e" << tr("Cannot set RTS line in serial port '%1': %2").arg(respeqtSettings->serialPortName(), lastErrorMessage());
+            qCritical() << "!e" << tr("Cannot set RTS line in serial port '%1': %2").arg(aspeqtSettings->serialPortName(), lastErrorMessage());
             return false;
         }
     }
@@ -127,7 +127,7 @@ bool StandardSerialPortBackend::open()
 
     /* Notify the user that emulation is started */
     qWarning() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking")
-                  .arg(respeqtSettings->serialPortName())
+                  .arg(aspeqtSettings->serialPortName())
                   .arg(m);
 
     return true;
@@ -160,13 +160,13 @@ int StandardSerialPortBackend::speedByte()
 {
 //    qDebug() << "!d" << tr("DBG -- Serial Port speedByte...");
 
-    if (respeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_SOFTWARE) {
+    if (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_SOFTWARE) {
         return 0x28; // standard speed (19200)
-    } else if (respeqtSettings->serialPortUsePokeyDivisors()) {
-        return respeqtSettings->serialPortPokeyDivisor();
+    } else if (aspeqtSettings->serialPortUsePokeyDivisors()) {
+        return aspeqtSettings->serialPortPokeyDivisor();
     } else {
         int speed = 0x08;
-        switch (respeqtSettings->serialPortMaximumSpeed()) {
+        switch (aspeqtSettings->serialPortMaximumSpeed()) {
         case 0:
             speed = 0x28;
             break;
@@ -190,11 +190,11 @@ bool StandardSerialPortBackend::setNormalSpeed()
 bool StandardSerialPortBackend::setHighSpeed()
 {
     mHighSpeed = true;
-    if (respeqtSettings->serialPortUsePokeyDivisors()) {
-        return setSpeed(divisorToBaud(respeqtSettings->serialPortPokeyDivisor()));
+    if (aspeqtSettings->serialPortUsePokeyDivisors()) {
+        return setSpeed(divisorToBaud(aspeqtSettings->serialPortPokeyDivisor()));
     } else {
         int speed = 57600;
-        switch (respeqtSettings->serialPortMaximumSpeed()) {
+        switch (aspeqtSettings->serialPortMaximumSpeed()) {
         case 0:
             speed = 19200;
             break;
@@ -416,7 +416,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             // if we use hardware handshake and the command line status was succesfully retrieved
             if( (MODEM_STAT != 0) && GetCommModemStatus(mHandle, &tmp) )
             {
-                if(respeqtSettings->serialPortTriggerOnFallingEdge())
+                if(aspeqtSettings->serialPortTriggerOnFallingEdge())
                 {
                     // ignore the trigger is the command line status is ON (we're waiting for a falling edge)
                     if( tmp & MODEM_STAT )continue;

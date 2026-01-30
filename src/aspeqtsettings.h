@@ -1,5 +1,5 @@
 /*
- * respeqtsettings.h
+ * aspeqtsettings.h
  */
 
 #ifndef ASPEQTSETTINGS_H
@@ -276,6 +276,6 @@ private:
     bool mEnableShade;
 };
 
-extern AspeQtSettings *respeqtSettings;
+extern AspeQtSettings *aspeqtSettings;
 
-#endif // RESPEQTSETTINGS_H
+#endif // ASPEQTSETTINGS_H

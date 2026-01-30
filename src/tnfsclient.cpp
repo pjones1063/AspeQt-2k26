@@ -2,6 +2,7 @@
 #include <QHostInfo>
 #include <QDebug>
 #include <algorithm>
+#include <QElapsedTimer> // Added for accurate timeout handling
 
 TnfsClient::TnfsClient(QObject *parent) : QObject(parent) {
     socket = new QUdpSocket(this);
@@ -31,20 +32,19 @@ QByteArray TnfsClient::sendCommand(quint8 cmd, const QByteArray &data) {
     QMutexLocker locker(&netMutex);
 
     // --- FIX 1: FLUSH THE BUFFER ---
-    // Before sending a new command, drain any "Ghost Packets" left over
-    // from previous timeouts. This ensures we only read the response to *this* command.
+    // Drain any "Ghost Packets" left over from previous timeouts.
     while (socket->hasPendingDatagrams()) {
         socket->readDatagram(nullptr, socket->pendingDatagramSize());
     }
 
-    // --- FIX 2: TUNE TIMEOUTS ---
-    // Atari SIO times out very fast. 250ms is a better balance than 1000ms.
     const int MAX_RETRIES = 4;
     const int TIMEOUT_MS = 250;
 
     quint8 currentSeq = m_sequence;
 
+    // --- OPTIMIZATION 1: Reserve Memory ---
     QByteArray packet;
+    packet.reserve(4 + data.size()); // Header (4) + Data
     packet.append(static_cast<char>(m_sessionId & 0xFF));
     packet.append(static_cast<char>((m_sessionId >> 8) & 0xFF));
     packet.append(static_cast<char>(currentSeq));
@@ -54,26 +54,49 @@ QByteArray TnfsClient::sendCommand(quint8 cmd, const QByteArray &data) {
     for (int retry = 0; retry < MAX_RETRIES; ++retry) {
         socket->writeDatagram(packet, serverAddr, serverPort);
 
-        if (socket->waitForReadyRead(TIMEOUT_MS)) {
-            while (socket->hasPendingDatagrams()) {
-                QByteArray response;
-                response.resize(socket->pendingDatagramSize());
-                socket->readDatagram(response.data(), response.size());
+        // --- OPTIMIZATION 2: Smart Receive Loop ---
+        // Don't retransmit immediately if we get a stale packet.
+        // Keep listening until the specific timeout for this attempt expires.
 
-                // Validate Header (4 bytes min)
-                if (response.size() >= 4) {
-                    quint8 respSeq = (quint8)response.at(2);
+        QElapsedTimer timer;
+        timer.start();
+        qint64 remainingTime = TIMEOUT_MS;
 
-                    // Match sequence
-                    if (respSeq == currentSeq) {
-                        m_sequence++;
-                        return response;
-                    } else {
-                        qWarning() << "!w" << "TNFS: Stale packet ignored. Seq:" << respSeq << "Expected:" << currentSeq;
+        while (remainingTime > 0) {
+            // Check for data immediately (Fast Path) or Wait (Slow Path)
+            if (socket->hasPendingDatagrams() || socket->waitForReadyRead(remainingTime)) {
+
+                while (socket->hasPendingDatagrams()) {
+                    // Peek size to avoid extra allocation if possible, or just read.
+                    qint64 pendingSize = socket->pendingDatagramSize();
+                    QByteArray response;
+                    response.resize(pendingSize);
+                    socket->readDatagram(response.data(), pendingSize);
+
+                    // Validate Header (4 bytes min)
+                    if (response.size() >= 4) {
+                        quint8 respSeq = (quint8)response.at(2);
+
+                        // Match sequence
+                        if (respSeq == currentSeq) {
+                            m_sequence++;
+                            return response; // SUCCESS
+                        } else {
+                            // Stale packet found. Log it, but DO NOT return.
+                            // We loop back to keep waiting for the *correct* packet.
+                            // qWarning() << "!w" << "TNFS: Stale packet ignored. Seq:" << respSeq << "Expected:" << currentSeq;
+                        }
                     }
                 }
+            } else {
+                // Real Timeout occurred (waitForReadyRead returned false)
+                break;
             }
+
+            // Update remaining time so we don't wait full 250ms again if we just read a stale packet
+            remainingTime = TIMEOUT_MS - timer.elapsed();
         }
+
         // Log retries so we know if the network is struggling
         if (retry > 0) {
             qWarning() << "!w" << "TNFS: Retry" << retry << "for CMD" << Qt::hex << cmd;
@@ -174,4 +197,3 @@ QList<TnfsClient::DirectoryEntry> TnfsClient::listDirectory(const QString &path)
     });
     return entries;
 }
-

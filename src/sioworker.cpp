@@ -72,7 +72,7 @@ bool SioWorker::wait(unsigned long time)
 
 void SioWorker::start(Priority p)
 {
-    switch (respeqtSettings->backend()) {
+    switch (aspeqtSettings->backend()) {
         case SERIAL_BACKEND_STANDARD:
             mPort = new StandardSerialPortBackend(0);
             break;
@@ -280,7 +280,7 @@ QString SioWorker::deviceName(int device)
         case SMART_CDEVIC:
             result = tr("Smart device (APE time + URL)");
             break;
-        case RESPEQT_CLIENT_CDEVIC:
+        case ASPEQT_CLIENT_CDEVIC:
             result = tr("AspeQt Client");
             break;
         case RS232_BASE_CDEVIC+0:
@@ -379,8 +379,8 @@ bool CassetteWorker::loadCasImage(const QString &fileName)
 
         /* Verify the header */
         if (magic == 0x64756162) {          // "baud"
-            if (respeqtSettings->useCustomCasBaud()) {
-                lastBaud = respeqtSettings->customCasBaud();
+            if (aspeqtSettings->useCustomCasBaud()) {
+                lastBaud = aspeqtSettings->customCasBaud();
             } else {
                 lastBaud = aux;
             }
@@ -477,7 +477,7 @@ void CassetteWorker::run()
 
 void CassetteWorker::start(Priority p)
 {
-    switch (respeqtSettings->backend()) {
+    switch (aspeqtSettings->backend()) {
         case SERIAL_BACKEND_STANDARD:
             mPort = new StandardSerialPortBackend(0);
             break;

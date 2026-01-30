@@ -6,9 +6,10 @@
 #include <QRegularExpression>
 #include <QTimer>
 #include <QDebug>
-#include <QSettings> // <--- Added missing header
+#include <QSettings>
+#include <QStyle>
 
-TnfsBrowser::TnfsBrowser(QWidget *parent) : QDialog(parent), client(new TnfsClient(this))
+TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(parent), client(new TnfsClient(this))
 {
     setWindowTitle(tr("TNFS Network Browser (13leader.net)"));
     resize(600, 450);
@@ -65,11 +66,50 @@ TnfsBrowser::TnfsBrowser(QWidget *parent) : QDialog(parent), client(new TnfsClie
     connect(btnClear, &QPushButton::clicked, this, &TnfsBrowser::onClearHistory);
 
     currentPath = "/";
+
+    // --- Auto-Navigate Logic ---
+    if (!initialUrl.isEmpty()) {
+        QUrl qurl(initialUrl);
+        QString host = qurl.host();
+        QString path = qurl.path();
+
+        // Strip filename to get directory: /folder/game.atr -> /folder/
+        if (!path.endsWith("/")) {
+            int lastSlash = path.lastIndexOf('/');
+            if (lastSlash != -1) path = path.left(lastSlash + 1);
+            else path = "/";
+        }
+
+        if (!host.isEmpty()) {
+            hostCombo->setEditText(host);
+
+            // Manual Connect Sequence
+            setCursor(Qt::WaitCursor);
+            statusLabel->setText(tr("Connecting to %1...").arg(host));
+            QApplication::processEvents();
+
+            if (client->connectToHost(host) && client->mount("/")) {
+                // Update Path to the saved one
+                currentPath = path;
+
+                // Update History
+                if (hostCombo->findText(host) == -1) hostCombo->addItem(host);
+                QStringList history;
+                for (int i = 0; i < hostCombo->count(); ++i) history << hostCombo->itemText(i);
+                settings.setValue("hostHistory", history);
+
+                refreshList();
+            } else {
+                statusLabel->setText(tr("Connection failed."));
+                unsetCursor();
+            }
+        }
+    }
 }
+
 
 TnfsBrowser::~TnfsBrowser()
 {
-    // Client is a child of this, so it cleans up automatically
 }
 
 QString TnfsBrowser::getSelectedUrl() const
@@ -137,11 +177,27 @@ void TnfsBrowser::refreshList()
 
         QListWidgetItem *item = new QListWidgetItem(entry.name);
 
-        if (entry.isDirectory) {
-            item->setIcon(QIcon::fromTheme("folder"));
+        // --- FIX: Directory Detection Heuristic ---
+        // Some TNFS servers do not send the trailing slash, or the client fails to parse it.
+        // If isDirectory is false, check if the name has NO extension. If so, treat as Folder.
+        bool isDir = entry.isDirectory;
+        if (!isDir && !entry.name.contains('.')) {
+            isDir = true;
+        }
+        // -------------------------------------------
+
+        if (isDir) {
+            // Try Theme Icon first, fallback to System Style Icon
+            QIcon icon = QIcon::fromTheme("folder");
+            if (icon.isNull()) icon = QApplication::style()->standardIcon(QStyle::SP_DirIcon);
+
+            item->setIcon(icon);
             item->setData(Qt::UserRole, true);
         } else {
-            item->setIcon(QIcon::fromTheme("media-floppy"));
+            QIcon icon = QIcon::fromTheme("media-floppy");
+            if (icon.isNull()) icon = QApplication::style()->standardIcon(QStyle::SP_FileIcon);
+
+            item->setIcon(icon);
             item->setData(Qt::UserRole, false);
         }
 

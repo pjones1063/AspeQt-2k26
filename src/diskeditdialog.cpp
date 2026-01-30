@@ -421,7 +421,7 @@ QMimeData* MyModel::mimeData(const QModelIndexList &indexes) const
     }
 
     QTemporaryFile temp;
-    temp.setFileTemplate(QDir::temp().absoluteFilePath("respeqt-dir-XXXXXX"));
+    temp.setFileTemplate(QDir::temp().absoluteFilePath("aspeqt-dir-XXXXXX"));
     temp.open();
     QString tempPath = temp.fileName() + "v";
     temp.close();
@@ -471,7 +471,7 @@ DiskEditDialog::DiskEditDialog(QWidget *parent) :
     connect(m_ui->aView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(selectionChanged(QItemSelection,QItemSelection)));
     connect(m_ui->onTopBox, SIGNAL(stateChanged(int)), SLOT(onTopChanged()));
     m_ui->aView->viewport()->setAcceptDrops(true);
-    if(respeqtSettings->explorerOnTop()) {
+    if(aspeqtSettings->explorerOnTop()) {
             m_ui->onTopBox->setChecked(true);
             setWindowFlags(Qt::WindowStaysOnTopHint);
     }
@@ -602,13 +602,13 @@ void DiskEditDialog::on_actionExtractFiles_triggered()
         return;
     }
 
-    QString target = QFileDialog::getExistingDirectory(this, tr("Extract files"), respeqtSettings->lastExtractDir());
+    QString target = QFileDialog::getExistingDirectory(this, tr("Extract files"), aspeqtSettings->lastExtractDir());
 
     if (target.isEmpty()) {
         return;
     }
 
-    respeqtSettings->setLastExtractDir(target);
+    aspeqtSettings->setLastExtractDir(target);
 
     QList <AtariDirEntry> selectedEntries;
     foreach (QModelIndex i, indexes) {
@@ -644,7 +644,7 @@ void DiskEditDialog::on_actionDeleteSelectedFiles_triggered()
 
 void DiskEditDialog::on_actionAddFiles_triggered()
 {
-    QStringList files = QFileDialog::getOpenFileNames(this, tr("Add files"), respeqtSettings->lastExtractDir());
+    QStringList files = QFileDialog::getOpenFileNames(this, tr("Add files"), aspeqtSettings->lastExtractDir());
     if (files.empty()) {
         return;
     }
@@ -682,10 +682,10 @@ void DiskEditDialog::onTopChanged()
     if(m_ui->onTopBox->isChecked())
     {
        setWindowFlags(Qt::WindowStaysOnTopHint);
-       respeqtSettings->setExplorerOnTop(true);
+       aspeqtSettings->setExplorerOnTop(true);
     } else {
        setWindowFlags(Qt::WindowStaysOnBottomHint);
-       respeqtSettings->setExplorerOnTop(false);
+       aspeqtSettings->setExplorerOnTop(false);
     }
     show();
 }
