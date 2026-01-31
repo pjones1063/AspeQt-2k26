@@ -110,7 +110,10 @@ bool TnfsImage::openUrl(const QString &url)
         }
 
         if (m_imgData.size() > 16 * 1024 * 1024) {
-            // ... error handling ...
+            qWarning() << "!e" << "TNFS: File too large (>16MB). Aborting.";
+            client.closeFile(handle);
+            QApplication::restoreOverrideCursor();
+            return false;
         }
     }
 
