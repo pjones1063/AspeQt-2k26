@@ -78,21 +78,39 @@ bool TnfsImage::openUrl(const QString &url)
 
     this->m_originalFileName = url;
 
+    // --- DOWNLOAD TO RAM ---
     qDebug() << "!n" << "TNFS: Downloading image to RAM...";
 
+    m_imgData.clear();
     quint32 offset = 0;
+
+    // 1. Setup Timer
+    QElapsedTimer progressTimer;
+    progressTimer.start();
+
     while (true) {
+        // Download in 1KB chunks
         QByteArray chunk = client.readFile(handle, offset, 1024);
+
         if (chunk.isEmpty()) break;
 
         m_imgData.append(chunk);
         offset += chunk.size();
 
+        // 2. Heartbeat Logic (Every 1000ms)
+        if (progressTimer.elapsed() > 500) {
+            // Re-print the EXACT same message.
+            // MainWindow will catch this and update the line to "[x2]", "[x3]", etc.
+            qDebug() << "!n" << "TNFS: Downloading image to RAM...";
+
+            // Allow the UI to repaint (Essential!)
+            QCoreApplication::processEvents();
+
+            progressTimer.restart();
+        }
+
         if (m_imgData.size() > 16 * 1024 * 1024) {
-            qWarning() << "!e" << "TNFS: File too large (>16MB). Aborting.";
-            client.closeFile(handle);
-            QApplication::restoreOverrideCursor();
-            return false;
+            // ... error handling ...
         }
     }
 

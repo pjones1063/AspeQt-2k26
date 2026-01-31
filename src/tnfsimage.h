@@ -5,6 +5,8 @@
 #include <QByteArray>
 #include <QList>
 #include <QString>
+#include <QElapsedTimer>
+#include <QCoreApplication>
 
 // --- HELPER MACROS FOR ATX PARSING ---
 #define VAPI_32(x, y) ((quint8)x[y] + ((quint8)x[y+1] << 8) + ((quint8)x[y+2] << 16) + ((quint8)x[y+3] << 24))
