@@ -83,6 +83,8 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
     m_ui->RclNameEdit->setText(aspeqtSettings->lastRclDir());
     m_ui->RclCommand->setText(aspeqtSettings->lastRclCommand());
+    m_ui->tnfsAutoConnectBox->setChecked(aspeqtSettings->restoreTnfsLocation());
+    m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
 
     switch (aspeqtSettings->backend()) {
     case SERIAL_BACKEND_STANDARD:
@@ -269,6 +271,8 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
     aspeqtSettings->setRclDir(m_ui->RclNameEdit->text());
     aspeqtSettings->setRclCommand(m_ui->RclCommand->text());
+    aspeqtSettings->setRestoreTnfsLocation(m_ui->tnfsAutoConnectBox->isChecked());
+    aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
 
     int backend = SERIAL_BACKEND_STANDARD;
     if (itemAtariSio->checkState(0) == Qt::Checked)

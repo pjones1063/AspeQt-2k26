@@ -23,6 +23,8 @@ private slots:
     void onItemDoubleClicked(QListWidgetItem *item);
     void onBackClicked();
     void onClearHistory();
+    void onCancelClicked();
+
 
 private:
     TnfsClient *client;
@@ -30,6 +32,7 @@ private:
     QListWidget *fileList;
     QLabel *statusLabel;
     QPushButton *btnClear;
+    QPushButton *btnCancel;
 
     QString currentPath;
     QString selectedUrl;

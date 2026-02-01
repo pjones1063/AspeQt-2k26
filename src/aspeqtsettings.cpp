@@ -104,7 +104,8 @@ AspeQtSettings::AspeQtSettings()
     if (mMainH < 426 && mdVis) mMainH = 426;
     mUseLargeFont = mSettings->value("UseLargeFont", false).toBool();
     mExplorerOnTop = mSettings->value("ExplorerOnTop", false).toBool();
-    mEnableShade = mSettings->value("EnableShadeByDefault", true).toBool();
+    mEnableShade = mSettings->value("EnableShadeByDefault", false).toBool();
+    mRestoreTnfsLocation = mSettings->value("RestoreTnfsLocation", true).toBool();
 }
 
 AspeQtSettings::~AspeQtSettings()
@@ -165,6 +166,7 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
         s.setValue("EnableShadeByDefault", mEnableShade);
         s.setValue("LastRclDir",mRclDir);
         s.setValue("LastRclCmd",mRclCommand);
+        s.setValue("RestoreTnfsLocation", mRestoreTnfsLocation);
 
        s.endGroup();
 //
@@ -222,6 +224,7 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
         mEnableShade = s.value("EnableShadeByDefault", true).toBool();
         mRclDir = mSettings->value("LastRclDir","").toString();
         mRclCommand = mSettings->value("LastRclCmd","").toString();
+        mRestoreTnfsLocation = s.value("RestoreTnfsLocation", true).toBool();
         s.endGroup();
  //
     s.beginReadArray("MountedImageSettings");
@@ -839,31 +842,6 @@ bool AspeQtSettings::isURLSubmitEnabled()
     return mUseURLSubmit;
 }
 
-// --- Corrected block for aspeqtsettings.cpp ---
-
-void AspeQtSettings::setRs232PortName(int deviceIdx, const QString &portName)
-{
-    // Use mSettings-> instead of settings.
-    mSettings->setValue(QString("Rs232/Port%1").arg(deviceIdx + 1), portName);
-}
-
-QString AspeQtSettings::rs232PortName(int deviceIdx)
-{
-    // Use mSettings-> instead of settings.
-    return mSettings->value(QString("Rs232/Port%1").arg(deviceIdx + 1), "").toString();
-}
-
-void AspeQtSettings::setRs232Mode(int deviceIdx, int mode)
-{
-    mSettings->setValue(QString("Rs232/Mode%1").arg(deviceIdx + 1), mode);
-}
-
-int AspeQtSettings::rs232Mode(int deviceIdx)
-{
-    // Default to 0 (Physical)
-    return mSettings->value(QString("Rs232/Mode%1").arg(deviceIdx + 1), 0).toInt();
-}
-
 
 void AspeQtSettings::setURLSubmit(bool enabled)
 {
@@ -880,4 +858,15 @@ void AspeQtSettings::writeRecentImageSettings()
         mSettings->setValue("IsWriteProtected", mRecentImageSettings[i].isWriteProtected);
     }
     mSettings->endArray();
+}
+
+void AspeQtSettings::setRestoreTnfsLocation(bool enabled)
+{
+    mRestoreTnfsLocation = enabled;
+    mSettings->setValue("RestoreTnfsLocation", mRestoreTnfsLocation);
+}
+
+bool AspeQtSettings::restoreTnfsLocation()
+{
+    return mRestoreTnfsLocation;
 }

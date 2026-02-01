@@ -203,14 +203,14 @@ public:
     bool explorerOnTop();
     void setExplorerOnTop(bool expOnTop);
 
-
+    void setRestoreTnfsLocation(bool enabled);
+    bool restoreTnfsLocation();
 
 private:
     QSettings *mSettings;
-
     void writeRecentImageSettings();
-
     bool mIsFirstTime;
+    bool mRestoreTnfsLocation;
 
 // To pass values from Mainwindow //
     int mMainX;

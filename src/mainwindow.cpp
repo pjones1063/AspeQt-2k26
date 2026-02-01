@@ -1954,10 +1954,24 @@ void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
 }
 
 
+/*
+ * mainwindow.cpp
+ * (Snippet showing updated on_actionMountTnfs_triggered)
+ */
+
+// ... [Existing Includes] ...
+
 void MainWindow::on_actionMountTnfs_triggered(int deviceId)
 {
-    // 1. Launch the thread-safe browser with the LAST SAVED URL
+    // 1. Set Busy Cursor immediately (from Main Window context)
+    // This covers the time taken by TnfsBrowser's constructor to Connect & Refresh.
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    // 2. Launch the thread-safe browser with the LAST SAVED URL
     TnfsBrowser browser(this, g_lastTnfsUrl);
+
+    // 3. Restore Cursor (Constructor is done, UI is ready to show)
+    QApplication::restoreOverrideCursor();
 
     if (browser.exec() == QDialog::Accepted) {
         QString url = browser.getSelectedUrl();
@@ -1965,19 +1979,19 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
         // --- Save the URL for next time ---
         g_lastTnfsUrl = url;
 
-        // 2. Eject whatever is currently in that slot
+        // Eject whatever is currently in that slot
         if (!ejectImage(deviceId)) return;
 
-        // 3. Create the streaming device
+        TnfsBrowser browser(this, aspeqtSettings->restoreTnfsLocation() ? g_lastTnfsUrl : "");
+
         TnfsImage *tnfs = new TnfsImage(sio);
 
-        // 4. Connect/Open the stream
+        // Connect/Open the stream
         if (tnfs->openUrl(url)) {
             // Install into the SIO chain
             sio->installDevice(DISK_BASE_CDEVIC + deviceId, tnfs);
 
-            // 5. Trigger UI Update via the central handler
-            // This ensures the logic in deviceStatusChanged (disabling buttons) is used.
+            // Trigger UI Update via the central handler
             deviceStatusChanged(DISK_BASE_CDEVIC + deviceId);
 
             qDebug() << "!i" << tr("Mounted TNFS Stream: %1").arg(url);

@@ -54,16 +54,24 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(p
     // File List
     fileList = new QListWidget(this);
 
+    // Bottom Button Bar (New)
+    QHBoxLayout *bottomLayout = new QHBoxLayout();
+    btnCancel = new QPushButton(tr("Cancel"), this);
+    bottomLayout->addStretch();
+    bottomLayout->addWidget(btnCancel);
+
     mainLayout->addLayout(topLayout);
     mainLayout->addLayout(navLayout);
     mainLayout->addWidget(fileList);
     mainLayout->addWidget(new QLabel(tr("Double-click a file (.ATR/.XEX) to Mount it."), this));
+    mainLayout->addLayout(bottomLayout); // Add the bottom layout
 
     // --- Connections ---
     connect(btnConnect, &QPushButton::clicked, this, &TnfsBrowser::onConnect);
     connect(btnBack, &QPushButton::clicked, this, &TnfsBrowser::onBackClicked);
     connect(fileList, &QListWidget::itemDoubleClicked, this, &TnfsBrowser::onItemDoubleClicked);
     connect(btnClear, &QPushButton::clicked, this, &TnfsBrowser::onClearHistory);
+    connect(btnCancel, &QPushButton::clicked, this, &TnfsBrowser::onCancelClicked); // Connect Cancel
 
     currentPath = "/";
 
@@ -84,7 +92,8 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(p
             hostCombo->setEditText(host);
 
             // Manual Connect Sequence
-            setCursor(Qt::WaitCursor);
+            // Note: Main Window handles the *Initial* WaitCursor, but we leave this
+            // label update here for visual clarity.
             statusLabel->setText(tr("Connecting to %1...").arg(host));
             QApplication::processEvents();
 
@@ -101,6 +110,7 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(p
                 refreshList();
             } else {
                 statusLabel->setText(tr("Connection failed."));
+                // Ensure cursor is unset if we fail (just in case)
                 unsetCursor();
             }
         }
@@ -121,9 +131,9 @@ void TnfsBrowser::onConnect()
 {
     QString host = hostCombo->currentText();
 
-    setCursor(Qt::WaitCursor); // Show busy
+    setCursor(Qt::WaitCursor); // Show busy for manual clicks
     statusLabel->setText(tr("Connecting to %1...").arg(host));
-    QApplication::processEvents(); // Force UI update
+    QApplication::processEvents();
 
     // 1. Establish UDP "Connection"
     if (client->connectToHost(host)) {
@@ -145,7 +155,7 @@ void TnfsBrowser::onConnect()
             settings.setValue("hostHistory", history);
 
             unsetCursor();
-            refreshList(); // Call refresh immediately
+            refreshList();
 
         } else {
             unsetCursor();
@@ -162,12 +172,18 @@ void TnfsBrowser::onConnect()
 
 void TnfsBrowser::refreshList()
 {
+    // Set cursor for internal navigation events
     setCursor(Qt::WaitCursor);
     fileList->setEnabled(false);
     statusLabel->setText(tr("Fetching %1...").arg(currentPath));
-    QApplication::processEvents(); // Keep UI responsive-ish
 
-    // Run Synchronously in Main Thread to avoid Thread Affinity issues
+    // [NEW] Log Message
+    // MainWindow will handle the [xNN] aggregation automatically
+    qDebug() << "!n" << "Directory loading...";
+
+    QApplication::processEvents();
+
+    // Run Synchronously
     QList<TnfsClient::DirectoryEntry> entries = client->listDirectory(currentPath);
 
     fileList->clear();
@@ -177,26 +193,19 @@ void TnfsBrowser::refreshList()
 
         QListWidgetItem *item = new QListWidgetItem(entry.name);
 
-        // --- FIX: Directory Detection Heuristic ---
-        // Some TNFS servers do not send the trailing slash, or the client fails to parse it.
-        // If isDirectory is false, check if the name has NO extension. If so, treat as Folder.
         bool isDir = entry.isDirectory;
         if (!isDir && !entry.name.contains('.')) {
             isDir = true;
         }
-        // -------------------------------------------
 
         if (isDir) {
-            // Try Theme Icon first, fallback to System Style Icon
             QIcon icon = QIcon::fromTheme("folder");
             if (icon.isNull()) icon = QApplication::style()->standardIcon(QStyle::SP_DirIcon);
-
             item->setIcon(icon);
             item->setData(Qt::UserRole, true);
         } else {
             QIcon icon = QIcon::fromTheme("media-floppy");
             if (icon.isNull()) icon = QApplication::style()->standardIcon(QStyle::SP_FileIcon);
-
             item->setIcon(icon);
             item->setData(Qt::UserRole, false);
         }
@@ -216,15 +225,12 @@ void TnfsBrowser::onItemDoubleClicked(QListWidgetItem *item)
 
     QString name = item->text();
 
-    // Build the target path
     QString targetPath = currentPath;
     if (!targetPath.endsWith("/")) targetPath += "/";
     targetPath += name;
 
-    // FILE SELECTION
     bool isDir = item->data(Qt::UserRole).toBool();
 
-    // Fallback if data not set (e.g. extension check)
     if (!isDir && (name.contains(".") || targetPath.contains("."))) {
         QUrl url;
         url.setScheme("tnfs");
@@ -236,7 +242,6 @@ void TnfsBrowser::onItemDoubleClicked(QListWidgetItem *item)
         return;
     }
 
-    // FOLDER NAVIGATION
     currentPath = targetPath;
     statusLabel->setText(tr("Browsing: %1").arg(currentPath));
     refreshList();
@@ -268,4 +273,10 @@ void TnfsBrowser::onClearHistory()
 
         statusLabel->setText(tr("History cleared."));
     }
+}
+
+// [NEW] Cancel Slot
+void TnfsBrowser::onCancelClicked()
+{
+    reject();
 }
