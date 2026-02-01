@@ -442,6 +442,7 @@ void MainWindow::createDeviceWidgets()
             }
         }
 
+
         // Connect existing signals to slots
         connect(deviceWidget, SIGNAL(actionMountDisk(int)), this, SLOT(on_actionMountDisk_triggered(int)));
         connect(deviceWidget, SIGNAL(actionMountFolder(int)), this, SLOT(on_actionMountFolder_triggered(int)));
@@ -457,6 +458,9 @@ void MainWindow::createDeviceWidgets()
         connect(this, SIGNAL(setFont(const QFont&)), deviceWidget, SLOT(setFont(const QFont&)));
         connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(on_actionHappyMode_triggered(int,bool)));
     }
+
+    ui->leftColumn->setAlignment(Qt::AlignTop);
+    ui->rightColumn->setAlignment(Qt::AlignTop);
 
     changeFonts();
 }
