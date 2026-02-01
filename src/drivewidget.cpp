@@ -224,6 +224,17 @@ void DriveWidget::setFont(const QFont& font) {
     ui->labelFileName->setFont(font);
 }
 
+void DriveWidget::setIconSize(const QSize &size)
+{
+    ui->buttonMountDisk->setIconSize(size);
+    ui->buttonMountFolder->setIconSize(size);
+    ui->buttonSave->setIconSize(size);
+    ui->autoSave->setIconSize(size);
+    ui->buttonEditDisk->setIconSize(size);
+    ui->buttonHappyMode->setIconSize(size);
+    ui->buttonEject->setIconSize(size);
+}
+
 void DriveWidget::on_actionMountFolder_triggered()  { emit actionMountFolder(driveNo_); }
 void DriveWidget::on_actionMountDisk_triggered()    { emit actionMountDisk(driveNo_); }
 void DriveWidget::on_actionEject_triggered()        { emit actionEject(driveNo_); }

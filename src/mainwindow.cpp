@@ -248,6 +248,42 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusBar->addPermanentWidget(prtOnOffLabel);
     ui->statusBar->addPermanentWidget(netLabel);
     ui->statusBar->addPermanentWidget(clearMessagesLabel);
+
+    // --- NEW: Opacity Slider for Shade Mode ---
+    opacitySlider = new QSlider(Qt::Horizontal, this);
+    opacitySlider->setRange(20, 90); // Range: 20% to 90% opacity
+
+    int savedOpacity = aspeqtSettings->shadeOpacity(); // <--- You'll need to add this getter
+    if (savedOpacity < 20) savedOpacity = 60;          // Safety check for first run
+
+    opacitySlider->setValue(savedOpacity);
+
+    opacitySlider->setFixedWidth(100);
+    opacitySlider->setToolTip(tr("Adjust Shade Opacity"));
+    opacitySlider->hide();           // Hidden by default
+
+    // 1. LIVE PREVIEW: Update opacity immediately as you slide
+    connect(opacitySlider, &QSlider::valueChanged, this, [this](int value){
+        if (g_shadeMode) {
+            // Remove the "!this->underMouse()" check so we can see the effect live
+            setWindowOpacity(value / 100.0);
+        }
+    });
+
+    // 2. RESTORE ON RELEASE: Snap back to 1.0 when you let go (if mouse is still inside)
+    // This ensures you aren't stuck working in a ghost window after adjusting.
+    connect(opacitySlider, &QSlider::sliderReleased, this, [this](){
+        if (g_shadeMode && this->underMouse()) {
+            setWindowOpacity(1.0);
+        }
+
+        aspeqtSettings->setShadeOpacity(opacitySlider->value());
+    });
+
+
+    ui->statusBar->addPermanentWidget(opacitySlider);
+
+
     ui->textEdit->installEventFilter(mainWindow);
     changeFonts();
     g_D9DOVisible =  aspeqtSettings->D9DOVisible();
@@ -308,6 +344,8 @@ MainWindow::MainWindow(QWidget *parent)
     sio->installDevice(PRINTER_BASE_CDEVIC, printer);
     setUpPrinterEmulationWidgets(aspeqtSettings->printerEmulation());
 
+    ui->menuBar->installEventFilter(this);
+
     untitledName = 0;
 
     connect(&trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -342,16 +380,21 @@ MainWindow::~MainWindow()
     delete logFile;
 }
 
-
 void MainWindow::createDeviceWidgets()
 {
-    for (int i = 0; i < DISK_COUNT; i++) {      //
-        DriveWidget* deviceWidget = new DriveWidget(i);
+    // 1. Calculate DPI-aware sizes based on the current platform's style
+    int iconMetric = style()->pixelMetric(QStyle::PM_SmallIconSize);
+    QSize dpiIconSize(iconMetric, iconMetric);
+    int buttonDimension = iconMetric + 8; // Adds padding around the icon for better clickability
 
-        if (i<8) {
-            ui->leftColumn->addWidget( deviceWidget );
+    for (int i = 0; i < DISK_COUNT; i++) {
+        DriveWidget* deviceWidget = new DriveWidget(i);
+        deviceWidget->setMinimumHeight(buttonDimension + 12);
+
+        if (i < 8) {
+            ui->leftColumn->addWidget(deviceWidget);
         } else {
-            ui->rightColumn->addWidget( deviceWidget );
+            ui->rightColumn->addWidget(deviceWidget);
         }
 
         const AspeQtSettings::ImageSettings& is = aspeqtSettings->mountedImageSetting(i);
@@ -359,6 +402,10 @@ void MainWindow::createDeviceWidgets()
 
         deviceWidget->setup();
         diskWidgets[i] = deviceWidget;
+
+        // 2. Standardize existing internal buttons in the DriveWidget
+        // This ensures the Mount, Save, and Eject buttons also scale on High DPI screens
+        deviceWidget->setIconSize(dpiIconSize);
 
         // --- NEW: Mount TNFS Action ---
         QAction *mountTnfsAction = new QAction(QIcon(":icons/silk-icons/icons/world.png"), tr("Mount from TNFS Network..."), this);
@@ -371,46 +418,49 @@ void MainWindow::createDeviceWidgets()
             on_actionMountTnfs_triggered(i);
         });
 
-        // 1. Add to Context Menu (Right Click)
+        // 3. Add to Context Menu (Right Click)
         diskWidgets[i]->addAction(mountTnfsAction);
 
-        // 2. Add a VISIBLE Button to the Drive Slot
-        // -  create a tool button and inject it into the widget's existing layout.
+        // 4. Create the TNFS Button with DPI-aware dimensions
         QToolButton *btnTnfs = new QToolButton(diskWidgets[i]);
         btnTnfs->setDefaultAction(mountTnfsAction);
-        btnTnfs->setAutoRaise(false);   // Keeps the border visible
-        btnTnfs->setFixedSize(22, 22);  // Forces it to match neighbors if they are small
+        btnTnfs->setAutoRaise(false);
+
+        // Use the calculated DPI-aware dimensions instead of hardcoded 22x22
+        btnTnfs->setFixedSize(buttonDimension, buttonDimension);
+        btnTnfs->setIconSize(dpiIconSize);
+
         btnTnfs->setToolTip(tr("Mount TNFS"));
+
         if (diskWidgets[i]->layout()) {
             QBoxLayout *layout = qobject_cast<QBoxLayout*>(diskWidgets[i]->layout());
             if (layout) {
+                // Inserts at index 1 to sit between standard Mount and Save buttons
                 layout->insertWidget(1, btnTnfs);
             } else {
                 diskWidgets[i]->layout()->addWidget(btnTnfs);
             }
         }
 
+        // Connect existing signals to slots
+        connect(deviceWidget, SIGNAL(actionMountDisk(int)), this, SLOT(on_actionMountDisk_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionMountFolder(int)), this, SLOT(on_actionMountFolder_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionAutoSave(int)), this, SLOT(on_actionAutoSave_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionEject(int)), this, SLOT(on_actionEject_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionWriteProtect(int,bool)), this, SLOT(on_actionWriteProtect_triggered(int,bool)));
+        connect(deviceWidget, SIGNAL(actionEditDisk(int)), this, SLOT(on_actionEditDisk_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionSave(int)), this, SLOT(on_actionSave(int)));
+        connect(deviceWidget, SIGNAL(actionRevert(int)), this, SLOT(on_actionRevert(int)));
+        connect(deviceWidget, SIGNAL(actionSaveAs(int)), this, SLOT(on_actionSaveAs_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionBootOptions(int)), this, SLOT(on_actionBootOption_triggered()));
 
-        // connect signals to slots
-        connect(deviceWidget, SIGNAL(actionMountDisk(int)),this, SLOT(on_actionMountDisk_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionMountFolder(int)),this, SLOT(on_actionMountFolder_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionAutoSave(int)),this, SLOT(on_actionAutoSave_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionEject(int)),this, SLOT(on_actionEject_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionWriteProtect(int,bool)),this, SLOT(on_actionWriteProtect_triggered(int,bool)));
-        connect(deviceWidget, SIGNAL(actionEditDisk(int)),this, SLOT(on_actionEditDisk_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionSave(int)),this, SLOT(on_actionSave_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionRevert(int)),this, SLOT(on_actionRevert_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionSaveAs(int)),this, SLOT(on_actionSaveAs_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionAutoSave(int)),this, SLOT(on_actionAutoSave_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionBootOptions(int)),this, SLOT(on_actionBootOption_triggered()));
-
-        connect(this, SIGNAL(setFont(const QFont&)),deviceWidget, SLOT(setFont(const QFont&)));
+        connect(this, SIGNAL(setFont(const QFont&)), deviceWidget, SLOT(setFont(const QFont&)));
         connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(on_actionHappyMode_triggered(int,bool)));
-
     }
 
     changeFonts();
 }
+
 
  void MainWindow::mousePressEvent(QMouseEvent *event)
  {
@@ -677,7 +727,8 @@ void MainWindow::enterEvent(QEvent *)
 void MainWindow::leaveEvent(QEvent *)
 {
     if (g_miniMode && g_shadeMode) {
-       setWindowOpacity(0.25);
+        // Use slider value (e.g., 60 becomes 0.6)
+        setWindowOpacity(opacitySlider->value() / 100.0);
     }
 }
 
@@ -685,11 +736,33 @@ void MainWindow::resizeEvent(QResizeEvent *)
 {
 }
 
-bool MainWindow::eventFilter(QObject * /*obj*/, QEvent *event)
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::MouseButtonDblClick) {
         on_actionLogWindow_triggered();
     }
+
+    // 2. NEW LOGIC: Dragging by Menu Bar in Shade Mode
+    if (obj == ui->menuBar && g_shadeMode) {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+        // A. On Click: Remember the offset, but IGNORE if clicking a menu item (File, Tools, etc.)
+        if (event->type() == QEvent::MouseButtonPress && mouseEvent->button() == Qt::LeftButton) {
+            if (ui->menuBar->actionAt(mouseEvent->pos())) {
+                return false; // User clicked a menu item, let Qt handle it
+            }
+            m_dragPosition = mouseEvent->globalPosition().toPoint() - frameGeometry().topLeft();
+            return true;
+        }
+
+        // B. On Move: Move the window relative to the mouse
+        if (event->type() == QEvent::MouseMove && (mouseEvent->buttons() & Qt::LeftButton)) {
+            move(mouseEvent->globalPosition().toPoint() - m_dragPosition);
+            return true;
+        }
+    }
+
+
     return false;
 }
 
@@ -733,22 +806,36 @@ void MainWindow::saveMiniWindowGeometry()
 {
     aspeqtSettings->setLastMiniHorizontalPos(geometry().x());
     aspeqtSettings->setLastMiniVerticalPos(geometry().y());
+    aspeqtSettings->setShadeOpacity(opacitySlider->value());
 }
 
 void MainWindow::on_actionToggleShade_triggered()
 {
     if (g_shadeMode) {
+        // --- TURNING OFF SHADE MODE ---
         setWindowFlags(Qt::WindowSystemMenuHint);
         setWindowOpacity(1.0);
+        opacitySlider->hide(); // Hide slider
         g_shadeMode = false;
         QMainWindow::show();
     } else {
+        // --- TURNING ON SHADE MODE ---
         setWindowFlags(Qt::FramelessWindowHint);
-        setWindowOpacity(0.25);
+
+        // Use the slider value immediately instead of hardcoded 0.25
+        double opacity = opacitySlider->value() / 100.0;
+        setWindowOpacity(opacity);
+
+        // Only show slider if we are also in Mini Mode
+        if (g_miniMode) {
+            opacitySlider->show();
+        }
+
         g_shadeMode = true;
         QMainWindow::show();
     }
 }
+
 
 // Toggle Mini Mode //
 void MainWindow::on_actionToggleMiniMode_triggered()
@@ -765,6 +852,7 @@ void MainWindow::on_actionToggleMiniMode_triggered()
     }
 
     if(!g_miniMode) {
+        // --- RESTORE NORMAL MODE ---
         if (g_D9DOVisible) {
             setMinimumWidth(688);
         } else
@@ -784,11 +872,30 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         QMainWindow::show();
         g_shadeMode = false;
     } else {
+        // --- ENTER MINI MODE ---
+
         g_savedGeometry = geometry();
         ui->textEdit->setVisible(false);
         setMinimumWidth(400);
-        setMinimumHeight(100);
-        setMaximumHeight(100);
+
+        // Check Slider Visibility
+        if (g_shadeMode && g_miniMode) {
+            opacitySlider->show();
+        } else {
+            opacitySlider->hide();
+        }
+
+        // --- FIX: Dynamic Height for High DPI ---
+        // Use the larger of 100px (legacy default) or 4x the current icon size.
+        // On Standard Monitors: 16px * 4 = 64px (100px wins, keeping original look)
+        // On Retina Monitors:   32px * 4 = 128px (128px wins, preventing cut-off)
+        int metric = style()->pixelMetric(QStyle::PM_SmallIconSize);
+        int miniHeight = qMax(140, metric * 6);
+
+        setMinimumHeight(miniHeight);
+        setMaximumHeight(miniHeight);
+        // ----------------------------------------
+
         setGeometry(aspeqtSettings->lastMiniHorizontalPos(), aspeqtSettings->lastMiniVerticalPos(),
                     minimumWidth(), minimumHeight());
         ui->actionHideShowDrives->setDisabled(true);
@@ -803,6 +910,7 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         QMainWindow::show();
     }
 }
+
 
 void MainWindow::showHideDrives()
 {
@@ -1968,7 +2076,7 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // 2. Launch the thread-safe browser with the LAST SAVED URL
-    TnfsBrowser browser(this, g_lastTnfsUrl);
+    TnfsBrowser browser(this, aspeqtSettings->restoreTnfsLocation() ? g_lastTnfsUrl : "");
 
     // 3. Restore Cursor (Constructor is done, UI is ready to show)
     QApplication::restoreOverrideCursor();

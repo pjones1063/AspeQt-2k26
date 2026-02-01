@@ -90,7 +90,7 @@ AspeQtSettings::AspeQtSettings()
     mLastExtractDir = mSettings->value("LastExtractDir", "").toString();
     mLastPrinterTextDir = mSettings->value("LastPrinterTextDir", "").toString();
     mLastCasDir = mSettings->value("LastCasDir", "").toString();
-    
+
     mI18nLanguage = mSettings->value("I18nLanguage", "auto").toString();
 
     mMinimizeToTray = mSettings->value("MinimizeToTray", false).toBool();
@@ -126,50 +126,50 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     QSettings s(fileName, QSettings::IniFormat);
 
     s.beginGroup("AspeQt");
-        s.setValue("Backend", mBackend);
-        s.setValue("AtariSioDriverName", mAtariSioDriverName);
-        s.setValue("AtariSioHandshakingMethod", mAtariSioHandshakingMethod);
-        s.setValue("SerialPortName", mSerialPortName);
-        s.setValue("HandshakingMethod", mSerialPortHandshakingMethod);
-        s.setValue("FallingEdge", mSerialPortTriggerOnFallingEdge);
-        s.setValue("WriteDelay", mSerialPortWriteDelay);
-        s.setValue("CompErrDelay", mSerialPortCompErrDelay);
-        s.setValue("MaximumSerialPortSpeed", mSerialPortMaximumSpeed);
-        s.setValue("SerialPortUsePokeyDivisors", mSerialPortUsePokeyDivisors);
-        s.setValue("SerialPortPokeyDivisor", mSerialPortPokeyDivisor);
-        s.setValue("UseHighSpeedExeLoader", mUseHighSpeedExeLoader);
-        s.setValue("PrinterEmulation", mPrinterEmulation);
-        s.setValue("CustomCasBaud", mCustomCasBaud);
-        s.setValue("UseCustomCasBaud", mUseCustomCasBaud);
-        s.setValue("I18nLanguage", mI18nLanguage);
-        s.setValue("SaveWindowsPosSize", msaveWindowsPos);
-        s.setValue("SaveDiskVisibility", msaveDiskVis);
-        s.setValue("D9DOVisible", mdVis);
-        if (g_miniMode) {
-            s.setValue("MiniX", mMiniX);
-            s.setValue("MiniY", mMiniY);
-        } else {
-            s.setValue("MainX", mMainX);
-            s.setValue("MainY", mMainY);
-            s.setValue("MainW", mMainW);
-            s.setValue("MainH", mMainH);
-        }
-        s.setValue("PrtX", mPrtX);
-        s.setValue("PrtY", mPrtY);
-        s.setValue("PrtW", mPrtW);
-        s.setValue("PrtH", mPrtH);
-        s.setValue("FilterUnderscore", mFilterUnderscore);
-        s.setValue("CapitalLettersInPCLINK", mUseCapitalLettersInPCLINK);
-        s.setValue("URLSubmit", mUseURLSubmit);
-        s.setValue("UseLargeFont", mUseLargeFont);
-        s.setValue("ExplorerOnTop", mExplorerOnTop);
-        s.setValue("EnableShadeByDefault", mEnableShade);
-        s.setValue("LastRclDir",mRclDir);
-        s.setValue("LastRclCmd",mRclCommand);
-        s.setValue("RestoreTnfsLocation", mRestoreTnfsLocation);
+    s.setValue("Backend", mBackend);
+    s.setValue("AtariSioDriverName", mAtariSioDriverName);
+    s.setValue("AtariSioHandshakingMethod", mAtariSioHandshakingMethod);
+    s.setValue("SerialPortName", mSerialPortName);
+    s.setValue("HandshakingMethod", mSerialPortHandshakingMethod);
+    s.setValue("FallingEdge", mSerialPortTriggerOnFallingEdge);
+    s.setValue("WriteDelay", mSerialPortWriteDelay);
+    s.setValue("CompErrDelay", mSerialPortCompErrDelay);
+    s.setValue("MaximumSerialPortSpeed", mSerialPortMaximumSpeed);
+    s.setValue("SerialPortUsePokeyDivisors", mSerialPortUsePokeyDivisors);
+    s.setValue("SerialPortPokeyDivisor", mSerialPortPokeyDivisor);
+    s.setValue("UseHighSpeedExeLoader", mUseHighSpeedExeLoader);
+    s.setValue("PrinterEmulation", mPrinterEmulation);
+    s.setValue("CustomCasBaud", mCustomCasBaud);
+    s.setValue("UseCustomCasBaud", mUseCustomCasBaud);
+    s.setValue("I18nLanguage", mI18nLanguage);
+    s.setValue("SaveWindowsPosSize", msaveWindowsPos);
+    s.setValue("SaveDiskVisibility", msaveDiskVis);
+    s.setValue("D9DOVisible", mdVis);
+    if (g_miniMode) {
+        s.setValue("MiniX", mMiniX);
+        s.setValue("MiniY", mMiniY);
+    } else {
+        s.setValue("MainX", mMainX);
+        s.setValue("MainY", mMainY);
+        s.setValue("MainW", mMainW);
+        s.setValue("MainH", mMainH);
+    }
+    s.setValue("PrtX", mPrtX);
+    s.setValue("PrtY", mPrtY);
+    s.setValue("PrtW", mPrtW);
+    s.setValue("PrtH", mPrtH);
+    s.setValue("FilterUnderscore", mFilterUnderscore);
+    s.setValue("CapitalLettersInPCLINK", mUseCapitalLettersInPCLINK);
+    s.setValue("URLSubmit", mUseURLSubmit);
+    s.setValue("UseLargeFont", mUseLargeFont);
+    s.setValue("ExplorerOnTop", mExplorerOnTop);
+    s.setValue("EnableShadeByDefault", mEnableShade);
+    s.setValue("LastRclDir",mRclDir);
+    s.setValue("LastRclCmd",mRclCommand);
+    s.setValue("RestoreTnfsLocation", mRestoreTnfsLocation);
 
-       s.endGroup();
-//
+    s.endGroup();
+    //
     s.beginWriteArray("MountedImageSettings");
     for (int i = 0; i < 15; i++) {                      //
         ImageSettings& is = mMountedImageSettings[i];
@@ -181,52 +181,52 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.endArray();
 }
 // Get all session related settings, so that a session could be fully restored //
- void AspeQtSettings::loadSessionFromFile(const QString &fileName)
+void AspeQtSettings::loadSessionFromFile(const QString &fileName)
 {
     QSettings s(fileName, QSettings::IniFormat);
     s.beginGroup("AspeQt");
-        mBackend = s.value("Backend", 0).toInt();
-        mAtariSioDriverName = s.value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
-        mAtariSioHandshakingMethod = s.value("AtariSioHandshakingMethod", 0).toInt();
-        mSerialPortName = s.value("SerialPortName", StandardSerialPortBackend::defaultPortName()).toString();
-        mSerialPortHandshakingMethod = s.value("HandshakingMethod", 0).toInt();
-        mSerialPortTriggerOnFallingEdge = s.value("FallingEdge", false).toBool();
-        mSerialPortWriteDelay = s.value("WriteDelay", 1).toInt();
-        mSerialPortCompErrDelay = s.value("CompErrDelay", 1).toInt();
-        mSerialPortMaximumSpeed = s.value("MaximumSerialPortSpeed", 2).toInt();
-        mSerialPortUsePokeyDivisors = s.value("SerialPortUsePokeyDivisors", false).toBool();
-        mSerialPortPokeyDivisor = s.value("SerialPortPokeyDivisor", 6).toInt();
-        mUseHighSpeedExeLoader = s.value("UseHighSpeedExeLoader", false).toBool();
-        mPrinterEmulation = s.value("PrinterEmulation", true).toBool();
-        mCustomCasBaud = s.value("CustomCasBaud", 875).toInt();
-        mUseCustomCasBaud = s.value("UseCustomCasBaud", false).toBool();
-        mI18nLanguage = s.value("I18nLanguage").toString();
-        msaveWindowsPos = s.value("SaveWindowsPosSize", true).toBool();
-        msaveDiskVis = s.value("SaveDiskVisibility", true).toBool();
-        mdVis = s.value("D9DOVisible", true).toBool();
-        mMainX = s.value("MainX", 20).toInt();
-        mMainY = s.value("MainY", 40).toInt();
-        mMainW = s.value("MainW", 688).toInt();
-        mMainH = s.value("MainH", 426).toInt();
-        if (mMainW < 688 && mdVis) mMainW = 688;
-        if (mMainH < 426 && mdVis) mMainH = 426;
-        mMiniX = s.value("MiniX", 8).toInt();
-        mMiniY = s.value("MiniY", 30).toInt();
-        mPrtX = s.value("PrtX", 20).toInt();
-        mPrtY = s.value("PrtY", 40).toInt();
-        mPrtW = s.value("PrtW", 600).toInt();
-        mPrtH = s.value("PrtH", 486).toInt();
-        mFilterUnderscore = s.value("FilterUnderscore", true).toBool();
-        mUseCapitalLettersInPCLINK = s.value("CapitalLettersInPCLINK", false).toBool();
-        mUseURLSubmit = s.value("URLSubmit", false).toBool();
-        mUseLargeFont = s.value("UseLargeFont", false).toBool();
-        mExplorerOnTop = s.value("ExplorerOnTop", false).toBool();
-        mEnableShade = s.value("EnableShadeByDefault", true).toBool();
-        mRclDir = mSettings->value("LastRclDir","").toString();
-        mRclCommand = mSettings->value("LastRclCmd","").toString();
-        mRestoreTnfsLocation = s.value("RestoreTnfsLocation", true).toBool();
-        s.endGroup();
- //
+    mBackend = s.value("Backend", 0).toInt();
+    mAtariSioDriverName = s.value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
+    mAtariSioHandshakingMethod = s.value("AtariSioHandshakingMethod", 0).toInt();
+    mSerialPortName = s.value("SerialPortName", StandardSerialPortBackend::defaultPortName()).toString();
+    mSerialPortHandshakingMethod = s.value("HandshakingMethod", 0).toInt();
+    mSerialPortTriggerOnFallingEdge = s.value("FallingEdge", false).toBool();
+    mSerialPortWriteDelay = s.value("WriteDelay", 1).toInt();
+    mSerialPortCompErrDelay = s.value("CompErrDelay", 1).toInt();
+    mSerialPortMaximumSpeed = s.value("MaximumSerialPortSpeed", 2).toInt();
+    mSerialPortUsePokeyDivisors = s.value("SerialPortUsePokeyDivisors", false).toBool();
+    mSerialPortPokeyDivisor = s.value("SerialPortPokeyDivisor", 6).toInt();
+    mUseHighSpeedExeLoader = s.value("UseHighSpeedExeLoader", false).toBool();
+    mPrinterEmulation = s.value("PrinterEmulation", true).toBool();
+    mCustomCasBaud = s.value("CustomCasBaud", 875).toInt();
+    mUseCustomCasBaud = s.value("UseCustomCasBaud", false).toBool();
+    mI18nLanguage = s.value("I18nLanguage").toString();
+    msaveWindowsPos = s.value("SaveWindowsPosSize", true).toBool();
+    msaveDiskVis = s.value("SaveDiskVisibility", true).toBool();
+    mdVis = s.value("D9DOVisible", true).toBool();
+    mMainX = s.value("MainX", 20).toInt();
+    mMainY = s.value("MainY", 40).toInt();
+    mMainW = s.value("MainW", 688).toInt();
+    mMainH = s.value("MainH", 426).toInt();
+    if (mMainW < 688 && mdVis) mMainW = 688;
+    if (mMainH < 426 && mdVis) mMainH = 426;
+    mMiniX = s.value("MiniX", 8).toInt();
+    mMiniY = s.value("MiniY", 30).toInt();
+    mPrtX = s.value("PrtX", 20).toInt();
+    mPrtY = s.value("PrtY", 40).toInt();
+    mPrtW = s.value("PrtW", 600).toInt();
+    mPrtH = s.value("PrtH", 486).toInt();
+    mFilterUnderscore = s.value("FilterUnderscore", true).toBool();
+    mUseCapitalLettersInPCLINK = s.value("CapitalLettersInPCLINK", false).toBool();
+    mUseURLSubmit = s.value("URLSubmit", false).toBool();
+    mUseLargeFont = s.value("UseLargeFont", false).toBool();
+    mExplorerOnTop = s.value("ExplorerOnTop", false).toBool();
+    mEnableShade = s.value("EnableShadeByDefault", true).toBool();
+    mRclDir = mSettings->value("LastRclDir","").toString();
+    mRclCommand = mSettings->value("LastRclCmd","").toString();
+    mRestoreTnfsLocation = s.value("RestoreTnfsLocation", true).toBool();
+    s.endGroup();
+    //
     s.beginReadArray("MountedImageSettings");
     for (int i = 0; i < 15; i++) {              //
         s.setArrayIndex(i);
@@ -342,7 +342,7 @@ QString AspeQtSettings::atariSioDriverName()
 }
 
 void AspeQtSettings::setAtariSioDriverName(const QString &name)
-{    
+{
     mAtariSioDriverName = name;
     if(mSessionFileName == "") mSettings->setValue("AtariSioDriverName", mAtariSioDriverName);
 }
@@ -353,7 +353,7 @@ int AspeQtSettings::atariSioHandshakingMethod()
 }
 
 void AspeQtSettings::setAtariSioHandshakingMethod(int method)
-{    
+{
     mAtariSioHandshakingMethod = method;
     if(mSessionFileName == "") mSettings->setValue("AtariSioHandshakingMethod", mAtariSioHandshakingMethod);
 }
@@ -364,7 +364,7 @@ int AspeQtSettings::backend()
 }
 
 void AspeQtSettings::setBackend(int backend)
-{   
+{
     mBackend = backend;
     if(mSessionFileName == "") mSettings->setValue("Backend", mBackend);
 }
@@ -375,7 +375,7 @@ bool AspeQtSettings::useHighSpeedExeLoader()
 }
 
 void AspeQtSettings::setUseHighSpeedExeLoader(bool use)
-{   
+{
     mUseHighSpeedExeLoader = use;
     if(mSessionFileName == "") mSettings->setValue("UseHighSpeedExeLoader", mUseHighSpeedExeLoader);
 }
@@ -397,7 +397,7 @@ bool AspeQtSettings::useCustomCasBaud()
 }
 
 void AspeQtSettings::setUseCustomCasBaud(bool use)
-{   
+{
     mUseCustomCasBaud = use;
     if(mSessionFileName == "") mSettings->setValue("UseCustomCasBaud", mUseCustomCasBaud);
 }
@@ -408,7 +408,7 @@ int AspeQtSettings::customCasBaud()
 }
 
 void AspeQtSettings::setCustomCasBaud(int baud)
-{    
+{
     mCustomCasBaud = baud;
     if(mSessionFileName == "") mSettings->setValue("CustomCasBaud", mCustomCasBaud);
 }
@@ -497,7 +497,7 @@ void AspeQtSettings::unmountImage(int no)
     ImageSettings is = mMountedImageSettings[no];
 
     for (int i = (NUM_RECENT_FILES-1); i > 0; i--) {
-            mRecentImageSettings[i] = mRecentImageSettings[i - 1];
+        mRecentImageSettings[i] = mRecentImageSettings[i - 1];
     }
     mRecentImageSettings[0] = is;
     writeRecentImageSettings();
@@ -506,7 +506,7 @@ void AspeQtSettings::unmountImage(int no)
 }
 
 void AspeQtSettings::swapImages(int no1, int no2)
-{    
+{
     ImageSettings is1 = mountedImageSetting(no1);
     ImageSettings is2 = mountedImageSetting(no2);
     setMountedImageSetting(no1, is2.fileName, is2.isWriteProtected);
@@ -578,7 +578,7 @@ bool AspeQtSettings::saveWindowsPos()
 }
 
 void AspeQtSettings::setsaveWindowsPos(bool saveMwp)
-{    
+{
     msaveWindowsPos = saveMwp;
     if(mSessionFileName == "") mSettings->setValue("SaveWindowsPosSize", msaveWindowsPos);
 }
@@ -590,7 +590,7 @@ int AspeQtSettings::lastHorizontalPos()
 }
 
 void AspeQtSettings::setLastHorizontalPos(int lastHpos)
-{    
+{
     mMainX = lastHpos;
     if(mSessionFileName == "") mSettings->setValue("MainX", mMainX);
 }
@@ -600,7 +600,7 @@ int AspeQtSettings::lastVerticalPos()
 }
 
 void AspeQtSettings::setLastVerticalPos(int lastVpos)
-{    
+{
     mMainY = lastVpos;
     if(mSessionFileName == "") mSettings->setValue("MainY", mMainY);
 }
@@ -610,7 +610,7 @@ int AspeQtSettings::lastWidth()
 }
 
 void AspeQtSettings::setLastWidth(int lastW)
-{    
+{
     mMainW = lastW;
     if(mSessionFileName == "") mSettings->setValue("MainW", mMainW);
 }
@@ -744,7 +744,7 @@ QString AspeQtSettings::lastSessionDir()
 void AspeQtSettings::setLastSessionDir(const QString &dir)
 {
     mLastSessionDir = dir;
-//    mSettings->setValue("LastSessionDir", mLastFolderImageDir);  //
+    //    mSettings->setValue("LastSessionDir", mLastFolderImageDir);  //
     mSettings->setValue("LastSessionDir", mLastSessionDir);
 }
 
@@ -869,4 +869,14 @@ void AspeQtSettings::setRestoreTnfsLocation(bool enabled)
 bool AspeQtSettings::restoreTnfsLocation()
 {
     return mRestoreTnfsLocation;
+}
+
+void AspeQtSettings::setShadeOpacity(int val)
+{
+    mSettings->setValue("MainWindow/ShadeOpacity", val);
+}
+
+int AspeQtSettings::shadeOpacity()
+{
+    return mSettings->value("MainWindow/ShadeOpacity", 60).toInt();
 }

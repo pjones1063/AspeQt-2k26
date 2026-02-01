@@ -33,6 +33,7 @@ public:
     void showAsImageMounted(const QString &fileName, const QString &description, bool editEnabled, bool enableSave);
     void showAsTNFSMounted(const QString &fileName, const QString &description);
     void updateFromImage(SimpleDiskImage* diskImage);
+    void setIconSize(const QSize &size);
 
     bool isAutoSaveEnabled();
     void setLabelToolTips(const QString &one, const QString &two, const QString &three);

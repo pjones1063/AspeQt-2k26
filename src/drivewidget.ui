@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ui version="4.0">
  <class>DriveWidget</class>
  <widget class="QFrame" name="DriveWidget">
@@ -30,19 +30,19 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>3</number>
+    <number>5</number>
    </property>
    <property name="leftMargin">
-    <number>3</number>
+    <number>5</number>
    </property>
    <property name="topMargin">
-    <number>3</number>
+    <number>5</number>
    </property>
    <property name="rightMargin">
-    <number>3</number>
+    <number>5</number>
    </property>
    <property name="bottomMargin">
-    <number>3</number>
+    <number>5</number>
    </property>
    <item>
     <widget class="QLabel" name="driveLabel">
@@ -60,22 +60,22 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="buttonMountDisk"/>
+    <widget class="QToolButton" name="buttonMountDisk" />
    </item>
    <item>
-    <widget class="QToolButton" name="buttonMountFolder"/>
+    <widget class="QToolButton" name="buttonMountFolder" />
    </item>
    <item>
-    <widget class="QToolButton" name="buttonSave"/>
+    <widget class="QToolButton" name="buttonSave" />
    </item>
    <item>
-    <widget class="QToolButton" name="autoSave"/>
+    <widget class="QToolButton" name="autoSave" />
    </item>
    <item>
-    <widget class="QToolButton" name="buttonEditDisk"/>
+    <widget class="QToolButton" name="buttonEditDisk" />
    </item>
    <item>
-    <widget class="QToolButton" name="buttonHappyMode"/>
+    <widget class="QToolButton" name="buttonHappyMode" />
    </item>
    <item>
     <spacer name="horizontalSpacer">
@@ -118,7 +118,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QToolButton" name="buttonEject"/>
+    <widget class="QToolButton" name="buttonEject" />
    </item>
   </layout>
   <action name="actionMountDisk">
@@ -222,7 +222,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../res/icons.qrc"/>
+  <include location="../res/icons.qrc" />
  </resources>
- <connections/>
+ <connections />
 </ui>

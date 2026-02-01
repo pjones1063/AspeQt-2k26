@@ -205,12 +205,16 @@ public:
 
     void setRestoreTnfsLocation(bool enabled);
     bool restoreTnfsLocation();
+    void setShadeOpacity(int val);
+    int shadeOpacity();
 
 private:
     QSettings *mSettings;
     void writeRecentImageSettings();
     bool mIsFirstTime;
     bool mRestoreTnfsLocation;
+
+
 
 // To pass values from Mainwindow //
     int mMainX;

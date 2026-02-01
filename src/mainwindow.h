@@ -16,6 +16,7 @@
 #include <QTranslator>
 #include <QSystemTrayIcon>
 #include <QTextEdit>
+#include <QSlider>
 
 
 #include "optionsdialog.h"
@@ -97,6 +98,8 @@ private:
 
     QDialog *logWindow_;
     QList<QAction*> recentFilesActions_;
+    QSlider *opacitySlider;
+    QPoint m_dragPosition;
 
 
     void setSession();  //
