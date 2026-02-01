@@ -316,8 +316,9 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                 if (atariFiles[i].longName == "DUP.SYS") info.setFile(":/boot_templates/$bootmyd/dup.sys");
 
                 int size = (info.size() + 124) / 125;
-                if (size > 999) {
-                    size = 999;
+                // FIX: Increased limit from 999 to 65535 to support large files (>125KB)
+                if (size > 65535) {
+                    size = 65535;
                 }
                 entry[1] = size % 256;
                 entry[2] = size / 256;
