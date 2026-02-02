@@ -33,6 +33,7 @@ void TnfsImage::cleanupAtx()
     }
 }
 
+
 bool TnfsImage::openUrl(const QString &url)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -49,9 +50,11 @@ bool TnfsImage::openUrl(const QString &url)
     m_isXex = false;
     cleanupAtx();
 
+    // 1. Force UI Update immediately to show "Connecting..."
     qDebug() << "!n" << "TNFS: Connecting to" << host << "...";
+    // Drain event queue to ensure the log line renders NOW
+    QCoreApplication::processEvents();
 
-    // --- DOWNLOAD PHASE ---
     TnfsClient client;
     if (!client.connectToHost(host)) {
         qWarning() << "!e" << "TNFS: Host Connection Failed:" << host;
@@ -65,10 +68,17 @@ bool TnfsImage::openUrl(const QString &url)
         return false;
     }
 
-    quint8 handle = client.openFile(fullPath.startsWith("/") ? fullPath.mid(1) : fullPath);
-    if (handle == 0xFF && fullPath.startsWith("/")) {
-        handle = client.openFile(fullPath);
-    }
+    QString pathNoSlash = fullPath.startsWith("/") ? fullPath.mid(1) : fullPath;
+    QString pathWithSlash = fullPath.startsWith("/") ? fullPath : "/" + fullPath;
+
+    // --- STRATEGY 1: Try STAT (Preferred) ---
+    // Try both formats because servers differ on leading slash handling
+    quint32 totalSize = client.getFileSize(pathNoSlash);
+    if (totalSize == 0) totalSize = client.getFileSize(pathWithSlash);
+
+    // --- OPEN FILE ---
+    quint8 handle = client.openFile(pathNoSlash);
+    if (handle == 0xFF) handle = client.openFile(pathWithSlash);
 
     if (handle == 0xFF) {
         qWarning() << "!e" << "TNFS: Failed to open:" << fullPath;
@@ -76,17 +86,34 @@ bool TnfsImage::openUrl(const QString &url)
         return false;
     }
 
+    // --- STRATEGY 2: Try LSEEK (Fallback) ---
+    // If STAT failed, try seeking to end of file
+    if (totalSize == 0) {
+        totalSize = client.getFileSize(handle);
+    }
+
+    // --- LOGGING & UI SETUP ---
+    if (totalSize > 0) {
+        qDebug() << "!i" << "TNFS: Downloading" << pathNoSlash << "(" << totalSize << "bytes)...";
+    } else {
+        qDebug() << "!i" << "TNFS: Downloading" << pathNoSlash << "(Stream mode)...";
+    }
+
+    // FORCE PAINT: Ensure the log window updates before we enter the loop
+    QCoreApplication::sendPostedEvents();
+    QCoreApplication::processEvents();
+
     this->m_originalFileName = url;
-
-    // --- DOWNLOAD TO RAM ---
-    qDebug() << "!n" << "TNFS: Downloading image to RAM...";
-
     m_imgData.clear();
-    quint32 offset = 0;
+    if (totalSize > 0) m_imgData.reserve(totalSize);
 
-    // 1. Setup Timer
+    quint32 offset = 0;
     QElapsedTimer progressTimer;
     progressTimer.start();
+
+    // Initial Signal: Send 0, but if totalSize is 0, this tells UI to go "Busy Mode"
+    emit downloadProgress(0, totalSize);
+    QCoreApplication::processEvents();
 
     while (true) {
         // Download in 1KB chunks
@@ -97,15 +124,13 @@ bool TnfsImage::openUrl(const QString &url)
         m_imgData.append(chunk);
         offset += chunk.size();
 
-        // 2. Heartbeat Logic (Every 1000ms)
-        if (progressTimer.elapsed() > 500) {
-            // Re-print the EXACT same message.
-            // MainWindow will catch this and update the line to "[x2]", "[x3]", etc.
-            qDebug() << "!n" << "TNFS: Downloading image to RAM...";
+        // Emit Progress
+        emit downloadProgress(offset, totalSize);
 
-            // Allow the UI to repaint (Essential!)
+        // UI Refresh Logic
+        // Keep this low (50ms) to prevent "Application Not Responding" ghosting
+        if (progressTimer.elapsed() > 50) {
             QCoreApplication::processEvents();
-
             progressTimer.restart();
         }
 
@@ -117,10 +142,21 @@ bool TnfsImage::openUrl(const QString &url)
         }
     }
 
+    // Final 100% update (Only if we knew the size)
+    if (totalSize > 0) {
+        emit downloadProgress(totalSize, totalSize);
+    } else {
+        // If size was unknown, we are done, so maybe hide the bar or set to 100% now
+        emit downloadProgress(m_imgData.size(), m_imgData.size());
+    }
+
+    QCoreApplication::processEvents();
+
     client.closeFile(handle);
     qDebug() << "!n" << "TNFS: Download Complete. Size:" << m_imgData.size();
 
-    // --- FORMAT AUTO-DETECTION & VALIDATION ---
+    // ... (rest of parsing logic: ATX, XEX, ATR) ...
+    // Copy the rest of your format detection code here
 
     // 1. ATX Format (Copy Protected)
     if (fullPath.endsWith(".atx", Qt::CaseInsensitive)) {
@@ -171,8 +207,8 @@ bool TnfsImage::openUrl(const QString &url)
     return true;
 }
 
-// --- XEX PARSER ---
-bool TnfsImage::parseXex()
+
+ bool TnfsImage::parseXex()
 {
     // Load the internal AspeQt loader binary
     // Try High Speed first if available, otherwise standard
@@ -308,19 +344,17 @@ void TnfsImage::handleCommand(quint8 command, quint16 aux)
 {
     // --- SPECIAL COMMANDS (Speed Poll / XEX Loader) ---
     switch (command) {
-    // --- FIX: SPEED POLL HANDLER ---
-    case 0x3F:
+    case 0x3F: // Speed Poll
     {
         if (!sio->port()->writeCommandAck()) return;
         sio->port()->writeComplete();
         QByteArray speed(1, 0);
         speed[0] = sio->port()->speedByte();
         sio->port()->writeDataFrame(speed);
-        // qDebug() << "!n" << "TNFS: Speed Poll.";
         return;
     }
 
-    // --- XEX PROTOCOL ---
+        // --- XEX PROTOCOL ---
     case 0xFE: // Get Chunk Data
     {
         if (!m_isXex || aux >= m_chunks.count()) {

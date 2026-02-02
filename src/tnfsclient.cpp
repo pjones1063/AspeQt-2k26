@@ -197,3 +197,127 @@ QList<TnfsClient::DirectoryEntry> TnfsClient::listDirectory(const QString &path)
     });
     return entries;
 }
+
+
+bool TnfsClient::beginListing(const QString &path)
+{
+    // Close previous if exists
+    if (m_dirHandle != 0xFF) endListing();
+
+    QByteArray req = path.toUtf8(); req.append((char)0x00);
+    QByteArray response = sendCommand(CMD_OPENDIR, req);
+
+    if (response.size() < 6 || (quint8)response.at(4) != 0) return false;
+
+    m_dirHandle = (quint8)response.at(5);
+
+    // *** RESET THE FLAG ***
+    m_listingFinished = false;
+
+    return true;
+}
+
+QList<TnfsClient::DirectoryEntry> TnfsClient::fetchNextBatch(int count)
+{
+    QList<DirectoryEntry> entries;
+    if (m_dirHandle == 0xFF) return entries;
+
+    for (int i = 0; i < count; i++) {
+        QByteArray entryData = sendCommand(CMD_READDIR, QByteArray().append((char)m_dirHandle));
+
+        // Check for EOF (Status != 0) or Empty Packet
+        if (entryData.size() < 6 || (quint8)entryData.at(4) != 0) {
+            endListing();
+            // *** MARK FINISHED ***
+            m_listingFinished = true;
+            break;
+        }
+
+        QByteArray rawName = entryData.mid(5);
+        if (rawName.isEmpty() || rawName.at(0) == '\0') {
+            endListing();
+            // *** MARK FINISHED ***
+            m_listingFinished = true;
+            break;
+        }
+
+        QString name = QString::fromUtf8(rawName).trimmed();
+        int nullPos = name.indexOf(QChar('\0'));
+        if (nullPos != -1) name = name.left(nullPos);
+
+        if (!name.isEmpty() && name != "." && name != "..") {
+            DirectoryEntry entry;
+            entry.name = name;
+            entry.isDirectory = (name.endsWith("/"));
+            if (entry.isDirectory) entry.name.chop(1);
+            entries.append(entry);
+        }
+    }
+    return entries;
+}
+
+void TnfsClient::endListing()
+{
+    if (m_dirHandle != 0xFF) {
+        sendCommand(CMD_CLOSEDIR, QByteArray().append((char)m_dirHandle));
+        m_dirHandle = 0xFF;
+    }
+}
+
+
+
+quint32 TnfsClient::getFileSize(const QString &path)
+{
+    // Use CMD_STAT (0x20) instead of LSEEK.
+    // Packet: [Cmd] [Path] [0x00]
+    QByteArray req = path.toUtf8();
+    req.append((char)0x00);
+
+    QByteArray res = sendCommand(CMD_STAT, req);
+
+    // Response Structure (Indices include 4-byte header):
+    // 0-3: Header
+    // 4: Status (0x00 = OK)
+    // 5-6: Mode
+    // 7-8: UID
+    // 9-10: GID
+    // 11-14: Size (Little Endian)
+
+    if (res.size() < 15 || (quint8)res.at(4) != 0x00) {
+        return 0; // Error or File Not Found
+    }
+
+    // Extract 32-bit Size from offset 11
+    quint32 size = (quint8)res.at(11) |
+                   ((quint8)res.at(12) << 8) |
+                   ((quint8)res.at(13) << 16) |
+                   ((quint8)res.at(14) << 24);
+
+    return size;
+}
+
+
+
+quint32 TnfsClient::getFileSize(quint8 handle)
+{
+    // 1. Seek to END
+    QByteArray reqEnd;
+    reqEnd.append((char)handle);
+    reqEnd.append((char)TnfsSeekEnd); // <--- Usage
+    reqEnd.append((char)0x00); reqEnd.append((char)0x00); reqEnd.append((char)0x00); reqEnd.append((char)0x00);
+
+    QByteArray resEnd = sendCommand(CMD_LSEEK, reqEnd);
+    if (resEnd.size() < 5 || (quint8)resEnd.at(4) != 0x00) return 0;
+
+    quint32 size = (quint8)resEnd.at(5) | ((quint8)resEnd.at(6) << 8) | ((quint8)resEnd.at(7) << 16) | ((quint8)resEnd.at(8) << 24);
+
+    // 2. Rewind to START
+    QByteArray reqSet;
+    reqSet.append((char)handle);
+    reqSet.append((char)TnfsSeekSet); // <--- Usage
+    reqSet.append((char)0x00); reqSet.append((char)0x00); reqSet.append((char)0x00); reqSet.append((char)0x00);
+
+    sendCommand(CMD_LSEEK, reqSet);
+
+    return size;
+}

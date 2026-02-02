@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QComboBox>
+#include <QToolButton>
+#include <QIcon>
 #include "tnfsclient.h"
 
 class TnfsBrowser : public QDialog
@@ -24,7 +26,8 @@ private slots:
     void onBackClicked();
     void onClearHistory();
     void onCancelClicked();
-
+    void onSortClicked();
+    void onMoreClicked();
 
 private:
     TnfsClient *client;
@@ -33,11 +36,16 @@ private:
     QLabel *statusLabel;
     QPushButton *btnClear;
     QPushButton *btnCancel;
+    QPushButton *btnMore;
+    QToolButton *btnSort;
 
+    bool m_sortAscending; // TRACK STA
     QString currentPath;
     QString selectedUrl;
+    bool m_isFirstBatch;
 
-    void refreshList();
+    void refreshList();     // Starts the listing (Resets state)
+    void loadNextBatch();   // Fetches the actual data
 };
 
 #endif // TNFSBROWSER_H

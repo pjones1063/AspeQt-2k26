@@ -8,16 +8,17 @@
 #include <QDebug>
 #include <QSettings>
 #include <QStyle>
+#include <algorithm>
 
 TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(parent), client(new TnfsClient(this))
 {
-    setWindowTitle(tr("TNFS Network Browser (13leader.net)"));
+    setWindowTitle(tr("TNFS Network Browser"));
     resize(600, 450);
 
     // --- UI Layout ---
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
-    // Top Bar: Host Input
+    // 1. Top Bar: Host Input
     QHBoxLayout *topLayout = new QHBoxLayout();
     hostCombo = new QComboBox(this);
     hostCombo->setEditable(true);
@@ -29,7 +30,7 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(p
     if (!savedHosts.isEmpty()) {
         hostCombo->addItems(savedHosts);
     } else {
-        hostCombo->addItem("13leader.net");
+        hostCombo->addItem("13leader.net"); // Default
     }
 
     QPushButton *btnConnect = new QPushButton(tr("Connect"), this);
@@ -38,40 +39,63 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(p
     btnClear->setToolTip(tr("Clear saved host history"));
 
     topLayout->addWidget(new QLabel(tr("TNFS Host:")));
-    topLayout->addWidget(hostCombo,1);
+    topLayout->addWidget(hostCombo, 1);
     topLayout->addWidget(btnConnect);
     topLayout->addWidget(btnClear);
 
-    // Navigation Bar
+    // 2. Navigation Bar (Back, Sort, Status)
     QHBoxLayout *navLayout = new QHBoxLayout();
+
     QPushButton *btnBack = new QPushButton(tr(".. (Up)"), this);
+
+    // --- NEW: Sort Button ---
+    btnSort = new QToolButton(this);
+    btnSort->setIcon(QIcon::fromTheme("view-sort-ascending"));
+    if (btnSort->icon().isNull()) btnSort->setText("A-Z"); // Fallback text
+    btnSort->setToolTip(tr("Sort A-Z / Z-A"));
+    m_sortAscending = true; // Default to A-Z
+
     statusLabel = new QLabel(tr("Not Connected"), this);
 
     navLayout->addWidget(btnBack);
+    navLayout->addWidget(btnSort); // Add sort button next to Back
     navLayout->addWidget(statusLabel);
     navLayout->addStretch();
 
-    // File List
+    // 3. File List
     fileList = new QListWidget(this);
 
-    // Bottom Button Bar (New)
+    // 4. Bottom Button Bar
     QHBoxLayout *bottomLayout = new QHBoxLayout();
+
+    // --- FIX: Create Buttons FIRST (Prevents Crash) ---
+    btnMore = new QPushButton(tr("More..."), this);
+    btnMore->setVisible(false); // Hidden by default
+
     btnCancel = new QPushButton(tr("Cancel"), this);
+
+    // --- FIX: Add to Layout SECOND ---
+    bottomLayout->addWidget(btnMore);
     bottomLayout->addStretch();
     bottomLayout->addWidget(btnCancel);
 
+    // Assemble Main Layout
     mainLayout->addLayout(topLayout);
     mainLayout->addLayout(navLayout);
     mainLayout->addWidget(fileList);
     mainLayout->addWidget(new QLabel(tr("Double-click a file (.ATR/.XEX) to Mount it."), this));
-    mainLayout->addLayout(bottomLayout); // Add the bottom layout
+    mainLayout->addLayout(bottomLayout);
 
     // --- Connections ---
     connect(btnConnect, &QPushButton::clicked, this, &TnfsBrowser::onConnect);
     connect(btnBack, &QPushButton::clicked, this, &TnfsBrowser::onBackClicked);
     connect(fileList, &QListWidget::itemDoubleClicked, this, &TnfsBrowser::onItemDoubleClicked);
     connect(btnClear, &QPushButton::clicked, this, &TnfsBrowser::onClearHistory);
-    connect(btnCancel, &QPushButton::clicked, this, &TnfsBrowser::onCancelClicked); // Connect Cancel
+    connect(btnMore, &QPushButton::clicked, this, &TnfsBrowser::onMoreClicked);
+    connect(btnCancel, &QPushButton::clicked, this, &TnfsBrowser::onCancelClicked);
+
+    // --- NEW: Sort Connection ---
+    connect(btnSort, &QToolButton::clicked, this, &TnfsBrowser::onSortClicked);
 
     currentPath = "/";
 
@@ -91,9 +115,7 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(p
         if (!host.isEmpty()) {
             hostCombo->setEditText(host);
 
-            // Manual Connect Sequence
-            // Note: Main Window handles the *Initial* WaitCursor, but we leave this
-            // label update here for visual clarity.
+            // Visual feedback
             statusLabel->setText(tr("Connecting to %1...").arg(host));
             QApplication::processEvents();
 
@@ -110,13 +132,11 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl) : QDialog(p
                 refreshList();
             } else {
                 statusLabel->setText(tr("Connection failed."));
-                // Ensure cursor is unset if we fail (just in case)
                 unsetCursor();
             }
         }
     }
 }
-
 
 TnfsBrowser::~TnfsBrowser()
 {
@@ -131,14 +151,11 @@ void TnfsBrowser::onConnect()
 {
     QString host = hostCombo->currentText();
 
-    setCursor(Qt::WaitCursor); // Show busy for manual clicks
+    setCursor(Qt::WaitCursor);
     statusLabel->setText(tr("Connecting to %1...").arg(host));
     QApplication::processEvents();
 
-    // 1. Establish UDP "Connection"
     if (client->connectToHost(host)) {
-
-        // 2. Perform Initial Mount of Root
         if (client->mount("/")) {
             statusLabel->setText(tr("Connected: /"));
             currentPath = "/";
@@ -172,52 +189,29 @@ void TnfsBrowser::onConnect()
 
 void TnfsBrowser::refreshList()
 {
-    // Set cursor for internal navigation events
-    setCursor(Qt::WaitCursor);
-    fileList->setEnabled(false);
+    fileList->clear();
+    btnMore->setVisible(false);
+    btnMore->setEnabled(true);
+    btnMore->setText(tr("More..."));
+
     statusLabel->setText(tr("Fetching %1...").arg(currentPath));
 
-    // [NEW] Log Message
-    // MainWindow will handle the [xNN] aggregation automatically
-    qDebug() << "!n" << "Directory loading...";
+    // --- NEW: Reset Sort State on folder change ---
+    m_sortAscending = true;
+    QIcon icon = QIcon::fromTheme("view-sort-ascending");
+    if (icon.isNull()) btnSort->setText("A-Z");
+    else btnSort->setIcon(icon);
 
     QApplication::processEvents();
 
-    // Run Synchronously
-    QList<TnfsClient::DirectoryEntry> entries = client->listDirectory(currentPath);
-
-    fileList->clear();
-
-    for (const auto &entry : entries) {
-        if (entry.name == "." || entry.name == "..") continue;
-
-        QListWidgetItem *item = new QListWidgetItem(entry.name);
-
-        bool isDir = entry.isDirectory;
-        if (!isDir && !entry.name.contains('.')) {
-            isDir = true;
-        }
-
-        if (isDir) {
-            QIcon icon = QIcon::fromTheme("folder");
-            if (icon.isNull()) icon = QApplication::style()->standardIcon(QStyle::SP_DirIcon);
-            item->setIcon(icon);
-            item->setData(Qt::UserRole, true);
-        } else {
-            QIcon icon = QIcon::fromTheme("media-floppy");
-            if (icon.isNull()) icon = QApplication::style()->standardIcon(QStyle::SP_FileIcon);
-            item->setIcon(icon);
-            item->setData(Qt::UserRole, false);
-        }
-
-        fileList->addItem(item);
+    // Start the listing process
+    if (client->beginListing(currentPath)) {
+        m_isFirstBatch = true; // Mark start
+        loadNextBatch();       // Load first page immediately
+    } else {
+        statusLabel->setText(tr("Error opening directory."));
     }
-
-    statusLabel->setText(tr("Browsing: %1").arg(currentPath));
-    fileList->setEnabled(true);
-    unsetCursor();
 }
-
 
 void TnfsBrowser::onItemDoubleClicked(QListWidgetItem *item)
 {
@@ -275,8 +269,114 @@ void TnfsBrowser::onClearHistory()
     }
 }
 
-// [NEW] Cancel Slot
 void TnfsBrowser::onCancelClicked()
 {
     reject();
+}
+
+void TnfsBrowser::onMoreClicked() {
+    loadNextBatch();
+}
+
+void TnfsBrowser::loadNextBatch()
+{
+    setCursor(Qt::WaitCursor);
+
+    // Fetch 20 items (Small enough for low latency)
+    auto newItems = client->fetchNextBatch(20);
+    bool finished = client->isListingFinished();
+
+    // LOGIC: If this is the FIRST batch AND it finished, we sort!
+    if (m_isFirstBatch && finished) {
+        std::sort(newItems.begin(), newItems.end(), [](const TnfsClient::DirectoryEntry &a, const TnfsClient::DirectoryEntry &b) {
+            // Folders first, then files
+            if (a.isDirectory != b.isDirectory) return a.isDirectory > b.isDirectory;
+            return a.name.toLower() < b.name.toLower();
+        });
+    }
+
+    // Add items to UI
+    for (const auto &entry : newItems) {
+        QListWidgetItem *item = new QListWidgetItem(entry.name);
+
+        if (entry.isDirectory) {
+            QIcon icon = QIcon::fromTheme("folder");
+            if (icon.isNull()) icon = QApplication::style()->standardIcon(QStyle::SP_DirIcon);
+            item->setIcon(icon);
+            item->setData(Qt::UserRole, true);
+        } else {
+            QIcon icon = QIcon::fromTheme("media-floppy");
+            if (icon.isNull()) icon = QApplication::style()->standardIcon(QStyle::SP_FileIcon);
+            item->setIcon(icon);
+            item->setData(Qt::UserRole, false);
+        }
+        fileList->addItem(item);
+    }
+
+    // UPDATE BUTTON STATE
+    if (finished) {
+        btnMore->setEnabled(false); // Grey it out
+
+        // Optional: Hide it completely if it's a small folder to look cleaner
+        if (m_isFirstBatch) btnMore->setVisible(false);
+        else btnMore->setText(tr("No more items"));
+
+    } else {
+        btnMore->setVisible(true);
+        btnMore->setEnabled(true);
+        btnMore->setText(tr("More..."));
+    }
+
+    if (!m_isFirstBatch) {
+        fileList->scrollToBottom(); // Only scroll if appending
+    }
+
+    m_isFirstBatch = false; // Next time, do not sort
+    statusLabel->setText(tr("Browsing: %1").arg(currentPath));
+    unsetCursor();
+}
+
+// --- NEW: Sorting Logic ---
+void TnfsBrowser::onSortClicked()
+{
+    // 1. Toggle State
+    m_sortAscending = !m_sortAscending;
+
+    // 2. Update Icon
+    if (m_sortAscending) {
+        QIcon icon = QIcon::fromTheme("view-sort-ascending");
+        if (icon.isNull()) btnSort->setText("A-Z");
+        else btnSort->setIcon(icon);
+    } else {
+        QIcon icon = QIcon::fromTheme("view-sort-descending");
+        if (icon.isNull()) btnSort->setText("Z-A");
+        else btnSort->setIcon(icon);
+    }
+
+    // 3. Extract all items from the list
+    QList<QListWidgetItem*> items;
+    while (fileList->count() > 0) {
+        items.append(fileList->takeItem(0));
+    }
+
+    // 4. Sort the list
+    std::sort(items.begin(), items.end(), [this](QListWidgetItem *a, QListWidgetItem *b) {
+        bool dirA = a->data(Qt::UserRole).toBool();
+        bool dirB = b->data(Qt::UserRole).toBool();
+
+        // RULE 1: Directories ALWAYS on top, regardless of sort direction
+        if (dirA != dirB) return dirA > dirB;
+
+        // RULE 2: Sort Names based on direction
+        if (m_sortAscending) {
+            return a->text().toLower() < b->text().toLower();
+        } else {
+            return a->text().toLower() > b->text().toLower();
+        }
+    });
+
+    // 5. Re-insert sorted items
+    for (auto *item : items) {
+        fileList->addItem(item);
+    }
 }

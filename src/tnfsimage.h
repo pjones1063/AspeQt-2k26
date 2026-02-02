@@ -35,6 +35,9 @@ public:
     virtual void handleCommand(quint8 command, quint16 aux) override;
     virtual QString deviceName() override { return "TNFS (RAM)"; }
 
+signals:
+    void downloadProgress(qint64 bytesRead, qint64 totalBytes);
+
 private:
     // Core Data
     QByteArray m_imgData;

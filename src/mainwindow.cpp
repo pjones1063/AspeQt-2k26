@@ -243,11 +243,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     speedLabel->setMinimumWidth(80);
 
+    dlProgressBar = new QProgressBar(this);
+    dlProgressBar->setRange(0, 100);
+    dlProgressBar->setValue(0);
+    dlProgressBar->setTextVisible(true);
+    dlProgressBar->setFixedWidth(150); // Nice width
+    dlProgressBar->hide(); // Hidden by default
+
+
     ui->statusBar->addPermanentWidget(speedLabel);
     ui->statusBar->addPermanentWidget(onOffLabel);
     ui->statusBar->addPermanentWidget(prtOnOffLabel);
     ui->statusBar->addPermanentWidget(netLabel);
     ui->statusBar->addPermanentWidget(clearMessagesLabel);
+    ui->statusBar->addPermanentWidget(dlProgressBar);
 
     // --- NEW: Opacity Slider for Shade Mode ---
     opacitySlider = new QSlider(Qt::Horizontal, this);
@@ -2087,7 +2096,7 @@ void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
  * (Snippet showing updated on_actionMountTnfs_triggered)
  */
 
-// ... [Existing Includes] ...
+
 
 void MainWindow::on_actionMountTnfs_triggered(int deviceId)
 {
@@ -2110,22 +2119,40 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
         // Eject whatever is currently in that slot
         if (!ejectImage(deviceId)) return;
 
-        TnfsBrowser browser(this, aspeqtSettings->restoreTnfsLocation() ? g_lastTnfsUrl : "");
-
         TnfsImage *tnfs = new TnfsImage(sio);
+        connect(tnfs, &TnfsImage::downloadProgress, this, &MainWindow::updateDownloadProgress);
 
         // Connect/Open the stream
         if (tnfs->openUrl(url)) {
             // Install into the SIO chain
             sio->installDevice(DISK_BASE_CDEVIC + deviceId, tnfs);
-
             // Trigger UI Update via the central handler
             deviceStatusChanged(DISK_BASE_CDEVIC + deviceId);
-
             qDebug() << "!i" << tr("Mounted TNFS Stream: %1").arg(url);
+            dlProgressBar->hide();
         } else {
             QMessageBox::critical(this, tr("Mount Error"), tr("Could not open TNFS stream from 13leader.net"));
             delete tnfs;
+            dlProgressBar->hide();
         }
+    }
+}
+
+
+
+void MainWindow::updateDownloadProgress(qint64 bytesRead, qint64 totalBytes)
+{
+    if (dlProgressBar->isHidden()) {
+        dlProgressBar->show();
+    }
+
+    if (totalBytes > 0) {
+        int percent = (int)((bytesRead * 100) / totalBytes);
+        dlProgressBar->setValue(percent);
+        dlProgressBar->setFormat(tr("Downloading: %p%"));
+    } else {
+        // Unknown size (0), just pulse
+        dlProgressBar->setRange(0, 0);
+        dlProgressBar->setFormat(tr("Downloading..."));
     }
 }

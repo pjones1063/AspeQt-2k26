@@ -18,7 +18,7 @@
 #include <QTextEdit>
 #include <QSlider>
 #include <QEnterEvent>
-
+#include <QProgressBar>
 
 #include "optionsdialog.h"
 #include "aboutdialog.h"
@@ -76,6 +76,8 @@ public slots:
     void bootExeTriggered(const QString &fileName);
     void bootCasTriggered(const QString &fileName);
     void printServer(bool on);
+    void updateDownloadProgress(qint64 bytesRead, qint64 totalBytes);
+
 
 private:
     int untitledName;
@@ -101,6 +103,7 @@ private:
     QList<QAction*> recentFilesActions_;
     QSlider *opacitySlider;
     QPoint m_dragPosition;
+    QProgressBar *dlProgressBar;
 
 
     void setSession();  //
