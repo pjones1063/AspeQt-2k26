@@ -721,11 +721,13 @@ void MainWindow::show()
     }
 }
 
-void MainWindow::enterEvent(QEvent *)
+void MainWindow::enterEvent(QEnterEvent *event)
 {
     if (g_miniMode && g_shadeMode) {
-       setWindowOpacity(1.0);
+        setWindowOpacity(1.0);
     }
+
+    QMainWindow::enterEvent(event);
 }
 
 void MainWindow::leaveEvent(QEvent *)
@@ -859,8 +861,7 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         // --- RESTORE NORMAL MODE ---
         if (g_D9DOVisible) {
             setMinimumWidth(688);
-        } else
-        {
+        } else {
             setMinimumWidth(344);
         }
 
@@ -870,11 +871,18 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         ui->actionHideShowDrives->setEnabled(true);
         saveMiniWindowGeometry();
         setGeometry(g_savedGeometry);
+
         setWindowOpacity(1.0);
         setWindowFlags(Qt::WindowSystemMenuHint);
+
         ui->actionToggleShade->setDisabled(true);
-        QMainWindow::show();
+
+        // Hide the slider when leaving mini mode
+        opacitySlider->hide();
+
         g_shadeMode = false;
+        QMainWindow::show();
+
     } else {
         // --- ENTER MINI MODE ---
 
@@ -882,39 +890,47 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         ui->textEdit->setVisible(false);
         setMinimumWidth(400);
 
-        // Check Slider Visibility
-        if (g_shadeMode && g_miniMode) {
-            opacitySlider->show();
-        } else {
-            opacitySlider->hide();
-        }
-
         // --- FIX: Dynamic Height for High DPI ---
-        // Use the larger of 100px (legacy default) or 4x the current icon size.
-        // On Standard Monitors: 16px * 4 = 64px (100px wins, keeping original look)
-        // On Retina Monitors:   32px * 4 = 128px (128px wins, preventing cut-off)
+        // Prevents the window from collapsing to 0 height or cutting off buttons
         int metric = style()->pixelMetric(QStyle::PM_SmallIconSize);
         int miniHeight = qMax(140, metric * 6);
 
         setMinimumHeight(miniHeight);
         setMaximumHeight(miniHeight);
-        // ----------------------------------------
 
         setGeometry(aspeqtSettings->lastMiniHorizontalPos(), aspeqtSettings->lastMiniVerticalPos(),
                     minimumWidth(), minimumHeight());
+
         ui->actionHideShowDrives->setDisabled(true);
         ui->actionToggleShade->setEnabled(true);
+
         if (aspeqtSettings->enableShade()) {
-            setWindowOpacity(0.25);
             setWindowFlags(Qt::FramelessWindowHint);
             g_shadeMode = true;
+
+            // --- FIX: Smart Opacity Check ---
+            // If the mouse is already over the window, stay opaque (1.0).
+            // If the mouse is away, apply the slider transparency.
+            if (this->underMouse()) {
+                setWindowOpacity(1.0);
+            } else {
+                setWindowOpacity(opacitySlider->value() / 100.0);
+            }
+
         } else {
             g_shadeMode = false;
         }
+
+        // --- FIX: Check Slider Visibility AFTER Shade Mode is Finalized ---
+        if (g_shadeMode) {
+            opacitySlider->show();
+        } else {
+            opacitySlider->hide();
+        }
+
         QMainWindow::show();
     }
 }
-
 
 void MainWindow::showHideDrives()
 {

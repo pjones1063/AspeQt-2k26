@@ -17,6 +17,7 @@
 #include <QSystemTrayIcon>
 #include <QTextEdit>
 #include <QSlider>
+#include <QEnterEvent>
 
 
 #include "optionsdialog.h"
@@ -131,10 +132,11 @@ protected:
     void dropEvent(QDropEvent *event);
     void closeEvent(QCloseEvent *event);
     void hideEvent(QHideEvent *event);
-    void enterEvent(QEvent *);
+    void enterEvent(QEnterEvent *event) override;
     void leaveEvent(QEvent *);
     void resizeEvent(QResizeEvent *);
     bool eventFilter(QObject *obj, QEvent *event);
+    //void leaveEvent(QEvent *event) override;
 
 signals:
     void logMessage(int type, const QString &msg);
