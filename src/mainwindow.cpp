@@ -2146,13 +2146,16 @@ void MainWindow::updateDownloadProgress(qint64 bytesRead, qint64 totalBytes)
         dlProgressBar->show();
     }
 
-    if (totalBytes > 0) {
-        int percent = (int)((bytesRead * 100) / totalBytes);
-        dlProgressBar->setValue(percent);
-        dlProgressBar->setFormat(tr("Downloading: %p%"));
+    // "Marquee" mode: setRange(0, 0).
+    // This creates an infinite animation block that cycles back to 0 automatically.
+    dlProgressBar->setRange(0, 0);
+
+    // Show bytes downloaded text
+    if (bytesRead > 0) {
+        // Convert to KB for readability
+        QString sizeText = QString::number(bytesRead / 1024) + " KB";
+        dlProgressBar->setFormat(tr("Downloading: %1").arg(sizeText));
     } else {
-        // Unknown size (0), just pulse
-        dlProgressBar->setRange(0, 0);
         dlProgressBar->setFormat(tr("Downloading..."));
     }
 }

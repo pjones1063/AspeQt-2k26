@@ -1,3 +1,6 @@
+/*
+ * tnfsbrowser.h
+ */
 #ifndef TNFSBROWSER_H
 #define TNFSBROWSER_H
 
@@ -9,6 +12,8 @@
 #include <QComboBox>
 #include <QToolButton>
 #include <QIcon>
+#include <QProgressBar>
+#include <QFutureWatcher>
 #include "tnfsclient.h"
 
 class TnfsBrowser : public QDialog
@@ -22,6 +27,7 @@ public:
 
 private slots:
     void onConnect();
+    void onConnectionFinished(); // New slot for async result
     void onItemDoubleClicked(QListWidgetItem *item);
     void onBackClicked();
     void onClearHistory();
@@ -34,18 +40,28 @@ private:
     QComboBox *hostCombo;
     QListWidget *fileList;
     QLabel *statusLabel;
+
+    // UI Elements
+    QPushButton *btnConnect; // Made member to disable during connect
     QPushButton *btnClear;
     QPushButton *btnCancel;
     QPushButton *btnMore;
     QToolButton *btnSort;
+    QProgressBar *progressBar; // The "Activity Bar"
 
-    bool m_sortAscending; // TRACK STA
+    // Async Connection Handling
+    QFutureWatcher<bool> *connectWatcher;
+
+    bool m_sortAscending;
     QString currentPath;
     QString selectedUrl;
     bool m_isFirstBatch;
 
-    void refreshList();     // Starts the listing (Resets state)
-    void loadNextBatch();   // Fetches the actual data
+    void refreshList();
+    void loadNextBatch();
+
+    // New Helper for Cross-Platform Icons
+    QIcon getIcon(const QString &name);
 };
 
 #endif // TNFSBROWSER_H

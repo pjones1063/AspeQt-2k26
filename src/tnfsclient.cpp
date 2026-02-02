@@ -228,7 +228,6 @@ QList<TnfsClient::DirectoryEntry> TnfsClient::fetchNextBatch(int count)
         // Check for EOF (Status != 0) or Empty Packet
         if (entryData.size() < 6 || (quint8)entryData.at(4) != 0) {
             endListing();
-            // *** MARK FINISHED ***
             m_listingFinished = true;
             break;
         }
@@ -236,7 +235,6 @@ QList<TnfsClient::DirectoryEntry> TnfsClient::fetchNextBatch(int count)
         QByteArray rawName = entryData.mid(5);
         if (rawName.isEmpty() || rawName.at(0) == '\0') {
             endListing();
-            // *** MARK FINISHED ***
             m_listingFinished = true;
             break;
         }
@@ -248,8 +246,18 @@ QList<TnfsClient::DirectoryEntry> TnfsClient::fetchNextBatch(int count)
         if (!name.isEmpty() && name != "." && name != "..") {
             DirectoryEntry entry;
             entry.name = name;
-            entry.isDirectory = (name.endsWith("/"));
-            if (entry.isDirectory) entry.name.chop(1);
+
+            // Logic: It is a directory if it ends with '/' OR has no extension
+            bool hasSlash = name.endsWith("/");
+            bool hasDot   = name.contains(".");
+
+            entry.isDirectory = (hasSlash || !hasDot);
+
+            // Cleanup: Remove trailing slash for display
+            if (hasSlash) {
+                entry.name.chop(1);
+            }
+
             entries.append(entry);
         }
     }
