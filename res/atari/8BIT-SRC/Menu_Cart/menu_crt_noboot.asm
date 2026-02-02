@@ -15,19 +15,17 @@
 ;   write A000 BFFF /home/paul/eclipse-workspace/8-bit-bin/menu_cart_noboot.img 
 ;	OPT h-t+
 
-	 icl 'menu_sym.asm'
-	 org $BFFA
- 	.word Start
- 	.word $0400
- 	.word Init
-	    
-	org $A000	
+	icl 'menu_sym.asm'
+	org $A000
 Start
 	jsr printf
 	.byte 125,155,'AspeQT             www.13leader.net',155
-	.byte         '------             cart        2k26',155,155,155,0
-	
-	icl 'menu.asm'		
-	icl 'printf.asm'	
-	
- 
+	.byte         '------             boot        2k26',155,155,155,0
+		
+	icl 'menu.asm'	
+	icl 'printf.asm'	  
+:($BFFC-*) .byte $FF
+    .word Start    ; $BFFC: Run Address (Where to jump on boot)
+    .byte $00      ; $BFFE: Reserved Flag
+    .byte $04    
+    

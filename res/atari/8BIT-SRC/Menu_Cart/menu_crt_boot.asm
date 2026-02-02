@@ -1,4 +1,3 @@
-
 ;  This program is free software; you can redistribute it and/or modify
 ;  it under the terms of the GNU General Public License as published by
 ;  the Free Software Foundation; either version 2 of the License, or
@@ -13,15 +12,8 @@
 ;  along with this program; if not, write to the Free Software
 ;  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;  
-;   write A000 BFFF /home/paul/eclipse-workspace/8-bit-bin/menu_cart_boot.img 
-;	OPT h-t+
 
-	icl 'menu_sym.asm'
-	org $BFFA
- 	.word Start
- 	.word $0500
- 	.word Init
- 	
+	icl 'menu_sym.asm' 	
 	org $A000
 Start
 	jsr printf
@@ -29,5 +21,9 @@ Start
 	.byte         '------             boot        2k26',155,155,155,0
 		
 	icl 'menu.asm'	
-	icl 'printf.asm'	 
- 		
+	icl 'printf.asm'	  
+:($BFFC-*) .byte $FF
+    .word Start    ; $BFFC: Run Address (Where to jump on boot)
+    .byte $00      ; $BFFE: Reserved Flag
+    .byte $05      ; $BFFF: Cartridge Control (05 = Auto Boot)
+    
