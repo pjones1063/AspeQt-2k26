@@ -337,10 +337,6 @@ MainWindow::MainWindow(QWidget *parent)
     SmartDevice *smart = new SmartDevice(sio);
     sio->installDevice(SMART_CDEVIC, smart);
 
-    // AspeQt Client  //
-    Mnu *mnu = new Mnu(sio);
-    sio->installDevice(ASPEQT_CLIENT_CDEVIC, mnu);
-
     textPrinterWindow = new TextPrinterWindow();
     // Documentation Display
     docDisplayWindow = new DocDisplayWindow();
@@ -360,15 +356,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
     trayIcon.setIcon(windowIcon());
 
-    // Connections needed for remotely mounting a disk image & Toggle Auto-Commit //
-    connect (mnu, SIGNAL(findNewSlot(int,bool)), this, SLOT(firstEmptyDiskSlot(int,bool)));
-    connect (this, SIGNAL(newSlot(int)), mnu, SLOT(gotNewSlot(int)));
-    connect (mnu, SIGNAL(mountFile(int,QString)), this, SLOT(mountFileWithDefaultProtection(int,QString)));
-    connect (this, SIGNAL(fileMounted(bool)), mnu, SLOT(fileMounted(bool)));
-    connect (mnu, SIGNAL(toggleAutoCommit(int,bool)), this, SLOT(autoCommit(int,bool)));
-    connect (mnu, SIGNAL(bootExe(QString)), this, SLOT(bootExeTriggered(QString)));
-    connect (mnu, SIGNAL(bootCas(QString)), this, SLOT(bootCasTriggered(QString)));
-    connect (mnu, SIGNAL(togglePrinterServer(bool)), this, SLOT(printServer(bool)));
 
 }
 

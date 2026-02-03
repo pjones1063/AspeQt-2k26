@@ -374,8 +374,9 @@ void TnfsBrowser::onSortClicked()
     m_sortAscending = !m_sortAscending;
 
     // Update Icon
-    QIcon icon = m_sortAscending ? QIcon::fromTheme("view-sort-ascending")
-                                 : QIcon::fromTheme("view-sort-descending");
+    QIcon icon = m_sortAscending ? getIcon("view-sort-ascending")
+                                 : getIcon("view-sort-descending");
+
     if (!icon.isNull()) btnSort->setIcon(icon);
 
     QList<QListWidgetItem*> items;
