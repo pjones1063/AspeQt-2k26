@@ -34,5 +34,8 @@
         <file alias="dos.sys">boot_templates/$bootata/dos.sys</file>
         <file alias="$boot.bin">boot_templates/$bootata/$boot.bin</file>
     </qresource>
+
+ 
+
 </RCC>
 

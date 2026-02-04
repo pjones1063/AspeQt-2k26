@@ -120,21 +120,45 @@ void MainWindow::doLogMessage(int type, const QString &msg)
     emit logMessage(type, msg);
 }
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), isClosing(false)
 {
-
-    /* Setup the logging system */
+    // =========================================================================
+    // STEP 1: LOGGING SETUP (MUST BE FIRST)
+    // =========================================================================
     mainWindow = this;
     g_aspeQtAppPath = QCoreApplication::applicationDirPath();
     g_disablePicoHiSpeed = false;
+
+    // Create/Open the log file immediately
     logFile = new QFile(QDir::temp().absoluteFilePath("aspeqt.log"));
     logFile->open(QFile::WriteOnly | QFile::Truncate | QFile::Unbuffered | QFile::Text);
     logMutex = new QMutex();
+
+    // Install the Message Handler so qDebug() goes to the file
     connect(this, SIGNAL(logMessage(int,QString)), this, SLOT(uiMessage(int,QString)), Qt::QueuedConnection);
     qInstallMessageHandler(logMessageOutput);
+
     qDebug() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
-    
+
+    // =========================================================================
+    // STEP 2: SIO WORKER & ATARI 850 INSTALLATION (MUST BE SECOND)
+    // =========================================================================
+    // We create the worker BEFORE the UI setup so it's ready to accept devices
+    sio = new SioWorker();
+
+
+    qDebug() << "!n" << "[Main] Atari850 Handler Installed at ID $50-$53.";
+
+    // Install PCLINK (Virtual Disk)
+    PCLINK* pclink = new PCLINK(sio);
+    sio->installDevice(PCLINK_CDEVIC, pclink);
+
+
+    // =========================================================================
+    // STEP 3: UI & SETTINGS SETUP (EXISTING LOGIC)
+    // =========================================================================
     logWindow_ = NULL;
     tnfsClient = new TnfsClient(this);
     setAcceptDrops(true);
@@ -147,13 +171,12 @@ MainWindow::MainWindow(QWidget *parent)
     foreach(QFileInfo file, list) {
         deltree(file.absoluteFilePath());
     }
-    
+
     QCoreApplication::setOrganizationName("ZeeSoft");
     QCoreApplication::setOrganizationDomain("https://github.com/jzatarski/AspeQt");
     QCoreApplication::setApplicationName("AspeQt");
     aspeqtSettings = new AspeQtSettings();
-       
-    /* Load translators */
+
     loadTranslators();
 
     /* Setup UI */
@@ -167,55 +190,48 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     QWidget* diskMenu = (QWidget*)menuBar()->children().at(1);
-
     diskMenu->addActions( recentFilesActions_ );
 
-    /* Initialize diskWidgets array and tool button actions */
     createDeviceWidgets();
 
-    /* Add info widget for symetry */
     this->infoWidget = new InfoWidget();
     ui->rightColumn->addWidget( infoWidget );
 
-
-    /* Parse command line arguments:
-      arg(1): session file (xxxxxxxx.aspeqt)   */
-
+    // Parse command line arguments...
     QStringList AspeQtArgs = QCoreApplication::arguments();
     g_sessionFile = g_sessionFilePath = "";
     if (AspeQtArgs.size() > 1) {
-       QFile sess;
-       QString s = QDir::separator();             //
-       int i = AspeQtArgs.at(1).lastIndexOf(s);   //
-       if (i != -1) {
-           i++;
-           g_sessionFile = AspeQtArgs.at(1).right(AspeQtArgs.at(1).size() - i);
-           g_sessionFilePath = AspeQtArgs.at(1).left(i);
-           g_sessionFilePath = QDir::fromNativeSeparators(g_sessionFilePath);
-           sess.setFileName(g_sessionFilePath+g_sessionFile);
-           if (!sess.exists()) {
-               QMessageBox::question(this, tr("Session file error"),
-               tr("Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration."), QMessageBox::Ok);
-               g_sessionFile = g_sessionFilePath = "";
-           }
-       } else {
-           if (AspeQtArgs.at(1) != "") {
+        QFile sess;
+        QString s = QDir::separator();
+        int i = AspeQtArgs.at(1).lastIndexOf(s);
+        if (i != -1) {
+            i++;
+            g_sessionFile = AspeQtArgs.at(1).right(AspeQtArgs.at(1).size() - i);
+            g_sessionFilePath = AspeQtArgs.at(1).left(i);
+            g_sessionFilePath = QDir::fromNativeSeparators(g_sessionFilePath);
+            sess.setFileName(g_sessionFilePath+g_sessionFile);
+            if (!sess.exists()) {
+                QMessageBox::question(this, tr("Session file error"),
+                                      tr("Requested session file not found..."), QMessageBox::Ok);
+                g_sessionFile = g_sessionFilePath = "";
+            }
+        } else {
+            if (AspeQtArgs.at(1) != "") {
                 g_sessionFile = AspeQtArgs.at(1);
                 g_sessionFilePath = QDir::currentPath();
                 sess.setFileName(g_sessionFile);
                 if (!sess.exists()) {
                     QMessageBox::question(this, tr("Session file error"),
-                    tr("Requested session file not found in the application's current directory path\n (No path was specified). AspeQt will continue with default session configuration."), QMessageBox::Ok);
+                                          tr("Requested session file not found..."), QMessageBox::Ok);
                     g_sessionFile = g_sessionFilePath = "";
                 }
             }
         }
     }
-    // Pass Session file name, path and MainWindow title to AspeQtSettings //
+
     aspeqtSettings->setSessionFile(g_sessionFile, g_sessionFilePath);
     aspeqtSettings->setMainWindowTitle(g_mainWindowTitle);
 
-    // Display Session name, and restore session parameters if session file was specified //
     g_mainWindowTitle = tr("AspeQt - Atari Serial Peripheral Emulator for Qt");
     if (g_sessionFile != "") {
         setWindowTitle(g_mainWindowTitle + tr(" -- Session: ") + g_sessionFile);
@@ -229,12 +245,12 @@ MainWindow::MainWindow(QWidget *parent)
     speedLabel = new QLabel(this);
     onOffLabel = new QLabel(this);
     prtOnOffLabel = new QLabel(this);
-    netLabel = new QLabel(this);
+
     clearMessagesLabel = new QLabel(this);
     speedLabel->setText(tr("19200 bits/sec"));
     onOffLabel->setMinimumWidth(21);
     prtOnOffLabel->setMinimumWidth(18);
-    netLabel->setMinimumWidth(18);
+
 
     clearMessagesLabel->setMinimumWidth(21);
     clearMessagesLabel->setPixmap(QIcon(":/icons/silk-icons/icons/page_white_c.png").pixmap(16, 16, QIcon::Normal));
@@ -247,98 +263,64 @@ MainWindow::MainWindow(QWidget *parent)
     dlProgressBar->setRange(0, 100);
     dlProgressBar->setValue(0);
     dlProgressBar->setTextVisible(true);
-    dlProgressBar->setFixedWidth(150); // Nice width
-    dlProgressBar->hide(); // Hidden by default
-
+    dlProgressBar->setFixedWidth(150);
+    dlProgressBar->hide();
 
     ui->statusBar->addPermanentWidget(speedLabel);
     ui->statusBar->addPermanentWidget(onOffLabel);
     ui->statusBar->addPermanentWidget(prtOnOffLabel);
-    ui->statusBar->addPermanentWidget(netLabel);
     ui->statusBar->addPermanentWidget(clearMessagesLabel);
     ui->statusBar->addPermanentWidget(dlProgressBar);
 
-    // --- NEW: Opacity Slider for Shade Mode ---
+    // Opacity Slider
     opacitySlider = new QSlider(Qt::Horizontal, this);
-    opacitySlider->setRange(20, 90); // Range: 20% to 90% opacity
-
-    int savedOpacity = aspeqtSettings->shadeOpacity(); // <--- You'll need to add this getter
-    if (savedOpacity < 20) savedOpacity = 60;          // Safety check for first run
-
+    opacitySlider->setRange(20, 90);
+    int savedOpacity = aspeqtSettings->shadeOpacity();
+    if (savedOpacity < 20) savedOpacity = 60;
     opacitySlider->setValue(savedOpacity);
-
     opacitySlider->setFixedWidth(100);
     opacitySlider->setToolTip(tr("Adjust Shade Opacity"));
-    opacitySlider->hide();           // Hidden by default
+    opacitySlider->hide();
 
-    // 1. LIVE PREVIEW: Update opacity immediately as you slide
     connect(opacitySlider, &QSlider::valueChanged, this, [this](int value){
         if (g_shadeMode) {
-            // Remove the "!this->underMouse()" check so we can see the effect live
             setWindowOpacity(value / 100.0);
         }
     });
 
-    // 2. RESTORE ON RELEASE: Snap back to 1.0 when you let go (if mouse is still inside)
-    // This ensures you aren't stuck working in a ghost window after adjusting.
     connect(opacitySlider, &QSlider::sliderReleased, this, [this](){
         if (g_shadeMode && this->underMouse()) {
             setWindowOpacity(1.0);
         }
-
         aspeqtSettings->setShadeOpacity(opacitySlider->value());
     });
 
-
     ui->statusBar->addPermanentWidget(opacitySlider);
-
 
     ui->textEdit->installEventFilter(mainWindow);
     changeFonts();
     g_D9DOVisible =  aspeqtSettings->D9DOVisible();
     showHideDrives();
 
-    /* Connect to the network */
-    QString netInterface;
-    Network *oNet = new Network();
-    if (oNet->openConnection(netInterface)) {
-        netLabel->setPixmap(QIcon(":/icons/oxygen-icons/16x16/actions/network_connect.png").pixmap(16, 16, QIcon::Normal));
-        netLabel->setToolTip(tr("Connected to the network via: ") +  netInterface);
-        netLabel->setStatusTip(netLabel->toolTip());
-    } else {
-        netLabel->setPixmap(QIcon(":/icons/oxygen-icons/16x16/actions/network_disconnect.png").pixmap(16, 16, QIcon::Normal));
-        netLabel->setToolTip(tr("No network connection"));
-        netLabel->setStatusTip(netLabel->toolTip());
-        //  QMessageBox::information(this,tr("Network connection cannot be opened"), tr("No network interface was found!"));
-    }
-
-
-    /* Connect SioWorker signals */
-    sio = new SioWorker();
     connect(sio, SIGNAL(started()), this, SLOT(sioStarted()));
     connect(sio, SIGNAL(finished()), this, SLOT(sioFinished()));
     connect(sio, SIGNAL(statusChanged(QString)), this, SLOT(sioStatusChanged(QString)));
     shownFirstTime = true;
 
-    PCLINK* pclink = new PCLINK(sio);
-    sio->installDevice(PCLINK_CDEVIC, pclink);
-    
-    /* Restore application state */
+    // Restore State
     for (int i = 0; i < DISK_COUNT; i++) {
         AspeQtSettings::ImageSettings is;
         is = aspeqtSettings->mountedImageSetting(i);
         mountFile(i, is.fileName, is.isWriteProtected);
     }
+
     updateRecentFileActions();
 
-    setAcceptDrops(true);
-
-    // SmartDevice (ApeTime + URL submit)
+    // SmartDevice & Printer
     SmartDevice *smart = new SmartDevice(sio);
     sio->installDevice(SMART_CDEVIC, smart);
 
     textPrinterWindow = new TextPrinterWindow();
-    // Documentation Display
     docDisplayWindow = new DocDisplayWindow();
 
     connect(textPrinterWindow, SIGNAL(closed()), this, SLOT(textPrinterWindowClosed()));
@@ -350,13 +332,10 @@ MainWindow::MainWindow(QWidget *parent)
     setUpPrinterEmulationWidgets(aspeqtSettings->printerEmulation());
 
     ui->menuBar->installEventFilter(this);
-
     untitledName = 0;
 
     connect(&trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
     trayIcon.setIcon(windowIcon());
-
-
 }
 
 MainWindow::~MainWindow()

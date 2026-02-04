@@ -28,7 +28,6 @@
 #include "sioworker.h"
 #include "textprinterwindow.h"
 #include "docdisplaywindow.h"
-#include "network.h"
 #include "drivewidget.h"
 #include "infowidget.h"
 #include "tnfsclient.h"
@@ -87,7 +86,7 @@ private:
     DriveWidget* diskWidgets[DISK_COUNT];    //
     InfoWidget* infoWidget;
 
-    QLabel *speedLabel, *onOffLabel, *prtOnOffLabel, *netLabel, *clearMessagesLabel;  //
+    QLabel *speedLabel, *onOffLabel, *prtOnOffLabel, *clearMessagesLabel;  //
     TextPrinterWindow *textPrinterWindow;
     DocDisplayWindow *docDisplayWindow;    //
     QTranslator aspeqt_translator, aspeqt_qt_translator;
