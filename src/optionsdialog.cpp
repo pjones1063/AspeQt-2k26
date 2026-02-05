@@ -81,8 +81,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->URLSubmit->setChecked(aspeqtSettings->isURLSubmitEnabled());
     m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
     m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
-    m_ui->RclNameEdit->setText(aspeqtSettings->lastRclDir());
-    m_ui->RclCommand->setText(aspeqtSettings->lastRclCommand());
     m_ui->tnfsAutoConnectBox->setChecked(aspeqtSettings->restoreTnfsLocation());
     m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
 
@@ -122,7 +120,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         }
     }
 
-    m_ui->buttonRclFolder->setIcon(QIcon(":/icons/silk-icons/icons/folder.png").pixmap(16, 16, QIcon::Normal, QIcon::On));
     bool no_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_NO_HANDSHAKE);
     bool software_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_SOFTWARE);
     m_ui->serialPortWriteDelayLabel->setVisible(software_handshake);
@@ -269,8 +266,6 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setURLSubmit(m_ui->URLSubmit->isChecked());
     aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
     aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
-    aspeqtSettings->setRclDir(m_ui->RclNameEdit->text());
-    aspeqtSettings->setRclCommand(m_ui->RclCommand->text());
     aspeqtSettings->setRestoreTnfsLocation(m_ui->tnfsAutoConnectBox->isChecked());
     aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
 
@@ -288,19 +283,4 @@ void OptionsDialog::OptionsDialog_accepted()
 void OptionsDialog::on_useEmulationCustomCasBaudBox_toggled(bool checked)
 {
     m_ui->emulationCustomCasBaudSpin->setEnabled(checked);
-}
-
-
-void OptionsDialog::on_buttonRclFolder_clicked()
-{
-    QString dir;
-    dir = aspeqtSettings->lastRclDir();
-    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
-    fileName = QDir::fromNativeSeparators(fileName);    //
-    if (fileName.isEmpty()) {
-        return;
-    }
-    aspeqtSettings->setRclDir(fileName);
-    m_ui->RclNameEdit->setText(fileName);
-
 }

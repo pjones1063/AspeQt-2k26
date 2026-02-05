@@ -37,7 +37,6 @@ private slots:
     void on_treeWidget_currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
     void OptionsDialog_accepted();
     void on_useEmulationCustomCasBaudBox_toggled(bool checked);
-    void on_buttonRclFolder_clicked();
 };
 
 #endif // OPTIONSDIALOG_H

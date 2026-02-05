@@ -11,6 +11,8 @@
 #include <QtConcurrent> // Required for background threads
 #include <algorithm>
 
+/* tnfsbrowser.cpp - Constructor */
+
 TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
     : QDialog(parent), client(new TnfsClient(this))
 {
@@ -38,6 +40,8 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
         hostCombo->addItem("13leader.net"); // Default
     }
 
+    // --- CRITICAL FIX: Removed "QPushButton *" type declaration ---
+    // This now initializes the CLASS MEMBER, not a local variable.
     btnConnect = new QPushButton(tr("Connect"), this);
 
     btnClear = new QPushButton(tr("Clear"), this);
@@ -103,6 +107,7 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
     connect(btnCancel, &QPushButton::clicked, this, &TnfsBrowser::onCancelClicked);
     connect(btnSort, &QToolButton::clicked, this, &TnfsBrowser::onSortClicked);
 
+    // --- Initialize Path ---
     currentPath = "/";
 
     // --- Auto-Navigate Logic ---
@@ -117,6 +122,10 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
             else path = "/";
         }
 
+        // --- FIX: Store the requested path immediately ---
+        // This ensures onConnectionFinished() uses this path instead of resetting to "/"
+        currentPath = path;
+
         if (!host.isEmpty()) {
             hostCombo->setEditText(host);
             // Trigger connection immediately
@@ -124,7 +133,6 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
         }
     }
 }
-
 
 
 TnfsBrowser::~TnfsBrowser()
@@ -209,8 +217,10 @@ void TnfsBrowser::onConnectionFinished()
     QString host = hostCombo->currentText();
 
     if (success) {
-        statusLabel->setText(tr("Connected: /"));
-        currentPath = "/";
+        // --- FIX: Do NOT reset currentPath to "/" here. ---
+        // The constructor (or previous state) has already set currentPath.
+
+        statusLabel->setText(tr("Connected: %1").arg(currentPath));
 
         // Save History
         if (hostCombo->findText(host) == -1) {
@@ -223,13 +233,14 @@ void TnfsBrowser::onConnectionFinished()
         }
         settings.setValue("hostHistory", history);
 
-        refreshList(); // Load files
+        refreshList(); // Load files using the preserved currentPath
     } else {
         statusLabel->setText(tr("Connection Failed."));
         QMessageBox::critical(this, tr("Connection Error"),
                               tr("Could not reach host '%1'.\nCheck internet or hostname.").arg(host));
     }
 }
+
 
 void TnfsBrowser::refreshList()
 {

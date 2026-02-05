@@ -32,4 +32,17 @@ public:
     void handleCommand(quint8 command, quint16 aux);
 };
 
+// --- NEW: K: Device (Clipboard) ---
+class ClipboardDevice : public SioDevice
+{
+    Q_OBJECT
+public:
+    ClipboardDevice(SioWorker *worker) : SioDevice(worker), m_clipPos(0) {}
+    void handleCommand(quint8 command, quint16 aux) override;
+
+private:
+    QByteArray m_clipBuffer;
+    int m_clipPos;
+};
+
 #endif // MISCDEVICES_H

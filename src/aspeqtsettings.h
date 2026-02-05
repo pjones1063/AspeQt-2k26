@@ -25,13 +25,6 @@ public:
 
     bool isFirstTime();
 
-    void setRs232PortName(int deviceIdx, const QString &portName);
-    QString rs232PortName(int deviceIdx);
-
-    void setRs232Mode(int deviceIdx, int mode); // 0 = Physical, 1 = Telnet
-    int rs232Mode(int deviceIdx);
-
-
     QString serialPortName();
     void setSerialPortName(const QString &name);
 
@@ -106,11 +99,6 @@ public:
     QString lastExtractDir();
     void setLastExtractDir(const QString &dir);
 
-    QString lastRclDir();
-    void setRclDir(const QString &dir);
-
-    QString lastRclCommand();
-    void setRclCommand(const QString &cmd);
 
     QString lastPrinterTextDir();
     void setLastPrinterTextDir(const QString &dir);
@@ -265,10 +253,6 @@ private:
     QString mLastExtractDir;
     QString mLastPrinterTextDir;
     QString mLastCasDir;
-    QString mRclDir;
-    QString mRclCommand;
-
-
     QString mI18nLanguage;
 
     bool mMinimizeToTray;

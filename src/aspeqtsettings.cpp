@@ -83,8 +83,6 @@ AspeQtSettings::AspeQtSettings()
 
     mLastDiskImageDir = mSettings->value("LastDiskImageDir", "").toString();
     mLastFolderImageDir = mSettings->value("LastFolderImageDir", "").toString();
-    mRclDir = mSettings->value("LastRclDir", "").toString();
-    mRclCommand = mSettings->value("LastRclCmd","").toString();
     mLastSessionDir = mSettings->value("LastSessionDir", "").toString();
     mLastExeDir = mSettings->value("LastExeDir", "").toString();
     mLastExtractDir = mSettings->value("LastExtractDir", "").toString();
@@ -164,8 +162,6 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("UseLargeFont", mUseLargeFont);
     s.setValue("ExplorerOnTop", mExplorerOnTop);
     s.setValue("EnableShadeByDefault", mEnableShade);
-    s.setValue("LastRclDir",mRclDir);
-    s.setValue("LastRclCmd",mRclCommand);
     s.setValue("RestoreTnfsLocation", mRestoreTnfsLocation);
 
     s.endGroup();
@@ -222,8 +218,6 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mUseLargeFont = s.value("UseLargeFont", false).toBool();
     mExplorerOnTop = s.value("ExplorerOnTop", false).toBool();
     mEnableShade = s.value("EnableShadeByDefault", true).toBool();
-    mRclDir = mSettings->value("LastRclDir","").toString();
-    mRclCommand = mSettings->value("LastRclCmd","").toString();
     mRestoreTnfsLocation = s.value("RestoreTnfsLocation", true).toBool();
     s.endGroup();
     //
@@ -710,30 +704,6 @@ void AspeQtSettings::setLastFolderImageDir(const QString &dir)
     mLastFolderImageDir = dir;
     mSettings->setValue("LastFolderImageDir", mLastFolderImageDir);
 }
-
-QString AspeQtSettings::lastRclDir()
-{
-    return mRclDir;
-}
-
-void AspeQtSettings::setRclDir(const QString &dir)
-{
-    mRclDir = dir;
-    mSettings->setValue("LastRclDir", mRclDir);
-}
-
-
-QString AspeQtSettings::lastRclCommand()
-{
-    return mRclCommand;
-}
-
-void AspeQtSettings::setRclCommand(const QString &cmd)
-{
-    mRclCommand = cmd;
-    mSettings->setValue("LastRclCmd", mRclCommand);
-}
-
 
 
 QString AspeQtSettings::lastSessionDir()

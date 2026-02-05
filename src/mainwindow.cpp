@@ -142,19 +142,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     qDebug() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
 
-    // =========================================================================
-    // STEP 2: SIO WORKER & ATARI 850 INSTALLATION (MUST BE SECOND)
-    // =========================================================================
-    // We create the worker BEFORE the UI setup so it's ready to accept devices
+
     sio = new SioWorker();
-
-
-    qDebug() << "!n" << "[Main] Atari850 Handler Installed at ID $50-$53.";
 
     // Install PCLINK (Virtual Disk)
     PCLINK* pclink = new PCLINK(sio);
     sio->installDevice(PCLINK_CDEVIC, pclink);
 
+    // =======================================================
+    // --- NEW: Install Clipboard Device (K:) ---
+    // Device ID 0x4B is ASCII 'K'.
+    // This connects the C++ Provider to the Atari Driver.
+    // =======================================================
+    ClipboardDevice *clipDev = new ClipboardDevice(sio);
+    sio->installDevice(0x4B, clipDev);
 
     // =========================================================================
     // STEP 3: UI & SETTINGS SETUP (EXISTING LOGIC)
@@ -1386,7 +1387,7 @@ void MainWindow::keepBootExeOpen()
 
 void MainWindow::bootExeTriggered(const QString &fileName)
 {
-    QString path = aspeqtSettings->lastRclDir();
+    QString path = aspeqtSettings->lastExeDir();
     g_exefileName = path + "/" + fileName;
     if (!g_exefileName.isEmpty()) {
         aspeqtSettings->setLastExeDir(QFileInfo(g_exefileName).absolutePath());
@@ -1407,7 +1408,7 @@ void MainWindow::mountFileWithDefaultProtection(int no, const QString &fileName)
 
     if(atariFileName.left(1) == "*") {
         atariFileName = atariFileName.mid(1);
-        path = aspeqtSettings->lastRclDir();
+        path = aspeqtSettings->lastDiskImageDir();
         if(atariFileName == "") {
             sio->port()->writeDataNak();
             return;

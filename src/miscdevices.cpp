@@ -19,6 +19,9 @@
 #include <QFileInfo>
 #include "diskimage.h"
 
+// --- NEW INCLUDES FOR CLIPBOARD ---
+#include <QClipboard>
+#include <QGuiApplication>
 
 extern char g_rclSlotNo;
 bool conversionMsgdisplayedOnce;
@@ -148,3 +151,66 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
     }
 }
 
+// ==========================================
+// CLIPBOARD DEVICE (K:) IMPLEMENTATION
+// ==========================================
+
+void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
+{
+    switch(command)
+    {
+    case 0x4F: // 'O' - Open / Snapshot Clipboard
+    {
+        if (!sio->port()->writeCommandAck()) return;
+
+        // 1. Capture text from System Clipboard
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        QString clipText = clipboard ? clipboard->text() : "";
+
+        // 2. Normalize Line Endings for Atari (LF -> $9B)
+        // Windows \r\n -> \n, then \n -> \x9b
+        clipText.replace("\r\n", "\n");
+        clipText.replace('\n', '\x9B');
+
+        // 3. Convert to 8-bit Local encoding (Latin1 usually maps best to ATASCII)
+        m_clipBuffer = clipText.toLatin1();
+        m_clipPos = 0; // Reset read cursor
+
+        sio->port()->writeComplete();
+        qDebug() << "!n" << tr("[K:] Clipboard captured (%1 bytes)").arg(m_clipBuffer.size());
+        break;
+    }
+
+    case 0x52: // 'R' - Read Data Chunk
+    {
+        if (!sio->port()->writeCommandAck()) return;
+
+        // Check if we have data left to send
+        if (m_clipPos >= m_clipBuffer.size()) {
+            // Send Data NAK to signal EOF (End of File) to Atari
+            sio->port()->writeDataNak();
+            qDebug() << "!d" << tr("[K:] EOF reached");
+            return;
+        }
+
+        // Calculate chunk size (Max 128 bytes or 'aux' if specified)
+        int bytesRemaining = m_clipBuffer.size() - m_clipPos;
+        int len = (aux > 0 && aux < 256) ? aux : 128;
+
+        if (bytesRemaining < len) len = bytesRemaining;
+
+        QByteArray chunk = m_clipBuffer.mid(m_clipPos, len);
+        m_clipPos += len;
+
+        sio->port()->writeComplete();
+        sio->port()->writeDataFrame(chunk);
+
+        qDebug() << "!d" << tr("[K:] Sent %1 bytes (%2/%3)").arg(len).arg(m_clipPos).arg(m_clipBuffer.size());
+        break;
+    }
+
+    default:
+        sio->port()->writeCommandNak();
+        break;
+    }
+}
