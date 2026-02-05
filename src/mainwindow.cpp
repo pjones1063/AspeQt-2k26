@@ -145,17 +145,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     sio = new SioWorker();
 
-    // Install PCLINK (Virtual Disk)
-    PCLINK* pclink = new PCLINK(sio);
-    sio->installDevice(PCLINK_CDEVIC, pclink);
+    // Install PCLINK (Virtual Disk)  and Y:
+    sio->installDevice(PCLINK_CDEVIC,  new PCLINK(sio));
 
-    // =======================================================
-    // --- NEW: Install Clipboard Device (K:) ---
-    // Device ID 0x4B is ASCII 'K'.
-    // This connects the C++ Provider to the Atari Driver.
-    // =======================================================
-    ClipboardDevice *clipDev = new ClipboardDevice(sio);
-    sio->installDevice(0x4B, clipDev);
+    sio->installDevice(0x59, new ClipboardDevice(sio));
 
     // =========================================================================
     // STEP 3: UI & SETTINGS SETUP (EXISTING LOGIC)

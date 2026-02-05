@@ -151,66 +151,75 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
     }
 }
 
-// ==========================================
-// CLIPBOARD DEVICE (K:) IMPLEMENTATION
-// ==========================================
-
 void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
 {
-    switch(command)
-    {
+    switch (command) {
     case 0x4F: // 'O' - Open / Snapshot Clipboard
     {
-        if (!sio->port()->writeCommandAck()) return;
+        // 1. Send Command ACK
+        if (!sio->port()->writeCommandAck()) {
+            return;
+        }
 
-        // 1. Capture text from System Clipboard
+        // 2. Snapshot the PC Clipboard
         QClipboard *clipboard = QGuiApplication::clipboard();
         QString clipText = clipboard ? clipboard->text() : "";
 
-        // 2. Normalize Line Endings for Atari (LF -> $9B)
-        // Windows \r\n -> \n, then \n -> \x9b
+        // 3. Convert Line Endings: Windows \r\n -> \n -> ATASCII $9B
         clipText.replace("\r\n", "\n");
         clipText.replace('\n', '\x9B');
 
-        // 3. Convert to 8-bit Local encoding (Latin1 usually maps best to ATASCII)
+        // 4. Store in buffer
         m_clipBuffer = clipText.toLatin1();
-        m_clipPos = 0; // Reset read cursor
+        m_clipPos = 0;
 
+        // 5. CRITICAL: Send Complete only.
+        // The ASM 'O' command has DBYT=0. We must NOT send data here.
         sio->port()->writeComplete();
-        qDebug() << "!n" << tr("[K:] Clipboard captured (%1 bytes)").arg(m_clipBuffer.size());
+
+        qDebug() << "!n" << tr("[K:] Clipboard Snapshotted (%1 bytes)").arg(m_clipBuffer.size());
         break;
     }
 
     case 0x52: // 'R' - Read Data Chunk
     {
-        if (!sio->port()->writeCommandAck()) return;
-
-        // Check if we have data left to send
-        if (m_clipPos >= m_clipBuffer.size()) {
-            // Send Data NAK to signal EOF (End of File) to Atari
-            sio->port()->writeDataNak();
-            qDebug() << "!d" << tr("[K:] EOF reached");
+        // 1. Send Command ACK
+        if (!sio->port()->writeCommandAck()) {
             return;
         }
 
-        // Calculate chunk size (Max 128 bytes or 'aux' if specified)
-        int bytesRemaining = m_clipBuffer.size() - m_clipPos;
-        int len = (aux > 0 && aux < 256) ? aux : 128;
+        // 2. Check for End of File
+        if (m_clipPos >= m_clipBuffer.size()) {
+            // Send NAK. The Atari Handler maps this to Error 144 (Success/EOF)
+            sio->port()->writeDataNak();
+            qDebug() << "!d" << tr("[K:] EOF sent (NAK)");
+            return;
+        }
 
-        if (bytesRemaining < len) len = bytesRemaining;
+        // 3. Prepare Strict 128-Byte Chunk
+        int chunkSize = 128;
+        QByteArray chunk = m_clipBuffer.mid(m_clipPos, chunkSize);
+        m_clipPos += chunkSize; // Advance position
 
-        QByteArray chunk = m_clipBuffer.mid(m_clipPos, len);
-        m_clipPos += len;
+        // 4. PAD WITH NULLS if chunk is small
+        // The Atari is waiting for exactly 128 bytes. If we send less, it hangs.
+        while (chunk.size() < 128) {
+            chunk.append((char)0x00);
+        }
 
+        // 5. SIO ORDER FIX: Complete BEFORE Data
+        // This ensures the checksum follows the data immediately.
         sio->port()->writeComplete();
         sio->port()->writeDataFrame(chunk);
 
-        qDebug() << "!d" << tr("[K:] Sent %1 bytes (%2/%3)").arg(len).arg(m_clipPos).arg(m_clipBuffer.size());
+        qDebug() << "!d" << tr("[K:] Sent 128 bytes (Pos: %1)").arg(m_clipPos);
         break;
     }
 
     default:
+        // Unknown Command
         sio->port()->writeCommandNak();
+        qWarning() << "!w" << tr("[K:] Unknown Command: $%1").arg(command, 2, 16, QChar('0'));
         break;
     }
 }
