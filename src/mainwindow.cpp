@@ -54,7 +54,8 @@ QString g_exefileName;
 QString g_rclFileName;
 QString g_aspeQtAppPath;
 QRect g_savedGeometry;
-char g_rclSlotNo;
+
+char g_aspeclSlotNo;
 bool g_disablePicoHiSpeed;
 bool g_D9DOVisible = true;
 bool g_miniMode = false;
@@ -145,9 +146,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     sio = new SioWorker();
 
-    // Install PCLINK (Virtual Disk)  and Y:
+    // Install PCLINK (Virtual Disk)
     sio->installDevice(PCLINK_CDEVIC,  new PCLINK(sio));
-
+    // AspeQt Client  // Ray A.
+    sio->installDevice(0x46, new AspeCl(sio));
+    // Clipboard
     sio->installDevice(0x59, new ClipboardDevice(sio));
 
     // =========================================================================

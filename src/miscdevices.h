@@ -32,6 +32,26 @@ public:
     void handleCommand(quint8 command, quint16 aux);
 };
 
+class AspeCl: public SioDevice
+{
+    Q_OBJECT
+
+public:
+    AspeCl(SioWorker *worker): SioDevice(worker) {}
+    void handleCommand(quint8 command, quint16 aux);
+
+public slots:
+    void gotNewSlot (int slot);                         // Ray A.
+    void fileMounted (bool mounted);                    // Ray A.
+
+signals:
+    void findNewSlot (int startFrom, bool createOne);
+    void mountFile (int no, const QString fileName);
+    void toggleAutoCommit (int no);                     // Ray A.
+
+};
+
+
 // --- NEW: K: Device (Clipboard) ---
 class ClipboardDevice : public SioDevice
 {
