@@ -40,7 +40,7 @@
 #include <QFont>
 
 #include "atarifilesystem.h"
-#include "miscutils.h"
+// #include "miscutils.h"
 
 
 
@@ -169,8 +169,8 @@ MainWindow::MainWindow(QWidget *parent)
         deltree(file.absoluteFilePath());
     }
 
-    QCoreApplication::setOrganizationName("ZeeSoft");
-    QCoreApplication::setOrganizationDomain("https://github.com/jzatarski/AspeQt");
+    QCoreApplication::setOrganizationName("13Leader.net");
+    QCoreApplication::setOrganizationDomain("https://github.com/pjones1063/AspeQt-2k26/");
     QCoreApplication::setApplicationName("AspeQt");
     aspeqtSettings = new AspeQtSettings();
 

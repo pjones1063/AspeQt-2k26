@@ -3,194 +3,202 @@
 <head>
     <meta name="qrichtext" content="1" />
     <style type="text/css">
-        /* Minimalist Qt-Safe CSS */
+        /* PRO / FANCY FONTS SETTINGS */
         body {
-            font-family: "Segoe UI", Verdana, sans-serif;
+            font-family: "Segoe UI Semilight", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-size: 14px;
-            color: #444444;
+            color: #2b2b2b;
             background-color: #ffffff;
-            margin: 20px;
-            line-height: 150%;
+            margin: 0px;
         }
 
-        /* Clean Headers - No blocky backgrounds */
+        /* HEADER AREA */
+        .header-container {
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #d0d0d0;
+            padding: 20px 30px;
+        }
+
         h1 {
-            color: #004494; /* Dark Blue */
-            font-size: 24px;
-            font-weight: normal;
-            text-align: center;
-            margin-bottom: 5px;
-            border-bottom: 2px solid #eeeeee;
-            padding-bottom: 15px;
+            color: #1a1a1a;
+            font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+            font-weight: 100; /* Thinner, modern look */
+            font-size: 28px;
+            margin: 0;
+            padding-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #666666;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* LEFT JUSTIFIED MENU */
+        .nav-bar {
+            margin-top: 15px;
+            text-align: left; /* Left Justified as requested */
+            font-size: 13px;
+        }
+
+        a.nav-link {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 25px; /* Spacing between items */
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        a.nav-link:hover {
+            color: #003366;
+            text-decoration: underline;
+        }
+
+        /* CONTENT AREA */
+        .content {
+            padding: 30px;
+            max-width: 800px; /* Prevents text from stretching too wide on 4k screens */
         }
 
         h2 {
-            color: #222222; /* Near Black */
-            font-size: 18px;
-            margin-top: 30px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #dddddd;
+            color: #004080; /* Professional Deep Blue */
+            font-size: 20px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eeeeee;
             padding-bottom: 5px;
         }
 
         h3 {
-            color: #cc0000; /* Accent Red for sub-headers */
-            font-size: 14px;
+            color: #cc0000; /* Muted Red accent */
+            font-size: 15px;
             font-weight: bold;
-            margin-top: 20px;
-            margin-bottom: 5px;
-        }
-
-        p {
-            margin-top: 5px;
-            margin-bottom: 10px;
-        }
-
-        /* Links - Standard blue, no backgrounds */
-        a {
-            color: #0056b3;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Navigation - Clean centered text */
-        .nav {
-            text-align: center;
-            font-size: 12px;
-            color: #999999;
-            margin-bottom: 30px;
-            margin-top: 10px;
-        }
-        .nav a {
-            color: #555555;
-            font-weight: bold;
-            margin-left: 10px;
-            margin-right: 10px;
-            text-transform: uppercase;
-        }
-
-        /* Code/Key terms styling */
-        .code-text {
-            font-family: Consolas, monospace;
-            color: #000000;
-            font-weight: bold;
-        }
-
-        /* Indented lists for cleaner look */
-        ul {
-            margin-left: 20px;
-            color: #444444;
-        }
-        li {
+            margin-top: 25px;
             margin-bottom: 8px;
         }
 
-        /* Warning Box - kept simple with a border */
-        .warning {
-            color: #856404;
-            border: 1px solid #ffeeba; /* Yellowish border */
-            padding: 10px;
-            margin: 15px 0;
-            background-color: #fffff0; /* Very light yellow */
+        p {
+            line-height: 160%;
+            margin-bottom: 15px;
         }
-        
-        /* Footer */
-        .footer {
-            margin-top: 40px;
-            padding-top: 10px;
-            border-top: 1px solid #eeeeee;
-            text-align: center;
-            font-size: 10px;
-            color: #aaaaaa;
+
+        li {
+            line-height: 150%;
+            margin-bottom: 8px;
+        }
+
+        /* CODE SNIPPETS */
+        .code-snippet {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 13px;
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 2px 6px;
+            border-radius: 4px; /* Qt 5.12+ supports this, earlier versions ignore it safely */
+        }
+
+        /* HIGHLIGHT BOXES */
+        .info-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+            color: #444;
         }
     </style>
 </head>
 <body>
 
-    <h1>AspeQt-2k26 User Manual</h1>
-    
-    <div class="nav">
-        <a href="#intro">Introduction</a> |
-        <a href="#system">Requirements</a> |
-        <a href="#config">Configuration</a> |
-        <a href="#networking">Networking</a> |
-        <a href="#usage">Usage</a>
+    <div class="header-container">
+        <h1>AspeQt-2k26</h1>
+        <p class="subtitle">Atari Serial Peripheral Emulator / Qt6 Edition</p>
+        
+        <div class="nav-bar">
+            <a href="#intro" class="nav-link">Introduction</a>
+            <a href="#system" class="nav-link">Requirements</a>
+            <a href="#config" class="nav-link">Configuration</a>
+            <a href="#networking" class="nav-link">Networking</a>
+            <a href="#usage" class="nav-link">Usage</a>
+        </div>
     </div>
 
-    <h2><a name="intro">Introduction</a></h2>
-    <p>AspeQt-2k26 is a cross-platform emulator that lets your Atari 8-bit computer use modern PC storage and networking via a simple SIO2PC cable.</p>
-    
-    <p>This <b>2k26 Edition</b> has been modernized with a <b>Qt6</b> backend for sharp high-DPI rendering and improved stability.</p>
+    <div class="content">
 
-    <h3>Key Features</h3>
-    <ul>
-        <li><b>Qt6 Modernization:</b> Native high-DPI support and stability.</li>
-        <li><b>TNFS Client:</b> Mount images directly from the internet.</li>
-        <li><b>Y: Clipboard Device:</b> Bi-directional text sharing between PC and Atari.</li>
-        <li><b>15 Disk Drives:</b> Full emulation for D1: through D15:.</li>
-        <li><b>High Speed SIO:</b> Up to 6x speed (~126kbits/s) with patches.</li>
-        <li><b>Virtual DOS 2.5:</b> Mount PC folders as writable Atari disks.</li>
-    </ul>
+        <a name="intro"></a>
+        <p><b>AspeQt-2k26</b> is a modernized, cross-platform emulator that bridges your Atari 8-bit computer to modern PC storage and networking via a standard SIO2PC cable.</p>
+        
+        <p>This edition has been rebuilt on the <b>Qt6 framework</b> to ensure crisp rendering on High-DPI displays and stability on modern operating systems (Windows 11, macOS, Linux).</p>
 
-    <h2><a name="system">System Requirements</a></h2>
-    <p>Requires Windows 10/11, modern Linux, or macOS. An Atari 8-bit computer and an SIO2PC interface are required.</p>
-    
-    <div class="warning">
-        <b>Hardware Tip:</b> Use adapters based on the <b>FTDI chipset</b>. Other chipsets often fail at high speeds.
-    </div>
+        <h3>New in 2k26</h3>
+        <ul>
+            <li><b>TNFS Client:</b> Integrated support for mounting images directly from the internet.</li>
+            <li><b>Y: Clipboard Device:</b> Bi-directional text sharing between PC and Atari.</li>
+            <li><b>Qt6 Interface:</b> Native drag-and-drop and high-resolution font scaling.</li>
+        </ul>
 
-    <h2><a name="config">Configuration</a></h2>
-    <p>Access settings via <b>Tools &gt; Options</b>.</p>
+        <a name="system"></a>
+        <h2>System Requirements</h2>
+        <p>Requires a modern 64-bit operating system. An Atari 8-bit computer and an SIO2PC interface are required for operation.</p>
+        
+        <div class="info-box">
+            <b>Hardware Note:</b> We strongly recommend USB adapters based on the <b>FTDI chipset</b>. Prolific or generic chipsets often exhibit timing drift at high speeds (Divisor 0-8).
+        </div>
 
-    <h3>Serial Port</h3>
-    <ul>
-        <li><b>Windows:</b> Select your COM port (e.g., <span class="code-text">COM3</span>).</li>
-        <li><b>Linux:</b> Select your device (e.g., <span class="code-text">/dev/ttyUSB0</span>).</li>
-    </ul>
+        <a name="config"></a>
+        <h2>Configuration</h2>
+        <p>Access the main settings via <b>Tools &gt; Options</b>.</p>
 
-    <h3>High Speed SIO</h3>
-    <ul>
-        <li><b>Divisor 40 (1x):</b> Standard speed.</li>
-        <li><b>Divisor 16 (2x):</b> Reliable on most hardware.</li>
-        <li><b>Divisor 8 (3x):</b> Recommended for FTDI.</li>
-        <li><b>Divisor 0 (6x):</b> Requires <i>hisio</i> OS patch.</li>
-    </ul>
+        <h3>Serial Connection</h3>
+        <p><b>Windows:</b> Select your COM port (e.g., <span class="code-snippet">COM3</span>).<br>
+        <b>Linux:</b> Select your device node (e.g., <span class="code-snippet">/dev/ttyUSB0</span>).</p>
 
-    <h2><a name="networking">Networking & Integration</a></h2>
-    
-    <h3>TNFS Client</h3>
-    <p>Mount disk images hosted on remote servers (FujiNet compatible) directly into a drive slot.</p>
-    <ul>
-        <li><b>Setup:</b> Go to <b>Tools &gt; Network</b> and enter the TNFS Server Address.</li>
-        <li><b>Usage:</b> Open the TNFS Browser and drag an <span class="code-text">.atr</span> file to a drive slot.</li>
-    </ul>
+        <h3>High Speed SIO</h3>
+        <ul>
+            <li><b>Divisor 40 (1x):</b> Standard 19200 bps.</li>
+            <li><b>Divisor 16 (2x):</b> Safe for most cables.</li>
+            <li><b>Divisor 8 (3x):</b> Recommended for FTDI cables.</li>
+            <li><b>Divisor 0 (6x):</b> Requires the <span class="code-snippet">hisio</span> OS patch on the Atari.</li>
+        </ul>
 
-    <h3>Y: Clipboard Device</h3>
-    <p>Bridges your PC's clipboard to the Atari.</p>
-    <ul>
-        <li><b>Read from PC:</b> Copy text on PC. Type <span class="code-text">COPY "Y:" "E:"</span> on Atari.</li>
-        <li><b>Write to PC:</b> Print to the <span class="code-text">Y:</span> device from Atari.</li>
-    </ul>
+        <a name="networking"></a>
+        <h2>Networking & Integration</h2>
+        
+        <h3>TNFS Client</h3>
+        <p>The TNFS client allows you to mount disk images hosted on remote servers (compatible with FujiNet) directly into a drive slot without downloading them first.</p>
+        <ul>
+            <li><b>Setup:</b> Go to <b>Tools &gt; Network</b> and enter the TNFS Server Address.</li>
+            <li><b>Usage:</b> Open the TNFS Browser, navigate the remote folders, and drag an <span class="code-snippet">.atr</span> file to any drive slot.</li>
+        </ul>
 
-    <h2><a name="usage">Usage</a></h2>
+        <h3>Y: Clipboard Device</h3>
+        <p>The <span class="code-snippet">Y:</span> device acts as a bridge between the host PC's clipboard and the Atari.</p>
+        <ul>
+            <li><b>Read from PC:</b> Copy text on your PC. On the Atari, type <span class="code-snippet">COPY "Y:" "E:"</span> to paste it.</li>
+            <li><b>Write to PC:</b> Print to the <span class="code-snippet">Y:</span> device from Atari (e.g., <span class="code-snippet">LIST "Y:"</span>) to copy text to your PC clipboard.</li>
+        </ul>
 
-    <h3>Folder Images (Virtual DOS)</h3>
-    <p>Mount a PC directory as a disk. Right-click the slot and select <b>Folder Boot Options</b> to make it bootable.</p>
-    
-    <div class="warning">
-        <b>Note:</b> This will copy boot files (dos.sys, dup.sys) into your PC folder, overwriting existing ones.
-    </div>
+        <a name="usage"></a>
+        <h2>Usage</h2>
 
-    <h3>Running Executables</h3>
-    <p>Drag <span class="code-text">.xex</span> or <span class="code-text">.com</span> files directly to a slot. AspeQt uses an internal loader to run these without DOS.</p>
+        <h3>Virtual DOS (Folder Images)</h3>
+        <p>You can mount a local PC directory as a writable disk. To boot from a folder, right-click the slot and select <b>Folder Boot Options</b>.</p>
+        <p>Supported DOS types for booting:</p>
+        <ul>
+            <li>Atari DOS 2.5</li>
+            <li>MyDOS 4.5</li>
+            <li>SpartaDOS 3.2G (Limited)</li>
+        </ul>
 
-    <h3>Printer Emulation</h3>
-    <p>The emulator captures output sent to <span class="code-text">P1:</span>. Open <b>File &gt; View Printer Output</b> to see the text (supports ATASCII translation).</p>
+        <h3>Running Executables</h3>
+        <p>Drag <span class="code-snippet">.xex</span> or <span class="code-snippet">.com</span> files directly to a slot. AspeQt uses a high-speed internal loader to run these files without requiring a DOS disk.</p>
 
-    <div class="footer">
-        AspeQt-2k26 Documentation &copy; 2026
+        <h3>Printer Emulation</h3>
+        <p>Output sent to <span class="code-snippet">P1:</span> is captured by AspeQt. View the output via <b>File &gt; View Printer Output</b>. The viewer automatically handles ATASCII-to-ASCII translation.</p>
+
+        <p style="margin-top: 50px; font-size: 11px; color: #999;">AspeQt-2k26 Documentation</p>
     </div>
 
 </body>

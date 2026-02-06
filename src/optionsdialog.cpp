@@ -78,7 +78,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->saveDiskVisBox->setChecked(aspeqtSettings->saveDiskVis());
     m_ui->filterUscore->setChecked(aspeqtSettings->filterUnderscore());
     m_ui->capitalLettersPCLINK->setChecked(aspeqtSettings->capitalLettersInPCLINK());
-    m_ui->URLSubmit->setChecked(aspeqtSettings->isURLSubmitEnabled());
     m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
     m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
     m_ui->tnfsAutoConnectBox->setChecked(aspeqtSettings->restoreTnfsLocation());
@@ -263,7 +262,6 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setsaveDiskVis(m_ui->saveDiskVisBox->isChecked());
     aspeqtSettings->setfilterUnderscore(m_ui->filterUscore->isChecked());
     aspeqtSettings->setCapitalLettersInPCLINK(m_ui->capitalLettersPCLINK->isChecked());
-    aspeqtSettings->setURLSubmit(m_ui->URLSubmit->isChecked());
     aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
     aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
     aspeqtSettings->setRestoreTnfsLocation(m_ui->tnfsAutoConnectBox->isChecked());

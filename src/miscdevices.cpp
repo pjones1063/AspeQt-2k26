@@ -456,31 +456,7 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
                                 .arg(QLocale::system().toString(dateTime, QLocale::ShortFormat));
         break;
     }
-    case 0x55: // Submit URL
-    {
-        if(aspeqtSettings->isURLSubmitEnabled() && aux!=0 && aux<=2000)
-        {
-            if (!sio->port()->writeCommandAck()) return;
-            QByteArray data = sio->port()->readDataFrame(aux);
-            if (data.isEmpty()) {
-                sio->port()->writeDataNak();
-                sio->port()->writeError();
-                return;
-            }
-            sio->port()->writeDataAck();
-            sio->port()->writeComplete();
 
-            QString urlstr(data);
-            QDesktopServices::openUrl(QUrl(urlstr));
-            qDebug() << "!n" << tr("URL [%1] submitted").arg(urlstr);
-        }
-        else
-        {
-            sio->port()->writeCommandNak();
-            return;
-        }
-        break;
-    }
     default:
         sio->port()->writeCommandNak();
         break;
@@ -490,7 +466,7 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
 void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
 {
     switch (command) {
-    case 0x4F: // 'O' - Open / Snapshot Clipboard
+    case 0x4f: // Snapshot Clipboard
     {
         // 1. Send Command ACK
         if (!sio->port()->writeCommandAck()) {
@@ -510,7 +486,7 @@ void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
         m_clipPos = 0;
         sio->port()->writeComplete();
 
-        qDebug() << "!n" << tr("[K:] Clipboard Snapshotted (%1 bytes)").arg(m_clipBuffer.size());
+        qDebug() << "!n" << tr("[Y:] Clipboard Snapshotted (%1 bytes)").arg(m_clipBuffer.size());
         break;
     }
 
@@ -521,37 +497,44 @@ void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
             return;
         }
 
-        // 2. Check for End of File
-        if (m_clipPos >= m_clipBuffer.size()) {
-            // Send NAK. The Atari Handler maps this to Error 144 (Success/EOF)
-            sio->port()->writeDataNak();
-            qDebug() << "!d" << tr("[K:] EOF sent (NAK)");
-            return;
+        // 2. Prepare a 128-Byte Buffer (Initialize with 0x00 / Nulls)
+        QByteArray dataFrame(128, (char)0x00);
+
+        // 3. Determine if we have real data left to send
+        int bytesRemaining = m_clipBuffer.size() - m_clipPos;
+
+        if (bytesRemaining > 0) {
+            // We have data. Calculate how much fits in this chunk.
+            int bytesToCopy = qMin(bytesRemaining, 128);
+
+            // Extract data and overwrite the nulls in our buffer
+            QByteArray segment = m_clipBuffer.mid(m_clipPos, bytesToCopy);
+            dataFrame.replace(0, bytesToCopy, segment);
+
+            // Advance the clipboard position
+            m_clipPos += bytesToCopy;
+
+            qDebug() << "!d" << tr("[Y:] Sent chunk: %1 bytes").arg(bytesToCopy);
+        } else {
+            // EOF: We have no more data.
+            // We still send the "dataFrame" (which is 128 nulls).
+            // The Atari driver reads byte 0 as 0x00 and triggers EOF (Error 136).
+            qDebug() << "!d" << tr("[Y:] Sent EOF (128 nulls)");
         }
 
-        // 3. Prepare Strict 128-Byte Chunk
-        int chunkSize = 128;
-        QByteArray chunk = m_clipBuffer.mid(m_clipPos, chunkSize);
-        m_clipPos += chunkSize; // Advance position
-
-        // 4. PAD WITH NULLS if chunk is small
-        // The Atari is waiting for exactly 128 bytes. If we send less, it hangs.
-        while (chunk.size() < 128) {
-            chunk.append((char)0x00);
-        }
-
+        // 4. Send the Packet
+        // writeComplete() sends 'C'
+        // writeDataFrame() sends the 128 bytes + Checksum
         sio->port()->writeComplete();
-        sio->port()->writeDataFrame(chunk);
+        sio->port()->writeDataFrame(dataFrame);
 
-        qDebug() << "!d" << tr("[K:] Sent 128 bytes (Pos: %1)").arg(m_clipPos);
         break;
     }
 
     default:
         // Unknown Command
         sio->port()->writeCommandNak();
-        qWarning() << "!w" << tr("[K:] Unknown Command: $%1").arg(command, 2, 16, QChar('0'));
+        qWarning() << "!w" << tr("[Y:] Unknown Command: $%1").arg(command, 2, 16, QChar('0'));
         break;
     }
-
 }

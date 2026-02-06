@@ -18,6 +18,7 @@ DocDisplayWindow::DocDisplayWindow(QWidget *parent) :
     QFont f;
     f.setFixedPitch(true);
     f.setFamily("monospace");
+    resize(1024, 800);
     ui->docDisplay->setFont(f);
 }
 
