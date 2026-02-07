@@ -10,13 +10,10 @@
  		
  	    .align 256    
  		
-IOBuf
-    .ds 128
-InputBuf
-    .ds 255
-EOF .ds 1  
+IOBuf .ds 128
+null  .byte 0
+EOF   .byte $FF
     
-
 .proc  Start
 	jsr printf
 	.byte 'PC Clipboad Y: ',155,0
@@ -45,8 +42,6 @@ exit
 OK1
 	jsr Printf
 	.byte 155,'Clip Loaded!',155,0
-	lda #$ff
-	sta EOF
 	clc	
 	rts
 .endp
@@ -130,10 +125,7 @@ SetupDCB_Read
     jsr SIOV
     rts
 
-	 				
-
-     icl 'printf.asm'
+    icl 'printf.asm'
      
-
 	 run Start
 	

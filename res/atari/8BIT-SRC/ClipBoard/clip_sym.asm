@@ -58,45 +58,5 @@ DOSINI	equ $0C
 comfnam	equ $21
 comtab	equ $0A
 
-	.enum Cmd
-OpenClip        = $4F	
-GetClip	        = $52
-PutClip	        = $57
-	.ende
-
-	.enum DCB
-OpenClip
-GetClip
-PutClip
-	.ende
  
  
-.macro ldyx
-	ldy #< :1
-	ldx #> :1
-.endm
-
-.macro styx
-	sty :1
-	stx :1+1
-.endm
-
-.macro ldax
-	lda #< :1
-	ldx #> :1
-.endm
-
-.macro stax
- 	sta :1
- 	stx :1+1
-.endm
-
-.macro lday
-	lda #< :1
-	ldy #> :1
-.endm
-
-.macro stay
- 	sta :1
- 	sty :1+1
-.endm

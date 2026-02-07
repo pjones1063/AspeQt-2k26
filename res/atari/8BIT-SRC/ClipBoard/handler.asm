@@ -1,44 +1,46 @@
 ; =================================================================
-; AspeQt-2k26 Clipboard Handler (Y:) - GOLDEN MASTER (NULL-TERM)
+; AspeQt-2k26 Clipboard Handler (Y:) - GOLDEN MASTER
 ; -----------------------------------------------------------------
 ; TARGET: Atari 8-bit (MADS Assembler)
-; MEMORY: Fixed at $4000
+; MEMORY: Code at $4000, Data at $0600 (Safe Zone)
 ; =================================================================
 
     icl "clip_sym.asm"
-    
-    org $4000
 
 ; =================================================================
-; RESIDENT DATA 
+; RESIDENT DATA (Page 6 - Safe from BASIC)
 ; =================================================================
-    .align 256      
-IOBuf       .ds 128 
+    org $0600    
+IOBuf       .ds 128
 BufPtr      .byte 0 
 EOF_Flag    .byte 0 
-TestB       .byte 'A'
-
 
 ; =================================================================
-; CIO JUMP TABLE
+; RESIDENT CODE
+; =================================================================
+    org $4000
+    .align 256 
+
+; =================================================================
+; CIO JUMP TABLE (MUST BE ADDRESS MINUS 1)
 ; =================================================================
 HandlerTable
-    .word HandlerOpen
-    .word HandlerClose
-    .word HandlerGet
-    .word HandlerPut
-    .word HandlerStat
-    .word HandlerSpec
+    .word HandlerOpen-1
+    .word HandlerClose-1
+    .word HandlerGet-1
+    .word HandlerPut-1
+    .word HandlerStat-1
+    .word HandlerSpec-1
     
 ; =================================================================
 ; 1. OPEN ROUTINE 
 ; =================================================================
 HandlerOpen
-    ; Send "OPEN" Command ($4F)
+    ; 1. Send "OPEN" Command ($4F)
     jsr SetupDCB_Open
     bmi OpenFail    
     
-    ; Reset Buffer State and EOF    
+    ; 2. Reset Buffer State
     ; We set BufPtr to 128 to force the *first* GET to trigger a Refill.
     lda #128
     sta BufPtr
@@ -46,7 +48,7 @@ HandlerOpen
     sta EOF_Flag
     
     ldy #1          ; Success
-    clc             ; Clear Carry (Success)
+    clc             ; Clear Carry 
     rts
 
 OpenFail
@@ -61,17 +63,13 @@ HandlerClose
     ldy #1          
     clc
     rts
-
+ 
 ; =================================================================
 ; 3. GET BYTE ROUTINE
 ; =================================================================
 HandlerGet
-     //proof of HandlerGet 
-     inc TestB
-     lda TestB 
-     ldy #$01
-     rts
-
+    stx SaveX       ; Save IOCB Index
+    
     ; 1. Have we already hit EOF?
     lda EOF_Flag
     beq CheckPtr
@@ -99,12 +97,13 @@ FetchByte
     ldx BufPtr
     lda IOBuf,x     ; Load the character
     
-    ; --- NULL TERMINATOR CHECK (CRITICAL FIX) ---
+    ; --- NULL TERMINATOR CHECK ---
     cmp #0          ; Is it a Null (0x00)?
     beq FoundNull   ; If yes, it's the End of the text.
-    ; --------------------------------------------
+    ; -----------------------------
 
     inc BufPtr      ; Advance pointer
+    ldx SaveX       ; Restore IOCB Index
     ldy #1          ; Success
     clc             ; Clear Carry
     rts
@@ -112,20 +111,22 @@ FetchByte
 FoundNull
     lda #1
     sta EOF_Flag    ; Mark EOF
+    ldx SaveX       ; Restore IOCB Index
     ldy #136        ; Return EOF Error
     sec
     rts
 
 RefillFailed
     sty EOF_Flag    ; Mark Error/EOF
+    ldx SaveX       ; Restore IOCB Index
     sec             
     rts
 
 ; -- Helper: Refill the Buffer --
 RefillBuffer
-    jsr SetupDCB_Read       
+    jsr SetupDCB_Read   ; Calls SIOV inside!
     bpl RefillOK    
-    rts             ; Return with SIO Error (in Y)
+    rts                 ; Return with SIO Error (in Y)
 
 RefillOK
     lda #0
@@ -144,7 +145,7 @@ HandlerSpec
     rts
 
 ; =================================================================
-; SIO SETUP (Matches clip.asm exactly)
+; SIO SETUP ROUTINES
 ; =================================================================
 SetupDCB_Open
     lda #$4F        ; Cmd 'O'
@@ -167,7 +168,7 @@ SetupDCB_Open
     sta DDEVIC
     lda #1
     sta DUNIT
-    jsr SIOV
+    jsr SIOV        ; Perform the Call
     rts
 
 SetupDCB_Read
@@ -194,8 +195,13 @@ SetupDCB_Read
     sta DDEVIC
     lda #1
     sta DUNIT
-    jsr SIOV
+    jsr SIOV        ; Perform the Call
     rts
+
+; =================================================================
+; DATA
+; =================================================================
+SaveX .byte 0
 
 ; =================================================================
 ; INSTALLER 
