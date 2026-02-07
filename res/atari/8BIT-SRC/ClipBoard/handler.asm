@@ -33,39 +33,56 @@ HandlerTable
     .word HandlerSpec-1
     
 ; =================================================================
-; 1. OPEN ROUTINE 
+; 1. OPEN ROUTINE (SYNCED WITH PC)
 ; =================================================================
 HandlerOpen
-    ; 1. Send "OPEN" Command ($4F)
+    ; 1. Setup the SIO Packet (but don't send yet)
     jsr SetupDCB_Open
+    
+    ; 2. Copy the Open Mode (4 or 8) to SIO Aux Byte 1
+    lda $2A         ; ZIOCB ICAX1 (4=Read, 8=Write)
+    sta DAUX1       ; Send this to PC so it knows to Clear or Snapshot!
+    lda #0
+    sta DAUX2
+    
+    ; 3. Perform the SIO Call
+    jsr SIOV
     bmi OpenFail    
     
-    ; 2. Reset Buffer State
-    ; We set BufPtr to 128 to force the *first* GET to trigger a Refill.
+    ; 4. Setup Local Pointers based on Mode
+    lda DAUX1       ; We can just check what we sent
+    and #$08        ; Is it Write Mode (8)?
+    bne OpenWrite
+    
+OpenRead
+    ; -- READ MODE (ENTER "Y:") --
+    ; Force Refill on first GET
     lda #128
     sta BufPtr
     lda #0
     sta EOF_Flag
-    
+    jmp OpenDone
+
+OpenWrite
+    ; -- WRITE MODE (LIST "Y:") --
+    ; Start with Empty Buffer
+    lda #0
+    sta BufPtr
+
+OpenDone
     ldy #1          ; Success
-    clc             ; Clear Carry 
+    clc
     rts
 
 OpenFail
-    ldy #144        ; Error 144
-    sec             ; Set Carry (Error)
+    ldy #144        ; Error
+    sec
     rts
+    
+    
 
 ; =================================================================
-; 2. CLOSE ROUTINE 
-; =================================================================
-HandlerClose
-    ldy #1          
-    clc
-    rts
- 
-; =================================================================
-; 3. GET BYTE ROUTINE
+; 2. GET BYTE ROUTINE
 ; =================================================================
 HandlerGet
     stx SaveX       ; Save IOCB Index
@@ -134,10 +151,95 @@ RefillOK
     ldy #1          ; Success
     rts
 
+
+; =================================================================
+; 3. PUT BYTE ROUTINE
+; =================================================================
+HandlerPut
+    stx SaveX       ; Save IOCB Index
+    
+    ; 1. Store Byte in Buffer
+    ldx BufPtr
+    sta IOBuf,x
+    inc BufPtr
+    
+    ; 2. Is Buffer Full? (128 bytes)
+    ldx BufPtr
+    cpx #128
+    bne PutSuccess  ; Not full, we are done
+    
+    ; 3. Buffer Full - FLUSH IT!
+    jsr FlushBuffer
+    cpy #1          ; Check SIO Success
+    bne PutError
+    
+PutSuccess
+    ldx SaveX       ; Restore IOCB
+    ldy #1          ; Success
+    clc
+    rts
+
+PutError
+    ldx SaveX
+    sec             ; Error Flag
+    rts
+
+FlushBuffer
+    jsr SetupDCB_Write
+    bpl FlushOK
+    rts             ; Return Error in Y
+FlushOK
+    lda #0
+    sta BufPtr      ; Reset Pointer
+    ldy #1          ; Success
+    rts
+    
+ 
+; =================================================================
+; 4. CLOSE ROUTINE (SMART R/W)
+; =================================================================
+HandlerClose
+    ; Check ZIOCB Aux Byte 1 ($2A)
+    lda $2A
+    and #$08        ; Check Bit 3 (Value 8 = WRITE)
+    bne CloseWrite
+    
+    ; --- READ MODE ---
+    ldy #1          
+    clc
+    rts
+
+CloseWrite
+    ; --- WRITE MODE ---
+    ; Flush remaining data in buffer
+    stx SaveX       ; Save IOCB Index
+    
+    lda BufPtr      ; Is buffer empty?
+    beq CloseDone
+    
+    ; Pad remainder with Nulls (Optional but good for clean frames)
+    ldx BufPtr
+PadLoop
+    lda #0
+    sta IOBuf,x
+    inx
+    cpx #128
+    bne PadLoop
+    
+    ; Send the final chunk
+    jsr FlushBuffer
+    
+CloseDone
+    ldx SaveX       ; Restore IOCB
+    ldy #1
+    clc
+    rts
+    
+
+           
 ; =================================================================
 ; UNSUPPORTED / STUBS
 ; =================================================================
-HandlerPut
 HandlerStat
 HandlerSpec
     ldy #1
@@ -162,13 +264,10 @@ SetupDCB_Open
     sta DUNUSE
     sta DBYTLO
     sta DBYTHI
-    sta DAUX1
-    sta DAUX2
     lda #$59        ; Device 'Y'
     sta DDEVIC
     lda #1
     sta DUNIT
-    jsr SIOV        ; Perform the Call
     rts
 
 SetupDCB_Read
@@ -198,6 +297,33 @@ SetupDCB_Read
     jsr SIOV        ; Perform the Call
     rts
 
+SetupDCB_Write
+    lda #$57        ; Cmd 'W' (Write)
+    sta DCOMND
+    lda #$80        ; Direction: Write ($80)
+    sta DSTATS
+    lda #<IOBuf
+    sta DBUFLO
+    lda #>IOBuf
+    sta DBUFHI
+    lda #$08        ; Timeout
+    sta DTIMLO
+    lda #$00
+    sta DUNUSE
+    lda #$80        ; Length 128
+    sta DBYTLO
+    lda #$00
+    sta DBYTHI
+    lda #$00        
+    sta DAUX1
+    sta DAUX2
+    lda #$59        ; Device 'Y'
+    sta DDEVIC
+    lda #1
+    sta DUNIT
+    jsr SIOV        
+    rts
+    
 ; =================================================================
 ; DATA
 ; =================================================================

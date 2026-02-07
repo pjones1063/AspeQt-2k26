@@ -466,31 +466,45 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
 void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
 {
     switch (command) {
-    case 0x4f: // Snapshot Clipboard
+    case 0x4F: // OPEN Command
     {
-        // 1. Send Command ACK
-        if (!sio->port()->writeCommandAck()) {
-            return;
+        // 1. Send ACK
+        if (!sio->port()->writeCommandAck()) return;
+
+        // 2. Check the Mode (Aux1 comes from Atari's OPEN command)
+        // aux & 0xFF is DAUX1. 4 = Read, 8 = Write.
+        quint8 mode = aux & 0xFF;
+
+        QClipboard *clipboard = QGuiApplication::clipboard();
+
+        if (mode == 8) {
+            // --- WRITE MODE (LIST "Y:") ---
+            // Clear the clipboard to accept new data
+            if (clipboard) clipboard->clear();
+            qDebug() << "!n" << tr("[Y:] Open for Write (Clipboard Cleared)");
+        }
+        else {
+            // --- READ MODE (ENTER "Y:") ---
+            // Snapshot existing clipboard for Atari to read
+            QString clipText = clipboard ? clipboard->text() : "";
+
+            // Normalize Line Endings ( \r\n -> \n -> \x9B )
+            clipText.replace("\r\n", "\n");
+            clipText.replace('\n', '\x9B');
+
+            m_clipBuffer = clipText.toLatin1();
+            m_clipPos = 0; // Reset read head
+
+            qDebug() << "!n" << tr("[Y:] Open for Read (Snapshotted %1 bytes)").arg(m_clipBuffer.size());
         }
 
-        // 2. Snapshot the PC Clipboard
-        QClipboard *clipboard = QGuiApplication::clipboard();
-        QString clipText = clipboard ? clipboard->text() : "";
-
-        // 3. Convert Line Endings: Windows \r\n -> \n -> ATASCII $9B
-        clipText.replace("\r\n", "\n");
-        clipText.replace('\n', '\x9B');
-
-        // 4. Store in buffer
-        m_clipBuffer = clipText.toLatin1();
-        m_clipPos = 0;
+        // 3. Send Complete
         sio->port()->writeComplete();
-
-        qDebug() << "!n" << tr("[Y:] Clipboard Snapshotted (%1 bytes)").arg(m_clipBuffer.size());
         break;
     }
 
-    case 0x52: // 'R' - Read Data Chunk
+
+    case 0x52: // 'R' - Read Data Chunk  -- (ENTER "Y:")
     {
         // 1. Send Command ACK
         if (!sio->port()->writeCommandAck()) {
@@ -528,6 +542,38 @@ void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
         sio->port()->writeComplete();
         sio->port()->writeDataFrame(dataFrame);
 
+        break;
+    }
+
+    case 0x57: // 'W' - Write to Clipboard (LIST "Y:")
+    {
+        // 1. Send ACK
+        if (!sio->port()->writeCommandAck()) return;
+
+        // 2. Receive the 128-byte Data Frame
+        QByteArray dataFrame = sio->port()->readDataFrame(128);
+
+        // 3. Send Complete (ACK the data)
+        sio->port()->writeComplete();
+
+        // 4. Process the Data
+        // Convert Atari EOL ($9B) -> PC Newline (\n)
+        // And strip Nulls (0x00) which pad the end of chunks
+        QString chunkStr = QString::fromLatin1(dataFrame);
+        chunkStr.replace(QChar(0x9B), QString("\n"));
+        chunkStr.remove(QChar(0x00)); // Remove padding
+
+        // 5. Append to Clipboard
+        QClipboard *clipboard = QGuiApplication::clipboard();
+        if (clipboard) {
+            // Append mode: Get current text + new chunk
+            // NOTE: For a cleaner implementation, we might want to clear
+            // the clipboard on the OPEN command, but appending works for now.
+            QString current = clipboard->text();
+            clipboard->setText(current + chunkStr);
+        }
+
+        qDebug() << "!d" << tr("[Y:] Received Write Chunk (%1 chars)").arg(chunkStr.length());
         break;
     }
 
