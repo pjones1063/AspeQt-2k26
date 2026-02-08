@@ -38,6 +38,7 @@
 #include <QScreen>
 #include <QWindow>
 #include <QFont>
+#include <QClipboard>
 
 #include "atarifilesystem.h"
 // #include "miscutils.h"
@@ -144,14 +145,6 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
 
 
-    sio = new SioWorker();
-
-    // Install PCLINK (Virtual Disk)
-    sio->installDevice(PCLINK_CDEVIC,  new PCLINK(sio));
-    // AspeQt Client  // Ray A.
-    sio->installDevice(0x46, new AspeCl(sio));
-    // Clipboard
-    sio->installDevice(0x59, new ClipboardDevice(sio));
 
     // =========================================================================
     // STEP 3: UI & SETTINGS SETUP (EXISTING LOGIC)
@@ -279,6 +272,15 @@ MainWindow::MainWindow(QWidget *parent)
     opacitySlider->setToolTip(tr("Adjust Shade Opacity"));
     opacitySlider->hide();
 
+
+    sio = new SioWorker();
+    sio->installDevice(PCLINK_CDEVIC,  new PCLINK(sio));
+    sio->installDevice(0x46, new AspeCl(sio));
+
+    clipper = new ClipboardDevice(sio);
+    sio->installDevice(0x59, clipper);
+
+
     connect(opacitySlider, &QSlider::valueChanged, this, [this](int value){
         if (g_shadeMode) {
             setWindowOpacity(value / 100.0);
@@ -302,6 +304,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sio, SIGNAL(started()), this, SLOT(sioStarted()));
     connect(sio, SIGNAL(finished()), this, SLOT(sioFinished()));
     connect(sio, SIGNAL(statusChanged(QString)), this, SLOT(sioStatusChanged(QString)));
+
+    connect(clipper, &ClipboardDevice::requestClipSet, this, [](QString text) {
+        QClipboard *cb = QGuiApplication::clipboard();
+        if (cb) {
+            cb->setText(text);
+        }
+    });
+
     shownFirstTime = true;
 
     // Restore State
@@ -1030,13 +1040,23 @@ void MainWindow::deviceStatusChanged(int deviceNo)
         TnfsImage *tnfsImg = qobject_cast<TnfsImage*>(device);
         if (tnfsImg) {
             // Force Save and Edit to FALSE (Gray out buttons)
-            diskWidget->setLabelToolTips(tnfsImg->originalFileName(), tnfsImg->originalFileName(), tr("TNFS Network Stream"));
+            QString fullUrl = tnfsImg->originalFileName();
+            QString fileNameOnly = fullUrl;
+
+            // --- FIX: Extract purely the filename from the URL ---
+            int lastSlash = fullUrl.lastIndexOf('/');
+            if (lastSlash != -1) {
+                fileNameOnly = fullUrl.mid(lastSlash + 1);
+            }
+            if (fileNameOnly.isEmpty()) fileNameOnly = fullUrl;
+
+            diskWidget->setLabelToolTips(fullUrl, fullUrl, tr("TNFS Network Stream To Ram"));
 
             // --- FIX: Force Happy Mode OFF for TNFS streams ---
             diskWidget->setHappyMode(false);
 
             // Arg 3 (Edit) = false, Arg 4 (Save) = false
-            diskWidget->showAsTNFSMounted(tnfsImg->originalFileName(), tr("TNFS Stream"));
+            diskWidget->showAsTNFSMounted(fileNameOnly, tr("TNFS Stream to RAM"));
             return; // EXIT HERE so SimpleDiskImage logic doesn't override it
         }
 

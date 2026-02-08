@@ -52,7 +52,7 @@ signals:
 };
 
 
-// --- NEW: K: Device (Clipboard) ---
+// --- NEW: Y Device (Clipboard) ---
 class ClipboardDevice : public SioDevice
 {
     Q_OBJECT
@@ -62,7 +62,12 @@ public:
 
 private:
     QByteArray m_clipBuffer;
+    QString    m_writeAccumulator;
     int m_clipPos;
+
+signals: // Define these signals
+     void requestClipSet(QString text); // The "Commit" signal
+
 };
 
 #endif // MISCDEVICES_H

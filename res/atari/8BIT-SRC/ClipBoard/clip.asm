@@ -10,7 +10,7 @@
  		
  	    .align 256    
  		
-IOBuf .ds 128
+IOBuf .ds 256
 null  .byte 0
 EOF   .byte $FF
     
@@ -62,7 +62,7 @@ OK2
    sta EOF
 NOTEOF
    lda #0
-   sta IOBuf+128
+   sta IOBuf+256
    jsr Printf
    .byte '%s',0
    .word IOBuf
@@ -111,9 +111,9 @@ SetupDCB_Read
     sta DTIMLO
     lda #$00
     sta DUNUSE
-    lda #$80        ; Length 128
+    lda #$00        ; Length 128
     sta DBYTLO
-    lda #$00
+    lda #$01
     sta DBYTHI
     lda #$00        
     sta DAUX1

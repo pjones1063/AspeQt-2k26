@@ -31,6 +31,7 @@
 #include "drivewidget.h"
 #include "infowidget.h"
 #include "tnfsclient.h"
+#include "miscdevices.h"
 
 namespace Ui
 {
@@ -96,6 +97,7 @@ private:
     QString lastMessage;
     int lastMessageRepeat;
     TnfsClient *tnfsClient;
+    ClipboardDevice *clipper;
     bool isClosing;
 
     QDialog *logWindow_;

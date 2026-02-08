@@ -1,15 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
-    <meta name="qrichtext" content="1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>AspeQt-2k26 User Manual</title>
     <style type="text/css">
         /* PRO / FANCY FONTS SETTINGS */
         body {
             font-family: "Segoe UI Semilight", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             color: #2b2b2b;
             background-color: #ffffff;
             margin: 0px;
+            line-height: 1.6;
         }
 
         /* HEADER AREA */
@@ -23,182 +25,250 @@
             color: #1a1a1a;
             font-family: "Segoe UI", "Helvetica Neue", sans-serif;
             font-weight: 100; /* Thinner, modern look */
-            font-size: 28px;
+            font-size: 32px;
             margin: 0;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
 
         .subtitle {
-            font-size: 12px;
+            font-size: 14px;
             color: #666666;
             margin: 0;
             padding: 0;
         }
 
-        /* LEFT JUSTIFIED MENU */
+        /* NAVIGATION */
         .nav-bar {
-            margin-top: 15px;
-            text-align: left; /* Left Justified as requested */
-            font-size: 13px;
+            margin-top: 20px;
+            text-align: left;
+            font-size: 14px;
         }
 
-        a.nav-link {
-            color: #0066cc;
+        .nav-bar a {
             text-decoration: none;
-            font-weight: bold;
-            margin-right: 25px; /* Spacing between items */
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 1px;
+            color: #0066cc;
+            margin-right: 15px;
+            font-weight: 600;
         }
 
-        a.nav-link:hover {
-            color: #003366;
+        .nav-bar a:hover {
             text-decoration: underline;
+            color: #003366;
         }
 
-        /* CONTENT AREA */
+        /* MAIN CONTENT */
         .content {
             padding: 30px;
-            max-width: 800px; /* Prevents text from stretching too wide on 4k screens */
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         h2 {
-            color: #004080; /* Professional Deep Blue */
-            font-size: 20px;
-            margin-top: 35px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #eeeeee;
-            padding-bottom: 5px;
+            color: #005a9c;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            font-weight: 400;
         }
 
         h3 {
-            color: #cc0000; /* Muted Red accent */
-            font-size: 15px;
-            font-weight: bold;
+            color: #333;
             margin-top: 25px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            font-weight: 600;
         }
 
         p {
-            line-height: 160%;
             margin-bottom: 15px;
         }
 
+        ul {
+            margin-bottom: 20px;
+        }
+
         li {
-            line-height: 150%;
             margin-bottom: 8px;
         }
 
         /* CODE SNIPPETS */
         .code-snippet {
-            font-family: Consolas, "Courier New", monospace;
-            font-size: 13px;
-            background-color: #f5f7fa;
-            color: #333;
-            padding: 2px 6px;
-            border-radius: 4px; /* Qt 5.12+ supports this, earlier versions ignore it safely */
+            font-family: "Consolas", "Courier New", monospace;
+            background-color: #f0f0f0;
+            border: 1px solid #e0e0e0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #c7254e;
+            font-size: 0.95em;
         }
 
-        /* HIGHLIGHT BOXES */
-        .info-box {
-            background-color: #f9f9f9;
+        .code-block {
+            font-family: "Consolas", "Courier New", monospace;
+            background-color: #f8f8f8;
+            border-left: 4px solid #005a9c;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* SPECIAL BOXES */
+        .note {
+            background-color: #eaf4ff;
             border-left: 4px solid #0066cc;
             padding: 15px;
             margin: 20px 0;
-            color: #444;
+            font-size: 14px;
         }
+        
+        .warning {
+            background-color: #fff4e5;
+            border-left: 4px solid #ff9900;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .footer a { color: #fff; }
     </style>
 </head>
 <body>
 
     <div class="header-container">
         <h1>AspeQt-2k26</h1>
-        <p class="subtitle">Atari Serial Peripheral Emulator / Qt6 Edition</p>
+        <p class="subtitle">High-Performance Peripheral Emulator for Atari 8-Bit Computers</p>
         
         <div class="nav-bar">
-            <a href="#intro" class="nav-link">Introduction</a>
-            <a href="#system" class="nav-link">Requirements</a>
-            <a href="#config" class="nav-link">Configuration</a>
-            <a href="#networking" class="nav-link">Networking</a>
-            <a href="#usage" class="nav-link">Usage</a>
+            <a href="#intro">Introduction</a>
+            <a href="#sio">High-Speed SIO</a>
+            <a href="#usage">Disk & Folder Images</a>
+            <a href="#tnfs">TNFS Client</a>
+            <a href="#printer">Printer (P:)</a>
+            <a href="#clipboard">Clipboard (Y:)</a>
         </div>
     </div>
 
     <div class="content">
-
         <a name="intro"></a>
-        <p><b>AspeQt-2k26</b> is a modernized, cross-platform emulator that bridges your Atari 8-bit computer to modern PC storage and networking via a standard SIO2PC cable.</p>
-        
-        <p>This edition has been rebuilt on the <b>Qt6 framework</b> to ensure crisp rendering on High-DPI displays and stability on modern operating systems (Windows 11, macOS, Linux).</p>
-
-        <h3>New in 2k26</h3>
+        <h2>Introduction</h2>
+        <p>AspeQt-2k26 is a modernized version of the classic AspeQt emulator, updated to use the Qt6 framework. It transforms your modern PC into a powerful peripheral server for Atari 8-bit computers (400/800/XL/XE).</p>
+        <p>Using a standard SIO2PC cable (USB or Serial), AspeQt can emulate:</p>
         <ul>
-            <li><b>TNFS Client:</b> Integrated support for mounting images directly from the internet.</li>
-            <li><b>Y: Clipboard Device:</b> Bi-directional text sharing between PC and Atari.</li>
-            <li><b>Qt6 Interface:</b> Native drag-and-drop and high-resolution font scaling.</li>
+            <li><b>Disk Drives (D1:-D8:)</b> - Supports ATR, XFD, PRO images, and direct Folder Mounting.</li>
+            <li><b>TNFS Client</b> - Mount and stream disk images directly from the internet (FujiNet protocol).</li>
+            <li><b>Printers (P:)</b> - Captures printed output to text or graphical view.</li>
+            <li><b>Clipboard Bridge (Y:)</b> - Bi-directional copy/paste between PC and Atari.</li>
+            <li><b>Cassette (C:)</b> - Load CAS files via SIO audio.</li>
         </ul>
 
-        <a name="system"></a>
-        <h2>System Requirements</h2>
-        <p>Requires a modern 64-bit operating system. An Atari 8-bit computer and an SIO2PC interface are required for operation.</p>
-        
-        <div class="info-box">
-            <b>Hardware Note:</b> We strongly recommend USB adapters based on the <b>FTDI chipset</b>. Prolific or generic chipsets often exhibit timing drift at high speeds (Divisor 0-8).
+        <a name="sio"></a>
+        <h2>High-Speed SIO</h2>
+        <p>AspeQt supports "divisor 0" high-speed SIO (approx. 126kbps) with custom OS ROMs (like QMEG or Hiassoft) and standard high-speed protocols (UltraSpeed, Happy, etc.).</p>
+        <div class="note">
+            <b>Note:</b> Reliable high-speed operation depends on your SIO2PC hardware. FTDI-based USB cables generally offer the best performance.
         </div>
 
-        <a name="config"></a>
-        <h2>Configuration</h2>
-        <p>Access the main settings via <b>Tools &gt; Options</b>.</p>
-
-        <h3>Serial Connection</h3>
-        <p><b>Windows:</b> Select your COM port (e.g., <span class="code-snippet">COM3</span>).<br>
-        <b>Linux:</b> Select your device node (e.g., <span class="code-snippet">/dev/ttyUSB0</span>).</p>
-
-        <h3>High Speed SIO</h3>
-        <ul>
-            <li><b>Divisor 40 (1x):</b> Standard 19200 bps.</li>
-            <li><b>Divisor 16 (2x):</b> Safe for most cables.</li>
-            <li><b>Divisor 8 (3x):</b> Recommended for FTDI cables.</li>
-            <li><b>Divisor 0 (6x):</b> Requires the <span class="code-snippet">hisio</span> OS patch on the Atari.</li>
-        </ul>
-
-        <a name="networking"></a>
-        <h2>Networking & Integration</h2>
-        
-        <h3>TNFS Client</h3>
-        <p>The TNFS client allows you to mount disk images hosted on remote servers (compatible with FujiNet) directly into a drive slot without downloading them first.</p>
-        <ul>
-            <li><b>Setup:</b> Go to <b>Tools &gt; Network</b> and enter the TNFS Server Address.</li>
-            <li><b>Usage:</b> Open the TNFS Browser, navigate the remote folders, and drag an <span class="code-snippet">.atr</span> file to any drive slot.</li>
-        </ul>
-
-        <h3>Y: Clipboard Device</h3>
-        <p>The <span class="code-snippet">Y:</span> device acts as a bridge between the host PC's clipboard and the Atari.</p>
-        <ul>
-            <li><b>Read from PC:</b> Copy text on your PC. On the Atari, type <span class="code-snippet">COPY "Y:" "E:"</span> to paste it.</li>
-            <li><b>Write to PC:</b> Print to the <span class="code-snippet">Y:</span> device from Atari (e.g., <span class="code-snippet">LIST "Y:"</span>) to copy text to your PC clipboard.</li>
-        </ul>
-
         <a name="usage"></a>
-        <h2>Usage</h2>
+        <h2>Disk & Folder Usage</h2>
+
+        <h3>Mounting Disk Images</h3>
+        <p>Drag and drop <span class="code-snippet">.atr</span>, <span class="code-snippet">.xfd</span>, or <span class="code-snippet">.pro</span> files directly into the drive slots (D1-D8). Double-clicking a slot opens the file browser.</p>
 
         <h3>Virtual DOS (Folder Images)</h3>
-        <p>You can mount a local PC directory as a writable disk. To boot from a folder, right-click the slot and select <b>Folder Boot Options</b>.</p>
-        <p>Supported DOS types for booting:</p>
+        <p>You can mount a local PC directory as a writable disk. To boot from a folder, right-click the slot and select <b>Mount Folder</b>.</p>
+        <p>Supported DOS structures for folder mounting:</p>
         <ul>
-            <li>Atari DOS 2.5</li>
+            <li>Atari DOS 2.0 / 2.5</li>
             <li>MyDOS 4.5</li>
-            <li>SpartaDOS 3.2G (Limited)</li>
+            <li>SpartaDOS (Limited)</li>
         </ul>
 
         <h3>Running Executables</h3>
-        <p>Drag <span class="code-snippet">.xex</span> or <span class="code-snippet">.com</span> files directly to a slot. AspeQt uses a high-speed internal loader to run these files without requiring a DOS disk.</p>
+        <p>Drag <span class="code-snippet">.xex</span> or <span class="code-snippet">.com</span> files directly to a slot. AspeQt uses a high-speed internal loader to execute these files instantly, bypassing the need for a DOS.</p>
 
-        <h3>Printer Emulation</h3>
-        <p>Output sent to <span class="code-snippet">P1:</span> is captured by AspeQt. View the output via <b>File &gt; View Printer Output</b>. The viewer automatically handles ATASCII-to-ASCII translation.</p>
+        <a name="tnfs"></a>
+        <h2>TNFS Client</h2>
+        <p>AspeQt-2k26 includes native support for TNFS (The Network File System), allowing you to mount and stream disk images directly from the internet using the FujiNet protocol.</p>
+        
+        <h3>Connecting to a Server</h3>
+        <p>Access the TNFS Client via the <b>Tools</b> menu. You can add standard TNFS servers (such as <span class="code-snippet">fujinet.pl</span> or <span class="code-snippet">atari-apps.irata.online</span>).</p>
+        
+        <h3>Usage</h3>
+        <p>Once connected, the remote file system appears in the AspeQt file browser. You can navigate folders and drag remote <span class="code-snippet">.ATR</span> or <span class="code-snippet">.XEX</span> files directly into the drive slots (D1-D8). AspeQt will stream the data on-demand, allowing you to boot software immediately without manually downloading files.</p>
 
-        <p style="margin-top: 50px; font-size: 11px; color: #999;">AspeQt-2k26 Documentation</p>
+        <a name="printer"></a>
+        <h2>Printer Emulation (P:)</h2>
+        <p>Output sent to <span class="code-snippet">P:</span> is captured by AspeQt. View the output via <b>Tools &gt; View Printer Output</b>. The viewer automatically handles ATASCII-to-ASCII translation.</p>
+
+        <a name="clipboard"></a>
+        <h2>The Y: Device (Clipboard Bridge)</h2>
+        <p>The <b>Y: Device</b> is a custom CIO handler that bridges the gap between your Atari 8-bit and your modern PC's system clipboard. It allows you to "Paste" code from your PC directly into Atari BASIC, or "Copy" listings from the Atari back to your PC.</p>
+        
+        <h3>1. Installation</h3>
+        <p>The Y: device is not built into the Atari OS; it must be loaded into memory.</p>
+        <ol>
+            <li>Load the <b>handler.xex</b> file provided with AspeQt (drag it to D1: and boot, or load it from DOS).</li>
+            <li>The handler installs itself at memory address <b>$4000</b>.</li>
+            <li>Once loaded, the device <span class="code-snippet">Y:</span> becomes available to the system.</li>
+        </ol>
+
+        <h3>2. Importing Code (PC &rarr; Atari)</h3>
+        <p>This feature allows you to write BASIC code in a modern editor (like VS Code or Notepad++) and run it on the Atari.</p>
+        <ul>
+            <li><b>On PC:</b> Select your text/code and <b>Copy</b> (Ctrl+C).</li>
+            <li><b>On Atari:</b> Type <span class="code-snippet">NEW</span>, then type <span class="code-snippet">ENTER "Y:"</span></li>
+        </ul>
+        <p>The Atari will read the text from your clipboard as if it were typing it in. AspeQt automatically converts modern Line Feeds (<span class="code-snippet">\n</span>) into ATASCII EOL (<span class="code-snippet">$9B</span>) characters.</p>
+
+        <h3>3. Exporting Code (Atari &rarr; PC)</h3>
+        <p>This feature allows you to save your work from the Atari back to your PC clipboard.</p>
+        <ul>
+            <li><b>On Atari:</b> Type <span class="code-snippet">LIST "Y:"</span></li>
+            <li><b>On PC:</b> Open your text editor and <b>Paste</b> (Ctrl+V).</li>
+        </ul>
+        <div class="warning">
+            <b>Note:</b> Opening "Y:" for writing (Mode 8) automatically <b>clears</b> the PC clipboard before appending the new data.
+        </div>
+
+        <h3>4. Advanced Usage (BASIC Example)</h3>
+        <p>The Y: device functions like any standard IOCB device. You can write your own software to utilize the clipboard bridge. Below is a BASIC example demonstrating both reading and writing.</p>
+        
+        <div class="code-block">
+10 REM === WRITE TO CLIPBOARD ===
+20 OPEN #1,8,0,"Y:"
+30 ? "Writing to PC Clipboard..."
+40 PRINT #1;"Hello from the 8-bit world!"
+50 PRINT #1;"This text was sent via AspeQt."
+60 CLOSE #1
+
+70 REM === READ FROM CLIPBOARD ===
+80 ? "Copy something on PC, then press Return."
+90 DIM A$(1):INPUT A$
+100 TRAP 140 :REM Catch EOF Error
+110 OPEN #1,4,0,"Y:"
+120 GET #1,B
+130 ? CHR$(B);
+140 GOTO 120
+150 CLOSE #1
+160 ? "Done."
+        </div>
+
+    </div>
+
+    <div class="footer">
+        &copy; 2026 AspeQt-2k26 Development Team.<br>
+        Based on the original AspeQt by FJC and Ray Lidstrom.
     </div>
 
 </body>
