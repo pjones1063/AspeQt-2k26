@@ -469,7 +469,7 @@ void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
 {
     switch (command) {
     // =============================================================
-    // COMMAND: OPEN (Start of Operation)
+    // COMMAND: OPEN
     // =============================================================
     case 0x4F:
     {
@@ -512,7 +512,7 @@ void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
     }
 
         // -------------------------------------------------------------
-        // COMMAND: READ (Sending Data TO Atari)
+        // COMMAND: READ
         // -------------------------------------------------------------
     case 0x52:
     {
@@ -537,7 +537,7 @@ void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
     }
 
         // -------------------------------------------------------------
-        // COMMAND: WRITE (Receiving Data FROM Atari)
+        // COMMAND: WRITE
         // -------------------------------------------------------------
     case 0x57:
     {
@@ -560,7 +560,7 @@ void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
 
 
         // =============================================================
-        // COMMAND: CLOSE (Commit Data to OS - NEW!)
+        // COMMAND: CLOSE
         // =============================================================
     case 0x43:
     {

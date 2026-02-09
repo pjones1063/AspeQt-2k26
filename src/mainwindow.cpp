@@ -17,6 +17,7 @@
 #include "folderimage.h"
 #include "pclink.h"
 #include "miscdevices.h"
+#include "pipenetwork.h"
 #include "aspeqtsettings.h"
 #include "autobootdialog.h"
 #include "autoboot.h"
@@ -274,11 +275,44 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     sio = new SioWorker();
-    sio->installDevice(PCLINK_CDEVIC,  new PCLINK(sio));
-    sio->installDevice(0x46, new AspeCl(sio));
 
-    clipper = new ClipboardDevice(sio);
-    sio->installDevice(0x59, clipper);
+    // -------------------------------------------------------
+    // DEVICE $45: PCLINK
+    // -------------------------------------------------------
+    PCLINK *pcLink = new PCLINK(sio);
+    pcLink->setParent(nullptr);
+    pcLink->moveToThread(sio);
+    sio->installDevice(PCLINK_CDEVIC, pcLink);
+
+    // -------------------------------------------------------
+    // DEVICE $46: AspeQt Client (AspeCl)
+    // -------------------------------------------------------
+    AspeCl *client = new AspeCl(sio);
+    client->setParent(nullptr);
+    client->moveToThread(sio);
+    sio->installDevice(0x46, client);
+
+    // -------------------------------------------------------
+    // DEVICE $57: Pipe Network (W:)
+    // -------------------------------------------------------
+    PipeNetwork *pipeNet = new PipeNetwork(sio);
+    pipeNet->setParent(nullptr);
+    pipeNet->moveToThread(sio);
+    sio->installDevice(0x57, pipeNet);
+
+    // -------------------------------------------------------
+    // DEVICE $59: Clipboard (Y:)
+    // -------------------------------------------------------
+    ClipboardDevice *clip = new ClipboardDevice(sio);
+    clip->setParent(nullptr);
+    clip->moveToThread(sio);
+
+    // Connect Signal (Background) -> Slot (Main Thread)
+    connect(clip, &ClipboardDevice::requestClipSet, this, [](QString text) {
+        QClipboard *cb = QGuiApplication::clipboard();
+        if (cb) cb->setText(text);
+    });
+    sio->installDevice(0x59, clip);
 
 
     connect(opacitySlider, &QSlider::valueChanged, this, [this](int value){
@@ -305,12 +339,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sio, SIGNAL(finished()), this, SLOT(sioFinished()));
     connect(sio, SIGNAL(statusChanged(QString)), this, SLOT(sioStatusChanged(QString)));
 
-    connect(clipper, &ClipboardDevice::requestClipSet, this, [](QString text) {
-        QClipboard *cb = QGuiApplication::clipboard();
-        if (cb) {
-            cb->setText(text);
-        }
-    });
+
 
     shownFirstTime = true;
 
@@ -323,8 +352,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateRecentFileActions();
 
-    // SmartDevice & Printer
+    // -------------------------------------------------------
+    // DEVICE: Smart Device
+    // -------------------------------------------------------
     SmartDevice *smart = new SmartDevice(sio);
+    smart->setParent(nullptr);
+    smart->moveToThread(sio);
     sio->installDevice(SMART_CDEVIC, smart);
 
     textPrinterWindow = new TextPrinterWindow();
@@ -333,7 +366,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(textPrinterWindow, SIGNAL(closed()), this, SLOT(textPrinterWindowClosed()));
     connect(docDisplayWindow, SIGNAL(closed()), this, SLOT(docDisplayWindowClosed()));
 
+
+    // -------------------------------------------------------
+    // DEVICE: Printer (P:)
+    // -------------------------------------------------------
     Printer *printer = new Printer(sio);
+    printer->setParent(nullptr);
+    printer->moveToThread(sio);
+
     connect(printer, SIGNAL(print(QString)), textPrinterWindow, SLOT(print(QString)));
     sio->installDevice(PRINTER_BASE_CDEVIC, printer);
     setUpPrinterEmulationWidgets(aspeqtSettings->printerEmulation());
@@ -2103,6 +2143,8 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
         if (!ejectImage(deviceId)) return;
 
         TnfsImage *tnfs = new TnfsImage(sio);
+        tnfs->setParent(nullptr);   // Detach
+        tnfs->moveToThread(sio);    // Move to SIO Thread
         connect(tnfs, &TnfsImage::downloadProgress, this, &MainWindow::updateDownloadProgress);
 
         // Connect/Open the stream

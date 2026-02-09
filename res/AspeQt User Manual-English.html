@@ -251,11 +251,10 @@
 40 PRINT #1;"Hello from the 8-bit world!"
 50 PRINT #1;"This text was sent via AspeQt."
 60 CLOSE #1
-
 70 REM === READ FROM CLIPBOARD ===
 80 ? "Copy something on PC, then press Return."
 90 DIM A$(1):INPUT A$
-100 TRAP 140 :REM Catch EOF Error
+100 TRAP 150 :REM Catch EOF Error
 110 OPEN #1,4,0,"Y:"
 120 GET #1,B
 130 ? CHR$(B);

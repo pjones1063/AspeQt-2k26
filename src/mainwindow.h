@@ -97,7 +97,6 @@ private:
     QString lastMessage;
     int lastMessageRepeat;
     TnfsClient *tnfsClient;
-    ClipboardDevice *clipper;
     bool isClosing;
 
     QDialog *logWindow_;
