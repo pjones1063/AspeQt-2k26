@@ -5,6 +5,7 @@
 #include "bootoptionsdialog.h"
 #include "ui_bootoptionsdialog.h"
 #include "mainwindow.h"
+#include "aspeqtsettings.h"
 
 #include <QTranslator>
 #include <QDir>
@@ -20,11 +21,22 @@ BootOptionsDialog::BootOptionsDialog(const QString& bootFolderPath, QWidget *par
     bootFolderPath_(bootFolderPath),
     m_ui(new Ui::BootOptionsDialog)
 {
+
+
+
     Qt::WindowFlags flags = windowFlags();
     flags = flags & (~Qt::WindowContextHelpButtonHint);
     setWindowFlags(flags);
 
     m_ui->setupUi(this);
+
+    QString lastDos = aspeqtSettings->lastBootDos();
+    if (lastDos == ":/boot_templates/$bootata") m_ui->atariDOS->setChecked(true);
+    else if (lastDos == ":/boot_templates/$bootmyd") m_ui->myDOS->setChecked(true);
+    else if (lastDos == ":/boot_templates/$bootdxl") m_ui->dosXL->setChecked(true);
+    else if (lastDos == ":/boot_templates/$bootsma") m_ui->smartDOS->setChecked(true);
+    else if (lastDos == ":/boot_templates/$bootspa") m_ui->spartaDOS->setChecked(true);
+    else if (lastDos == ":/boot_templates/$bootpic") m_ui->myPicoDOS->setChecked(true);
 
     connect(m_ui->myPicoDOS, SIGNAL(toggled(bool)), this, SLOT(picoDOSToggled()));
 }
@@ -65,6 +77,7 @@ void BootOptionsDialog::accept()
         g_disablePicoHiSpeed = m_ui->disablePicoHiSpeed->isChecked();
     }
 
+
     // FIX: Do NOT prepend g_aspeQtAppPath.
     // The resource path (e.g. ":/boot_templates/...") is absolute in the Qt Resource System.
     bootDir = selectedDOS;
@@ -84,6 +97,8 @@ void BootOptionsDialog::accept()
     // FIX: Use the resource path directly
     dir.setPath(selectedDOS);
 
+    aspeqtSettings->setLastBootDos(selectedDOS);
+
     // Grab all files in that resource folder
     allFiles = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
 
@@ -94,6 +109,10 @@ void BootOptionsDialog::accept()
         }
     }
 
+    m_ui->disablePicoHiSpeed->setChecked(aspeqtSettings->disablePicoHiSpeed());
+    connect(m_ui->myPicoDOS, SIGNAL(toggled(bool)), this, SLOT(picoDOSToggled()));
+    picoDOSToggled();
+
     QDialog::accept();
 }
 
@@ -101,4 +120,7 @@ void BootOptionsDialog::picoDOSToggled()
 {
     bool enable = m_ui->myPicoDOS->isChecked();
     m_ui->disablePicoHiSpeed->setEnabled(enable);
+    if (!enable) {
+        m_ui->disablePicoHiSpeed->setChecked(false);
+    }
 }

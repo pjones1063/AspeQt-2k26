@@ -104,6 +104,9 @@ AspeQtSettings::AspeQtSettings()
     mExplorerOnTop = mSettings->value("ExplorerOnTop", false).toBool();
     mEnableShade = mSettings->value("EnableShadeByDefault", false).toBool();
     mRestoreTnfsLocation = mSettings->value("RestoreTnfsLocation", true).toBool();
+    mLastBootDos = mSettings->value("LastBootDos", ":/boot_templates/$bootmyd").toString();
+    mDisablePicoHiSpeed = mSettings->value("DisablePicoHiSpeed", false).toBool();
+
 }
 
 AspeQtSettings::~AspeQtSettings()
@@ -163,6 +166,8 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("ExplorerOnTop", mExplorerOnTop);
     s.setValue("EnableShadeByDefault", mEnableShade);
     s.setValue("RestoreTnfsLocation", mRestoreTnfsLocation);
+    s.setValue("LastBootDos", mLastBootDos);        // NEW
+    s.setValue("DisablePicoHiSpeed", mDisablePicoHiSpeed); // NEW
 
     s.endGroup();
     //
@@ -219,6 +224,9 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mExplorerOnTop = s.value("ExplorerOnTop", false).toBool();
     mEnableShade = s.value("EnableShadeByDefault", true).toBool();
     mRestoreTnfsLocation = s.value("RestoreTnfsLocation", true).toBool();
+    mLastBootDos = s.value("LastBootDos", ":/boot_templates/$bootmyd").toString(); // NEW
+    mDisablePicoHiSpeed = s.value("DisablePicoHiSpeed", false).toBool();      // NEW
+
     s.endGroup();
     //
     s.beginReadArray("MountedImageSettings");
@@ -849,4 +857,28 @@ void AspeQtSettings::setShadeOpacity(int val)
 int AspeQtSettings::shadeOpacity()
 {
     return mSettings->value("MainWindow/ShadeOpacity", 60).toInt();
+}
+
+//
+QString AspeQtSettings::lastBootDos()
+{
+    return mLastBootDos;
+}
+
+void AspeQtSettings::setLastBootDos(const QString &dos)
+{
+    mLastBootDos = dos;
+    // Only save to global settings if we aren't currently in a "Session"
+    if(mSessionFileName == "") mSettings->setValue("LastBootDos", mLastBootDos);
+}
+
+bool AspeQtSettings::disablePicoHiSpeed()
+{
+    return mDisablePicoHiSpeed;
+}
+
+void AspeQtSettings::setDisablePicoHiSpeed(bool disable)
+{
+    mDisablePicoHiSpeed = disable;
+    if(mSessionFileName == "") mSettings->setValue("DisablePicoHiSpeed", mDisablePicoHiSpeed);
 }

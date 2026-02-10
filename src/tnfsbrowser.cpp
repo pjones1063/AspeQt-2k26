@@ -109,8 +109,9 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
 
     // --- Initialize Path ---
     currentPath = "/";
+    m_activeHost = "";
 
-    // --- Auto-Navigate Logic ---
+        // --- Auto-Navigate Logic ---
     if (!initialUrl.isEmpty()) {
         QUrl qurl(initialUrl);
         QString host = qurl.host();
@@ -183,6 +184,11 @@ QIcon TnfsBrowser::getIcon(const QString &name)
 void TnfsBrowser::onConnect()
 {
     QString host = hostCombo->currentText();
+
+    if (!m_activeHost.isEmpty() && host != m_activeHost) {
+        currentPath = "/";
+    }
+    m_activeHost = host;
 
     // 1. Disable UI
     hostCombo->setEnabled(false);

@@ -195,12 +195,18 @@ public:
     bool restoreTnfsLocation();
     void setShadeOpacity(int val);
     int shadeOpacity();
+    QString lastBootDos();
+    void setLastBootDos(const QString &dos);
+    bool disablePicoHiSpeed();
+    void setDisablePicoHiSpeed(bool disable);
 
 private:
     QSettings *mSettings;
     void writeRecentImageSettings();
     bool mIsFirstTime;
     bool mRestoreTnfsLocation;
+    QString mLastBootDos;
+    bool mDisablePicoHiSpeed;
 
 
 

@@ -4,7 +4,7 @@ import threading
 
 # --- CONFIGURATION ---
 # Get an API key from - https://aistudio.google.com/
-API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxx"
+API_KEY = "xxxxxxxxxxxxxxxxxxxxxxx"
 client = genai.Client(api_key=API_KEY)
 
 app = Flask(__name__)

@@ -55,6 +55,7 @@ private:
     bool m_sortAscending;
     QString currentPath;
     QString selectedUrl;
+    QString m_activeHost;
     bool m_isFirstBatch;
 
     void refreshList();
