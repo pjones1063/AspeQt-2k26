@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/boot_templates/$bootspa">
+        <file alias="autorun.sys">boot_templates/$bootspa/autorun.sys</file>
         <file alias="x32.dos">boot_templates/$bootspa/x32.dos</file>
         <file alias="$boot.bin">boot_templates/$bootspa/$boot.bin</file>
     </qresource>
 
     <qresource prefix="/boot_templates/$bootdxl">
+        
         <file alias="dosxl.sys">boot_templates/$bootdxl/dosxl.sys</file>
         <file alias="dos.sys">boot_templates/$bootdxl/dos.sys</file>
         <file alias="menu.com">boot_templates/$bootdxl/menu.com</file>
@@ -12,12 +14,14 @@
     </qresource>
 
     <qresource prefix="/boot_templates/$bootsma">
+        <file alias="autorun.sys">boot_templates/$bootsma/autorun.sys</file>
         <file alias="dup.sys">boot_templates/$bootsma/dup.sys</file>
         <file alias="dos.sys">boot_templates/$bootsma/dos.sys</file>
         <file alias="$boot.bin">boot_templates/$bootsma/$boot.bin</file>
     </qresource>
 
     <qresource prefix="/boot_templates/$bootmyd">
+        <file alias="autorun.sys">boot_templates/$bootmyd/autorun.sys</file>
         <file alias="dup.sys">boot_templates/$bootmyd/dup.sys</file>
         <file alias="dos.sys">boot_templates/$bootmyd/dos.sys</file>
         <file alias="$boot.bin">boot_templates/$bootmyd/$boot.bin</file>
@@ -29,13 +33,12 @@
     </qresource>
 
     <qresource prefix="/boot_templates/$bootata">
+        <file alias="autorun.sys">boot_templates/$bootata/autorun.sys</file>
         <file alias="dup.sys">boot_templates/$bootata/dup.sys</file>
         <file alias="ramdisk.com">boot_templates/$bootata/ramdisk.com</file>
         <file alias="dos.sys">boot_templates/$bootata/dos.sys</file>
         <file alias="$boot.bin">boot_templates/$bootata/$boot.bin</file>
     </qresource>
-
- 
-
+    
 </RCC>
 

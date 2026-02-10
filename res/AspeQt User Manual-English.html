@@ -77,6 +77,14 @@
             font-size: 18px;
             font-weight: 600;
         }
+        
+        h4 {
+            color: #444;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
 
         p {
             margin-bottom: 15px;
@@ -156,6 +164,7 @@
             <a href="#tnfs">TNFS Client</a>
             <a href="#printer">Printer (P:)</a>
             <a href="#clipboard">Clipboard (Y:)</a>
+            <a href="#wdevice">Web Pipe (W:)</a>
         </div>
     </div>
 
@@ -169,6 +178,7 @@
             <li><b>TNFS Client</b> - Mount and stream disk images directly from the internet (FujiNet protocol).</li>
             <li><b>Printers (P:)</b> - Captures printed output to text or graphical view.</li>
             <li><b>Clipboard Bridge (Y:)</b> - Bi-directional copy/paste between PC and Atari.</li>
+            <li><b>Web Pipe (W:)</b> - Thin-client gateway for Python scripts and AI.</li>
             <li><b>Cassette (C:)</b> - Load CAS files via SIO audio.</li>
         </ul>
 
@@ -261,6 +271,140 @@
 140 GOTO 120
 150 CLOSE #1
 160 ? "Done."
+        </div>
+
+        <a name="wdevice"></a>
+        <h2>The W: Device (Web Pipe)</h2>
+        <p>The <b>W:</b> device transforms the Atari 8-bit into a "Thin Client" capable of interacting with modern web services. Instead of implementing complex network stacks (TCP/IP, SSL) on the Atari, the <b>W:</b> device acts as a transparent proxy. It forwards standard BASIC text commands to a backend script running on your PC via HTTP.</p>
+
+        <h3>How It Works</h3>
+        <p>The device operates using standard Atari I/O commands:</p>
+        <ul>
+            <li><b>Write Mode (HTTP POST):</b> Opening W: for write allows you to buffer data. When you CLOSE the channel, AspeQt sends the buffered data as an HTTP POST request to the specified URL.</li>
+            <li><b>Read Mode (HTTP GET):</b> Opening W: for read immediately performs an HTTP GET request to the URL. Subsequent INPUT commands retrieve the server's response.</li>
+        </ul>
+
+        <h3>Running the Handler</h3>
+        <p>To enable the W: and Y: devices, you must first load the handler into memory.</p>
+        <ul>
+            <li><b>Manual Loading:</b> From the DOS menu, select option <b>L</b> (Binary Load) and type <span class="code-snippet">HANDLER.XEX</span>.</li>
+            <li><b>Automatic Loading:</b> Rename <span class="code-snippet">HANDLER.XEX</span> to <span class="code-snippet">AUTORUN.SYS</span> on your boot disk. This ensures the network drivers load automatically every time you turn on the computer.</li>
+        </ul>
+
+        <h3>Code Example: The "Hello World" Loop</h3>
+        <p>This example demonstrates sending data to a Python script and reading the response.</p>
+
+        <h4>1. Atari BASIC (The Frontend)</h4>
+        <div class="code-block">
+10 DIM U$(40), MSG$(40), REPLY$(40)
+20 U$="W:http://192.168.1.5:5000/atari"
+30 MSG$="HELLO FROM 1979"
+
+40 REM --- STEP 1: SEND DATA (POST) ---
+50 OPEN #1,8,0,U$       : REM Open for Write
+60 PRINT #1;MSG$        : REM Send the message
+70 CLOSE #1             : REM Trigger the Network Request
+
+80 REM --- STEP 2: READ RESPONSE (GET) ---
+90 OPEN #1,4,0,U$       : REM Open for Read
+100 INPUT #1,REPLY$     : REM Read text from PC
+110 PRINT "SERVER SAID: ";REPLY$
+120 CLOSE #1
+        </div>
+
+        <h4>2. Python/Flask (The Backend)</h4>
+        <div class="code-block">
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/atari', methods=['GET', 'POST'])
+def handle_atari():
+    if request.method == 'POST':
+        # Receive text from Atari
+        data = request.data.decode('utf-8')
+        print(f"Atari sent: {data}")
+        return "OK"
+    else:
+        # Send text to Atari
+        return "MESSAGE RECEIVED LOUD AND CLEAR"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+        </div>
+
+        <h3>Application Examples Library</h3>
+        <p>This library contains a collection of "Hybrid Computing" examples that demonstrate the power of the W: Device. These examples offload heavy processing (AI, Web Scraping, SSL, Speech Synthesis) to a modern PC (Host) while using the Atari 8-bit as the frontend terminal.</p>
+
+        <h4>General Prerequisites</h4>
+        <p>For all examples below, you must have:</p>
+        <ul>
+            <li><b>Python 3.x</b> installed on your Host PC.</li>
+            <li><b>Flask</b> installed (<span class="code-snippet">pip install flask</span>).</li>
+            <li>The <b>PC's IP Address</b> configured in the BASIC .LST files.</li>
+        </ul>
+
+        <h4>1. Gemini AI Chatbot</h4>
+        <p>Turns the Atari into a client for Google's Gemini Large Language Model. You can type natural language questions ("Who is Captain Kirk?") and receive intelligent, summarized answers on the Atari screen.</p>
+        <ul>
+            <li><b>BASIC File:</b> GEMINI_AI.LST</li>
+            <li><b>Python Script:</b> gemini_ai.py</li>
+            <li><b>Dependencies:</b> <span class="code-snippet">pip install google-generativeai</span></li>
+        </ul>
+
+        <h4>2. Basic Graphical Weather Station</h4>
+        <p>Fetches live weather data from the Open-Meteo API for a specific location and displays it on the Atari using GRAPHICS 5 (4-color mode).</p>
+        <ul>
+            <li><b>BASIC File:</b> WEATHER.LST</li>
+            <li><b>Python Script:</b> weather.py</li>
+            <li><b>Dependencies:</b> <span class="code-snippet">pip install requests</span></li>
+        </ul>
+
+        <h4>3. Cloud Notepad</h4>
+        <p>Demonstrates Reading and Writing to the PC's hard drive. It acts as a "Cloud Drive" for text.</p>
+        <ul>
+            <li><b>BASIC File:</b> CLOUD_NOTE.LST</li>
+            <li><b>Python Script:</b> cloud_note.py</li>
+        </ul>
+
+        <h4>4. Text-to-Speech Synthesizer</h4>
+        <p>The "Talking Atari." Any text typed on the Atari is sent to the PC, where it is read aloud using the Linux espeak engine.</p>
+        <ul>
+            <li><b>BASIC File:</b> TTS_SERVER.LST</li>
+            <li><b>Python Script:</b> tts_server.py</li>
+            <li><b>Dependencies:</b> <span class="code-snippet">sudo apt install espeak</span> (Linux)</li>
+        </ul>
+
+        <h4>5. Web News Scraper</h4>
+        <p>Connects to a modern news website, scrapes the HTML, strips out ads/javascript, and delivers a plain-text headline summary to the Atari.</p>
+        <ul>
+            <li><b>BASIC File:</b> SCRAPER.LST</li>
+            <li><b>Python Script:</b> scraper.py</li>
+            <li><b>Dependencies:</b> <span class="code-snippet">pip install requests beautifulsoup4</span></li>
+        </ul>
+
+        <h4>6. Remote Execution (Linux & Windows)</h4>
+        <p>Allows the Atari to execute shell commands or launch GUI applications on the Host PC.</p>
+        <ul>
+            <li><b>BASIC Files:</b> EXEC_LINUX.LST / EXEC_WIN.LST</li>
+            <li><b>Python Scripts:</b> exec_linux.py / exec_win.py</li>
+        </ul>
+
+        <h4>7. File Upload / Telemetry</h4>
+        <p>A utility to upload raw data or text files from the Atari to the PC.</p>
+        <ul>
+            <li><b>BASIC File:</b> FILE_UPLOAD.LST</li>
+            <li><b>Python Script:</b> file_upload.py</li>
+        </ul>
+
+        <h4>Quick Dependency Install</h4>
+        <div class="code-block">
+# Linux/Mac
+sudo apt install espeak
+pip install flask requests beautifulsoup4 google-generativeai psutil
+
+# Windows
+pip install flask requests beautifulsoup4 google-generativeai psutil
         </div>
 
     </div>
