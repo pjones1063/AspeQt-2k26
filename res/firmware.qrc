@@ -6,15 +6,12 @@
     </qresource>
 
     <qresource prefix="/boot_templates/$bootdxl">
-        
         <file alias="dosxl.sys">boot_templates/$bootdxl/dosxl.sys</file>
         <file alias="dos.sys">boot_templates/$bootdxl/dos.sys</file>
-        <file alias="menu.com">boot_templates/$bootdxl/menu.com</file>
         <file alias="$boot.bin">boot_templates/$bootdxl/$boot.bin</file>
     </qresource>
 
     <qresource prefix="/boot_templates/$bootsma">
-        <file alias="autorun.sys">boot_templates/$bootsma/autorun.sys</file>
         <file alias="dup.sys">boot_templates/$bootsma/dup.sys</file>
         <file alias="dos.sys">boot_templates/$bootsma/dos.sys</file>
         <file alias="$boot.bin">boot_templates/$bootsma/$boot.bin</file>
@@ -33,7 +30,6 @@
     </qresource>
 
     <qresource prefix="/boot_templates/$bootata">
-        <file alias="autorun.sys">boot_templates/$bootata/autorun.sys</file>
         <file alias="dup.sys">boot_templates/$bootata/dup.sys</file>
         <file alias="ramdisk.com">boot_templates/$bootata/ramdisk.com</file>
         <file alias="dos.sys">boot_templates/$bootata/dos.sys</file>

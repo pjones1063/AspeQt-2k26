@@ -1,16 +1,17 @@
 /*
  * pipenetwork.h
- * Network Streaming Device (N:) for AspeQt
+ * Network Streaming Device (W:) for AspeQt
  */
 
 #ifndef PIPENETWORK_H
 #define PIPENETWORK_H
 
-#include "sioworker.h" // <--- User requested change
+#include "sioworker.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QEventLoop>
 #include <QTimer>
+#include <QProcess> // Added for system curl support (FTP)
 
 class PipeNetwork : public SioDevice
 {
@@ -24,6 +25,7 @@ public:
 private:
     QNetworkAccessManager *m_manager;
     QNetworkReply *m_reply;
+    QProcess *m_process; // Helper process for protocols Qt6 dropped (FTP)
 
     // Circular-ish buffer for incoming stream data
     QByteArray m_rxBuffer;

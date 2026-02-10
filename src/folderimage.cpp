@@ -326,10 +326,10 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                 entry[0] = 0x42;
                 QFileInfo info = atariFiles[i].original;;
                 
-                // If it is our injected resource, get size correctly
-                if (atariFiles[i].longName == "DOS.SYS") info.setFile(":/boot_templates/$bootmyd/dos.sys");
-                if (atariFiles[i].longName == "DUP.SYS") info.setFile(":/boot_templates/$bootmyd/dup.sys");
-                if (atariFiles[i].longName == "AUTORUN.SYS") info.setFile(":/boot_templates/$bootmyd/autorun.sys");
+                //  ---  If it is our injected resource, get size correctly ** FIX - remove hard coding **
+                // if (atariFiles[i].longName == "DOS.SYS") info.setFile(":/boot_templates/$bootmyd/dos.sys");
+                // if (atariFiles[i].longName == "DUP.SYS") info.setFile(":/boot_templates/$bootmyd/dup.sys");
+                // if (atariFiles[i].longName == "AUTORUN.SYS") info.setFile(":/boot_templates/$bootmyd/autorun.sys");
 
                 int size = (info.size() + 124) / 125;
                 // FIX: Increased limit from 999 to 65535 to support large files (>125KB)
@@ -367,9 +367,9 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
 
             // --- INJECTION HANDLING ---
             QString loadPath = atariFiles[atariFileNo].original.absoluteFilePath();
-            if (atariFiles[atariFileNo].longName == "DOS.SYS") loadPath = ":/boot_templates/$bootmyd/dos.sys";
-            if (atariFiles[atariFileNo].longName == "DUP.SYS") loadPath = ":/boot_templates/$bootmyd/dup.sys";
-            if (atariFiles[atariFileNo].longName == "AUTORUN.SYS") loadPath = ":/boot_templates/$bootmyd/autorun.sys";
+            // if (atariFiles[atariFileNo].longName == "DOS.SYS") loadPath = ":/boot_templates/$bootmyd/dos.sys";
+            // if (atariFiles[atariFileNo].longName == "DUP.SYS") loadPath = ":/boot_templates/$bootmyd/dup.sys";
+            // if (atariFiles[atariFileNo].longName == "AUTORUN.SYS") loadPath = ":/boot_templates/$bootmyd/autorun.sys";
             // --------------------------
 
             QFile file(loadPath);
@@ -395,10 +395,10 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
 
     /* Rest of the file sectors */
         if ((sector >= 433 && sector <= 1023)) {
-            QString loadPath = atariFiles[atariFileNo].original.absoluteFilePath();
-            if (atariFiles[atariFileNo].longName == "DOS.SYS") loadPath = ":/boot_templates/$bootmyd/dos.sys";
-            if (atariFiles[atariFileNo].longName == "DUP.SYS") loadPath = ":/boot_templates/$bootmyd/dup.sys";
-            if (atariFiles[atariFileNo].longName == "AUTORUN.SYS") loadPath = ":/boot_templates/$bootmyd/autorun.sys";
+            QString loadPath = atariFiles[atariFileNo].original.absoluteFilePath();   // ** FIX ** - remove hard coding
+            // if (atariFiles[atariFileNo].longName == "DOS.SYS") loadPath = ":/boot_templates/$bootmyd/dos.sys";
+            // if (atariFiles[atariFileNo].longName == "DUP.SYS") loadPath = ":/boot_templates/$bootmyd/dup.sys";
+            // if (atariFiles[atariFileNo].longName == "AUTORUN.SYS") loadPath = ":/boot_templates/$bootmyd/autorun.sys";
 
             QFile file(loadPath);
             if (!file.open(QFile::ReadOnly)) {

@@ -333,6 +333,45 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
         </div>
 
+        <h3>Native FTP Support (GET & PUT)</h3>
+        <p>AspeQt-2k26 includes a built-in bridge to the <b>FTP protocol</b>. This allows your Atari to download files, read directory listings, and upload data directly to FTP servers without needing a PC-side Python script.</p>
+        
+        <div class="note">
+            <b>Prerequisite:</b> This feature requires the <b>curl</b> utility to be installed on your Host PC (Windows/Linux/Mac) and available in the system PATH.
+        </div>
+
+        <h4>1. Reading Files & Directory Listings (GET)</h4>
+        <p>To read a file or view a directory, simply open the W: device with an <span class="code-snippet">ftp://</span> URL in Read mode (4).</p>
+        <ul>
+            <li><b>Files:</b> Text files are streamed to the Atari. Unix Line Feeds (<span class="code-snippet">\n</span>) are automatically converted to Atari EOLs (<span class="code-snippet">$9B</span>).</li>
+            <li><b>Directories:</b> If the URL ends in a slash (<span class="code-snippet">/</span>), AspeQt returns a directory listing.</li>
+        </ul>
+
+        <div class="code-block">
+10 DIM U$(60), L$(120)
+20 REM --- PUBLIC FTP EXAMPLE ---
+30 U$="W:ftp://ftp.funet.fi/pub/atari/README"
+40 OPEN #1,4,0,U$
+50 TRAP 90
+60 INPUT #1,L$
+70 PRINT L$
+80 GOTO 60
+90 CLOSE #1
+100 PRINT "--- EOF ---"
+        </div>
+
+        <h4>2. Uploading Files (PUT)</h4>
+        <p>To upload data, open the W: device in Write mode (8). You must provide valid credentials in the URL if the server requires them.</p>
+
+        <div class="code-block">
+10 DIM U$(80)
+20 REM --- UPLOAD WITH CREDENTIALS ---
+30 U$="W:ftp://user:password@192.168.1.50/upload.txt"
+40 OPEN #1,8,0,U$
+50 PRINT #1;"This text is being uploaded from an Atari 8-bit!"
+60 CLOSE #1 : REM Upload starts immediately on CLOSE
+        </div>
+
         <h3>Application Examples Library</h3>
         <p>This library contains a collection of "Hybrid Computing" examples that demonstrate the power of the W: Device. These examples offload heavy processing (AI, Web Scraping, SSL, Speech Synthesis) to a modern PC (Host) while using the Atari 8-bit as the frontend terminal.</p>
 

@@ -8,6 +8,7 @@
 
 #include <QTranslator>
 #include <QDir>
+#include <QtDebug> // Added for debug output if needed
 
 extern QString g_aspeQtAppPath;
 extern bool g_disablePicoHiSpeed;
@@ -53,6 +54,7 @@ void BootOptionsDialog::accept()
     QStringList allFiles;
     QString fileName;
 
+    // 1. Determine which Internal Resource to use
     if(m_ui->atariDOS->isChecked()) selectedDOS = ":/boot_templates/$bootata";
     if(m_ui->myDOS->isChecked()) selectedDOS = ":/boot_templates/$bootmyd";
     if(m_ui->dosXL->isChecked()) selectedDOS = ":/boot_templates/$bootdxl";
@@ -63,23 +65,33 @@ void BootOptionsDialog::accept()
         g_disablePicoHiSpeed = m_ui->disablePicoHiSpeed->isChecked();
     }
 
-    bootDir = g_aspeQtAppPath + "/" + selectedDOS;
+    // FIX: Do NOT prepend g_aspeQtAppPath.
+    // The resource path (e.g. ":/boot_templates/...") is absolute in the Qt Resource System.
+    bootDir = selectedDOS;
 
-    // First delete existing boot files in the Folder Image
-    // then copy new boot files from the appropriate DOS directory
-
+    // 2. First delete existing boot files in the physical Folder Image
     dir.setPath(bootFolderPath_);
     filters << "*dos.sys" << "dup.sys" << "dosxl.sys"
             << "autorun.sys" << "ramdisk.com" << "menu.com"
             << "startup.exc" << "x*.dos" << "startup.bat" << "$*.bin";
-    allFiles =  dir.entryList(filters, QDir::Files);
+
+    allFiles = dir.entryList(filters, QDir::Files);
     foreach(fileName, allFiles) {
         file.remove(bootFolderPath_ + "/" + fileName);
     }
-    dir.setPath(g_aspeQtAppPath + "/" + selectedDOS);
-    allFiles =  dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
+
+    // 3. Now copy new boot files from the internal Resource to the physical folder
+    // FIX: Use the resource path directly
+    dir.setPath(selectedDOS);
+
+    // Grab all files in that resource folder
+    allFiles = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
+
     foreach(fileName, allFiles) {
-        file.copy(dir.path() + "/" + fileName, bootFolderPath_ + "/" + fileName);
+        // Copy: Source (Resource) -> Dest (Physical Folder)
+        if (!file.copy(dir.path() + "/" + fileName, bootFolderPath_ + "/" + fileName)) {
+            qWarning() << "Failed to copy boot file:" << fileName;
+        }
     }
 
     QDialog::accept();
