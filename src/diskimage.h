@@ -7,6 +7,8 @@
 
 #include <QFile>
 #include <QTemporaryFile>
+#include <QMutex>               // <--- [1] Include QMutex
+#include <QMutexLocker>         // <--- [2] Include QMutexLocke
 
 #include "sioworker.h"
 #include "miscutils.h"
@@ -46,6 +48,7 @@ public:
     inline uint totalSize() const {return m_totalSize;}
     QByteArray toPercomBlock();
     QString humanReadable() const;
+
 };
 
 class SimpleDiskImage: public SioDevice
@@ -55,9 +58,11 @@ class SimpleDiskImage: public SioDevice
 public:
     void setHappyMode(bool enabled) { m_happyModeEnabled = enabled; }
     bool isHappyMode() const { return m_happyModeEnabled; }
+    void setModified(bool modified);
 
 protected:
     bool m_happyModeEnabled = false; // Add to the protected members section
+      mutable QMutex m_ioMutex;
 
 public:
     SimpleDiskImage(SioWorker *worker);
@@ -70,7 +75,8 @@ public:
     bool save();
     bool saveAs(const QString &fileName);
     virtual inline bool isOpen() const {return file.isOpen();}
-    inline bool isReadOnly() const {return m_isReadOnly;}
+//    inline bool isReadOnly() const {return m_isReadOnly;}
+    inline bool isReadOnly() const { return false; }
     inline void setReadOnly(bool readOnly) {m_isReadOnly = readOnly;}
     inline bool isModified() const {return m_isModified;}
     inline bool isUnmodifiable() const {return m_isUnmodifiable;}

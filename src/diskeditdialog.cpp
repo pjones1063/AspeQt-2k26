@@ -155,6 +155,12 @@ bool MyModel::setData(const QModelIndex &index, const QVariant &value, int role)
             entry.atariName = s.toLatin1();
             entries[index.row()] = entry;
             emit dataChanged(index, index);
+
+            if (fileSystem && fileSystem->image()) {
+                SimpleDiskImage* img = qobject_cast<SimpleDiskImage*>(fileSystem->image());
+                if (img) img->setModified(true);
+            }
+
             return true;
         } else {
             return false;
@@ -216,7 +222,9 @@ void MyModel::deleteFiles(QModelIndexList indexes)
         }
     }
 
-    fileSystem->deleteRecursive(selectedEntries);
+    if (!fileSystem->deleteRecursive(selectedEntries)) {
+        QMessageBox::critical(0, tr("Error"), tr("Could not delete files. (Is this file system supported?)"));
+    }
 
     emit layoutAboutToBeChanged();
     while (!l.isEmpty()) {
@@ -371,17 +379,29 @@ void MyModel::setRoot()
     emit layoutChanged();
 }
 
-void MyModel::insertFiles(QStringList names)
+
+int MyModel::insertFiles(QStringList names)
 {
     if (names.isEmpty()) {
-        return;
+        return 0;
     }
 
     int dir = dirs.last();
 
+    // 1. Capture the result first
+    QList<AtariDirEntry> newEntries = fileSystem->insertRecursive(dir, names);
+
+    // 2. Check for failure (SpartaDOS or Full Disk)
+    if (newEntries.isEmpty()) {
+        QMessageBox::warning(0, tr("Error"), tr("Could not insert files.\n\nPossible causes:\n- File system not supported (e.g. SpartaDOS)\n- Disk is full\n- File name invalid"));
+        return 0;
+    }
+
     emit layoutAboutToBeChanged();
-    entries.append(fileSystem->insertRecursive(dir, names));
+    entries.append(newEntries); // 3. Only append if we have data
     emit layoutChanged();
+
+    return newEntries.count();
 }
 
 bool MyModel::dropMimeData(const QMimeData *data, Qt::DropAction /*action*/, int /*row*/, int /*column*/, const QModelIndex &/*parent*/)
@@ -640,6 +660,8 @@ void DiskEditDialog::on_actionDeleteSelectedFiles_triggered()
     QModelIndexList indexes = m_ui->aView->selectionModel()->selectedRows();
     model->deleteFiles(indexes);
     m_ui->aView->selectionModel()->clearSelection();
+
+    if (m_disk) m_disk->setModified(true);
 }
 
 void DiskEditDialog::on_actionAddFiles_triggered()
@@ -648,8 +670,14 @@ void DiskEditDialog::on_actionAddFiles_triggered()
     if (files.empty()) {
         return;
     }
-    model->insertFiles(files);
+
+    // CHANGE THIS BLOCK:
+    // Only flag as modified if files were actually added (> 0)
+    if (model->insertFiles(files) > 0) {
+        if (m_disk) m_disk->setModified(true);
+    }
 }
+
 
 // 
 void DiskEditDialog::on_actionPrint_triggered()

@@ -93,13 +93,14 @@ void DriveWidget::updateFromImage(SimpleDiskImage *diskImage)
     bool enableEdit = diskImage->editDialog() != NULL;
     ui->actionEditDisk->setChecked(enableEdit);
 
+    // --- FIX: ALWAYS ENABLE SAVE ---
+    // Do not check !modified. Always allow the user to click Save.
+    ui->actionSave->setEnabled(true);
+    // -------------------------------
 
-    // Update save/revert
-    bool modified = diskImage->isModified();
-    ui->actionSave->setEnabled(!modified);
-    ui->actionRevert->setEnabled(!modified);
+    ui->actionRevert->setEnabled(diskImage->isModified());
 
-    // This was not set in default image mounted!
+    // Ensure visual feedback matches the forced writable state
     ui->actionWriteProtect->setChecked(diskImage->isReadOnly());
     ui->actionWriteProtect->setEnabled(!diskImage->isUnmodifiable());
 }
@@ -171,7 +172,10 @@ void DriveWidget::showAsImageMounted(const QString &fileName, const QString &des
 
     if(driveNo_ == 0) ui->actionBootOption->setEnabled(false);
 
-    ui->actionSave->setEnabled(enableSave);
+    //ui->actionSave->setEnabled(enableSave);
+    // --- FIX: ALWAYS ENABLE SAVE ---
+    ui->actionSave->setEnabled(true);
+    // -------------------------------
     ui->actionRevert->setEnabled(enableSave);
 }
 
@@ -235,6 +239,15 @@ void DriveWidget::setIconSize(const QSize &size)
     ui->buttonEject->setIconSize(size);
 }
 
+void DriveWidget::on_actionAutoSave_toggled(bool state) {
+    // --- FIX: DO NOT DISABLE SAVE BUTTON ---
+    // Ensure button stays enabled
+    if (ui->labelFileName->text().length() > 0) {
+        ui->actionSave->setEnabled(true);
+    }
+    emit actionAutoSave(driveNo_, state);
+}
+
 void DriveWidget::on_actionMountFolder_triggered()  { emit actionMountFolder(driveNo_); }
 void DriveWidget::on_actionMountDisk_triggered()    { emit actionMountDisk(driveNo_); }
 void DriveWidget::on_actionEject_triggered()        { emit actionEject(driveNo_); }
@@ -243,7 +256,7 @@ void DriveWidget::on_actionEditDisk_triggered()     { emit actionEditDisk(driveN
 void DriveWidget::on_actionSave_triggered()         { emit actionSave(driveNo_); }
 void DriveWidget::on_actionRevert_triggered()       { emit actionRevert(driveNo_); }
 void DriveWidget::on_actionSaveAs_triggered()       { emit actionSaveAs(driveNo_); }
-void DriveWidget::on_actionAutoSave_toggled(bool state) { emit actionAutoSave(driveNo_, state); }
+
 void DriveWidget::on_actionBootOption_triggered()   { emit actionBootOptions(driveNo_); }
 void DriveWidget::on_actionHappyMode_toggled(bool state) {  emit actionHappyMode(driveNo_, state); }
 void DriveWidget::setHappyMode(bool enabled) { ui->buttonHappyMode->setChecked(enabled); }

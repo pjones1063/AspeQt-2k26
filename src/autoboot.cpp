@@ -344,9 +344,9 @@ bool AutoBoot::open(const QString &fileName, bool highSpeed)
     QFile boot;
 
     if (highSpeed) {
-        boot.setFileName(":/binaries/atari/autoboot/autoboot-hispeed.bin");
+        boot.setFileName(":/binaries/autoboot-hispeed.bin");
     } else {
-        boot.setFileName(":/binaries/atari/autoboot/autoboot.bin");
+        boot.setFileName(":/binaries/autoboot.bin");
     }
 
     if (!boot.open(QFile::ReadOnly)) {

@@ -13,6 +13,10 @@
 
 #include <QtDebug>
 
+#ifdef Q_OS_LINUX
+#include <unistd.h>
+#endif
+
 /* DiskGeometry */
 
 DiskGeometry::DiskGeometry()
@@ -433,7 +437,7 @@ bool SimpleDiskImage::openAtr(const QString &fileName)
     // Update the image information
     m_geometry.initialize(geometry);
     refreshNewGeometry();
-    m_isReadOnly = sourceFile->isWritable();
+    m_isReadOnly = false;
     m_originalFileName = fileName;
     m_originalFileHeader = header;
     m_isModified = repaired;
@@ -443,6 +447,8 @@ bool SimpleDiskImage::openAtr(const QString &fileName)
     delete sourceFile;
     return true;
 }
+
+
 
 bool SimpleDiskImage::openXfd(const QString &fileName)
 {
@@ -502,7 +508,7 @@ bool SimpleDiskImage::openXfd(const QString &fileName)
     m_geometry.initialize(size);
     refreshNewGeometry();
     m_originalFileHeader = QByteArray(16, 0);
-    m_isReadOnly = sourceFile->isWritable();
+    m_isReadOnly = false;
     m_originalFileName = fileName;
     m_isModified = false;
     m_isUnmodifiable = false;
@@ -531,7 +537,10 @@ bool SimpleDiskImage::openDi(const QString &fileName)
 }
 
 bool SimpleDiskImage::saveAtr(const QString &fileName)
+
 {
+    QMutexLocker locker(&m_ioMutex);
+
     if (m_originalFileHeader.size() != 16) {
         m_originalFileHeader = QByteArray(16, 0);
     }
@@ -573,6 +582,13 @@ bool SimpleDiskImage::saveAtr(const QString &fileName)
         delete outputFile;
         return false;
     }
+
+    // --- FIX: FLUSH BUFFERS ---
+    file.flush();
+#ifdef Q_OS_LINUX
+    fsync(file.handle());
+#endif
+
 
     // Try to copy the temporary file back
     if (!file.reset()) {
@@ -1089,6 +1105,7 @@ void SimpleDiskImage::refreshNewGeometry()
 
 bool SimpleDiskImage::format(const DiskGeometry &geo)
 {
+    QMutexLocker locker(&m_ioMutex);
     if ((!file.resize(0)) || (!file.resize(geo.totalSize()))) {
         qCritical() << "!e" << tr("[%1] Cannot format: %2")
                        .arg(deviceName())
@@ -1140,6 +1157,9 @@ bool SimpleDiskImage::seekToSector(quint16 sector)
 
 bool SimpleDiskImage::readSector(quint16 sector, QByteArray &data)
 {
+
+    QMutexLocker locker(&m_ioMutex);
+
     if (!seekToSector(sector)) {
         return false;
     }
@@ -1156,6 +1176,8 @@ bool SimpleDiskImage::readSector(quint16 sector, QByteArray &data)
 
 bool SimpleDiskImage::writeSector(quint16 sector, const QByteArray &data)
 {
+    QMutexLocker locker(&m_ioMutex);
+
     if (!seekToSector(sector)) {
         return false;
     }
@@ -1170,6 +1192,7 @@ bool SimpleDiskImage::writeSector(quint16 sector, const QByteArray &data)
                        .arg(file.errorString());
         return false;
     }
+    file.flush();
     return true;
 }
 
@@ -1229,5 +1252,14 @@ int SimpleDiskImage::defaultFileSystem()
                 return 0;
             }
         }
+    }
+}
+
+void SimpleDiskImage::setModified(bool modified)
+{
+    if (m_isModified != modified) {
+        m_isModified = modified;
+        // Notify the UI (MainWindow) that the status has changed
+        emit statusChanged(m_deviceNo);
     }
 }

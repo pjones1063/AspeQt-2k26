@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/binaries">
-        <file>atari/autoboot/autoboot-hispeed.bin</file>
-        <file>atari/autoboot/autoboot.bin</file>
+        <file alias="autoboot-hispeed.bin">boot_templates/autoboot/autoboot-hispeed.bin</file>
+        <file alias="autoboot.bin">boot_templates/autoboot/autoboot.bin</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

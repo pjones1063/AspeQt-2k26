@@ -1669,14 +1669,19 @@ void MainWindow::loadTranslators()
     }
 }
 
+
+/* mainwindow.cpp - saveDisk */
 void MainWindow::saveDisk(int no)
 {
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
+    // --- FIX: USE CORRECT OFFSET FOR SioDevice ---
+    SioDevice *device = sio->getDevice(no + DISK_BASE_CDEVIC);
+    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (device);
 
-    // --- SAFETY CHECK ---
     if (!img) return;
-    SioDevice *device = sio->getDevice(no);
+
+    // Check if it is TNFS
     if (qobject_cast<TnfsImage*>(device))  return;
+    // ---------------------------------------------
 
     if (img->isUnnamed()) {
         saveDiskAs(no);
@@ -1686,7 +1691,7 @@ void MainWindow::saveDisk(int no)
         img->unlock();
         if (!saved) {
             if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
-                .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
+                                                                   .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
                 saveDiskAs(no);
             }
         }

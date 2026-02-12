@@ -42,7 +42,7 @@ public:
     void setFileSystem(AtariFileSystem *aFileSystem);
     QMimeData* mimeData(const QModelIndexList &indexes) const;
     QStringList mimeTypes() const;
-    void insertFiles(QStringList names);
+    int insertFiles(QStringList names);
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
     inline bool isRoot() const {return dirs.count() == 1;}
     inline QString currentPath() const {return m_currentPath;}

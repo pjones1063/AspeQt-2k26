@@ -212,7 +212,7 @@ bool TnfsImage::openUrl(const QString &url)
 {
     // Load the internal AspeQt loader binary
     // Try High Speed first if available, otherwise standard
-    QFile boot(":/binaries/atari/autoboot/autoboot.bin");
+    QFile boot(":/binaries/autoboot.bin");
 
     if (!boot.open(QFile::ReadOnly)) {
         qCritical() << "!e" << "TNFS: Missing internal resource 'autoboot.bin'!";
