@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/documentation">
+        <file>license.txt</file>
+        <file>about.html</file>
+        <file>AspeQt User Manual-English.html</file>
+    </qresource>
+</RCC>

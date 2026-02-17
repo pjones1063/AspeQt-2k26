@@ -1,0 +1,20 @@
+10 DIM U$(40)
+20 U$="W:http://127.0.0.1:5000/file"
+30 GRAPHICS 0 : PRINT "DOWNLOADING testfile.txt..."
+
+40 REM --- TRAP EOF (Error 136) ---
+50 TRAP 120
+
+60 REM --- OPEN CONNECTION ---
+70 OPEN #1,4,0,U$
+
+80 REM --- READ & PRINT LOOP ---
+90 GET #1,A
+100 ? CHR$(A);
+110 GOTO 90
+
+120 REM --- EOF / CLEANUP ---
+130 CLOSE #1
+140 PRINT : PRINT "--- DONE ---"
+150 END
+
