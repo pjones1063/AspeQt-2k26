@@ -466,17 +466,18 @@ void MainWindow::createDeviceWidgets()
 
 
         // Connect existing signals to slots
+        // [FIX 1] Corrected Slot Name: on_actionSave -> on_actionSave_triggered
+        connect(deviceWidget, SIGNAL(actionSave(int)), this, SLOT(on_actionSave_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionAutoSave(int,bool)), this, SLOT(on_actionAutoSave_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionRevert(int)), this, SLOT(on_actionRevert_triggered(int)));
+
         connect(deviceWidget, SIGNAL(actionMountDisk(int)), this, SLOT(on_actionMountDisk_triggered(int)));
         connect(deviceWidget, SIGNAL(actionMountFolder(int)), this, SLOT(on_actionMountFolder_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionAutoSave(int)), this, SLOT(on_actionAutoSave_triggered(int)));
         connect(deviceWidget, SIGNAL(actionEject(int)), this, SLOT(on_actionEject_triggered(int)));
         connect(deviceWidget, SIGNAL(actionWriteProtect(int,bool)), this, SLOT(on_actionWriteProtect_triggered(int,bool)));
         connect(deviceWidget, SIGNAL(actionEditDisk(int)), this, SLOT(on_actionEditDisk_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionSave(int)), this, SLOT(on_actionSave(int)));
-        connect(deviceWidget, SIGNAL(actionRevert(int)), this, SLOT(on_actionRevert(int)));
         connect(deviceWidget, SIGNAL(actionSaveAs(int)), this, SLOT(on_actionSaveAs_triggered(int)));
         connect(deviceWidget, SIGNAL(actionBootOptions(int)), this, SLOT(on_actionBootOption_triggered()));
-
         connect(this, SIGNAL(setFont(const QFont&)), deviceWidget, SLOT(setFont(const QFont&)));
         connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(on_actionHappyMode_triggered(int,bool)));
     }

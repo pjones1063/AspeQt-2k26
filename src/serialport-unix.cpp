@@ -461,6 +461,22 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             data = readDataFrame(4, false);
 
             if (!data.isEmpty()) {
+
+
+                // Filter: If the command is for a device we don't emulate, ignore it (likely noise)
+                bool validDevice = false;
+                for(int i=0; i < mSioDevices.size(); i++) {
+                    if (data.at(0) == mSioDevices[i]) {
+                        validDevice = true;
+                        break;
+                    }
+                }
+                if (!validDevice) {
+                    data.clear();
+                    continue; // Loop again, don't return this garbage
+                }
+
+
                 if(mMethod != HANDSHAKE_NO_HANDSHAKE)
                 {
                     // wait for command line to go off
@@ -483,14 +499,14 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             } else {
                 retries++;
                 totalRetries++;
-                if (retries == 2) {
+                  if (retries == 2) {
                     retries = 0;
                     if (mHighSpeed) {
                         setNormalSpeed();
                     } else {
                         setHighSpeed();
-                    }
-                }
+                     }
+                 }
             }
     //    } while (totalRetries < 100);
         } while (1);

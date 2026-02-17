@@ -190,25 +190,51 @@ void TnfsBrowser::onConnect()
     }
     m_activeHost = host;
 
-    // 1. Disable UI
+    // 1. Disable UI to prevent double-clicks
     hostCombo->setEnabled(false);
     btnConnect->setEnabled(false);
     fileList->setEnabled(false);
 
-    // 2. Show Infinite Progress Bar
-    progressBar->setVisible(true);
+    // 2. Show "Connecting..." status
+    progressBar->setVisible(true); // Shows the bar, but animation will freeze
     statusLabel->setText(tr("Connecting to %1...").arg(host));
 
-    // 3. Run Connection in Background Thread
-    QFuture<bool> future = QtConcurrent::run([this, host]() {
-        // This runs in a worker thread
-        if (client->connectToHost(host)) {
-            return client->mount("/");
-        }
-        return false;
-    });
+    // FORCE UI UPDATE: Ensures the label is drawn before we block
+    QApplication::processEvents();
 
-    connectWatcher->setFuture(future);
+    // 3. Synchronous Connection (Blocks UI for ~200ms - 2s)
+    bool success = false;
+    if (client->connectToHost(host)) {
+        success = client->mount("/");
+    }
+
+    // 4. Restore UI
+    hostCombo->setEnabled(true);
+    btnConnect->setEnabled(true);
+    fileList->setEnabled(true);
+    progressBar->setVisible(false);
+
+    if (success) {
+        statusLabel->setText(tr("Connected: %1").arg(currentPath));
+
+        // Save to History
+        if (hostCombo->findText(host) == -1) {
+            hostCombo->addItem(host);
+        }
+        // Save settings...
+        QSettings settings("AspeQt", "TNFS");
+        QStringList history;
+        for (int i = 0; i < hostCombo->count(); ++i) {
+            history << hostCombo->itemText(i);
+        }
+        settings.setValue("hostHistory", history);
+
+        refreshList();
+    } else {
+        statusLabel->setText(tr("Connection Failed."));
+        QMessageBox::critical(this, tr("Connection Error"),
+                              tr("Could not reach host '%1'.\nCheck internet or hostname.").arg(host));
+    }
 }
 
 void TnfsBrowser::onConnectionFinished()

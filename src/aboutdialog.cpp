@@ -5,6 +5,11 @@
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 
+#include <QUrl>
+#include <QEvent>
+#include <QDesktopServices>
+
+
 AboutDialog::AboutDialog(QWidget *parent, QString version) :
     QDialog(parent),
     m_ui(new Ui::AboutDialog)
