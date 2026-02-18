@@ -325,6 +325,8 @@ MainWindow::MainWindow(QWidget *parent)
     // -------------------------------------------------------
     // DEVICE $46: AspeQt Client (AspeCl)
     // -------------------------------------------------------
+    // DEPRECATED: This device is maintained for legacy compatibility.
+    // Modern time-sync uses the ApeTime protocol (handled via SIO).
     AspeCl *client = new AspeCl(sio);
     client->setParent(nullptr);
     client->moveToThread(sio);

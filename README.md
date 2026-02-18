@@ -41,6 +41,13 @@ Standard build process for modern Apple Silicon (M3) environments.
 
 ---
 
+### 🕒 Time Synchronization (Real-Time Clock)
+AspeQt-2k26 features built-in support for the **ApeTime** protocol, allowing your Atari to synchronize its clock with your PC automatically.
+
+* **Recommended Method:** Use a standard ApeTime-compatible driver.
+    * **SpartaDOS X / RealDOS / BW-DOS:** Simply load the `ATIME.SYS` driver (or enable it in your `CONFIG.SYS`). The system time will sync automatically on boot.
+* **Legacy Method (Deprecated):** The `aspecl` client executable is included for legacy compatibility but is **not recommended** for modern setups.
+
 ### Troubleshooting (Windows/MinGW)
 If the Windows build fails, check the following common roadblocks:
 
