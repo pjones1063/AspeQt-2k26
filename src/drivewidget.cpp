@@ -22,8 +22,11 @@ DriveWidget::~DriveWidget()
 
 static void FormatStatusTip(QAction* action, QString& driveNum)
 {
-    const QString& tip = action->statusTip().arg(driveNum);
-    action->setStatusTip(tip);
+    QString tip = action->statusTip();
+    // Only attempt to format if the placeholder %1 actually exists
+    if (tip.contains("%1")) {
+        action->setStatusTip(tip.arg(driveNum));
+    }
 }
 
 void DriveWidget::setup()
@@ -124,6 +127,7 @@ void DriveWidget::showAsEmpty()
     ui->actionEditDisk->setChecked(false);
     ui->actionAutoSave->setEnabled(false);
     ui->actionAutoSave->setChecked(false);
+    ui->actionHappyMode->setEnabled(true);
     if(driveNo_ == 0)
         ui->actionBootOption->setEnabled(false);
 
@@ -205,6 +209,9 @@ void DriveWidget::showAsTNFSMounted(const QString &fileName, const QString &desc
     ui->actionEject->setEnabled(true);
     ui->actionMountDisk->setEnabled(true);   // Allow swapping
     ui->actionMountFolder->setEnabled(true); // Allow swapping
+
+    ui->actionHappyMode->setChecked(false);
+    ui->actionHappyMode->setEnabled(false);
 
     // 4. Update Status Tips
     setLabelToolTips(fileName, fileName, description);

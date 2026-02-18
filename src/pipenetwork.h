@@ -35,9 +35,16 @@ private:
 
     bool m_netFinished;
     bool m_isWriteMode;
+    bool m_sessionTranslate;
     QString m_lastUrl;
 
     void reset();
+    QString cleanUrl(QString raw);
+    bool shouldTranslate(quint16 aux, bool globalSetting);
+
+signals:
+    void sendFireAndForget(QString url, QByteArray data);
+
 };
 
 #endif // PIPENETWORK_H

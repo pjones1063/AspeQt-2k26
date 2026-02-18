@@ -115,6 +115,9 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="actionBootOption"/>
+    <addaction name="separator"/>
+    <addaction name="actionPhonebook"/>
+    <addaction name="separator"/>
     <addaction name="actionOptions"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -559,6 +562,24 @@
    </property>
    <property name="statusTip">
     <string>Configure firmware and boot options</string>
+   </property>
+  </action>
+  <action name="actionPhonebook">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/book_open.png</normaloff>:/icons/silk-icons/icons/book_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Phonebook...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open BBS Phonebook</string>
+   </property>
+   <property name="statusTip">
+    <string>Open BBS Phonebook</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>

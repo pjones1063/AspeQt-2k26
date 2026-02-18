@@ -20,6 +20,7 @@
 #include <QEnterEvent>
 #include <QProgressBar>
 
+#include "modembridge.h"
 #include "optionsdialog.h"
 #include "aboutdialog.h"
 #include "createimagedialog.h"
@@ -32,6 +33,8 @@
 #include "infowidget.h"
 #include "tnfsclient.h"
 #include "miscdevices.h"
+#include "phonedirectory.h"
+#include "bbsdata.h"
 
 namespace Ui
 {
@@ -77,6 +80,8 @@ public slots:
     void bootCasTriggered(const QString &fileName);
     void printServer(bool on);
     void updateDownloadProgress(qint64 bytesRead, qint64 totalBytes);
+    void onFireAndForget(QString url, QByteArray data);
+    void on_actionPhonebook_triggered();
 
 
 private:
@@ -105,6 +110,9 @@ private:
     QPoint m_dragPosition;
     QProgressBar *dlProgressBar;
 
+    ModemBridge *modemBridge;
+
+
 
     void setSession();  //
     void updateRecentFileActions();
@@ -123,8 +131,8 @@ private:
     void loadTranslators();
     void autoSaveDisk(int no);                                              //
     void setUpPrinterEmulationWidgets(bool enabled);
-
-
+    void updatePhonebookMenuState();
+    void openResourceHtml(const QString &resourcePath);
     void createDeviceWidgets();
 
 protected:

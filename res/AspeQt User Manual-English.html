@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -109,6 +109,22 @@
             font-size: 0.95em;
         }
 
+        /* DIAGRAM BOXES */
+        .diagram-block {
+            font-family: "Consolas", "Courier New", monospace;
+            background-color: #2b2b2b;
+            color: #00ff00; /* Retro Phosphor Green */
+            border: 1px solid #444;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 13px;
+            line-height: 1.4;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
         .code-block {
             font-family: "Consolas", "Courier New", monospace;
             background-color: #f8f8f8;
@@ -162,8 +178,9 @@
             <a href="#sio">High-Speed SIO</a>
             <a href="#usage">Disk & Folder Images</a>
             <a href="#tnfs">TNFS Client</a>
+            <a href="#modem">Modem Bridge</a>
+            <a href="#wiring">Wiring Diagram</a>
             <a href="#printer">Printer (P:)</a>
-            <a href="#clipboard">Clipboard (Y:)</a>
             <a href="#wdevice">Web Pipe (W:)</a>
         </div>
     </div>
@@ -176,10 +193,10 @@
         <ul>
             <li><b>Disk Drives (D1:-D8:)</b> - Supports ATR, XFD, PRO images, and direct Folder Mounting.</li>
             <li><b>TNFS Client</b> - Mount and stream disk images directly from the internet (FujiNet protocol).</li>
+            <li><b>Modem Bridge</b> - Connect physical Atari modems to Telnet BBSs via the PC.</li>
             <li><b>Printers (P:)</b> - Captures printed output to text or graphical view.</li>
             <li><b>Clipboard Bridge (Y:)</b> - Bi-directional copy/paste between PC and Atari.</li>
-            <li><b>Web Pipe (W:)</b> - Thin-client gateway for Python scripts and AI.</li>
-            <li><b>Cassette (C:)</b> - Load CAS files via SIO audio.</li>
+            <li><b>Web Pipe (W:)</b> - Multi-channel gateway for Python scripts and AI.</li>
         </ul>
 
         <a name="sio"></a>
@@ -191,197 +208,290 @@
 
         <a name="usage"></a>
         <h2>Disk & Folder Usage</h2>
-
         <h3>Mounting Disk Images</h3>
         <p>Drag and drop <span class="code-snippet">.atr</span>, <span class="code-snippet">.xfd</span>, or <span class="code-snippet">.pro</span> files directly into the drive slots (D1-D8). Double-clicking a slot opens the file browser.</p>
 
         <h3>Virtual DOS (Folder Images)</h3>
         <p>You can mount a local PC directory as a writable disk. To boot from a folder, right-click the slot and select <b>Mount Folder</b>.</p>
-        <p>Supported DOS structures for folder mounting:</p>
-        <ul>
-            <li>Atari DOS 2.0 / 2.5</li>
-            <li>MyDOS 4.5</li>
-            <li>SpartaDOS (Limited)</li>
-        </ul>
-
-        <h3>Running Executables</h3>
-        <p>Drag <span class="code-snippet">.xex</span> or <span class="code-snippet">.com</span> files directly to a slot. AspeQt uses a high-speed internal loader to execute these files instantly, bypassing the need for a DOS.</p>
 
         <a name="tnfs"></a>
         <h2>TNFS Client</h2>
-        <p>AspeQt-2k26 includes native support for TNFS (The Network File System), allowing you to mount and stream disk images directly from the internet using the FujiNet protocol.</p>
+        <p>AspeQt-2k26 includes native support for TNFS (The Network File System), allowing you to mount and stream disk images directly from the internet using the FujiNet protocol. Access this via the <b>Tools</b> menu.</p>
+
+        <a name="modem"></a>
+        <h2>Modem Bridge (Internet Adapter)</h2>
+        <p>The Modem Bridge allows your Atari 8-bit computer to connect to modern Telnet BBSs using your PC's internet connection. It acts as a gateway between your physical Atari hardware and the TCP/IP network.</p>
+
+        <h3>1. Required Hardware</h3>
+        <p>This feature requires a physical serial interface. It does <b>not</b> work with a standard SIO2PC cable alone.</p>
+        <ul>
+            <li><b>Atari Interface:</b> Atari 850, ICD R-Verter, or P:R: Connection.</li>
+            <li><b>Cables:</b> A Null Modem cable connecting the Atari Interface to your PC.</li>
+            <li><b>PC Hardware:</b> A USB-to-Serial adapter (FTDI recommended).</li>
+        </ul>
         
-        <h3>Connecting to a Server</h3>
-        <p>Access the TNFS Client via the <b>Tools</b> menu. You can add standard TNFS servers (such as <span class="code-snippet">fujinet.pl</span> or <span class="code-snippet">atari-apps.irata.online</span>).</p>
+        <div class="diagram-block">
+   [ ATARI COMPUTER ]                                     [ PC / ASPEQT ]
+   +----------------+                                 +---------------------+
+   |                |            (1)                  |                     |
+   |   SIO PORT     |=======[ SIO2PC ]===============>|   [ USB PORT 1 ]    |
+   |                |                                 |   (SIO / Disks)     |
+   +----------------+                                 +---------------------+
+           |
+           | (Daisy Chain SIO Cable)
+           |
+   +----------------+                                 +---------------------+
+   |  850 INTERFACE |            (2)                  |                     |
+   |   (R: DEVICE)  |======[ USB-SERIAL ]============>|   [ USB PORT 2 ]    |
+   |     PORT 1     |        ADAPTER                  |   (Modem Bridge)    |
+   +----------------+      (Null Modem)               +---------------------+
+                                                                 |
+                                                                 v
+                                                           ( TO INTERNET )
+        </div>
+
+        <div class="warning">
+            <b>Setup Tip:</b> Your Null Modem cable <b>MUST</b> support the <b>DTR</b> (Data Terminal Ready) signal. AspeQt asserts DTR High to tell the Atari 850 that the "Modem" is powered on. If your cable lacks this wire, the Atari will not respond.
+        </div>
+
+        <h3>2. Configuration Reference</h3>
+        <p>Configure the bridge settings via <b>Tools &gt; Options &gt; Modem Bridge</b>. Correct settings are vital for stable communication.</p>
         
-        <h3>Usage</h3>
-        <p>Once connected, the remote file system appears in the AspeQt file browser. You can navigate folders and drag remote <span class="code-snippet">.ATR</span> or <span class="code-snippet">.XEX</span> files directly into the drive slots (D1-D8). AspeQt will stream the data on-demand, allowing you to boot software immediately without manually downloading files.</p>
+        <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <tr style="background-color: #f4f4f4;">
+                <th style="width: 180px;">Setting</th>
+                <th>Description &amp; Recommended Value</th>
+            </tr>
+            <tr>
+                <td><b>Enable Modem Bridge</b></td>
+                <td>Master switch for the feature. When checked, AspeQt opens the serial port and asserts DTR/RTS signals.<br>
+                <i>Note: If unchecked, the Atari will see the modem as "Offline" or "Not Ready".</i></td>
+            </tr>
+            <tr>
+                <td><b>Serial Port</b></td>
+                <td>Select the COM port (Windows) or TTY device (Linux/Mac) corresponding to your <b>USB-to-Serial adapter</b>. Do NOT select your SIO2PC adapter here.</td>
+            </tr>
+            <tr>
+                <td><b>Baud Rate</b></td>
+                <td>The communication speed between PC and Atari. Must match your terminal software settings.<br>
+                <b>Recommended:</b> <span class="code-snippet">19200</span> (Standard for Atari 850).</td>
+            </tr>
+            <tr>
+                <td><b>Flow Control</b></td>
+                <td>Enables hardware RTS/CTS handshaking. <br>
+                <b>Recommended:</b> <b>OFF</b> (Unchecked) unless you have a high-quality 5-wire Null Modem cable. If enabled with a 3-wire cable, the connection will freeze.</td>
+            </tr>
+            <tr>
+                <td><b>Local Echo</b></td>
+                <td>If checked, AspeQt echoes all typed characters back to the Atari. Use this if you cannot see what you are typing in your terminal software.<br>
+                <b>Recommended:</b> <b>OFF</b> (Most BBS software handles echoing remotely).</td>
+            </tr>
+            <tr>
+                <td><b>Phonebook File</b></td>
+                <td>Path to the <code>phonebook.xml</code> file storing your BBS list. Defaults to the application directory.</td>
+            </tr>
+        </table>
+
+        <h3>3. The Phonebook</h3>
+        <p>Access via <b>Tools &gt; Phonebook</b>. Use this to store your favorite BBS addresses and credentials.</p>
+        <ul>
+            <li><b>Dialing:</b> Select an entry and click <b>Dial</b>. AspeQt will look up the credentials and connect.</li>
+            <li><b>Auto-Login:</b> If you save a Username and Password in the phonebook, you can use the <b>Macros</b> listed below to auto-type them.</li>
+        </ul>
+
+        <div class="note">
+            <b>Getting a Phonebook:</b> You can download a compatible XML or SyncTerm phonebook list from the Telnet BBS Guide: <br>
+            <a href="https://telnetbbsguide.com/lists/new-bbs-systems/" target="_blank">https://telnetbbsguide.com/lists/new-bbs-systems/</a>
+        </div>
+
+        <h3>4. Supported Commands & Macros</h3>
+        <p>The bridge emulates a standard Hayes modem. It supports the following commands from your Atari terminal software (BobTerm, Ice-T, etc.):</p>
+
+        <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <tr style="background-color: #f4f4f4;">
+                <th style="width: 180px;">Command / Key</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ATDT &lt;Name&gt;</span></td>
+                <td><b>Dial by Name.</b> Looks up the entry in the Phonebook (e.g., <code>ATDT Level29</code>). This is required to load credentials for macros.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ATDT &lt;IP:Port&gt;</span></td>
+                <td><b>Raw Dial.</b> Connects directly to an IP (e.g., <code>ATDT 192.168.1.5:23</code>). Macros are disabled in this mode.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ATH</span></td>
+                <td><b>Hangup.</b> Disconnects the current session.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">+++</span></td>
+                <td><b>Escape Sequence.</b> Pauses the data stream and switches the modem to "Command Mode" without disconnecting. (Requires 1 second of silence before and after).</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ESC</span> + <span class="code-snippet">U</span></td>
+                <td><b>Type Username.</b> (Macro) Auto-types the Login ID saved in the current Phonebook entry.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ESC</span> + <span class="code-snippet">P</span></td>
+                <td><b>Type Password.</b> (Macro) Auto-types the Password saved in the current Phonebook entry.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ESC</span> + <span class="code-snippet">H</span></td>
+                <td><b>Panic Hangup.</b> Immediately terminates the connection and returns to Command Mode. Use this if the session freezes.</td>
+            </tr>
+        </table>
+
+        <h3>5. ATASCII Translation</h3>
+        <p>Modern internet servers expect standard ASCII input. AspeQt automatically performs the following translations:</p>
+        <ul>
+            <li><b>Backspace:</b> Atari Delete (Code 126/127) is automatically converted to ASCII Backspace (Code 8).</li>
+            <li><b>Newlines:</b> Atari EOL (155) is converted to standard Network Newlines (CR/LF).</li>
+        </ul>
+
+        <a name="wiring"></a>
+        <h2>Appendix: Wiring the Atari 850 Null Modem Cable</h2>
+        <p>Unlike modern PCs, the Atari 850 Interface uses a <b>non-standard DB9 pinout</b>. You cannot use a standard off-the-shelf "Serial Cable" or "Null Modem Cable" without an adapter, as the wire mappings will be incorrect.</p>
+        
+        <p>To connect your Atari 850 (Port 1) to a PC USB-Serial Adapter, you must build a custom cable or use a breakout box with the following wiring scheme.</p>
+
+        <h3>The "Magic" Signal: DTR</h3>
+        <p>The Atari 850 requires the <b>DSR (Data Set Ready)</b> and <b>CD (Carrier Detect)</b> pins to be HIGH to detect that a modem is present. AspeQt emulates this by asserting its <b>DTR (Data Terminal Ready)</b> signal. Your cable <b>MUST</b> connect the PC's DTR pin to the Atari's DSR and CD pins, or the bridge will remain "Dead."</p>
+
+        <div class="diagram-block">
+   ATARI 850 (PORT 1)                              PC USB ADAPTER
+   [ DB9 MALE Connector ]                          [ DB9 FEMALE Connector ]
+   (Plugs into Atari 850)                          (Plugs into PC)
+
+     PIN   FUNCTION                                  FUNCTION   PIN
+    +---+------------+                              +------------+---+
+    | 1 |  DTR (Out) |----------------------------->| DSR / DCD  |1+6|
+    +---+------------+          (Cross)             +------------+---+
+    | 6 |  DSR (In)  |<-----------------------------| DTR (Out)  | 4 |
+    +---+------------+                              +------------+---+
+    
+    +---+------------+                              +------------+---+
+    | 3 |  TX  (Out) |----------------------------->| RX  (In)   | 2 |
+    +---+------------+          (Cross)             +------------+---+
+    | 4 |  RX  (In)  |<-----------------------------| TX  (Out)  | 3 |
+    +---+------------+                              +------------+---+
+
+    +---+------------+                              +------------+---+
+    | 7 |  RTS (Out) |----------------------------->| CTS (In)   | 8 |
+    +---+------------+          (Cross)             +------------+---+
+    | 8 |  CTS (In)  |<-----------------------------| RTS (Out)  | 7 |
+    +---+------------+                              +------------+---+
+
+    +---+------------+                              +------------+---+
+    | 5 |  GROUND    |------------------------------| GROUND     | 5 |
+    +---+------------+          (Direct)            +------------+---+
+        </div>
+
+        <h3>Connector Gender Guide</h3>
+        <ul>
+            <li><b>Atari 850 Side:</b> The 850 ports are <i>Female</i>. Your cable needs a <b>DB9 Male</b> connector.</li>
+            <li><b>PC Side:</b> Most USB-Serial dongles are <i>Male</i>. Your cable needs a <b>DB9 Female</b> connector.</li>
+        </ul>
+
+        <div class="note">
+            <b>Troubleshooting:</b> If you are using a commercially available "Atari 850 Modem Cable" (which is usually DB9-to-DB25), you will need a standard <b>DB25-to-DB9 Null Modem Adapter</b> attached to the PC side to perform the necessary signal crossing.
+        </div>
 
         <a name="printer"></a>
         <h2>Printer Emulation (P:)</h2>
-        <p>Output sent to <span class="code-snippet">P:</span> is captured by AspeQt. View the output via <b>Tools &gt; View Printer Output</b>. The viewer automatically handles ATASCII-to-ASCII translation.</p>
+        <p>Output sent to <span class="code-snippet">P:</span> is captured by AspeQt. View the output via <b>Tools &gt; View Printer Output</b>.</p>
 
         <a name="clipboard"></a>
         <h2>The Y: Device (Clipboard Bridge)</h2>
-        <p>The <b>Y: Device</b> is a custom CIO handler that bridges the gap between your Atari 8-bit and your modern PC's system clipboard. It allows you to "Paste" code from your PC directly into Atari BASIC, or "Copy" listings from the Atari back to your PC.</p>
-        
-        <h3>1. Installation</h3>
-        <p>The Y: device is not built into the Atari OS; it must be loaded into memory.</p>
-        <ol>
-            <li>Load the <b>handler.xex</b> file provided with AspeQt (drag it to D1: and boot, or load it from DOS).</li>
-            <li>The handler installs itself at memory address <b>$4000</b>.</li>
-            <li>Once loaded, the device <span class="code-snippet">Y:</span> becomes available to the system.</li>
-        </ol>
-
-        <h3>2. Importing Code (PC &rarr; Atari)</h3>
-        <p>This feature allows you to write BASIC code in a modern editor (like VS Code or Notepad++) and run it on the Atari.</p>
+        <p>The <b>Y: Device</b> bridges your Atari 8-bit and your modern PC's system clipboard. It allows you to "Paste" code from your PC directly into Atari BASIC, or "Copy" listings from the Atari back to your PC.</p>
         <ul>
-            <li><b>On PC:</b> Select your text/code and <b>Copy</b> (Ctrl+C).</li>
-            <li><b>On Atari:</b> Type <span class="code-snippet">NEW</span>, then type <span class="code-snippet">ENTER "Y:"</span></li>
+            <li><b>Import Code (PC &rarr; Atari):</b> Copy text on PC, then type <span class="code-snippet">ENTER "Y:"</span> on Atari.</li>
+            <li><b>Export Code (Atari &rarr; PC):</b> Type <span class="code-snippet">LIST "Y:"</span> on Atari, then Paste on PC.</li>
         </ul>
-        <p>The Atari will read the text from your clipboard as if it were typing it in. AspeQt automatically converts modern Line Feeds (<span class="code-snippet">\n</span>) into ATASCII EOL (<span class="code-snippet">$9B</span>) characters.</p>
-
-        <h3>3. Exporting Code (Atari &rarr; PC)</h3>
-        <p>This feature allows you to save your work from the Atari back to your PC clipboard.</p>
-        <ul>
-            <li><b>On Atari:</b> Type <span class="code-snippet">LIST "Y:"</span></li>
-            <li><b>On PC:</b> Open your text editor and <b>Paste</b> (Ctrl+V).</li>
-        </ul>
-        <div class="warning">
-            <b>Note:</b> Opening "Y:" for writing (Mode 8) automatically <b>clears</b> the PC clipboard before appending the new data.
-        </div>
-
-        <h3>4. Advanced Usage (BASIC Example)</h3>
-        <p>The Y: device functions like any standard IOCB device. You can write your own software to utilize the clipboard bridge. Below is a BASIC example demonstrating both reading and writing.</p>
-        
-        <div class="code-block">
-10 REM === WRITE TO CLIPBOARD ===
-20 OPEN #1,8,0,"Y:"
-30 ? "Writing to PC Clipboard..."
-40 PRINT #1;"Hello from the 8-bit world!"
-50 PRINT #1;"This text was sent via AspeQt."
-60 CLOSE #1
-70 REM === READ FROM CLIPBOARD ===
-80 ? "Copy something on PC, then press Return."
-90 DIM A$(1):INPUT A$
-100 TRAP 150 :REM Catch EOF Error
-110 OPEN #1,4,0,"Y:"
-120 GET #1,B
-130 ? CHR$(B);
-140 GOTO 120
-150 CLOSE #1
-160 ? "Done."
-        </div>
 
         <a name="wdevice"></a>
         <h2>The W: Device (Web Pipe)</h2>
-        <p>The <b>W:</b> device transforms the Atari 8-bit into a "Thin Client" capable of interacting with modern web services. Instead of implementing complex network stacks (TCP/IP, SSL) on the Atari, the <b>W:</b> device acts as a transparent proxy. It forwards standard BASIC text commands to a backend script running on your PC via HTTP.</p>
+        <p>The <b>W:</b> device transforms the Atari 8-bit into a "Thin Client" capable of interacting with modern web services. It acts as a transparent proxy, forwarding standard BASIC text commands to a backend script running on your PC via HTTP.</p>
 
-        <h3>How It Works</h3>
-        <p>The device operates using standard Atari I/O commands:</p>
+        <h3>1. Multi-Channel Support (W1: - W4:)</h3>
+        <p>AspeQt-2k26 supports up to <b>4 simultaneous connections</b>. This allows for complex "Full Duplex" applications where one channel reads data while another writes data, or background threads poll for status updates.</p>
         <ul>
-            <li><b>Write Mode (HTTP POST):</b> Opening W: for write allows you to buffer data. When you CLOSE the channel, AspeQt sends the buffered data as an HTTP POST request to the specified URL.</li>
-            <li><b>Read Mode (HTTP GET):</b> Opening W: for read immediately performs an HTTP GET request to the URL. Subsequent INPUT commands retrieve the server's response.</li>
+            <li><b>W:</b> or <b>W1:</b> - Primary Channel (Device $57)</li>
+            <li><b>W2:</b> - Secondary Channel (Device $56)</li>
+            <li><b>W3:</b> - Tertiary Channel (Device $55)</li>
+            <li><b>W4:</b> - Quaternary Channel (Device $54)</li>
         </ul>
-
-        <h3>Running the Handler</h3>
-        <p>To enable the W: and Y: devices, you must first load the handler into memory.</p>
-        <ul>
-            <li><b>Manual Loading:</b> From the DOS menu, select option <b>L</b> (Binary Load) and type <span class="code-snippet">HANDLER.XEX</span>.</li>
-            <li><b>Automatic Loading:</b> Rename <span class="code-snippet">HANDLER.XEX</span> to <span class="code-snippet">AUTORUN.SYS</span> on your boot disk. This ensures the network drivers load automatically every time you turn on the computer.</li>
-        </ul>
-
-        <h3>Code Example: The "Hello World" Loop</h3>
-        <p>This example demonstrates sending data to a Python script and reading the response.</p>
-
-        <h4>1. Atari BASIC (The Frontend)</h4>
         <div class="code-block">
-10 DIM U$(40), MSG$(40), REPLY$(40)
-20 U$="W:http://192.168.1.5:5000/atari"
-30 MSG$="HELLO FROM 1979"
-
-40 REM --- STEP 1: SEND DATA (POST) ---
-50 OPEN #1,8,0,U$       : REM Open for Write
-60 PRINT #1;MSG$        : REM Send the message
-70 CLOSE #1             : REM Trigger the Network Request
-
-80 REM --- STEP 2: READ RESPONSE (GET) ---
-90 OPEN #1,4,0,U$       : REM Open for Read
-100 INPUT #1,REPLY$     : REM Read text from PC
-110 PRINT "SERVER SAID: ";REPLY$
-120 CLOSE #1
+10 REM -- QUAD CHANNEL EXAMPLE --
+20 OPEN #1,8,0,"W1:http://192.168.1.5:5000/cmd"  :REM Command Channel
+30 OPEN #2,4,0,"W2:http://192.168.1.5:5000/data" :REM Data Stream
+40 OPEN #3,4,0,"W3:http://192.168.1.5:5000/status":REM Background Poll
+50 PRINT #1;"GET STATUS"
+60 INPUT #3,STATUS$
+70 IF STATUS$="READY" THEN INPUT #2,DATA$
+80 CLOSE #1 : CLOSE #2 : CLOSE #3
         </div>
 
-        <h4>2. Python/Flask (The Backend)</h4>
-        <div class="code-block">
-from flask import Flask, request
+        <h3>2. Configuration: Text vs. Binary Mode</h3>
+        <p>The W: device can be configured globally via <b>Options &gt; Emulation</b>, or overridden per-connection using the command parameters.</p>
+        <ul>
+            <li><b>Text Mode:</b> Best for BASIC and Web APIs.
+                <ul>
+                    <li><i>Write:</i> Converts Atari EOL (<span class="code-snippet">$9B</span>) &rarr; Unix Newline (<span class="code-snippet">\n</span>).</li>
+                    <li><i>Read:</i> Converts Unix Newline (<span class="code-snippet">\n</span>) &rarr; Atari EOL (<span class="code-snippet">$9B</span>).</li>
+                </ul>
+            </li>
+            <li><b>Binary Mode:</b> Best for Game Loaders and Asset Streaming.
+                <ul>
+                    <li>Data is passed raw, byte-for-byte. No translation occurs.</li>
+                </ul>
+            </li>
+        </ul>
 
-app = Flask(__name__)
-
-@app.route('/atari', methods=['GET', 'POST'])
-def handle_atari():
-    if request.method == 'POST':
-        # Receive text from Atari
-        data = request.data.decode('utf-8')
-        print(f"Atari sent: {data}")
-        return "OK"
-    else:
-        # Send text to Atari
-        return "MESSAGE RECEIVED LOUD AND CLEAR"
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-        </div>
-
-        <h3>Native FTP Support (GET & PUT)</h3>
-        <p>AspeQt-2k26 includes a built-in bridge to the <b>FTP protocol</b>. This allows your Atari to download files, read directory listings, and upload data directly to FTP servers without needing a PC-side Python script.</p>
+        <h4>On-the-Fly Mode Switching (Advanced)</h4>
+        <p>You can override the global setting for a specific connection by using the <b>AUX2</b> parameter (the 3rd number in the OPEN or XIO command).</p>
         
-        <div class="note">
-            <b>Prerequisite:</b> This feature requires the <b>curl</b> utility to be installed on your Host PC (Windows/Linux/Mac) and available in the system PATH.
-        </div>
-
-        <h4>1. Reading Files & Directory Listings (GET)</h4>
-        <p>To read a file or view a directory, simply open the W: device with an <span class="code-snippet">ftp://</span> URL in Read mode (4).</p>
         <ul>
-            <li><b>Files:</b> Text files are streamed to the Atari. Unix Line Feeds (<span class="code-snippet">\n</span>) are automatically converted to Atari EOLs (<span class="code-snippet">$9B</span>).</li>
-            <li><b>Directories:</b> If the URL ends in a slash (<span class="code-snippet">/</span>), AspeQt returns a directory listing.</li>
+            <li><b>0:</b> Use Global AspeQt Settings (Default)</li>
+            <li><b>1:</b> Force TEXT Mode (Translate EOLs)</li>
+            <li><b>2:</b> Force BINARY Mode (Raw Data)</li>
         </ul>
 
         <div class="code-block">
-10 DIM U$(60), L$(120)
-20 REM --- PUBLIC FTP EXAMPLE ---
-30 U$="W:ftp://ftp.funet.fi/pub/atari/README"
-40 OPEN #1,4,0,U$
-50 TRAP 90
-60 INPUT #1,L$
-70 PRINT L$
-80 GOTO 60
-90 CLOSE #1
-100 PRINT "--- EOF ---"
+10 REM -- MODE SWITCHING EXAMPLES --
+20 U$="W:http://192.168.1.5:5000/api"
+
+30 REM Force TEXT Mode (AUX2=1) for API call
+40 OPEN #1, 8, 1, U$ 
+50 PRINT #1;"HELLO" :REM Sends "HELLO\n"
+60 CLOSE #1
+
+70 REM Force BINARY Mode (AUX2=2) for Game Asset
+80 OPEN #1, 8, 2, "W:http://server.com/sprite.dat"
+90 REM Data read here will NOT have $9B converted
+100 CLOSE #1
         </div>
 
-        <h4>2. Uploading Files (PUT)</h4>
-        <p>To upload data, open the W: device in Write mode (8). You must provide valid credentials in the URL if the server requires them.</p>
-
+        <h3>3. Advanced: XIO Commands (One-Shot)</h3>
+        <p>The <b>XIO</b> command allows you to send a "Fire and Forget" packet without the overhead of OPEN/PRINT/CLOSE. This is ideal for telemetry, logging, or high-speed triggers.</p>
+        
+        <h4>Command 80 ($50): Fast POST</h4>
+        <p>Sends a payload to a URL in a single operation. The format is <span class="code-snippet">"W#:URL,DATA"</span>. It supports all channels (W1-W4) and the AUX2 mode flag.</p>
         <div class="code-block">
-10 DIM U$(80)
-20 REM --- UPLOAD WITH CREDENTIALS ---
-30 U$="W:ftp://user:password@192.168.1.50/upload.txt"
-40 OPEN #1,8,0,U$
-50 PRINT #1;"This text is being uploaded from an Atari 8-bit!"
-60 CLOSE #1 : REM Upload starts immediately on CLOSE
+10 DIM PKT$(120)
+20 URL$="http://192.168.1.5:5000/score"
+30 SCORE=15000
+
+40 REM -- Build Packet --
+50 PKT$="W1:":PKT$(4)=URL$
+60 PKT$(LEN(PKT$)+1)=",":PKT$(LEN(PKT$)+1)=STR$(SCORE)
+
+70 REM -- Execute XIO 80 with FORCE BINARY (AUX2=2) --
+80 XIO 80,#1,0,2,PKT$
         </div>
 
-        <h3>Application Examples Library</h3>
-        <p>This library contains a collection of "Hybrid Computing" examples that demonstrate the power of the W: Device. These examples offload heavy processing (AI, Web Scraping, SSL, Speech Synthesis) to a modern PC (Host) while using the Atari 8-bit as the frontend terminal.</p>
-
-        <h4>General Prerequisites</h4>
-        <p>For all examples below, you must have:</p>
-        <ul>
-            <li><b>Python 3.x</b> installed on your Host PC.</li>
-            <li><b>Flask</b> installed (<span class="code-snippet">pip install flask</span>).</li>
-            <li>The <b>PC's IP Address</b> configured in the BASIC .LST files.</li>
-        </ul>
+        <h3>4. Application Examples Library</h3>
+        <p>This library contains a collection of "Hybrid Computing" examples that demonstrate the power of the W: Device.</p>
 
         <h4>1. Gemini AI Chatbot</h4>
         <p>Turns the Atari into a client for Google's Gemini Large Language Model. You can type natural language questions ("Who is Captain Kirk?") and receive intelligent, summarized answers on the Atari screen.</p>
@@ -445,7 +555,6 @@ pip install flask requests beautifulsoup4 google-generativeai psutil
 # Windows
 pip install flask requests beautifulsoup4 google-generativeai psutil
         </div>
-
     </div>
 
     <div class="footer">

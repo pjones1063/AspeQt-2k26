@@ -1,29 +1,136 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-  <head>
+<head>
     <meta content="en-us" http-equiv="Content-Language">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <title>AspeQt-13L</title>
+    <title>AspeQt-2k26</title>
     <style type="text/css">
-body { font-family: Arial, Helvetica, sans-serif; }
-h1   { color: #4C920E; font-size: large; }
-</style>
-  </head>
-  <body>
-    <h1><img src="/icons/main-icon/icon.jpeg" align="middle">&nbsp;AspeQt,
-      Atari Serial Peripheral Emulator for Qt</h1>
-    <p align="justify"><b>Summary</b><br>
-      AspeQt-2k26 emulates Atari SIO peripherals when connected to an
-      Atari 8-bit computer with an SIO2PC cable. In that respect t's
-      similar to programs like APE, Atari810, and AspeQt. The main
-      difference is that it's free (unlike APE and AspeQt) and it's
-      cross-platform (unlike Atari810 and APE).<b><br>
-      </b></p>
-    <p align="justify"><b><br>
-        License</b><br>
-      AspeQt-2022-13L fork <em>Copyright 2024 by <a
-          href="https://13leader.net">The 13th Leader</a></em><br>
-      <br>
-    </p>
-  </body>
+        /* Qt TextBrowser CSS Profile */
+        body {
+            font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            color: #333333;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* The "Card" Container */
+        .container {
+            background-color: #fcfcfc;
+            border: 1px solid #d0d0d0;
+            margin: 5px;
+        }
+
+        /* Header Section - Modern Flat Style */
+        td.header {
+            background-color: #2d2d2d;
+            color: #ffffff;
+            padding: 20px 25px; /* Increased padding for balance without icon */
+            border-bottom: 3px solid #4C920E; /* Atari Green Accent */
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 24px; /* Slightly larger for impact */
+            font-weight: normal;
+            margin: 0;
+            padding: 0;
+            letter-spacing: 0.5px;
+        }
+        
+        .subtitle {
+            color: #4C920E; /* Atari Greenish */
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* Content Section */
+        td.content {
+            padding: 25px;
+            line-height: 1.6;
+        }
+
+        /* Clean Feature Box (Grey/Neutral) */
+        .feature-box {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid #666666; /* Neutral accent */
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        /* Footer Section */
+        td.footer {
+            background-color: #f4f4f4;
+            color: #888888;
+            font-size: 11px;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        a {
+            color: #2d2d2d;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <table width="100%" cellspacing="0" cellpadding="0" class="container">
+        <tr>
+            <td class="header" valign="middle">
+                <h1>AspeQt-2k26</h1>
+                <div class="subtitle">Atari Serial Peripheral Emulator for Qt6</div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="content" valign="top">
+                <p><b>Bridging the Gap Between Vintage and Modern.</b></p>
+                
+                <p align="justify">
+                    AspeQt-2k26 transforms your modern PC into a powerful peripheral server for Atari 8-bit computers. 
+                    Rebuilt entirely on the <b>Modern Qt6 Framework</b>, it ensures long-term stability on Windows 11, macOS, Linux, and Raspberry Pi.
+                </p>
+
+                <p><b>Key Features:</b></p>
+                <ul>
+                    <li>High-Speed SIO (Divisor 0 Support)</li>
+                    <li>Modem Bridge (RS232 to Telnet Gateway)</li>
+                    <li>TNFS Client (FujiNet Protocol)</li>
+                </ul>
+
+                <div class="feature-box">
+                    <b>New in 2k26: Hybrid Devices</b><br>
+                    <br>
+                    This version introduces two powerful new devices for bridging the gap between 8-bit and 64-bit worlds:<br>
+                    <ul>
+                        <li><b>W: Device (Web Pipe):</b> A multi-channel gateway allowing Atari BASIC to interact with Python scripts, AI models, and Web APIs.</li>
+                        <li><b>Y: Device (Clipboard):</b> Bi-directional copy & paste between the Atari and your PC system clipboard.</li>
+                    </ul>
+                    <br>
+                    <i>Please refer to the User Manual (Help &gt; Documentation) for details.</i>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="footer">
+                Copyright &copy; 2026 by <b>13leader.net</b> (pjones1063)<br>
+                <br>
+                Based on the original AspeQt by <i>FJC</i> and <i>Ray Lidstrom</i>.<br>
+                <br>
+                GitHub Project: <b>pjones1063/AspeQt-2k26</b>
+            </td>
+        </tr>
+    </table>
+
+</body>
 </html>

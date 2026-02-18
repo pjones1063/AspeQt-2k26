@@ -82,6 +82,14 @@
    </item>
    <item>
     <property name="text">
+     <string>Hayes Modem Emulator</string>
+    </property>
+    <property name="flags">
+     <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>User interface</string>
     </property>
    </item>
@@ -102,7 +110,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_serialPort">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -525,13 +533,38 @@
         <property name="verticalSpacing">
          <number>6</number>
         </property>
-        <item row="0" column="0" colspan="2">
-         <widget class="QCheckBox" name="emulationHighSpeedExeLoaderBox">
+        <item row="1" column="0" colspan="2">
+         <widget class="QCheckBox" name="emulationUseCustomCasBaudBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Use high speed executable loader</string>
+           <string>Use custom baud rate for cassette emulation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QCheckBox" name="filterUscore">
+          <property name="text">
+           <string>Filter out underscore character from file names</string>
           </property>
           <property name="checked">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <italic>true</italic>
+           </font>
+          </property>
+          <property name="text">
+           <string>        (Required for AtariDOS compatibility)</string>
           </property>
          </widget>
         </item>
@@ -551,6 +584,30 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="QCheckBox" name="emulationHighSpeedExeLoaderBox">
+          <property name="text">
+           <string>Use high speed executable loader</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0" colspan="2">
+         <widget class="QCheckBox" name="eolPostCheckBox">
+          <property name="toolTip">
+           <string>Enable this for text-based web services.
+Disable for binary data.</string>
+          </property>
+          <property name="text">
+           <string>Convert Atari EOL (155) to LF (10) on Network Write</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
         <item row="9" column="0">
          <spacer name="emulationVerticalSpacer">
           <property name="orientation">
@@ -564,43 +621,28 @@
           </property>
          </spacer>
         </item>
-        <item row="7" column="0">
+        <item row="8" column="0" colspan="2">
+         <widget class="QCheckBox" name="eolGetCheckBox">
+          <property name="toolTip">
+           <string>Enable this to read Unix text files properly on Atari.
+Disable for binary files.</string>
+          </property>
+          <property name="text">
+           <string>Convert LF (10) to Atari EOL (155) on Network Read</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
          <widget class="QCheckBox" name="capitalLettersPCLINK">
           <property name="text">
            <string>CAPITAL letters in file names</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>PCLINK:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label">
-          <property name="font">
-           <font>
-            <italic>false</italic>
-           </font>
-          </property>
-          <property name="text">
-           <string>Folder Images:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0" colspan="2">
-         <widget class="QCheckBox" name="filterUscore">
-          <property name="text">
-           <string>Filter out underscore character from file names</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0" colspan="2">
+        <item row="6" column="0" colspan="2">
          <widget class="QCheckBox" name="tnfsAutoConnectBox">
           <property name="text">
            <string>Restore last TNFS location on mount</string>
@@ -610,30 +652,192 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0" colspan="2">
-         <widget class="QCheckBox" name="emulationUseCustomCasBaudBox">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="page_modemBridge">
+    <layout class="QVBoxLayout" name="verticalLayout_modem">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QGroupBox" name="modemBridgeGroup">
+       <property name="title">
+        <string>Hayes Modem Emulator (Rs232 to TCP Bridge)</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_modemGroup">
+        <item>
+         <widget class="QCheckBox" name="modemEnableBox">
+          <property name="toolTip">
+           <string>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</string>
           </property>
           <property name="text">
-           <string>Use custom baud rate for cassette emulation</string>
+           <string>Enable Modem Bridge (RS232 to TCP)</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0" colspan="2">
-         <widget class="QLabel" name="label_2">
-          <property name="font">
-           <font>
-            <italic>true</italic>
-           </font>
-          </property>
+        <item>
+         <widget class="QLabel" name="modemPortLabel">
           <property name="text">
-           <string>        (Required for AtariDOS compatibility)</string>
+           <string>Bridge Serial Port:</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="modemPortComboBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>Must be different from the SIO port.</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="modemBaudLabel">
+          <property name="text">
+           <string>Baud Rate:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="modemBaudComboBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>9600</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>19200</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>38400</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>57600</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>115200</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="modemFlowControlBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>Highly recommended for Atari 850 Interface.</string>
+          </property>
+          <property name="text">
+           <string>Enable Hardware Flow Control (RTS/CTS)</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_modem">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="modemSshBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="visible">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Enable SSH Support (Port 22)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="modemLocalEchoBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Local Echo (Half Duplex)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="modemPhonebookLabel">
+          <property name="text">
+           <string>Phonebook XML Path:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_phonebook">
+          <item>
+           <widget class="QLineEdit" name="modemPhonebookPathEdit">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
+            <property name="placeholderText">
+             <string>Click ... to select dialdirectory.xml</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="modemPhonebookBrowseBtn">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="modemSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
