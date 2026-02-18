@@ -397,6 +397,25 @@
             <b>Troubleshooting:</b> If you are using a commercially available "Atari 850 Modem Cable" (which is usually DB9-to-DB25), you will need a standard <b>DB25-to-DB9 Null Modem Adapter</b> attached to the PC side to perform the necessary signal crossing.
         </div>
 
+<a name="timesync"></a>
+        <h2>Time Synchronization (Real-Time Clock)</h2>
+        <p>AspeQt-2k26 allows your Atari 8-bit computer to read the current date and time from your PC. This is essential for file timestamps in DOS.</p>
+
+        <h3>Recommended Method: ApeTime Protocol</h3>
+        <p>AspeQt natively emulates the <b>ApeTime</b> device. This is the modern standard supported by most DOS variants.</p>
+        <ul>
+            <li><b>SpartaDOS X:</b> Enable the `DATE` and `TIME` drivers, or load `ATIME.SYS`.</li>
+            <li><b>RealDOS / BW-DOS:</b> Load the `ATIME.SYS` driver in your `CONFIG.SYS`.</li>
+            <li><b>MyDOS:</b> Requires a specialized autorun utility (check the `indus` or `ape` folders on your utility disks).</li>
+        </ul>
+        <div class="note">
+            <b>Note:</b> You do <b>not</b> need to run any special client software on the PC side. AspeQt handles the protocol automatically in the background.
+        </div>
+
+        <h3>Legacy Method: AspeCl (Deprecated)</h3>
+        <p>The older `aspecl` client (Device $46) is included for backward compatibility with very old setups but is <b>not recommended</b> for new users. Please use the ApeTime protocol instead.</p>
+        
+        
         <a name="printer"></a>
         <h2>Printer Emulation (P:)</h2>
         <p>Output sent to <span class="code-snippet">P:</span> is captured by AspeQt. View the output via <b>Tools &gt; View Printer Output</b>.</p>
