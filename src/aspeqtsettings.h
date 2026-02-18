@@ -25,6 +25,9 @@ public:
 
     bool isFirstTime();
 
+    bool enableRDevice();
+    void setEnableRDevice(bool enabled);
+
     QString serialPortName();
     void setSerialPortName(const QString &name);
 
@@ -191,14 +194,42 @@ public:
     bool explorerOnTop();
     void setExplorerOnTop(bool expOnTop);
 
+
     void setRestoreTnfsLocation(bool enabled);
     bool restoreTnfsLocation();
     void setShadeOpacity(int val);
     int shadeOpacity();
+    bool translateEolOnPost();
+    void setTranslateEolOnPost(bool enabled);
+    bool translateEolOnGet();
+    void setTranslateEolOnGet(bool enabled);
     QString lastBootDos();
     void setLastBootDos(const QString &dos);
     bool disablePicoHiSpeed();
     void setDisablePicoHiSpeed(bool disable);
+
+    // Modem Bridge Settings
+    bool isModemBridgeEnabled();
+    void setModemBridgeEnabled(bool enabled);
+
+    QString modemBridgePortName();
+    void setModemBridgePortName(const QString &name);
+
+    int modemBridgeBaudRate();
+    void setModemBridgeBaudRate(int baud);
+
+    bool modemBridgeFlowControl();
+    void setModemBridgeFlowControl(bool enabled);
+
+    bool modemBridgeSshEnabled();
+    void setModemBridgeSshEnabled(bool enabled);
+
+    bool modemBridgeLocalEcho();
+    void setModemBridgeLocalEcho(bool enabled);
+
+    QString modemBridgePhonebookPath();
+    void setModemBridgePhonebookPath(const QString &path);
+
 
 private:
     QSettings *mSettings;
@@ -207,7 +238,19 @@ private:
     bool mRestoreTnfsLocation;
     QString mLastBootDos;
     bool mDisablePicoHiSpeed;
+    bool mTranslateEolOnPost;
+    bool mTranslateEolOnGet;
+    bool mEnableRDevice;    
+    QString mModemBridgePhonebookPath;
 
+
+    // Modem Bridge Members
+    bool mModemBridgeEnabled;
+    QString mModemBridgePortName;
+    int mModemBridgeBaudRate;
+    bool mModemBridgeFlowControl;
+    bool mModemBridgeSshEnabled;
+    bool mModemBridgeLocalEcho;
 
 
 // To pass values from Mainwindow //
@@ -269,6 +312,8 @@ private:
     bool mExplorerOnTop;
     bool mEnableShade;
 };
+
+
 
 extern AspeQtSettings *aspeqtSettings;
 

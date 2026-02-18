@@ -40,6 +40,9 @@
 #include <QWindow>
 #include <QFont>
 #include <QClipboard>
+#include <QTemporaryDir>
+#include <QStandardPaths>
+#include <QDesktopServices>
 
 #include "atarifilesystem.h"
 // #include "miscutils.h"
@@ -277,6 +280,41 @@ MainWindow::MainWindow(QWidget *parent)
     sio = new SioWorker();
 
     // -------------------------------------------------------
+    // MODEM BRIDGE SETUP
+    // -------------------------------------------------------
+    modemBridge = new ModemBridge(this);
+
+    // Connect Status Messages (Info)
+    connect(modemBridge, &ModemBridge::statusMessage, this, [](const QString &msg) {
+        // Use qDebug so the message handler catches it and colors it Blue (!i)
+        qDebug() << "!i [ModemBridge]" << msg;
+    });
+
+    // Connect Error Messages (Error)
+    connect(modemBridge, &ModemBridge::errorOccurred, this, [](const QString &err) {
+        // Use qCritical so the message handler catches it and colors it Red (!e)
+        qCritical() << "!e [ModemBridge]" << err;
+    });
+
+    // Configure from Settings
+    if (aspeqtSettings->isModemBridgeEnabled()) {
+        modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
+                                   aspeqtSettings->modemBridgeBaudRate());
+        modemBridge->setFlowControl(aspeqtSettings->modemBridgeFlowControl());
+        modemBridge->setLocalEcho(aspeqtSettings->modemBridgeLocalEcho());
+        modemBridge->setTcpMode(aspeqtSettings->modemBridgeSshEnabled());
+
+        // Load Phonebook path
+        QString pbPath = aspeqtSettings->modemBridgePhonebookPath();
+        if (pbPath.isEmpty()) pbPath = g_aspeQtAppPath + "/phonebook.xml";
+        modemBridge->setPhonebookPath(pbPath);
+
+        modemBridge->start();
+    }
+
+    updatePhonebookMenuState();
+
+    // -------------------------------------------------------
     // DEVICE $45: PCLINK
     // -------------------------------------------------------
     PCLINK *pcLink = new PCLINK(sio);
@@ -295,10 +333,49 @@ MainWindow::MainWindow(QWidget *parent)
     // -------------------------------------------------------
     // DEVICE $57: Pipe Network (W:)
     // -------------------------------------------------------
-    PipeNetwork *pipeNet = new PipeNetwork(sio);
-    pipeNet->setParent(nullptr);
-    pipeNet->moveToThread(sio);
-    sio->installDevice(0x57, pipeNet);
+    PipeNetwork *pipeNet1 = new PipeNetwork(sio);
+    pipeNet1->setParent(nullptr);
+    pipeNet1->moveToThread(sio);
+
+    // Connect W1 to the shared handler
+    connect(pipeNet1, &PipeNetwork::sendFireAndForget, this, &MainWindow::onFireAndForget);
+    sio->installDevice(0x57, pipeNet1);
+
+
+    // -------------------------------------------------------
+    // DEVICE $58: Pipe Network (W2:)
+    // -------------------------------------------------------
+    PipeNetwork *pipeNet2 = new PipeNetwork(sio);
+    pipeNet2->setParent(nullptr);
+    pipeNet2->moveToThread(sio);
+
+    // Connect W2 to the SAME shared handler
+    connect(pipeNet2, &PipeNetwork::sendFireAndForget, this, &MainWindow::onFireAndForget);
+    sio->installDevice(0x56, pipeNet2);
+
+    // -------------------------------------------------------
+    // DEVICE $58: Pipe Network (W3:)
+    // -------------------------------------------------------
+    PipeNetwork *pipeNet3 = new PipeNetwork(sio);
+    pipeNet3->setParent(nullptr);
+    pipeNet3->moveToThread(sio);
+
+    // Connect W3 to the SAME shared handler
+    connect(pipeNet3, &PipeNetwork::sendFireAndForget, this, &MainWindow::onFireAndForget);
+    sio->installDevice(0x55, pipeNet3);
+
+
+    // -------------------------------------------------------
+    // DEVICE $58: Pipe Network (W4:)
+    // -------------------------------------------------------
+    PipeNetwork *pipeNet4 = new PipeNetwork(sio);
+    pipeNet4->setParent(nullptr);
+    pipeNet4->moveToThread(sio);
+
+    // Connect W3 to the SAME shared handler
+    connect(pipeNet4, &PipeNetwork::sendFireAndForget, this, &MainWindow::onFireAndForget);
+    sio->installDevice(0x54, pipeNet4);
+
 
     // -------------------------------------------------------
     // DEVICE $59: Clipboard (Y:)
@@ -393,8 +470,8 @@ MainWindow::~MainWindow()
 
     delete aspeqtSettings;
     delete sio;
-
     delete ui;
+    delete modemBridge;
 
     qDebug() << "!d" << tr("AspeQt stopped at %1.").arg(QDateTime::currentDateTime().toString());
     qInstallMessageHandler(0);
@@ -1236,9 +1313,54 @@ void MainWindow::on_actionOptions_triggered()
     for (int i = DISK_BASE_CDEVIC; i < (DISK_BASE_CDEVIC+DISK_COUNT); i++) {    // 0x31 - 0x3E
         deviceStatusChanged(i);
     }
-    
+
+    if (aspeqtSettings->isModemBridgeEnabled()) {
+        // 1. Create if missing
+        if (!modemBridge) {
+            modemBridge = new ModemBridge(this);
+
+            // Connect Status Messages (Info)
+            // Connect Status Messages (Info)
+            connect(modemBridge, &ModemBridge::statusMessage, this, [](const QString &msg) {
+                // Use qDebug so the message handler catches it and colors it Blue (!i)
+                qDebug() << "!i [ModemBridge]" << msg;
+            });
+
+            // Connect Error Messages (Error)
+            connect(modemBridge, &ModemBridge::errorOccurred, this, [](const QString &err) {
+                // Use qCritical so the message handler catches it and colors it Red (!e)
+                qCritical() << "!e [ModemBridge]" << err;
+            });
+        }
+
+        // 2. Update Configuration (in case Port/Baud changed)
+        // Note: setSerialPort calls stop() internally if it's already running, so this is safe.
+
+        updatePhonebookMenuState();
+
+        modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
+                                   aspeqtSettings->modemBridgeBaudRate());
+        modemBridge->setFlowControl(aspeqtSettings->modemBridgeFlowControl());
+        modemBridge->setLocalEcho(aspeqtSettings->modemBridgeLocalEcho());
+        modemBridge->setTcpMode(aspeqtSettings->modemBridgeSshEnabled());
+
+        // Load Phonebook path
+        QString pbPath = aspeqtSettings->modemBridgePhonebookPath();
+        if (pbPath.isEmpty()) pbPath = g_aspeQtAppPath + "/phonebook.xml";
+        modemBridge->setPhonebookPath(pbPath);
+        modemBridge->start();
+
+    }
+    else {
+        // User Unchecked the box -> STOP THE BRIDGE (Drops DTR/RTS)
+        if (modemBridge) {
+            modemBridge->stop();
+        }
+    }
+
     ui->actionStartEmulation->trigger();
 }
+
 
 void MainWindow::changeFonts()
 {
@@ -1259,14 +1381,16 @@ void MainWindow::on_actionAbout_triggered()
 //
 void MainWindow::on_actionDocumentation_triggered()
 {
-    QString dir = aspeqtSettings->lastSessionDir();
+    // Uses the helper function you added at the bottom of the file
+    // to extract the HTML from resources and open it in Chrome/Edge.
+    openResourceHtml(":/documentation/AspeQt User Manual-English.html");
 
+    // Uncheck the menu item immediately since it's not a toggle anymore
     if (ui->actionDocumentation->isChecked()) {
-        docDisplayWindow->show();
-    } else {
-        docDisplayWindow->hide();
+        ui->actionDocumentation->setChecked(false);
     }
 }
+
 //
 void MainWindow::docDisplayWindowClosed()
 {
@@ -1485,6 +1609,8 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
     bool isDir = false;
     bool ask   = true;
 
+
+
     if (fileName.isEmpty()) {
         if(g_rclFileName.left(1) == "*") emit fileMounted(false);  //
         return;
@@ -1519,6 +1645,7 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 
         bool happy = aspeqtSettings->mountedImageSetting(no).isHappyMode;
         disk->setHappyMode(happy);
+        diskWidgets[no]->setHappyMode(happy);
 
         PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(PCLINK_CDEVIC));
         if(isDir || pclink->hasLink(no+1))
@@ -1949,21 +2076,33 @@ void MainWindow::on_actionOpenSession_triggered()
 {
     QString dir = aspeqtSettings->lastSessionDir();
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open session"),
-                                 dir,
-                                 tr(
-                                         "AspeQt sessions (*.aspeqt);;"
-                                         "All files (*)"));
+                                                    dir,
+                                                    tr(
+                                                        "AspeQt sessions (*.aspeqt);;"
+                                                        "All files (*)"));
     if (fileName.isEmpty()) {
         return;
     }
-// First eject existing images, then mount session images and restore mainwindow position and size //
+
+    // --- [FIX 1] STOP EMULATION & PREVENT AUTO-RESTART ---
+    // We must ensure the SIO thread is dead before we start ripping out drives.
+    // By stopping it here, the subsequent call to EjectAll will see it's
+    // already stopped and WON'T try to restart it automatically.
+    bool wasRunning = ui->actionStartEmulation->isChecked();
+    if (wasRunning) {
+        ui->actionStartEmulation->trigger(); // Stop
+        sio->wait(); // Block until thread is truly finished
+        qApp->processEvents();
+    }
+
+    // Eject existing images (Safe now because emulation is off)
     MainWindow::on_actionEjectAll_triggered();
 
     aspeqtSettings->setLastSessionDir(QFileInfo(fileName).absolutePath());
     g_sessionFile = QFileInfo(fileName).fileName();
     g_sessionFilePath = QFileInfo(fileName).absolutePath();
 
-// Pass Session file name, path and MainWindow title to AspeQtSettings //
+    // Pass Session file name, path and MainWindow title to AspeQtSettings
     aspeqtSettings->setSessionFile(g_sessionFile, g_sessionFilePath);
     aspeqtSettings->setMainWindowTitle(g_mainWindowTitle);
 
@@ -1972,15 +2111,30 @@ void MainWindow::on_actionOpenSession_triggered()
     setWindowTitle(g_mainWindowTitle + tr(" -- Session: ") + g_sessionFile);
     setGeometry(aspeqtSettings->lastHorizontalPos(), aspeqtSettings->lastVerticalPos(), aspeqtSettings->lastWidth() , aspeqtSettings->lastHeight());
 
-    for (int i = 0; i < DISK_COUNT; i++) {  //
+    // Mount the new images
+    for (int i = 0; i < DISK_COUNT; i++) {
         AspeQtSettings::ImageSettings is;
         is = aspeqtSettings->mountedImageSetting(i);
-        mountFile(i, is.fileName, is.isWriteProtected);
+        // Only attempt mount if filename is valid
+        if (!is.fileName.isEmpty()) {
+            mountFile(i, is.fileName, is.isWriteProtected);
+        }
     }
-    g_D9DOVisible =  aspeqtSettings->D9DOVisible();
-    on_actionHideShowDrives_triggered();
+
+    // --- [FIX 2] CORRECT VISIBILITY RESTORATION ---
+    // OLD BUG: on_actionHideShowDrives_triggered() is a TOGGLE.
+    // If the setting was TRUE, calling it set it to FALSE.
+    // We must set the state directly instead.
+    g_D9DOVisible = aspeqtSettings->D9DOVisible();
+    showHideDrives();
+
+    // Now that everything is safe and loaded, we can restart emulation
+    // (setSession will trigger the Start action)
     setSession();
 }
+
+
+
 void MainWindow::on_actionSaveSession_triggered()
 {
     QString dir = aspeqtSettings->lastSessionDir();
@@ -1992,6 +2146,14 @@ void MainWindow::on_actionSaveSession_triggered()
     if (fileName.isEmpty()) {
         return;
     }
+
+    // --- [FIX] FORCE EXTENSION ---
+    // QFileDialog often returns the exact string typed by the user.
+    // If they forgot ".aspeqt", we must append it so the Open dialog can find it later.
+    if (!fileName.endsWith(".aspeqt", Qt::CaseInsensitive)) {
+        fileName += ".aspeqt";
+    }
+
     aspeqtSettings->setLastSessionDir(QFileInfo(fileName).absolutePath());
 
 // Save mainwindow position and size to session file //
@@ -2188,5 +2350,103 @@ void MainWindow::updateDownloadProgress(qint64 bytesRead, qint64 totalBytes)
         dlProgressBar->setFormat(tr("Downloading: %1").arg(sizeText));
     } else {
         dlProgressBar->setFormat(tr("Downloading..."));
+    }
+}
+
+
+void MainWindow::on_actionPhonebook_triggered()
+{
+    // 1. Determine path (with fallback)
+    QString pbPath = aspeqtSettings->modemBridgePhonebookPath();
+
+    if (pbPath.isEmpty()) {
+        return;
+    }
+
+    // 2. Open Phone Directory Dialog
+    PhoneDirectory pd(this);
+    pd.loadFromFile(pbPath);
+
+    if (pd.exec() == QDialog::Accepted) {
+        BbsEntry entry = pd.getSelectedEntry();
+
+        // FIX: Check for Name, not IP (We need the Name for the lookup)
+        if (!entry.name.isEmpty()) {
+
+            // 3. Safety Check: Is Bridge Enabled?
+            if (!modemBridge || !aspeqtSettings->isModemBridgeEnabled()) {
+                QMessageBox::warning(this, tr("Modem Bridge"),
+                                     tr("The Modem Bridge is currently disabled in Options.\n"
+                                        "Please enable it in Tools -> Options -> Modem Bridge to dial."));
+                return;
+            }
+
+            modemBridge->dial(entry.name);
+        }
+    }
+}
+
+
+void MainWindow::onFireAndForget(QString urlStr, QByteArray data)
+{
+    // 1. Create a Manager (parented to qApp so it cleans up automatically)
+    QNetworkAccessManager *manager = new QNetworkAccessManager(QCoreApplication::instance());
+
+    QUrl url(urlStr);
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "text/plain");
+
+    // 2. Choose POST or GET based on data presence
+    QNetworkReply *reply;
+    if (!data.isEmpty()) {
+        reply = manager->post(req, data);
+    } else {
+        reply = manager->get(req);
+    }
+
+    // 3. Handle Completion & Cleanup
+    connect(reply, &QNetworkReply::finished, [reply, manager, urlStr](){
+        if (reply->error() != QNetworkReply::NoError) {
+            qWarning() << "!e" << "[W:] Background Network Error:" << urlStr << reply->errorString();
+        } else {
+            qDebug() << "!n" << "[W:] Background Success:" << urlStr;
+        }
+        reply->deleteLater();
+        manager->deleteLater(); // Destroy manager when the reply is done
+    });
+}
+
+void MainWindow::updatePhonebookMenuState()
+{
+    QString pbPath = aspeqtSettings->modemBridgePhonebookPath();
+
+    // Disable the menu action if string is empty
+    ui->actionPhonebook->setEnabled(!pbPath.isEmpty());
+
+    // Optional: Tooltip explanation
+    if (pbPath.isEmpty()) {
+        ui->actionPhonebook->setToolTip(tr("Phonebook disabled. Set XML path in Options -> Modem Bridge."));
+    } else {
+        ui->actionPhonebook->setToolTip(tr("Open BBS Phonebook"));
+    }
+}
+
+void MainWindow::openResourceHtml(const QString &resourcePath)
+{
+    // 1. Define where to extract (User's Temp Folder)
+    QString tempPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+    QString fileName = QFileInfo(resourcePath).fileName();
+    QString targetPath = tempPath + "/" + fileName;
+
+    // 2. Copy the file from internal QRC to real Disk
+    // (Only if it doesn't exist or we want to overwrite to ensure freshness)
+    QFile::remove(targetPath);
+    if (QFile::copy(resourcePath, targetPath)) {
+
+        // 3. Launch the real file in Chrome/Edge
+        QDesktopServices::openUrl(QUrl::fromLocalFile(targetPath));
+
+    } else {
+        QMessageBox::warning(this, tr("Error"), tr("Could not extract manual to: ") + targetPath);
     }
 }

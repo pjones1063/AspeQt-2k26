@@ -1,4 +1,4 @@
- cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.16)
 
 project(AspeQt VERSION 1.0.0 LANGUAGES CXX)
 
@@ -33,7 +33,8 @@ if(NOT TARGET ZLIB::ZLIB)
 endif()
 
 # --- 2. Find Qt 6 Components ---
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent)
+# FIX: Added 'Xml' to the list of required components
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml)
 
 # --- 3. Find ALL source files in src/ ---
 file(GLOB_RECURSE PROJECT_SOURCES
@@ -80,6 +81,7 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::SerialPort
     Qt6::PrintSupport
     Qt6::Concurrent
+    Qt6::Xml
     ZLIB::ZLIB
 )
 

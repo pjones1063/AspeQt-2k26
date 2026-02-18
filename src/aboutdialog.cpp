@@ -18,10 +18,9 @@ AboutDialog::AboutDialog(QWidget *parent, QString version) :
     flags = flags & (~Qt::WindowContextHelpButtonHint);
     setWindowFlags(flags);
     m_ui->setupUi(this);
+    resize(600, 500);
     m_ui->versionLabel->setText(tr("version %1").arg(version));
     m_ui->textBrowser->setSource(*new QUrl(tr("qrc:/documentation/about.html")));
-
-    //connect(this, SIGNAL(accepted()), this, SLOT(AboutDialog_accepted()));
 }
 
 AboutDialog::~AboutDialog()

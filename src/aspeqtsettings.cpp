@@ -106,6 +106,20 @@ AspeQtSettings::AspeQtSettings()
     mRestoreTnfsLocation = mSettings->value("RestoreTnfsLocation", true).toBool();
     mLastBootDos = mSettings->value("LastBootDos", ":/boot_templates/$bootmyd").toString();
     mDisablePicoHiSpeed = mSettings->value("DisablePicoHiSpeed", false).toBool();
+    mTranslateEolOnPost = mSettings->value("PipeNetwork/TranslateEolOnPost", true).toBool();
+    mTranslateEolOnGet = mSettings->value("PipeNetwork/TranslateEolOnGet", false).toBool();
+
+    // Modem Bridge Defaults
+    mModemBridgeEnabled = mSettings->value("ModemBridge/Enabled", false).toBool();
+    mModemBridgePortName = mSettings->value("ModemBridge/PortName", "").toString();
+    mModemBridgeBaudRate = mSettings->value("ModemBridge/BaudRate", 9600).toInt();
+    mModemBridgeFlowControl = mSettings->value("ModemBridge/FlowControl", true).toBool(); // Default to HW for 850
+    mModemBridgeSshEnabled = mSettings->value("ModemBridge/SshEnabled", false).toBool();
+    mModemBridgeLocalEcho = mSettings->value("ModemBridge/LocalEcho", false).toBool();
+    mModemBridgePhonebookPath = mSettings->value("ModemBridge/PhonebookPath", "").toString();
+
+    // RS232
+    mEnableRDevice = mSettings->value("EnableRDevice", false).toBool(); // Default to OFF
 
 }
 
@@ -166,8 +180,17 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("ExplorerOnTop", mExplorerOnTop);
     s.setValue("EnableShadeByDefault", mEnableShade);
     s.setValue("RestoreTnfsLocation", mRestoreTnfsLocation);
-    s.setValue("LastBootDos", mLastBootDos);        // NEW
-    s.setValue("DisablePicoHiSpeed", mDisablePicoHiSpeed); // NEW
+    s.setValue("LastBootDos", mLastBootDos);
+    s.setValue("DisablePicoHiSpeed", mDisablePicoHiSpeed);
+    s.setValue("TranslateEolOnPost", mTranslateEolOnPost);
+    s.setValue("TranslateEolOnGet", mTranslateEolOnGet);
+    s.setValue("ModemBridge/Enabled", mModemBridgeEnabled);
+    s.setValue("ModemBridge/PortName", mModemBridgePortName);
+    s.setValue("ModemBridge/BaudRate", mModemBridgeBaudRate);
+    s.setValue("ModemBridge/FlowControl", mModemBridgeFlowControl);
+    s.setValue("ModemBridge/SshEnabled", mModemBridgeSshEnabled);
+    s.setValue("ModemBridge/LocalEcho", mModemBridgeLocalEcho);
+    s.setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
 
     s.endGroup();
     //
@@ -224,8 +247,20 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mExplorerOnTop = s.value("ExplorerOnTop", false).toBool();
     mEnableShade = s.value("EnableShadeByDefault", true).toBool();
     mRestoreTnfsLocation = s.value("RestoreTnfsLocation", true).toBool();
-    mLastBootDos = s.value("LastBootDos", ":/boot_templates/$bootmyd").toString(); // NEW
-    mDisablePicoHiSpeed = s.value("DisablePicoHiSpeed", false).toBool();      // NEW
+    mLastBootDos = s.value("LastBootDos", ":/boot_templates/$bootmyd").toString();
+    mDisablePicoHiSpeed = s.value("DisablePicoHiSpeed", false).toBool();
+    mTranslateEolOnPost = s.value("TranslateEolOnPost", true).toBool();
+    mTranslateEolOnGet = s.value("TranslateEolOnGet", false).toBool(); 
+    mModemBridgeEnabled = s.value("ModemBridge/Enabled", false).toBool();
+    mModemBridgePortName = s.value("ModemBridge/PortName", "").toString();
+    mModemBridgeBaudRate = s.value("ModemBridge/BaudRate", 9600).toInt();
+    mModemBridgeFlowControl = s.value("ModemBridge/FlowControl", true).toBool();
+    mModemBridgeSshEnabled = s.value("ModemBridge/SshEnabled", false).toBool();
+    mModemBridgeLocalEcho = s.value("ModemBridge/LocalEcho", false).toBool();
+    mModemBridgePhonebookPath = s.value("ModemBridge/PhonebookPath", "").toString();
+
+    // Add near other settings loads
+    mEnableRDevice = mSettings->value("EnableRDevice", false).toBool(); // Default to OFF
 
     s.endGroup();
     //
@@ -882,3 +917,71 @@ void AspeQtSettings::setDisablePicoHiSpeed(bool disable)
     mDisablePicoHiSpeed = disable;
     if(mSessionFileName == "") mSettings->setValue("DisablePicoHiSpeed", mDisablePicoHiSpeed);
 }
+
+bool AspeQtSettings::translateEolOnPost() { return mTranslateEolOnPost; }
+void AspeQtSettings::setTranslateEolOnPost(bool enabled) {
+    mTranslateEolOnPost = enabled;
+    if(mSessionFileName == "") mSettings->setValue("PipeNetwork/TranslateEolOnPost", enabled);
+}
+
+bool AspeQtSettings::translateEolOnGet() { return mTranslateEolOnGet; }
+void AspeQtSettings::setTranslateEolOnGet(bool enabled) {
+    mTranslateEolOnGet = enabled;
+    if(mSessionFileName == "") mSettings->setValue("PipeNetwork/TranslateEolOnGet", enabled);
+}
+
+bool AspeQtSettings::enableRDevice()
+{
+    return mEnableRDevice;
+}
+
+// Modem Bridge Implementation
+bool AspeQtSettings::isModemBridgeEnabled() { return mModemBridgeEnabled; }
+void AspeQtSettings::setModemBridgeEnabled(bool enabled) {
+    mModemBridgeEnabled = enabled;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/Enabled", mModemBridgeEnabled);
+}
+
+QString AspeQtSettings::modemBridgePortName() { return mModemBridgePortName; }
+void AspeQtSettings::setModemBridgePortName(const QString &name) {
+    mModemBridgePortName = name;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/PortName", mModemBridgePortName);
+}
+
+int AspeQtSettings::modemBridgeBaudRate() { return mModemBridgeBaudRate; }
+void AspeQtSettings::setModemBridgeBaudRate(int baud) {
+    mModemBridgeBaudRate = baud;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/BaudRate", mModemBridgeBaudRate);
+}
+
+bool AspeQtSettings::modemBridgeFlowControl() { return mModemBridgeFlowControl; }
+void AspeQtSettings::setModemBridgeFlowControl(bool enabled) {
+    mModemBridgeFlowControl = enabled;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/FlowControl", mModemBridgeFlowControl);
+}
+
+bool AspeQtSettings::modemBridgeSshEnabled() { return mModemBridgeSshEnabled; }
+void AspeQtSettings::setModemBridgeSshEnabled(bool enabled) {
+    mModemBridgeSshEnabled = enabled;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/SshEnabled", mModemBridgeSshEnabled);
+}
+
+bool AspeQtSettings::modemBridgeLocalEcho() { return mModemBridgeLocalEcho; }
+void AspeQtSettings::setModemBridgeLocalEcho(bool enabled) {
+    mModemBridgeLocalEcho = enabled;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/LocalEcho", mModemBridgeLocalEcho);
+}
+
+void AspeQtSettings::setEnableRDevice(bool enabled)
+{
+    mEnableRDevice = enabled;
+    if(mSessionFileName == "") mSettings->setValue("EnableRDevice", mEnableRDevice);
+}
+
+// Implementation:
+QString AspeQtSettings::modemBridgePhonebookPath() { return mModemBridgePhonebookPath; }
+void AspeQtSettings::setModemBridgePhonebookPath(const QString &path) {
+    mModemBridgePhonebookPath = path;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
+}
+

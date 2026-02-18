@@ -442,18 +442,6 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 
             if (!data.isEmpty()) {
 
-                bool validDevice = false;
-                for(int i=0; i < mSioDevices.size(); i++) {
-                    if (data.at(0) == mSioDevices[i]) {
-                        validDevice = true;
-                        break;
-                    }
-                }
-                if (!validDevice) {
-                    data.clear();
-                    continue;
-                }
-
 //            qDebug() << "!d" << tr("DBG -- Serial Port, data not empty: [%1]").arg(data.data());
 
                 if(MASK != EV_RXCHAR) { //
@@ -473,7 +461,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             } else {
                 retries++;
                 totalRetries++;
-                 if (retries == 2) {
+                if (retries == 2) {
                     retries = 0;
                     if (mHighSpeed) {
                         setNormalSpeed();
