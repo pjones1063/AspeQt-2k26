@@ -112,7 +112,13 @@ private:
 
     ModemBridge *modemBridge;
 
-
+    QToolButton *btnModemToggle; // On/Off Icon
+    QToolButton *btnMacroUser;   // Auto-User (ESC-U)
+    QToolButton *btnMacroPass;   // Auto-Pass (ESC-P)
+    QToolButton *btnHangup;      // Hangup Command
+    QLabel *ledRx;               // Green "Download" LED
+    QLabel *ledTx;               // Red "Upload" LED
+    QTimer *ledResetTimer;       // Turns LEDs off after 50m
 
     void setSession();  //
     void updateRecentFileActions();
@@ -211,7 +217,14 @@ private slots:
     void saveMiniWindowGeometry();
     void logChanged(QString text);
     void changeFonts();
-    void on_actionHappyMode_triggered(int deviceId, bool enabled); 
+    void on_actionHappyMode_triggered(int deviceId, bool enabled);
+
+    void blinkRx();
+    void blinkTx();
+    void resetLeds();
+
+    // [NEW] Button Actions
+    void onModemToggleClicked();
 
 };
 

@@ -85,7 +85,7 @@
      <string>Hayes Modem Emulator</string>
     </property>
     <property name="flags">
-     <set>ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+     <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
     </property>
    </item>
    <item>

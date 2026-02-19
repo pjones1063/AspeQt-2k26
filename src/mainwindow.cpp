@@ -277,6 +277,85 @@ MainWindow::MainWindow(QWidget *parent)
     opacitySlider->hide();
 
 
+    // A. Create LED Widgets (Simulated using CSS)
+    // ------------------------------------------------
+    ledRx = new QLabel(this);
+    ledRx->setFixedSize(14, 14);
+    ledRx->setToolTip(tr("RX: Data Receiving from Internet"));
+    // Default Style: Dark Green Circle
+    ledRx->setStyleSheet("min-width: 12px; min-height: 12px; border-radius: 7px; background-color: #004400; border: 1px solid #555;");
+
+    ledTx = new QLabel(this);
+    ledTx->setFixedSize(14, 14);
+    ledTx->setToolTip(tr("TX: Data Sending from Atari"));
+    // Default Style: Dark Red Circle
+    ledTx->setStyleSheet("min-width: 12px; min-height: 12px; border-radius: 7px; background-color: #440000; border: 1px solid #555;");
+
+    ledResetTimer = new QTimer(this);
+    ledResetTimer->setInterval(75); // Blink speed (ms)
+    connect(ledResetTimer, &QTimer::timeout, this, &MainWindow::resetLeds);
+
+
+    // B. Create Control Buttons (Using QToolButton for ease)
+    // ------------------------------------------------
+    auto setupBtn = [](QToolButton* btn, QString iconName, QString text, QString tip) {
+        // Try to load icon, fallback to text if missing
+        QIcon icon(iconName);
+        if (icon.isNull()) btn->setText(text);
+        else btn->setIcon(icon);
+
+        btn->setToolTip(tip);
+        btn->setAutoRaise(true); // Makes it look flat like the label icons
+        btn->setFixedSize(22, 22);
+        btn->setIconSize(QSize(16, 16));
+    };
+
+    // 1. Modem Toggle
+    btnModemToggle = new QToolButton(this);
+    setupBtn(btnModemToggle, ":/icons/silk-icons/icons/telephone.png", "M", tr("Toggle Modem Bridge On/Off"));
+    btnModemToggle->setCheckable(true);
+    connect(btnModemToggle, &QToolButton::clicked, this, &MainWindow::onModemToggleClicked);
+
+    // 2. Hangup
+    btnHangup = new QToolButton(this);
+    setupBtn(btnHangup, ":/icons/silk-icons/icons/disconnect.png", "H", tr("Hangup (NO CARRIER)"));
+    connect(btnHangup, &QToolButton::clicked, [this]() {
+        if (modemBridge) modemBridge->hangup();
+    });
+
+    // 3. Macros
+    btnMacroUser = new QToolButton(this);
+    setupBtn(btnMacroUser, ":/icons/silk-icons/icons/user.png", "U", tr("Send Auto-User (ESC-U)"));
+    connect(btnMacroUser, &QToolButton::clicked, [this]() {
+        if (modemBridge) modemBridge->injectMacro('U');
+    });
+
+    btnMacroPass = new QToolButton(this);
+    setupBtn(btnMacroPass, ":/icons/silk-icons/icons/key.png", "P", tr("Send Auto-Pass (ESC-P)"));
+    connect(btnMacroPass, &QToolButton::clicked, [this]() {
+        if (modemBridge) modemBridge->injectMacro('P');
+    });
+
+
+    // C. Add to Status Bar
+    // ------------------------------------------------
+    // Add a spacer label or separator first if you like
+    ui->statusBar->addPermanentWidget(new QLabel(" ", this));
+
+    // Add Widgets (Order: Toggle | LEDs | Macros)
+    ui->statusBar->addPermanentWidget(btnModemToggle);
+    ui->statusBar->addPermanentWidget(ledRx);
+    ui->statusBar->addPermanentWidget(ledTx);
+    ui->statusBar->addPermanentWidget(btnHangup);
+    ui->statusBar->addPermanentWidget(btnMacroUser);
+    ui->statusBar->addPermanentWidget(btnMacroPass);
+
+    // Sync initial state
+    btnModemToggle->setChecked(aspeqtSettings->isModemBridgeEnabled());
+
+
+
+
     sio = new SioWorker();
 
     // -------------------------------------------------------
@@ -311,6 +390,10 @@ MainWindow::MainWindow(QWidget *parent)
 
         modemBridge->start();
     }
+
+
+    connect(modemBridge, &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
+    connect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
 
     updatePhonebookMenuState();
 
@@ -2365,29 +2448,24 @@ void MainWindow::on_actionPhonebook_triggered()
         return;
     }
 
-    // 2. Open Phone Directory Dialog
     PhoneDirectory pd(this);
     pd.loadFromFile(pbPath);
 
     if (pd.exec() == QDialog::Accepted) {
         BbsEntry entry = pd.getSelectedEntry();
 
-        // FIX: Check for Name, not IP (We need the Name for the lookup)
         if (!entry.name.isEmpty()) {
-
-            // 3. Safety Check: Is Bridge Enabled?
             if (!modemBridge || !aspeqtSettings->isModemBridgeEnabled()) {
-                QMessageBox::warning(this, tr("Modem Bridge"),
-                                     tr("The Modem Bridge is currently disabled in Options.\n"
-                                        "Please enable it in Tools -> Options -> Modem Bridge to dial."));
+                // ... error handling ...
                 return;
             }
 
-            modemBridge->dial(entry.name);
+            // [FIX] Pass the FULL entry, not just the name!
+            // This ensures the Login/Pass we just edited is used.
+            modemBridge->dial(entry);
         }
     }
 }
-
 
 void MainWindow::onFireAndForget(QString urlStr, QByteArray data)
 {
@@ -2450,5 +2528,57 @@ void MainWindow::openResourceHtml(const QString &resourcePath)
 
     } else {
         QMessageBox::warning(this, tr("Error"), tr("Could not extract manual to: ") + targetPath);
+    }
+}
+
+void MainWindow::blinkRx() {
+    // Bright Green
+    ledRx->setStyleSheet("min-width: 12px; min-height: 12px; border-radius: 7px; background-color: #00FF00; border: 1px solid #005500;");
+    ledResetTimer->start();
+}
+
+void MainWindow::blinkTx() {
+    // Bright Red
+    ledTx->setStyleSheet("min-width: 12px; min-height: 12px; border-radius: 7px; background-color: #FF0000; border: 1px solid #550000;");
+    ledResetTimer->start();
+}
+
+void MainWindow::resetLeds() {
+    // Return to Dark (Off) state
+    ledRx->setStyleSheet("min-width: 12px; min-height: 12px; border-radius: 7px; background-color: #004400; border: 1px solid #555;");
+    ledTx->setStyleSheet("min-width: 12px; min-height: 12px; border-radius: 7px; background-color: #440000; border: 1px solid #555;");
+}
+
+void MainWindow::onModemToggleClicked() {
+    bool enabled = btnModemToggle->isChecked();
+
+    // 1. Update Settings
+    aspeqtSettings->setModemBridgeEnabled(enabled);
+
+    // 2. Start/Stop Bridge
+    if (modemBridge) {
+        if (enabled) {
+            // Reload settings in case they changed in Options
+            modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
+                                       aspeqtSettings->modemBridgeBaudRate());
+            modemBridge->start();
+
+            // Re-connect signals just to be safe (Qt handles duplicates automatically usually, but unique connection is safer)
+            disconnect(modemBridge, &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
+            disconnect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
+            connect(modemBridge, &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
+            connect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
+        } else {
+            modemBridge->stop();
+        }
+    }
+
+    // 3. Update Visuals
+    if (enabled) {
+        btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/telephone_go.png")); // Or similar "Active" icon
+        btnModemToggle->setToolTip(tr("Modem Bridge: ON"));
+    } else {
+        btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/telephone_delete.png")); // Or "Inactive" icon
+        btnModemToggle->setToolTip(tr("Modem Bridge: OFF"));
     }
 }

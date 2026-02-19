@@ -21,6 +21,10 @@ public:
     void setLocalEcho(bool enable);
     void dial(const QString &target);
     void setPhonebookPath(const QString &path);
+    void dial(const BbsEntry &entry);
+    void hangup();
+    void injectMacro(char macroType);
+
 
 public slots:
     void start();
@@ -29,6 +33,8 @@ public slots:
 signals:
     void statusMessage(const QString &msg); // To log to the AspeQt log window
     void errorOccurred(const QString &err);
+    void rxActivity();
+    void txActivity();
 
 private slots:
     void onSerialDataReceived();
@@ -56,6 +62,7 @@ private:
 
     void processAtCommand(const QByteArray &cmd);
     void sendToSerial(const QByteArray &data);
+    void connectTo(const QString &host, int port);
 
     QList<BbsEntry> m_phonebook;
     BbsEntry m_currentConnection; // Stores info for the active session
@@ -63,6 +70,8 @@ private:
 
     void loadPhonebook(const QString &path);
     BbsEntry findBbsByName(const QString &name);
+
+
 };
 
 #endif // MODEMBRIDGE_H

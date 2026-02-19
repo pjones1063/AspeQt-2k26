@@ -61,6 +61,8 @@ void ModemBridge::onSerialDataReceived() {
     QByteArray data = m_serial->readAll();
     if (!m_isActive) return;
 
+     emit txActivity();
+
     // ----------------------------------------
     // MODE 1: CONNECTED (Data Mode)
     // ----------------------------------------
@@ -164,27 +166,20 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
 
     // --- DIAL (ATDT) ---
     if (upperCmd.startsWith("D")) {
-
-        // [FIX] Auto-Disconnect if already online
-        if (m_socket->state() != QAbstractSocket::UnconnectedState) {
-            emit statusMessage("Modem Bridge: Disconnecting previous session...");
-            m_socket->abort(); // Immediate hard close
-            m_isConnected = false;
-        }
-
         QString target = upperCmd.mid(1).trimmed();
         if (target.startsWith("T")) target = target.mid(1).trimmed();
 
         QString host = target;
         int port = 23;
+        bool found = false;
 
         // 1. Phonebook Lookup
-        bool found = false;
         for (const BbsEntry &entry : m_phonebook) {
+            // Compare against internal loaded phonebook
             if (entry.name.compare(target, Qt::CaseInsensitive) == 0) {
                 host = entry.ip;
                 port = entry.port;
-                m_currentConnection = entry; // Save for Macros
+                m_currentConnection = entry; // Load saved macros
                 found = true;
                 break;
             }
@@ -192,15 +187,17 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
 
         // 2. Raw Parse
         if (!found) {
-            m_currentConnection = BbsEntry();
+            m_currentConnection = BbsEntry(); // Clear macros for manual dialing
             QStringList parts = target.split(':');
             host = parts[0];
             if (parts.size() > 1) port = parts[1].toInt();
         }
 
-        m_serial->write("\r\nDIALING...\r\n");
-        m_socket->connectToHost(host, port);
+        // 3. Connect
+        connectTo(host, port);
     }
+
+
     // --- HANGUP (ATH) ---
     else if (upperCmd.startsWith("H")) {
         if (m_socket->state() != QAbstractSocket::UnconnectedState) {
@@ -226,6 +223,14 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
     }
 }
 
+void ModemBridge::dial(const BbsEntry &entry) {
+    // 1. Direct injection of the fresh data!
+    m_currentConnection = entry;
+
+    // 2. Dial using the IP/Port from the entry
+    connectTo(entry.ip, entry.port);
+}
+
 
 void ModemBridge::onSocketConnected() {
     m_isConnected = true;
@@ -236,6 +241,8 @@ void ModemBridge::onSocketConnected() {
 
 void ModemBridge::onSocketDataReceived() {
     QByteArray data = m_socket->readAll();
+
+    emit rxActivity();
 
     if (!m_isTelnetMode) {
         // Raw Mode (good for SSH later)
@@ -284,6 +291,8 @@ void ModemBridge::onSocketDataReceived() {
         sendToSerial(filteredData);
     }
     */
+
+
 }
 
 
@@ -331,6 +340,18 @@ void ModemBridge::checkEscapeSequence() {
     }
 }
 
+void ModemBridge::connectTo(const QString &host, int port) {
+    // [FIX] Auto-Disconnect if already online
+    if (m_socket->state() != QAbstractSocket::UnconnectedState) {
+        emit statusMessage("Modem Bridge: Disconnecting previous session...");
+        m_socket->abort();
+        m_isConnected = false;
+    }
+
+    emit statusMessage(QString("Modem Bridge: Dialing %1:%2...").arg(host).arg(port));
+    m_serial->write("\r\nDIALING...\r\n");
+    m_socket->connectToHost(host, port);
+}
 
 
 void ModemBridge::setTcpMode(bool enableSsh) {
@@ -402,4 +423,48 @@ BbsEntry ModemBridge::findBbsByName(const QString &name) {
     return BbsEntry();
 }
 
+/* modembridge.cpp - Add to the end of the file */
 
+void ModemBridge::hangup() {
+    emit statusMessage("Modem Bridge: Manual Hangup requested.");
+
+    // Disconnect the socket if active
+    if (m_socket->state() != QAbstractSocket::UnconnectedState) {
+        m_socket->disconnectFromHost();
+    }
+
+    // Force state to false immediately (UI feedback)
+    m_isConnected = false;
+
+    // Note: onSocketDisconnected() will handle sending "NO CARRIER"
+    // to the serial port, so we don't need to double-send it here.
+}
+
+void ModemBridge::injectMacro(char macroType) {
+    // Safety Check: Can't type into a socket that isn't open
+    if (m_socket->state() != QAbstractSocket::ConnectedState) {
+        emit errorOccurred("Modem Bridge: Cannot send macro - Not Connected.");
+        return;
+    }
+
+    QString textToSend;
+    QString logMsg;
+
+    if (macroType == 'U' || macroType == 'u') {
+        textToSend = m_currentConnection.login;
+        logMsg = "Auto-User";
+    }
+    else if (macroType == 'P' || macroType == 'p') {
+        textToSend = m_currentConnection.password;
+        logMsg = "Auto-Pass";
+    }
+
+    if (!textToSend.isEmpty()) {
+        m_socket->write(textToSend.toUtf8());
+        m_socket->write("\r"); // Send Return key
+        emit statusMessage(QString("Modem Bridge: Sent %1 macro.").arg(logMsg));
+        emit txActivity(); // Flash the TX LED
+    } else {
+        emit statusMessage(QString("Modem Bridge: %1 macro is empty.").arg(logMsg));
+    }
+}

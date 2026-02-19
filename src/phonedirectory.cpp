@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QDialogButtonBox>
 #include <QDebug>
+#include <QToolButton>
 
 PhoneDirectory::PhoneDirectory(QWidget *parent) : QDialog(parent) {
     setWindowTitle(tr("BBS Phonebook"));
@@ -184,6 +185,7 @@ void PhoneDirectory::refreshList(const QString &filter) {
     }
 }
 
+
 void PhoneDirectory::onEditClicked() {
     QTreeWidgetItem *item = m_tree->currentItem();
     if (!item) return;
@@ -203,14 +205,38 @@ void PhoneDirectory::onEditClicked() {
     QLineEdit *ipEdit = new QLineEdit(entry.ip);
     QLineEdit *portEdit = new QLineEdit(QString::number(entry.port));
     QLineEdit *userEdit = new QLineEdit(entry.login);
+
+    // --- NEW: PASSWORD FIELD & SHOW BUTTON ---
+    QHBoxLayout *passLayout = new QHBoxLayout();
+    passLayout->setContentsMargins(0, 0, 0, 0); // Keep it flush with the form
+
     QLineEdit *passEdit = new QLineEdit(entry.password);
     passEdit->setEchoMode(QLineEdit::Password);
+
+    QToolButton *showPassBtn = new QToolButton(&dlg);
+    showPassBtn->setText(tr("Show"));
+    showPassBtn->setCheckable(true);
+
+    // Lambda to handle the toggle action seamlessly
+    connect(showPassBtn, &QToolButton::toggled, [passEdit, showPassBtn](bool checked) {
+        if (checked) {
+            passEdit->setEchoMode(QLineEdit::Normal);
+            showPassBtn->setText(tr("Hide"));
+        } else {
+            passEdit->setEchoMode(QLineEdit::Password);
+            showPassBtn->setText(tr("Show"));
+        }
+    });
+
+    passLayout->addWidget(passEdit);
+    passLayout->addWidget(showPassBtn);
+    // ------------------------------------------
 
     layout.addRow(tr("Name:"), nameEdit);
     layout.addRow(tr("Address:"), ipEdit);
     layout.addRow(tr("Port:"), portEdit);
     layout.addRow(tr("User ID:"), userEdit);
-    layout.addRow(tr("Password:"), passEdit);
+    layout.addRow(tr("Password:"), passLayout); // Add the sub-layout here instead of just the line edit
 
     QDialogButtonBox btns(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dlg);
     connect(&btns, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
@@ -232,6 +258,7 @@ void PhoneDirectory::onEditClicked() {
         item->setText(3, entry.login);
     }
 }
+
 
 void PhoneDirectory::onSaveClicked() {
     if (m_filePath.isEmpty()) return;
