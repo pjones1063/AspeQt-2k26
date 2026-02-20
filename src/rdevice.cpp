@@ -48,39 +48,49 @@ void RDevice::handleCommand(quint8 command, quint16 aux)
 }
 
 // --------------------------------------------------------------------------
-// Command Logic
+// SIO Command Handlers
 // --------------------------------------------------------------------------
 
 void RDevice::handlePollType1()
 {
-    // FIX: A poll must return ACK -> COMPLETE -> 4-byte status
+    // FIX: Restore full handshake for Command $3F (Read).
+    // The Atari expects ACK -> COMPLETE -> 4 Bytes of Data.
     if (!sio->port()->writeCommandAck()) return;
 
-    QByteArray idFrame(4, 0x00); // 850 ID is usually all zeros or $00,$00,$01,$00
+    // Standard 850 Status Response (4 bytes)
+    // 00 00 01 00 = "Device Ready / Version 1"
+    QByteArray idFrame;
+    idFrame.append((char)0x00);
+    idFrame.append((char)0x00);
+    idFrame.append((char)0x01);
+    idFrame.append((char)0x00);
+
+    // Send "Complete" to signal data is ready
     sio->port()->writeComplete();
+
+    // Send the Data Frame
     sio->port()->writeDataFrame(idFrame);
 
-    qDebug() << "!i [RDevice] Responded to Boot Poll ($3F)";
+    qDebug() << "!i [RDevice] Responded to Boot Poll ($3F) with Valid Status.";
 }
 
 void RDevice::handleDownloadDriver()
 {
     qDebug() << "!i [RDevice] Handling Download ($26)";
 
-    // 1. Handshake
     if (!sio->port()->writeCommandAck()) return;
 
-    // 2. Prepare Payload with Length Header
+    // Payload: Length Header + Driver
     QByteArray payload;
     quint16 len = sizeof(driver_850);
     payload.append((char)(len & 0xFF));         // LSB
     payload.append((char)((len >> 8) & 0xFF));  // MSB
     payload.append((const char*)driver_850, len);
 
-    // 3. FIX: DO NOT send writeComplete() here. The 850 sends Data immediately after ACK.
+    // Command $26 Protocol: ACK -> Data (No Complete byte)
     sio->port()->writeDataFrame(payload);
 
-    qDebug() << "!n [RDevice] Sent Handler (" << payload.size() << " bytes)";
+    qDebug() << "!n [RDevice] Sent Driver (" << payload.size() << " bytes).";
 }
 
 void RDevice::handleStatus()
@@ -129,7 +139,6 @@ void RDevice::handleWrite(quint16 len)
             tcpSocket->write(data);
         }
     }
-
     sio->port()->writeComplete();
 }
 
@@ -150,10 +159,8 @@ void RDevice::handleRead(quint16 len)
     sio->port()->writeDataFrame(chunk);
 }
 
-
-
 // --------------------------------------------------------------------------
-// AT Command / Networking Logic (Same as before)
+// AT Command / Networking Logic
 // --------------------------------------------------------------------------
 
 void RDevice::processAtCommand(const QString &cmd)
@@ -166,6 +173,12 @@ void RDevice::processAtCommand(const QString &cmd)
         tcpSocket->connectToHost(target, 23);
     } else if (upperCmd == "ATH") {
         tcpSocket->disconnectFromHost();
+        sendResultCode(0);
+    } else if (upperCmd == "ATE0") {
+        echoEnabled = false;
+        sendResultCode(0);
+    } else if (upperCmd == "ATE1") {
+        echoEnabled = true;
         sendResultCode(0);
     } else {
         sendResultCode(4); // ERROR

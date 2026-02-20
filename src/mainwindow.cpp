@@ -420,6 +420,7 @@ MainWindow::MainWindow(QWidget *parent)
     pcLink->moveToThread(sio);
     sio->installDevice(PCLINK_CDEVIC, pcLink);
 
+
     // -------------------------------------------------------
     // DEVICE $46: AspeQt Client (AspeCl)
     // -------------------------------------------------------
@@ -429,6 +430,7 @@ MainWindow::MainWindow(QWidget *parent)
     client->setParent(nullptr);
     client->moveToThread(sio);
     sio->installDevice(0x46, client);
+
 
     // -------------------------------------------------------
     // DEVICE $57: Pipe Network (W:)
@@ -536,6 +538,7 @@ MainWindow::MainWindow(QWidget *parent)
     smart->setParent(nullptr);
     smart->moveToThread(sio);
     sio->installDevice(SMART_CDEVIC, smart);
+    sio->installDevice(0x70, smart);
 
     textPrinterWindow = new TextPrinterWindow();
     docDisplayWindow = new DocDisplayWindow();

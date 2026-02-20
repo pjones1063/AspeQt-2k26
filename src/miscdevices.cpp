@@ -9,6 +9,7 @@
 #endif
 
 #include "miscdevices.h"
+#include "rdevice_handler.h"
 #include "aspeqtsettings.h"
 #include <QDateTime>
 #include <QtDebug>
@@ -436,6 +437,25 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
 {
     switch(command)
     {
+
+    case 0x3F: // --- CRITICAL: Type 3 Smart Poll ---
+    {
+        if (!sio->port()->writeCommandAck()) return;
+
+        // Signature for Relocatable Loader Request (AUX LSB 0x70)
+        if ((aux & 0xFF) == 0x70) {
+            // Serve the relocator stub program from rdevice_handler.h
+            QByteArray payload((const char*)relocator_stub, sizeof(relocator_stub));
+            sio->port()->writeComplete();
+            sio->port()->writeDataFrame(payload);
+            qDebug() << "!i [SmartDevice] Sent Relocator Stub to Atari.";
+        } else {
+            sio->port()->writeCommandNak();
+        }
+        break;
+    }
+
+
     case 0x93: // Get APE Time
     {
         if (!sio->port()->writeCommandAck()) return;

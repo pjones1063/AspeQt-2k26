@@ -114,6 +114,17 @@ void SioWorker::run()
         if (mustTerminate) {
             break;
         }
+
+        quint8 id   = (quint8)cmd[0];
+        quint8 c    = (quint8)cmd[1];
+        quint16 aux2 = (quint8)cmd[2] | ((quint8)cmd[3] << 8);
+
+        qDebug() << "!d [SIO Spy] ID:$" << QString::number(id, 16).rightJustified(2, '0')
+                 << "CMD:$" << QString::number(c, 16).rightJustified(2, '0')
+                 << "AUX:$" << QString::number(aux2, 16).rightJustified(4, '0');
+
+
+
         if (cmd.isEmpty()) {
             qCritical() << "!e" << tr("Cannot read command frame.");
             break;
