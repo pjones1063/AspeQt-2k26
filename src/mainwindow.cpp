@@ -9,6 +9,7 @@
 #include <QLayout>
 #include "tnfsbrowser.h"
 #include "tnfsimage.h"
+#include "rdevice.h"
 
 #include "diskimage.h"
 #include "diskimagepro.h"
@@ -396,6 +397,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
 
     updatePhonebookMenuState();
+
+
+    // -------------------------------------------------------
+    //R: Device testing
+    // -------------------------------------------------------
+    RDevice *rDev = new RDevice(sio);
+    rDev->setParent(nullptr);
+    rDev->moveToThread(sio);
+    sio->installDevice(0x50, rDev);
+
+
 
     // -------------------------------------------------------
     // DEVICE $45: PCLINK
