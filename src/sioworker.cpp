@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QDateTime>
 #include <QtDebug>
+#include <QCoreApplication>
 
 /* SioDevice */
 SioDevice::SioDevice(SioWorker *worker)
@@ -107,9 +108,9 @@ void SioWorker::run()
     /* Process SIO commands until we're explicitly stopped */
     while (!mustTerminate) {
 
-//        qDebug() << "!d" << tr("DBG -- SIOWORKER...");
+        QCoreApplication::processEvents(); // <--- ADD THIS LINE
 
-        QByteArray cmd = mPort->readCommandFrame();
+       QByteArray cmd = mPort->readCommandFrame();
         if (mustTerminate) {
             break;
         }

@@ -13,7 +13,9 @@ public:
     explicit RDevice(SioWorker *worker);
     ~RDevice() override;
 
+    // SioDevice Override
     void handleCommand(quint8 command, quint16 aux) override;
+
     QString deviceName() override { return "R: Device (850 Emulation)"; }
 
 private slots:
@@ -30,29 +32,20 @@ private:
     QString    atCmdAccumulator;
     QTcpSocket *tcpSocket;
 
-    // --- ADDED THESE MISSING DECLARATIONS ---
     bool echoEnabled = true;
     bool verboseResponses = true;
-    void sendResultCode(int code);
-    // ----------------------------------------
-
-    // SIO Helpers
-    void sendAck();
-    void sendNak();
-    void sendComplete();
-    void sendFrame(const QByteArray &data);
-    quint8 calcChecksum(const QByteArray &data);
 
     // Command Handlers
-    void handlePollType1();
-    void handleDownloadDriver();
-    void handleStatus();
+    void handlePollType1();      // $3F
+    void handleDownloadDriver(); // $26
+    void handleStatus();         // $53
     void handleWrite(quint16 len);
     void handleRead(quint16 len);
 
-    // AT Command Logic
+    // AT Logic
     void processAtCommand(const QString &cmd);
     void sendAtResponse(const QString &text);
+    void sendResultCode(int code);
 };
 
 #endif // RDEVICE_H

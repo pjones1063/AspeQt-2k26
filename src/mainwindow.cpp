@@ -400,13 +400,16 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // -------------------------------------------------------
-    //R: Device testing
+    // R: Device testing
     // -------------------------------------------------------
     RDevice *rDev = new RDevice(sio);
     rDev->setParent(nullptr);
     rDev->moveToThread(sio);
     sio->installDevice(0x50, rDev);
 
+    RDevice *rDev2 = new RDevice(sio);
+    rDev2->moveToThread(sio);
+    sio->installDevice(0x4F, rDev2);
 
 
     // -------------------------------------------------------
