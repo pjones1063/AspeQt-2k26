@@ -1,5 +1,5 @@
 10 DIM U$(60), F$(100), D$(120), CMD$(20)
-20 U$="W1:http://10.5.5.12:5000"
+20 U$="W1:http://127.0.0.1:5000"
 
 100 PRINT CHR$(125)
 110 PRINT "--- ATARI SMART PORTAL ---"
@@ -19,7 +19,7 @@
 530 F$(LEN(F$)+1)=CMD$
 
 540 REM -- OPEN WITH FULL URL --
-550 OPEN #1, 4, 0, F$
+550 OPEN #1, 4, 1, F$
 
 600 TRAP 650
 610 INPUT #1, D$

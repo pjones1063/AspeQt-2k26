@@ -4,10 +4,10 @@
 40 U2$="W2:http://127.0.0.1:5000/device2"
 
 50 PRINT "1. OPENING W1..."
-60 OPEN #1, 8, 0, U1$
+60 OPEN #1, 8, 1, U1$
 
 70 PRINT "2. OPENING W2 (Concurrent)..."
-80 OPEN #2, 8, 0, U2$
+80 OPEN #2, 8, 1, U2$
 
 90 PRINT "3. WRITING TO BUFFERS..."
 100 PRINT #1;"Hello from Device 1 buffer"
@@ -33,5 +33,5 @@
 70 CMD$(LEN(CMD$)+1)=MSG$
 
 80 PRINT "SENDING: ";CMD$
-90 XIO 44,#1,0,0,CMD$
+90 XIO 44,#1,0,1,CMD$
 100 PRINT "DONE."
