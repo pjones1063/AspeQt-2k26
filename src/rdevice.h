@@ -12,11 +12,11 @@ class RDevice : public SioDevice
 public:
     explicit RDevice(SioWorker *worker);
     ~RDevice() override;
-
-    // SioDevice Override
     void handleCommand(quint8 command, quint16 aux) override;
-
+    void setEnabled(bool enable);
+    bool isEnabled() const { return m_isEnabled; }
     QString deviceName() override { return "R: Device (850 Emulation)"; }
+
 
 private slots:
     void onSocketConnected();
@@ -34,6 +34,7 @@ private:
 
     bool echoEnabled = true;
     bool verboseResponses = true;
+    bool m_isEnabled;
 
     // Command Handlers
     void handlePollType1();      // $3F

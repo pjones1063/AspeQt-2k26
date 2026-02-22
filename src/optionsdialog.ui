@@ -691,6 +691,16 @@ Disable for binary files.</string>
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="modemRBox">
+          <property name="toolTip">
+           <string>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</string>
+          </property>
+          <property name="text">
+           <string>Enable 850 Device  (R: to TCP)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLabel" name="modemPortLabel">
           <property name="text">
            <string>Bridge Serial Port:</string>

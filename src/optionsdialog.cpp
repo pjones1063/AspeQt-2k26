@@ -78,6 +78,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->modemFlowControlBox->setChecked(aspeqtSettings->modemBridgeFlowControl());
     m_ui->modemSshBox->setChecked(aspeqtSettings->modemBridgeSshEnabled());
     m_ui->modemLocalEchoBox->setChecked(aspeqtSettings->modemBridgeLocalEcho());
+    m_ui->modemRBox->setChecked(aspeqtSettings->enableRDevice());
 
     // Trigger initial state for Modem UI
     on_modemEnableBox_toggled(aspeqtSettings->isModemBridgeEnabled());
@@ -269,9 +270,12 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
     }
 }
 
-// Find the existing on_modemEnableBox_toggled and update it:
+
 void OptionsDialog::on_modemEnableBox_toggled(bool checked)
 {
+     if (checked) {
+        m_ui->modemRBox->setChecked(false);
+     }
     // 1. Manage UI State for Modem Bridge
     m_ui->modemPortComboBox->setEnabled(checked);
     m_ui->modemBaudComboBox->setEnabled(checked);
@@ -283,7 +287,7 @@ void OptionsDialog::on_modemEnableBox_toggled(bool checked)
 }
 
 
-void OptionsDialog::on_enableRDeviceBox_toggled(bool checked)
+void OptionsDialog::on_modemRBox_toggled(bool checked)
 {
     if (checked) {
         // 1. If R: Device is ON, turn Modem Bridge OFF

@@ -38,7 +38,7 @@ private slots:
     void OptionsDialog_accepted();
     void on_useEmulationCustomCasBaudBox_toggled(bool checked);
     void on_modemEnableBox_toggled(bool checked);
-    void on_enableRDeviceBox_toggled(bool checked);
+    void on_modemRBox_toggled(bool checked);
     void on_modemPhonebookBrowseBtn_clicked();
 };
 
