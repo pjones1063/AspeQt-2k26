@@ -2529,25 +2529,51 @@ void MainWindow::updatePhonebookMenuState()
     }
 }
 
+
+/* mainwindow.cpp */
+
 void MainWindow::openResourceHtml(const QString &resourcePath)
 {
     // 1. Define where to extract (User's Temp Folder)
     QString tempPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
     QString fileName = QFileInfo(resourcePath).fileName();
-    QString targetPath = tempPath + "/" + fileName;
 
-    // 2. Copy the file from internal QRC to real Disk
-    // (Only if it doesn't exist or we want to overwrite to ensure freshness)
-    QFile::remove(targetPath);
+    // Use toNativeSeparators for better Windows compatibility
+    QString targetPath = QDir::toNativeSeparators(tempPath + "/" + fileName);
+
+    QFile targetFile(targetPath);
+
+    // 2. Handle Existing File
+    if (targetFile.exists()) {
+        // [FIX 1] Force Write permissions.
+        // Resources often copy as Read-Only, causing "Access Denied" on removal.
+        targetFile.setPermissions(QFile::WriteOwner | QFile::ReadOwner | QFile::WriteUser | QFile::ReadUser);
+
+        // [FIX 2] Handle Browser Lock.
+        // If the file is open in Edge/Chrome, remove() will fail on Windows.
+        if (!targetFile.remove()) {
+            qWarning() << "Could not remove temp file (likely locked by browser):" << targetPath;
+
+            // If we can't delete it, just open the one that's already there.
+            QDesktopServices::openUrl(QUrl::fromLocalFile(targetPath));
+            return;
+        }
+    }
+
+    // 3. Copy from Resource to Disk
     if (QFile::copy(resourcePath, targetPath)) {
 
-        // 3. Launch the real file in Chrome/Edge
+        // [FIX 3] Ensure the NEW file is writable for next time
+        QFile::setPermissions(targetPath, QFile::WriteOwner | QFile::ReadOwner | QFile::WriteUser | QFile::ReadUser);
+
+        // 4. Launch in Browser
         QDesktopServices::openUrl(QUrl::fromLocalFile(targetPath));
 
     } else {
         QMessageBox::warning(this, tr("Error"), tr("Could not extract manual to: ") + targetPath);
     }
 }
+
 
 void MainWindow::blinkRx() {
     // Bright Green
