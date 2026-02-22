@@ -17,7 +17,6 @@ public:
     bool isEnabled() const { return m_isEnabled; }
     QString deviceName() override { return "R: Device (850 Emulation)"; }
 
-
 private slots:
     void onSocketConnected();
     void onSocketDisconnected();
@@ -36,12 +35,16 @@ private:
     bool verboseResponses = true;
     bool m_isEnabled;
 
-    // Command Handlers
-    void handlePollType1();      // $3F
-    void handleDownloadDriver(); // $26
+    // --- SIO Command Handlers ---
+    void handlePollType1();      // $3F - Boot Poll (The Trigger)
+    void handleDownloadRelocator(); // $21 - Relocator (The Loader)
+    void handleDownloadDriver(); // $26 - Handler (The Driver)
+
+    // Standard R: Operations
     void handleStatus();         // $53
     void handleWrite(quint16 len);
     void handleRead(quint16 len);
+    void handleControl(quint16 aux); // $41 - Control (DTR/RTS)
 
     // AT Logic
     void processAtCommand(const QString &cmd);
