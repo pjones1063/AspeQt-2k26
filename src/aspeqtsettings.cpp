@@ -117,8 +117,6 @@ AspeQtSettings::AspeQtSettings()
     mModemBridgeSshEnabled = mSettings->value("ModemBridge/SshEnabled", false).toBool();
     mModemBridgeLocalEcho = mSettings->value("ModemBridge/LocalEcho", false).toBool();
     mModemBridgePhonebookPath = mSettings->value("ModemBridge/PhonebookPath", "").toString();
-
-    // RS232
     mEnableRDevice = mSettings->value("EnableRDevice", false).toBool(); // Default to OFF
 
 }
@@ -260,9 +258,6 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mModemBridgeLocalEcho = s.value("ModemBridge/LocalEcho", false).toBool();
     mModemBridgePhonebookPath = s.value("ModemBridge/PhonebookPath", "").toString();
     mEnableRDevice = s.value("EnableRDevice", false).toBool();
-
-    // Add near other settings loads
-    mEnableRDevice = mSettings->value("EnableRDevice", false).toBool(); // Default to OFF
 
     s.endGroup();
     //

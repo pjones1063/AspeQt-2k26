@@ -357,6 +357,7 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setModemBridgeSshEnabled(m_ui->modemSshBox->isChecked());
     aspeqtSettings->setModemBridgeLocalEcho(m_ui->modemLocalEchoBox->isChecked());
     aspeqtSettings->setModemBridgePhonebookPath(m_ui->modemPhonebookPathEdit->text());
+    aspeqtSettings->setEnableRDevice(m_ui->modemRBox->isChecked());
 
     int backend = SERIAL_BACKEND_STANDARD;
     if (itemAtariSio->checkState(0) == Qt::Checked)

@@ -40,6 +40,7 @@ StandardSerialPortBackend::StandardSerialPortBackend(QObject *parent)
     : AbstractSerialPortBackend(parent)
 {
     mHandle = -1;
+    mCurrentDeviceId = 0;
 }
 
 StandardSerialPortBackend::~StandardSerialPortBackend()
@@ -320,11 +321,11 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
         // [FIX 1: THE FLUSH]
-        // We cannot check "isRDevice" here because we haven't read the data yet!
-        // The R: device sends commands back-to-back ($21 -> $26).
-        // If we flush, we delete the $26 command that arrived while we were processing $21.
-        // Therefore, we must disable flushing if the R: Device feature is globally enabled.
-        if (!aspeqtSettings->enableRDevice())
+
+        bool lastWasRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
+
+        // Note: Using 'aspeqtSettings' as seen in your file
+        if (aspeqtSettings->enableRDevice() && lastWasRDevice)
         {
             if (tcflush(mHandle, TCIFLUSH) != 0)
             {
@@ -375,8 +376,8 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             // [FIX 2: THE SLEEP]
             // Here we HAVE read the data, so we can be smart.
             // Check if this command is for the R: Device ($50 - $53)
-            quint8 deviceId = (quint8)data.at(0);
-            bool isRDevice = (deviceId >= 0x50 && deviceId <= 0x53);
+            mCurrentDeviceId = (quint8)data.at(0);
+            bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
 
             // Logic:
             // 1. If R: Feature is OFF -> Always Sleep (Legacy Behavior)
@@ -543,10 +544,20 @@ bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
     QByteArray copy(data);
     copy.resize(copy.size() + 1);
     copy[copy.size() - 1] = sioChecksum(copy, copy.size() - 1);
-    if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
-    SioWorker::usleep(50);
+
+    // [FIX 6: SPEED OPTIMIZATION]
+    // Skip artificial delays for R: Device
+    bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
+
+    if (! (aspeqtSettings->enableRDevice() && isRDevice) )
+    {
+        if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
+        SioWorker::usleep(50);
+    }
+
     return writeRawFrame(copy);
 }
+
 
 bool StandardSerialPortBackend::writeCommandAck()
 {
@@ -570,10 +581,20 @@ bool StandardSerialPortBackend::writeDataNak()
 
 bool StandardSerialPortBackend::writeComplete()
 {
-    if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
-    else SioWorker::usleep(mCompErrDelay);
+    // [FIX 7: SPEED OPTIMIZATION]
+    // Skip artificial delays for R: Device to prevent Bus Crashes
+    bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
+
+    if (! (aspeqtSettings->enableRDevice() && isRDevice) )
+    {
+        if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
+        else SioWorker::usleep(mCompErrDelay);
+    }
+
     return writeRawFrame(QByteArray(1, SIO_COMPLETE));
 }
+
+
 
 bool StandardSerialPortBackend::writeError()
 {
