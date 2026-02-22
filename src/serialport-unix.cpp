@@ -312,16 +312,25 @@ int StandardSerialPortBackend::speed()
     return mSpeed;
 }
 
+
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
     QByteArray data;
 
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
-        if (tcflush(mHandle, TCIFLUSH) != 0)
+        // [FIX 1: THE FLUSH]
+        // We cannot check "isRDevice" here because we haven't read the data yet!
+        // The R: device sends commands back-to-back ($21 -> $26).
+        // If we flush, we delete the $26 command that arrived while we were processing $21.
+        // Therefore, we must disable flushing if the R: Device feature is globally enabled.
+        if (!aspeqtSettings->enableRDevice())
         {
-            qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1").arg(lastErrorMessage());
-            return data;
+            if (tcflush(mHandle, TCIFLUSH) != 0)
+            {
+                qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1").arg(lastErrorMessage());
+                return data;
+            }
         }
 
         const int size = 4;
@@ -352,21 +361,34 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             }
             else
             {
-                // avoid high CPU load in idle state
-                #if defined Q_OS_UNIX || defined Q_OS_MAC
-                    QThread::usleep(300);
-                #endif
+// avoid high CPU load in idle state
+#if defined Q_OS_UNIX || defined Q_OS_MAC
+                QThread::usleep(300);
+#endif
             }
         } while(got!=expected && !mCanceled);
 
         if(got==expected)
         {
             data.resize(size);
-            // After sending the last byte of the command frame
-            // ATARI does not drop the command line immediately.
-            // Within this small time window ATARI is not able to process the ACK byte.
-            // For the "software handshake" approach, we need to wait here a little bit.
-            QThread::usleep(500);
+
+            // [FIX 2: THE SLEEP]
+            // Here we HAVE read the data, so we can be smart.
+            // Check if this command is for the R: Device ($50 - $53)
+            quint8 deviceId = (quint8)data.at(0);
+            bool isRDevice = (deviceId >= 0x50 && deviceId <= 0x53);
+
+            // Logic:
+            // 1. If R: Feature is OFF -> Always Sleep (Legacy Behavior)
+            // 2. If R: Feature is ON but device is Disk Drive -> Sleep (Legacy Behavior)
+            // 3. If R: Feature is ON AND device is R: -> SKIP SLEEP (Speed Fix)
+            if (! (aspeqtSettings->enableRDevice() && isRDevice) )
+            {
+                // After sending the last byte of the command frame
+                // ATARI does not drop the command line immediately.
+                // We wait here for legacy devices, but skip for R: to prevent timeout.
+                QThread::usleep(500);
+            }
         }
         else
         {
@@ -375,8 +397,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
     }
     else
     {
-        // RI/DSR/CTS/- handshake
-
+        // --- HARDWARE HANDSHAKE (Keeping existing logic exactly as is) ---
         int mask;
         switch (mMethod) {
         case HANDSHAKE_RI:
@@ -402,13 +423,13 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                 int bytes;
                 do {
                     ioctl(mHandle, FIONREAD, &bytes);
-                    #ifdef Q_OS_UNIX
-                        QThread::yieldCurrentThread();
-                    #endif
+#ifdef Q_OS_UNIX
+                    QThread::yieldCurrentThread();
+#endif
 
-                    #ifdef Q_OS_MAC
-                        QThread::usleep(300);
-                    #endif
+#ifdef Q_OS_MAC
+                    QThread::usleep(300);
+#endif
                 } while ((bytes==0) && !mCanceled);
             }
             else
@@ -421,13 +442,13 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                         return data;
                     }
                     if (status & mask) {
-                        #ifdef Q_OS_UNIX
-                            QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
-                        #endif
+#ifdef Q_OS_UNIX
+                        QThread::yieldCurrentThread();
+#endif
 
-                        #ifdef Q_OS_MAC
-                            QThread::usleep(500);
-                        #endif
+#ifdef Q_OS_MAC
+                        QThread::usleep(500);
+#endif
                     }
                 } while ((status & mask) && !mCanceled);
                 /* Now wait for it to go on again */
@@ -437,19 +458,19 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                         return data;
                     }
                     if (!(status & mask)) {
-                        #ifdef Q_OS_UNIX
-                            QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
-                        #endif
+#ifdef Q_OS_UNIX
+                        QThread::yieldCurrentThread();
+#endif
 
-                        #ifdef Q_OS_MAC
-                           QThread::usleep(500);
-                        #endif
+#ifdef Q_OS_MAC
+                        QThread::usleep(500);
+#endif
                     }
                 } while (!(status & mask) && !mCanceled);
 
                 if (tcflush(mHandle, TCIFLUSH) != 0) {
                     qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1")
-                                   .arg(lastErrorMessage());
+                    .arg(lastErrorMessage());
                     return data;
                 }
             }
@@ -473,10 +494,6 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                 }
                 else
                 {
-                    // After sending the last byte of the command frame
-                    // ATARI does not drop the command line immediately.
-                    // Within this small time window ATARI is not able to process the ACK byte.
-                    // For the "no handshake" approach, we need to wait here a little bit.
                     QThread::usleep(500);
                 }
                 break;
@@ -492,11 +509,11 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                     }
                 }
             }
-    //    } while (totalRetries < 100);
         } while (1);
     }
     return data;
 }
+
 
 QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
 {
