@@ -34,6 +34,8 @@ public:
     bool setSpeed(int speed);
     bool writeRawFrame(const QByteArray &data);
     void setActiveSioDevices(const QByteArray &data);
+    QByteArray readRawFrame(uint size, bool verbose = true);
+
 
 private:
     bool mCanceled;
@@ -49,8 +51,9 @@ private:
     bool setHighSpeed();
     int speed();
     quint8 sioChecksum(const QByteArray &data, uint size);
-    QByteArray readRawFrame(uint size, bool verbose = true);
     QString lastErrorMessage();
+    int mCurrentDeviceId;
+
 };
 
 /* Dummy AtariSIO backend */
@@ -81,6 +84,7 @@ public:
     bool setSpeed(int speed);
     bool writeRawFrame(const QByteArray &data);
     void setActiveSioDevices(const QByteArray &data);
+    QByteArray readRawFrame(uint size, bool verbose = true);
 };
 
 #endif // SERIALPORTWIN32_H

@@ -3,7 +3,7 @@
  */
 
 #ifndef ASPEQTSETTINGS_H
-#define ASPEEQTSETTINGS_H
+#define ASPEQTSETTINGS_H
 
 #include <QSettings>
 

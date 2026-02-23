@@ -1,104 +1,177 @@
 #include "rdevice.h"
-#include "rdevice_handler.h" // Contains driver_850 and relocator_stub
-#include "aspeqtsettings.h"
+#include "rdevice_handler.h" // Assumed to contain 'driver_850' and 'relocator_stub' arrays
+#include "aspeqtsettings.h"  // For checking settings
 #include <QDebug>
 #include <QThread>
+#include <QCoreApplication>
+#include <QFile>
+#include <QDomDocument>
 
-// --- SIO Command Constants ---
-#define CMD_RELOCATOR    0x21 // '!' - Download Relocator
-#define CMD_DOWNLOAD     0x26 // '&' - Download Handler
-#define CMD_POLL_TYPE1   0x3F // '?' - Boot Poll
-#define CMD_CONTROL      0x41 // 'A' - Control
-#define CMD_CONFIGURE    0x42 // 'B' - Configure
-#define CMD_STATUS       0x53 // 'S' - Status
-#define CMD_WRITE        0x57 // 'W' - Output
-#define CMD_READ         0x52 // 'R' - Input
-#define CMD_STREAM       0x58 // 'X' - Stream Mode
+// Result Codes
+#define RESULT_OK           0
+#define RESULT_CONNECT      1
+#define RESULT_RING         2
+#define RESULT_NO_CARRIER   3
+#define RESULT_ERROR        4
+
+#define GUARD_TIME_MS       1000
+#define RING_INTERVAL_MS    3000
 
 RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
 {
+    // Client Socket
     tcpSocket = new QTcpSocket(this);
     connect(tcpSocket, &QTcpSocket::connected, this, &RDevice::onSocketConnected);
     connect(tcpSocket, &QTcpSocket::disconnected, this, &RDevice::onSocketDisconnected);
     connect(tcpSocket, &QTcpSocket::readyRead, this, &RDevice::onSocketReadyRead);
     connect(tcpSocket, &QTcpSocket::errorOccurred, this, &RDevice::onSocketError);
-    m_isEnabled = aspeqtSettings->enableRDevice();
+
+    // Server Socket
+    tcpServer = new QTcpServer(this);
+    connect(tcpServer, &QTcpServer::newConnection, this, &RDevice::onNewConnection);
+    pendingSocket = nullptr;
+
+    // Initial State
+    // Note: User must call setEnabled(true) or logic should check settings
+    m_isEnabled = (aspeqtSettings && aspeqtSettings->enableRDevice());
     state = ModemState::CommandMode;
+
+    lastActivityTimer.start();
+    lastRingTimer.start();
+
+    if (m_isEnabled) {
+        loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
+    }
 }
 
 RDevice::~RDevice()
 {
     if (tcpSocket) tcpSocket->close();
+    if (tcpServer) tcpServer->close();
 }
+
+void RDevice::setEnabled(bool enable)
+{
+    m_isEnabled = enable;
+    if (!m_isEnabled) {
+        if (tcpSocket->state() != QAbstractSocket::UnconnectedState) {
+            tcpSocket->disconnectFromHost();
+        }
+        tcpServer->close();
+        state = ModemState::CommandMode;
+        rxBuffer.clear();
+        atCmdAccumulator.clear();
+        m_phonebook.clear();
+    } else {
+        // Reload phonebook when enabling
+        loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
+    }
+}
+
+void RDevice::loadPhonebook(const QString &path) {
+    if (path.isEmpty()) return;
+    m_phonebook.clear();
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)) return;
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement(); // <EtherTerm>
+    QDomElement pb = root.firstChildElement("Phonebook");
+    QDomNodeList list = pb.elementsByTagName("BBS");
+
+    for (int i = 0; i < list.count(); i++) {
+        QDomElement e = list.at(i).toElement();
+        BbsEntry bbs;
+        bbs.name = e.attribute("name");
+        bbs.ip = e.attribute("ip");
+        bbs.port = e.attribute("port").toInt();
+        bbs.protocol = e.attribute("protocol");
+        bbs.login = e.attribute("login");
+        bbs.password = e.attribute("password");
+        m_phonebook.append(bbs);
+    }
+    qDebug() << "[RDevice] Loaded" << m_phonebook.count() << "entries from phonebook.";
+}
+
+void RDevice::shortDelay()
+{
+    // Slight delay to allow SIO bus handling (approx 5ms)
+    SioWorker::usleep(5000);
+}
+
+// --------------------------------------------------------------------------
+// SIO Dispatcher
+// --------------------------------------------------------------------------
 
 void RDevice::handleCommand(quint8 command, quint16 aux)
 {
-    bool shouldBeEnabled = aspeqtSettings->enableRDevice();
-    if (m_isEnabled != shouldBeEnabled) {
-        setEnabled(shouldBeEnabled);
+    if (aspeqtSettings) {
+        bool settingEnabled = aspeqtSettings->enableRDevice();
+        if (m_isEnabled != settingEnabled) setEnabled(settingEnabled);
     }
 
-    if (!m_isEnabled) return;
+    if (!m_isEnabled) {
+        sio->port()->writeCommandNak();
+        return;
+    }
+
+    quint8 aux1 = (aux & 0xFF);
+    quint8 aux2 = (aux >> 8) & 0xFF;
 
     switch (command) {
-    // --- Boot Sequence ---
+    // Boot & Load
     case CMD_POLL_TYPE1: handlePollType1(); break;
+    case CMD_POLL_TYPE3: handlePollType3(aux1, aux2); break;
     case CMD_RELOCATOR:  handleDownloadRelocator(); break;
     case CMD_DOWNLOAD:   handleDownloadDriver(); break;
 
-        // --- Normal Operation ---
+        // Operation
     case CMD_STATUS:     handleStatus(); break;
     case CMD_WRITE:      handleWrite(aux); break;
     case CMD_READ:       handleRead(aux); break;
     case CMD_CONTROL:    handleControl(aux); break;
+    case CMD_STREAM:     handleStream(); break;
+
+    // Server / Extended
+    case CMD_LISTEN:     handleListen(aux); break;
+    case CMD_UNLISTEN:   handleUnlisten(); break;
+
+    // Config Stubs
+    case CMD_CONFIGURE:
+    case CMD_AUTOANSWER:
+        sio->port()->writeCommandAck();
+        sio->port()->writeComplete();
+        break;
 
     default:
-        // Generic ACK for configuration commands we don't strictly enforce yet
-        if (command == CMD_CONFIGURE || command == CMD_STREAM) {
-            if (sio->port()->writeCommandAck()) {
-                sio->port()->writeComplete();
-            }
-        } else {
-            sio->port()->writeCommandNak();
-        }
+        sio->port()->writeCommandNak();
         break;
     }
 }
 
 // --------------------------------------------------------------------------
-// SIO Boot Loader Logic (Adapted from FujiNet modem.cpp)
+// Boot & Handlers
 // --------------------------------------------------------------------------
 
 void RDevice::handlePollType1()
 {
-    // LOGIC FROM: modem.cpp :: sio_poll_1()
-    // The Atari sends '?' ($3F). We must reply with a 12-byte Boot Block.
-    // This tells the OS: "Load my relocator code to $0500".
-
     if (!sio->port()->writeCommandAck()) return;
 
-    // Defines the size of the relocator stub (from rdevice_handler.h)
     quint16 relSize = sizeof(relocator_stub);
-
-    // Construct the 12-byte Boot Block
-    // Byte 0: DDEVIC ($50 for R:)
-    // Byte 1: DUNIT (1)
-    // Byte 2: DCOMND ($21 = The command we want the Atari to send next)
-    // Byte 3: DSTATS ($40 = Read/Download)
-    // Byte 4/5: Buffer Address ($0500 - Fixed boot location)
-    // Byte 6: Timeout
-    // Byte 7: Unused
-    // Byte 8/9: Byte Count (Size of the Relocator binary)
-    // Byte 10/11: Aux (0)
-
     QByteArray bootBlock;
     bootBlock.resize(12);
     bootBlock[0] = 0x50;
     bootBlock[1] = 0x01;
-    bootBlock[2] = 0x21; // This triggers CMD_RELOCATOR next
+    bootBlock[2] = 0x21;
     bootBlock[3] = 0x40;
-    bootBlock[4] = 0x00; // Low byte of $0500
-    bootBlock[5] = 0x05; // High byte of $0500
+    bootBlock[4] = 0x00;
+    bootBlock[5] = 0x05;
     bootBlock[6] = 0x08;
     bootBlock[7] = 0x00;
     bootBlock[8] = (char)(relSize & 0xFF);
@@ -106,52 +179,43 @@ void RDevice::handlePollType1()
     bootBlock[10] = 0x00;
     bootBlock[11] = 0x00;
 
-    // CRITICAL TIMING: FujiNet uses a delay here to let the Atari OS settle.
-    QThread::msleep(10);
-
-    // Send the block.
-    // IMPORTANT: Do NOT send writeComplete() for boot blocks.
+    shortDelay();
     sio->port()->writeDataFrame(bootBlock);
+}
 
-    qDebug() << "[RDevice] Boot Sequence Started: Sent Boot Block.";
+void RDevice::handlePollType3(quint8 aux1, quint8 aux2)
+{
+    bool respond = (m_deviceNo == 0x50);
+    if (aux1 == 0x52 && aux2 == 0x01) respond = true;
+
+    if (!respond) return;
+
+    if (!sio->port()->writeCommandAck()) return;
+
+    quint16 fsize = sizeof(driver_850);
+    QByteArray response(4, 0);
+    response[0] = (quint8)(fsize & 0xFF);
+    response[1] = (quint8)((fsize >> 8) & 0xFF);
+    response[2] = 0x50;
+    response[3] = 0x00;
+
+    shortDelay();
+    sio->port()->writeDataFrame(response);
 }
 
 void RDevice::handleDownloadRelocator()
 {
-    // LOGIC FROM: modem.cpp :: sio_send_firmware(0x21)
-    // The Atari executes the command we gave it in the Boot Block ($21).
-    // We send the Relocator binary.
-
-    qDebug() << "[RDevice] Sending Relocator ($21)";
-
     if (!sio->port()->writeCommandAck()) return;
-
-    // Get data from rdevice_handler.h
     QByteArray payload((const char*)relocator_stub, sizeof(relocator_stub));
-
-    // CRITICAL TIMING
-    QThread::msleep(5);
-
-    // Send the binary
+    shortDelay();
     sio->port()->writeDataFrame(payload);
 }
 
 void RDevice::handleDownloadDriver()
 {
-    // LOGIC FROM: modem.cpp :: sio_send_firmware(0x26)
-    // The Relocator (now running on Atari) sends $26 to fetch the main driver.
-
-    qDebug() << "[RDevice] Sending Main Driver ($26)";
-
     if (!sio->port()->writeCommandAck()) return;
-
-    // Get data from rdevice_handler.h
     QByteArray payload((const char*)driver_850, sizeof(driver_850));
-
-    // CRITICAL TIMING
-    QThread::msleep(5);
-
-    // Send the binary
+    shortDelay();
     sio->port()->writeDataFrame(payload);
 }
 
@@ -161,35 +225,20 @@ void RDevice::handleDownloadDriver()
 
 void RDevice::handleStatus()
 {
-    // LOGIC FROM: modem.cpp :: sio_status()
     if (!sio->port()->writeCommandAck()) return;
 
-    QByteArray statusData(4, 0x00);
-
-    // Byte 0: Error bits (0 = OK)
-    statusData[0] = 0x00;
-
-    // Byte 1: Hardware Status bits
-    // bit 7: DSR (Not usually emulated here, but set to 1 for "Connected")
-    // bit 6: CTS (1 = Ready)
-    // bit 4: Carrier Detect (1 = Connected)
-    quint8 bits = 0x00;
-
-    // Always indicate CTS/DSR Ready
-    bits |= 0x10; // CTS
+    quint8 bits = 0x10; // CTS Always Ready
+    bits |= 0x80;       // DSR Always Ready
 
     if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
-        bits |= 0x40; // CD (Carrier Detect)
+        bits |= 0x40; // Carrier Detect (CD)
     }
 
-    if (!rxBuffer.isEmpty()) {
-        // bit 0: Data Ready? (Usually managed by IRQ, but good to set)
-        bits |= 0x01;
-    }
+    if (!rxBuffer.isEmpty()) bits |= 0x01;
 
+    QByteArray statusData(4, 0x00);
     statusData[1] = bits;
-    statusData[2] = 0xE0; // Default Timeout
-    statusData[3] = 0x00;
+    statusData[2] = 0xE0; // Timeout
 
     sio->port()->writeComplete();
     sio->port()->writeDataFrame(statusData);
@@ -197,55 +246,177 @@ void RDevice::handleStatus()
 
 void RDevice::handleControl(quint16 aux)
 {
-    // LOGIC FROM: modem.cpp :: sio_control()
-    // AUX1 controls DTR/RTS/XMT lines.
-
     if (!sio->port()->writeCommandAck()) return;
 
-    // Extract DTR bit (Bit 7 enables change, Bit 6 is value)
     if (aux & 0x80) {
         bool dtr = (aux & 0x40);
         if (!dtr && tcpSocket->state() == QAbstractSocket::ConnectedState) {
-            // Drop DTR = Hangup
-            qDebug() << "[RDevice] DTR Dropped. Disconnecting.";
             tcpSocket->disconnectFromHost();
+            state = ModemState::CommandMode;
         }
     }
-
     sio->port()->writeComplete();
 }
 
-void RDevice::handleWrite(quint16 len)
+void RDevice::handleStream()
 {
-    // LOGIC FROM: modem.cpp :: sio_write()
     if (!sio->port()->writeCommandAck()) return;
 
-    int frameLen = (len > 0) ? len : 128; // Usually 0 in header means 128 or 256 depending on density, but R: is standard
+    // Send POKEY Table
+    QByteArray payload;
+    const char table[] = {0x28, (char)0xA0, 0x00, (char)0xA0, 0x28, (char)0xA0, 0x00, (char)0xA0, 0x78};
+    payload.append(table, 9);
+
+    shortDelay();
+    sio->port()->writeDataFrame(payload);
+    sio->port()->writeComplete();
+
+    qDebug() << "[RDevice] Entering Concurrent Stream Mode";
+    state = ModemState::StreamMode;
+    processStreamLoop();
+}
+
+// --------------------------------------------------------------------------
+// Stream Loop (The Bridge)
+// --------------------------------------------------------------------------
+
+void RDevice::processStreamLoop()
+{
+    // Reset ESC state logic on entry
+    m_escPressed = false;
+
+    while (state == ModemState::StreamMode) {
+        QCoreApplication::processEvents();
+
+        if (sio->isInterruptionRequested()) break;
+
+        // 1. TCP -> Serial (PC to Atari)
+        if (!rxBuffer.isEmpty()) {
+            sio->port()->writeRawFrame(rxBuffer);
+            rxBuffer.clear();
+        }
+
+        // 2. Serial -> TCP (Atari to PC)
+        QByteArray chunk = sio->port()->readRawFrame(1, false);
+
+        if (!chunk.isEmpty()) {
+            char c = chunk.at(0);
+
+            // --- Escape Sequence +++ Logic ---
+            qint64 silenceDuration = lastActivityTimer.elapsed();
+            lastActivityTimer.restart();
+
+            if (c == '+') {
+                if (silenceDuration > GUARD_TIME_MS && plusCount == 0) plusCount = 1;
+                else if (plusCount > 0) plusCount++;
+            } else {
+                plusCount = 0;
+            }
+
+            // --- MACRO Logic (ESC-U/P/H) ---
+            bool charConsumed = false;
+
+            if (m_escPressed) {
+                m_escPressed = false;
+                charConsumed = true; // We consume this char as part of the sequence
+
+                if (c == 'u' || c == 'U') {
+                    if (!m_currentConnection.login.isEmpty()) {
+                        if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
+                            tcpSocket->write(m_currentConnection.login.toUtf8());
+                            tcpSocket->write("\r");
+                            qDebug() << "[RDevice] Sent Login Macro";
+                        }
+                    }
+                }
+                else if (c == 'p' || c == 'P') {
+                    if (!m_currentConnection.password.isEmpty()) {
+                        if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
+                            tcpSocket->write(m_currentConnection.password.toUtf8());
+                            tcpSocket->write("\r");
+                            qDebug() << "[RDevice] Sent Password Macro";
+                        }
+                    }
+                }
+                else if (c == 'h' || c == 'H') {
+                    qDebug() << "[RDevice] Manual Hangup via ESC-H";
+                    tcpSocket->disconnectFromHost();
+                    state = ModemState::CommandMode;
+                    sendResultCode(RESULT_OK); // Or NO CARRIER? Usually OK then back to command
+                    return; // Break out of stream loop
+                }
+                else {
+                    // Not a valid macro, send the ESC we swallowed + this char
+                    if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
+                        char esc = 0x1B;
+                        tcpSocket->write(&esc, 1);
+                        tcpSocket->write(&c, 1);
+                    }
+                }
+            }
+            else if (c == 0x1B) {
+                m_escPressed = true;
+                charConsumed = true; // Don't send ESC yet, wait for next char
+            }
+
+            // Write to Socket if not consumed by Macro logic
+            if (!charConsumed && tcpSocket->state() == QAbstractSocket::ConnectedState) {
+                tcpSocket->write(chunk);
+            }
+
+        } else {
+            // No data received (Timeout). Check if we completed an escape sequence.
+            if (plusCount == 3 && lastActivityTimer.elapsed() > GUARD_TIME_MS) {
+                qDebug() << "[RDevice] Escape Sequence +++ Detected";
+                state = ModemState::CommandMode;
+                sendResultCode(RESULT_OK);
+                plusCount = 0;
+            }
+        }
+    }
+
+    qDebug() << "[RDevice] Exited Concurrent Stream Mode";
+}
+
+// --------------------------------------------------------------------------
+// Read / Write (Command Mode)
+// --------------------------------------------------------------------------
+
+void RDevice::handleWrite(quint16 len)
+{
+    if (!sio->port()->writeCommandAck()) return;
+
+    int frameLen = (len > 0) ? len : 128;
     QByteArray data = sio->port()->readDataFrame(frameLen);
 
     if (data.isEmpty()) {
         sio->port()->writeDataNak();
         return;
     }
-
     sio->port()->writeDataAck();
 
-    if (state == ModemState::CommandMode) {
-        for (char c : data) {
-            if (c == 0x0D || (quint8)c == 0x9B) { // CR or ATASCII EOL
-                processAtCommand(atCmdAccumulator);
-                atCmdAccumulator.clear();
-            } else if (c == 0x7D || c == 0x08) { // Backspace
-                if (!atCmdAccumulator.isEmpty()) atCmdAccumulator.chop(1);
-            } else {
-                atCmdAccumulator.append(c);
+    // In Command Mode, we parse AT commands
+    for (char c : data) {
+        if (c == 0x0D || (quint8)c == 0x9B) {
+            if (echoEnabled) {
+                rxBuffer.append(0x0D);
+                rxBuffer.append(0x0A);
+            }
+            processAtCommand(atCmdAccumulator);
+            atCmdAccumulator.clear();
+        }
+        else if (c == 0x08 || c == 0x7D || c == 0x7F) {
+            if (!atCmdAccumulator.isEmpty()) {
+                atCmdAccumulator.chop(1);
+                if (echoEnabled) rxBuffer.append(c);
             }
         }
-    } else {
-        if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
-            tcpSocket->write(data);
+        else {
+            atCmdAccumulator.append(c);
+            if (echoEnabled) rxBuffer.append(c);
         }
     }
+
     sio->port()->writeComplete();
 }
 
@@ -253,7 +424,9 @@ void RDevice::handleRead(quint16 len)
 {
     if (!sio->port()->writeCommandAck()) return;
 
-    int readLen = (len > 0) ? len : 128; // Usually SIO is fixed block
+    checkRing();
+
+    int readLen = (len > 0) ? len : 128;
     QByteArray chunk;
 
     if (!rxBuffer.isEmpty()) {
@@ -261,8 +434,6 @@ void RDevice::handleRead(quint16 len)
         rxBuffer.remove(0, chunk.size());
     }
 
-    // Pad with 0x00 if we don't have enough data
-    // (Real 850 might pad differently or timeout, but 0x00 is safe for text)
     while (chunk.size() < readLen) chunk.append((char)0x00);
 
     sio->port()->writeComplete();
@@ -270,54 +441,166 @@ void RDevice::handleRead(quint16 len)
 }
 
 // --------------------------------------------------------------------------
-// AT Command Processing
+// Server / Listen
 // --------------------------------------------------------------------------
 
-void RDevice::processAtCommand(const QString &cmd)
+void RDevice::handleListen(quint16 aux)
 {
-    QString upperCmd = cmd.trimmed().toUpper();
-    qDebug() << "[RDevice] AT Command:" << upperCmd;
+    listenPort = aux;
+    if (listenPort > 0) {
+        if (tcpServer->isListening()) tcpServer->close();
+        if (tcpServer->listen(QHostAddress::Any, listenPort)) {
+            sio->port()->writeCommandAck();
+            sio->port()->writeComplete();
+            return;
+        }
+    }
+    sio->port()->writeCommandNak();
+}
 
-    if (upperCmd == "AT") {
-        sendResultCode(0); // OK
-    } else if (upperCmd.startsWith("ATDT")) {
-        QString target = upperCmd.mid(4).trimmed();
+void RDevice::handleUnlisten()
+{
+    tcpServer->close();
+    if (pendingSocket) {
+        pendingSocket->disconnectFromHost();
+        pendingSocket->deleteLater();
+        pendingSocket = nullptr;
+    }
+    sio->port()->writeCommandAck();
+    sio->port()->writeComplete();
+}
 
-        // Handle "Host:Port" logic
-        QString host = target;
-        int port = 23;
+void RDevice::onNewConnection()
+{
+    if (tcpServer->hasPendingConnections()) {
+        QTcpSocket *client = tcpServer->nextPendingConnection();
 
-        if (target.contains(":")) {
-            QStringList parts = target.split(":");
+        if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
+            client->write("BUSY\r\n");
+            client->disconnectFromHost();
+            client->deleteLater();
+        } else {
+            if (pendingSocket) {
+                pendingSocket->close();
+                pendingSocket->deleteLater();
+            }
+            pendingSocket = client;
+
+            if (autoAnswer) {
+                at_handle_answer();
+            }
+        }
+    }
+}
+
+void RDevice::checkRing()
+{
+    if (pendingSocket && !autoAnswer) {
+        if (lastRingTimer.elapsed() > RING_INTERVAL_MS) {
+            sendResultCode(RESULT_RING);
+            lastRingTimer.restart();
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// AT Commands
+// --------------------------------------------------------------------------
+
+void RDevice::processAtCommand(const QString &rawCmd)
+{
+    QString cmd = rawCmd.trimmed().toUpper();
+    if (cmd.startsWith("AT")) cmd.remove(0, 2);
+    else return;
+
+    qDebug() << "[RDevice] AT Command:" << cmd;
+
+    if (cmd.isEmpty()) sendResultCode(RESULT_OK);
+    else if (cmd == "A") at_handle_answer();
+    else if (cmd.startsWith("D")) at_handle_dial(cmd.mid(1));
+    else if (cmd == "H") at_handle_hangup();
+    else if (cmd == "E0") { echoEnabled = false; sendResultCode(RESULT_OK); }
+    else if (cmd == "E1") { echoEnabled = true; sendResultCode(RESULT_OK); }
+    else if (cmd == "V0") { verboseResponses = false; sendResultCode(RESULT_OK); }
+    else if (cmd == "V1") { verboseResponses = true; sendResultCode(RESULT_OK); }
+    else if (cmd == "S0=0") { autoAnswer = false; sendResultCode(RESULT_OK); }
+    else if (cmd == "S0=1") { autoAnswer = true; sendResultCode(RESULT_OK); }
+    else if (cmd.startsWith("PORT")) {
+        listenPort = cmd.mid(4).toInt();
+        handleListen(listenPort);
+        sendResultCode(RESULT_OK);
+    }
+    else sendResultCode(RESULT_ERROR);
+}
+
+void RDevice::at_handle_dial(const QString &target)
+{
+    QString cleanTarget = target;
+    if (cleanTarget.startsWith("T")) cleanTarget.remove(0, 1);
+
+    QString host = cleanTarget;
+    int port = 23;
+    bool foundInPhonebook = false;
+
+    // 1. Check Phonebook First
+    for (const BbsEntry &entry : m_phonebook) {
+        if (entry.name.compare(cleanTarget, Qt::CaseInsensitive) == 0) {
+            host = entry.ip;
+            port = entry.port;
+            m_currentConnection = entry; // Save for Macros
+            foundInPhonebook = true;
+            qDebug() << "[RDevice] Phonebook Match:" << entry.name;
+            break;
+        }
+    }
+
+    if (!foundInPhonebook) {
+        m_currentConnection = BbsEntry(); // Clear previous session data
+        if (cleanTarget.contains(":")) {
+            QStringList parts = cleanTarget.split(":");
             host = parts[0];
             port = parts[1].toInt();
         }
-
-        qDebug() << "[RDevice] Dialing:" << host << port;
-        tcpSocket->connectToHost(host, port);
-        // Note: We don't send CONNECT yet; we wait for the socket signal
-    } else if (upperCmd == "ATH") {
-        tcpSocket->disconnectFromHost();
-        sendResultCode(0);
-    } else if (upperCmd == "ATE0") {
-        echoEnabled = false;
-        sendResultCode(0);
-    } else if (upperCmd == "ATE1") {
-        echoEnabled = true;
-        sendResultCode(0);
-    } else {
-        sendResultCode(4); // ERROR
     }
+
+    tcpSocket->connectToHost(host, port);
+}
+
+void RDevice::at_handle_answer()
+{
+    if (pendingSocket) {
+        if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
+        tcpSocket->deleteLater();
+        tcpSocket = pendingSocket;
+        pendingSocket = nullptr;
+
+        connect(tcpSocket, &QTcpSocket::disconnected, this, &RDevice::onSocketDisconnected);
+        connect(tcpSocket, &QTcpSocket::readyRead, this, &RDevice::onSocketReadyRead);
+        connect(tcpSocket, &QTcpSocket::errorOccurred, this, &RDevice::onSocketError);
+
+        sendResultCode(RESULT_CONNECT);
+        state = ModemState::StreamMode;
+    } else {
+        sendResultCode(RESULT_ERROR);
+    }
+}
+
+void RDevice::at_handle_hangup()
+{
+    tcpSocket->disconnectFromHost();
+    sendResultCode(RESULT_OK);
+    state = ModemState::CommandMode;
 }
 
 void RDevice::sendResultCode(int code)
 {
     if (verboseResponses) {
         switch(code) {
-        case 0: sendAtResponse("OK\r\n"); break;
-        case 1: sendAtResponse("CONNECT\r\n"); break;
-        case 3: sendAtResponse("NO CARRIER\r\n"); break;
-        case 4: sendAtResponse("ERROR\r\n"); break;
+        case RESULT_OK:         sendAtResponse("OK\r\n"); break;
+        case RESULT_CONNECT:    sendAtResponse("CONNECT\r\n"); break;
+        case RESULT_RING:       sendAtResponse("RING\r\n"); break;
+        case RESULT_NO_CARRIER: sendAtResponse("NO CARRIER\r\n"); break;
+        case RESULT_ERROR:      sendAtResponse("ERROR\r\n"); break;
         }
     } else {
         sendAtResponse(QString("%1\r").arg(code));
@@ -329,33 +612,40 @@ void RDevice::sendAtResponse(const QString &text)
     rxBuffer.append(text.toLatin1());
 }
 
-void RDevice::setEnabled(bool enable)
-{
-    m_isEnabled = enable;
-    if (!m_isEnabled) {
-        if (tcpSocket->state() != QAbstractSocket::UnconnectedState) {
-            tcpSocket->disconnectFromHost();
-        }
-        state = ModemState::CommandMode;
-        rxBuffer.clear();
-        atCmdAccumulator.clear();
-    }
-}
+// --------------------------------------------------------------------------
+// Sockets & Data
+// --------------------------------------------------------------------------
 
 void RDevice::onSocketConnected() {
-    state = ModemState::StreamMode;
-    sendResultCode(1); // CONNECT
+    sendResultCode(RESULT_CONNECT);
 }
 
 void RDevice::onSocketDisconnected() {
+    sendResultCode(RESULT_NO_CARRIER);
     state = ModemState::CommandMode;
-    sendResultCode(3); // NO CARRIER
 }
 
 void RDevice::onSocketReadyRead() {
-    rxBuffer.append(tcpSocket->readAll());
+    processIncomingData(tcpSocket->readAll());
+}
+
+void RDevice::processIncomingData(QByteArray data)
+{
+    // Basic Telnet Filter (Strip IAC)
+    for (int i = 0; i < data.size(); ++i) {
+        unsigned char c = (unsigned char)data.at(i);
+        if (c == 0xFF) {
+            if (i + 2 < data.size()) i += 2;
+        } else {
+            rxBuffer.append(c);
+        }
+    }
 }
 
 void RDevice::onSocketError(QAbstractSocket::SocketError) {
-    sendResultCode(4); // ERROR
+    if (state == ModemState::CommandMode) sendResultCode(RESULT_ERROR);
+    else {
+        sendResultCode(RESULT_NO_CARRIER);
+        state = ModemState::CommandMode;
+    }
 }

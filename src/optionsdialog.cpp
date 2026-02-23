@@ -79,10 +79,19 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->modemFlowControlBox->setChecked(aspeqtSettings->modemBridgeFlowControl());
     m_ui->modemSshBox->setChecked(aspeqtSettings->modemBridgeSshEnabled());
     m_ui->modemLocalEchoBox->setChecked(aspeqtSettings->modemBridgeLocalEcho());
+
+    // Set R: Device Defaults
     m_ui->modemRBox->setChecked(aspeqtSettings->enableRDevice());
 
     // Trigger initial state for Modem UI
+    // Note: This function now checks both boxes to determine phonebook state
     on_modemEnableBox_toggled(aspeqtSettings->isModemBridgeEnabled());
+
+    // If R-Device is specifically enabled, make sure we run its logic too
+    // to potentially disable the conflicting bridge controls
+    if (aspeqtSettings->enableRDevice()) {
+        on_modemRBox_toggled(true);
+    }
 
 
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
@@ -274,17 +283,23 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
 
 void OptionsDialog::on_modemEnableBox_toggled(bool checked)
 {
-     if (checked) {
+    if (checked) {
         m_ui->modemRBox->setChecked(false);
-     }
-    // 1. Manage UI State for Modem Bridge
+    }
+    // 1. Manage UI State for Modem Bridge (Physical Port Stuff)
     m_ui->modemPortComboBox->setEnabled(checked);
     m_ui->modemBaudComboBox->setEnabled(checked);
     m_ui->modemFlowControlBox->setEnabled(checked);
     m_ui->modemSshBox->setEnabled(checked);
     m_ui->modemLocalEchoBox->setEnabled(checked);
-    m_ui->modemPhonebookPathEdit->setEnabled(checked);
-    m_ui->modemPhonebookBrowseBtn->setEnabled(checked);    
+
+    // 2. Manage Phonebook (Shared Resource)
+    // It should be enabled if Modem Bridge OR R: Device is enabled.
+    bool rDeviceEnabled = m_ui->modemRBox->isChecked();
+    bool phonebookEnabled = checked || rDeviceEnabled;
+
+    m_ui->modemPhonebookPathEdit->setEnabled(phonebookEnabled);
+    m_ui->modemPhonebookBrowseBtn->setEnabled(phonebookEnabled);
 }
 
 
@@ -296,16 +311,27 @@ void OptionsDialog::on_modemRBox_toggled(bool checked)
             m_ui->modemEnableBox->blockSignals(true);
             m_ui->modemEnableBox->setChecked(false);
             m_ui->modemEnableBox->blockSignals(false);
+
+            // Manually trigger the disable logic for the Bridge UI since we blocked signals
+            on_modemEnableBox_toggled(false);
         }
 
-        // 2. Strict Visual Feedback: Grey out Modem Bridge options
+        // 2. Disable Physical Serial Port options (irrelevant for R: emulation)
         m_ui->modemPortComboBox->setEnabled(false);
         m_ui->modemBaudComboBox->setEnabled(false);
         m_ui->modemFlowControlBox->setEnabled(false);
         m_ui->modemSshBox->setEnabled(false);
         m_ui->modemLocalEchoBox->setEnabled(false);
-        m_ui->modemPhonebookPathEdit->setEnabled(false);
-        m_ui->modemPhonebookBrowseBtn->setEnabled(false);
+
+        // 3. ENABLE Phonebook options
+        m_ui->modemPhonebookPathEdit->setEnabled(true);
+        m_ui->modemPhonebookBrowseBtn->setEnabled(true);
+    }
+    else {
+        // If unchecking R: Device, check if Modem Bridge is enabled to decide Phonebook state
+        bool bridgeEnabled = m_ui->modemEnableBox->isChecked();
+        m_ui->modemPhonebookPathEdit->setEnabled(bridgeEnabled);
+        m_ui->modemPhonebookBrowseBtn->setEnabled(bridgeEnabled);
     }
 }
 
@@ -323,6 +349,14 @@ void OptionsDialog::OptionsDialog_accepted()
         return; // Do not accept(), keep dialog open
     }
     // -------------------------------------------
+
+    // --- WARNING: Experimental R: Device ---
+    // Added warning per request for R: device enablement
+    if (m_ui->modemRBox->isChecked()) {
+        QMessageBox::warning(this, tr("Experimental Feature"),
+                             tr("850 R: Device (R: to tcp) is experimental and may not work with all SIO2PC devices"));
+    }
+    // ---------------------------------------
 
     aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
