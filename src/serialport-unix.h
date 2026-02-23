@@ -33,9 +33,8 @@ public:
     bool writeError();
     bool setSpeed(int speed);
     bool writeRawFrame(const QByteArray &data);
-    void setActiveSioDevices(const QByteArray &data);
     QByteArray readRawFrame(uint size, bool verbose = true);
-
+    void setActiveSioDevices(const QByteArray &data);
 
 private:
     bool mCanceled;
@@ -52,8 +51,6 @@ private:
     bool mHighSpeed;
     quint8 sioChecksum(const QByteArray &data, uint size);
     QString lastErrorMessage();
-    int mCurrentDeviceId;
-
 };
 
 class AtariSioBackend : public AbstractSerialPortBackend
@@ -82,9 +79,8 @@ public:
     bool writeError();
     bool setSpeed(int speed);
     bool writeRawFrame(const QByteArray &data);
-    void setActiveSioDevices(const QByteArray &data);
     QByteArray readRawFrame(uint size, bool verbose = true);
-
+    void setActiveSioDevices(const QByteArray &data);
 
 private:
     int mHandle, mCancelHandles[2];

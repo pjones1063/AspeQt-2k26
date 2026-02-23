@@ -26,7 +26,6 @@ StandardSerialPortBackend::StandardSerialPortBackend(QObject *parent)
     : AbstractSerialPortBackend(parent)
 {
     mHandle = INVALID_HANDLE_VALUE;
-    mCurrentDeviceId = 0;
 }
 
 StandardSerialPortBackend::~StandardSerialPortBackend()
@@ -295,30 +294,17 @@ int StandardSerialPortBackend::speed()
     return mSpeed;
 }
 
-
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
-    //    qDebug() << "!d" << tr("DBG -- Serial Port readCommandFrame...");
+//    qDebug() << "!d" << tr("DBG -- Serial Port readCommandFrame...");
 
     QByteArray data;
 
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
-        // [FIX] Roadblock B: Smart Purge
-        // Prevent PurgeComm from deleting the next command in the R: boot chain.
-
-        bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
-        bool shouldPurge = true;
-
-        if (aspeqtSettings->enableRDevice() && isRDevice) {
-            shouldPurge = false; // SKIP PURGE
-        }
-
-        if (shouldPurge) {
-            if (!PurgeComm(mHandle, PURGE_RXCLEAR)) {
-                qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1").arg(lastErrorMessage());
-                return data;
-            }
+        if (!PurgeComm(mHandle, PURGE_RXCLEAR)) {
+            qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1").arg(lastErrorMessage());
+            return data;
         }
 
         const int size = 4;
@@ -331,15 +317,15 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             if(ReadFile(mHandle, &c, 1, &result, NULL) && result == 1)
             {
                 data.append(c);
-                if(data.size() == size + 2)
+                if(data.size()==size+2)
                 {
-                    data.remove(0, 1);
+                    data.remove(0,1);
                 }
-                if(data.size() == size + 1)
+                if(data.size()==size+1)
                 {
-                    for(int i=0 ; i < mSioDevices.size() ; i++)
+                    for(int i=0 ; i<mSioDevices.size() ; i++)
                     {
-                        if(data.at(0) == mSioDevices[i])
+                        if(data.at(0)==mSioDevices[i])
                         {
                             expected = (quint8)data.at(size);
                             got = sioChecksum(data, size);
@@ -348,21 +334,16 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                     }
                 }
             }
-        } while(got != expected && !mCanceled);
+        } while(got!=expected && !mCanceled);
 
-        if(got == expected)
+        if(got==expected)
         {
             data.resize(size);
-
-            // [FIX] Roadblock A: Update ID and Skip Sleep
-            mCurrentDeviceId = (quint8)data.at(0);
-            isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
-
-            // Skip legacy delay for R: Device to ensure high throughput
-            if (! (aspeqtSettings->enableRDevice() && isRDevice) )
-            {
-                QThread::usleep(500);
-            }
+            // After sending the last byte of the command frame
+            // ATARI does not drop the command line immediately.
+            // Within this small time window ATARI is not able to process the ACK byte.
+            // For the "software handshake" approach, we need to wait here a little bit.
+            QThread::usleep(500);
         }
         else
         {
@@ -371,18 +352,129 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
     }
     else
     {
-        // Hardware Handshake Logic (Unchanged)
-        // Ensure mCurrentDeviceId is updated here if you use HW handshake for R:
-        // But strictly speaking, the bug was in the SW handshake path.
+        DWORD MASK;
+        DWORD MODEM_STAT;
+        DWORD tmp;
 
-        // ... (Existing HW Handshake code) ...
+        switch (mMethod) {
+        case HANDSHAKE_RI:
+            MASK = EV_RING;
+            MODEM_STAT = MS_RING_ON;
+            break;
+        case HANDSHAKE_DSR:
+            MASK = EV_DSR;
+            MODEM_STAT = MS_DSR_ON;
+            break;
+        case HANDSHAKE_CTS:
+            MASK = EV_CTS;
+            MODEM_STAT = MS_CTS_ON;
+            break;
+        case HANDSHAKE_NO_HANDSHAKE:
+        default:
+            MASK = EV_RXCHAR;
+            MODEM_STAT = 0;
+            break;
+        }
 
-        // If data was read in the HW block, you should ideally update mCurrentDeviceId there too:
-        // mCurrentDeviceId = (quint8)data.at(0);
+        if (!SetCommMask(mHandle, MASK)) {
+            qCritical() << "!e" << tr("Cannot set serial port event mask: %1").arg(lastErrorMessage());
+            return data;
+        }
+
+        int retries = 0, totalRetries = 0;
+        do {
+            data.clear();
+            OVERLAPPED ov;
+
+            memset(&ov, 0, sizeof(ov));
+            ov.hEvent = CreateEvent(0, true, false, 0);
+
+            HANDLE events[2];
+            events[0] = ov.hEvent;
+            events[1] = mCancelHandle;
+
+            if (!WaitCommEvent(mHandle, &tmp, &ov)) {
+                if (GetLastError() == ERROR_IO_PENDING) {
+                    DWORD x = WaitForMultipleObjects(2, events, false, INFINITE);
+                    CloseHandle(ov.hEvent);
+                    if (x == WAIT_OBJECT_0 + 1) {
+                        data.clear();
+                        return data;
+                    }
+                    if (x == WAIT_FAILED) {
+                        qCritical() << "!e" << tr("Cannot wait for serial port event: %1").arg(lastErrorMessage());
+                        data.clear();
+                        return data;
+                    }
+                } else {
+                    CloseHandle(ov.hEvent);
+                    qCritical() << "!e" << tr("Cannot wait for serial port event: %1").arg(lastErrorMessage());
+                    return data;
+                }
+            }
+
+            // if we use hardware handshake and the command line status was succesfully retrieved
+            if( (MODEM_STAT != 0) && GetCommModemStatus(mHandle, &tmp) )
+            {
+                if(aspeqtSettings->serialPortTriggerOnFallingEdge())
+                {
+                    // ignore the trigger is the command line status is ON (we're waiting for a falling edge)
+                    if( tmp & MODEM_STAT )continue;
+                }
+                else
+                {
+                    // ignore the trigger is the command line status is OFF (we're waiting for a rising edge)
+                    if( !(tmp & MODEM_STAT) )continue;
+                }
+            }
+
+            if(MASK != EV_RXCHAR)
+            {            
+               if (!PurgeComm(mHandle, PURGE_RXCLEAR)) {
+                   qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1").arg(lastErrorMessage());
+                   return data;
+               }
+            }
+
+    //        qDebug() << "!d" << tr("DBG -- Serial Port, just about to readDataFrame...");
+
+            data = readDataFrame(4, false);
+
+            if (!data.isEmpty()) {
+
+//            qDebug() << "!d" << tr("DBG -- Serial Port, data not empty: [%1]").arg(data.data());
+
+                if(MASK != EV_RXCHAR) { //
+                    do {
+                        GetCommModemStatus(mHandle, &tmp);
+                    } while ((tmp & MODEM_STAT) && !mCanceled);
+                }
+                else
+                {
+                    // After sending the last byte of the command frame
+                    // ATARI does not drop the command line immediately.
+                    // Within this small time window ATARI is not able to process the ACK byte.
+                    // For the "software handshake" approach, we need to wait here a little bit.
+                    QThread::usleep(500);
+                }
+                break;
+            } else {
+                retries++;
+                totalRetries++;
+                if (retries == 2) {
+                    retries = 0;
+                    if (mHighSpeed) {
+                        setNormalSpeed();
+                    } else {
+                        setHighSpeed();
+                    }
+                }
+            }
+    //    } while (totalRetries < 100);
+        } while (1);
     }
     return data;
 }
-
 
 QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
 {
@@ -411,26 +503,15 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
 
 bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
 {
-    //    qDebug() << "!d" << tr("DBG -- Serial Port writeDataFrame...");
+//    qDebug() << "!d" << tr("DBG -- Serial Port writeDataFrame...");
 
     QByteArray copy(data);
     copy.resize(copy.size() + 1);
     copy[copy.size() - 1] = sioChecksum(copy, copy.size() - 1);
-
-    // --- START UPDATE: Speed Optimization ---
-    bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
-
-    // Skip artificial delays for R: Device to ensure high throughput
-    if (! (aspeqtSettings->enableRDevice() && isRDevice) )
-    {
-        if(mMethod==HANDSHAKE_SOFTWARE) SioWorker::usleep(mWriteDelay);
-        SioWorker::usleep(50);
-    }
-    // --- END UPDATE ---
-
+    if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
+    SioWorker::usleep(50);
     return writeRawFrame(copy);
 }
-
 
 bool StandardSerialPortBackend::writeCommandAck()
 {
@@ -462,21 +543,12 @@ bool StandardSerialPortBackend::writeDataNak()
 
 bool StandardSerialPortBackend::writeComplete()
 {
-    //    qDebug() << "!d" << tr("DBG -- Serial Port writeComplete...");
+//    qDebug() << "!d" << tr("DBG -- Serial Port writeComplete...");
 
-    // --- START UPDATE: Speed Optimization ---
-    bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
-
-    if (! (aspeqtSettings->enableRDevice() && isRDevice) )
-    {
-        if(mMethod==HANDSHAKE_SOFTWARE) SioWorker::usleep(mWriteDelay);
-        else SioWorker::usleep(mCompErrDelay);
-    }
-    // --- END UPDATE ---
-
+    if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
+    else SioWorker::usleep(mCompErrDelay);
     return writeRawFrame(QByteArray(1, SIO_COMPLETE));
 }
-
 
 bool StandardSerialPortBackend::writeError()
 {

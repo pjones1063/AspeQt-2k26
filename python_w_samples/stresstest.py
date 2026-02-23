@@ -39,15 +39,18 @@ def handle_stress():
 
             # 4. LOGGING LOGIC (Smart Filtering)
             # Don't spam console for the big 1-500 stream (Test 2)
-            if len(data) > 100:
-                print(f"[POST] {client_id} -> Received Stream: {len(data)} bytes")
+            # if len(data) > 100:
+            #    print(f"[POST] {client_id} -> Received Stream: {len(data)} bytes")
             # Don't spam console for rapid XIO hits (Test 4)
-            elif "W1-PING" in text_payload or "W2-PING" in text_payload:
+            if "W1-PING" in text_payload:
                  # Print dots for XIO hopping to show it's alive without flooding
-                 print(".", end="", flush=True)
+                 print("*", end="", flush=True)
+            elif "W2-PING" in text_payload:
+                 # Print dots for XIO hopping to show it's alive without flooding
+                 print("+", end="", flush=True)     
             else:
                 # Normal Packet (Test 1)
-                print(f"[POST] {client_id} -> {text_payload}")
+                 print(f"[POST] {client_id} -> Received Stream: {len(data)} bytes")
 
             return "OK", 200
 

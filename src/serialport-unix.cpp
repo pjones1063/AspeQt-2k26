@@ -40,7 +40,6 @@ StandardSerialPortBackend::StandardSerialPortBackend(QObject *parent)
     : AbstractSerialPortBackend(parent)
 {
     mHandle = -1;
-    mCurrentDeviceId = 0;
 }
 
 StandardSerialPortBackend::~StandardSerialPortBackend()
@@ -313,31 +312,16 @@ int StandardSerialPortBackend::speed()
     return mSpeed;
 }
 
-
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
     QByteArray data;
 
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
-        // [FIX] Roadblock B: Smart Flush
-        // The R: Device sends commands (like $26 after $21) extremely fast.
-        // If we flush the buffer unconditionally, we delete the command before reading it.
-        // We check 'mCurrentDeviceId' (state from the PREVIOUS command) to see if we
-        // are in an active R: Device conversation.
-
-        bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
-        bool shouldFlush = true;
-
-        if (aspeqtSettings->enableRDevice() && isRDevice) {
-            shouldFlush = false; // SKIP FLUSH to preserve the incoming command
-        }
-
-        if (shouldFlush) {
-            if (tcflush(mHandle, TCIFLUSH) != 0) {
-                qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1").arg(lastErrorMessage());
-                return data;
-            }
+        if (tcflush(mHandle, TCIFLUSH) != 0)
+        {
+            qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1").arg(lastErrorMessage());
+            return data;
         }
 
         const int size = 4;
@@ -346,22 +330,18 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
         do
         {
             char c;
-            // Read 1 byte at a time
-            if(::read(mHandle, &c, 1) == 1)
+            if(1 == ::read(mHandle, &c, 1))
             {
                 data.append(c);
-
-                // Sliding window buffer logic
-                if(data.size() == size + 2)
+                if(data.size()==size+2)
                 {
-                    data.remove(0, 1);
+                    data.remove(0,1);
                 }
-
-                if(data.size() == size + 1)
+                if(data.size()==size+1)
                 {
-                    for(int i=0 ; i < mSioDevices.size() ; i++)
+                    for(int i=0 ; i<mSioDevices.size() ; i++)
                     {
-                        if(data.at(0) == mSioDevices[i])
+                        if(data.at(0)==mSioDevices[i])
                         {
                             expected = (quint8)data.at(size);
                             got = sioChecksum(data, size);
@@ -370,23 +350,23 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                     }
                 }
             }
-        } while(got != expected && !mCanceled);
+            else
+            {
+                // avoid high CPU load in idle state
+                #if defined Q_OS_UNIX || defined Q_OS_MAC
+                    QThread::usleep(300);
+                #endif
+            }
+        } while(got!=expected && !mCanceled);
 
-        if(got == expected)
+        if(got==expected)
         {
             data.resize(size);
-
-            // [FIX] Roadblock A: Update ID and Skip Sleep
-            // Capture the device ID we just heard from.
-            mCurrentDeviceId = (quint8)data.at(0);
-            isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
-
-            // If we are talking to the R: Device, DO NOT sleep.
-            // We need to return immediately to process the data payload.
-            if (! (aspeqtSettings->enableRDevice() && isRDevice) )
-            {
-                SioWorker::usleep(500);
-            }
+            // After sending the last byte of the command frame
+            // ATARI does not drop the command line immediately.
+            // Within this small time window ATARI is not able to process the ACK byte.
+            // For the "software handshake" approach, we need to wait here a little bit.
+            QThread::usleep(500);
         }
         else
         {
@@ -395,16 +375,128 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
     }
     else
     {
-        // Hardware Handshake Logic (Standard implementation preserved)
-        // Note: R: Device usually relies on Software Handshake or standard SIO,
-        // but if HW handshake is used, similar logic would apply to the purge.
-        // For standard AspeQt behavior, we return the data if available.
-        // (Implementation omitted for brevity as it is unchanged from stock)
-        return data;
+        // RI/DSR/CTS/- handshake
+
+        int mask;
+        switch (mMethod) {
+        case HANDSHAKE_RI:
+            mask = TIOCM_RI;
+            break;
+        case HANDSHAKE_DSR:
+            mask = TIOCM_DSR;
+            break;
+        case HANDSHAKE_CTS:
+        default:
+            mask = TIOCM_CTS;
+            break;
+        }
+
+        int status;
+        int retries = 0, totalRetries = 0;
+
+        do {
+            data.clear();
+
+            if(mMethod == HANDSHAKE_NO_HANDSHAKE)
+            {
+                int bytes;
+                do {
+                    ioctl(mHandle, FIONREAD, &bytes);
+                    #ifdef Q_OS_UNIX
+                        QThread::yieldCurrentThread();
+                    #endif
+
+                    #ifdef Q_OS_MAC
+                        QThread::usleep(300);
+                    #endif
+                } while ((bytes==0) && !mCanceled);
+            }
+            else
+            {
+                // RI/DSR/CTS handshake
+                /* First, wait until command line goes off */
+                do {
+                    if (ioctl(mHandle, TIOCMGET, &status) < 0) {
+                        qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
+                        return data;
+                    }
+                    if (status & mask) {
+                        #ifdef Q_OS_UNIX
+                            QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
+                        #endif
+
+                        #ifdef Q_OS_MAC
+                            QThread::usleep(500);
+                        #endif
+                    }
+                } while ((status & mask) && !mCanceled);
+                /* Now wait for it to go on again */
+                do {
+                    if (ioctl(mHandle, TIOCMGET, &status) < 0) {
+                        qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
+                        return data;
+                    }
+                    if (!(status & mask)) {
+                        #ifdef Q_OS_UNIX
+                            QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
+                        #endif
+
+                        #ifdef Q_OS_MAC
+                           QThread::usleep(500);
+                        #endif
+                    }
+                } while (!(status & mask) && !mCanceled);
+
+                if (tcflush(mHandle, TCIFLUSH) != 0) {
+                    qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1")
+                                   .arg(lastErrorMessage());
+                    return data;
+                }
+            }
+
+            if (mCanceled) {
+                return data;
+            }
+
+            data = readDataFrame(4, false);
+
+            if (!data.isEmpty()) {
+                if(mMethod != HANDSHAKE_NO_HANDSHAKE)
+                {
+                    // wait for command line to go off
+                    do {
+                        if (ioctl(mHandle, TIOCMGET, &status) < 0) {
+                            qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
+                            return data;
+                        }
+                    } while ((status & mask) && !mCanceled);
+                }
+                else
+                {
+                    // After sending the last byte of the command frame
+                    // ATARI does not drop the command line immediately.
+                    // Within this small time window ATARI is not able to process the ACK byte.
+                    // For the "no handshake" approach, we need to wait here a little bit.
+                    QThread::usleep(500);
+                }
+                break;
+            } else {
+                retries++;
+                totalRetries++;
+                if (retries == 2) {
+                    retries = 0;
+                    if (mHighSpeed) {
+                        setNormalSpeed();
+                    } else {
+                        setHighSpeed();
+                    }
+                }
+            }
+    //    } while (totalRetries < 100);
+        } while (1);
     }
     return data;
 }
-
 
 QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
 {
@@ -434,20 +526,10 @@ bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
     QByteArray copy(data);
     copy.resize(copy.size() + 1);
     copy[copy.size() - 1] = sioChecksum(copy, copy.size() - 1);
-
-    // [FIX 6: SPEED OPTIMIZATION]
-    // Skip artificial delays for R: Device
-    bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
-
-    if (! (aspeqtSettings->enableRDevice() && isRDevice) )
-    {
-        if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
-        SioWorker::usleep(50);
-    }
-
+    if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
+    SioWorker::usleep(50);
     return writeRawFrame(copy);
 }
-
 
 bool StandardSerialPortBackend::writeCommandAck()
 {
@@ -471,20 +553,10 @@ bool StandardSerialPortBackend::writeDataNak()
 
 bool StandardSerialPortBackend::writeComplete()
 {
-    // [FIX 7: SPEED OPTIMIZATION]
-    // Skip artificial delays for R: Device to prevent Bus Crashes
-    bool isRDevice = (mCurrentDeviceId >= 0x50 && mCurrentDeviceId <= 0x53);
-
-    if (! (aspeqtSettings->enableRDevice() && isRDevice) )
-    {
-        if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
-        else SioWorker::usleep(mCompErrDelay);
-    }
-
+    if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
+    else SioWorker::usleep(mCompErrDelay);
     return writeRawFrame(QByteArray(1, SIO_COMPLETE));
 }
-
-
 
 bool StandardSerialPortBackend::writeError()
 {
@@ -946,7 +1018,6 @@ QString AtariSioBackend::lastErrorMessage()
 
 void AtariSioBackend::setActiveSioDevices(const QByteArray &){}
 
-// Add to serialport-unix.cpp
 
 QByteArray AtariSioBackend::readRawFrame(uint size, bool verbose)
 {
