@@ -1,6 +1,6 @@
 #include "rdevice.h"
-#include "rdevice_handler.h" // Assumed to contain 'driver_850' and 'relocator_stub' arrays
-#include "aspeqtsettings.h"  // For checking settings
+#include "rdevice_handler.h" // 'driver_850' and 'relocator_stub' arrays
+#include "aspeqtsettings.h"
 #include <QDebug>
 #include <QThread>
 #include <QCoreApplication>
@@ -202,6 +202,7 @@ void RDevice::handlePollType3(quint8 aux1, quint8 aux2)
     shortDelay();
     sio->port()->writeDataFrame(response);
 }
+
 
 void RDevice::handleDownloadRelocator()
 {
