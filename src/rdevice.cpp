@@ -60,7 +60,6 @@ void RDevice::setEnabled(bool enable)
 void RDevice::handleCommand(quint8 command, quint16 aux)
 {
     if (!m_isEnabled) {
-        sio->port()->writeCommandNak();
         return;
     }
 

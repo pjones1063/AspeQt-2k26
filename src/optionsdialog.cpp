@@ -45,9 +45,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     // --- Standard Serial Port Combo Setup ---
     m_ui->serialPortComboBox->clear();
     const QList<QSerialPortInfo>& infos = QSerialPortInfo::availablePorts();
-
-    m_ui->serialPortComboBox->addItem("ttyAspeQT","ttyAspeQT");
-
     for (const QSerialPortInfo &info : infos)
     {
         m_ui->serialPortComboBox->addItem(info.portName(), info.systemLocation());

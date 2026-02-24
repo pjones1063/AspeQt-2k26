@@ -38,6 +38,7 @@ public:
     QString deviceName() override { return "R: Device (850 Emulation)"; }
     void setEnabled(bool enable);
     bool isEnabled() const { return m_isEnabled; }
+    void loadPhonebook(const QString &path);
 
     // Called by SIO Worker when raw bytes arrive during Stream Mode
     void processSerialData(const QByteArray &data);
@@ -106,7 +107,7 @@ private:
     void sendAtResponse(const QString &text);
     void parseTelnet(const QByteArray &data);
     void checkEscapeSequence(const QByteArray &data);
-    void loadPhonebook(const QString &path);
+
 
     // SIO Handlers
     void handlePollType1();

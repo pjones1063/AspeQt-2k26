@@ -37,7 +37,8 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
     if (!savedHosts.isEmpty()) {
         hostCombo->addItems(savedHosts);
     } else {
-        hostCombo->addItem("13leader.net"); // Default
+        //hostCombo->addItem("13leader.net"); // Default
+        hostCombo->clear();
     }
 
     // --- CRITICAL FIX: Removed "QPushButton *" type declaration ---
@@ -402,7 +403,7 @@ void TnfsBrowser::onClearHistory()
     if (QMessageBox::Yes == QMessageBox::question(this, tr("Clear History"),
                                                   tr("Clear all saved hosts?"), QMessageBox::Yes | QMessageBox::No)) {
         hostCombo->clear();
-        hostCombo->addItem("13leader.net");
+        // hostCombo->addItem("13leader.net");
         QSettings settings("AspeQt", "TNFS");
         settings.remove("hostHistory");
         statusLabel->setText(tr("History cleared."));

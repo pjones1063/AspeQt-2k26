@@ -1415,6 +1415,20 @@ void MainWindow::on_actionOptions_triggered()
         deviceStatusChanged(i);
     }
 
+
+
+    RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+    if (rDev) {
+        bool isRDeviceActive = aspeqtSettings->enableRDevice();
+        rDev->setEnabled(isRDeviceActive); // Updates internal flag and closes active sockets
+
+        // If newly enabled, ensure the phonebook is loaded from the current path
+        if (isRDeviceActive) {
+            rDev->loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
+        }
+    }
+
+
     if (aspeqtSettings->isModemBridgeEnabled()) {
         // 1. Create if missing
         if (!modemBridge) {
