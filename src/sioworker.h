@@ -83,8 +83,14 @@ public:
     static void usleep(unsigned long time) {QThread::usleep(time);}
 signals:
     void statusChanged(QString status);
+    void rawDataReceived(const QByteArray &data);
+
 public slots:
     void start(Priority p = InheritPriority);
+    void onChangeBaudRate(int baudRate);
+    void onStreamFinished();
+    void onWriteRawData(const QByteArray &data);
+
 
 public:
     void setHappyMode(int deviceId, bool enabled);
@@ -93,6 +99,9 @@ public:
 
 private:
     bool happyMode[DISK_COUNT]; // Array to track state for D1-D15
+    bool m_isStreaming = false;
+    void restoreStandardBaudRate();
+
 
 };
 

@@ -96,8 +96,10 @@ void SioWorker::start(Priority p)
     QThread::start(p);
 }
 
+
 void SioWorker::run()
 {
+    // Connect status signal (Existing)
     connect(mPort, SIGNAL(statusChanged(QString)), this, SIGNAL(statusChanged(QString)));
 
     /* Open serial port */
@@ -108,27 +110,44 @@ void SioWorker::run()
     /* Process SIO commands until we're explicitly stopped */
     while (!mustTerminate) {
 
-        QCoreApplication::processEvents(); // <--- ADD THIS LINE
+        // CRITICAL: This is required for your Slots (onChangeBaudRate, onStreamFinished)
+        // to actually execute while this while-loop is running!
+        QCoreApplication::processEvents();
 
-       QByteArray cmd = mPort->readCommandFrame();
+        // ====================================================================
+        // NEW: Stream Mode Handler (High Priority)
+        // ====================================================================
+        if (m_isStreaming) {
+            // 1. Read Raw Bytes (Non-blocking / Short Timeout)
+            // We read up to 128 bytes. The backend must support readRawFrame.
+            QByteArray rawData = mPort->readRawFrame(128, false);
+
+            // 2. Forward to RDevice via Signal
+            if (!rawData.isEmpty()) {
+                emit rawDataReceived(rawData);
+            }
+
+            // 3. Prevent 100% CPU usage
+            usleep(100);
+
+            // 4. Skip Standard Logic below and loop again
+            continue;
+        }
+        // ====================================================================
+        // EXISTING: Standard SIO Command Polling (Your Original Logic)
+        // ====================================================================
+
+        QByteArray cmd = mPort->readCommandFrame();
+
         if (mustTerminate) {
             break;
         }
-
-        /**************************/
-        /*      SOI Spy debug     */
-        /**************************/
-        // quint8 id   = (quint8)cmd[0];
-        // quint8 c    = (quint8)cmd[1];
-        // quint16 aux2 = (quint8)cmd[2] | ((quint8)cmd[3] << 8);
-        // qDebug() << "!d [SIO Spy] ID:$" << QString::number(id, 16).rightJustified(2, '0')
-        //         << "CMD:$" << QString::number(c, 16).rightJustified(2, '0')
-        //         << "AUX:$" << QString::number(aux2, 16).rightJustified(4, '0');
 
         if (cmd.isEmpty()) {
             qCritical() << "!e" << tr("Cannot read command frame.");
             break;
         }
+
         /* Decode the command */
         quint8 no = (quint8)cmd[0];
         quint8 command = (quint8)cmd[1];
@@ -142,22 +161,24 @@ void SioWorker::run()
                 devices[no]->unlock();
             } else {
                 qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 ignored because the image explorer is open.")
-                               .arg(deviceName(no))
-                               .arg(command, 2, 16, QChar('0'))
-                               .arg(aux, 4, 16, QChar('0'));
+                .arg(deviceName(no))
+                    .arg(command, 2, 16, QChar('0'))
+                    .arg(aux, 4, 16, QChar('0'));
             }
         } else {
             qDebug() << "!u" << tr("[%1] command: $%2, aux: $%3 ignored.")
-                           .arg(deviceName(no))
-                           .arg(command, 2, 16, QChar('0'))
-                           .arg(aux, 4, 16, QChar('0'));
+            .arg(deviceName(no))
+                .arg(command, 2, 16, QChar('0'))
+                .arg(aux, 4, 16, QChar('0'));
         }
         deviceMutex->unlock();
         cmd.clear();
     }
+
     setHighSpeed(false);
     mPort->close();
 }
+
 
 void SioWorker::setHighSpeed(bool enabled)
 {
@@ -498,4 +519,40 @@ void CassetteWorker::start(Priority p)
             break;
     }
     QThread::start(p);
+}
+
+
+void SioWorker::onChangeBaudRate(int baudRate)
+{
+    // Use the accessor port() instead of m_port
+    if (port()) {
+        qDebug() << "[SioWorker] Changing Baud Rate to:" << baudRate;
+        port()->setSpeed(baudRate);
+
+        // Flag that we are now streaming
+        m_isStreaming = true;
+    }
+}
+
+void SioWorker::onWriteRawData(const QByteArray &data)
+{
+    if (port() && m_isStreaming) {
+        // Direct write without adding SIO checksums
+        port()->writeRawFrame(data);
+    }
+}
+
+void SioWorker::onStreamFinished()
+{
+    qDebug() << "[SioWorker] Stream Mode Finished. Restoring Command Mode.";
+    m_isStreaming = false;
+    restoreStandardBaudRate();
+}
+
+void SioWorker::restoreStandardBaudRate()
+{
+    if (port()) {
+        // Standard SIO is usually 19200
+        port()->setSpeed(19200);
+    }
 }

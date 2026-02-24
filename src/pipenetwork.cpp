@@ -224,7 +224,9 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         // 2. Send Frame
         QByteArray chunk;
         if (m_rxBuffer.isEmpty() && m_netFinished) {
-            chunk.fill(0, 256); // EOF
+            sio->port()->writeError();
+            return;
+
         } else {
             int len = qMin(256, m_rxBuffer.size());
             chunk = m_rxBuffer.left(len);

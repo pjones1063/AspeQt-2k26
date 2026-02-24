@@ -402,14 +402,12 @@ MainWindow::MainWindow(QWidget *parent)
     // -------------------------------------------------------
     // R: Device testing
     // -------------------------------------------------------
+    // When you create RDevice:
     RDevice *rDev = new RDevice(sio);
-    rDev->setParent(nullptr);
-    rDev->moveToThread(sio);
+    connect(rDev, &RDevice::requestBaudRateChange, sio, &SioWorker::onChangeBaudRate);
+    connect(rDev, &RDevice::streamModeFinished, sio, &SioWorker::onStreamFinished);
+    connect(rDev, &RDevice::sendSerialData, sio, &SioWorker::onWriteRawData);
     sio->installDevice(0x50, rDev);
-
-    RDevice *rDev2 = new RDevice(sio);
-    rDev2->moveToThread(sio);
-    sio->installDevice(0x4F, rDev2);
 
 
     // -------------------------------------------------------

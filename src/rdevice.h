@@ -7,23 +7,23 @@
 #include <QByteArray>
 #include <QElapsedTimer>
 #include <QObject>
-#include <QList>
-#include "bbsdata.h" // Assumed available in project
+#include <QQueue>
+#include "bbsdata.h"
 
 // SIO Command Constants
-#define CMD_RELOCATOR    0x21 // '!' - Download Relocator
-#define CMD_DOWNLOAD     0x26 // '&' - Download Handler
-#define CMD_POLL_TYPE1   0x3F // '?' - Boot Poll
-#define CMD_POLL_TYPE3   0x40 // '@' - Add Device Poll
-#define CMD_CONTROL      0x41 // 'A' - Control
-#define CMD_CONFIGURE    0x42 // 'B' - Configure
-#define CMD_LISTEN       0x4C // 'L' - Listen (ATPORT)
-#define CMD_UNLISTEN     0x4D // 'M' - Unlisten
-#define CMD_AUTOANSWER   0x4F // 'O' - Auto Answer
-#define CMD_STATUS       0x53 // 'S' - Status
-#define CMD_WRITE        0x57 // 'W' - Output
-#define CMD_READ         0x52 // 'R' - Input
-#define CMD_STREAM       0x58 // 'X' - Concurrent Mode
+#define CMD_RELOCATOR    0x21
+#define CMD_DOWNLOAD     0x26
+#define CMD_POLL_TYPE1   0x3F
+#define CMD_POLL_TYPE3   0x40
+#define CMD_CONTROL      0x41
+#define CMD_CONFIGURE    0x42
+#define CMD_LISTEN       0x4C
+#define CMD_UNLISTEN     0x4D
+#define CMD_AUTOANSWER   0x4F
+#define CMD_STATUS       0x53
+#define CMD_WRITE        0x57
+#define CMD_READ         0x52
+#define CMD_STREAM       0x58
 
 class RDevice : public SioDevice
 {
@@ -33,84 +33,94 @@ public:
     explicit RDevice(SioWorker *worker);
     ~RDevice() override;
 
+    // SIO Interface
     void handleCommand(quint8 command, quint16 aux) override;
     QString deviceName() override { return "R: Device (850 Emulation)"; }
-
-    // Toggle R: functionality
     void setEnabled(bool enable);
     bool isEnabled() const { return m_isEnabled; }
 
+    // Called by SIO Worker when raw bytes arrive during Stream Mode
+    void processSerialData(const QByteArray &data);
+
+signals:
+    // Signal to SIO Worker to send bytes to Atari (Stream Mode)
+    void sendSerialData(const QByteArray &data);
+
+    // Signal to SIO Worker to change physical UART speed
+    void requestBaudRateChange(int baudRate);
+
+    // Signal to SIO Worker to exit Stream Mode (return to Command Mode)
+    void streamModeFinished();
+
 private slots:
-    // TCP Client Slots
+    // TCP Sockets
     void onSocketConnected();
     void onSocketDisconnected();
     void onSocketReadyRead();
     void onSocketError(QAbstractSocket::SocketError socketError);
-
-    // TCP Server Slots
     void onNewConnection();
 
 private:
     enum class ModemState { CommandMode, StreamMode };
 
+    // Telnet FSM States
+    enum class TelnetState {
+        Normal,
+        IacReceived,
+        Will, Wont, Do, Dont,
+        SubNegotiation,
+        SubIac
+    };
+
     // --- State Variables ---
     ModemState state = ModemState::CommandMode;
+    TelnetState m_telnetState = TelnetState::Normal;
     bool m_isEnabled;
-    QByteArray rxBuffer;          // Buffer for data PC -> Atari
-    QString atCmdAccumulator;     // Buffer for AT commands Atari -> PC
+
+    QByteArray m_txBuffer;        // Data waiting to go to Atari
+    QString m_atCmdBuffer;        // AT command accumulator
 
     // --- Networking ---
-    QTcpSocket *tcpSocket;        // Outgoing/Active connection
-    QTcpServer *tcpServer;        // Incoming connection listener
-    QTcpSocket *pendingSocket;    // Waiting for Answer (ATA)
+    QTcpSocket *tcpSocket;
+    QTcpServer *tcpServer;
+    QTcpSocket *pendingSocket;
 
     // --- Modem Registers ---
-    bool echoEnabled = true;      // ATE0/1
-    bool verboseResponses = true; // ATV0/1
-    bool autoAnswer = false;      // ATS0=1
-    int listenPort = 0;           // ATPORT
+    bool echoEnabled = true;
+    bool verboseResponses = true;
+    bool autoAnswer = false;
+    int listenPort = 0;
 
-    // --- Timing & Escape Sequence ---
-    QElapsedTimer lastActivityTimer;
-    QElapsedTimer lastRingTimer;
-    int plusCount = 0;
-    bool possibleEscape = false;
+    // --- Escape Sequence (+++) ---
+    QElapsedTimer m_escapeTimer;
+    int m_plusCount = 0;
 
-    // --- Phonebook & Macros ---
+    // --- Phonebook ---
     QList<BbsEntry> m_phonebook;
-    BbsEntry m_currentConnection; // Stores info for the active session (Login/Pass)
-    bool m_escPressed = false;    // Tracks ESC key for Macros inside Stream Loop
+    BbsEntry m_currentConnection;
 
-    void loadPhonebook(const QString &path);
 
-    // --- Core Logic Helpers ---
-    void processStreamLoop();     // The Blocking Data Pump for Mode $58
+    // --- Helpers ---
     void processAtCommand(const QString &cmd);
-    void processIncomingData(QByteArray data); // Telnet IAC stripping
-
-    // --- SIO Command Handlers ---
-    void handlePollType1();             // $3F
-    void handlePollType3(quint8 aux1, quint8 aux2); // $40
-    void handleDownloadRelocator();     // $21
-    void handleDownloadDriver();        // $26
-    void handleStatus();                // $53
-    void handleControl(quint16 aux);    // $41
-    void handleWrite(quint16 len);      // $57
-    void handleRead(quint16 len);       // $52
-    void handleStream();                // $58
-    void handleListen(quint16 aux);     // $4C
-    void handleUnlisten();              // $4D
-
-    // --- AT Helpers ---
     void sendResultCode(int code);
     void sendAtResponse(const QString &text);
-    void at_handle_dial(const QString &target);
-    void at_handle_answer();
-    void at_handle_hangup();
-    void checkRing();
+    void parseTelnet(const QByteArray &data);
+    void checkEscapeSequence(const QByteArray &data);
+    void loadPhonebook(const QString &path);
 
-    // Helper for timing
-    void shortDelay();
+    // SIO Handlers
+    void handlePollType1();
+    void handlePollType3(quint8 aux1, quint8 aux2);
+    void handleDownloadRelocator();
+    void handleDownloadDriver();
+    void handleStatus();
+    void handleControl(quint16 aux);
+    void handleWrite(quint16 len);
+    void handleRead(quint16 len);
+    void handleStream();
+    void handleListen(quint16 aux);
+    void at_handle_dial(const QString &target);
+
 };
 
 #endif // RDEVICE_H
