@@ -237,6 +237,7 @@ BbsEntry PhoneDirectory::getSelectedEntry() {
     return empty;
 }
 
+
 bool PhoneDirectory::runEditDialog(BbsEntry &entry) {
     QDialog dlg(this);
     dlg.setWindowTitle(tr("Edit BBS Entry"));
