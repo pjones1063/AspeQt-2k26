@@ -173,6 +173,11 @@ void PhoneDirectory::refreshList(const QString &filter) {
     m_tree->clear();
     for (int i = 0; i < m_entries.size(); ++i) {
         const BbsEntry &e = m_entries[i];
+
+        bool isTelnet = e.protocol.trimmed().isEmpty() ||
+                        (e.protocol.compare("TELNET", Qt::CaseInsensitive) == 0);
+        if (!isTelnet) continue;
+
         if (filter.isEmpty() || e.name.contains(filter, Qt::CaseInsensitive)) {
             QTreeWidgetItem *item = new QTreeWidgetItem(m_tree);
             item->setText(0, e.name);
@@ -293,6 +298,7 @@ void PhoneDirectory::onAddClicked() {
     newEntry.name = "New BBS";
     newEntry.ip = "bbs.example.com";
     newEntry.port = 23;
+    newEntry.protocol = "TELNET";
     m_entries.append(newEntry);
     refreshList();
 
