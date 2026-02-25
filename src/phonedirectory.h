@@ -35,6 +35,7 @@ private:
     void parseXml();
     void saveToFile(); // New helper
     void refreshList(const QString &filter = "");
+    bool runEditDialog(BbsEntry &entry);
 };
 
 #endif // PHONEDIRECTORY_H

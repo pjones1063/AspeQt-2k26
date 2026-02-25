@@ -200,70 +200,14 @@ void PhoneDirectory::onEditClicked() {
 
     BbsEntry &entry = m_entries[index];
 
-    // Create a dynamic dialog for editing
-    QDialog dlg(this);
-    dlg.setWindowTitle(tr("Edit BBS Entry"));
-    dlg.resize(400, 200); // Reasonable size for edit dialog
-    QFormLayout layout(&dlg);
-
-    QLineEdit *nameEdit = new QLineEdit(entry.name);
-    QLineEdit *ipEdit = new QLineEdit(entry.ip);
-    QLineEdit *portEdit = new QLineEdit(QString::number(entry.port));
-    QLineEdit *userEdit = new QLineEdit(entry.login);
-
-    // --- NEW: PASSWORD FIELD & SHOW BUTTON ---
-    QHBoxLayout *passLayout = new QHBoxLayout();
-    passLayout->setContentsMargins(0, 0, 0, 0); // Keep it flush with the form
-
-    QLineEdit *passEdit = new QLineEdit(entry.password);
-    passEdit->setEchoMode(QLineEdit::Password);
-
-    QToolButton *showPassBtn = new QToolButton(&dlg);
-    showPassBtn->setText(tr("Show"));
-    showPassBtn->setCheckable(true);
-
-    // Lambda to handle the toggle action seamlessly
-    connect(showPassBtn, &QToolButton::toggled, [passEdit, showPassBtn](bool checked) {
-        if (checked) {
-            passEdit->setEchoMode(QLineEdit::Normal);
-            showPassBtn->setText(tr("Hide"));
-        } else {
-            passEdit->setEchoMode(QLineEdit::Password);
-            showPassBtn->setText(tr("Show"));
-        }
-    });
-
-    passLayout->addWidget(passEdit);
-    passLayout->addWidget(showPassBtn);
-    // ------------------------------------------
-
-    layout.addRow(tr("Name:"), nameEdit);
-    layout.addRow(tr("Address:"), ipEdit);
-    layout.addRow(tr("Port:"), portEdit);
-    layout.addRow(tr("User ID:"), userEdit);
-    layout.addRow(tr("Password:"), passLayout); // Add the sub-layout here instead of just the line edit
-
-    QDialogButtonBox btns(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dlg);
-    connect(&btns, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
-    connect(&btns, &QDialogButtonBox::rejected, &dlg, &QDialog::reject);
-    layout.addRow(&btns);
-
-    if (dlg.exec() == QDialog::Accepted) {
-        // Update the internal list
-        entry.name = nameEdit->text();
-        entry.ip = ipEdit->text();
-        entry.port = portEdit->text().toInt();
-        entry.login = userEdit->text();
-        entry.password = passEdit->text();
-
-        // Update the UI immediately
+    // Use the helper. If true (OK clicked), update the UI.
+    if (runEditDialog(entry)) {
         item->setText(0, entry.name);
         item->setText(1, entry.ip);
         item->setText(2, QString::number(entry.port));
         item->setText(3, entry.login);
     }
 }
-
 
 void PhoneDirectory::onSaveClicked() {
     if (m_filePath.isEmpty()) return;
@@ -293,19 +237,88 @@ BbsEntry PhoneDirectory::getSelectedEntry() {
     return empty;
 }
 
+bool PhoneDirectory::runEditDialog(BbsEntry &entry) {
+    QDialog dlg(this);
+    dlg.setWindowTitle(tr("Edit BBS Entry"));
+    dlg.resize(400, 200);
+    QFormLayout layout(&dlg);
+
+    // Initialize fields with data from the passed 'entry' object
+    QLineEdit *nameEdit = new QLineEdit(entry.name);
+    QLineEdit *ipEdit = new QLineEdit(entry.ip);
+    QLineEdit *portEdit = new QLineEdit(QString::number(entry.port));
+    QLineEdit *userEdit = new QLineEdit(entry.login);
+
+    // Password Field Logic
+    QHBoxLayout *passLayout = new QHBoxLayout();
+    passLayout->setContentsMargins(0, 0, 0, 0);
+    QLineEdit *passEdit = new QLineEdit(entry.password);
+    passEdit->setEchoMode(QLineEdit::Password);
+    QToolButton *showPassBtn = new QToolButton(&dlg);
+    showPassBtn->setText(tr("Show"));
+    showPassBtn->setCheckable(true);
+
+    connect(showPassBtn, &QToolButton::toggled, [passEdit, showPassBtn](bool checked) {
+        if (checked) {
+            passEdit->setEchoMode(QLineEdit::Normal);
+            showPassBtn->setText(tr("Hide"));
+        } else {
+            passEdit->setEchoMode(QLineEdit::Password);
+            showPassBtn->setText(tr("Show"));
+        }
+    });
+
+    passLayout->addWidget(passEdit);
+    passLayout->addWidget(showPassBtn);
+
+    layout.addRow(tr("Name:"), nameEdit);
+    layout.addRow(tr("Address:"), ipEdit);
+    layout.addRow(tr("Port:"), portEdit);
+    layout.addRow(tr("User ID:"), userEdit);
+    layout.addRow(tr("Password:"), passLayout);
+
+    QDialogButtonBox btns(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dlg);
+    connect(&btns, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
+    connect(&btns, &QDialogButtonBox::rejected, &dlg, &QDialog::reject);
+    layout.addRow(&btns);
+
+    // If User Clicks OK
+    if (dlg.exec() == QDialog::Accepted) {
+        entry.name = nameEdit->text();
+        entry.ip = ipEdit->text();
+        entry.port = portEdit->text().toInt();
+        entry.login = userEdit->text();
+        entry.password = passEdit->text();
+        return true; // Saved
+    }
+
+    return false; // Canceled
+}
+
 void PhoneDirectory::onAddClicked() {
+    // 1. Create a temporary entry
     BbsEntry newEntry;
     newEntry.name = "New BBS";
     newEntry.ip = "bbs.example.com";
     newEntry.port = 23;
     newEntry.protocol = "TELNET";
-    m_entries.append(newEntry);
-    refreshList();
 
-    // Optional: Auto-trigger edit
-    m_tree->setCurrentItem(m_tree->topLevelItem(m_entries.size()-1));
-    onEditClicked();
+    // 2. Show the dialog using the temporary entry
+    if (runEditDialog(newEntry)) {
+        // 3. ONLY if they clicked OK, append it to the real list
+        m_entries.append(newEntry);
+
+        refreshList();
+
+        // Select the new item
+        int lastVisualIndex = m_tree->topLevelItemCount() - 1;
+        if (lastVisualIndex >= 0) {
+            m_tree->setCurrentItem(m_tree->topLevelItem(lastVisualIndex));
+        }
+    }
+    // If they clicked Cancel, 'newEntry' is destroyed and nothing happens.
 }
+
 
 void PhoneDirectory::onDeleteClicked() {
     QTreeWidgetItem *item = m_tree->currentItem();
@@ -317,3 +330,4 @@ void PhoneDirectory::onDeleteClicked() {
         refreshList();
     }
 }
+
