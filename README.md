@@ -1,71 +1,59 @@
 # Atari AspeQt-2K26
 
+![AspeQt-2k26 Badge](res/badge.png)
+
 ### The Modern Atari 8-bit Serial Peripheral Emulator
 **Built for 2026 and beyond | Powered by Qt 6**
 
 ---
 
-### Summary
+### Project Overview
 AspeQt-2K26 is a modernized fork of the classic AspeQT/RespeQt emulator. It emulates Atari SIO peripherals (Disk Drives, Printers, etc.) when connected to an Atari 8-bit computer (400/800/XL/XE) via an SIO2PC cable.
 
-While preserving the classic functionality, **AspeQt-2K26** migrates the codebase to **Qt 6**, fixing critical stability issues and adding support for modern large-capacity storage and current operating systems.
+This version migrates the codebase to **Qt 6**, fixing critical stability issues and introducing high-performance networking and hardware-level emulation for modern operating systems.
 
-### What's New in AspeQt-2K26
-* **Qt 6 Native:** Fully ported to the Qt 6 framework for modern UI support and High-DPI scaling.
-* **Self-Contained Firmware:** All necessary boot firmware (MyDOS, Atari DOS, etc.) is now embedded within the executable.
-* **Large Hard Disk Support:** Fixed integer overflow logic to support **16MB+ Hard Disk Images** (up to 65,535 sectors) correctly.
-* **"Happy Mode" Improvements:** Enhanced handshake logic and proper Windows timing via `winmm`.
-* **Stability Fixes:** Crash-proof UI actions on empty slots and resolved memory safety issues in the autoboot loader.
-* **Modern Desktop Integration:** Restored and fixed **Drag & Drop** functionality for Qt 6 environments.
-* **Enhanced Linux/Unix Support:** Implemented proper serial port flushing (`tcdrain`) to prevent SIO timeouts and NAKs.
+### 🚀 What's New in AspeQt-2K26
 
----
+#### 1. Full Qt 6 Native Port
+* **Modern Framework:** Fully ported to the Qt 6 framework for enhanced stability and long-term support.
+* **High-DPI Support:** Optimized UI for modern monitors and 4K displays.
 
-### Automated Deployment
-This project includes automated scripts to generate production-ready installers for all major platforms.
+#### 2. Client TNFS Support
+* **Cloud Storage:** Direct support for mounting disk images from TNFS servers (like `13leader.net`) without needing local files.
+* **Dynamic Browsing:** Integrated TNFS browser with thread-safe download progress tracking.
 
-#### **Windows (QEMU/Native)**
-The Windows script builds the project using MinGW and generates both a portable ZIP and a professional installer.
-* **Requirements:** Qt 6.10.2, MinGW 13.1.0, and Inno Setup 6.
-* **Command:** Run `powershell ./release/deploy_win.ps1`.
+#### 3. Native W: and Y: Drivers
+* **W: (Network Device):** A native SIO implementation of the Network Streaming Device. Supports HTTP and FTP (via system `curl`) for downloading data directly to the Atari. Includes EOL translation between Unix (LF) and ATASCII (EOL).
+* **Y: (Clipboard Device):** Bridges the Atari to your modern OS clipboard. Use `OPEN #1,4,0,"Y:"` to read the PC clipboard or `OPEN #1,8,0,"Y:"` to write to it.
 
-#### **Linux (Debian/Ubuntu)**
-The Linux script generates a `.deb` package and a portable `.tar.gz`.
-* **Requirements:** CMake, CPack, and Qt 6 development libraries.
-* **Command:** Run `bash ./release/deploy_linux.sh`.
+#### 4. Modem RS232 Bridge
+* **Hayes Emulation:** Bridges a secondary serial port to the Internet, allowing you to use a real Atari and 850 interface to access modern BBSes.
+* **BBS Phonebook:** Integrated XML phonebook support for quick dialing.
+* **Macros & Automation:** Built-in Macro support (Auto-User/Auto-Pass) to speed up BBS logins.
 
-#### **macOS**
-Standard build process for modern Apple Silicon (M3) environments.
-* **Requirements:** Xcode or Clang, and Qt 6.
-* **Command:** Use `macdeployqt` to wrap the `.app` bundle into a `.dmg`.
+#### 5. Experimental 850 R: Emulation
+* **Direct Hardware Emulation:** A kernel-bypass, SIO-level emulation of the **Atari 850 Interface Module**.
+* **TCP/IP Integration:** Maps the 850 driver's RS-232 commands directly to TCP/IP sockets for modern "modem-less" networking.
+* **Stream Mode:** Optimized for Raspberry Pi 5 native UARTs, providing FujiNet-level precision for R: device polls.
 
 ---
 
 ### 🕒 Time Synchronization (Real-Time Clock)
 AspeQt-2k26 features built-in support for the **ApeTime** protocol, allowing your Atari to synchronize its clock with your PC automatically.
 
-* **Recommended Method:** Use a standard ApeTime-compatible driver.
-    * **SpartaDOS X / RealDOS / BW-DOS:** Simply load the `ATIME.SYS` driver (or enable it in your `CONFIG.SYS`). The system time will sync automatically on boot.
-* **Legacy Method (Deprecated):** The `aspecl` client executable is included for legacy compatibility but is **not recommended** for modern setups.
-
-### Troubleshooting (Windows/MinGW)
-If the Windows build fails, check the following common roadblocks:
-
-* **Stale Cache:** If moving the project from Linux to Windows, you MUST delete the `build/` folder entirely to clear Linux-specific paths from `CMakeCache.txt`.
-* **Missing windres:** If you see `'windres' is not recognized`, ensure `CMAKE_RC_COMPILER` is explicitly set in the deployment script to point to the MinGW `bin` folder.
-* **sh.exe Conflict:** If the build fails with `sh.exe was found in your PATH`, remove Git Bash from your system PATH temporarily.
-* **-j Invalid Number:** Ensure the multi-core flag is passed as a sub-expression: `-j ($env:NUMBER_OF_PROCESSORS)`.
+* **Recommended Method:** Use a standard ApeTime-compatible driver like `ATIME.SYS` on SpartaDOS X.
+* **Legacy Support:** The `aspecl` client is included for backward compatibility with older setups.
 
 ---
 
 ### Support & Community
-Support and inquiries can be made on our BBS. We love talking Atari!
+Support and inquiries can be made on our BBS or via our GitHub issues page. We love talking Atari!
 * **Telnet:** `telnet 13leader.net 8023`
 * **Web:** [http://13leader.net](http://13leader.net)
 
 ---
 
-### Building from Source (Manual)
+### Building from Source
 **Requirements:**
 * CMake 3.16+
 * Qt 6.x Development Libraries
@@ -76,4 +64,3 @@ mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build . --parallel
-
