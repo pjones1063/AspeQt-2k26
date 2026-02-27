@@ -5,6 +5,7 @@
 #include <QTreeWidget>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QCloseEvent>
 #include "bbsdata.h"
 
 class PhoneDirectory : public QDialog {
@@ -14,6 +15,10 @@ public:
     void loadFromFile(const QString &path);
     BbsEntry getSelectedEntry();
 
+protected:
+    // Intercept window close events (X button)
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void onSearch(const QString &text);
     void onDialClicked();
@@ -21,6 +26,7 @@ private slots:
     void onSaveClicked();
     void onAddClicked();
     void onDeleteClicked();
+    void onCloseClicked(); // Custom slot for the Close button
 
 private:
     QLineEdit *m_searchEdit;
@@ -31,11 +37,16 @@ private:
 
     QString m_filePath;
     QList<BbsEntry> m_entries;
+    bool m_isDirty; // Tracks unsaved changes
 
     void parseXml();
-    void saveToFile(); // New helper
+    void saveToFile();
     void refreshList(const QString &filter = "");
     bool runEditDialog(BbsEntry &entry);
+
+    // Helper to handle the "Save Changes?" prompt
+    // Returns true if safe to proceed, false if user cancelled.
+    bool checkUnsavedChanges(const QString &actionName);
 };
 
 #endif // PHONEDIRECTORY_H

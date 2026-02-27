@@ -1,5 +1,5 @@
 #include "rdevice.h"
-#include "rdevice_handler.h" // Binary blobs (driver_850, etc)
+#include "rdevice_handler.h" // Binary blobs
 #include "aspeqtsettings.h"
 #include <QDebug>
 #include <QCoreApplication>
@@ -19,13 +19,19 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
 {
     // TCP Client
     tcpSocket = new QTcpSocket(this);
-    // Disable Nagle's algorithm for lower latency
     tcpSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
 
     connect(tcpSocket, &QTcpSocket::connected, this, &RDevice::onSocketConnected);
     connect(tcpSocket, &QTcpSocket::disconnected, this, &RDevice::onSocketDisconnected);
     connect(tcpSocket, &QTcpSocket::readyRead, this, &RDevice::onSocketReadyRead);
     connect(tcpSocket, &QTcpSocket::errorOccurred, this, &RDevice::onSocketError);
+
+    // [NEW] SSH Client
+    m_ssh = new SshClient(this);
+    connect(m_ssh, &SshClient::connected, this, &RDevice::onSshConnected);
+    connect(m_ssh, &SshClient::disconnected, this, &RDevice::onSshDisconnected);
+    connect(m_ssh, &SshClient::rxData, this, &RDevice::onSshDataReceived);
+    connect(m_ssh, &SshClient::error, this, &RDevice::onSshError);
 
     // TCP Server
     tcpServer = new QTcpServer(this);
@@ -39,6 +45,7 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
 RDevice::~RDevice()
 {
     tcpSocket->abort();
+    m_ssh->disconnectFromHost(); // [NEW] Cleanup SSH
     tcpServer->close();
 }
 
@@ -47,6 +54,7 @@ void RDevice::setEnabled(bool enable)
     m_isEnabled = enable;
     if (!enable) {
         tcpSocket->disconnectFromHost();
+        m_ssh->disconnectFromHost(); // [NEW]
         tcpServer->close();
         state = ModemState::CommandMode;
         m_txBuffer.clear();
@@ -54,9 +62,8 @@ void RDevice::setEnabled(bool enable)
 }
 
 // --------------------------------------------------------------------------
-// SIO Dispatcher
+// SIO Dispatcher (Unchanged)
 // --------------------------------------------------------------------------
-
 void RDevice::handleCommand(quint8 command, quint16 aux)
 {
     if (!m_isEnabled) {
@@ -83,7 +90,7 @@ void RDevice::handleCommand(quint8 command, quint16 aux)
 }
 
 // --------------------------------------------------------------------------
-// Stream Mode (The Professional Way)
+// Stream Mode
 // --------------------------------------------------------------------------
 
 void RDevice::handleStream()
@@ -91,11 +98,10 @@ void RDevice::handleStream()
     if (!sio->port()->writeCommandAck()) return;
 
     // 1. Send POKEY Table to Atari (Standard 19200 table for compatibility)
-    // Note: You can expand this to support higher speeds if needed
     const char table[] = {0x28, (char)0xA0, 0x00, (char)0xA0, 0x28, (char)0xA0, 0x00, (char)0xA0, 0x78};
     QByteArray payload(table, 9);
 
-    SioWorker::usleep(5000); // Critical timing delay
+    SioWorker::usleep(5000);
     sio->port()->writeDataFrame(payload);
     sio->port()->writeComplete();
 
@@ -104,9 +110,7 @@ void RDevice::handleStream()
     m_escapeTimer.start();
     m_plusCount = 0;
 
-    // 3. Tell Hardware to Switch Speed
-    // Note: Assuming Atari 850 default of 19200 for now.
-    // In a real scenario, you calculate this from the previous CMD_CONFIGURE.
+    // 3. Tell Hardware to Switch Speed (assuming 19200)
     emit requestBaudRateChange(19200);
 
     qDebug() << "[RDevice] Entered Stream Mode (Event Driven)";
@@ -120,9 +124,12 @@ void RDevice::processSerialData(const QByteArray &data)
     // 1. Check for Escape Sequence (+++)
     checkEscapeSequence(data);
 
-    // 2. Send to TCP
-    if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
-        tcpSocket->write(data);
+    // 2. Send to Network (SSH or TCP)
+    // [NEW] Check active protocol
+    if (m_isSshMode) {
+        if (m_ssh->isConnected()) m_ssh->write(data);
+    } else {
+        if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->write(data);
     }
 }
 
@@ -131,30 +138,22 @@ void RDevice::checkEscapeSequence(const QByteArray &data)
     for (char c : data) {
         if (c == '+') {
             if (m_escapeTimer.elapsed() > ESCAPE_GUARD_TIME) {
-                // First plus after silence
                 if (m_plusCount == 0) m_plusCount = 1;
-                else m_plusCount++; // Subsequent plus
+                else m_plusCount++;
             } else {
-                // Too fast, or not preceded by silence
-                if (m_plusCount > 0) m_plusCount++; // Keep counting to invalidate
+                if (m_plusCount > 0) m_plusCount++;
                 else m_plusCount = 0;
             }
         } else {
-            // Non-plus character reset
             m_plusCount = 0;
             m_escapeTimer.restart();
         }
     }
 
-    // Note: We need a timer to check "Silence AFTER pluses".
-    // Since we are event-driven, we check strictly on the *next* data packet
-    // or a timeout. For robustness, if we have 3 pluses, we should start a single-shot timer
-    // in the main loop to confirm the "post-silence".
-    // SIMPLIFIED LOGIC for this snippet:
     if (m_plusCount >= 3 && m_escapeTimer.elapsed() > ESCAPE_GUARD_TIME) {
         qDebug() << "[RDevice] Escape Sequence Detected";
         state = ModemState::CommandMode;
-        emit streamModeFinished(); // Tell SIO Worker to stop streaming
+        emit streamModeFinished();
         sendResultCode(RESULT_OK);
         m_plusCount = 0;
     }
@@ -163,6 +162,8 @@ void RDevice::checkEscapeSequence(const QByteArray &data)
 // Called by Qt when TCP data arrives (Atari <- Net)
 void RDevice::onSocketReadyRead()
 {
+    if (m_isSshMode) return; // Ignore TCP if we are in SSH mode
+
     QByteArray data = tcpSocket->readAll();
 
     if (state == ModemState::StreamMode) {
@@ -175,71 +176,61 @@ void RDevice::onSocketReadyRead()
             m_txBuffer.clear();
         }
     } else {
-        // Command Mode: Buffer data but don't display until READ command?
-        // Or just drop it? Standard 850 drops it unless buffered.
-        // We'll buffer a small amount for the next 'READ' command.
+        m_txBuffer.append(data);
+    }
+}
+
+// [NEW] SSH Ready Read
+void RDevice::onSshDataReceived(const QByteArray &data)
+{
+    // SSH usually already handles PTY/Telnet negotiation internally via libssh
+    // so we just pass raw data through.
+
+    if (state == ModemState::StreamMode) {
+        emit sendSerialData(data);
+    } else {
         m_txBuffer.append(data);
     }
 }
 
 // --------------------------------------------------------------------------
-// Telnet State Machine (Correct Implementation)
+// Telnet State Machine (Only used for TCP)
 // --------------------------------------------------------------------------
-
 void RDevice::parseTelnet(const QByteArray &data)
 {
+    // ... (Keep existing implementation unchanged) ...
     for (char c : data) {
         unsigned char byte = (unsigned char)c;
 
         switch (m_telnetState) {
         case TelnetState::Normal:
-            if (byte == 0xFF) {
-                m_telnetState = TelnetState::IacReceived;
-            } else {
-                m_txBuffer.append(c);
-            }
+            if (byte == 0xFF) { m_telnetState = TelnetState::IacReceived; }
+            else { m_txBuffer.append(c); }
             break;
-
         case TelnetState::IacReceived:
             switch (byte) {
-            case 0xFF: // Binary 255 (Escaped)
-                m_txBuffer.append((char)0xFF);
-                m_telnetState = TelnetState::Normal;
-                break;
-            case 0xFB: m_telnetState = TelnetState::Will; break; // WILL
-            case 0xFC: m_telnetState = TelnetState::Wont; break; // WONT
-            case 0xFD: m_telnetState = TelnetState::Do;   break; // DO
-            case 0xFE: m_telnetState = TelnetState::Dont; break; // DONT
-            case 0xFA: m_telnetState = TelnetState::SubNegotiation; break; // SB
-            default: m_telnetState = TelnetState::Normal; break; // Ignore other commands
+            case 0xFF: m_txBuffer.append((char)0xFF); m_telnetState = TelnetState::Normal; break;
+            case 0xFB: m_telnetState = TelnetState::Will; break;
+            case 0xFC: m_telnetState = TelnetState::Wont; break;
+            case 0xFD: m_telnetState = TelnetState::Do;   break;
+            case 0xFE: m_telnetState = TelnetState::Dont; break;
+            case 0xFA: m_telnetState = TelnetState::SubNegotiation; break;
+            default: m_telnetState = TelnetState::Normal; break;
             }
             break;
-
         case TelnetState::Will:
         case TelnetState::Wont:
         case TelnetState::Do:
         case TelnetState::Dont:
-            // We just ignore options for now (dumb terminal)
-            // Ideally, we would reply with WONT/DONT
             m_telnetState = TelnetState::Normal;
             break;
-
         case TelnetState::SubNegotiation:
-            if (byte == 0xFF) {
-                m_telnetState = TelnetState::SubIac;
-            }
-            // Consume all sub-negotiation bytes
+            if (byte == 0xFF) { m_telnetState = TelnetState::SubIac; }
             break;
-
         case TelnetState::SubIac:
-            if (byte == 0xF0) { // SE (End Sub-negotiation)
-                m_telnetState = TelnetState::Normal;
-            } else if (byte == 0xFF) {
-                // Double IAC inside sub (binary data in sub)
-                m_telnetState = TelnetState::SubNegotiation;
-            } else {
-                m_telnetState = TelnetState::SubNegotiation;
-            }
+            if (byte == 0xF0) { m_telnetState = TelnetState::Normal; }
+            else if (byte == 0xFF) { m_telnetState = TelnetState::SubNegotiation; }
+            else { m_telnetState = TelnetState::SubNegotiation; }
             break;
         }
     }
@@ -253,13 +244,11 @@ void RDevice::handleWrite(quint16 len)
 {
     if (!sio->port()->writeCommandAck()) return;
 
-    // Read payload from Atari
     QByteArray data = sio->port()->readDataFrame(len > 0 ? len : 128);
     sio->port()->writeDataAck();
 
-    // Parse AT Commands
     for (char c : data) {
-        if (c == 0x0D || (quint8)c == 0x9B) { // CR or ATASCII EOL
+        if (c == 0x0D || (quint8)c == 0x9B) {
             processAtCommand(m_atCmdBuffer);
             m_atCmdBuffer.clear();
         } else {
@@ -274,12 +263,10 @@ void RDevice::handleRead(quint16 len)
 {
     if (!sio->port()->writeCommandAck()) return;
 
-    // Send buffered data (from TCP) to Atari
     int readLen = (len > 0) ? len : 128;
     QByteArray chunk = m_txBuffer.left(readLen);
     m_txBuffer.remove(0, chunk.size());
 
-    // Pad if not enough data
     while (chunk.size() < readLen) chunk.append((char)0x00);
 
     sio->port()->writeComplete();
@@ -292,54 +279,179 @@ void RDevice::processAtCommand(const QString &rawCmd)
     if (cmd.startsWith("AT")) cmd.remove(0, 2);
 
     if (cmd.startsWith("DT")) {
-        // Extract number/host after "DT"
         QString target = cmd.mid(2).trimmed();
         at_handle_dial(target);
     }
     else if (cmd == "H") {
+        // [NEW] Disconnect both
         tcpSocket->disconnectFromHost();
-        // onSocketDisconnected will send NO CARRIER
+        m_ssh->disconnectFromHost();
+        // onSocketDisconnected/onSshDisconnected will send NO CARRIER
     }
     else if (cmd == "Z") {
         tcpSocket->abort();
+        m_ssh->disconnectFromHost();
         state = ModemState::CommandMode;
         sendResultCode(RESULT_OK);
     }
     else if (cmd == "O") {
-        if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
+        // Check connection on either
+        bool active = (tcpSocket->state() == QAbstractSocket::ConnectedState) || m_ssh->isConnected();
+
+        if (active) {
             sendResultCode(RESULT_CONNECT);
             state = ModemState::StreamMode;
-            emit streamModeFinished(); // Actually this should START stream mode?
-            // Note: ATO usually returns to Online Data Mode.
-            // You need to signal SIO Worker to go back to Stream Mode here.
+            emit streamModeFinished();
         } else {
             sendResultCode(RESULT_ERROR);
         }
     }
     else {
-        // Default OK for configured registers
         sendResultCode(RESULT_OK);
     }
 }
 
 void RDevice::sendResultCode(int code)
 {
-    // Simplified result codes
     if (verboseResponses) {
         if (code == RESULT_OK) m_txBuffer.append("\r\nOK\r\n");
         else if (code == RESULT_CONNECT) m_txBuffer.append("\r\nCONNECT\r\n");
+        else if (code == RESULT_NO_CARRIER) m_txBuffer.append("\r\nNO CARRIER\r\n");
+        else if (code == RESULT_ERROR) m_txBuffer.append("\r\nERROR\r\n");
     } else {
         m_txBuffer.append(QString("%1\r").arg(code).toLatin1());
     }
 }
 
 // --------------------------------------------------------------------------
-// Boilerplate Handlers
+// Dialing Logic (Updated for SSH)
 // --------------------------------------------------------------------------
+void RDevice::at_handle_dial(const QString &target)
+{
+    QString host = target;
+    int port = 23;
+    bool found = false;
 
+    // 1. Phonebook Lookup
+    for (const BbsEntry &entry : m_phonebook) {
+        if (entry.name.compare(target, Qt::CaseInsensitive) == 0) {
+            host = entry.ip;
+            port = entry.port;
+            m_currentConnection = entry; // Stores protocol, login, pass
+            found = true;
+            break;
+        }
+    }
+
+    // 2. Raw Parse
+    if (!found) {
+        m_currentConnection = BbsEntry();
+
+        // Check SSH Prefix
+        if (host.startsWith("SSH:")) {
+            m_currentConnection.protocol = "SSH";
+            host = host.mid(4);
+            port = 22;
+        }
+        else if (target.contains(":")) {
+            QStringList parts = target.split(":");
+            host = parts[0];
+            port = parts[1].toInt();
+        }
+
+        m_currentConnection.ip = host;
+        m_currentConnection.port = port;
+    }
+
+    sendAtResponse("DIALING " + host + "...\r\n");
+
+    // 3. Switch Protocols
+    if (m_currentConnection.protocol == "SSH" || port == 22) {
+        m_isSshMode = true;
+        // Kill TCP if active
+        if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
+
+        QString user = m_currentConnection.login.isEmpty() ? "guest" : m_currentConnection.login;
+        m_ssh->connectToHost(host, port, user, m_currentConnection.password);
+    }
+    else {
+        m_isSshMode = false;
+        // Kill SSH if active
+        if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+
+        tcpSocket->connectToHost(host, port);
+    }
+}
+
+void RDevice::sendAtResponse(const QString &text)
+{
+    m_txBuffer.append(text.toLatin1());
+}
+
+void RDevice::loadPhonebook(const QString &path)
+{
+    if (path.isEmpty()) return;
+    m_phonebook.clear();
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly)) return;
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) { file.close(); return; }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    QDomElement pb = root.firstChildElement("Phonebook");
+    QDomNodeList list = pb.elementsByTagName("BBS");
+
+    for (int i = 0; i < list.count(); i++) {
+        QDomElement e = list.at(i).toElement();
+        BbsEntry bbs;
+        bbs.name = e.attribute("name");
+        bbs.ip = e.attribute("ip");
+        bbs.port = e.attribute("port").toInt();
+        bbs.protocol = e.attribute("protocol"); // [NEW] Added protocol
+        bbs.login = e.attribute("login");
+        bbs.password = e.attribute("password");
+        m_phonebook.append(bbs);
+    }
+    qDebug() << "[RDevice] Loaded" << m_phonebook.count() << "phonebook entries.";
+}
+
+// --------------------------------------------------------------------------
+// Socket / SSH Event Slots
+// --------------------------------------------------------------------------
+void RDevice::onSocketConnected() { sendResultCode(RESULT_CONNECT); }
+void RDevice::onSocketDisconnected() {
+    if (m_isSshMode) return;
+    sendResultCode(RESULT_NO_CARRIER);
+    state = ModemState::CommandMode;
+    emit streamModeFinished();
+}
+void RDevice::onSocketError(QAbstractSocket::SocketError) {
+    if (m_isSshMode) return;
+    sendResultCode(RESULT_ERROR);
+}
+void RDevice::onNewConnection() { /* Handle incoming call */ }
+
+// [NEW] SSH Callbacks
+void RDevice::onSshConnected() {
+    sendResultCode(RESULT_CONNECT);
+}
+void RDevice::onSshDisconnected() {
+    if (!m_isSshMode) return;
+    sendResultCode(RESULT_NO_CARRIER);
+    state = ModemState::CommandMode;
+    emit streamModeFinished();
+}
+void RDevice::onSshError(const QString &msg) {
+    Q_UNUSED(msg);
+    if (!m_isSshMode) return;
+    sendResultCode(RESULT_ERROR);
+}
+
+// Boilerplate Handlers
 void RDevice::handlePollType1() {
     if (!sio->port()->writeCommandAck()) return;
-    // Standard 850 Boot Block (Generated)
     QByteArray bootBlock(12, 0);
     bootBlock[0]=0x50; bootBlock[1]=0x01; bootBlock[2]=0x21; bootBlock[3]=0x40;
     bootBlock[4]=0x00; bootBlock[5]=0x05; bootBlock[8]=sizeof(relocator_stub)&0xFF; bootBlock[9]=sizeof(relocator_stub)>>8;
@@ -378,7 +490,9 @@ void RDevice::handleStatus() {
     if (!sio->port()->writeCommandAck()) return;
     QByteArray status(4, 0);
     status[1] = 0x10 | 0x80; // CTS | DSR
-    if (tcpSocket->state() == QAbstractSocket::ConnectedState) status[1] |= 0x40; // CD
+    // Check either connection
+    if (tcpSocket->state() == QAbstractSocket::ConnectedState || (m_isSshMode && m_ssh->isConnected()))
+        status[1] |= 0x40; // CD
     sio->port()->writeComplete();
     sio->port()->writeDataFrame(status);
 }
@@ -396,80 +510,3 @@ void RDevice::handleListen(quint16 aux) {
         sio->port()->writeCommandNak();
     }
 }
-
-
-
-void RDevice::loadPhonebook(const QString &path)
-{
-    if (path.isEmpty()) return;
-    m_phonebook.clear();
-    QFile file(path);
-    if (!file.open(QIODevice::ReadOnly)) return;
-
-    QDomDocument doc;
-    if (!doc.setContent(&file)) { file.close(); return; }
-    file.close();
-
-    QDomElement root = doc.documentElement();
-    QDomElement pb = root.firstChildElement("Phonebook");
-    QDomNodeList list = pb.elementsByTagName("BBS");
-
-    for (int i = 0; i < list.count(); i++) {
-        QDomElement e = list.at(i).toElement();
-        BbsEntry bbs;
-        bbs.name = e.attribute("name");
-        bbs.ip = e.attribute("ip");
-        bbs.port = e.attribute("port").toInt();
-        bbs.login = e.attribute("login");
-        bbs.password = e.attribute("password");
-        m_phonebook.append(bbs);
-    }
-    qDebug() << "[RDevice] Loaded" << m_phonebook.count() << "phonebook entries.";
-}
-
-
-void RDevice::at_handle_dial(const QString &target)
-{
-    QString host = target;
-    int port = 23;
-    bool found = false;
-
-    // 1. Phonebook Lookup
-    for (const BbsEntry &entry : m_phonebook) {
-        if (entry.name.compare(target, Qt::CaseInsensitive) == 0) {
-            host = entry.ip;
-            port = entry.port;
-            // Store entry for Macros (Login/Pass) logic later
-            m_currentConnection = entry;
-            found = true;
-            break;
-        }
-    }
-
-    // 2. Raw Parse (IP:Port)
-    if (!found) {
-        m_currentConnection = BbsEntry(); // Clear old macro data
-        if (target.contains(":")) {
-            QStringList parts = target.split(":");
-            host = parts[0];
-            port = parts[1].toInt();
-        }
-    }
-
-    sendAtResponse("DIALING " + host + "...\r\n");
-    tcpSocket->connectToHost(host, port);
-}
-
-void RDevice::sendAtResponse(const QString &text)
-{
-    // Append to the transmission buffer to be sent to Atari next READ command
-    m_txBuffer.append(text.toLatin1());
-}
-
-
-// Socket Slots
-void RDevice::onSocketConnected() { sendResultCode(RESULT_CONNECT); }
-void RDevice::onSocketDisconnected() { sendResultCode(RESULT_NO_CARRIER); state = ModemState::CommandMode; emit streamModeFinished(); }
-void RDevice::onSocketError(QAbstractSocket::SocketError) { sendResultCode(RESULT_ERROR); }
-void RDevice::onNewConnection() { /* Handle incoming call */ }
-

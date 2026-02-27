@@ -32,9 +32,13 @@ if(NOT TARGET ZLIB::ZLIB)
     endif()
 endif()
 
-# --- 2. Find Qt 6 Components ---
-# FIX: Added 'Xml' to the list of required components
+# --- 2. Find Dependencies ---
+
+# Find Qt 6 Components
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml)
+
+# Find LibSSH (New Addition)
+find_package(libssh REQUIRED)
 
 # --- 3. Find ALL source files in src/ ---
 file(GLOB_RECURSE PROJECT_SOURCES
@@ -83,6 +87,7 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::Concurrent
     Qt6::Xml
     ZLIB::ZLIB
+    ssh  # Link against libssh
 )
 
 # REQUIRED FIX: Link Windows Multimedia API for timing functions
@@ -114,7 +119,6 @@ install(TARGETS AspeQt
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-
 
 target_compile_definitions(AspeQt PRIVATE
     VERSION="${PROJECT_VERSION}"

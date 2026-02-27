@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 #include <QTimer>
 #include "bbsdata.h"
+#include "sshclient.h" // [NEW] Include SSH wrapper
 
 class ModemBridge : public QObject
 {
@@ -16,7 +17,6 @@ public:
 
     // Configuration
     void setSerialPort(const QString &portName, int baudRate);
-    void setTcpMode(bool enableSsh);
     void setFlowControl(bool enable);
     void setLocalEcho(bool enable);
     void dial(const QString &target);
@@ -25,39 +25,52 @@ public:
     void hangup();
     void injectMacro(char macroType);
 
+    // Placeholder for setTcpMode if you still use it elsewhere,
+    // though protocol is now handled per-connection.
+    void setTcpMode(bool enableSsh);
 
 public slots:
     void start();
     void stop();
 
 signals:
-    void statusMessage(const QString &msg); // To log to the AspeQt log window
+    void statusMessage(const QString &msg);
     void errorOccurred(const QString &err);
     void rxActivity();
     void txActivity();
 
 private slots:
+    // Serial Port
     void onSerialDataReceived();
+    void checkEscapeSequence();
+
+    // TCP / Telnet Slots
     void onSocketDataReceived();
     void onSocketConnected();
     void onSocketDisconnected();
     void onSocketError(QAbstractSocket::SocketError socketError);
-    void checkEscapeSequence(); // Check for "+++" timing
 
+    // [NEW] SSH Slots
+    void onSshConnected();
+    void onSshDisconnected();
+    void onSshDataReceived(const QByteArray &data);
+    void onSshError(const QString &msg);
 
 private:
     QSerialPort *m_serial;
     QTcpSocket *m_socket;
+    SshClient *m_ssh; // [NEW] The SSH Controller
 
     bool m_isActive;
-    bool m_isConnected; // True = Online (Data Mode), False = Command Mode
-    QByteArray m_serialBuffer; // Buffer for incoming AT commands
-    QByteArray m_escapeBuffer; // Buffer for tracking "+++"
-    QTimer *m_escapeTimer;     // Guard timer for "+++"
+    bool m_isConnected;     // True = Online (Data Mode)
+    bool m_isSshMode;       // [NEW] True = SSH, False = TCP/Telnet
+
+    QByteArray m_serialBuffer;
+    QByteArray m_escapeBuffer;
+    QTimer *m_escapeTimer;
     bool m_flowControl = true;
     bool m_localEcho = false;
-    bool m_isTelnetMode = true; // Default to true for port 23
-    int m_telnetState = 0;      // 0=Normal, 1=IAC Received, 2=Command Received
+    bool m_isTelnetMode = true;
     bool m_suppressCarrierMessage = false;
 
     void processAtCommand(const QByteArray &cmd);
@@ -65,13 +78,11 @@ private:
     void connectTo(const QString &host, int port);
 
     QList<BbsEntry> m_phonebook;
-    BbsEntry m_currentConnection; // Stores info for the active session
-    bool m_escPressed = false;    // Tracks ESC state
+    BbsEntry m_currentConnection;
+    bool m_escPressed = false;
 
     void loadPhonebook(const QString &path);
     BbsEntry findBbsByName(const QString &name);
-
-
 };
 
 #endif // MODEMBRIDGE_H

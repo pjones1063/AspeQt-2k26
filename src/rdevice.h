@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QQueue>
 #include "bbsdata.h"
+#include "sshclient.h" // [NEW] Include SSH Client
 
 // SIO Command Constants
 #define CMD_RELOCATOR    0x21
@@ -61,6 +62,12 @@ private slots:
     void onSocketError(QAbstractSocket::SocketError socketError);
     void onNewConnection();
 
+    // [NEW] SSH Slots
+    void onSshConnected();
+    void onSshDisconnected();
+    void onSshDataReceived(const QByteArray &data);
+    void onSshError(const QString &msg);
+
 private:
     enum class ModemState { CommandMode, StreamMode };
 
@@ -77,6 +84,7 @@ private:
     ModemState state = ModemState::CommandMode;
     TelnetState m_telnetState = TelnetState::Normal;
     bool m_isEnabled;
+    bool m_isSshMode = false; // [NEW] Track active protocol
 
     QByteArray m_txBuffer;        // Data waiting to go to Atari
     QString m_atCmdBuffer;        // AT command accumulator
@@ -85,6 +93,7 @@ private:
     QTcpSocket *tcpSocket;
     QTcpServer *tcpServer;
     QTcpSocket *pendingSocket;
+    SshClient  *m_ssh;           // [NEW] SSH Handler
 
     // --- Modem Registers ---
     bool echoEnabled = true;

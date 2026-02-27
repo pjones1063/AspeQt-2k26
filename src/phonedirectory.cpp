@@ -10,11 +10,13 @@
 #include <QDialogButtonBox>
 #include <QDebug>
 #include <QToolButton>
+#include <QRadioButton>
+#include <QButtonGroup>
+#include <QCloseEvent>
 
-PhoneDirectory::PhoneDirectory(QWidget *parent) : QDialog(parent) {
+PhoneDirectory::PhoneDirectory(QWidget *parent) : QDialog(parent), m_isDirty(false) {
     setWindowTitle(tr("BBS Phonebook"));
-    // FIX: Set wider default size per your screenshot request
-    resize(650, 450);
+    resize(700, 450);
 
     // Layout
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -27,14 +29,15 @@ PhoneDirectory::PhoneDirectory(QWidget *parent) : QDialog(parent) {
 
     // List
     m_tree = new QTreeWidget(this);
-    // Added "User ID" column
-    m_tree->setHeaderLabels({tr("BBS Name"), tr("Address"), tr("Port"), tr("User ID")});
+    // Columns: Name, IP, Port, Protocol, User
+    m_tree->setHeaderLabels({tr("BBS Name"), tr("Address"), tr("Port"), tr("Protocol"), tr("User ID")});
 
     // Column Resizing Logic
-    m_tree->header()->setSectionResizeMode(0, QHeaderView::Stretch); // Name takes avail space
+    m_tree->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     m_tree->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     m_tree->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     m_tree->header()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+    m_tree->header()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
     mainLayout->addWidget(m_tree);
 
     // Buttons
@@ -56,10 +59,10 @@ PhoneDirectory::PhoneDirectory(QWidget *parent) : QDialog(parent) {
     connect(delBtn, &QPushButton::clicked, this, &PhoneDirectory::onDeleteClicked);
 
     QPushButton *closeBtn = new QPushButton(tr("Close"), this);
-    connect(closeBtn, &QPushButton::clicked, this, &QDialog::reject);
+    // Connect to custom slot to check for changes
+    connect(closeBtn, &QPushButton::clicked, this, &PhoneDirectory::onCloseClicked);
 
-    // Layout buttons: [Edit] [Save] <space> [Dial] [Close]
-    btnLayout->insertWidget(0, addBtn); // Put at start
+    btnLayout->insertWidget(0, addBtn);
     btnLayout->insertWidget(1, delBtn);
     btnLayout->addWidget(m_editBtn);
     btnLayout->addWidget(m_saveBtn);
@@ -68,55 +71,27 @@ PhoneDirectory::PhoneDirectory(QWidget *parent) : QDialog(parent) {
     btnLayout->addWidget(m_dialBtn);
     btnLayout->addWidget(closeBtn);
     mainLayout->addLayout(btnLayout);
-    m_dialBtn->setDefault(true); // Pressing Enter triggers Dial
-    m_dialBtn->setFocus();       // Initial focus is on Dial
+    m_dialBtn->setDefault(true);
+    m_dialBtn->setFocus();
 
-    // Double click to dial
     connect(m_tree, &QTreeWidget::itemDoubleClicked, this, &PhoneDirectory::onDialClicked);
 }
 
 void PhoneDirectory::loadFromFile(const QString &path) {
-
-    if (path.isEmpty()) {
-        qWarning() << "PhoneDirectory: No file path provided.";
-        return;
-    }
-
+    if (path.isEmpty()) return;
     m_filePath = path;
     parseXml();
     refreshList();
+    m_isDirty = false; // Reset dirty flag after load
 }
 
 void PhoneDirectory::parseXml() {
     m_entries.clear();
     QFile file(m_filePath);
-
-    // [FIX] Report file open errors
-    if (!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::warning(this, tr("File Error"),
-                             tr("Could not open phonebook file:\n%1").arg(m_filePath));
-        return;
-    }
+    if (!file.open(QIODevice::ReadOnly)) return;
 
     QDomDocument doc;
-    QString errorMsg;
-    int errorLine;
-    int errorColumn;
-
-    // [FIX] Capture XML Parsing Errors
-    if (!doc.setContent(&file, &errorMsg, &errorLine, &errorColumn)) {
-        file.close();
-        QMessageBox::critical(this, tr("Invalid XML"),
-                              tr("The phonebook file contains invalid XML and cannot be loaded.\n\n"
-                                 "File: %1\n"
-                                 "Error: %2\n"
-                                 "Line: %3, Column: %4")
-                                  .arg(m_filePath)
-                                  .arg(errorMsg)
-                                  .arg(errorLine)
-                                  .arg(errorColumn));
-        return;
-    }
+    if (!doc.setContent(&file)) { file.close(); return; }
 
     QDomNodeList list = doc.elementsByTagName("BBS");
     for (int i = 0; i < list.count(); i++) {
@@ -125,12 +100,11 @@ void PhoneDirectory::parseXml() {
         bbs.name = e.attribute("name");
         bbs.ip = e.attribute("ip");
         bbs.port = e.attribute("port").toInt();
+        bbs.protocol = e.attribute("protocol");
         bbs.login = e.attribute("login");
         bbs.password = e.attribute("password");
-        bbs.protocol = e.attribute("protocol");
         m_entries.append(bbs);
     }
-
     file.close();
 }
 
@@ -153,8 +127,6 @@ void PhoneDirectory::saveToFile() {
         tag.setAttribute("protocol", entry.protocol);
         tag.setAttribute("login", entry.login);
         tag.setAttribute("password", entry.password);
-        tag.setAttribute("font", "vga8x16.bmp"); // Default
-        tag.setAttribute("keyMap", "ANSI");      // Default
         pb.appendChild(tag);
     }
 
@@ -163,9 +135,30 @@ void PhoneDirectory::saveToFile() {
         QTextStream stream(&file);
         stream << doc.toString();
         file.close();
+
+        m_isDirty = false; // Changes are now saved
         QMessageBox::information(this, tr("Saved"), tr("Phonebook saved successfully!"));
     } else {
         QMessageBox::critical(this, tr("Error"), tr("Could not write to file."));
+    }
+}
+
+// Central logic for checking unsaved changes
+bool PhoneDirectory::checkUnsavedChanges(const QString &actionName) {
+    if (!m_isDirty) return true;
+
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, tr("Unsaved Changes"),
+                                  tr("You have unsaved changes. Save before %1?").arg(actionName),
+                                  QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
+    if (reply == QMessageBox::Yes) {
+        saveToFile();
+        return true; // Saved and ready to go
+    } else if (reply == QMessageBox::No) {
+        return true; // Proceed without saving
+    } else {
+        return false; // Cancel action
     }
 }
 
@@ -174,22 +167,17 @@ void PhoneDirectory::refreshList(const QString &filter) {
     for (int i = 0; i < m_entries.size(); ++i) {
         const BbsEntry &e = m_entries[i];
 
-        bool isTelnet = e.protocol.trimmed().isEmpty() ||
-                        (e.protocol.compare("TELNET", Qt::CaseInsensitive) == 0);
-        if (!isTelnet) continue;
-
         if (filter.isEmpty() || e.name.contains(filter, Qt::CaseInsensitive)) {
             QTreeWidgetItem *item = new QTreeWidgetItem(m_tree);
             item->setText(0, e.name);
             item->setText(1, e.ip);
             item->setText(2, QString::number(e.port));
-            item->setText(3, e.login);
-            // Store the original index in the item so we can find it for editing
+            item->setText(3, e.protocol.isEmpty() ? "TELNET" : e.protocol);
+            item->setText(4, e.login);
             item->setData(0, Qt::UserRole, i);
         }
     }
 }
-
 
 void PhoneDirectory::onEditClicked() {
     QTreeWidgetItem *item = m_tree->currentItem();
@@ -200,17 +188,18 @@ void PhoneDirectory::onEditClicked() {
 
     BbsEntry &entry = m_entries[index];
 
-    // Use the helper. If true (OK clicked), update the UI.
     if (runEditDialog(entry)) {
         item->setText(0, entry.name);
         item->setText(1, entry.ip);
         item->setText(2, QString::number(entry.port));
-        item->setText(3, entry.login);
+        item->setText(3, entry.protocol);
+        item->setText(4, entry.login);
+
+        m_isDirty = true; // Flag as dirty
     }
 }
 
 void PhoneDirectory::onSaveClicked() {
-    if (m_filePath.isEmpty()) return;
     saveToFile();
 }
 
@@ -220,7 +209,26 @@ void PhoneDirectory::onSearch(const QString &text) {
 
 void PhoneDirectory::onDialClicked() {
     if (m_tree->currentItem()) {
-        accept();
+        // Check changes before dialing
+        if (checkUnsavedChanges("dialing")) {
+            accept();
+        }
+    }
+}
+
+// Handle the "Close" button click
+void PhoneDirectory::onCloseClicked() {
+    if (checkUnsavedChanges("closing")) {
+        reject();
+    }
+}
+
+// Handle the "X" window button or ESC key
+void PhoneDirectory::closeEvent(QCloseEvent *event) {
+    if (checkUnsavedChanges("closing")) {
+        event->accept();
+    } else {
+        event->ignore();
     }
 }
 
@@ -229,7 +237,6 @@ BbsEntry PhoneDirectory::getSelectedEntry() {
     QTreeWidgetItem *item = m_tree->currentItem();
     if (!item) return empty;
 
-    // Use the stored index for robust lookup
     int index = item->data(0, Qt::UserRole).toInt();
     if (index >= 0 && index < m_entries.size()) {
         return m_entries[index];
@@ -237,43 +244,47 @@ BbsEntry PhoneDirectory::getSelectedEntry() {
     return empty;
 }
 
-
 bool PhoneDirectory::runEditDialog(BbsEntry &entry) {
     QDialog dlg(this);
     dlg.setWindowTitle(tr("Edit BBS Entry"));
-    dlg.resize(400, 200);
+    dlg.resize(400, 250);
     QFormLayout layout(&dlg);
 
-    // Initialize fields with data from the passed 'entry' object
     QLineEdit *nameEdit = new QLineEdit(entry.name);
     QLineEdit *ipEdit = new QLineEdit(entry.ip);
     QLineEdit *portEdit = new QLineEdit(QString::number(entry.port));
     QLineEdit *userEdit = new QLineEdit(entry.login);
 
-    // Password Field Logic
+    QRadioButton *rbTelnet = new QRadioButton(tr("Telnet"), &dlg);
+    QRadioButton *rbSsh = new QRadioButton(tr("SSH"), &dlg);
+    QHBoxLayout *protoLayout = new QHBoxLayout();
+    protoLayout->addWidget(rbTelnet);
+    protoLayout->addWidget(rbSsh);
+    protoLayout->addStretch();
+
+    if (entry.protocol.compare("SSH", Qt::CaseInsensitive) == 0) rbSsh->setChecked(true);
+    else rbTelnet->setChecked(true);
+
+    QObject::connect(rbSsh, &QRadioButton::toggled, [portEdit](bool checked){
+        if(checked && portEdit->text() == "23") portEdit->setText("22");
+    });
+    QObject::connect(rbTelnet, &QRadioButton::toggled, [portEdit](bool checked){
+        if(checked && portEdit->text() == "22") portEdit->setText("23");
+    });
+
     QHBoxLayout *passLayout = new QHBoxLayout();
-    passLayout->setContentsMargins(0, 0, 0, 0);
     QLineEdit *passEdit = new QLineEdit(entry.password);
     passEdit->setEchoMode(QLineEdit::Password);
     QToolButton *showPassBtn = new QToolButton(&dlg);
     showPassBtn->setText(tr("Show"));
     showPassBtn->setCheckable(true);
-
-    connect(showPassBtn, &QToolButton::toggled, [passEdit, showPassBtn](bool checked) {
-        if (checked) {
-            passEdit->setEchoMode(QLineEdit::Normal);
-            showPassBtn->setText(tr("Hide"));
-        } else {
-            passEdit->setEchoMode(QLineEdit::Password);
-            showPassBtn->setText(tr("Show"));
-        }
-    });
-
+    connect(showPassBtn, &QToolButton::toggled, [passEdit](bool c){ passEdit->setEchoMode(c?QLineEdit::Normal:QLineEdit::Password); });
     passLayout->addWidget(passEdit);
     passLayout->addWidget(showPassBtn);
 
     layout.addRow(tr("Name:"), nameEdit);
     layout.addRow(tr("Address:"), ipEdit);
+    layout.addRow(tr("Protocol:"), protoLayout);
     layout.addRow(tr("Port:"), portEdit);
     layout.addRow(tr("User ID:"), userEdit);
     layout.addRow(tr("Password:"), passLayout);
@@ -283,43 +294,38 @@ bool PhoneDirectory::runEditDialog(BbsEntry &entry) {
     connect(&btns, &QDialogButtonBox::rejected, &dlg, &QDialog::reject);
     layout.addRow(&btns);
 
-    // If User Clicks OK
     if (dlg.exec() == QDialog::Accepted) {
         entry.name = nameEdit->text();
         entry.ip = ipEdit->text();
         entry.port = portEdit->text().toInt();
         entry.login = userEdit->text();
         entry.password = passEdit->text();
-        return true; // Saved
+        entry.protocol = rbSsh->isChecked() ? "SSH" : "TELNET";
+        return true;
     }
 
-    return false; // Canceled
+    return false;
 }
 
 void PhoneDirectory::onAddClicked() {
-    // 1. Create a temporary entry
     BbsEntry newEntry;
     newEntry.name = "New BBS";
-    newEntry.ip = "bbs.example.com";
+    newEntry.ip = "";
     newEntry.port = 23;
     newEntry.protocol = "TELNET";
 
-    // 2. Show the dialog using the temporary entry
     if (runEditDialog(newEntry)) {
-        // 3. ONLY if they clicked OK, append it to the real list
         m_entries.append(newEntry);
-
         refreshList();
+        m_isDirty = true; // Flag as dirty
 
-        // Select the new item
         int lastVisualIndex = m_tree->topLevelItemCount() - 1;
         if (lastVisualIndex >= 0) {
             m_tree->setCurrentItem(m_tree->topLevelItem(lastVisualIndex));
+            m_tree->scrollToBottom();
         }
     }
-    // If they clicked Cancel, 'newEntry' is destroyed and nothing happens.
 }
-
 
 void PhoneDirectory::onDeleteClicked() {
     QTreeWidgetItem *item = m_tree->currentItem();
@@ -329,6 +335,6 @@ void PhoneDirectory::onDeleteClicked() {
     if (QMessageBox::question(this, tr("Confirm"), tr("Delete this entry?"), QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes) {
         m_entries.removeAt(index);
         refreshList();
+        m_isDirty = true; // Flag as dirty
     }
 }
-
