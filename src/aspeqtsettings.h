@@ -37,6 +37,10 @@ public:
     bool serialPortTriggerOnFallingEdge();
     void setSerialPortTriggerOnFallingEdge(bool use);
 
+    // --- [NEW] Hardware UART Setting ---
+    bool serialPortHardwareUart();
+    void setSerialPortHardwareUart(bool enable);
+
     int serialPortMaximumSpeed();
     void setSerialPortMaximumSpeed(int speed);
 
@@ -148,49 +152,49 @@ public:
     bool minimizeToTray();
     void setMinimizeToTray(bool tray);
 
-// Save window positions and sizes option //
+    // Save window positions and sizes option //
     bool saveWindowsPos();
     void setsaveWindowsPos(bool saveMwp);
 
-// Save drive visibility option //
+    // Save drive visibility option //
     bool saveDiskVis();
     void setsaveDiskVis(bool saveDvis);
 
-// To pass session file name/path  //
+    // To pass session file name/path  //
     void setSessionFile(const QString &g_sessionFile, const QString &g_sessionFilePath);
 
-// To manipulate session files  //
+    // To manipulate session files  //
     void saveSessionToFile(const QString &fileName);
     void loadSessionFromFile(const QString &fileName);
 
-// To manipulate Main Window Title for Session file names    //
+    // To manipulate Main Window Title for Session file names    //
     void setMainWindowTitle(const QString &g_mainWindowTitle);
 
-// Hide/Show drives D9-DO   //
+    // Hide/Show drives D9-DO   //
     bool D9DOVisible();
     void setD9DOVisible(bool dVis);
 
-// Filter special characters from file names in Folder Images
+    // Filter special characters from file names in Folder Images
     bool filterUnderscore();
     void setfilterUnderscore(bool filter);
 
-// CAPITAL letters in file names for PCLINK
+    // CAPITAL letters in file names for PCLINK
     bool capitalLettersInPCLINK();
     void setCapitalLettersInPCLINK(bool caps);
 
-// URL Submit feature
+    // URL Submit feature
     bool isURLSubmitEnabled();
     void setURLSubmit(bool enabled);
 
-// Enable Shade Mode //
+    // Enable Shade Mode //
     bool enableShade();
     void setEnableShade(bool shade);
 
-// Use Large Font //
+    // Use Large Font //
     bool useLargeFont();
     void setUseLargeFont(bool largeFont);
 
-// Explorer Window On Top
+    // Explorer Window On Top
     bool explorerOnTop();
     void setExplorerOnTop(bool expOnTop);
 
@@ -240,7 +244,7 @@ private:
     bool mDisablePicoHiSpeed;
     bool mTranslateEolOnPost;
     bool mTranslateEolOnGet;
-    bool mEnableRDevice;    
+    bool mEnableRDevice;
     QString mModemBridgePhonebookPath;
 
 
@@ -253,7 +257,7 @@ private:
     bool mModemBridgeLocalEcho;
 
 
-// To pass values from Mainwindow //
+    // To pass values from Mainwindow //
     int mMainX;
     int mMainY;
     int mMainW;
@@ -271,10 +275,11 @@ private:
     QString mSessionFileName;
     QString mSessionFilePath;
     QString mMainWindowTitle;
-//
+    //
     QString mSerialPortName;
     int mSerialPortHandshakingMethod;
     bool mSerialPortTriggerOnFallingEdge;
+    bool mSerialPortHardwareUart; // [NEW] Flag for Direct RasPi UART
     int mSerialPortWriteDelay;
     int mSerialPortCompErrDelay;
     int mSerialPortMaximumSpeed;

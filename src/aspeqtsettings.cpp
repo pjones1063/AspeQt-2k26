@@ -34,6 +34,7 @@ AspeQtSettings::AspeQtSettings()
     }
     mSerialPortHandshakingMethod = mSettings->value("HandshakingMethod", 0).toInt();
     mSerialPortTriggerOnFallingEdge = mSettings->value("FallingEdge", false).toBool();
+    mSerialPortHardwareUart = mSettings->value("SerialPortHardwareUart", false).toBool(); // [NEW] Default to USB delays enabled
     mSerialPortWriteDelay = mSettings->value("WriteDelay", 1).toInt();
 #ifdef Q_OS_WIN
     mSerialPortCompErrDelay = mSettings->value("CompErrDelay", 300).toInt(); // default is 300us for windows
@@ -145,6 +146,7 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("SerialPortName", mSerialPortName);
     s.setValue("HandshakingMethod", mSerialPortHandshakingMethod);
     s.setValue("FallingEdge", mSerialPortTriggerOnFallingEdge);
+    s.setValue("SerialPortHardwareUart", mSerialPortHardwareUart); // [NEW]
     s.setValue("WriteDelay", mSerialPortWriteDelay);
     s.setValue("CompErrDelay", mSerialPortCompErrDelay);
     s.setValue("MaximumSerialPortSpeed", mSerialPortMaximumSpeed);
@@ -214,6 +216,7 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mSerialPortName = s.value("SerialPortName", StandardSerialPortBackend::defaultPortName()).toString();
     mSerialPortHandshakingMethod = s.value("HandshakingMethod", 0).toInt();
     mSerialPortTriggerOnFallingEdge = s.value("FallingEdge", false).toBool();
+    mSerialPortHardwareUart = s.value("SerialPortHardwareUart", false).toBool(); // [NEW]
     mSerialPortWriteDelay = s.value("WriteDelay", 1).toInt();
     mSerialPortCompErrDelay = s.value("CompErrDelay", 1).toInt();
     mSerialPortMaximumSpeed = s.value("MaximumSerialPortSpeed", 2).toInt();
@@ -249,7 +252,7 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mLastBootDos = s.value("LastBootDos", ":/boot_templates/$bootmyd").toString();
     mDisablePicoHiSpeed = s.value("DisablePicoHiSpeed", false).toBool();
     mTranslateEolOnPost = s.value("TranslateEolOnPost", true).toBool();
-    mTranslateEolOnGet = s.value("TranslateEolOnGet", false).toBool(); 
+    mTranslateEolOnGet = s.value("TranslateEolOnGet", false).toBool();
     mModemBridgeEnabled = s.value("ModemBridge/Enabled", false).toBool();
     mModemBridgePortName = s.value("ModemBridge/PortName", "").toString();
     mModemBridgeBaudRate = s.value("ModemBridge/BaudRate", 9600).toInt();
@@ -291,6 +294,18 @@ void AspeQtSettings::setSerialPortName(const QString &name)
 {
     mSerialPortName = name;
     if(mSessionFileName == "") mSettings->setValue("SerialPortName", mSerialPortName);
+}
+
+// --- [NEW] Hardware UART Implementation ---
+bool AspeQtSettings::serialPortHardwareUart()
+{
+    return mSerialPortHardwareUart;
+}
+
+void AspeQtSettings::setSerialPortHardwareUart(bool enable)
+{
+    mSerialPortHardwareUart = enable;
+    if(mSessionFileName == "") mSettings->setValue("SerialPortHardwareUart", mSerialPortHardwareUart);
 }
 
 int AspeQtSettings::serialPortMaximumSpeed()
@@ -981,4 +996,5 @@ void AspeQtSettings::setModemBridgePhonebookPath(const QString &path) {
     mModemBridgePhonebookPath = path;
     if(mSessionFileName == "") mSettings->setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
 }
+
 

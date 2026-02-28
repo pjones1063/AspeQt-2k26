@@ -12,7 +12,7 @@
 #include "serialport.h"
 
 namespace Ui {
-    class OptionsDialog;
+class OptionsDialog;
 }
 
 class OptionsDialog : public QDialog {
@@ -40,6 +40,7 @@ private slots:
     void on_modemEnableBox_toggled(bool checked);
     void on_modemRBox_toggled(bool checked);
     void on_modemPhonebookBrowseBtn_clicked();
+    void on_mDirectUart_toggled(bool checked); // [NEW] Handles UART Checkbox UI state
 };
 
 #endif // OPTIONSDIALOG_H

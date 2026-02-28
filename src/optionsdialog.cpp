@@ -93,6 +93,11 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
     m_ui->serialPortFallingEdge->setChecked(aspeqtSettings->serialPortTriggerOnFallingEdge());
+    m_ui->mDirectUart->setChecked(aspeqtSettings->serialPortHardwareUart()); // [NEW] Set Direct UART UI State
+
+    // Call UI handler to gray out delay boxes if HW UART is active
+    on_mDirectUart_toggled(aspeqtSettings->serialPortHardwareUart());
+
     m_ui->serialPortWriteDelayCombo->setCurrentIndex(aspeqtSettings->serialPortWriteDelay());
     m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
     m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
@@ -151,6 +156,8 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     bool no_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_NO_HANDSHAKE);
     bool software_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_SOFTWARE);
+    bool hwUart = m_ui->mDirectUart->isChecked(); // [NEW] Get state for visibility
+
     m_ui->serialPortWriteDelayLabel->setVisible(software_handshake);
     m_ui->serialPortWriteDelayCombo->setVisible(software_handshake);
     m_ui->serialPortBaudLabel->setVisible(!software_handshake);
@@ -160,6 +167,13 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->serialPortDivisorEdit->setVisible(!software_handshake);
     m_ui->serialPortCompErrDelayLabel->setVisible(!software_handshake);
     m_ui->serialPortCompErrDelayBox->setVisible(!software_handshake);
+
+    // [NEW] Respect HW UART Checkbox when enabling/disabling
+    m_ui->serialPortCompErrDelayBox->setEnabled(!hwUart);
+    m_ui->serialPortCompErrDelayLabel->setEnabled(!hwUart);
+    m_ui->serialPortWriteDelayCombo->setEnabled(!hwUart);
+    m_ui->serialPortWriteDelayLabel->setEnabled(!hwUart);
+
     m_ui->eolPostCheckBox->setChecked(aspeqtSettings->translateEolOnPost());
     m_ui->eolGetCheckBox->setChecked(aspeqtSettings->translateEolOnGet());
 
@@ -206,6 +220,8 @@ void OptionsDialog::on_serialPortHandshakeCombo_currentIndexChanged(int index)
 {
     bool no_handshake = (index==HANDSHAKE_NO_HANDSHAKE);
     bool software_handshake = (index==HANDSHAKE_SOFTWARE);
+    bool hwUart = m_ui->mDirectUart->isChecked(); // [NEW] Get state
+
     m_ui->serialPortWriteDelayLabel->setVisible(software_handshake);
     m_ui->serialPortWriteDelayCombo->setVisible(software_handshake);
     m_ui->serialPortBaudLabel->setVisible(!software_handshake);
@@ -215,12 +231,34 @@ void OptionsDialog::on_serialPortHandshakeCombo_currentIndexChanged(int index)
     m_ui->serialPortDivisorEdit->setVisible(!software_handshake);
     m_ui->serialPortCompErrDelayLabel->setVisible(!software_handshake);
     m_ui->serialPortCompErrDelayBox->setVisible(!software_handshake);
+
+    // [NEW] Keep artificial delay boxes disabled if Hardware UART is selected
+    m_ui->serialPortCompErrDelayBox->setEnabled(!hwUart);
+    m_ui->serialPortCompErrDelayLabel->setEnabled(!hwUart);
+    m_ui->serialPortWriteDelayCombo->setEnabled(!hwUart);
+    m_ui->serialPortWriteDelayLabel->setEnabled(!hwUart);
+
 #ifdef Q_OS_WIN
     m_ui->serialPortFallingEdge->setVisible(!no_handshake && !software_handshake);
 #endif
     if(itemStandard->checkState((0)) == Qt::Checked)
     {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(!software_handshake);
+    }
+}
+
+// [NEW] Method to Handle Checkbox Click
+void OptionsDialog::on_mDirectUart_toggled(bool checked)
+{
+    // If Hardware UART is checked, disable the artificial delay spinboxes entirely
+    m_ui->serialPortCompErrDelayBox->setEnabled(!checked);
+    m_ui->serialPortCompErrDelayLabel->setEnabled(!checked);
+    m_ui->serialPortWriteDelayCombo->setEnabled(!checked);
+    m_ui->serialPortWriteDelayLabel->setEnabled(!checked);
+
+    // If they checked it while using Software Handshake, we should probably warn or force CTS
+    if (checked && m_ui->serialPortHandshakeCombo->currentIndex() == HANDSHAKE_SOFTWARE) {
+        m_ui->serialPortHandshakeCombo->setCurrentIndex(HANDSHAKE_CTS); // Force CTS
     }
 }
 
@@ -358,6 +396,7 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
     aspeqtSettings->setSerialPortTriggerOnFallingEdge(m_ui->serialPortFallingEdge->isChecked());
+    aspeqtSettings->setSerialPortHardwareUart(m_ui->mDirectUart->isChecked()); // [NEW] Save HW UART setting
     aspeqtSettings->setSerialPortWriteDelay(m_ui->serialPortWriteDelayCombo->currentIndex());
     aspeqtSettings->setSerialPortCompErrDelay(m_ui->serialPortCompErrDelayBox->value());
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
