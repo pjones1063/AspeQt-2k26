@@ -9,9 +9,8 @@
 #include <QObject>
 #include <QQueue>
 #include "bbsdata.h"
-#include "sshclient.h" // [NEW] Include SSH Client
+#include "sshclient.h"
 
-// SIO Command Constants
 #define CMD_RELOCATOR    0x21
 #define CMD_DOWNLOAD     0x26
 #define CMD_POLL_TYPE1   0x3F
@@ -34,35 +33,26 @@ public:
     explicit RDevice(SioWorker *worker);
     ~RDevice() override;
 
-    // SIO Interface
     void handleCommand(quint8 command, quint16 aux) override;
     QString deviceName() override { return "R: Device (850 Emulation)"; }
     void setEnabled(bool enable);
     bool isEnabled() const { return m_isEnabled; }
     void loadPhonebook(const QString &path);
 
-    // Called by SIO Worker when raw bytes arrive during Stream Mode
     void processSerialData(const QByteArray &data);
 
 signals:
-    // Signal to SIO Worker to send bytes to Atari (Stream Mode)
     void sendSerialData(const QByteArray &data);
-
-    // Signal to SIO Worker to change physical UART speed
     void requestBaudRateChange(int baudRate);
-
-    // Signal to SIO Worker to exit Stream Mode (return to Command Mode)
     void streamModeFinished();
 
 private slots:
-    // TCP Sockets
     void onSocketConnected();
     void onSocketDisconnected();
     void onSocketReadyRead();
     void onSocketError(QAbstractSocket::SocketError socketError);
     void onNewConnection();
 
-    // [NEW] SSH Slots
     void onSshConnected();
     void onSshDisconnected();
     void onSshDataReceived(const QByteArray &data);
@@ -70,53 +60,40 @@ private slots:
 
 private:
     enum class ModemState { CommandMode, StreamMode };
+    enum class TelnetState { Normal, IacReceived, Will, Wont, Do, Dont, SubNegotiation, SubIac };
 
-    // Telnet FSM States
-    enum class TelnetState {
-        Normal,
-        IacReceived,
-        Will, Wont, Do, Dont,
-        SubNegotiation,
-        SubIac
-    };
-
-    // --- State Variables ---
     ModemState state = ModemState::CommandMode;
     TelnetState m_telnetState = TelnetState::Normal;
     bool m_isEnabled;
-    bool m_isSshMode = false; // [NEW] Track active protocol
+    bool m_isSshMode = false;
 
-    QByteArray m_txBuffer;        // Data waiting to go to Atari
-    QString m_atCmdBuffer;        // AT command accumulator
+    QByteArray m_txBuffer;
+    QString m_atCmdBuffer;
 
-    // --- Networking ---
     QTcpSocket *tcpSocket;
     QTcpServer *tcpServer;
     QTcpSocket *pendingSocket;
-    SshClient  *m_ssh;           // [NEW] SSH Handler
+    SshClient  *m_ssh;
 
-    // --- Modem Registers ---
     bool echoEnabled = true;
     bool verboseResponses = true;
     bool autoAnswer = false;
     int listenPort = 0;
 
-    // --- Escape Sequence (+++) ---
     QElapsedTimer m_escapeTimer;
     int m_plusCount = 0;
 
-    // --- Phonebook ---
     QList<BbsEntry> m_phonebook;
     BbsEntry m_currentConnection;
 
-
-    // --- Helpers ---
     void processAtCommand(const QString &cmd);
     void sendResultCode(int code);
     void sendAtResponse(const QString &text);
     void parseTelnet(const QByteArray &data);
     void checkEscapeSequence(const QByteArray &data);
 
+    // Core helper to handle SIO Reads (Device to Host)
+    void sendDataToAtari(const QByteArray &data);
 
     // SIO Handlers
     void handlePollType1();
@@ -130,7 +107,6 @@ private:
     void handleStream();
     void handleListen(quint16 aux);
     void at_handle_dial(const QString &target);
-
 };
 
 #endif // RDEVICE_H

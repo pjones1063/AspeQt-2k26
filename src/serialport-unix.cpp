@@ -7,6 +7,7 @@
 #include "atarisio.h"
 #include "aspeqtsettings.h"
 #include <QTime>
+#include <QThread> // [ADDED] Needed for sleep in readRawFrame
 #include <QtDebug>
 
 #include <string.h>
@@ -15,16 +16,16 @@
 #include <sys/types.h>
 #include <unistd.h>
 #ifdef Q_OS_UNIX
-    #ifdef Q_OS_LINUX
-        #include <termio.h>
-        #include <linux/serial.h>
-    #endif
+#ifdef Q_OS_LINUX
+#include <termio.h>
+#include <linux/serial.h>
+#endif
 
-    #ifdef Q_OS_MAC
-        #include <termios.h>
-        #include <sys/ioctl.h>
-        #define IOSSIOSPEED    _IOW('T', 2, speed_t)
-    #endif
+#ifdef Q_OS_MAC
+#include <termios.h>
+#include <sys/ioctl.h>
+#define IOSSIOSPEED    _IOW('T', 2, speed_t)
+#endif
 #endif
 
 AbstractSerialPortBackend::AbstractSerialPortBackend(QObject *parent)
@@ -50,10 +51,10 @@ StandardSerialPortBackend::~StandardSerialPortBackend()
 }
 
 #ifdef Q_OS_LINUX
-  QString StandardSerialPortBackend::defaultPortName()
-  {
-      return QString("ttyS0");
-  }
+QString StandardSerialPortBackend::defaultPortName()
+{
+    return QString("ttyS0");
+}
 #endif
 
 #ifdef Q_OS_MAC
@@ -79,7 +80,7 @@ bool StandardSerialPortBackend::open()
 
     if (mHandle < 0) {
         qCritical() << "!e" << tr("Cannot open serial port '%1': %2")
-                       .arg(name, lastErrorMessage());
+        .arg(name, lastErrorMessage());
         return false;
     }
 
@@ -125,8 +126,8 @@ bool StandardSerialPortBackend::open()
     }
     /* Notify the user that emulation is started */
     qWarning() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking.")
-                  .arg(aspeqtSettings->serialPortName())
-                  .arg(m);
+                              .arg(aspeqtSettings->serialPortName())
+                              .arg(m);
 
     return true;
 }
@@ -141,7 +142,7 @@ void StandardSerialPortBackend::close()
     cancel();
     if (::close(mHandle)) {
         qCritical() << "!e" << tr("Cannot close serial port: %1")
-                       .arg(lastErrorMessage());
+        .arg(lastErrorMessage());
     }
     mHandle = -1;
 }
@@ -212,51 +213,51 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     tios.c_cflag &= ~CSTOPB;
     cfmakeraw(&tios);
     switch (speed) {
-        case 600:
-            cfsetispeed(&tios, B600);
-            cfsetospeed(&tios, B600);
-            break;
-        case 19200:
-            cfsetispeed(&tios, B19200);
-            cfsetospeed(&tios, B19200);
-            break;
-        case 38400:
-            // reset special handling of 38400bps back to 38400
-            ioctl(mHandle, TIOCGSERIAL, &ss);
-            ss.flags &= ~ASYNC_SPD_MASK;
-            ioctl(mHandle, TIOCSSERIAL, &ss);
+    case 600:
+        cfsetispeed(&tios, B600);
+        cfsetospeed(&tios, B600);
+        break;
+    case 19200:
+        cfsetispeed(&tios, B19200);
+        cfsetospeed(&tios, B19200);
+        break;
+    case 38400:
+        // reset special handling of 38400bps back to 38400
+        ioctl(mHandle, TIOCGSERIAL, &ss);
+        ss.flags &= ~ASYNC_SPD_MASK;
+        ioctl(mHandle, TIOCSSERIAL, &ss);
 
-            cfsetispeed(&tios, B38400);
-            cfsetospeed(&tios, B38400);
-            break;
-        case 57600:
-            cfsetispeed(&tios, B57600);
-            cfsetospeed(&tios, B57600);
-            break;
-        default:
-            // configure port to use custom speed instead of 38400
-            ioctl(mHandle, TIOCGSERIAL, &ss);
-            ss.flags = (ss.flags & ~ASYNC_SPD_MASK) | ASYNC_SPD_CUST;
-            ss.custom_divisor = (ss.baud_base + (speed / 2)) / speed;
-            int customSpeed = ss.baud_base / ss.custom_divisor;
+        cfsetispeed(&tios, B38400);
+        cfsetospeed(&tios, B38400);
+        break;
+    case 57600:
+        cfsetispeed(&tios, B57600);
+        cfsetospeed(&tios, B57600);
+        break;
+    default:
+        // configure port to use custom speed instead of 38400
+        ioctl(mHandle, TIOCGSERIAL, &ss);
+        ss.flags = (ss.flags & ~ASYNC_SPD_MASK) | ASYNC_SPD_CUST;
+        ss.custom_divisor = (ss.baud_base + (speed / 2)) / speed;
+        int customSpeed = ss.baud_base / ss.custom_divisor;
 
-            if (customSpeed < speed * 98 / 100 || customSpeed > speed * 102 / 100) {
-                qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2").arg(speed).arg(tr("Closest possible speed is %2.").arg(customSpeed));
-                return false;
-            }
+        if (customSpeed < speed * 98 / 100 || customSpeed > speed * 102 / 100) {
+            qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2").arg(speed).arg(tr("Closest possible speed is %2.").arg(customSpeed));
+            return false;
+        }
 
-            ioctl(mHandle, TIOCSSERIAL, &ss);
+        ioctl(mHandle, TIOCSSERIAL, &ss);
 
-            cfsetispeed(&tios, B38400);
-            cfsetospeed(&tios, B38400);
-            break;
+        cfsetispeed(&tios, B38400);
+        cfsetospeed(&tios, B38400);
+        break;
     }
 
     /* Set serial port state */
     if (tcsetattr(mHandle, TCSANOW, &tios) != 0) {
         qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2")
-                       .arg(speed)
-                       .arg(lastErrorMessage());
+        .arg(speed)
+            .arg(lastErrorMessage());
         return false;
     }
 
@@ -288,16 +289,16 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     /* Set serial port state */
     if (tcsetattr(mHandle, TCSANOW, &tios) != 0) {
         qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2")
-                       .arg(speed)
-                       .arg(lastErrorMessage());
+        .arg(speed)
+            .arg(lastErrorMessage());
         return false;
     }
 
     /* Set requested speed */
     speed_t spd = speed;
     if (ioctl(mHandle, IOSSIOSPEED, &spd) < 0) {
-         qCritical() << "!e" << tr("Failed to set serial port speed to %1").arg(speed);
-         return false;
+        qCritical() << "!e" << tr("Failed to set serial port speed to %1").arg(speed);
+        return false;
     }
 
     emit statusChanged(tr("%1 bits/sec").arg(speed));
@@ -311,6 +312,7 @@ int StandardSerialPortBackend::speed()
 {
     return mSpeed;
 }
+
 
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
@@ -352,10 +354,10 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             }
             else
             {
-                // avoid high CPU load in idle state
-                #if defined Q_OS_UNIX || defined Q_OS_MAC
-                    QThread::usleep(300);
-                #endif
+// avoid high CPU load in idle state
+#if defined Q_OS_UNIX || defined Q_OS_MAC
+                QThread::usleep(300);
+#endif
             }
         } while(got!=expected && !mCanceled);
 
@@ -402,54 +404,59 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                 int bytes;
                 do {
                     ioctl(mHandle, FIONREAD, &bytes);
-                    #ifdef Q_OS_UNIX
-                        QThread::yieldCurrentThread();
-                    #endif
+#ifdef Q_OS_UNIX
+                    QThread::yieldCurrentThread();
+#endif
 
-                    #ifdef Q_OS_MAC
-                        QThread::usleep(300);
-                    #endif
+#ifdef Q_OS_MAC
+                    QThread::usleep(300);
+#endif
                 } while ((bytes==0) && !mCanceled);
             }
             else
             {
                 // RI/DSR/CTS handshake
-                /* First, wait until command line goes off */
+                /* First, wait until command line goes off (active) */
                 do {
                     if (ioctl(mHandle, TIOCMGET, &status) < 0) {
                         qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
                         return data;
                     }
                     if (status & mask) {
-                        #ifdef Q_OS_UNIX
-                            QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
-                        #endif
+#ifdef Q_OS_UNIX
+                        QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
+#endif
 
-                        #ifdef Q_OS_MAC
-                            QThread::usleep(500);
-                        #endif
+#ifdef Q_OS_MAC
+                        QThread::usleep(500);
+#endif
                     }
                 } while ((status & mask) && !mCanceled);
-                /* Now wait for it to go on again */
-                do {
-                    if (ioctl(mHandle, TIOCMGET, &status) < 0) {
-                        qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
-                        return data;
-                    }
-                    if (!(status & mask)) {
-                        #ifdef Q_OS_UNIX
-                            QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
-                        #endif
 
-                        #ifdef Q_OS_MAC
-                           QThread::usleep(500);
-                        #endif
-                    }
-                } while (!(status & mask) && !mCanceled);
+                // [FIX] ONLY wait for the line to go inactive if we are NOT using a Hardware UART (Pi GPIO).
+                // Hardware UARTs use TTL logic (non-inverted), so we must read while the line is currently active.
+                if (!aspeqtSettings->serialPortHardwareUart()) {
+                    /* Now wait for it to go on again */
+                    do {
+                        if (ioctl(mHandle, TIOCMGET, &status) < 0) {
+                            qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
+                            return data;
+                        }
+                        if (!(status & mask)) {
+#ifdef Q_OS_UNIX
+                            QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
+#endif
+
+#ifdef Q_OS_MAC
+                            QThread::usleep(500);
+#endif
+                        }
+                    } while (!(status & mask) && !mCanceled);
+                }
 
                 if (tcflush(mHandle, TCIFLUSH) != 0) {
                     qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1")
-                                   .arg(lastErrorMessage());
+                    .arg(lastErrorMessage());
                     return data;
                 }
             }
@@ -492,11 +499,14 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                     }
                 }
             }
-    //    } while (totalRetries < 100);
+            //    } while (totalRetries < 100);
         } while (1);
     }
     return data;
 }
+
+
+
 
 QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
 {
@@ -512,9 +522,9 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
     } else {
         if (verbose) {
             qWarning() << "!w" << tr("Data frame checksum error, expected: %1, got: %2. (%3)")
-                           .arg(expected)
-                           .arg(got)
-                           .arg(QString(data.toHex()));
+            .arg(expected)
+                .arg(got)
+                .arg(QString(data.toHex()));
         }
         data.clear();
         return data;
@@ -558,16 +568,16 @@ bool StandardSerialPortBackend::writeComplete()
     if (!aspeqtSettings->serialPortHardwareUart()) {
         if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
         else SioWorker::usleep(mCompErrDelay);
-}
+    }
     return writeRawFrame(QByteArray(1, SIO_COMPLETE));
 }
 
 bool StandardSerialPortBackend::writeError()
 {
-   if (!aspeqtSettings->serialPortHardwareUart()) {
-     if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
-     else SioWorker::usleep(mCompErrDelay);
-   }
+    if (!aspeqtSettings->serialPortHardwareUart()) {
+        if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
+        else SioWorker::usleep(mCompErrDelay);
+    }
     return writeRawFrame(QByteArray(1, SIO_ERROR));
 }
 
@@ -598,7 +608,10 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
     rest = size;
     QTime startTime = QTime::currentTime();
 
-    int timeOut = data.count() * 12000 / mSpeed + 100;
+    // [FIX] Increased base timeout from 100 to 400ms.
+    // Real hardware + USB latency requires more time for the Atari to process checksums and reply with ACK.
+    int timeOut = data.count() * 12000 / mSpeed + 400;
+
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
         timeOut += 100;
@@ -609,12 +622,16 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
         result = ::read(mHandle, data.data() + total, rest);
         if (result < 0 && errno != EAGAIN) {
             qCritical() << "!e" << tr("Cannot read from serial port: %1")
-                           .arg(lastErrorMessage());
+            .arg(lastErrorMessage());
             data.clear();
             return data;
         }
         if (result < 0) {
             result = 0;
+// [FIX] Sleep to release CPU during wait
+#if defined Q_OS_UNIX || defined Q_OS_MAC
+            QThread::usleep(200);
+#endif
         }
         total += result;
         rest -= result;
@@ -623,7 +640,10 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
 
     if ((uint)total != size)
     {
-        qCritical() << "!e" << tr("Serial port read timeout. %1 of %2 read in %3 ms").arg(total).arg(data.count()).arg(elapsed);
+        // Log timeout but do not treat as critical error if we are polling for ACK (size=1)
+        if (size > 1) {
+            qCritical() << "!e" << tr("Serial port read timeout. %1 of %2 read in %3 ms").arg(total).arg(data.count()).arg(elapsed);
+        }
         data.clear();
         return data;
     }
@@ -650,7 +670,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
         result = ::write(mHandle, data.constData() + total, rest);
         if (result < 0 && errno != EAGAIN) {
             qCritical() << "!e" << tr("Cannot read from serial port: %1")
-                           .arg(lastErrorMessage());
+            .arg(lastErrorMessage());
             return false;
         }
         if (result < 0) {
@@ -669,7 +689,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
 
     if (tcdrain(mHandle) != 0) {
         qCritical() << "!e" << tr("Cannot flush serial port write buffer: %1")
-                       .arg(lastErrorMessage());
+        .arg(lastErrorMessage());
         return false;
     }
 
@@ -717,7 +737,7 @@ bool AtariSioBackend::open()
 
     if (mHandle < 0) {
         qCritical() << "!e" << tr("Cannot open serial port '%1': %2")
-                       .arg(name, lastErrorMessage());
+        .arg(name, lastErrorMessage());
         return false;
     }
 
@@ -726,15 +746,15 @@ bool AtariSioBackend::open()
 
     if (version < 0) {
         qCritical() << "!e" << tr("Cannot open AtariSio driver '%1': %2")
-                      .arg(name).arg("Cannot determine AtariSio version.");
+        .arg(name).arg("Cannot determine AtariSio version.");
         close();
         return false;
     }
 
     if ((version >> 8) != (ATARISIO_VERSION >> 8) ||
-         (version & 0xff) < (ATARISIO_VERSION & 0xff)) {
+        (version & 0xff) < (ATARISIO_VERSION & 0xff)) {
         qCritical() << "!e" << tr("Cannot open AtariSio driver '%1': %2")
-                      .arg(name).arg("Incompatible AtariSio version.");
+        .arg(name).arg("Incompatible AtariSio version.");
         close();
         return false;
     }
@@ -758,14 +778,14 @@ bool AtariSioBackend::open()
 
     if (ioctl(mHandle, ATARISIO_IOC_SET_MODE, mode) < 0) {
         qCritical() << "!e" << tr("Cannot set AtariSio driver mode: %1")
-                       .arg(lastErrorMessage());
+        .arg(lastErrorMessage());
         close();
         return false;
     }
 
     if (ioctl(mHandle, ATARISIO_IOC_SET_AUTOBAUD, true) < 0) {
         qCritical() << "!e" << tr("Cannot set AtariSio to autobaud mode: %1")
-                       .arg(lastErrorMessage());
+        .arg(lastErrorMessage());
         close();
         return false;
     }
@@ -790,8 +810,8 @@ bool AtariSioBackend::open()
 
     /* Notify the user that emulation is started */
     qWarning() << "!i" << tr("Emulation started through AtariSIO backend on '%1' with %2 handshaking.")
-                  .arg(aspeqtSettings->atariSioDriverName())
-                  .arg(m);
+                              .arg(aspeqtSettings->atariSioDriverName())
+                              .arg(m);
 
     return true;
 }
@@ -806,7 +826,7 @@ void AtariSioBackend::close()
     cancel();
     if (::close(mHandle)) {
         qCritical() << "!e" << tr("Cannot close serial port: %1")
-                       .arg(lastErrorMessage());
+        .arg(lastErrorMessage());
     }
     ::close(mCancelHandles[0]);
     ::close(mCancelHandles[1]);
@@ -996,29 +1016,29 @@ bool AtariSioBackend::writeRawFrame(const QByteArray &data)
 QString AtariSioBackend::lastErrorMessage()
 {
     switch (errno) {
-        case EATARISIO_ERROR_BLOCK_TOO_LONG:
-            return tr("Block too long.");
-            break;
-        case EATARISIO_COMMAND_NAK:
-            return tr("Command not acknowledged.");
-            break;
-        case EATARISIO_COMMAND_TIMEOUT:
-            return tr("Command timeout.");
-            break;
-        case EATARISIO_CHECKSUM_ERROR:
-            return tr("Checksum error.");
-            break;
-        case EATARISIO_COMMAND_COMPLETE_ERROR:
-            return tr("Device error.");
-            break;
-        case EATARISIO_DATA_NAK:
-            return tr("Data frame not acknowledged.");
-            break;
-        case EATARISIO_UNKNOWN_ERROR:
-            return tr("Unknown AtariSio driver error.");
-            break;
-        default:
-            return QString::fromUtf8(strerror(errno)) + ".";
+    case EATARISIO_ERROR_BLOCK_TOO_LONG:
+        return tr("Block too long.");
+        break;
+    case EATARISIO_COMMAND_NAK:
+        return tr("Command not acknowledged.");
+        break;
+    case EATARISIO_COMMAND_TIMEOUT:
+        return tr("Command timeout.");
+        break;
+    case EATARISIO_CHECKSUM_ERROR:
+        return tr("Checksum error.");
+        break;
+    case EATARISIO_COMMAND_COMPLETE_ERROR:
+        return tr("Device error.");
+        break;
+    case EATARISIO_DATA_NAK:
+        return tr("Data frame not acknowledged.");
+        break;
+    case EATARISIO_UNKNOWN_ERROR:
+        return tr("Unknown AtariSio driver error.");
+        break;
+    default:
+        return QString::fromUtf8(strerror(errno)) + ".";
     }
 }
 
@@ -1027,10 +1047,6 @@ void AtariSioBackend::setActiveSioDevices(const QByteArray &){}
 
 QByteArray AtariSioBackend::readRawFrame(uint size, bool verbose)
 {
-    // The AtariSIO driver is packet-based, so strictly speaking,
-    // "Raw" byte streaming isn't natively supported the same way.
-    // However, we can attempt to read a frame of 'size' bytes.
-
     QByteArray data;
     SIO_data_frame frame;
 
