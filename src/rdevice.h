@@ -38,13 +38,9 @@ public:
     void setEnabled(bool enable);
     bool isEnabled() const { return m_isEnabled; }
     void loadPhonebook(const QString &path);
+    void forceCommandMode();
 
     void processSerialData(const QByteArray &data);
-
-signals:
-    void sendSerialData(const QByteArray &data);
-    void requestBaudRateChange(int baudRate);
-    void streamModeFinished();
 
 private slots:
     void onSocketConnected();
@@ -102,7 +98,7 @@ private:
     void handleDownloadDriver();
     void handleStatus();
     void handleControl(quint16 aux);
-    void handleWrite(quint16 len);
+    void handleWrite(quint16 aux);
     void handleRead(quint16 len);
     void handleStream();
     void handleListen(quint16 aux);

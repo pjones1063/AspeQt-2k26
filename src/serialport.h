@@ -79,6 +79,9 @@ public:
     virtual bool writeRawFrame(const QByteArray &data) = 0;
     virtual QByteArray readRawFrame(uint size, bool verbose = true) = 0;
     virtual void setActiveSioDevices(const QByteArray &data) = 0;
+    virtual void setStreamMode(bool stream) { Q_UNUSED(stream); }
+    virtual bool isStreamMode() const { return false; }
+
 
 signals:
     void statusChanged(QString status);

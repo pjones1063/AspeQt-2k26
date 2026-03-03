@@ -110,10 +110,6 @@ void SioWorker::run()
     /* Process SIO commands until we're explicitly stopped */
     while (!mustTerminate) {
 
-        // CRITICAL: This is required for your Slots (onChangeBaudRate, onStreamFinished)
-        // to actually execute while this while-loop is running!
-        QCoreApplication::processEvents();
-
         // ====================================================================
         // NEW: Stream Mode Handler (High Priority)
         // ====================================================================
@@ -521,13 +517,15 @@ void CassetteWorker::start(Priority p)
     QThread::start(p);
 }
 
-
 void SioWorker::onChangeBaudRate(int baudRate)
 {
     // Use the accessor port() instead of m_port
     if (port()) {
         qDebug() << "[SioWorker] Changing Baud Rate to:" << baudRate;
         port()->setSpeed(baudRate);
+
+        // [CRITICAL FIX] Explicitly tell the hardware to drop SIO block rules
+        port()->setStreamMode(true);
 
         // Flag that we are now streaming
         m_isStreaming = true;
@@ -544,10 +542,17 @@ void SioWorker::onWriteRawData(const QByteArray &data)
 
 void SioWorker::onStreamFinished()
 {
-    qDebug() << "[SioWorker] Stream Mode Finished. Restoring Command Mode.";
+    qDebug() << "[SioWorker] Stream Mode Finished. Restoring standard SIO.";
     m_isStreaming = false;
+
+    if (port()) {
+        // [CRITICAL FIX] Restore strict blocking rules for Disk Drives
+        port()->setStreamMode(false);
+    }
+
     restoreStandardBaudRate();
 }
+
 
 void SioWorker::restoreStandardBaudRate()
 {

@@ -35,6 +35,8 @@ public:
     bool writeRawFrame(const QByteArray &data);
     QByteArray readRawFrame(uint size, bool verbose = true);
     void setActiveSioDevices(const QByteArray &data);
+    virtual void setStreamMode(bool stream) { m_isStreamMode = stream; }
+    virtual bool isStreamMode() const { return m_isStreamMode; }
 
 private:
     bool mCanceled;
@@ -49,6 +51,8 @@ private:
     bool setHighSpeed();
     int speed();
     bool mHighSpeed;
+    bool m_isStreamMode = false;
+
     quint8 sioChecksum(const QByteArray &data, uint size);
     QString lastErrorMessage();
 };

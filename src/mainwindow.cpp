@@ -404,9 +404,7 @@ MainWindow::MainWindow(QWidget *parent)
     // -------------------------------------------------------
     // When you create RDevice:
     RDevice *rDev = new RDevice(sio);
-    connect(rDev, &RDevice::requestBaudRateChange, sio, &SioWorker::onChangeBaudRate);
-    connect(rDev, &RDevice::streamModeFinished, sio, &SioWorker::onStreamFinished);
-    connect(rDev, &RDevice::sendSerialData, sio, &SioWorker::onWriteRawData);
+    rDev->setParent(nullptr);
     sio->installDevice(0x50, rDev);
 
 
@@ -1239,6 +1237,12 @@ void MainWindow::sioFinished()
     speedLabel->hide();
     speedLabel->clear();
     qWarning() << "!i" << tr("Emulation stopped.");
+
+    RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+    if (rDev) {
+        rDev->forceCommandMode();
+    }
+
 }
 
 void MainWindow::sioStatusChanged(QString status)

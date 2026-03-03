@@ -58,7 +58,6 @@ void RDevice::setEnabled(bool enable)
     }
 }
 
-
 void RDevice::handleCommand(quint8 command, quint16 aux)
 {
     if (!m_isEnabled) return;
@@ -82,19 +81,14 @@ void RDevice::handleCommand(quint8 command, quint16 aux)
     case CMD_WRITE:      handleWrite(aux); break;
     case CMD_READ:       handleRead(aux); break;
     case CMD_CONTROL:    handleControl(aux); break;
-
-    // [CRITICAL FIX] Added missing commands that just need an ACK + COMPLETE
     case CMD_CONFIGURE:  handleControl(aux); break;
     case CMD_AUTOANSWER: handleControl(aux); break;
-
     case CMD_STREAM:     handleStream(); break;
     case CMD_LISTEN:     handleListen(aux); break;
     case CMD_UNLISTEN:   sio->port()->writeCommandAck(); tcpServer->close(); sio->port()->writeComplete(); break;
     default:             sio->port()->writeCommandNak(); break;
     }
 }
-
-
 
 // --------------------------------------------------------------------------
 // SIO Core Helper (READ from Peripheral to Host)
@@ -154,17 +148,10 @@ void RDevice::handleDownloadDriver() {
     sendDataToAtari(payload);
 }
 
-
 void RDevice::handleStatus() {
     if (!sio->port()->writeCommandAck()) return;
 
     QByteArray status(4, 0);
-
-    // [CRITICAL FIX]: 850 Status Byte 1
-    // Bits 7,6 = DSR (Data Set Ready)
-    // Bits 5,4 = CTS (Clear To Send)
-    // Bits 3,2 = CRX (Carrier Detect)
-    // '11' in a bit pair means "Always High" (Ready).
 
     // Set DSR (0xC0) and CTS (0x30) to Always High so Ice-T is allowed to transmit.
     status[1] = 0xC0 | 0x30; // 0xF0
@@ -176,7 +163,6 @@ void RDevice::handleStatus() {
 
     sendDataToAtari(status);
 }
-
 
 void RDevice::handleRead(quint16 len) {
     if (!sio->port()->writeCommandAck()) return;
@@ -190,39 +176,33 @@ void RDevice::handleRead(quint16 len) {
     sendDataToAtari(chunk);
 }
 
-
-
 void RDevice::handleStream() {
     if (!sio->port()->writeCommandAck()) return;
 
     qDebug() << "!i" << "[RDevice] Success! Atari requested Concurrent Stream Mode ($58)";
 
-    SioWorker::usleep(2000);
-
     const char table[] = {0x28, (char)0xA0, 0x00, (char)0xA0, 0x28, (char)0xA0, 0x00, (char)0xA0, 0x78};
     QByteArray payload(table, 9);
 
-    sio->port()->writeRawFrame(payload);
+    // 1. Send COMPLETE + Data + Checksum.
+    sendDataToAtari(payload);
+
+    // 2. Hardware drain delay.
+    SioWorker::usleep(150000);
 
     state = ModemState::StreamMode;
     m_escapeTimer.start();
     m_plusCount = 0;
 
-    emit requestBaudRateChange(19200);
+    // DIRECTLY call the SioWorker method instead of emitting a signal
+    sio->onChangeBaudRate(19200);
     qDebug() << "!d" << "[RDevice] Stream active at 19200 Baud. Handing over to raw UART.";
 }
-
-
-
 
 void RDevice::handleWrite(quint16 aux) {
     if (!sio->port()->writeCommandAck()) return;
 
-    // aux1 (lower 8 bits) tells us how many bytes are ACTUAL text data
     quint8 logicalLen = aux & 0xFF;
-
-    // [CRITICAL FIX] The 850 Handler ALWAYS sends a 64-byte payload block.
-    // We must read all 64 bytes from the serial buffer to prevent misalignment!
     QByteArray data = sio->port()->readDataFrame(64);
 
     if (data.isEmpty()) {
@@ -230,10 +210,20 @@ void RDevice::handleWrite(quint16 aux) {
         return;
     }
 
-    // Acknowledge Data Payload received OK
     sio->port()->writeDataAck();
 
-    // Process ONLY the valid characters based on logicalLen
+    QString debugStr;
+    for (int i = 0; i < logicalLen && i < data.size(); i++) {
+        char c = data.at(i);
+        if (c >= 32 && c <= 126) {
+            debugStr.append(c);
+        } else {
+            debugStr.append(QString("<%1>").arg((quint8)c, 2, 16, QLatin1Char('0')).toUpper());
+        }
+    }
+
+    // qDebug() << "!i" << "[RDevice] BASIC WRITE Payload:" << debugStr;
+
     for (int i = 0; i < logicalLen && i < data.size(); i++) {
         char c = data.at(i);
         if (c == 0x0D || (quint8)c == 0x9B) {
@@ -244,11 +234,8 @@ void RDevice::handleWrite(quint16 aux) {
         }
     }
 
-    // Host-to-Device Writes get a COMPLETE byte after processing
     sio->port()->writeComplete();
 }
-
-
 
 void RDevice::handleControl(quint16 aux) {
     if (!sio->port()->writeCommandAck()) return;
@@ -296,7 +283,8 @@ void RDevice::checkEscapeSequence(const QByteArray &data) {
 
     if (m_plusCount >= 3 && m_escapeTimer.elapsed() > ESCAPE_GUARD_TIME) {
         state = ModemState::CommandMode;
-        emit streamModeFinished();
+        // DIRECTLY call the SioWorker method
+        sio->onStreamFinished();
         sendResultCode(RESULT_OK);
         m_plusCount = 0;
     }
@@ -308,7 +296,8 @@ void RDevice::onSocketReadyRead() {
     if (state == ModemState::StreamMode) {
         parseTelnet(data);
         if (!m_txBuffer.isEmpty()) {
-            emit sendSerialData(m_txBuffer);
+            // DIRECTLY call SioWorker instead of emitting
+            sio->onWriteRawData(m_txBuffer);
             m_txBuffer.clear();
         }
     } else {
@@ -317,8 +306,12 @@ void RDevice::onSocketReadyRead() {
 }
 
 void RDevice::onSshDataReceived(const QByteArray &data) {
-    if (state == ModemState::StreamMode) emit sendSerialData(data);
-    else m_txBuffer.append(data);
+    if (state == ModemState::StreamMode) {
+        // DIRECTLY call SioWorker instead of emitting
+        sio->onWriteRawData(data);
+    } else {
+        m_txBuffer.append(data);
+    }
 }
 
 void RDevice::parseTelnet(const QByteArray &data) {
@@ -381,7 +374,8 @@ void RDevice::processAtCommand(const QString &rawCmd) {
         if (active) {
             sendResultCode(RESULT_CONNECT);
             state = ModemState::StreamMode;
-            emit streamModeFinished();
+            // DIRECTLY call SioWorker
+            sio->onChangeBaudRate(19200);
         } else {
             sendResultCode(RESULT_ERROR);
         }
@@ -463,12 +457,26 @@ void RDevice::loadPhonebook(const QString &path) {
     }
 }
 
+void RDevice::forceCommandMode()
+{
+    if (state == ModemState::StreamMode) {
+        state = ModemState::CommandMode;
+        m_plusCount = 0;
+
+        // Reset the SioWorker's stream flags and hardware block mode
+        sio->onStreamFinished();
+
+        qDebug() << "!d" << "[RDevice] Emulation stopped: Forced back to Command Mode.";
+    }
+}
+
 void RDevice::onSocketConnected() { sendResultCode(RESULT_CONNECT); }
 void RDevice::onSocketDisconnected() {
     if (m_isSshMode) return;
     sendResultCode(RESULT_NO_CARRIER);
     state = ModemState::CommandMode;
-    emit streamModeFinished();
+    // DIRECTLY call SioWorker
+    sio->onStreamFinished();
 }
 void RDevice::onSocketError(QAbstractSocket::SocketError) {
     if (m_isSshMode) return;
@@ -481,7 +489,8 @@ void RDevice::onSshDisconnected() {
     if (!m_isSshMode) return;
     sendResultCode(RESULT_NO_CARRIER);
     state = ModemState::CommandMode;
-    emit streamModeFinished();
+    // DIRECTLY call SioWorker
+    sio->onStreamFinished();
 }
 void RDevice::onSshError(const QString &msg) {
     Q_UNUSED(msg);

@@ -596,6 +596,7 @@ quint8 StandardSerialPortBackend::sioChecksum(const QByteArray &data, uint size)
     return sum;
 }
 
+
 QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
 {
     QByteArray data;
@@ -608,13 +609,18 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
     rest = size;
     QTime startTime = QTime::currentTime();
 
-    // [FIX] Increased base timeout from 100 to 400ms.
-    // Real hardware + USB latency requires more time for the Atari to process checksums and reply with ACK.
+    // Standard SIO timeout calculation
     int timeOut = data.count() * 12000 / mSpeed + 400;
 
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
         timeOut += 100;
+    }
+
+    // [PERFECT FIX] If the 850 Handler explicitly engaged Stream Mode,
+    // reduce latency to 15ms for snappy typing and fast modem responses.
+    if (m_isStreamMode) {
+        timeOut = 15;
     }
 
     int elapsed;
@@ -628,7 +634,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
         }
         if (result < 0) {
             result = 0;
-// [FIX] Sleep to release CPU during wait
+// Release CPU during wait
 #if defined Q_OS_UNIX || defined Q_OS_MAC
             QThread::usleep(200);
 #endif
@@ -636,19 +642,34 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
         total += result;
         rest -= result;
         elapsed = startTime.msecsTo(QTime::currentTime());
+
+        // [PERFECT FIX] If streaming, break instantly the moment we get ANY data
+        // so Ice-T receives characters fluidly without waiting for a 128-byte block to fill.
+        if (m_isStreamMode && total > 0) {
+            break;
+        }
+
     } while (total < size && elapsed < timeOut);
 
     if ((uint)total != size)
     {
-        // Log timeout but do not treat as critical error if we are polling for ACK (size=1)
-        if (size > 1) {
-            qCritical() << "!e" << tr("Serial port read timeout. %1 of %2 read in %3 ms").arg(total).arg(data.count()).arg(elapsed);
+        // In Stream Mode, returning a partially filled buffer is expected and correct!
+        if (m_isStreamMode && total > 0) {
+            data.resize(total);
+            return data;
+        }
+
+        // Standard SIO failure logging (Ignored during stream polling)
+        if (size > 1 && !m_isStreamMode) {
+            qCritical() << "!e" << tr("Serial port read timeout. %1 of %2 read in %3 ms").arg(total).arg(size).arg(elapsed);
         }
         data.clear();
         return data;
     }
     return data;
 }
+
+
 
 bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
 {
