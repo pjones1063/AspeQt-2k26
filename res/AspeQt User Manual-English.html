@@ -238,13 +238,13 @@
 
         <a name="modem"></a>
         <h2>Modem Bridge (Internet Adapter)</h2>
-        [cite_start]<p>The AspeQt-2k26 Modem Bridge is a hardware-software hybrid solution that allows vintage Atari 8-bit computers to access modern Telnet BBSs and TCP/IP services[cite: 5]. [cite_start]Unlike pure software emulators (like the R: Device), this feature utilizes the physical Atari 850 Interface (or compatible RS-232 hardware like the P:R: Connection or ICD R-Verter)[cite: 6]. [cite_start]AspeQt acts as a "Virtual Hayes Modem," bridging the physical serial data from the Atari to a TCP/IP socket on the PC[cite: 7]. [cite_start]This allows the use of authentic vintage terminal software (BobTerm, Ice-T, Express!) to connect to the internet[cite: 8].</p>
+        <p>The AspeQt-2k26 Modem Bridge is a hardware-software hybrid solution that allows vintage Atari 8-bit computers to access modern Telnet BBSs and TCP/IP services. Unlike pure software emulators (like the R: Device), this feature utilizes the physical Atari 850 Interface (or compatible RS-232 hardware like the P:R: Connection or ICD R-Verter). AspeQt acts as a "Virtual Hayes Modem," bridging the physical serial data from the Atari to a TCP/IP socket on the PC. This allows the use of authentic vintage terminal software (BobTerm, Ice-T, Express!) to connect to the internet.</p>
 
         <h3>1. The "Dual-Cable" Topology</h3>
-        [cite_start]<p>To utilize the Modem Bridge, your setup requires two distinct connections to the PC[cite: 10].</p>
+        <p>To utilize the Modem Bridge, your setup requires two distinct connections to the PC.</p>
         <ul>
-            [cite_start]<li><b>Disk I/O Path:</b> Atari SIO -> SIO2PC -> PC USB (COM A)[cite: 13]. [cite_start]Handles D1: through D8:[cite: 14].</li>
-            [cite_start]<li><b>Modem Path:</b> Atari 850 (Port 1) -> Null Modem -> PC USB (COM B)[cite: 15]. [cite_start]Handles R: (The Modem Bridge)[cite: 15].</li>
+            <li><b>Disk I/O Path:</b> Atari SIO -> SIO2PC -> PC USB (COM A). Handles D1: through D8:.</li>
+            <li><b>Modem Path:</b> Atari 850 (Port 1) -> Null Modem -> PC USB (COM B). Handles R: (The Modem Bridge).</li>
         </ul>
         
         <div class="diagram-block">
@@ -268,7 +268,7 @@
         </div>
 
         <h3>2. Configuration Reference</h3>
-        [cite_start]<p>Configure the bridge settings via Tools > Options > Modem Bridge[cite: 61]. [cite_start]Correct settings are vital for stable communication[cite: 61].</p>
+        <p>Configure the bridge settings via Tools > Options > Modem Bridge. Correct settings are vital for stable communication.</p>
         
         <table>
             <tr>
@@ -277,40 +277,40 @@
             </tr>
             <tr>
                 <td><b>Enable Modem Bridge</b></td>
-                <td>Master switch for the feature. When checked, AspeQt opens the serial port and asserts DTR/RTS signals. [cite_start]Note: If unchecked, the Atari will see the modem as "Offline" or "Not Ready"[cite: 62].</td>
+                <td>Master switch for the feature. When checked, AspeQt opens the serial port and asserts DTR/RTS signals. Note: If unchecked, the Atari will see the modem as "Offline" or "Not Ready".</td>
             </tr>
             <tr>
                 <td><b>Serial Port</b></td>
-                <td>Select the COM port (Windows) or TTY device (Linux/Mac) corresponding to your USB-to-Serial adapter. [cite_start]Do NOT select your SIO2PC adapter here[cite: 62].</td>
+                <td>Select the COM port (Windows) or TTY device (Linux/Mac) corresponding to your USB-to-Serial adapter. Do NOT select your SIO2PC adapter here.</td>
             </tr>
             <tr>
                 <td><b>Baud Rate</b></td>
-                <td>The communication speed between PC and Atari. Must match your terminal software settings. [cite_start]Recommended: 19200 (Standard for Atari 850)[cite: 62].</td>
+                <td>The communication speed between PC and Atari. Must match your terminal software settings. Recommended: 19200 (Standard for Atari 850).</td>
             </tr>
             <tr>
                 <td><b>Flow Control</b></td>
-                <td>Enables hardware RTS/CTS handshaking. Recommended: OFF (Unchecked) unless you have a high-quality 5-wire Null Modem cable. [cite_start]If enabled with a 3-wire cable, the connection will freeze[cite: 62].</td>
+                <td>Enables hardware RTS/CTS handshaking. Recommended: OFF (Unchecked) unless you have a high-quality 5-wire Null Modem cable. If enabled with a 3-wire cable, the connection will freeze.</td>
             </tr>
             <tr>
                 <td><b>Local Echo</b></td>
-                <td>If checked, AspeQt echoes all typed characters back to the Atari. Use this if you cannot see what you are typing in your terminal software. [cite_start]Recommended: OFF (Most BBS software handles echoing remotely)[cite: 62].</td>
+                <td>If checked, AspeQt echoes all typed characters back to the Atari. Use this if you cannot see what you are typing in your terminal software. Recommended: OFF (Most BBS software handles echoing remotely).</td>
             </tr>
             <tr>
                 <td><b>Phonebook File</b></td>
-                <td>Path to the phonebook.xml file storing your BBS list. [cite_start]Defaults to the application directory[cite: 62].</td>
+                <td>Path to the phonebook.xml file storing your BBS list. Defaults to the application directory.</td>
             </tr>
         </table>
 
         <h3>3. Using the Phonebook</h3>
-        [cite_start]<p>The Phonebook is essential for managing BBS addresses and storing credentials for the macro system[cite: 64].</p>
+        <p>The Phonebook is essential for managing BBS addresses and storing credentials for the macro system.</p>
         <ul>
-            [cite_start]<li><b>Access:</b> Tools -> Phonebook[cite: 65].</li>
-            [cite_start]<li><b>Add Entry:</b> Click Add[cite: 66]. [cite_start]Fill in Name, Address, Port, and optional Login/Password to use the Auto-Type macros[cite: 67, 68, 69, 70].</li>
-            [cite_start]<li><b>Dialing:</b> Select an entry and click Dial[cite: 71]. [cite_start]AspeQt will send the ATDT string to the Atari automatically[cite: 72].</li>
+            <li><b>Access:</b> Tools -> Phonebook.</li>
+            <li><b>Add Entry:</b> Click Add. Fill in Name, Address, Port, and optional Login/Password to use the Auto-Type macros.</li>
+            <li><b>Dialing:</b> Select an entry and click Dial. AspeQt will send the ATDT string to the Atari automatically.</li>
         </ul>
 
         <h3>4. Hayes Emulation & Command Set</h3>
-        [cite_start]<p>The bridge emulates a standard Hayes-compatible modem[cite: 75]. [cite_start]You can issue these commands from any Atari terminal program[cite: 75].</p>
+        <p>The bridge emulates a standard Hayes-compatible modem. You can issue these commands from any Atari terminal program.</p>
 
         <table>
             <tr>
@@ -319,59 +319,59 @@
             </tr>
             <tr>
                 <td><span class="code-snippet">AT</span></td>
-                <td>Attention. Returns OK. [cite_start]Used to verify connection[cite: 77].</td>
+                <td>Attention. Returns OK. Used to verify connection.</td>
             </tr>
             <tr>
                 <td><span class="code-snippet">ATDT &lt;Name&gt;</span></td>
-                <td>Dial by Name. Example: ATDT Basement. [cite_start]Looks up IP/Port in Phonebook and loads credentials[cite: 77].</td>
+                <td>Dial by Name. Example: ATDT Basement. Looks up IP/Port in Phonebook and loads credentials.</td>
             </tr>
             <tr>
                 <td><span class="code-snippet">ATDT &lt;IP:Port&gt;</span></td>
-                <td>Raw Dial. Example: ATDT 192.168.1.5:23. [cite_start]Connects directly (No macros available)[cite: 77].</td>
+                <td>Raw Dial. Example: ATDT 192.168.1.5:23. Connects directly (No macros available).</td>
             </tr>
             <tr>
                 <td><span class="code-snippet">ATH</span></td>
-                <td>Hangup. [cite_start]Disconnects the TCP session[cite: 77].</td>
+                <td>Hangup. Disconnects the TCP session.</td>
             </tr>
             <tr>
                 <td><span class="code-snippet">+++</span></td>
-                <td>Escape. Pauses data mode and switches to command mode. [cite_start]Requires 1 second silence before/after[cite: 77].</td>
+                <td>Escape. Pauses data mode and switches to command mode. Requires 1 second silence before/after.</td>
             </tr>
             <tr>
                 <td><span class="code-snippet">$ESC+U$</span></td>
-                <td>Auto-User. [cite_start]Types the Username saved in the current Phonebook entry[cite: 80].</td>
+                <td>Auto-User. Types the Username saved in the current Phonebook entry.</td>
             </tr>
             <tr>
                 <td><span class="code-snippet">$ESC+P$</span></td>
-                <td>Auto-Pass. [cite_start]Types the Password saved in the current Phonebook entry[cite: 80].</td>
+                <td>Auto-Pass. Types the Password saved in the current Phonebook entry.</td>
             </tr>
             <tr>
                 <td><span class="code-snippet">$ESC+H$</span></td>
-                <td>Panic Hangup. [cite_start]Immediately terminates the connection and forces Command Mode[cite: 80].</td>
+                <td>Panic Hangup. Immediately terminates the connection and forces Command Mode.</td>
             </tr>
         </table>
 
         <h3>5. ATASCII Translation</h3>
-        [cite_start]<p>Modern servers expect ASCII[cite: 82]. [cite_start]The bridge automatically performs these translations[cite: 82]:</p>
+        <p>Modern servers expect ASCII. The bridge automatically performs these translations:</p>
         <ul>
-            [cite_start]<li><b>Delete Key:</b> Atari Delete (126/127) is converted to ASCII Backspace (0x08)[cite: 83].</li>
-            [cite_start]<li><b>EOL:</b> Atari EOL (155) is converted to CR/LF[cite: 84].</li>
+            <li><b>Delete Key:</b> Atari Delete (126/127) is converted to ASCII Backspace (0x08).</li>
+            <li><b>EOL:</b> Atari EOL (155) is converted to CR/LF.</li>
         </ul>
 
         <h3>6. Troubleshooting</h3>
         <ul>
-            [cite_start]<li><b>"Modem Not Responding" in Terminal:</b> Cause: The Atari 850 does not detect the DSR/CD signal[cite: 87]. [cite_start]Fix: Verify the wiring in Section 3. Ensure AspeQt "Enable Modem Bridge" is checked[cite: 88].</li>
-            [cite_start]<li><b>"Garbage Characters" on Screen:</b> Cause: Baud rate mismatch[cite: 90]. [cite_start]Fix: Ensure the baud rate in AspeQt Options matches the baud rate configured in your Atari terminal software (e.g., 19200)[cite: 91].</li>
-            [cite_start]<li><b>"Session Frozen / Hanging":</b> Cause: Telnet flow control deadlock[cite: 93]. [cite_start]Fix: Press ESC + H to force a disconnect, then type ATZ to reset the bridge[cite: 94].</li>
+            <li><b>"Modem Not Responding" in Terminal:</b> Cause: The Atari 850 does not detect the DSR/CD signal. Fix: Verify the wiring in Section 3. Ensure AspeQt "Enable Modem Bridge" is checked.</li>
+            <li><b>"Garbage Characters" on Screen:</b> Cause: Baud rate mismatch. Fix: Ensure the baud rate in AspeQt Options matches the baud rate configured in your Atari terminal software (e.g., 19200).</li>
+            <li><b>"Session Frozen / Hanging":</b> Cause: Telnet flow control deadlock. Fix: Press ESC + H to force a disconnect, then type ATZ to reset the bridge.</li>
         </ul>
 
         <a name="wiring"></a>
         <h2>Appendix: Corrected Wiring for Atari 850 Null Modem Cable</h2>
-        [cite_start]<p>Standard off-the-shelf Null Modem cables will not work with the Atari 850 without modification[cite: 40]. [cite_start]The 850 requires the DSR (Data Set Ready) and CD (Carrier Detect) pins to be held HIGH to detect the presence of a modem[cite: 41]. [cite_start]AspeQt asserts the PC's DTR (Data Terminal Ready) signal when the bridge is active[cite: 42]. [cite_start]You must construct a cable that routes this DTR signal to the 850's DSR/CD pins[cite: 43].</p>
+        <p>Standard off-the-shelf Null Modem cables will not work with the Atari 850 without modification. The 850 requires the DSR (Data Set Ready) and CD (Carrier Detect) pins to be held HIGH to detect the presence of a modem. AspeQt asserts the PC's DTR (Data Terminal Ready) signal when the bridge is active. You must construct a cable that routes this DTR signal to the 850's DSR/CD pins.</p>
 
         <h3>The "Magic" Signal: Loopbacks</h3>
-        [cite_start]<p><b>On the PC side:</b> Bridge Pin 1 (CD) and Pin 6 (DSR) together, and connect them to the wire coming from the Atari's Pin 1 (DTR)[cite: 47]. [cite_start]This ensures the PC knows the Atari is ready[cite: 48].</p>
-        [cite_start]<p><b>On the Atari side:</b> Bridge Pin 2 (CD) and Pin 6 (DSR) together, and connect them to the wire coming from the PC's Pin 4 (DTR)[cite: 48]. [cite_start]This ensures the Atari 850 detects a valid carrier tone and opens the port for data[cite: 49].</p>
+        <p><b>On the PC side:</b> Bridge Pin 1 (CD) and Pin 6 (DSR) together, and connect them to the wire coming from the Atari's Pin 1 (DTR). This ensures the PC knows the Atari is ready.</p>
+        <p><b>On the Atari side:</b> Bridge Pin 2 (CD) and Pin 6 (DSR) together, and connect them to the wire coming from the PC's Pin 4 (DTR). This ensures the Atari 850 detects a valid carrier tone and opens the port for data.</p>
 
         <div class="diagram-block">
    ATARI 850 (PORT 1)                              PC USB ADAPTER
@@ -404,21 +404,21 @@
 
         <a name="raspberrypi"></a>
         <h2>Raspberry Pi Implementation (Direct UART)</h2>
-        [cite_start]<p>This section details the configuration for users running AspeQt-2k26 directly on a Raspberry Pi[cite: 96]. [cite_start]In this configuration, the Raspberry Pi acts as both the host for the emulator and the physical modem interface[cite: 97].</p>
+        <p>This section details the configuration for users running AspeQt-2k26 directly on a Raspberry Pi. In this configuration, the Raspberry Pi acts as both the host for the emulator and the physical modem interface.</p>
         
         <h3>8.1 Hardware Architecture (Pi Edition)</h3>
-        [cite_start]<p>Unlike the PC setup which requires two USB cables, this setup utilizes the Pi's built-in GPIO pins for the modem connection[cite: 99].</p>
+        <p>Unlike the PC setup which requires two USB cables, this setup utilizes the Pi's built-in GPIO pins for the modem connection.</p>
         <ul>
-            [cite_start]<li><b>Disk I/O Path:</b> Atari SIO → SIO2PC Raspberry Pi USB Port[cite: 100]. [cite_start]Function: Handles standard disk drives (D1:-D8:)[cite: 100].</li>
-            [cite_start]<li><b>Modem Path:</b> Atari 850 (Port 1) Level Shifter → Raspberry Pi GPIO Header[cite: 101]. [cite_start]Function: Handles R: (The Modem Bridge)[cite: 101].</li>
+            <li><b>Disk I/O Path:</b> Atari SIO → SIO2PC Raspberry Pi USB Port. Function: Handles standard disk drives (D1:-D8:).</li>
+            <li><b>Modem Path:</b> Atari 850 (Port 1) Level Shifter → Raspberry Pi GPIO Header. Function: Handles R: (The Modem Bridge).</li>
         </ul>
 
         <div class="warning">
-            [cite_start]<b>CRITICAL Voltage Hazard:</b> The Atari 850 uses RS-232 voltage levels (±12V)[cite: 103]. [cite_start]The Raspberry Pi GPIO uses 3.3V TTL logic[cite: 103]. [cite_start]DO NOT connect the Atari 850 directly to the Raspberry Pi[cite: 104]. [cite_start]YOU MUST use a 3.3V RS-232 to TTL Level Shifter (e.g., MAX3232) to bridge the connection[cite: 105]. [cite_start]Direct connection will permanently damage the Pi[cite: 106].
+            <b>CRITICAL Voltage Hazard:</b> The Atari 850 uses RS-232 voltage levels (±12V). The Raspberry Pi GPIO uses 3.3V TTL logic. DO NOT connect the Atari 850 directly to the Raspberry Pi. YOU MUST use a 3.3V RS-232 to TTL Level Shifter (e.g., MAX3232) to bridge the connection. Direct connection will permanently damage the Pi.
         </div>
 
         <h3>8.2 Wiring: Pi GPIO to Atari 850 (Port 1)</h3>
-        [cite_start]<p>Since the Raspberry Pi UART lacks standard DTR/DSR control pins, we utilize a "Local Loopback" on the Atari side to trick the 850 into detecting a "Ready" modem[cite: 108]. [cite_start]Inside the DB9 connector plugging into the Atari 850, solder a small jumper wire connecting Pin 1 (DTR) to both Pin 6 (DSR) and Pin 2 (CD)[cite: 111, 112]. [cite_start]This ensures the Atari 850 instantly sees the "modem" (Pi) as online when the Atari is powered on[cite: 113].</p>
+        <p>Since the Raspberry Pi UART lacks standard DTR/DSR control pins, we utilize a "Local Loopback" on the Atari side to trick the 850 into detecting a "Ready" modem. Inside the DB9 connector plugging into the Atari 850, solder a small jumper wire connecting Pin 1 (DTR) to both Pin 6 (DSR) and Pin 2 (CD). This ensures the Atari 850 instantly sees the "modem" (Pi) as online when the Atari is powered on.</p>
 
         <table>
             <tr>
@@ -433,72 +433,72 @@
                 <td>Pin 3 (TX)</td>
                 <td>Atari &rarr; Pi</td>
                 <td>T2IN &rarr; T2OUT</td>
-                [cite_start]<td>GPIO 15 (RXD) - Pin 10 [cite: 110]</td>
+                <td>GPIO 15 (RXD) - Pin 10</td>
             </tr>
             <tr>
                 <td>Receive Data</td>
                 <td>Pin 4 (RX)</td>
                 <td>Pi &rarr; Atari</td>
                 <td>R2OUT &rarr; R2IN</td>
-                [cite_start]<td>GPIO 14 (TXD) - Pin 8 [cite: 110]</td>
+                <td>GPIO 14 (TXD) - Pin 8</td>
             </tr>
             <tr>
                 <td>Ground</td>
                 <td>Pin 5 (GND)</td>
                 <td>Common</td>
                 <td>GND</td>
-                [cite_start]<td>GND - Pin 6 [cite: 110]</td>
+                <td>GND - Pin 6</td>
             </tr>
             <tr>
                 <td>Clear To Send</td>
                 <td>Pin 8 (CTS)</td>
                 <td>Pi &rarr; Atari</td>
                 <td>T1OUT &rarr; T1IN</td>
-                [cite_start]<td>GPIO 17 (RTS) - Pin 11 [cite: 110]</td>
+                <td>GPIO 17 (RTS) - Pin 11</td>
             </tr>
             <tr>
                 <td>Request To Send</td>
                 <td>Pin 7 (RTS)</td>
                 <td>Atari &rarr; Pi</td>
                 <td>R1OUT &rarr; R1IN</td>
-                [cite_start]<td>GPIO 16 (CTS) - Pin 36 [cite: 110]</td>
+                <td>GPIO 16 (CTS) - Pin 36</td>
             </tr>
             <tr>
                 <td>Modem Ready</td>
                 <td>Pin 6 (DSR)</td>
                 <td>Loopback</td>
                 <td>--</td>
-                [cite_start]<td>-- [cite: 110]</td>
+                <td>--</td>
             </tr>
             <tr>
                 <td>Carrier Detect</td>
                 <td>Pin 2 (CD)</td>
                 <td>Loopback</td>
                 <td>--</td>
-                [cite_start]<td>-- [cite: 110]</td>
+                <td>--</td>
             </tr>
             <tr>
                 <td>Terminal Ready</td>
                 <td>Pin 1 (DTR)</td>
                 <td>Loopback</td>
                 <td>--</td>
-                [cite_start]<td>-- [cite: 110]</td>
+                <td>--</td>
             </tr>
         </table>
 
         <h3>8.3 Raspberry Pi OS Configuration</h3>
-        [cite_start]<p>Before running AspeQt, you must free the UART from the Linux console[cite: 115].</p>
+        <p>Before running AspeQt, you must free the UART from the Linux console.</p>
         <ol>
-            [cite_start]<li><b>Disable Serial Console:</b> Run <span class="code-snippet">sudo raspi-config</span>[cite: 117]. [cite_start]Navigate to Interface Options -> Serial Port[cite: 118, 119]. [cite_start]Answer "No" to "login shell to be accessible over serial?"[cite: 121, 122]. [cite_start]Answer "Yes" to "serial port hardware to be enabled?"[cite: 124].</li>
-            [cite_start]<li><b>Optimize UART (Disable Bluetooth):</b> To ensure stable timing for the Atari 850, use the primary UART (PL011) by disabling Bluetooth[cite: 126]. [cite_start]Edit config: <span class="code-snippet">sudo nano /boot/config.txt</span> [cite: 127] [cite_start]and add line: <span class="code-snippet">dtoverlay=disable-bt</span>[cite: 128]. [cite_start]Save and Reboot[cite: 129].</li>
+            <li><b>Disable Serial Console:</b> Run <span class="code-snippet">sudo raspi-config</span>. Navigate to Interface Options -> Serial Port. Answer "No" to "login shell to be accessible over serial?". Answer "Yes" to "serial port hardware to be enabled?".</li>
+            <li><b>Optimize UART (Disable Bluetooth):</b> To ensure stable timing for the Atari 850, use the primary UART (PL011) by disabling Bluetooth. Edit config: <span class="code-snippet">sudo nano /boot/config.txt</span> and add line: <span class="code-snippet">dtoverlay=disable-bt</span>. Save and Reboot.</li>
         </ol>
 
         <h4>AspeQt Configuration (Pi Specifics)</h4>
-        [cite_start]<p>Change the settings in Tools > Options > Modem Bridge to match the Linux environment[cite: 131]:</p>
+        <p>Change the settings in Tools > Options > Modem Bridge to match the Linux environment:</p>
         <ul>
-            [cite_start]<li><b>Serial Port:</b> /dev/ttyAMA0 (if BT disabled) OR /dev/serial0 [cite: 138]</li>
-            [cite_start]<li><b>Baud Rate:</b> 19200 (Recommended) [cite: 139]</li>
-            <li><b>Flow Control:</b> OFF (Recommended for initial setup). [cite_start]Only enable if the "Loopback" wiring above is 100% verified[cite: 140].</li>
+            <li><b>Serial Port:</b> /dev/ttyAMA0 (if BT disabled) OR /dev/serial0</li>
+            <li><b>Baud Rate:</b> 19200 (Recommended)</li>
+            <li><b>Flow Control:</b> OFF (Recommended for initial setup). Only enable if the "Loopback" wiring above is 100% verified.</li>
         </ul>
 
         <a name="timesync"></a>
