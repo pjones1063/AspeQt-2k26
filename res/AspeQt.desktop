@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=AspeQt-2K26
+Comment=Atari Serial Peripheral Emulator
+Exec=AspeQt
+Icon=AspeQt
+Terminal=false
+Categories=Utility;Emulator;
+
