@@ -7,10 +7,17 @@
 
 #include <QThread>
 #include <QMutex>
-#include <QRecursiveMutex>  // <-- ADD THIS LINE
+#include <QRecursiveMutex>
 #include <climits>
-
+#include <QElapsedTimer>
 #include "serialport.h"
+
+#ifdef HAS_LIBGPIOD
+#include <gpiod.hpp>
+#include <poll.h>
+#include <memory>
+#endif
+
 
 enum SIO_CDEVIC
 {
@@ -43,12 +50,15 @@ public:
     SioDevice(SioWorker *worker);
     virtual ~SioDevice();
     virtual void handleCommand(quint8 command, quint16 aux) = 0;
+    virtual void processSerialData(const QByteArray &data) { Q_UNUSED(data); }
+    virtual void forceCommandMode() { }
     virtual QString deviceName();
     inline void lock() {mLock.lock();}
     inline bool tryLock() {return mLock.tryLock();}
     inline void unlock() {mLock.unlock();}
     inline void setDeviceNo(int no) {emit statusChanged(m_deviceNo); m_deviceNo = no; emit statusChanged(no);}
     inline int deviceNo() const {return m_deviceNo;}
+
 signals:
     void statusChanged(int deviceNo);
 };
@@ -84,6 +94,7 @@ public:
 signals:
     void statusChanged(QString status);
     void rawDataReceived(const QByteArray &data);
+    void sioTrace(const QString &dir, const QByteArray &data);
 
 public slots:
     void start(Priority p = InheritPriority);
@@ -95,12 +106,25 @@ public slots:
 public:
     void setHappyMode(int deviceId, bool enabled);
     void setHighSpeed(bool enabled);
-
+    void setTraceEnabled(bool enabled) {
+        m_traceEnabled = enabled;
+        if (mPort) mPort->setTraceEnabled(enabled);
+    }
+    bool isTraceEnabled() const { return m_traceEnabled; }
 
 private:
     bool happyMode[DISK_COUNT]; // Array to track state for D1-D15
     bool m_isStreaming = false;
+    bool m_traceEnabled = false;
     void restoreStandardBaudRate();
+
+#ifdef HAS_LIBGPIOD
+    std::unique_ptr<::gpiod::line_request> m_gpioRequest;
+    struct pollfd m_gpioPollFd;
+    void initHardwareInterrupts();
+    void checkHardwareInterrupts();
+    QElapsedTimer m_streamGuardTimer;
+#endif
 
 
 };

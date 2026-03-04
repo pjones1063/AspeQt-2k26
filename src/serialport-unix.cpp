@@ -364,6 +364,8 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
         if(got==expected)
         {
             data.resize(size);
+            if (isTraceEnabled()) emit sioTrace("RX (CMD)", data);
+
             // After sending the last byte of the command frame
             // ATARI does not drop the command line immediately.
             // Within this small time window ATARI is not able to process the ACK byte.
@@ -518,6 +520,7 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
     quint8 got = sioChecksum(data, size);
     if (expected == got) {
         data.resize(size);
+        if (isTraceEnabled()) emit sioTrace("RX (Data)", data);
         return data;
     } else {
         if (verbose) {
@@ -540,6 +543,7 @@ bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
         if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
         SioWorker::usleep(50);
     }
+    if (isTraceEnabled()) emit sioTrace("TX (Data)", copy);
     return writeRawFrame(copy);
 }
 
@@ -911,6 +915,8 @@ QByteArray AtariSioBackend::readCommandFrame()
         data[2] = frame.aux1;
         data[3] = frame.aux2;
 
+        if (isTraceEnabled()) emit sioTrace("RX (CMD)", data);
+
         int sp = ioctl(mHandle, ATARISIO_IOC_GET_BAUDRATE);
         if (sp >= 0 && mSpeed != sp) {
             emit statusChanged(tr("%1 bits/sec").arg(sp));
@@ -943,6 +949,8 @@ QByteArray AtariSioBackend::readDataFrame(uint size, bool verbose)
             qCritical() << "!e" << tr("Cannot read data frame: %1").arg(lastErrorMessage());
         }
         data.clear();
+    } else {
+        if (isTraceEnabled()) emit sioTrace("RX (Data)", data);
     }
 
     return data;
@@ -954,6 +962,8 @@ bool AtariSioBackend::writeDataFrame(const QByteArray &data)
 
     frame.data_buffer = (unsigned char*)data.constData();
     frame.data_length = data.size();
+
+    if (isTraceEnabled()) emit sioTrace("TX (Data)", data);
 
     if (ioctl(mHandle, ATARISIO_IOC_SEND_DATA_FRAME, &frame) < 0 ) {
         qCritical() << "!e" << tr("Cannot write data frame: %1").arg(lastErrorMessage());

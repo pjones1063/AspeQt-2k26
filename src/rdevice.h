@@ -8,6 +8,7 @@
 #include <QElapsedTimer>
 #include <QObject>
 #include <QQueue>
+#include <QMutex>
 #include "bbsdata.h"
 #include "sshclient.h"
 
@@ -39,14 +40,19 @@ public:
     bool isEnabled() const { return m_isEnabled; }
     void loadPhonebook(const QString &path);
     void forceCommandMode();
-
+    QByteArray dequeueNetworkData();
     void processSerialData(const QByteArray &data);
+
+    // --- THE MISSING SIGNALS BLOCK ---
+signals:
+    void dispatchToNetwork(const QByteArray &data);
+    void executeAtCommand(const QString &cmd);
 
 private slots:
     void onSocketConnected();
     void onSocketDisconnected();
     void onSocketReadyRead();
-    void onSocketError(QAbstractSocket::SocketError socketError);
+    void onSocketError(QAbstractSocket::SocketError);
     void onNewConnection();
 
     void onSshConnected();
@@ -65,6 +71,9 @@ private:
 
     QByteArray m_txBuffer;
     QString m_atCmdBuffer;
+
+    QByteArray m_networkToSioBuffer;
+    QMutex m_bufferMutex;
 
     QTcpSocket *tcpSocket;
     QTcpServer *tcpServer;
@@ -97,11 +106,12 @@ private:
     void handleDownloadRelocator();
     void handleDownloadDriver();
     void handleStatus();
-    void handleControl(quint16 aux);
-    void handleWrite(quint16 aux);
     void handleRead(quint16 len);
-    void handleStream();
+    void handleWrite(quint16 aux);
+    void handleControl(quint16 aux);
     void handleListen(quint16 aux);
+    void handleStream();
+
     void at_handle_dial(const QString &target);
 };
 

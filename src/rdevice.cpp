@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QDomDocument>
 #include <QThread>
+#include <QMutexLocker>
 
 #define RESULT_OK           0
 #define RESULT_CONNECT      1
@@ -37,6 +38,36 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
 
     m_isEnabled = (aspeqtSettings && aspeqtSettings->enableRDevice());
     if (m_isEnabled) loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
+
+    // --- FIX 1: Safely route background data to the active network socket or the offline parser ---
+    connect(this, &RDevice::dispatchToNetwork, this, [this](const QByteArray &data){
+        bool isConnected = (m_isSshMode && m_ssh->isConnected()) ||
+                           (!m_isSshMode && tcpSocket->state() == QAbstractSocket::ConnectedState);
+
+        if (isConnected) {
+            if (m_isSshMode) m_ssh->write(data);
+            else tcpSocket->write(data);
+        } else {
+            // OFFLINE STREAMING: Parse AT Commands and handle local echo
+            for (char c : data) {
+                // Echo characters back to the Atari terminal
+                if (echoEnabled) {
+                    QMutexLocker locker(&m_bufferMutex);
+                    m_networkToSioBuffer.append(c);
+                }
+
+                if (c == 0x0D || (quint8)c == 0x9B) { // CR or ATASCII Return
+                    emit executeAtCommand(m_atCmdBuffer);
+                    m_atCmdBuffer.clear();
+                } else {
+                    m_atCmdBuffer.append(c);
+                }
+            }
+        }
+    }, Qt::QueuedConnection);
+
+    // --- FIX 2: Route parsed AT commands to the Main Thread so QTcpSocket can safely connect ---
+    connect(this, &RDevice::executeAtCommand, this, &RDevice::processAtCommand, Qt::QueuedConnection);
 }
 
 RDevice::~RDevice()
@@ -177,27 +208,33 @@ void RDevice::handleRead(quint16 len) {
 }
 
 void RDevice::handleStream() {
+    // 1. Acknowledge the command block
     if (!sio->port()->writeCommandAck()) return;
 
     qDebug() << "!i" << "[RDevice] Success! Atari requested Concurrent Stream Mode ($58)";
 
-    const char table[] = {0x28, (char)0xA0, 0x00, (char)0xA0, 0x28, (char)0xA0, 0x00, (char)0xA0, 0x78};
-    QByteArray payload(table, 9);
+    // Give Atari OS 2ms to process ACK
+    SioWorker::usleep(2000);
 
-    // 1. Send COMPLETE + Data + Checksum.
-    sendDataToAtari(payload);
+    // --- FIX 3: ACTIVE KERNEL DRAIN ---
+    // The standard writeComplete() call allows the Linux kernel to passively buffer the byte.
+    // This causes SIOV to timeout and play the raspberry sound.
+    // By using writeRawFrame, we actively force the byte down the wire instantly.
+    QByteArray completeByte;
+    completeByte.append((char)0x43); // 0x43 is 'C' (COMPLETE)
+    sio->port()->writeRawFrame(completeByte);
 
-    // 2. Hardware drain delay.
-    SioWorker::usleep(150000);
+    // Give the UART 5ms to physically shift the COMPLETE byte out the wire before reconfiguring
+    SioWorker::usleep(5000);
 
     state = ModemState::StreamMode;
     m_escapeTimer.start();
     m_plusCount = 0;
 
-    // DIRECTLY call the SioWorker method instead of emitting a signal
     sio->onChangeBaudRate(19200);
     qDebug() << "!d" << "[RDevice] Stream active at 19200 Baud. Handing over to raw UART.";
 }
+
 
 void RDevice::handleWrite(quint16 aux) {
     if (!sio->port()->writeCommandAck()) return;
@@ -222,12 +259,10 @@ void RDevice::handleWrite(quint16 aux) {
         }
     }
 
-    // qDebug() << "!i" << "[RDevice] BASIC WRITE Payload:" << debugStr;
-
     for (int i = 0; i < logicalLen && i < data.size(); i++) {
         char c = data.at(i);
         if (c == 0x0D || (quint8)c == 0x9B) {
-            processAtCommand(m_atCmdBuffer);
+            emit executeAtCommand(m_atCmdBuffer);
             m_atCmdBuffer.clear();
         } else {
             m_atCmdBuffer.append(c);
@@ -258,11 +293,9 @@ void RDevice::handleListen(quint16 aux) {
 void RDevice::processSerialData(const QByteArray &data) {
     if (state != ModemState::StreamMode) return;
     checkEscapeSequence(data);
-    if (m_isSshMode) {
-        if (m_ssh->isConnected()) m_ssh->write(data);
-    } else {
-        if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->write(data);
-    }
+
+    // Safely jump to the Main Thread via queued signal
+    emit dispatchToNetwork(data);
 }
 
 void RDevice::checkEscapeSequence(const QByteArray &data) {
@@ -282,10 +315,12 @@ void RDevice::checkEscapeSequence(const QByteArray &data) {
     }
 
     if (m_plusCount >= 3 && m_escapeTimer.elapsed() > ESCAPE_GUARD_TIME) {
-        state = ModemState::CommandMode;
-        // DIRECTLY call the SioWorker method
-        sio->onStreamFinished();
-        sendResultCode(RESULT_OK);
+        // --- FIX 4: DECOUPLE SIO STATE FROM MODEM STATE ---
+        // Drop the remote connection, but KEEP the Atari SIO stream alive
+        if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
+        if (m_isSshMode && m_ssh->isConnected()) m_ssh->disconnectFromHost();
+
+        sendResultCode(RESULT_OK); // Tell Ice-T the modem is listening
         m_plusCount = 0;
     }
 }
@@ -293,11 +328,12 @@ void RDevice::checkEscapeSequence(const QByteArray &data) {
 void RDevice::onSocketReadyRead() {
     if (m_isSshMode) return;
     QByteArray data = tcpSocket->readAll();
+
     if (state == ModemState::StreamMode) {
         parseTelnet(data);
         if (!m_txBuffer.isEmpty()) {
-            // DIRECTLY call SioWorker instead of emitting
-            sio->onWriteRawData(m_txBuffer);
+            QMutexLocker locker(&m_bufferMutex);
+            m_networkToSioBuffer.append(m_txBuffer);
             m_txBuffer.clear();
         }
     } else {
@@ -307,8 +343,8 @@ void RDevice::onSocketReadyRead() {
 
 void RDevice::onSshDataReceived(const QByteArray &data) {
     if (state == ModemState::StreamMode) {
-        // DIRECTLY call SioWorker instead of emitting
-        sio->onWriteRawData(data);
+        QMutexLocker locker(&m_bufferMutex);
+        m_networkToSioBuffer.append(data);
     } else {
         m_txBuffer.append(data);
     }
@@ -360,22 +396,20 @@ void RDevice::processAtCommand(const QString &rawCmd) {
         at_handle_dial(target);
     }
     else if (cmd == "H") {
-        tcpSocket->disconnectFromHost();
-        m_ssh->disconnectFromHost();
+        if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
+        if (m_isSshMode && m_ssh->isConnected()) m_ssh->disconnectFromHost();
+        sendResultCode(RESULT_OK);
     }
     else if (cmd == "Z") {
         tcpSocket->abort();
-        m_ssh->disconnectFromHost();
-        state = ModemState::CommandMode;
+        if (m_isSshMode && m_ssh) m_ssh->disconnectFromHost();
+        // REMOVED: state = ModemState::CommandMode; (Do not kill SIO stream)
         sendResultCode(RESULT_OK);
     }
     else if (cmd == "O") {
-        bool active = (tcpSocket->state() == QAbstractSocket::ConnectedState) || m_ssh->isConnected();
+        bool active = (tcpSocket->state() == QAbstractSocket::ConnectedState) || (m_isSshMode && m_ssh->isConnected());
         if (active) {
             sendResultCode(RESULT_CONNECT);
-            state = ModemState::StreamMode;
-            // DIRECTLY call SioWorker
-            sio->onChangeBaudRate(19200);
         } else {
             sendResultCode(RESULT_ERROR);
         }
@@ -386,13 +420,22 @@ void RDevice::processAtCommand(const QString &rawCmd) {
 }
 
 void RDevice::sendResultCode(int code) {
+    QByteArray resp;
     if (verboseResponses) {
-        if (code == RESULT_OK) m_txBuffer.append("\r\nOK\r\n");
-        else if (code == RESULT_CONNECT) m_txBuffer.append("\r\nCONNECT\r\n");
-        else if (code == RESULT_NO_CARRIER) m_txBuffer.append("\r\nNO CARRIER\r\n");
-        else if (code == RESULT_ERROR) m_txBuffer.append("\r\nERROR\r\n");
+        if (code == RESULT_OK) resp = "\r\nOK\r\n";
+        else if (code == RESULT_CONNECT) resp = "\r\nCONNECT\r\n";
+        else if (code == RESULT_NO_CARRIER) resp = "\r\nNO CARRIER\r\n";
+        else if (code == RESULT_ERROR) resp = "\r\nERROR\r\n";
     } else {
-        m_txBuffer.append(QString("%1\r").arg(code).toLatin1());
+        resp = QString("%1\r").arg(code).toLatin1();
+    }
+
+    // Crucial: Route to the active stream buffer if in Concurrent Mode
+    if (state == ModemState::StreamMode) {
+        QMutexLocker locker(&m_bufferMutex);
+        m_networkToSioBuffer.append(resp);
+    } else {
+        m_txBuffer.append(resp);
     }
 }
 
@@ -432,7 +475,14 @@ void RDevice::at_handle_dial(const QString &target) {
     }
 }
 
-void RDevice::sendAtResponse(const QString &text) { m_txBuffer.append(text.toLatin1()); }
+void RDevice::sendAtResponse(const QString &text) {
+    if (state == ModemState::StreamMode) {
+        QMutexLocker locker(&m_bufferMutex);
+        m_networkToSioBuffer.append(text.toLatin1());
+    } else {
+        m_txBuffer.append(text.toLatin1());
+    }
+}
 
 void RDevice::loadPhonebook(const QString &path) {
     if (path.isEmpty()) return;
@@ -474,9 +524,7 @@ void RDevice::onSocketConnected() { sendResultCode(RESULT_CONNECT); }
 void RDevice::onSocketDisconnected() {
     if (m_isSshMode) return;
     sendResultCode(RESULT_NO_CARRIER);
-    state = ModemState::CommandMode;
-    // DIRECTLY call SioWorker
-    sio->onStreamFinished();
+    // REMOVED: state = ModemState::CommandMode; (Do not kill SIO stream)
 }
 void RDevice::onSocketError(QAbstractSocket::SocketError) {
     if (m_isSshMode) return;
@@ -488,12 +536,18 @@ void RDevice::onSshConnected() { sendResultCode(RESULT_CONNECT); }
 void RDevice::onSshDisconnected() {
     if (!m_isSshMode) return;
     sendResultCode(RESULT_NO_CARRIER);
-    state = ModemState::CommandMode;
-    // DIRECTLY call SioWorker
-    sio->onStreamFinished();
+    // REMOVED: state = ModemState::CommandMode; (Do not kill SIO stream)
 }
 void RDevice::onSshError(const QString &msg) {
     Q_UNUSED(msg);
     if (!m_isSshMode) return;
     sendResultCode(RESULT_ERROR);
+}
+
+// --- NEW METHOD FOR SIOWORKER TO CALL ---
+QByteArray RDevice::dequeueNetworkData() {
+    QMutexLocker locker(&m_bufferMutex);
+    QByteArray data = m_networkToSioBuffer;
+    m_networkToSioBuffer.clear();
+    return data;
 }

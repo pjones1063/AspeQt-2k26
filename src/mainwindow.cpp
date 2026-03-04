@@ -313,7 +313,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 1. Modem Toggle
     btnModemToggle = new QToolButton(this);
-    setupBtn(btnModemToggle, ":/icons/silk-icons/icons/telephone.png", "M", tr("Toggle Modem Bridge On/Off"));
+    setupBtn(btnModemToggle, ":/icons/silk-icons/icons/world.png", "M", tr("Toggle Modem Bridge On/Off"));
     btnModemToggle->setCheckable(true);
     connect(btnModemToggle, &QToolButton::clicked, this, &MainWindow::onModemToggleClicked);
 
@@ -326,38 +326,54 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 3. Macros
     btnMacroUser = new QToolButton(this);
-    setupBtn(btnMacroUser, ":/icons/silk-icons/icons/user.png", "U", tr("Send Auto-User (ESC-U)"));
+    setupBtn(btnMacroUser, ":/icons/silk-icons/icons/application.png", "U", tr("Send Auto-User (ESC-U)"));
     connect(btnMacroUser, &QToolButton::clicked, [this]() {
         if (modemBridge) modemBridge->injectMacro('U');
     });
 
     btnMacroPass = new QToolButton(this);
-    setupBtn(btnMacroPass, ":/icons/silk-icons/icons/key.png", "P", tr("Send Auto-Pass (ESC-P)"));
+    setupBtn(btnMacroPass, ":/icons/silk-icons/icons/lock.png", "P", tr("Send Auto-Pass (ESC-P)"));
     connect(btnMacroPass, &QToolButton::clicked, [this]() {
         if (modemBridge) modemBridge->injectMacro('P');
     });
 
 
+    // SIO Trace Toggle
+    btnSioTrace = new QToolButton(this);
+    setupBtn(btnSioTrace, ":/icons/silk-icons/icons/monitor.png", "HEX", tr("Toggle SIO Hex Dump Trace"));
+    btnSioTrace->setCheckable(true);
+    connect(btnSioTrace, &QToolButton::clicked, this, &MainWindow::onSioTraceToggleClicked);
+
+
     // C. Add to Status Bar
-    // ------------------------------------------------
-    // Add a spacer label or separator first if you like
-    ui->statusBar->addPermanentWidget(new QLabel(" ", this));
+
+    QFrame *vLine1 = new QFrame(this);
+    vLine1->setFrameShape(QFrame::VLine);
+    vLine1->setFrameShadow(QFrame::Sunken);
+    vLine1->setLineWidth(1);
+    QFrame *vLine2 = new QFrame(this);
+    vLine2->setFrameShape(QFrame::VLine);
+    vLine2->setFrameShadow(QFrame::Sunken);
+    vLine2->setLineWidth(1);
 
     // Add Widgets (Order: Toggle | LEDs | Macros)
+    ui->statusBar->addPermanentWidget(btnSioTrace);
+    ui->statusBar->addPermanentWidget(vLine1);
     ui->statusBar->addPermanentWidget(btnModemToggle);
-    ui->statusBar->addPermanentWidget(ledRx);
-    ui->statusBar->addPermanentWidget(ledTx);
     ui->statusBar->addPermanentWidget(btnHangup);
     ui->statusBar->addPermanentWidget(btnMacroUser);
     ui->statusBar->addPermanentWidget(btnMacroPass);
+    ui->statusBar->addPermanentWidget(vLine2);
+    ui->statusBar->addPermanentWidget(ledRx);
+    ui->statusBar->addPermanentWidget(ledTx);
 
     // Sync initial state
     btnModemToggle->setChecked(aspeqtSettings->isModemBridgeEnabled());
 
 
-
-
     sio = new SioWorker();
+
+    connect(sio, &SioWorker::sioTrace, this, &MainWindow::onSioTraceData);
 
     // -------------------------------------------------------
     // MODEM BRIDGE SETUP
@@ -2635,10 +2651,120 @@ void MainWindow::onModemToggleClicked() {
 
     // 3. Update Visuals
     if (enabled) {
-        btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/telephone_go.png")); // Or similar "Active" icon
+        // Use network_connect.png from your oxygen-icons resource
+        btnModemToggle->setIcon(QIcon(":/icons/oxygen-icons/16x16/actions/network_connect.png"));
         btnModemToggle->setToolTip(tr("Modem Bridge: ON"));
     } else {
-        btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/telephone_delete.png")); // Or "Inactive" icon
+        // Revert to world.png
+        btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/world.png"));
         btnModemToggle->setToolTip(tr("Modem Bridge: OFF"));
     }
+}
+
+
+
+void MainWindow::onSioTraceToggleClicked()
+{
+    bool enabled = btnSioTrace->isChecked();
+    if (sio) sio->setTraceEnabled(enabled);
+
+    if (enabled) {
+        // monitor_go.png is in your QRC
+        btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor_go.png"));
+        btnSioTrace->setStyleSheet("background-color: #227722; color: white; border-radius: 4px;");
+        qDebug() << "!i" << "[SIO Trace] Hex Dump Enabled";
+    } else {
+        // monitor.png is in your QRC
+        btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor.png"));
+        btnSioTrace->setStyleSheet("");
+        qDebug() << "!i" << "[SIO Trace] Hex Dump Disabled";
+    }
+}
+
+
+void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
+{
+    if (data.isEmpty() || !btnSioTrace->isChecked()) return;
+
+    // SMART COMMAND DECODER
+    // Handle both 4-byte (raw cmd) and 5-byte (cmd + checksum) packets
+    if (dir.contains("CMD") && (data.size() == 4 || data.size() == 5)) {
+        quint8 dev = static_cast<quint8>(data[0]);
+        quint8 cmd = static_cast<quint8>(data[1]);
+
+        // Use static_cast for bitwise operations to avoid compiler warnings
+        quint16 aux = static_cast<quint8>(data[2]) | (static_cast<quint8>(data[3]) << 8);
+
+        QString devName = "Unknown";
+        // D1: through D15:
+        if (dev >= 0x31 && dev <= 0x3F) devName = QString("D%1:").arg(dev - 0x30);
+        else if (dev == 0x50) devName = "R1:";
+        else if (dev == 0x40) devName = "P1:";
+        else if (dev == 0x70) devName = "T1:"; // Time Device
+
+        QString cmdName = QString("$%1").arg(cmd, 2, 16, QChar('0')).toUpper();
+        if (cmd == 'R' || cmd == 0x52) cmdName = "READ";
+        if (cmd == 'W' || cmd == 0x57) cmdName = "WRITE";
+        if (cmd == 'S' || cmd == 0x53) cmdName = "STATUS";
+        if (cmd == 'P' || cmd == 0x50) cmdName = "PUT/WRITE";
+        if (cmd == 0x21) cmdName = "FORMAT";
+
+        // Add the English translation for common SIO commands
+        QString cmdLog = QString("<pre style='margin: 0;'><font color='#882288'><b>[SIO CMD] %1 %2 (Aux: %3)</b></font></pre>")
+                             .arg(devName).arg(cmdName).arg(aux);
+
+        qDebug().noquote() << "!n" << cmdLog;
+        return; // Skip the hex dump for commands since we translated it
+    }
+
+
+    QString headerColor = dir.startsWith("TX") ? "#C45911" : "#1177C4";
+
+    // 1. Use <pre> to force strict Monospace and preserve exact spacing
+    // We use <font> instead of <span> for better compatibility with Qt's older rich text engine
+    QString dump = QString("<pre style='margin: 0; line-height: 1.2;'><font color='%1'><b>[SIO %2]</b></font> %3 bytes:\n")
+                       .arg(headerColor).arg(dir).arg(data.size());
+
+    // Format into classic 16-byte Hex + ASCII lines
+    for (int i = 0; i < data.size(); i += 16) {
+        QByteArray chunk = data.mid(i, 16);
+
+        QString offset = QString("%1").arg(i, 4, 16, QChar('0')).toUpper();
+
+        QString hex = chunk.toHex(' ').toUpper();
+        if (chunk.size() > 8) {
+            hex.insert(23, " ");
+        }
+        hex = hex.leftJustified(48, ' ');
+
+        QString ascii;
+        for (char c : chunk) {
+            quint8 byte = static_cast<quint8>(c);
+            // Standard ASCII
+            if (byte >= 32 && byte <= 126) {
+                ascii += static_cast<char>(byte); // Explicit cast to char
+            }
+            // Atari Inverse Video (Subtract 128 to get standard ASCII)
+            else if (byte >= 160 && byte <= 254) {
+                ascii += static_cast<char>(byte - 128); // Explicit cast to char
+            }
+            // Unreadable graphics/control characters
+            else {
+                ascii += '.';
+            }
+        }
+
+        // 2. Build the line using standard spaces.
+        // <pre> guarantees these spaces will align perfectly.
+        QString line = QString("<font color='#888888'>%1:</font>  %2  <font color='#888888'>|</font>  %3")
+                           .arg(offset)
+                           .arg(hex)
+                           .arg(ascii.toHtmlEscaped());
+
+        dump += line + "\n";
+    }
+
+    dump += "</pre>";
+
+    qDebug().noquote() << "!n" << dump;
 }

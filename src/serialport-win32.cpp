@@ -339,6 +339,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
         if(got==expected)
         {
             data.resize(size);
+            if (isTraceEnabled()) emit sioTrace("RX (CMD)", data);
             // After sending the last byte of the command frame
             // ATARI does not drop the command line immediately.
             // Within this small time window ATARI is not able to process the ACK byte.
@@ -488,6 +489,7 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
     quint8 got = sioChecksum(data, size);
     if (expected == got) {
         data.resize(size);
+        if (isTraceEnabled()) emit sioTrace("RX (Data)", data);
         return data;
     } else {
         if (verbose) {
@@ -510,6 +512,7 @@ bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
     copy[copy.size() - 1] = sioChecksum(copy, copy.size() - 1);
     if(mMethod==HANDSHAKE_SOFTWARE)SioWorker::usleep(mWriteDelay);
     SioWorker::usleep(50);
+    if (isTraceEnabled()) emit sioTrace("TX (Data)", copy);
     return writeRawFrame(copy);
 }
 

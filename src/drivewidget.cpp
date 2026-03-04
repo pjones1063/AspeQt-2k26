@@ -65,6 +65,9 @@ void DriveWidget::setup()
     insertAction(0, ui->actionWriteProtect);
     insertAction(0, ui->actionEditDisk);
 
+    ui->actionSaveAs->setIcon(QIcon(":/icons/silk-icons/icons/disk.png"));
+    ui->actionRevert->setIcon(QIcon(":/icons/silk-icons/icons/arrow_undo.png"));
+
     // Connect widget actions to buttons
     ui->buttonMountDisk->setDefaultAction(ui->actionMountDisk);
     ui->buttonMountFolder->setDefaultAction(ui->actionMountFolder);

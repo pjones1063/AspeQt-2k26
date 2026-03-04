@@ -42,6 +42,8 @@ class AbstractSerialPortBackend : public QObject
 public:
     AbstractSerialPortBackend(QObject *parent = 0);
     virtual ~AbstractSerialPortBackend();
+    virtual void setTraceEnabled(bool enabled) { m_traceEnabled = enabled; }
+    virtual bool isTraceEnabled() const { return m_traceEnabled; }
 
     static inline int baudToDivisor(int baud) {return (int)(1781610.0 / baud / 2 - 7);}
     static inline int divisorToBaud(int divisor)
@@ -82,9 +84,12 @@ public:
     virtual void setStreamMode(bool stream) { Q_UNUSED(stream); }
     virtual bool isStreamMode() const { return false; }
 
+protected:
+    bool m_traceEnabled = false;
 
 signals:
     void statusChanged(QString status);
+    void sioTrace(const QString &dir, const QByteArray &data);
 };
 
 #ifdef Q_OS_WIN

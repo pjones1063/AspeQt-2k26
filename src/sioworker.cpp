@@ -5,6 +5,7 @@
 #include "sioworker.h"
 
 #include "aspeqtsettings.h"
+#include "rdevice.h"
 #include <QFile>
 #include <QDateTime>
 #include <QtDebug>
@@ -82,6 +83,9 @@ void SioWorker::start(Priority p)
             break;
     }
 
+    mPort->setTraceEnabled(m_traceEnabled);
+    connect(mPort, &AbstractSerialPortBackend::sioTrace, this, &SioWorker::sioTrace);
+
     QByteArray data;
     for (int i=0; i <= 255; i++)
     {
@@ -107,31 +111,54 @@ void SioWorker::run()
         return;
     }
 
+#ifdef HAS_LIBGPIOD
+    if (aspeqtSettings->serialPortHardwareUart()){
+        initHardwareInterrupts();
+    }
+#endif
+
     /* Process SIO commands until we're explicitly stopped */
     while (!mustTerminate) {
 
-        // ====================================================================
-        // NEW: Stream Mode Handler (High Priority)
-        // ====================================================================
+            // ====================================================================
+            // NEW: Stream Mode Handler (High Priority)
+            // ====================================================================
+
+#ifdef HAS_LIBGPIOD
+        if (aspeqtSettings->serialPortHardwareUart()){
+            checkHardwareInterrupts();
+        }
+#endif
         if (m_isStreaming) {
-            // 1. Read Raw Bytes (Non-blocking / Short Timeout)
-            // We read up to 128 bytes. The backend must support readRawFrame.
+            deviceMutex->lock();
+            SioDevice *device = devices[0x50]; // Grab R: Device
+            RDevice *rdev = qobject_cast<RDevice*>(device);
+
+            // <--- CHANGED: DRAIN NETWORK BUFFER -> ATARI --->
+            if (rdev) {
+                QByteArray txData = rdev->dequeueNetworkData();
+                if (!txData.isEmpty()) {
+                    if (m_traceEnabled) emit sioTrace("TX (STRM)", txData);
+                    mPort->writeRawFrame(txData);
+                }
+            }
+            deviceMutex->unlock();
+
+            // <--- CHANGED: READ UART -> NETWORK --->
             QByteArray rawData = mPort->readRawFrame(128, false);
 
-            // 2. Forward to RDevice via Signal
-            if (!rawData.isEmpty()) {
-                emit rawDataReceived(rawData);
+            if (!rawData.isEmpty() && rdev) {
+                // NEW: Trace Stream RX Data
+                if (m_traceEnabled) emit sioTrace("RX (STRM)", rawData);
+                deviceMutex->lock();
+                rdev->processSerialData(rawData);
+                deviceMutex->unlock();
             }
 
-            // 3. Prevent 100% CPU usage
             usleep(100);
-
-            // 4. Skip Standard Logic below and loop again
             continue;
         }
-        // ====================================================================
-        // EXISTING: Standard SIO Command Polling (Your Original Logic)
-        // ====================================================================
+
 
         QByteArray cmd = mPort->readCommandFrame();
 
@@ -174,6 +201,7 @@ void SioWorker::run()
     setHighSpeed(false);
     mPort->close();
 }
+
 
 
 void SioWorker::setHighSpeed(bool enabled)
@@ -517,20 +545,36 @@ void CassetteWorker::start(Priority p)
     QThread::start(p);
 }
 
+
 void SioWorker::onChangeBaudRate(int baudRate)
 {
-    // Use the accessor port() instead of m_port
     if (port()) {
         qDebug() << "[SioWorker] Changing Baud Rate to:" << baudRate;
-        port()->setSpeed(baudRate);
 
-        // [CRITICAL FIX] Explicitly tell the hardware to drop SIO block rules
+        if (baudRate != 19200) {
+            port()->setSpeed(baudRate);
+        }
+
+#ifdef HAS_LIBGPIOD
+        // <--- ADDED: PURGE THE STALE EVENTS --->
+        // Read any pending edges left over from the Command Block
+        if (m_gpioRequest) {
+            ::gpiod::edge_event_buffer purge_buffer(16);
+            int purge_ret = poll(&m_gpioPollFd, 1, 0);
+            if (purge_ret > 0) {
+                m_gpioRequest->read_edge_events(purge_buffer);
+                qDebug() << "!d" << "[SioWorker] Purged stale COMMAND edges from kernel queue.";
+            }
+        }
+        m_streamGuardTimer.start();
+#endif
+
         port()->setStreamMode(true);
-
-        // Flag that we are now streaming
         m_isStreaming = true;
     }
 }
+
+
 
 void SioWorker::onWriteRawData(const QByteArray &data)
 {
@@ -561,3 +605,92 @@ void SioWorker::restoreStandardBaudRate()
         port()->setSpeed(19200);
     }
 }
+
+
+// ==========================================================================
+// RASPBERRY PI 5: TRUE HARDWARE INTERRUPTS (SIO COMMAND PIN 7)
+// ==========================================================================
+#ifdef HAS_LIBGPIOD
+
+void SioWorker::initHardwareInterrupts()
+{
+    try {
+        // --- FIX 1: Prevent "Device or resource busy" ---
+        // Release any existing lock on the GPIO pin before claiming it again
+        if (m_gpioRequest) {
+            m_gpioRequest.reset();
+        }
+
+        const std::string chip_path = "/dev/gpiochip4";
+        const ::gpiod::line::offset line_offset = 18; // GPIO 18 (Physical Pin 12)
+
+        m_gpioRequest = std::make_unique<::gpiod::line_request>(
+            ::gpiod::chip(chip_path)
+                .prepare_request()
+                .set_consumer("AspeQt_Command_Watcher")
+                .add_line_settings(
+                    line_offset,
+                    ::gpiod::line_settings()
+                        .set_direction(::gpiod::line::direction::INPUT)
+                        .set_edge_detection(::gpiod::line::edge::FALLING)
+                        .set_bias(::gpiod::line::bias::PULL_UP)
+                    )
+                .do_request()
+            );
+
+        m_gpioPollFd.fd = m_gpioRequest->fd();
+        m_gpioPollFd.events = POLLIN;
+
+        qDebug() << "!i" << "[SioWorker] Hardware interrupts enabled on Pi 5 GPIO 18 (Physical Pin 12).";
+    } catch (const std::exception& e) {
+        qCritical() << "!e" << "[SioWorker] Failed to setup Pi 5 hardware interrupts:" << e.what();
+        m_gpioRequest.reset();
+    }
+}
+
+
+void SioWorker::checkHardwareInterrupts()
+{
+    if (!m_gpioRequest) return;
+
+    int ret = poll(&m_gpioPollFd, 1, 0);
+
+    if (ret > 0) {
+        ::gpiod::edge_event_buffer buffer(16);
+        m_gpioRequest->read_edge_events(buffer);
+
+        if (m_streamGuardTimer.elapsed() < 250) return;
+
+        for (const auto& event : buffer) {
+            if (event.type() == ::gpiod::edge_event::event_type::FALLING_EDGE) {
+
+                if (m_isStreaming) {
+                    // Massive Debounce: Verify pin is solidly low for 20ms.
+                    // This guarantees it is the Atari quitting the terminal, not RS232 crosstalk.
+                    int lowCount = 0;
+                    for (int i = 0; i < 20; i++) {
+                        usleep(1000); // 1ms
+                        if (m_gpioRequest->get_values()[0] == ::gpiod::line::value::INACTIVE) {
+                            lowCount++;
+                        } else {
+                            break; // Noise spike bounced high. Ignore.
+                        }
+                    }
+
+                    if (lowCount == 20) {
+                        qDebug() << "!d" << "[SioWorker] Atari formally dropped COMMAND line. Exiting Stream.";
+                        deviceMutex->lock();
+                        SioDevice *rdev = devices[0x50];
+                        if (rdev) rdev->forceCommandMode();
+                        deviceMutex->unlock();
+                        break;
+                    }
+                } else {
+                    // (Standard Block mode command interception logic remains here if needed)
+                }
+            }
+        }
+    }
+}
+
+#endif

@@ -119,6 +119,7 @@ private:
     QLabel *ledRx;               // Green "Download" LED
     QLabel *ledTx;               // Red "Upload" LED
     QTimer *ledResetTimer;       // Turns LEDs off after 50m
+    QToolButton *btnSioTrace;    // SIO Tracer
 
     void setSession();  //
     void updateRecentFileActions();
@@ -223,7 +224,8 @@ private slots:
     void blinkTx();
     void resetLeds();
 
-    // [NEW] Button Actions
+    void onSioTraceToggleClicked();
+    void onSioTraceData(const QString &dir, const QByteArray &data);
     void onModemToggleClicked();
 
 };

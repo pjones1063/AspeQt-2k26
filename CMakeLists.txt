@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(AspeQt VERSION 1.4.0 LANGUAGES CXX)
+project(AspeQt VERSION 1.0.0 LANGUAGES CXX)
 
 include(GNUInstallDirs)
 
@@ -13,6 +13,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # --- 0. Define Icon Path (MacOS specific) ---
+# We define this early so we can use it in the executable source list
 set(MACOS_ICON_FILE "res/icons.icns")
 
 # --- 1. Setup ZLIB (Cross-platform Fetch) ---
@@ -32,7 +33,11 @@ if(NOT TARGET ZLIB::ZLIB)
 endif()
 
 # --- 2. Find Dependencies ---
+
+# Find Qt 6 Components
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml)
+
+# Find LibSSH (New Addition)
 find_package(libssh REQUIRED)
 
 # --- 3. Find ALL source files in src/ ---
@@ -41,6 +46,7 @@ file(GLOB_RECURSE PROJECT_SOURCES
     "src/*.h"
     "src/*.ui"
 )
+
 
 # --- 4. Filter out files for the wrong OS ---
 if(WIN32)
@@ -52,6 +58,8 @@ elseif(UNIX)
 endif()
 
 # --- 5. Add the Executable ---
+# NOTE: We include ${MACOS_ICON_FILE} in the source list.
+# This ensures CMake is aware of the file and can copy it into the bundle.
 qt_add_executable(AspeQt
     ${PROJECT_SOURCES}
     ${MACOS_ICON_FILE}
@@ -79,10 +87,10 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::Concurrent
     Qt6::Xml
     ZLIB::ZLIB
-    ssh
+    ssh  # Link against libssh
 )
 
-# REQUIRED FIX: Link Windows Multimedia API 
+# REQUIRED FIX: Link Windows Multimedia API for timing functions
 if(WIN32)
     target_link_libraries(AspeQt PRIVATE winmm)
     set_property(TARGET AspeQt PROPERTY WIN32_EXECUTABLE ON)
@@ -90,17 +98,40 @@ endif()
 
 # --- 8. MacOS Bundle & Icon Settings ---
 if(APPLE)
+    # A. Mark the .icns file as a resource file so it goes into Contents/Resources
     set_source_files_properties(${MACOS_ICON_FILE} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources"
     )
 
+    # B. Set the Bundle properties
     set_target_properties(AspeQt PROPERTIES
         MACOSX_BUNDLE ON
         MACOSX_BUNDLE_GUI_IDENTIFIER "net.13leader.AspeQt"
         MACOSX_BUNDLE_BUNDLE_NAME "AspeQt"
+        # C. Tell Info.plist to use the filename "icons.icns"
         MACOSX_BUNDLE_ICON_FILE "icons.icns"
     )
 endif()
+
+if(UNIX AND NOT APPLE)
+    find_package(PkgConfig REQUIRED)
+    # Quietly check if libgpiod (v2) is installed
+    pkg_check_modules(GPIOD QUIET libgpiodcxx)
+
+    if(GPIOD_FOUND)
+        message(STATUS "Found libgpiod: Hardware SIO interrupts enabled.")
+
+        # Add a C++ preprocessor flag so our code knows it's active
+        add_compile_definitions(HAS_LIBGPIOD)
+
+        # Link the library to your main executable (replace 'AspeQt' with your target name)
+        target_link_libraries(AspeQt PRIVATE ${GPIOD_LIBRARIES})
+        target_include_directories(AspeQt PRIVATE ${GPIOD_INCLUDE_DIRS})
+    else()
+        message(STATUS "libgpiod not found. Falling back to software SIO interrupts.")
+    endif()
+endif()
+
 
 # --- 9. Install Definitions ---
 install(TARGETS AspeQt
@@ -109,27 +140,12 @@ install(TARGETS AspeQt
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-# Linux Desktop Integration (Ignored on Win/Mac)
-if(UNIX AND NOT APPLE)
-    # Ensure AspeQt.desktop exists in your project root
-    if(EXISTS "${CMAKE_SOURCE_DIR}/AspeQt.desktop")
-        install(FILES "AspeQt.desktop" 
-                DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
-    endif()
-    
-    # Ensure the icon exists in your res folder
-    if(EXISTS "${CMAKE_SOURCE_DIR}/res/main-icon/AspeQt.png")
-        install(FILES "res/main-icon/AspeQt.png" 
-                DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/48x48/apps")
-    endif()
-endif()
-
 target_compile_definitions(AspeQt PRIVATE
     VERSION="${PROJECT_VERSION}"
 )
 
-
 # --- 10. Copy Resources to Build Directory ---
+# This ensures non-embedded resources (like help files) are available near the binary
 file(GLOB_RECURSE RESOURCES_TO_COPY
     "${CMAKE_SOURCE_DIR}/res/help/*"
     "${CMAKE_SOURCE_DIR}/res/images/*"
@@ -147,17 +163,7 @@ foreach(resource ${RESOURCES_TO_COPY})
     configure_file("${resource}" "${destination}" COPYONLY)
 endforeach()
 
-# --- 11. CPack Configuration ---
-
-# --- macOS Bundle Fixes ---
-if(APPLE)
-    # Ensure the app looks inside the bundle for libraries (like libssh)
-    set_target_properties(AspeQt PROPERTIES
-        INSTALL_RPATH "@executable_path/../Frameworks"
-        BUILD_WITH_INSTALL_RPATH TRUE
-    )
-endif()
-
+# --- CPack Configuration ---
 set(CPACK_PACKAGE_NAME "AspeQt-2K26")
 set(CPACK_PACKAGE_VENDOR "Paul Jones")
 set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
@@ -167,15 +173,9 @@ set(CPACK_PACKAGE_INSTALL_DIRECTORY "AspeQt-2K26")
 # Debian specific settings
 if(UNIX AND NOT APPLE)
     set(CPACK_GENERATOR "DEB")
-    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Paul Jones")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Paul Jones") # Required for .deb
     set(CPACK_DEBIAN_PACKAGE_SECTION "utils")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
-
-    # Automatically find shared library dependencies (Qt6, libssh, etc.)
-    set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-
-    # Explicitly list core packages to ensure all dependencies are resolved by apt
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6widgets6, libqt6network6, libqt6serialport6, libssh-4")
 endif()
 
 include(CPack)
