@@ -92,7 +92,7 @@ private:
     DriveWidget* diskWidgets[DISK_COUNT];    //
     InfoWidget* infoWidget;
 
-    QLabel *speedLabel, *onOffLabel, *prtOnOffLabel, *clearMessagesLabel;  //
+    QLabel *speedLabel;  //
     TextPrinterWindow *textPrinterWindow;
     DocDisplayWindow *docDisplayWindow;    //
     QTranslator aspeqt_translator, aspeqt_qt_translator;
@@ -120,6 +120,7 @@ private:
     QLabel *ledTx;               // Red "Upload" LED
     QTimer *ledResetTimer;       // Turns LEDs off after 50m
     QToolButton *btnSioTrace;    // SIO Tracer
+    QToolButton *btnDisasmToggle; // dis-asm
 
     void setSession();  //
     void updateRecentFileActions();
@@ -225,6 +226,7 @@ private slots:
     void resetLeds();
 
     void onSioTraceToggleClicked();
+    void onDisasmToggleClicked();
     void onSioTraceData(const QString &dir, const QByteArray &data);
     void onModemToggleClicked();
 

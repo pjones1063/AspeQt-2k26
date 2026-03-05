@@ -7,6 +7,7 @@
 
 #include <QToolButton>
 #include <QLayout>
+#include <QElapsedTimer>
 #include "tnfsbrowser.h"
 #include "tnfsimage.h"
 #include "rdevice.h"
@@ -26,6 +27,8 @@
 #include "bootoptionsdialog.h"
 #include "logdisplaydialog.h"
 #include "infowidget.h"
+#include "opcodes6502.h"
+
 
 #include <QEvent>
 #include <QDragEnterEvent>
@@ -44,6 +47,7 @@
 #include <QTemporaryDir>
 #include <QStandardPaths>
 #include <QDesktopServices>
+#include <qtoolbar.h>
 
 #include "atarifilesystem.h"
 // #include "miscutils.h"
@@ -238,19 +242,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* Setup status bar */
     speedLabel = new QLabel(this);
-    onOffLabel = new QLabel(this);
-    prtOnOffLabel = new QLabel(this);
 
-    clearMessagesLabel = new QLabel(this);
     speedLabel->setText(tr("19200 bits/sec"));
-    onOffLabel->setMinimumWidth(21);
-    prtOnOffLabel->setMinimumWidth(18);
 
-
-    clearMessagesLabel->setMinimumWidth(21);
-    clearMessagesLabel->setPixmap(QIcon(":/icons/silk-icons/icons/page_white_c.png").pixmap(16, 16, QIcon::Normal));
-    clearMessagesLabel->setToolTip(tr("Clear messages"));
-    clearMessagesLabel->setStatusTip(clearMessagesLabel->toolTip());
 
     speedLabel->setMinimumWidth(80);
 
@@ -262,9 +256,6 @@ MainWindow::MainWindow(QWidget *parent)
     dlProgressBar->hide();
 
     ui->statusBar->addPermanentWidget(speedLabel);
-    ui->statusBar->addPermanentWidget(onOffLabel);
-    ui->statusBar->addPermanentWidget(prtOnOffLabel);
-    ui->statusBar->addPermanentWidget(clearMessagesLabel);
     ui->statusBar->addPermanentWidget(dlProgressBar);
 
     // Opacity Slider
@@ -344,26 +335,55 @@ MainWindow::MainWindow(QWidget *parent)
     btnSioTrace->setCheckable(true);
     connect(btnSioTrace, &QToolButton::clicked, this, &MainWindow::onSioTraceToggleClicked);
 
+    // Disassembler Toggle
+    btnDisasmToggle = new QToolButton(this);
+    setupBtn(btnDisasmToggle, ":/icons/silk-icons/icons/page_white_text.png", "ASM", tr("Toggle 6502 Disassembler"));
+    btnDisasmToggle->setCheckable(true);
+    connect(btnDisasmToggle, &QToolButton::clicked, this, &MainWindow::onDisasmToggleClicked);
+
 
     // C. Add to Status Bar
+    ui->statusBar->addPermanentWidget(ledRx);
+    ui->statusBar->addPermanentWidget(ledTx);
 
-    QFrame *vLine1 = new QFrame(this);
-    vLine1->setFrameShape(QFrame::VLine);
-    vLine1->setFrameShadow(QFrame::Sunken);
-    vLine1->setLineWidth(1);
-    QFrame *vLine2 = new QFrame(this);
-    vLine2->setFrameShape(QFrame::VLine);
-    vLine2->setFrameShadow(QFrame::Sunken);
-    vLine2->setLineWidth(1);
 
-    // Add Widgets (Order: Toggle | LEDs | Macros)
-    ui->statusBar->addPermanentWidget(btnSioTrace);
-    ui->statusBar->addPermanentWidget(vLine1);
-    ui->statusBar->addPermanentWidget(btnModemToggle);
-    ui->statusBar->addPermanentWidget(btnHangup);
-    ui->statusBar->addPermanentWidget(btnMacroUser);
-    ui->statusBar->addPermanentWidget(btnMacroPass);
-    ui->statusBar->addPermanentWidget(vLine2);
+    // C. Create Main Toolbar (Modern Qt Layout)
+    // ------------------------------------------------
+    QToolBar *mainToolBar = addToolBar(tr("Main Tools"));
+    mainToolBar->setMovable(false);          // Lock it under the menu bar
+    mainToolBar->setIconSize(QSize(16, 16)); // Keep icons uniform
+
+    mainToolBar->addAction(ui->actionStartEmulation);
+    mainToolBar->addAction(ui->actionPrinterEmulation);
+    mainToolBar->addAction(ui->actionOptions);
+    mainToolBar->addSeparator();
+
+    // 1. Clear Log Button (Converted to a proper ToolButton)
+    QToolButton *btnClearLog = new QToolButton(this);
+    setupBtn(btnClearLog, ":/icons/silk-icons/icons/page_white_c.png", "C", tr("Clear log messages"));
+    connect(btnClearLog, &QToolButton::clicked, this, [this]() {
+        ui->textEdit->clear();
+        emit sendLogText("");
+    });
+
+    // 2. Add Diagnostic Tools to Toolbar
+    mainToolBar->addWidget(btnClearLog);
+    mainToolBar->addWidget(btnSioTrace);
+    mainToolBar->addWidget(btnDisasmToggle);
+
+    // Built-in Qt Toolbar Separator
+    mainToolBar->addSeparator();
+
+    // 3. Add Modem Tools to Toolbar
+    mainToolBar->addWidget(btnModemToggle);
+    mainToolBar->addWidget(btnHangup);
+    mainToolBar->addWidget(btnMacroUser);
+    mainToolBar->addWidget(btnMacroPass);
+
+
+    // D. Finalize Status Bar (Passive Indicators Only)
+    // ------------------------------------------------
+    // (speedLabel, onOffLabel, etc. were already added earlier in the constructor)
     ui->statusBar->addPermanentWidget(ledRx);
     ui->statusBar->addPermanentWidget(ledTx);
 
@@ -695,21 +715,6 @@ void MainWindow::createDeviceWidgets()
          drag->setMimeData(mimeData);
 
          drag->exec();
-     }
-
-     if (event->button() == Qt::LeftButton && onOffLabel->geometry().translated(ui->statusBar->geometry().topLeft()).contains(event->pos())) {
-         ui->actionStartEmulation->trigger();
-     }
-
-     if (event->button() == Qt::LeftButton && prtOnOffLabel->geometry().translated(ui->statusBar->geometry().topLeft()).contains(event->pos())) {
-         ui->actionPrinterEmulation->trigger();     //
-     }
-     if (event->button() == Qt::LeftButton && clearMessagesLabel->geometry().translated(ui->statusBar->geometry().topLeft()).contains(event->pos())) {
-         ui->textEdit->clear();
-         emit sendLogText("");
-     }
-     if (event->button() == Qt::LeftButton && !speedLabel->isHidden() && speedLabel->geometry().translated(ui->statusBar->geometry().topLeft()).contains(event->pos())) {
-        ui->actionOptions->trigger();
      }
 }
 
@@ -1209,15 +1214,11 @@ void MainWindow::setUpPrinterEmulationWidgets(bool enable)
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Stop printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Stop printer emulation", 0));
         ui->actionPrinterEmulation->setIcon(QIcon(":/icons/silk-icons/icons/printer.png").pixmap(16, 16, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/silk-icons/icons/printer.png").pixmap(16, 16, QIcon::Normal, QIcon::On));
     } else {
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Start printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Start printer emulation", 0));
         ui->actionPrinterEmulation->setIcon(QIcon(":/icons/silk-icons/icons/printer_delete.png").pixmap(16, 16, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/silk-icons/icons/printer_delete.png").pixmap(16, 16, QIcon::Normal, QIcon::On));
     }
-    prtOnOffLabel->setToolTip(ui->actionPrinterEmulation->toolTip());
-    prtOnOffLabel->setStatusTip(ui->actionPrinterEmulation->statusTip());
 }
 
 void MainWindow::on_actionStartEmulation_triggered()
@@ -1232,13 +1233,10 @@ void MainWindow::on_actionStartEmulation_triggered()
 }
 
 void MainWindow::sioStarted()
-{
+{    
     ui->actionStartEmulation->setText(tr("&Stop emulation"));
     ui->actionStartEmulation->setToolTip(tr("Stop SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Stop SIO peripheral emulation"));
-    onOffLabel->setPixmap(ui->actionStartEmulation->icon().pixmap(16, QIcon::Normal, QIcon::On));
-    onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
-    onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
 }
 
 void MainWindow::sioFinished()
@@ -1247,9 +1245,7 @@ void MainWindow::sioFinished()
     ui->actionStartEmulation->setToolTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setChecked(false);
-    onOffLabel->setPixmap(ui->actionStartEmulation->icon().pixmap(16, QIcon::Normal, QIcon::Off));
-    onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
-    onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
+
     speedLabel->hide();
     speedLabel->clear();
     qWarning() << "!i" << tr("Emulation stopped.");
@@ -2662,7 +2658,6 @@ void MainWindow::onModemToggleClicked() {
 }
 
 
-
 void MainWindow::onSioTraceToggleClicked()
 {
     bool enabled = btnSioTrace->isChecked();
@@ -2681,26 +2676,52 @@ void MainWindow::onSioTraceToggleClicked()
     }
 }
 
+void MainWindow::onDisasmToggleClicked()
+{
+    bool enabled = btnDisasmToggle->isChecked();
+
+    if (enabled) {
+        // Change to "Go" arrow icon when active
+        btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_go.png"));
+        btnDisasmToggle->setStyleSheet("background-color: #227722; color: white; border-radius: 4px;");
+        qDebug() << "!i" << "[Disassembler] Forced 6502 Disassembly Enabled";
+    } else {
+        // Revert to normal icon
+        btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
+        btnDisasmToggle->setStyleSheet("");
+        qDebug() << "!i" << "[Disassembler] Forced 6502 Disassembly Disabled";
+    }
+}
+
 
 void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
 {
     if (data.isEmpty() || !btnSioTrace->isChecked()) return;
 
-    // SMART COMMAND DECODER
-    // Handle both 4-byte (raw cmd) and 5-byte (cmd + checksum) packets
+    // --- 1. RAW TIMING ANALYSIS ---
+    static QElapsedTimer latencyTimer;
+    QString latencyHeader;
+
+    // Reset timer on every command to measure device response time
+    if (dir.contains("CMD")) {
+        latencyTimer.start();
+    }
+    // Show elapsed time for data responses
+    else if (latencyTimer.isValid()) {
+        latencyHeader = QString(" (Lat: %1ms)").arg(latencyTimer.elapsed());
+    }
+
+    // --- 2. SMART COMMAND DECODER ---
     if (dir.contains("CMD") && (data.size() == 4 || data.size() == 5)) {
         quint8 dev = static_cast<quint8>(data[0]);
         quint8 cmd = static_cast<quint8>(data[1]);
-
-        // Use static_cast for bitwise operations to avoid compiler warnings
         quint16 aux = static_cast<quint8>(data[2]) | (static_cast<quint8>(data[3]) << 8);
 
         QString devName = "Unknown";
-        // D1: through D15:
         if (dev >= 0x31 && dev <= 0x3F) devName = QString("D%1:").arg(dev - 0x30);
         else if (dev == 0x50) devName = "R1:";
         else if (dev == 0x40) devName = "P1:";
-        else if (dev == 0x70) devName = "T1:"; // Time Device
+        else if (dev == 0x70) devName = "T1:";
 
         QString cmdName = QString("$%1").arg(cmd, 2, 16, QChar('0')).toUpper();
         if (cmd == 'R' || cmd == 0x52) cmdName = "READ";
@@ -2709,62 +2730,99 @@ void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
         if (cmd == 'P' || cmd == 0x50) cmdName = "PUT/WRITE";
         if (cmd == 0x21) cmdName = "FORMAT";
 
-        // Add the English translation for common SIO commands
-        QString cmdLog = QString("<pre style='margin: 0;'><font color='#882288'><b>[SIO CMD] %1 %2 (Aux: %3)</b></font></pre>")
+        // Added font-family here just in case
+        QString cmdLog = QString("<pre style='margin: 0; font-family: \"Courier New\", Courier, monospace;'><font color='#882288'><b>[SIO CMD] %1 %2 (Aux: %3)</b></font></pre>")
                              .arg(devName).arg(cmdName).arg(aux);
-
         qDebug().noquote() << "!n" << cmdLog;
-        return; // Skip the hex dump for commands since we translated it
+        return;
     }
 
-
+    // --- 3. HEX DUMP WITH ZERO-DIMMING ---
     QString headerColor = dir.startsWith("TX") ? "#C45911" : "#1177C4";
 
-    // 1. Use <pre> to force strict Monospace and preserve exact spacing
-    // We use <font> instead of <span> for better compatibility with Qt's older rich text engine
-    QString dump = QString("<pre style='margin: 0; line-height: 1.2;'><font color='%1'><b>[SIO %2]</b></font> %3 bytes:\n")
-                       .arg(headerColor).arg(dir).arg(data.size());
+    // Explicit font-family rule applied to stop the columns from wobbling
+    QString dump = QString("<pre style='margin: 0; line-height: 1.2; font-family: \"Courier New\", Courier, monospace;'><font color='%1'><b>[SIO %2]</b></font> %3 bytes%4:\n")
+                       .arg(headerColor).arg(dir).arg(data.size()).arg(latencyHeader);
 
-    // Format into classic 16-byte Hex + ASCII lines
     for (int i = 0; i < data.size(); i += 16) {
         QByteArray chunk = data.mid(i, 16);
-
         QString offset = QString("%1").arg(i, 4, 16, QChar('0')).toUpper();
 
-        QString hex = chunk.toHex(' ').toUpper();
-        if (chunk.size() > 8) {
-            hex.insert(23, " ");
-        }
-        hex = hex.leftJustified(48, ' ');
+        // Build Hex Column with Gutter and Zero-Dimming
+        QString hex;
+        for (int j = 0; j < 16; ++j) {
+            if (j == 8) hex += " "; // Middle Gutter
 
+            if (j < chunk.size()) {
+                quint8 byte = static_cast<quint8>(chunk[j]);
+                QString bHex = QString("%1").arg(byte, 2, 16, QChar('0')).toUpper();
+
+                // Dim 00 (Null) and 20 (Space) to make data pop
+                if (byte == 0x00 || byte == 0x20) {
+                    hex += QString("<font color='#444444'>%1</font> ").arg(bHex);
+                } else {
+                    hex += bHex + " ";
+                }
+            } else {
+                hex += "   "; // Alignment padding
+            }
+        }
+
+        // Build ASCII Column with ATASCII translation
         QString ascii;
         for (char c : chunk) {
             quint8 byte = static_cast<quint8>(c);
-            // Standard ASCII
-            if (byte >= 32 && byte <= 126) {
-                ascii += static_cast<char>(byte); // Explicit cast to char
-            }
-            // Atari Inverse Video (Subtract 128 to get standard ASCII)
-            else if (byte >= 160 && byte <= 254) {
-                ascii += static_cast<char>(byte - 128); // Explicit cast to char
-            }
-            // Unreadable graphics/control characters
-            else {
-                ascii += '.';
-            }
+            if (byte >= 32 && byte <= 126) ascii += static_cast<char>(byte);
+            else if (byte >= 160 && byte <= 254) ascii += static_cast<char>(byte - 128);
+            else ascii += '.';
         }
 
-        // 2. Build the line using standard spaces.
-        // <pre> guarantees these spaces will align perfectly.
-        QString line = QString("<font color='#888888'>%1:</font>  %2  <font color='#888888'>|</font>  %3")
-                           .arg(offset)
-                           .arg(hex)
-                           .arg(ascii.toHtmlEscaped());
-
-        dump += line + "\n";
+        dump += QString("<font color='#888888'>%1:</font>  %2  <font color='#888888'>|</font>  %3\n")
+                    .arg(offset).arg(hex).arg(ascii.toHtmlEscaped());
     }
 
     dump += "</pre>";
-
     qDebug().noquote() << "!n" << dump;
+
+    // --- 4. EXECUTABLE HEURISTIC DISASSEMBLER ---
+    bool forceAsm = btnDisasmToggle->isChecked();
+    bool isExecutable = (data.size() > 5 && static_cast<quint8>(data[0]) == 0xFF && static_cast<quint8>(data[1]) == 0xFF);
+
+    if (forceAsm || isExecutable) {
+
+        // Explicit font-family rule applied here as well
+        QString asmCode = "<pre style='color: #228822; margin: 0; font-family: \"Courier New\", Courier, monospace;'><b>[6502 Disassembly Suggestion]</b>\n";
+
+        // Skip the FF FF header for disassembly
+        int pc = isExecutable ? 2 : 0;
+
+        while (pc < data.size()) {
+            quint8 opByte = static_cast<quint8>(data[pc]);
+            Opcode6502 op = opTable[opByte];
+
+            QString line = QString("%1:  ").arg(pc, 4, 16, QChar('0')).toUpper();
+
+            if (op.len == 1) {
+                line += op.mnemonic;
+            } else if (op.len == 2 && pc + 1 < data.size()) {
+                quint8 val = static_cast<quint8>(data[pc+1]);
+                line += QString(op.mnemonic).replace("xx", QString("%1").arg(val, 2, 16, QChar('0')).toUpper());
+            } else if (op.len == 3 && pc + 2 < data.size()) {
+                quint16 addr = static_cast<quint8>(data[pc+1]) | (static_cast<quint8>(data[pc+2]) << 8);
+                line += QString(op.mnemonic).replace("xxxx", QString("%1").arg(addr, 4, 16, QChar('0')).toUpper());
+            } else {
+                line += QString(".BYTE $%1").arg(opByte, 2, 16, QChar('0')).toUpper();
+            }
+
+            asmCode += line + "\n";
+            pc += op.len;
+
+            if (pc > 128) {
+                asmCode += "...(Truncated for brevity)...\n";
+                break;
+            }
+        }
+        asmCode += "</pre>";
+        qDebug().noquote() << "!n" << asmCode;
+    }
 }
