@@ -1,6 +1,5 @@
 /*
  * logdisplaydialog.h
- *
  */
 
 #ifndef LOGDISPLAYDIALOG_H
@@ -12,7 +11,7 @@
 #include <QTextEdit>
 
 namespace Ui {
-    class LogDisplayDialog;
+class LogDisplayDialog;
 }
 
 class LogDisplayDialog : public QDialog {
@@ -34,9 +33,8 @@ private:
     Ui::LogDisplayDialog *l_ui;
 
 private slots:
-    void diskFilter();
+    void saveLog(); // Added Save Slot
     void onClick(QAbstractButton* button);
 
-signals:
 };
 #endif // LOGDISPLAYDIALOG_H

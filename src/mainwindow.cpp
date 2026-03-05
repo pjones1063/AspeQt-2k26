@@ -48,6 +48,7 @@
 #include <QStandardPaths>
 #include <QDesktopServices>
 #include <qtoolbar.h>
+#include "sectorinspectordialog.h"
 
 #include "atarifilesystem.h"
 // #include "miscutils.h"
@@ -352,9 +353,11 @@ MainWindow::MainWindow(QWidget *parent)
     QToolBar *mainToolBar = addToolBar(tr("Main Tools"));
     mainToolBar->setMovable(false);          // Lock it under the menu bar
     mainToolBar->setIconSize(QSize(16, 16)); // Keep icons uniform
+    ui->actionShowPrinterTextOutput->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
 
     mainToolBar->addAction(ui->actionStartEmulation);
     mainToolBar->addAction(ui->actionPrinterEmulation);
+    mainToolBar->addAction(ui->actionShowPrinterTextOutput);
     mainToolBar->addAction(ui->actionOptions);
     mainToolBar->addSeparator();
 
@@ -366,7 +369,14 @@ MainWindow::MainWindow(QWidget *parent)
         emit sendLogText("");
     });
 
+    QToolButton *btnShowLog = new QToolButton(this);
+    setupBtn(btnShowLog, ":/icons/silk-icons/icons/page_white.png", "L", tr("Show Log Window"));
+    connect(btnShowLog, &QToolButton::clicked, this, &MainWindow::on_actionLogWindow_triggered);
+
+    ui->actionPhonebook->setIcon(QIcon(":/icons/silk-icons/icons/folder.png"));
+
     // 2. Add Diagnostic Tools to Toolbar
+    mainToolBar->addWidget(btnShowLog);
     mainToolBar->addWidget(btnClearLog);
     mainToolBar->addWidget(btnSioTrace);
     mainToolBar->addWidget(btnDisasmToggle);
@@ -376,6 +386,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 3. Add Modem Tools to Toolbar
     mainToolBar->addWidget(btnModemToggle);
+    mainToolBar->addAction(ui->actionPhonebook);
     mainToolBar->addWidget(btnHangup);
     mainToolBar->addWidget(btnMacroUser);
     mainToolBar->addWidget(btnMacroPass);
@@ -692,6 +703,7 @@ void MainWindow::createDeviceWidgets()
         connect(deviceWidget, SIGNAL(actionBootOptions(int)), this, SLOT(on_actionBootOption_triggered()));
         connect(this, SIGNAL(setFont(const QFont&)), deviceWidget, SLOT(setFont(const QFont&)));
         connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(on_actionHappyMode_triggered(int,bool)));
+        connect(deviceWidget, SIGNAL(actionInspectSectors(int)), this, SLOT(on_actionInspectSectors_triggered(int)));
     }
 
     ui->leftColumn->setAlignment(Qt::AlignTop);
@@ -1003,7 +1015,7 @@ void MainWindow::on_actionLogWindow_triggered()
         w = geometry().width();
         h = geometry().height();
         if (!g_miniMode) {
-            logWindow_->setGeometry(x+w/1.9, y+30, logWindow_->geometry().width(), geometry().height());
+            logWindow_->setGeometry(x+w/1.9, y+30, 800, geometry().height());
         } else {
             logWindow_->setGeometry(x+20, y+60, w, h*2);
         }
@@ -2824,5 +2836,16 @@ void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
         }
         asmCode += "</pre>";
         qDebug().noquote() << "!n" << asmCode;
+    }
+}
+
+void MainWindow::on_actionInspectSectors_triggered(int deviceId)
+{
+    SimpleDiskImage *img = qobject_cast<SimpleDiskImage*>(sio->getDevice(deviceId + DISK_BASE_CDEVIC));
+
+    if (img) {
+        SectorInspectorDialog *dlg = new SectorInspectorDialog(img, this);
+        dlg->setAttribute(Qt::WA_DeleteOnClose);
+        dlg->show();
     }
 }

@@ -81,6 +81,21 @@ void DriveWidget::setup()
     insertAction(0, ui->actionHappyMode);
     // 3. Connect the widget button to the action
     ui->buttonHappyMode->setDefaultAction(ui->actionHappyMode);
+
+    ui->actionInspectSectors->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
+    FormatStatusTip(ui->actionInspectSectors, driveTxt);
+    ui->buttonInspectSectors->setDefaultAction(ui->actionInspectSectors);
+
+    // 2. Add it to the context menu (Right-click)
+    // We'll place it right below the Edit (Explore) option
+    insertAction(0, ui->actionInspectSectors);
+
+    // 3. Connect the action to its own signal
+    connect(ui->actionInspectSectors, &QAction::triggered, this, [this]() {
+        emit actionInspectSectors(driveNo_);
+    });
+
+
 }
 
 void DriveWidget::updateFromImage(SimpleDiskImage *diskImage)
@@ -131,6 +146,7 @@ void DriveWidget::showAsEmpty()
     ui->actionAutoSave->setEnabled(false);
     ui->actionAutoSave->setChecked(false);
     ui->actionHappyMode->setEnabled(true);
+    ui->actionInspectSectors->setEnabled(false);
     if(driveNo_ == 0)
         ui->actionBootOption->setEnabled(false);
 
@@ -153,8 +169,10 @@ void DriveWidget::showAsFolderMounted(const QString &fileName, const QString &de
     ui->actionSave->setEnabled(false);
     ui->actionAutoSave->setEnabled(false);
     ui->actionRevert->setEnabled(false);
+    ui->actionInspectSectors->setEnabled(false);
 
     if(driveNo_ == 0) ui->actionBootOption->setEnabled(true);
+
 }
 
 void DriveWidget::showAsImageMounted(const QString &fileName, const QString &description, bool editEnabled, bool enableSave)
@@ -176,6 +194,7 @@ void DriveWidget::showAsImageMounted(const QString &fileName, const QString &des
     ui->actionRevert->setEnabled(false);
 
     ui->actionAutoSave->setEnabled(true);
+    ui->actionInspectSectors->setEnabled(true);
 
     if(driveNo_ == 0) ui->actionBootOption->setEnabled(false);
 
@@ -215,6 +234,7 @@ void DriveWidget::showAsTNFSMounted(const QString &fileName, const QString &desc
 
     ui->actionHappyMode->setChecked(false);
     ui->actionHappyMode->setEnabled(false);
+    ui->actionInspectSectors->setEnabled(false);
 
     // 4. Update Status Tips
     setLabelToolTips(fileName, fileName, description);
@@ -245,6 +265,7 @@ void DriveWidget::setIconSize(const QSize &size)
     ui->buttonSave->setIconSize(size);
     ui->autoSave->setIconSize(size);
     ui->buttonEditDisk->setIconSize(size);
+    ui->buttonInspectSectors->setIconSize(size);
     ui->buttonHappyMode->setIconSize(size);
     ui->buttonEject->setIconSize(size);
 }

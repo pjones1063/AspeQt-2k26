@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SectorEditDialog</class>
+ <widget class="QDialog" name="SectorEditDialog">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>720</width><height>420</height></rect></property>
+  <property name="windowTitle"><string>Edit Sector</string></property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="alternatingRowColors"><bool>true</bool></property>
+     <property name="selectionMode"><enum>QAbstractItemView::SingleSelection</enum></property>
+     <attribute name="horizontalHeaderDefaultSectionSize"><number>35</number></attribute>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="bottomLayout">
+     <item>
+      <widget class="QPushButton" name="btnInjectText">
+       <property name="text"><string>Inject Text...</string></property>
+       <property name="icon">
+        <iconset resource="../res/icons.qrc">
+         <normaloff>:/icons/silk-icons/icons/page_white_text.png</normaloff>:/icons/silk-icons/icons/page_white_text.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblStatus">
+       <property name="font">
+        <font><family>Courier New</family><pointsize>10</pointsize></font>
+       </property>
+       <property name="text"><string>Select a cell...</string></property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation"><enum>Qt::Horizontal</enum></property>
+       <property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="standardButtons"><set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../res/icons.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SectorEditDialog</receiver>
+   <slot>accept()</slot>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>SectorEditDialog</receiver>
+   <slot>reject()</slot>
+  </connection>
+ </connections>
+</ui>

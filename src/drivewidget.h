@@ -53,7 +53,8 @@ signals:
     void actionSaveAs(int deviceId);
     void actionRevert(int deviceId);
     void actionBootOptions(int deviceId);
-    void actionHappyMode(int deviceId, bool enabled); // Must be here!
+    void actionHappyMode(int deviceId, bool enabled);
+    void actionInspectSectors(int deviceId);
 
 private slots:
     void setFont(const QFont& font);

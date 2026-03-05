@@ -55,9 +55,9 @@ void DocDisplayWindow::print(const QString &text)
 
 void DocDisplayWindow::on_actionPrint_triggered()
 {
-     QPrinter printer;
-     QPrintDialog *dialog = new QPrintDialog(&printer, this);
-         if (dialog->exec() != QDialog::Accepted)
-             return;
-         ui->docDisplay->print(&printer);
+    QPrinter printer;
+    QPrintDialog *dialog = new QPrintDialog(&printer, this);
+    if (dialog->exec() != QDialog::Accepted)
+        return;
+    ui->docDisplay->print(&printer);
 }
