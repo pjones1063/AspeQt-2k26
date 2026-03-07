@@ -234,6 +234,10 @@ public:
     QString modemBridgePhonebookPath();
     void setModemBridgePhonebookPath(const QString &path);
 
+    QString lastRclDir();
+    void setLastRclDir(const QString &dir);
+
+
 
 private:
     QSettings *mSettings;

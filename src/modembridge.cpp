@@ -92,9 +92,13 @@ void ModemBridge::onSerialDataReceived() {
     QByteArray data = m_serial->readAll();
     if (!m_isActive) return;
 
+    // --- CRITICAL FIX: ALWAYS BLINK TX ON ATARI TYPING ---
+    emit txActivity();
 
     // --- MODE 1: CONNECTED (Data Mode) ---
     if (m_isConnected) {
+        emit traceData(m_isSshMode ? "TX (SSH)" : "TX (TCP)", data);
+
         for (char c : data) {
             // Atari Backspace Fix (126/127 -> 8)
             if (c == 126 || c == 127) c = 8;
@@ -103,7 +107,6 @@ void ModemBridge::onSerialDataReceived() {
             if (c == '+') {
                 m_escapeBuffer.append(c);
                 if (m_escapeBuffer.length() > 3) {
-                    // Not an escape sequence, flush it out
                     if (m_isSshMode) m_ssh->write(m_escapeBuffer);
                     else             m_socket->write(m_escapeBuffer);
                     m_escapeBuffer.clear();
@@ -127,7 +130,6 @@ void ModemBridge::onSerialDataReceived() {
                 if (c == 'p' || c == 'P') { injectMacro('p'); continue; }
                 if (c == 'h' || c == 'H') { hangup(); continue; }
 
-                // Pass literal ESC char if not a macro
                 QByteArray esc(1, 0x1B);
                 esc.append(c);
                 if (m_isSshMode) m_ssh->write(esc);
@@ -137,7 +139,6 @@ void ModemBridge::onSerialDataReceived() {
                 m_escPressed = true;
             }
             else {
-                // Normal Character
                 if (m_isSshMode) m_ssh->write(QByteArray(1, c));
                 else             m_socket->write(QByteArray(1, c));
             }
@@ -145,20 +146,23 @@ void ModemBridge::onSerialDataReceived() {
     }
     // --- MODE 2: COMMAND MODE ---
     else {
-        if (m_localEcho) m_serial->write(data);
+        // --- NEW: Trace AT Commands so you can see what you type ---
+        emit traceData("TX (CMD)", data);
+
+        if (m_localEcho) sendToSerial(data); // Changed to sendToSerial
 
         for (char c : data) {
             if (c == '\r' || c == 155) {
-                m_serial->write("\n");
+                sendToSerial("\n"); // Changed to sendToSerial
                 processAtCommand(m_serialBuffer);
                 m_serialBuffer.clear();
             } else if (c != '\n') {
                 if (c == 126 || c == 127 || c == 8) {
                     if (!m_serialBuffer.isEmpty()) {
                         m_serialBuffer.chop(1);
-                        m_serial->write(QByteArray(1, 8)); // BS
-                        m_serial->write(" ");              // Space
-                        m_serial->write(QByteArray(1, 8)); // BS
+                        sendToSerial(QByteArray(1, 8)); // BS
+                        sendToSerial(" ");              // Space
+                        sendToSerial(QByteArray(1, 8)); // BS
                     }
                 } else {
                     m_serialBuffer.append(c);
@@ -241,31 +245,27 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
 
 void ModemBridge::dial(const BbsEntry &entry) {
 
-    // 1. Store the credentials locally so the Macro buttons (ESC-U / ESC-P)
-    // can inject them into the raw text stream later.
-    // (Note: Ensure m_currentLogin and m_currentPassword are declared as QStrings in modembridge.h)
-    m_currentLogin = entry.login;
-    m_currentPassword = entry.password;
+    // FIX: Store the FULL entry into your existing class variable so
+    // injectMacro() has access to m_currentConnection.login and password!
+    m_currentConnection = entry;
 
-    // 2. Parse the exact protocol string saved by the Phonebook
     QString proto = entry.protocol.toUpper();
     m_isSshMode = proto.startsWith("SSH");
 
     if (m_isSshMode) {
+        // CRITICAL FIX: The SSH Protocol strictly requires a username string.
+        QString safeUser = entry.login.isEmpty() ? "guest" : entry.login;
+
         if (proto == "SSH-AUTH") {
             qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Authenticated SSH...";
-            // Linux Box Mode: Perform strict cryptographic SSH authentication using libssh
-            m_ssh->connectToHost(entry.ip, entry.port, entry.login, entry.password);
-
+            m_ssh->connectToHost(entry.ip, entry.port, safeUser, entry.password);
         } else {
             qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Anonymous BBS SSH...";
-            // Retro BBS Mode: Connect anonymously with blank credentials, allowing
-            // the BBS to open the PTY shell and show its custom ANSI login screen.
-            m_ssh->connectToHost(entry.ip, entry.port, "", "");
+            // Pass safeUser but a BLANK password to let the BBS show its own ANSI login
+            m_ssh->connectToHost(entry.ip, entry.port, safeUser, "");
         }
     } else {
         qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Telnet/TCP...";
-        // Standard unencrypted Telnet/TCP
         connectTo(entry.ip, entry.port);
     }
 }
@@ -285,15 +285,21 @@ void ModemBridge::connectTo(const QString &host, int port) {
     m_serial->write("\r\nDIALING...\r\n");
 
     // 2. Decide Protocol
-    // If protocol is explicitly SSH, OR if port is 22 (and not explicitly Telnet)
-    bool useSsh = (m_currentConnection.protocol.toUpper() == "SSH") || (port == 22);
+    QString proto = m_currentConnection.protocol.toUpper();
+    bool useSsh = proto.startsWith("SSH") || (port == 22);
 
     if (useSsh) {
         m_isSshMode = true;
-        // Use saved user/pass or defaults
-        QString user = m_currentConnection.login.isEmpty() ? "guest" : m_currentConnection.login;
-        QString pass = m_currentConnection.password;
-        m_ssh->connectToHost(host, port, user, pass);
+
+        // CRITICAL FIX: Apply the safe username rule here too
+        QString safeUser = m_currentConnection.login.isEmpty() ? "guest" : m_currentConnection.login;
+
+        if (proto == "SSH-AUTH") {
+            m_ssh->connectToHost(host, port, safeUser, m_currentConnection.password);
+        } else {
+            // Anonymous BBS mode
+            m_ssh->connectToHost(host, port, safeUser, "");
+        }
     } else {
         m_isSshMode = false;
         m_socket->connectToHost(host, port);
@@ -309,10 +315,13 @@ void ModemBridge::onSocketConnected() {
     emit statusMessage("Modem Bridge: Telnet Connected.");
 }
 
+
 void ModemBridge::onSocketDataReceived() {
     QByteArray data = m_socket->readAll();
-    sendToSerial(data);
+    emit traceData("RX (TCP)", data);
+    sendToSerial(data); // RX Blinks automatically here now
 }
+
 
 void ModemBridge::onSocketDisconnected() {
     if (m_isSshMode) return; // Ignore TCP signals if we are in SSH mode
@@ -339,7 +348,8 @@ void ModemBridge::onSshConnected() {
 }
 
 void ModemBridge::onSshDataReceived(const QByteArray &data) {
-    sendToSerial(data);
+    emit traceData("RX (SSH)", data);
+    sendToSerial(data); // RX Blinks automatically here now
 }
 
 void ModemBridge::onSshDisconnected() {
@@ -384,6 +394,9 @@ void ModemBridge::injectMacro(char macroType) {
     if (!textToSend.isEmpty()) {
         QByteArray bytes = textToSend.toUtf8() + "\r";
 
+        emit traceData(m_isSshMode ? "TX (MACRO)" : "TX (MACRO)", bytes);
+        emit txActivity();
+
         if (m_isSshMode) m_ssh->write(bytes);
         else             m_socket->write(bytes);
 
@@ -392,8 +405,19 @@ void ModemBridge::injectMacro(char macroType) {
 }
 
 void ModemBridge::sendToSerial(const QByteArray &data) {
-    if (m_serial->isOpen()) m_serial->write(data);
+    if (m_serial->isOpen()) {
+        m_serial->write(data);
+
+        // --- NEW: Centralized RX Blinker ---
+        emit rxActivity();
+
+        // Let the Hex Dump see local responses like "OK" and "NO CARRIER"
+        if (!m_isConnected) {
+            emit traceData("RX (CMD)", data);
+        }
+    }
 }
+
 
 void ModemBridge::checkEscapeSequence() {
     if (m_escapeBuffer == "+++") {
@@ -444,3 +468,8 @@ BbsEntry ModemBridge::findBbsByName(const QString &name) {
     }
     return BbsEntry();
 }
+
+
+
+
+

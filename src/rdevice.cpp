@@ -298,11 +298,56 @@ void RDevice::handleListen(quint16 aux) {
 
 void RDevice::processSerialData(const QByteArray &data) {
     if (state != ModemState::StreamMode) return;
-    checkEscapeSequence(data);
 
-    // Safely jump to the Main Thread via queued signal
-    emit dispatchToNetwork(data);
+    static bool escPending = false;
+    QByteArray filteredData;
+
+    // Trap Atari Keyboard Macros (ESC U / ESC P / ESC H) in the SIO stream
+    for (int i = 0; i < data.size(); ++i) {
+        char c = data[i];
+
+        if (escPending) {
+            escPending = false;
+
+            if (c == 'U' || c == 'u') {
+                // Inject UserID directly into the network stream
+                QString inject = m_currentConnection.login + "\r";
+                emit dispatchToNetwork(inject.toUtf8());
+                continue;
+            }
+            if (c == 'P' || c == 'p') {
+                // Inject Password directly into the network stream
+                QString inject = m_currentConnection.password + "\r";
+                emit dispatchToNetwork(inject.toUtf8());
+                continue;
+            }
+            if (c == 'H' || c == 'h') {
+                // Hangup Macro: Drop carrier instantly
+                if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
+                if (m_isSshMode && m_ssh->isConnected()) m_ssh->disconnectFromHost();
+                continue;
+            }
+
+            // Not a macro, put the ESC byte and the character back
+            filteredData.append(0x1B);
+            filteredData.append(c);
+        } else if (c == 0x1B) {
+            // 0x1B is the ESC key. Hold it and wait for the next byte.
+            escPending = true;
+        } else {
+            filteredData.append(c);
+        }
+    }
+
+    // Only process the '+++' check and send to network if there is standard typing left
+    if (!filteredData.isEmpty()) {
+        checkEscapeSequence(filteredData);
+
+        // Safely jump to the Main Thread via queued signal
+        emit dispatchToNetwork(filteredData);
+    }
 }
+
 
 void RDevice::checkEscapeSequence(const QByteArray &data) {
     for (char c : data) {

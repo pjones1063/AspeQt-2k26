@@ -426,6 +426,11 @@ MainWindow::MainWindow(QWidget *parent)
         qCritical() << "!e [ModemBridge]" << err;
     });
 
+    // Commect Hex Dump
+    connect(modemBridge, &ModemBridge::traceData, this, &MainWindow::onSioTraceData);
+    connect(modemBridge, &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
+    connect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
+
     // Configure from Settings
     if (aspeqtSettings->isModemBridgeEnabled()) {
         modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
@@ -463,14 +468,22 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // -------------------------------------------------------
-    // DEVICE $46: AspeQt Client (AspeCl)
+    // DEVICE $46: AspeQt Client Device & legacy support
     // -------------------------------------------------------
-    // DEPRECATED: This device is maintained for legacy compatibility.
-    // Modern time-sync uses the ApeTime protocol (handled via SIO).
-    AspeCl *client = new AspeCl(sio);
+    AspeqtClientDevice *client = new AspeqtClientDevice(sio);
     client->setParent(nullptr);
     client->moveToThread(sio);
     sio->installDevice(0x46, client);
+
+    // Connections for remote disk management, booting, and printer control
+    connect(client, SIGNAL(findNewSlot(int,bool)), this, SLOT(firstEmptyDiskSlot(int,bool)));
+    connect(this, SIGNAL(newSlot(int)), client, SLOT(gotNewSlot(int)));
+    connect(client, SIGNAL(mountFile(int,QString)), this, SLOT(mountFileWithDefaultProtection(int,QString)));
+    connect(this, SIGNAL(fileMounted(bool)), client, SLOT(fileMounted(bool)));
+    connect(client, SIGNAL(toggleAutoCommit(int,bool)), this, SLOT(autoCommit(int,bool)));
+    connect(client, SIGNAL(bootExe(QString)), this, SLOT(bootExeTriggered(QString)));
+    connect(client, SIGNAL(bootCas(QString)), this, SLOT(bootCasTriggered(QString)));
+    connect(client, SIGNAL(togglePrinterServer(bool)), this, SLOT(printServer(bool)));
 
 
     // -------------------------------------------------------
@@ -2845,3 +2858,4 @@ void MainWindow::on_actionInspectSectors_triggered(int deviceId)
         dlg->show();
     }
 }
+

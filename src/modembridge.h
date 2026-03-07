@@ -36,6 +36,9 @@ public slots:
 signals:
     void statusMessage(const QString &msg);
     void errorOccurred(const QString &err);
+    void traceData(const QString &dir, const QByteArray &data);
+    void rxActivity();
+    void txActivity();
 
 private slots:
     // Serial Port

@@ -35,6 +35,8 @@
 #include "miscdevices.h"
 #include "phonedirectory.h"
 #include "bbsdata.h"
+#include "aspeqtclientdevice.h"
+
 
 namespace Ui
 {

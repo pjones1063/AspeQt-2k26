@@ -6,6 +6,9 @@
 #include "serialport.h"
 #include "mainwindow.h"
 
+#include <QDir>
+
+
 AspeQtSettings::AspeQtSettings()
 {
     mSettings = new QSettings(); //uses QApplication's info to determine setting to use
@@ -997,4 +1000,28 @@ void AspeQtSettings::setModemBridgePhonebookPath(const QString &path) {
     if(mSessionFileName == "") mSettings->setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
 }
 
+
+
+QString AspeQtSettings::lastRclDir()
+{
+    QString dir = mSettings->value("LastRclDir", "").toString();
+
+    // Smart Fallback: If a specific remote directory hasn't been set in the UI,
+    // default to the last directory the user mounted a disk from.
+    if (dir.isEmpty()) {
+        dir = lastDiskImageDir();
+    }
+
+    // Ultimate Fallback: Default to the OS user's home directory
+    if (dir.isEmpty()) {
+        dir = QDir::homePath();
+    }
+
+    return dir;
+}
+
+void AspeQtSettings::setLastRclDir(const QString &dir)
+{
+    if(mSessionFileName == "") mSettings->setValue("LastRclDir", dir);
+}
 

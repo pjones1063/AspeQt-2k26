@@ -176,6 +176,7 @@ if(UNIX AND NOT APPLE)
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Paul Jones") # Required for .deb
     set(CPACK_DEBIAN_PACKAGE_SECTION "utils")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+    set(CPACK_DEBIAN_FILE_NAME "DEB-DEFAULT")
 endif()
 
 include(CPack)

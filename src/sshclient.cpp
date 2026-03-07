@@ -48,7 +48,15 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
         ssh_options_set(m_session, SSH_OPTIONS_USER, user.toUtf8().constData());
     }
 
-    // 1. Connect (Blocking call, but safe here in background thread)
+    // --- CRITICAL FIX 1: ENABLE LEGACY CIPHERS ---
+    // Retro BBSes run on ancient SSH software (like Cryptlib or early Dropbear).
+    // Modern libssh disables these algorithms due to age, causing "kex errors".
+    ssh_options_set(m_session, SSH_OPTIONS_CIPHERS_C_S, "aes128-cbc,aes256-cbc,3des-cbc,aes128-ctr,aes192-ctr,aes256-ctr,chacha20-poly1305@openssh.com");
+    ssh_options_set(m_session, SSH_OPTIONS_CIPHERS_S_C, "aes128-cbc,aes256-cbc,3des-cbc,aes128-ctr,aes192-ctr,aes256-ctr,chacha20-poly1305@openssh.com");
+    ssh_options_set(m_session, SSH_OPTIONS_KEY_EXCHANGE, "diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,curve25519-sha256@libssh.org,ecdh-sha2-nistp256");
+    ssh_options_set(m_session, SSH_OPTIONS_HOSTKEYS, "ssh-dss,ssh-rsa,ecdsa-sha2-nistp256,ssh-ed25519");
+
+    // 1. Connect
     int rc = ssh_connect(m_session);
     if (rc != SSH_OK) {
         emit errorOccurred(QString("Connection Error: %1").arg(ssh_get_error(m_session)));
@@ -56,9 +64,37 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
         return;
     }
 
-    // 2. Authenticate (Password)
-    // NOTE: This is a blocking call.
-    rc = ssh_userauth_password(m_session, nullptr, password.toUtf8().constData());
+    // --- CRITICAL FIX 2: SMART AUTHENTICATION ---
+    if (password.isEmpty()) {
+        // ANONYMOUS BBS MODE:
+        // Step A: We MUST query allowed auth methods so the BBS doesn't disconnect us (Error 10)
+        rc = ssh_userauth_none(m_session, nullptr);
+
+        if (rc != SSH_AUTH_SUCCESS) {
+            int methods = ssh_userauth_list(m_session, nullptr);
+
+            // Step B: Keyboard-Interactive (Usually presents a dummy prompt we answer with "guest")
+            if (methods & SSH_AUTH_METHOD_INTERACTIVE) {
+                rc = ssh_userauth_kbdint(m_session, nullptr, nullptr);
+                while (rc == SSH_AUTH_INFO) {
+                    int prompts = ssh_userauth_kbdint_getnprompts(m_session);
+                    for (int i = 0; i < prompts; ++i) {
+                        ssh_userauth_kbdint_setanswer(m_session, i, "guest");
+                    }
+                    rc = ssh_userauth_kbdint(m_session, nullptr, nullptr);
+                }
+            }
+
+            // Step C: Dummy Password (If the BBS explicitly demands the password field isn't blank)
+            if (rc != SSH_AUTH_SUCCESS && (methods & SSH_AUTH_METHOD_PASSWORD)) {
+                rc = ssh_userauth_password(m_session, nullptr, "guest");
+            }
+        }
+    } else {
+        // STRICT LINUX MODE:
+        rc = ssh_userauth_password(m_session, nullptr, password.toUtf8().constData());
+    }
+
     if (rc != SSH_AUTH_SUCCESS) {
         emit errorOccurred(QString("Authentication Failed: %1").arg(ssh_get_error(m_session)));
         cleanup();
@@ -81,7 +117,6 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
     }
 
     // 4. Request PTY (Pseudo Teletype)
-    // Critical for BBS/Interactive use so the server sends us raw data/prompts
     rc = ssh_channel_request_pty(m_channel);
     if (rc != SSH_OK) {
         emit errorOccurred("Error: Failed to request PTY.");
@@ -107,6 +142,7 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
     // Start the non-blocking read loop
     QTimer::singleShot(m_pollIntervalMs, this, &SshBackend::pollLoop);
 }
+
 
 void SshBackend::processWrite(const QByteArray &data) {
     if (!m_isConnected || !m_channel) return;
