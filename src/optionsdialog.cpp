@@ -389,7 +389,7 @@ void OptionsDialog::OptionsDialog_accepted()
     // Added warning per request for R: device enablement
     if (m_ui->modemRBox->isChecked()) {
         QMessageBox::warning(this, tr("Experimental Feature"),
-                             tr("850 R: Device (R: to tcp) is experimental and may not work with all SIO2PC devices"));
+                             tr("The 850 R: Device requires hardware-level interrupts to exit Concurrent Stream Mode. This feature is incompatible with standard USB SIO2PC adapters. It requires a Raspberry Pi using raw UART, with the SIO COMMAND line mapped to a GPIO pin."));
     }
     // ---------------------------------------
 

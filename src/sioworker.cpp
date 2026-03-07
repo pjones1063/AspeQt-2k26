@@ -105,25 +105,21 @@ void SioWorker::run()
 {
     // Connect status signal (Existing)
     connect(mPort, SIGNAL(statusChanged(QString)), this, SIGNAL(statusChanged(QString)));
-
     /* Open serial port */
     if (!mPort->open()) {
         return;
     }
-
 #ifdef HAS_LIBGPIOD
     if (aspeqtSettings->serialPortHardwareUart()){
         initHardwareInterrupts();
     }
 #endif
-
     /* Process SIO commands until we're explicitly stopped */
     while (!mustTerminate) {
 
             // ====================================================================
             // NEW: Stream Mode Handler (High Priority)
             // ====================================================================
-
 #ifdef HAS_LIBGPIOD
         if (aspeqtSettings->serialPortHardwareUart()){
             checkHardwareInterrupts();
@@ -140,6 +136,7 @@ void SioWorker::run()
                 if (!txData.isEmpty()) {
                     if (m_traceEnabled) emit sioTrace("TX (STRM)", txData);
                     mPort->writeRawFrame(txData);
+                    emit txActivity();
                 }
             }
             deviceMutex->unlock();
@@ -153,24 +150,21 @@ void SioWorker::run()
                 deviceMutex->lock();
                 rdev->processSerialData(rawData);
                 deviceMutex->unlock();
+                emit rxActivity();
             }
-
             usleep(100);
             continue;
         }
 
-
         QByteArray cmd = mPort->readCommandFrame();
-
         if (mustTerminate) {
             break;
         }
-
         if (cmd.isEmpty()) {
             qCritical() << "!e" << tr("Cannot read command frame.");
             break;
         }
-
+        emit rxActivity();
         /* Decode the command */
         quint8 no = (quint8)cmd[0];
         quint8 command = (quint8)cmd[1];
@@ -182,6 +176,7 @@ void SioWorker::run()
             if (devices[no]->tryLock()) {
                 devices[no]->handleCommand(command, aux);
                 devices[no]->unlock();
+                emit txActivity();
             } else {
                 qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 ignored because the image explorer is open.")
                 .arg(deviceName(no))
@@ -659,17 +654,18 @@ void SioWorker::checkHardwareInterrupts()
         ::gpiod::edge_event_buffer buffer(16);
         m_gpioRequest->read_edge_events(buffer);
 
-        if (m_streamGuardTimer.elapsed() < 250) return;
+        // REMOVED: m_streamGuardTimer check (Blinded the emulator to instant retries)
 
         for (const auto& event : buffer) {
             if (event.type() == ::gpiod::edge_event::event_type::FALLING_EDGE) {
 
                 if (m_isStreaming) {
-                    // Massive Debounce: Verify pin is solidly low for 20ms.
-                    // This guarantees it is the Atari quitting the terminal, not RS232 crosstalk.
+                    // FIX: Atari command blocks at 19200 baud hold the line low for ~2.6ms.
+                    // A 20ms debounce will ALWAYS fail to catch it.
+                    // We use a light 100 microsecond debounce just to filter EMI noise.
                     int lowCount = 0;
-                    for (int i = 0; i < 20; i++) {
-                        usleep(1000); // 1ms
+                    for (int i = 0; i < 5; i++) {
+                        usleep(20); // 20 microseconds
                         if (m_gpioRequest->get_values()[0] == ::gpiod::line::value::INACTIVE) {
                             lowCount++;
                         } else {
@@ -677,16 +673,20 @@ void SioWorker::checkHardwareInterrupts()
                         }
                     }
 
-                    if (lowCount == 20) {
-                        qDebug() << "!d" << "[SioWorker] Atari formally dropped COMMAND line. Exiting Stream.";
+                    if (lowCount == 5) {
+                        qDebug() << "!d" << "[SioWorker] Atari asserted COMMAND line! Exiting Stream.";
                         deviceMutex->lock();
+
                         SioDevice *rdev = devices[0x50];
-                        if (rdev) rdev->forceCommandMode();
+                        // Safely cast to RDevice to call forceCommandMode()
+                        if (rdev) {
+                            RDevice *r = qobject_cast<RDevice*>(rdev);
+                            if (r) r->forceCommandMode();
+                        }
+
                         deviceMutex->unlock();
                         break;
                     }
-                } else {
-                    // (Standard Block mode command interception logic remains here if needed)
                 }
             }
         }

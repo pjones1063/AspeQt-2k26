@@ -405,6 +405,9 @@ MainWindow::MainWindow(QWidget *parent)
     sio = new SioWorker();
 
     connect(sio, &SioWorker::sioTrace, this, &MainWindow::onSioTraceData);
+    connect(sio, &SioWorker::rxActivity, this, &MainWindow::blinkRx);
+    connect(sio, &SioWorker::txActivity, this, &MainWindow::blinkTx);
+
 
     // -------------------------------------------------------
     // MODEM BRIDGE SETUP
@@ -439,12 +442,7 @@ MainWindow::MainWindow(QWidget *parent)
         modemBridge->start();
     }
 
-
-    connect(modemBridge, &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
-    connect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
-
     updatePhonebookMenuState();
-
 
     // -------------------------------------------------------
     // R: Device testing
@@ -1273,6 +1271,9 @@ void MainWindow::sioStatusChanged(QString status)
 {
     speedLabel->setText(status);
     speedLabel->show();
+
+    blinkRx();
+    blinkTx();
 }
 
 void MainWindow::deviceStatusChanged(int deviceNo)
@@ -1386,7 +1387,7 @@ void MainWindow::uiMessage(int t, QString message)
         lastMessageRepeat = 1;
     }
 
-    ui->statusBar->showMessage(message, 3000);
+    // ui->statusBar->showMessage(message, 3000);
 
     switch (t) {
         case 'd':
@@ -2647,11 +2648,6 @@ void MainWindow::onModemToggleClicked() {
                                        aspeqtSettings->modemBridgeBaudRate());
             modemBridge->start();
 
-            // Re-connect signals just to be safe (Qt handles duplicates automatically usually, but unique connection is safer)
-            disconnect(modemBridge, &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
-            disconnect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
-            connect(modemBridge, &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
-            connect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
         } else {
             modemBridge->stop();
         }
@@ -2800,7 +2796,7 @@ void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
     bool forceAsm = btnDisasmToggle->isChecked();
     bool isExecutable = (data.size() > 5 && static_cast<quint8>(data[0]) == 0xFF && static_cast<quint8>(data[1]) == 0xFF);
 
-    if (forceAsm || isExecutable) {
+    if (forceAsm) {
 
         // Explicit font-family rule applied here as well
         QString asmCode = "<pre style='color: #228822; margin: 0; font-family: \"Courier New\", Courier, monospace;'><b>[6502 Disassembly Suggestion]</b>\n";

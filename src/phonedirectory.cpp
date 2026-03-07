@@ -255,17 +255,27 @@ bool PhoneDirectory::runEditDialog(BbsEntry &entry) {
     QLineEdit *portEdit = new QLineEdit(QString::number(entry.port));
     QLineEdit *userEdit = new QLineEdit(entry.login);
 
+    // --- NEW: 3 Protocol Radio Buttons ---
     QRadioButton *rbTelnet = new QRadioButton(tr("Telnet"), &dlg);
-    QRadioButton *rbSsh = new QRadioButton(tr("SSH"), &dlg);
+    QRadioButton *rbSsh = new QRadioButton(tr("SSH (BBS)"), &dlg);
+    QRadioButton *rbSshAuth = new QRadioButton(tr("SSH (Auth)"), &dlg);
+
     QHBoxLayout *protoLayout = new QHBoxLayout();
     protoLayout->addWidget(rbTelnet);
     protoLayout->addWidget(rbSsh);
+    protoLayout->addWidget(rbSshAuth);
     protoLayout->addStretch();
 
-    if (entry.protocol.compare("SSH", Qt::CaseInsensitive) == 0) rbSsh->setChecked(true);
+    // Set initial checked state based on XML string
+    if (entry.protocol.compare("SSH-AUTH", Qt::CaseInsensitive) == 0) rbSshAuth->setChecked(true);
+    else if (entry.protocol.compare("SSH", Qt::CaseInsensitive) == 0) rbSsh->setChecked(true);
     else rbTelnet->setChecked(true);
 
+    // Auto-switch Ports for convenience
     QObject::connect(rbSsh, &QRadioButton::toggled, [portEdit](bool checked){
+        if(checked && portEdit->text() == "23") portEdit->setText("22");
+    });
+    QObject::connect(rbSshAuth, &QRadioButton::toggled, [portEdit](bool checked){
         if(checked && portEdit->text() == "23") portEdit->setText("22");
     });
     QObject::connect(rbTelnet, &QRadioButton::toggled, [portEdit](bool checked){
@@ -300,7 +310,12 @@ bool PhoneDirectory::runEditDialog(BbsEntry &entry) {
         entry.port = portEdit->text().toInt();
         entry.login = userEdit->text();
         entry.password = passEdit->text();
-        entry.protocol = rbSsh->isChecked() ? "SSH" : "TELNET";
+
+        // --- NEW: Save the exact protocol string ---
+        if (rbSshAuth->isChecked()) entry.protocol = "SSH-AUTH";
+        else if (rbSsh->isChecked()) entry.protocol = "SSH";
+        else entry.protocol = "TELNET";
+
         return true;
     }
 
@@ -338,3 +353,4 @@ void PhoneDirectory::onDeleteClicked() {
         m_isDirty = true; // Flag as dirty
     }
 }
+

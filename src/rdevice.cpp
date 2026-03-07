@@ -211,27 +211,33 @@ void RDevice::handleStream() {
     // 1. Acknowledge the command block
     if (!sio->port()->writeCommandAck()) return;
 
-    qDebug() << "!i" << "[RDevice] Success! Atari requested Concurrent Stream Mode ($58)";
-
-    // Give Atari OS 2ms to process ACK
+    // 2. Standard SIO t3 delay (Wait for Atari to switch to receive)
     SioWorker::usleep(2000);
 
-    // --- FIX 3: ACTIVE KERNEL DRAIN ---
-    // The standard writeComplete() call allows the Linux kernel to passively buffer the byte.
-    // This causes SIOV to timeout and play the raspberry sound.
-    // By using writeRawFrame, we actively force the byte down the wire instantly.
+    // 3. Send COMPLETE byte
     QByteArray completeByte;
-    completeByte.append((char)0x43); // 0x43 is 'C' (COMPLETE)
+    completeByte.append((char)0x43); // 'C'
     sio->port()->writeRawFrame(completeByte);
 
-    // Give the UART 5ms to physically shift the COMPLETE byte out the wire before reconfiguring
-    SioWorker::usleep(5000);
+    // 4. CRITICAL FIX: The UART TX Flush Bug
+    // writeRawFrame only puts 'C' into the Linux OS buffer.
+    // If we change the baud rate right now, Linux resets the UART hardware
+    // and flushes the TX FIFO. The 'C' is destroyed and never reaches the Atari!
+    // We MUST sleep to guarantee the 'C' physically leaves the Raspberry Pi.
+    SioWorker::usleep(15000); // 15ms
 
     state = ModemState::StreamMode;
     m_escapeTimer.start();
     m_plusCount = 0;
 
+    // 5. This triggers the SioWorker to enter the stream mode loop
     sio->onChangeBaudRate(19200);
+
+    // 6. CRITICAL FIX: The Framing Error
+    // Give the Atari OS and Ice-T time to put POKEY into transparent mode
+    // before we allow AspeQt to blast any queued TCP/BBS network text at it.
+    SioWorker::usleep(20000); // 20ms
+
     qDebug() << "!d" << "[RDevice] Stream active at 19200 Baud. Handing over to raw UART.";
 }
 
@@ -452,7 +458,12 @@ void RDevice::at_handle_dial(const QString &target) {
 
     if (!found) {
         m_currentConnection = BbsEntry();
-        if (host.startsWith("SSH:")) {
+
+        // --- NEW: Allow manual SSH-AUTH or SSH prefixes via AT commands ---
+        if (host.startsWith("SSH-AUTH:")) {
+            m_currentConnection.protocol = "SSH-AUTH"; host = host.mid(9); port = 22;
+        }
+        else if (host.startsWith("SSH:")) {
             m_currentConnection.protocol = "SSH"; host = host.mid(4); port = 22;
         }
         else if (target.contains(":")) {
@@ -463,17 +474,29 @@ void RDevice::at_handle_dial(const QString &target) {
 
     sendAtResponse("DIALING " + host + "...\r\n");
 
-    if (m_currentConnection.protocol == "SSH" || port == 22) {
+    QString proto = m_currentConnection.protocol.toUpper();
+
+    // --- SMART PROTOCOL LOGIC ---
+    if (proto.startsWith("SSH") || port == 22) {
         m_isSshMode = true;
         if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
-        QString user = m_currentConnection.login.isEmpty() ? "guest" : m_currentConnection.login;
-        m_ssh->connectToHost(host, port, user, m_currentConnection.password);
+
+        if (proto == "SSH-AUTH") {
+            // Linux Box Mode: Strict cryptographic SSH authentication
+            QString user = m_currentConnection.login.isEmpty() ? "guest" : m_currentConnection.login;
+            m_ssh->connectToHost(host, port, user, m_currentConnection.password);
+        } else {
+            // Retro BBS Mode: Anonymous connection, bypass protocol auth
+            m_ssh->connectToHost(host, port, "", "");
+        }
     } else {
+        // Telnet Mode
         m_isSshMode = false;
         if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
         tcpSocket->connectToHost(host, port);
     }
 }
+
 
 void RDevice::sendAtResponse(const QString &text) {
     if (state == ModemState::StreamMode) {

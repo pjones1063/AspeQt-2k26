@@ -92,7 +92,6 @@ void ModemBridge::onSerialDataReceived() {
     QByteArray data = m_serial->readAll();
     if (!m_isActive) return;
 
-    emit txActivity();
 
     // --- MODE 1: CONNECTED (Data Mode) ---
     if (m_isConnected) {
@@ -241,9 +240,36 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
 }
 
 void ModemBridge::dial(const BbsEntry &entry) {
-    m_currentConnection = entry;
-    connectTo(entry.ip, entry.port);
+
+    // 1. Store the credentials locally so the Macro buttons (ESC-U / ESC-P)
+    // can inject them into the raw text stream later.
+    // (Note: Ensure m_currentLogin and m_currentPassword are declared as QStrings in modembridge.h)
+    m_currentLogin = entry.login;
+    m_currentPassword = entry.password;
+
+    // 2. Parse the exact protocol string saved by the Phonebook
+    QString proto = entry.protocol.toUpper();
+    m_isSshMode = proto.startsWith("SSH");
+
+    if (m_isSshMode) {
+        if (proto == "SSH-AUTH") {
+            qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Authenticated SSH...";
+            // Linux Box Mode: Perform strict cryptographic SSH authentication using libssh
+            m_ssh->connectToHost(entry.ip, entry.port, entry.login, entry.password);
+
+        } else {
+            qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Anonymous BBS SSH...";
+            // Retro BBS Mode: Connect anonymously with blank credentials, allowing
+            // the BBS to open the PTY shell and show its custom ANSI login screen.
+            m_ssh->connectToHost(entry.ip, entry.port, "", "");
+        }
+    } else {
+        qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Telnet/TCP...";
+        // Standard unencrypted Telnet/TCP
+        connectTo(entry.ip, entry.port);
+    }
 }
+
 
 void ModemBridge::dial(const QString &target) {
     processAtCommand(("ATDT " + target).toUtf8());
@@ -285,7 +311,6 @@ void ModemBridge::onSocketConnected() {
 
 void ModemBridge::onSocketDataReceived() {
     QByteArray data = m_socket->readAll();
-    emit rxActivity();
     sendToSerial(data);
 }
 
@@ -314,7 +339,6 @@ void ModemBridge::onSshConnected() {
 }
 
 void ModemBridge::onSshDataReceived(const QByteArray &data) {
-    emit rxActivity();
     sendToSerial(data);
 }
 
@@ -364,7 +388,6 @@ void ModemBridge::injectMacro(char macroType) {
         else             m_socket->write(bytes);
 
         emit statusMessage(QString("Modem Bridge: Sent Macro %1").arg(macroType));
-        emit txActivity();
     }
 }
 

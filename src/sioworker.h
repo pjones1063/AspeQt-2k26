@@ -61,6 +61,7 @@ public:
 
 signals:
     void statusChanged(int deviceNo);
+
 };
 
 class SioWorker : public QThread
@@ -95,6 +96,8 @@ signals:
     void statusChanged(QString status);
     void rawDataReceived(const QByteArray &data);
     void sioTrace(const QString &dir, const QByteArray &data);
+    void rxActivity();
+    void txActivity();
 
 public slots:
     void start(Priority p = InheritPriority);

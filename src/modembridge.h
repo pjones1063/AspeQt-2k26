@@ -36,8 +36,6 @@ public slots:
 signals:
     void statusMessage(const QString &msg);
     void errorOccurred(const QString &err);
-    void rxActivity();
-    void txActivity();
 
 private slots:
     // Serial Port
@@ -72,6 +70,9 @@ private:
     bool m_localEcho = false;
     bool m_isTelnetMode = true;
     bool m_suppressCarrierMessage = false;
+
+    QString m_currentLogin;
+    QString m_currentPassword;
 
     void processAtCommand(const QByteArray &cmd);
     void sendToSerial(const QByteArray &data);
