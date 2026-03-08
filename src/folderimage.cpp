@@ -64,7 +64,7 @@ void FolderImage::buildDirectory()
     for (i = 0; i < 64; i++) {
         do {
             j++;
-            if (j >= infos.count()) {
+            if (j >= infos.size()) {
                 atariFiles[i].exists = false;
                 break;
             }
@@ -116,7 +116,7 @@ void FolderImage::buildDirectory()
             }
         } while (k < i);
 
-        if (j >= infos.count()) {
+        if (j >= infos.size()) {
             break;
         }
 
@@ -182,10 +182,10 @@ void FolderImage::buildDirectory()
 
     // ---------------------------------
 
-    if (i < infos.count()) {
+    if (i < infos.size()) {
         qWarning() << "!w" << tr("Cannot mirror %1 of %2 files in '%3': Atari directory is full.")
-                       .arg(infos.count() - i)
-                       .arg(infos.count())
+                       .arg(infos.size() - i)
+                       .arg(infos.size())
                        .arg(dir.path());
     }
 }

@@ -357,7 +357,7 @@ void TnfsImage::handleCommand(quint8 command, quint16 aux)
         // --- XEX PROTOCOL ---
     case 0xFE: // Get Chunk Data
     {
-        if (!m_isXex || aux >= m_chunks.count()) {
+        if (!m_isXex || aux >= m_chunks.size()) {
             sio->port()->writeCommandNak();
             return;
         }
@@ -369,7 +369,7 @@ void TnfsImage::handleCommand(quint8 command, quint16 aux)
     }
     case 0xFF: // Get Chunk Info
     {
-        if (!m_isXex || aux >= m_chunks.count()) {
+        if (!m_isXex || aux >= m_chunks.size()) {
             sio->port()->writeCommandNak();
             return;
         }

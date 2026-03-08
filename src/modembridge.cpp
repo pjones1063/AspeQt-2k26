@@ -448,7 +448,7 @@ void ModemBridge::loadPhonebook(const QString &path) {
     file.close();
 
     QDomNodeList list = doc.elementsByTagName("BBS");
-    for (int i = 0; i < list.count(); i++) {
+    for (int i = 0; i < list.size(); i++) {
         QDomElement e = list.at(i).toElement();
         BbsEntry bbs;
         bbs.name = e.attribute("name");
@@ -459,7 +459,7 @@ void ModemBridge::loadPhonebook(const QString &path) {
         bbs.password = e.attribute("password");
         m_phonebook.append(bbs);
     }
-    emit statusMessage(QString("Modem Bridge: Loaded %1 entries.").arg(m_phonebook.count()));
+    emit statusMessage(QString("Modem Bridge: Loaded %1 entries.").arg(m_phonebook.size()));
 }
 
 BbsEntry ModemBridge::findBbsByName(const QString &name) {

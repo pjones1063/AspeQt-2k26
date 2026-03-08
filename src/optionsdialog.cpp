@@ -147,7 +147,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     filters << "aspeqt_*.qm";
     dir.setNameFilters(filters);
     for (int i = 0; i < dir.entryList().size(); ++i) {
-        local_translator.load(":/translations/i18n/" + dir.entryList()[i]);
+        (void)local_translator.load(":/translations/i18n/" + dir.entryList()[i]);
         m_ui->i18nLanguageCombo->addItem(local_translator.translate("OptionsDialog", "English"), dir.entryList()[i].replace("aspeqt_", "").replace(".qm", ""));
         if (dir.entryList()[i].replace("aspeqt_", "").replace(".qm", "").compare(aspeqtSettings->i18nLanguage()) == 0) {
             m_ui->i18nLanguageCombo->setCurrentIndex(i+2);

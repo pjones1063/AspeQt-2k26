@@ -111,7 +111,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
     }
     case 0xFE:
     {   /* Get chunk */
-        if(aux >= chunks.count()) {
+        if(aux >= chunks.size()) {
             qDebug() << "!e" << tr("[%1] Invalid chunk in get chunk: aux = %2")
             .arg(deviceName())
                 .arg(aux);
@@ -127,14 +127,14 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                                 .arg(chunks.at(aux).data.size());
         sio->port()->writeComplete();
         sio->port()->writeDataFrame(chunks.at(aux).data);
-        emit blockRead(aux + 1, chunks.count());
+        emit blockRead(aux + 1, chunks.size());
         break;
     }
 
 
     case 0xFF:
     {   /* Get chunk info */
-        if(aux >= chunks.count()) {
+        if(aux >= chunks.size()) {
             qDebug() << "!e" << tr("[%1] Invalid chunk in get chunk info: aux = %2")
             .arg(deviceName())
                 .arg(aux);
@@ -238,7 +238,7 @@ bool AutoBoot::readExecutable(const QString &fileName)
                 qCritical() << "!e" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
                 .arg(fileName)
                     .arg(2 - data.size());
-                if (chunks.count() == 0) {
+                if (chunks.size() == 0) {
                     return false;
                 } else {
                     break;

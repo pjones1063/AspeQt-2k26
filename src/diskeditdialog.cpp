@@ -132,7 +132,7 @@ bool MyModel::setData(const QModelIndex &index, const QVariant &value, int role)
             return false;
         }
         s = s.toUpper();
-        if (s.count() > 8) {
+        if (s.size() > 8) {
             s.resize(8);
         }
         foreach (QChar c, s) {
@@ -140,11 +140,11 @@ bool MyModel::setData(const QModelIndex &index, const QVariant &value, int role)
                 return false;
             }
         }
-        while (s.count() < 8) {
+        while (s.size() < 8) {
             s.append(' ');
         }
         s.append(entries.at(index.row()).suffix());
-        while (s.count() < 11) {
+        while (s.size() < 11) {
             s.append(' ');
         }
         if (s.toLatin1() == entries.at(index.row()).atariName) {
@@ -173,7 +173,7 @@ bool MyModel::setData(const QModelIndex &index, const QVariant &value, int role)
             return false;
         }
         s = s.toUpper();
-        if (s.count() > 3) {
+        if (s.size() > 3) {
             s.resize(3);
         }
         foreach (QChar c, s) {
@@ -181,11 +181,11 @@ bool MyModel::setData(const QModelIndex &index, const QVariant &value, int role)
                 return false;
             }
         }
-        while (s.count() < 3) {
+        while (s.size() < 3) {
             s.append(' ');
         }
         QString b = entries.at(index.row()).baseName();
-        while (b.count() < 8) {
+        while (b.size() < 8) {
             b.append(' ');
         }
         s = b + s;
@@ -268,7 +268,7 @@ QVariant MyModel::headerData (int section, Qt::Orientation orientation, int role
 
 int MyModel::rowCount (const QModelIndex & /*parent*/) const
 {
-    return entries.count();
+    return entries.size();
 }
 
 int MyModel::columnCount (const QModelIndex & /*parent*/) const
@@ -401,7 +401,7 @@ int MyModel::insertFiles(QStringList names)
     entries.append(newEntries); // 3. Only append if we have data
     emit layoutChanged();
 
-    return newEntries.count();
+    return newEntries.size();
 }
 
 bool MyModel::dropMimeData(const QMimeData *data, Qt::DropAction /*action*/, int /*row*/, int /*column*/, const QModelIndex &/*parent*/)
@@ -654,7 +654,7 @@ void DiskEditDialog::on_actionTextConversion_triggered()
 
 void DiskEditDialog::on_actionDeleteSelectedFiles_triggered()
 {
-    if (QMessageBox::question(this, tr("Confirmation"), tr("Are you sure you want to delete selected files?"), QMessageBox::Yes, QMessageBox::No) != QMessageBox::Yes) {
+    if (QMessageBox::question(this, tr("Confirmation"), tr("Are you sure you want to delete selected files?"), QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No) != QMessageBox::StandardButton::Yes) {
         return;
     }
     QModelIndexList indexes = m_ui->aView->selectionModel()->selectedRows();

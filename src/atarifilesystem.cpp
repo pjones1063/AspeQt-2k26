@@ -335,13 +335,13 @@ QByteArray AtariFileSystem::findName(quint16 dir, QString name)
     }
     extension.remove(QRegularExpression("[^A-Z0-9]"));;
     extension = extension.left(3);
-    while (extension.count() < 3) {
+    while (extension.size() < 3) {
         extension.append(" ");
     }
     pfx = baseName;
     for (int i = 1; i < 99999999; i++) {
         atariName = baseName;
-        while (atariName.count() < 8) {
+        while (atariName.size() < 8) {
             atariName.append(" ");
         }
         atariName.append(extension);
@@ -358,8 +358,8 @@ QByteArray AtariFileSystem::findName(quint16 dir, QString name)
         }
         QString sfx = QString::number(i + 1);
         baseName = pfx;
-        if (baseName.count() + sfx.count() > 8) {
-            baseName.resize(8 - sfx.count());
+        if (baseName.size() + sfx.size() > 8) {
+            baseName.resize(8 - sfx.size());
         }
         baseName.append(sfx);
     }
@@ -370,7 +370,7 @@ quint16 AtariFileSystem::findFreeSector(quint16 from)
 {
     quint8 masks[8] = {128, 64, 32, 16, 8, 4, 2, 1};
     quint16 sector;
-    uint sectors = bitmap.count() * 8;
+    uint sectors = bitmap.size() * 8;
 
     uint startFrom = from;
     if (from < 4) {
@@ -406,7 +406,7 @@ void AtariFileSystem::freeSector(quint16 sector)
 
 bool AtariFileSystem::sectorIsFree(quint16 sector)
 {
-    uint sectors = bitmap.count() * 8;
+    uint sectors = bitmap.size() * 8;
     if (sector < 4 || sector > sectors) {
         return false;
     }
@@ -488,16 +488,16 @@ bool Dos10FileSystem::extract(const AtariDirEntry &entry, const QString &target)
             return false;
         }
         if (!(entry.attributes & AtariDirEntry::MyDos)) {
-            int fileNo = (quint8)data.at(data.count() - 3) >> 2;
+            int fileNo = (quint8)data.at(data.size() - 3) >> 2;
             if (fileNo != entry.no) {
                 QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot read '%1': %2").arg(entry.niceName()).arg(tr("File number mismatch.")));
                 return false;
             }
-            sector = ((quint8)data.at(data.count() - 3) & 0x03) * 256 + (quint8)data.at(data.count() - 2);
+            sector = ((quint8)data.at(data.size() - 3) & 0x03) * 256 + (quint8)data.at(data.size() - 2);
         } else {
-            sector = (quint8)data.at(data.count() - 3)  * 256 + (quint8)data.at(data.count() - 2);
+            sector = (quint8)data.at(data.size() - 3)  * 256 + (quint8)data.at(data.size() - 2);
         }
-        uint size = (quint8)data.at(data.count() - 1);
+        uint size = (quint8)data.at(data.size() - 1);
         if (!(entry.attributes & AtariDirEntry::Dos10)) {
             data.resize(size);
         } else {
@@ -511,7 +511,7 @@ bool Dos10FileSystem::extract(const AtariDirEntry &entry, const QString &target)
         nData.clear();
         if (m_textConversion) {
             int j = 0;
-            for (int i = 0; i < data.count(); i++) {
+            for (int i = 0; i < data.size(); i++) {
             #ifdef Q_OS_WIN
                 if (data.at(i) == '\r') {
                     // ignore carriage return
@@ -543,7 +543,7 @@ bool Dos10FileSystem::extract(const AtariDirEntry &entry, const QString &target)
         } else {
             nData = data;
         }
-        if (file.write(nData) != nData.count()) {
+        if (file.write(nData) != nData.size()) {
             QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot write to '%1': %2").arg(file.fileName()).arg(file.errorString()));
             return false;
         }
@@ -617,11 +617,11 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
 
 // Only in binary mode data.count must be = size, so if the file opened in text mode don't display an error
 // The message below should normally never display unless there is a system error.
-        if (data.count() < size) {
+        if (data.size() < size) {
             if(mode == (QFile::ReadOnly | QFile::Text)) {
-                size = data.count();
+                size = data.size();
             } else {
-                QMessageBox::critical(m_image->editDialog(), tr("File system error"), tr("Number of bytes (%1) read from '%2' is not equal to expected data size of (%3)").arg(data.count()).arg(name).arg(size));
+                QMessageBox::critical(m_image->editDialog(), tr("File system error"), tr("Number of bytes (%1) read from '%2' is not equal to expected data size of (%3)").arg(data.size()).arg(name).arg(size));
             return result;
             }
         }
@@ -632,7 +632,7 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
             newSector = 0;
         }
         if (m_textConversion) {
-            for (int i = 0; i < data.count(); i++) {
+            for (int i = 0; i < data.size(); i++) {
                 if (data.at(i) == '\n') {
                     data[i] = '\x9b';
                 } else if (data.at(i) == '\x9b') {
@@ -804,14 +804,14 @@ bool Dos10FileSystem::erase(const AtariDirEntry &entry)
             return false;
         }
         if (!(entry.attributes & AtariDirEntry::MyDos)) {
-            int fileNo = (quint8)data.at(data.count() - 3) >> 2;
+            int fileNo = (quint8)data.at(data.size() - 3) >> 2;
             if (fileNo != entry.no) {
                 QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("File number mismatch.")));
                 return false;
             }
-            sector = ((quint8)data.at(data.count() - 3) & 0x03) * 256 + (quint8)data.at(data.count() - 2);
+            sector = ((quint8)data.at(data.size() - 3) & 0x03) * 256 + (quint8)data.at(data.size() - 2);
         } else {
-            sector = (quint8)data.at(data.count() - 3)  * 256 + (quint8)data.at(data.count() - 2);
+            sector = (quint8)data.at(data.size() - 3)  * 256 + (quint8)data.at(data.size() - 2);
         }
     }
 
@@ -1008,7 +1008,7 @@ bool MyDosFileSystem::writeBitmap()
 
     int bps = m_image->geometry().bytesPerSector();
 
-    int total = bitmap.count();
+    int total = bitmap.size();
     if (total > bps - 10) {
         total = bps - 10;
     }
@@ -1021,14 +1021,14 @@ bool MyDosFileSystem::writeBitmap()
         return false;
     }
 
-    if (bitmap.count() == total) {
+    if (bitmap.size() == total) {
         return true;
     }
 
-    int xvtocCount = (bitmap.count() - total + bps - 1) / bps;
+    int xvtocCount = (bitmap.size() - total + bps - 1) / bps;
 
     for (quint16 s = 359; xvtocCount > 0; xvtocCount--, s--, total += bps) {
-        int n = bitmap.count() - total;
+        int n = bitmap.size() - total;
         if (n > bps) {
             n = bps;
         }
@@ -1127,11 +1127,11 @@ QByteArray SpartaDosFile::read(uint bytes)
 {
     QByteArray result;
     while (bytes) {
-        uint left = m_currentSector.count() - m_currentSectorOffset;
+        uint left = m_currentSector.size() - m_currentSectorOffset;
         if (bytes > left) {
             result.append(m_currentSector.right(left));
             bytes -= left;
-            if (m_currentMapOffset >= m_currentMap.count()) {
+            if (m_currentMapOffset >= m_currentMap.size()) {
                 int nextMap = (quint8)m_currentMap.at(0) + (quint8)m_currentMap.at(1) * 256;
                 if (nextMap == 0) {
                     m_currentMap.clear();
@@ -1268,12 +1268,12 @@ bool SpartaDosFileSystem::extract(const AtariDirEntry &entry, const QString &tar
             bufSize = rest;
         }
         buffer = sdf.read(bufSize);
-        if (buffer.count() != bufSize) {
-            bufSize = buffer.count();
+        if (buffer.size() != bufSize) {
+            bufSize = buffer.size();
             rest = bufSize;
         }
         if (m_textConversion) {
-            for (int i = 0; i < buffer.count(); i++) {
+            for (int i = 0; i < buffer.size(); i++) {
                 if (buffer.at(i) == '\n') {
                     buffer[i] = '\x9b';
                 } else if (buffer.at(i) == '\x9b') {

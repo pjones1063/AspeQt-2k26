@@ -251,7 +251,7 @@ void TextPrinterWindow::on_actionSave_triggered()
         }
      }
      if (!lineNumberFound) {
-         QMessageBox::information (this, tr("Stripping Line Numbers.."),tr("The text does not seem to contain any line numbers!"),QMessageBox::Ok);
+         QMessageBox::information (this, tr("Stripping Line Numbers.."),tr("The text does not seem to contain any line numbers!"),QMessageBox::StandardButton::Ok);
      } else {
          ui->printerTextEdit->clear();
          ui->printerTextEditASCII->clear();

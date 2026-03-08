@@ -614,7 +614,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
     QTime startTime = QTime::currentTime();
 
     // Standard SIO timeout calculation
-    int timeOut = data.count() * 12000 / mSpeed + 400;
+    int timeOut = data.size() * 12000 / mSpeed + 400;
 
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
@@ -681,10 +681,10 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     uint total, rest;
 
     total = 0;
-    rest = data.count();
+    rest = data.size();
     QTime startTime = QTime::currentTime();
 
-    int timeOut = data.count() * 12000 / mSpeed + 100;
+    int timeOut = data.size() * 12000 / mSpeed + 100;
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
         timeOut += 100;
@@ -704,11 +704,11 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
         total += result;
         rest -= result;
         elapsed = startTime.msecsTo(QTime::currentTime());
-    } while (total < (uint)data.count() && elapsed < timeOut);
+    } while (total < (uint)data.size() && elapsed < timeOut);
 
-    if (total != (uint)data.count())
+    if (total != (uint)data.size())
     {
-        qCritical() << "!e" << tr("Serial port write timeout. %1 of %2 written in %3 ms").arg(total).arg(data.count()).arg(elapsed);
+        qCritical() << "!e" << tr("Serial port write timeout. %1 of %2 written in %3 ms").arg(total).arg(data.size()).arg(elapsed);
         return false;
     }
 

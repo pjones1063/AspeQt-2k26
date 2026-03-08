@@ -94,7 +94,7 @@ void PhoneDirectory::parseXml() {
     if (!doc.setContent(&file)) { file.close(); return; }
 
     QDomNodeList list = doc.elementsByTagName("BBS");
-    for (int i = 0; i < list.count(); i++) {
+    for (int i = 0; i < list.size(); i++) {
         QDomElement e = list.at(i).toElement();
         BbsEntry bbs;
         bbs.name = e.attribute("name");
@@ -150,12 +150,12 @@ bool PhoneDirectory::checkUnsavedChanges(const QString &actionName) {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, tr("Unsaved Changes"),
                                   tr("You have unsaved changes. Save before %1?").arg(actionName),
-                                  QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+                                  QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No | QMessageBox::StandardButton::Cancel);
 
-    if (reply == QMessageBox::Yes) {
+    if (reply == QMessageBox::StandardButton::Yes) {
         saveToFile();
         return true; // Saved and ready to go
-    } else if (reply == QMessageBox::No) {
+    } else if (reply == QMessageBox::StandardButton::No) {
         return true; // Proceed without saving
     } else {
         return false; // Cancel action
@@ -347,7 +347,7 @@ void PhoneDirectory::onDeleteClicked() {
     if (!item) return;
     int index = item->data(0, Qt::UserRole).toInt();
 
-    if (QMessageBox::question(this, tr("Confirm"), tr("Delete this entry?"), QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes) {
+    if (QMessageBox::question(this, tr("Confirm"), tr("Delete this entry?"), QMessageBox::StandardButton::Yes|QMessageBox::StandardButton::No) == QMessageBox::StandardButton::Yes) {
         m_entries.removeAt(index);
         refreshList();
         m_isDirty = true; // Flag as dirty

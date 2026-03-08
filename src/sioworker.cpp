@@ -496,7 +496,7 @@ void CassetteWorker::run()
         emit statusChanged(remainingTime);
         qDebug() << "!n" << tr("[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)")
                 .arg(block)
-                .arg(mRecords.count())
+                .arg(mRecords.size())
                 .arg(record.gapDuration)
                 .arg(record.data.length());
         tm = tm.addMSecs(record.gapDuration);

@@ -400,8 +400,8 @@ void TnfsBrowser::onBackClicked()
 
 void TnfsBrowser::onClearHistory()
 {
-    if (QMessageBox::Yes == QMessageBox::question(this, tr("Clear History"),
-                                                  tr("Clear all saved hosts?"), QMessageBox::Yes | QMessageBox::No)) {
+    if (QMessageBox::StandardButton::Yes == QMessageBox::question(this, tr("Clear History"),
+                                                  tr("Clear all saved hosts?"), QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No)) {
         hostCombo->clear();
         // hostCombo->addItem("13leader.net");
         QSettings settings("AspeQt", "TNFS");

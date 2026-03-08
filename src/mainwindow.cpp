@@ -211,8 +211,8 @@ MainWindow::MainWindow(QWidget *parent)
             g_sessionFilePath = QDir::fromNativeSeparators(g_sessionFilePath);
             sess.setFileName(g_sessionFilePath+g_sessionFile);
             if (!sess.exists()) {
-                QMessageBox::question(this, tr("Session file error"),
-                                      tr("Requested session file not found..."), QMessageBox::Ok);
+                QMessageBox::warning(this, tr("Session file error"),
+                                     tr("Requested session file not found..."));
                 g_sessionFile = g_sessionFilePath = "";
             }
         } else {
@@ -221,8 +221,8 @@ MainWindow::MainWindow(QWidget *parent)
                 g_sessionFilePath = QDir::currentPath();
                 sess.setFileName(g_sessionFile);
                 if (!sess.exists()) {
-                    QMessageBox::question(this, tr("Session file error"),
-                                          tr("Requested session file not found..."), QMessageBox::Ok);
+                    QMessageBox::warning(this, tr("Session file error"),
+                                         tr("Requested session file not found..."));
                     g_sessionFile = g_sessionFilePath = "";
                 }
             }
@@ -726,7 +726,7 @@ void MainWindow::createDeviceWidgets()
 
  void MainWindow::mousePressEvent(QMouseEvent *event)
  {
-     int slot = containingDiskSlot(event->pos());
+     int slot = containingDiskSlot(event->position().toPoint());
 
      if (event->button() == Qt::LeftButton
          && slot >= 0) {
@@ -752,7 +752,7 @@ void MainWindow::createDeviceWidgets()
 
 void MainWindow::dragMoveEvent(QDragMoveEvent *event)
 {
-    int i = containingDiskSlot(event->pos());
+    int i = containingDiskSlot(event->position().toPoint());
     if (i >= 0 && (event->mimeData()->hasUrls() ||
                    event->mimeData()->hasFormat("application/x-aspeqt-disk-image"))) {
         event->acceptProposedAction();
@@ -780,7 +780,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     for (int j = 0; j < DISK_COUNT; j++) { //
         diskWidgets[j]->setFrameShadow(QFrame::Raised);
     }
-    int slot = containingDiskSlot(event->pos());
+    int slot = containingDiskSlot(event->position().toPoint());
     if (!(event->mimeData()->hasUrls() ||
           event->mimeData()->hasFormat("application/x-aspeqt-disk-image")) ||
           slot < 0) {
@@ -876,7 +876,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if (g_sessionFile != "") aspeqtSettings->saveSessionToFile(g_sessionFilePath + "/" + g_sessionFile);
     aspeqtSettings->setD9DOVisible(g_D9DOVisible);
     bool wasRunning = ui->actionStartEmulation->isChecked();
-    QMessageBox::StandardButton answer = QMessageBox::No;
+    QMessageBox::StandardButton answer = QMessageBox::StandardButton::No;
 
     if (wasRunning) {
         ui->actionStartEmulation->trigger();
@@ -896,10 +896,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
         if (img && img->isModified()) {
             toBeSaved--;
             answer = saveImageWhenClosing(i, answer, toBeSaved);
-            if (answer == QMessageBox::NoToAll) {
+            if (answer == QMessageBox::StandardButton::NoToAll) {
                 break;
             }
-            if (answer == QMessageBox::Cancel) {
+            if (answer == QMessageBox::StandardButton::Cancel) {
                 if (wasRunning) {
                     ui->actionStartEmulation->trigger();
                 }
@@ -952,9 +952,9 @@ void MainWindow::show()
     if (shownFirstTime) {
         /* Open options dialog if it's the first time */
         if (aspeqtSettings->isFirstTime()) {
-            if (QMessageBox::Yes == QMessageBox::question(this, tr("First run"),
+            if (QMessageBox::StandardButton::Yes == QMessageBox::question(this, tr("First run"),
                                        tr("You are running AspeQt for the first time.\n\nDo you want to open the options dialog?"),
-                                       QMessageBox::Yes, QMessageBox::No)) {
+                                       QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No)) {
                 ui->actionOptions->trigger();
             }
         }
@@ -1364,8 +1364,8 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                         if (!saved) {
                             int response = QMessageBox::question(this, tr("Save failed"),
                                             tr("'%1' cannot be saved, do you want to save the image with another name?").arg(img->originalFileName()),
-                                            QMessageBox::Yes, QMessageBox::No);
-                            if (response == QMessageBox::Yes) {
+                                            QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+                            if (response == QMessageBox::StandardButton::Yes) {
                                 saveDiskAs(deviceNo);
                             }
                         }
@@ -1384,8 +1384,8 @@ void MainWindow::uiMessage(int t, QString message)
     if (message.at(0) == '"') {
         message.remove(0, 1);
     }
-    if (message.at(message.count() - 1) == ' ' && message.at(message.count() - 2) == '"') {
-        message.resize(message.count() - 2);
+    if (message.at(message.size() - 1) == ' ' && message.at(message.size() - 2) == '"') {
+        message.resize(message.size() - 2);
     }
 
     if (message == lastMessage) {
@@ -1623,8 +1623,8 @@ bool MainWindow::ejectImage(int no, bool ask)
     // Only ask to save if it is a Disk Image AND has modifications
     if (ask && img && img->isModified()) {
         QMessageBox::StandardButton answer;
-        answer = saveImageWhenClosing(no, QMessageBox::No, 0);
-        if (answer == QMessageBox::Cancel) {
+        answer = saveImageWhenClosing(no, QMessageBox::StandardButton::No, 0);
+        if (answer == QMessageBox::StandardButton::Cancel) {
             return false;
         }
     }
@@ -1917,21 +1917,21 @@ QMessageBox::StandardButton MainWindow::saveImageWhenClosing(int no, QMessageBox
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
 
-    if (previousAnswer != QMessageBox::YesToAll) {
+    if (previousAnswer != QMessageBox::StandardButton::YesToAll) {
         QMessageBox::StandardButtons buttons;
         if (number) {
-            buttons = QMessageBox::Yes | QMessageBox::No | QMessageBox::YesToAll | QMessageBox::NoToAll | QMessageBox::Cancel;
+            buttons = QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No | QMessageBox::StandardButton::YesToAll | QMessageBox::StandardButton::NoToAll | QMessageBox::StandardButton::Cancel;
         } else {
-            buttons = QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel;
+            buttons = QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No | QMessageBox::StandardButton::Cancel;
         }
         previousAnswer = QMessageBox::question(this, tr("Image file unsaved"), tr("'%1' has unsaved changes, do you want to save it?")
                                        .arg(img->originalFileName()), buttons);
     }
-    if (previousAnswer == QMessageBox::Yes || previousAnswer == QMessageBox::YesToAll) {
+    if (previousAnswer == QMessageBox::StandardButton::Yes || previousAnswer == QMessageBox::StandardButton::YesToAll) {
         saveDisk(no);
     }
     if (previousAnswer == QMessageBox::Close) {
-        previousAnswer = QMessageBox::Cancel;
+        previousAnswer = QMessageBox::StandardButton::Cancel;
     }
     return previousAnswer;
 }
@@ -1942,13 +1942,13 @@ void MainWindow::loadTranslators()
     qApp->removeTranslator(&aspeqt_translator);
     if (aspeqtSettings->i18nLanguage().compare("auto") == 0) {
         QString locale = QLocale::system().name();
-        aspeqt_translator.load(":/translations/i18n/aspeqt_" + locale);
-        aspeqt_qt_translator.load(":/translations/i18n/qt_" + locale);
+        (void)aspeqt_translator.load(":/translations/i18n/aspeqt_" + locale);
+        (void)aspeqt_qt_translator.load(":/translations/i18n/qt_" + locale);
         qApp->installTranslator(&aspeqt_qt_translator);
         qApp->installTranslator(&aspeqt_translator);
     } else if (aspeqtSettings->i18nLanguage().compare("en") != 0) {
-        aspeqt_translator.load(":/translations/i18n/aspeqt_" + aspeqtSettings->i18nLanguage());
-        aspeqt_qt_translator.load(":/translations/i18n/qt_" + aspeqtSettings->i18nLanguage());
+        (void)aspeqt_translator.load(":/translations/i18n/aspeqt_" + aspeqtSettings->i18nLanguage());
+        (void)aspeqt_qt_translator.load(":/translations/i18n/qt_" + aspeqtSettings->i18nLanguage());
         qApp->installTranslator(&aspeqt_qt_translator);
         qApp->installTranslator(&aspeqt_translator);
     }
@@ -1976,7 +1976,7 @@ void MainWindow::saveDisk(int no)
         img->unlock();
         if (!saved) {
             if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
-                                                                   .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
+                                                                   .arg(img->originalFileName()), QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No) == QMessageBox::StandardButton::Yes) {
                 saveDiskAs(no);
             }
         }
@@ -2028,7 +2028,7 @@ void MainWindow::autoSaveDisk(int no)
     img->unlock();
     if (!saved) {
         if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
-            .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
+            .arg(img->originalFileName()), QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No) == QMessageBox::StandardButton::Yes) {
             saveDiskAs(no);
         }
     }
@@ -2073,7 +2073,7 @@ void MainWindow::saveDiskAs(int no)
 
         if (!saved) {
             if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
-                .arg(fileName), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No) {
+                .arg(fileName), QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No) == QMessageBox::StandardButton::No) {
                 break;
             }
         }
@@ -2098,7 +2098,7 @@ void MainWindow::revertDisk(int no)
 
     if (QMessageBox::question(this, tr("Revert to last saved"),
             tr("Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.")
-            .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
+            .arg(img->originalFileName()), QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No) == QMessageBox::StandardButton::Yes) {
         img->lock();
         img->reopen();
         img->unlock();
@@ -2125,7 +2125,7 @@ void MainWindow::on_actionMountRecent_triggered(const QString &fileName) {mountF
 
 void MainWindow::on_actionEjectAll_triggered()
 {
-    QMessageBox::StandardButton answer = QMessageBox::No;
+    QMessageBox::StandardButton answer = QMessageBox::StandardButton::No;
 
     int toBeSaved = 0;
 
@@ -2155,10 +2155,10 @@ void MainWindow::on_actionEjectAll_triggered()
         if (img && img->isModified()) {
             toBeSaved--;
             answer = saveImageWhenClosing(i, answer, toBeSaved);
-            if (answer == QMessageBox::NoToAll) {
+            if (answer == QMessageBox::StandardButton::NoToAll) {
                 break;
             }
-            if (answer == QMessageBox::Cancel) {
+            if (answer == QMessageBox::StandardButton::Cancel) {
                 if (wasRunning) {
                     ui->actionStartEmulation->trigger();
                 }

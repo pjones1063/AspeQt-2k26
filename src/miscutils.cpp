@@ -45,7 +45,7 @@ FileTypes::FileType FileTypes::getFileType(const QString &fileName)
         if (file.open(QFile::ReadOnly)) {
             header = file.read(4);
         }
-        while (header.count() < 4) {
+        while (header.size() < 4) {
             header.append('\x0');
         }
     }
@@ -63,7 +63,7 @@ FileTypes::FileType FileTypes::getFileType(const QString &fileName)
         } else {
             header = QByteArray(4, 0);
         }
-        while (header.count() < 4) {
+        while (header.size() < 4) {
             header.append('\x0');
         }
     }

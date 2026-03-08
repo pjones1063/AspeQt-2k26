@@ -566,7 +566,7 @@ void RDevice::loadPhonebook(const QString &path) {
     QDomElement pb = root.firstChildElement("Phonebook");
     QDomNodeList list = pb.elementsByTagName("BBS");
 
-    for (int i = 0; i < list.count(); i++) {
+    for (int i = 0; i < list.size(); i++) {
         QDomElement e = list.at(i).toElement();
         BbsEntry bbs;
         bbs.name = e.attribute("name"); bbs.ip = e.attribute("ip"); bbs.port = e.attribute("port").toInt();

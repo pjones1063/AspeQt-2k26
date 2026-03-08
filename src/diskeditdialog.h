@@ -44,7 +44,7 @@ public:
     QStringList mimeTypes() const;
     int insertFiles(QStringList names);
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
-    inline bool isRoot() const {return dirs.count() == 1;}
+    inline bool isRoot() const {return dirs.size() == 1;}
     inline QString currentPath() const {return m_currentPath;}
 private:
     QString m_currentPath;
