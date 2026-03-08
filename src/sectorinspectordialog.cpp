@@ -86,9 +86,9 @@ void SectorInspectorDialog::on_btnSearch_clicked() {
     if (term.isEmpty()) return;
 
     QByteArray searchBytes;
+    int searchType = ui->searchTypeCombo->currentIndex();
 
-    // Index 0 is "Text", Index 1 is "Hex"
-    if (ui->searchTypeCombo->currentIndex() == 0) {
+    if (searchType == 0) {
         searchBytes = term.toLatin1();
     } else {
         searchBytes = QByteArray::fromHex(term.toLatin1());
@@ -104,65 +104,101 @@ void SectorInspectorDialog::on_btnSearch_clicked() {
 
     int currentSector = ui->sectorSpinBox->value();
     int maxSector = m_img->geometry().sectorCount();
-
-    int startSector = currentSector + 1;
-    if (startSector > maxSector) startSector = 1;
-
-    bool found = false;
-    QByteArray buffer;
-    QByteArray overlap; // Holds the tail end of the previous sector
-
-    // We need to keep exactly (SearchLength - 1) bytes to catch splits
     int overlapSize = searchBytes.size() - 1;
 
-    // Helper lambda to do the overlapping search
-    auto doSearch = [&](int start, int end) {
-        overlap.clear();
-        for (int i = start; i <= end; ++i) {
-            if (m_img->readSector(i, buffer)) {
+    // Reset search state if the user changed the term, type, or manually scrolled the sector
+    if (term != m_lastSearchTerm || searchType != m_lastSearchType || currentSector != m_lastMatchSector) {
+        m_lastMatchSector = currentSector;
+        m_lastMatchOffset = -1;
+        m_lastSearchTerm = term;
+        m_lastSearchType = searchType;
+    }
 
-                // Glue the end of the last sector to the front of this one
-                QByteArray combined = overlap + buffer;
+    QByteArray buffer;
+    QByteArray overlap;
+    bool found = false;
+    int previousSectorSize = 0;
 
-                int matchPos = combined.indexOf(searchBytes);
-                if (matchPos != -1) {
-                    // Did it start in the overlap (previous sector) or this sector?
-                    // Note: If i is the very first sector of the search and it matches
-                    // instantly, overlap.size() is 0, so matchPos (>= 0) is not < 0.
-                    int foundInSector = (matchPos < overlap.size()) ? (i - 1) : i;
+    // Loop maxSector + 1 times.
+    // count = 0: Search the REST of the current sector
+    // count > 0: Search all other sectors and wrap around
+    for (int count = 0; count <= maxSector; ++count) {
 
-                    // Safety check just in case it points to sector 0
-                    if (foundInSector < 1) foundInSector = 1;
+        int i = currentSector + count;
+        if (i > maxSector) i -= maxSector;
 
-                    ui->sectorSpinBox->setValue(foundInSector);
-                    QString hexSector = QString("%1").arg(foundInSector, 4, 16, QChar('0')).toUpper();
-                    ui->searchStatusLabel->setText(QString("<font color='green'>Found in %1 ($%2)</font>").arg(foundInSector).arg(hexSector));
-                    found = true;
-                    return true;
-                }
+        if (m_img->readSector(i, buffer)) {
+            QByteArray combined;
+            int startSearchPos = 0;
 
-                // Save the tail end of this sector for the next loop
-                if (overlapSize > 0 && buffer.size() >= overlapSize) {
-                    overlap = buffer.right(overlapSize);
+            if (count == 0) {
+                // Pass 0: Resume searching exactly where we left off in the current sector
+                combined = buffer;
+                startSearchPos = m_lastMatchOffset + 1;
+            } else {
+                // Subsequent passes: append new sector to the tail of the last one
+                combined = overlap + buffer;
+
+                if (count == 1) {
+                    // Prevent infinite loop on cross-sector matches located in the overlap region.
+                    // Calculate if our resume point (m_lastMatchOffset + 1) falls inside the overlap
+                    int overlapStartPos = (m_lastMatchOffset + 1) - (previousSectorSize - overlap.size());
+                    if (overlapStartPos > 0) {
+                        startSearchPos = overlapStartPos;
+                    }
                 }
             }
-        }
-        return false;
-    };
 
-    // Pass 1: Search from Next Sector to End of Disk
-    if (!doSearch(startSector, maxSector)) {
-        // Pass 2: Wrap around and search from Sector 1 to Current Sector
-        doSearch(1, currentSector);
+            int matchPos = -1;
+            if (startSearchPos < combined.size()) {
+                matchPos = combined.indexOf(searchBytes, startSearchPos);
+            }
+
+            if (matchPos != -1) {
+                int foundInSector = i;
+                int offsetInSector = matchPos;
+
+                if (count > 0 && matchPos < overlap.size()) {
+                    // Match spanned the boundary, starting in the tail of the previous sector
+                    foundInSector = i - 1;
+                    if (foundInSector < 1) foundInSector = maxSector;
+                    offsetInSector = previousSectorSize - overlap.size() + matchPos;
+                } else if (count > 0) {
+                    // Adjust index to strip the overlap padding
+                    offsetInSector = matchPos - overlap.size();
+                }
+
+                // Save state so the next click resumes exactly after this byte
+                m_lastMatchSector = foundInSector;
+                m_lastMatchOffset = offsetInSector;
+
+                ui->sectorSpinBox->setValue(foundInSector);
+                QString hexSector = QString("%1").arg(foundInSector, 4, 16, QChar('0')).toUpper();
+                ui->searchStatusLabel->setText(QString("<font color='green'>Found in %1 ($%2)</font>").arg(foundInSector).arg(hexSector));
+
+                // Force a re-render to update the active green highlight
+                refreshSector();
+                found = true;
+                break;
+            }
+
+            // Save the tail for the next loop's overlap
+            previousSectorSize = buffer.size();
+            if (overlapSize > 0) {
+                overlap = combined.right(qMin(overlapSize, (int)combined.size()));
+            }
+        }
     }
 
     if (!found) {
         ui->searchStatusLabel->setText("<font color='red'>Not found</font>");
+        // Reset offset so clicking "Find Next" again wraps back to the top of the disk
+        m_lastMatchOffset = -1;
     }
 }
 
+
 void SectorInspectorDialog::formatSector(const QByteArray &data) {
-    // 1. Check if we need to highlight anything based on the current search box
     QByteArray searchBytes;
     QString term = ui->searchLineEdit->text();
     if (!term.isEmpty()) {
@@ -170,15 +206,40 @@ void SectorInspectorDialog::formatSector(const QByteArray &data) {
         else searchBytes = QByteArray::fromHex(term.toLatin1());
     }
 
-    // 2. Find absolute byte indices of all matches in this sector
-    QList<int> highlightIndices;
-    if (!searchBytes.isEmpty()) {
-        int pos = 0;
-        while ((pos = data.indexOf(searchBytes, pos)) != -1) {
-            for (int k = 0; k < searchBytes.size(); ++k) {
-                highlightIndices.append(pos + k);
+    QList<int> activeHighlightIndices;
+    QList<int> passiveHighlightIndices;
+
+    // Distinguish between the "Active" match and all other "Passive" matches in this sector
+    if (!searchBytes.isEmpty() && m_img) {
+        QByteArray searchSpace = data;
+
+        // Bring in the start of the next sector so cross-sector matches can be visualized
+        int nextSector = ui->sectorSpinBox->value() + 1;
+        if (nextSector > m_img->geometry().sectorCount()) nextSector = 1;
+
+        QByteArray nextBuffer;
+        if (m_img->readSector(nextSector, nextBuffer)) {
+            int neededBytes = searchBytes.size() - 1;
+            if (neededBytes > 0) {
+                searchSpace.append(nextBuffer.left(qMin(neededBytes, (int)nextBuffer.size())));
             }
-            pos += searchBytes.size();
+        }
+
+        int pos = 0;
+        while ((pos = searchSpace.indexOf(searchBytes, pos)) != -1) {
+            for (int k = 0; k < searchBytes.size(); ++k) {
+                int byteIndex = pos + k;
+
+                // Only highlight bytes that actually belong to the current sector's UI page
+                if (byteIndex < data.size()) {
+                    if (ui->sectorSpinBox->value() == m_lastMatchSector && pos == m_lastMatchOffset) {
+                        activeHighlightIndices.append(byteIndex);
+                    } else {
+                        passiveHighlightIndices.append(byteIndex);
+                    }
+                }
+            }
+            pos += 1;
         }
     }
 
@@ -195,14 +256,17 @@ void SectorInspectorDialog::formatSector(const QByteArray &data) {
             if (j == 8) hex += " "; // Middle Gutter
 
             int byteIndex = i + j;
-            bool isHighlighted = highlightIndices.contains(byteIndex);
+            bool isActive = activeHighlightIndices.contains(byteIndex);
+            bool isPassive = passiveHighlightIndices.contains(byteIndex);
 
             if (j < chunk.size()) {
                 quint8 byte = static_cast<quint8>(chunk[j]);
                 QString bHex = QString("%1").arg(byte, 2, 16, QChar('0')).toUpper();
 
                 // HEX FORMATTING
-                if (isHighlighted) {
+                if (isActive) {
+                    hex += QString("<span style='background-color: #00FF00; color: #000000;'>%1</span> ").arg(bHex);
+                } else if (isPassive) {
                     hex += QString("<span style='background-color: #FFFF00; color: #000000;'>%1</span> ").arg(bHex);
                 } else if (byte == 0x00 || byte == 0x20) {
                     hex += QString("<font color='#444444'>%1</font> ").arg(bHex);
@@ -215,10 +279,11 @@ void SectorInspectorDialog::formatSector(const QByteArray &data) {
                 if (byte >= 32 && byte <= 126) mappedChar = static_cast<char>(byte);
                 else if (byte >= 160 && byte <= 254) mappedChar = static_cast<char>(byte - 128);
 
-                // We must escape characters BEFORE wrapping them in HTML spans
                 QString escapedChar = QString(mappedChar).toHtmlEscaped();
 
-                if (isHighlighted) {
+                if (isActive) {
+                    ascii += QString("<span style='background-color: #00FF00; color: #000000;'>%1</span>").arg(escapedChar);
+                } else if (isPassive) {
                     ascii += QString("<span style='background-color: #FFFF00; color: #000000;'>%1</span>").arg(escapedChar);
                 } else {
                     ascii += escapedChar;
@@ -229,7 +294,6 @@ void SectorInspectorDialog::formatSector(const QByteArray &data) {
             }
         }
 
-        // We pass the raw 'ascii' string here because it already contains HTML tags and is pre-escaped
         dump += QString("<font color='#888888'>%1:</font>  %2  <font color='#888888'>|</font>  %3\n")
                     .arg(offset).arg(hex).arg(ascii);
     }

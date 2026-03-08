@@ -20,8 +20,8 @@
 	org $4000
 Start
 	jsr printf
-	.byte 125,155,'AspeQT             www.13leader.net',155
-	.byte         '------             com         2K26',155,155,155,0
+	.byte 125,155,'AspeQt-2k26        www.13leader.net',155
+	.byte         'com',155,155,155,0
 		
  	icl 'menu.asm'    
     icl 'printf.asm'      

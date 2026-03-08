@@ -2,6 +2,7 @@
 #define SECTORINSPECTORDIALOG_H
 
 #include <QDialog>
+#include <QString>
 #include "diskimage.h"
 
 namespace Ui {
@@ -25,6 +26,11 @@ private:
     Ui::SectorInspectorDialog *ui;
     SimpleDiskImage *m_img;
     void formatSector(const QByteArray &data);
+
+    QString m_lastSearchTerm;
+    int m_lastSearchType = -1;
+    int m_lastMatchSector = -1;
+    int m_lastMatchOffset = -1;
 };
 
 #endif // SECTORINSPECTORDIALOG_H

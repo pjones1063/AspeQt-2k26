@@ -25,8 +25,8 @@
 	org $A000
 Start
 	jsr printf
-	.byte 125,155,'AspeQT             www.13leader.net',155
-	.byte         '------             boot        2K26',155,155,155,0
+	.byte 125,155,'AspeQ6-2K26        www.13leader.net',155
+	.byte         'boot cart',155,155,155,0
 		
 	icl 'menu.asm'	
 	icl 'printf.asm'	 
