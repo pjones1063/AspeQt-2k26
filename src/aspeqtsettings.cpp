@@ -991,6 +991,11 @@ void AspeQtSettings::setEnableRDevice(bool enabled)
 {
     mEnableRDevice = enabled;
     if(mSessionFileName == "") mSettings->setValue("EnableRDevice", mEnableRDevice);
+
+    if (enabled) {
+        setSerialPortHardwareUart(true);
+    }
+
 }
 
 // Implementation:

@@ -13,22 +13,7 @@
 ;  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ; ** .proc  Menu
 
-	jsr printf
-	.byte 'A List Slot       J Auto Commit On',155
-	.byte 'B List Disk Image K Auto Commit Off',155
-	.byte 'C Create Disk     L Set Date',155,0
-    jsr printf	
-    .byte 'D Mount Disk      M TD Line On',155
-	.byte 'E UnMount Disk    N TD Line Off',155
-	.byte 'F Save Disk       O Start Printer',155,0
-	jsr printf
-	.byte 'G Swap Slot       P Stop Printer',155
-	.byte 'H Boot .ATR       Q AspeQT Path',155
-	.byte 'I Boot .XEX       R Exit to DOS',155,0
-	jsr printf
-	.byte '                  S Reboot',155,155,0
- 	
-	
+	jsr PrintBanner
 	
 .proc Main	
     jsr printf
@@ -55,25 +40,27 @@
     jeq BootATR
     cmp #'I'   			// I Boot XEX/Exe 
     jeq BootXEX   
-    cmp #'J' 			// J Auto Commit On   
+	cmp #'J'			// J Toggle BASIC
+    jeq ToggleBasic
+    cmp #'K' 			// K Auto Commit On   
     jeq CommitOn
-    cmp #'K'  			// K Auto Commit Off  
+    cmp #'L'  			// L Auto Commit Off  
     jeq CommitOff  
-    cmp #'L'			// L Set Date
+    cmp #'M'			// M Set Date
     jeq GetTD
-    cmp #'M'			// M TD Line On
-    jeq GetTDOn
     cmp #'N'			// N TD Line On
+    jeq GetTDOn
+    cmp #'O'			// O TD Line Off
     jeq GetTDOff
-    cmp #'O'			// O TD Line On
+    cmp #'P'			// P Start Printer
     jeq SetPrintOn
-    cmp #'P'			// P TD Line On
+    cmp #'Q'			// Q Stop Printer
     jeq SetPrintOff	
-    cmp #'Q'			// Q Display host path
+    cmp #'R'			// R Display host path
     jeq GetHostPath	
-	cmp #'R'			// R Exit to Dos
+	cmp #'S'			// S Exit to Dos
     jeq Exit
-	cmp #'S'			// S Cold Reboot
+	cmp #'T'			// T Cold Reboot
     jeq Reboot
 
 	jmp Start
@@ -720,7 +707,7 @@ OK5	; got date and time from server, so attempt to set Sparta clock
 	dey
 	dex
 	bpl @-
-	
+	sei
 	lda portb
 	pha
 	and #$FE
@@ -728,6 +715,7 @@ OK5	; got date and time from server, so attempt to set Sparta clock
 	jsr I_SETTD	; this will fail if the vectors aren't there
 	pla
 	sta portb
+	cli
 	bcc TDSetOK
 	bcs TDSetFailed
 	
@@ -774,7 +762,7 @@ TDSetOK
 	lda $701
 	cmp #$44
 	bcs IsSDX1
-	
+	sei
 	lda portb
 	pha
 	and #$FE
@@ -782,6 +770,7 @@ TDSetOK
 	jsr I_TDON
 	pla
 	sta portb
+	cli
 	bcs TDOnFailed
 	rts
 	
@@ -892,6 +881,124 @@ Abort
 	cmp #'Y'
 	jne main
 	jmp $E477
+.endp
+
+//
+//  Toggle internal BASIC ROM (XL/XE only)
+//
+.proc ToggleBasic
+    lda $FCD8       // Check OS signature ($4C = XL/XE, $A2 = 400/800)
+    cmp #$4C
+    beq IsXL
+    
+    jsr Printf
+    .byte 155,'Must be an XL/XE to toggle BASIC!',155,0
+    jmp Main
+
+IsXL
+    sei
+    lda $D301
+    eor #$02        // Toggle bit 1 (BASIC ROM: 0=Enabled, 1=Disabled)
+    sta $D301
+    cli
+    
+    // Update the OS flag at $03F8 (BASICF) so Reset doesn't revert it
+    lda $D301
+    and #$02
+    sta $03F8       // 02 = Disabled, 00 = Enabled
+    
+    cmp #$00
+    beq Enabled
+    
+    jsr Printf
+    .byte 155,'BASIC ROM is now OFF',155,0
+    jmp Main
+    
+Enabled
+    jsr Printf
+    .byte 155,'BASIC ROM is now ON',155,0
+    jmp Main
+.endp
+
+
+//
+//  Print System Hardware Banner
+//
+.proc PrintBanner
+    jsr printf
+    .byte 155,' System: ',0
+
+    ; 1. Check RAM size (RAMSIZ $02E4 is in 256-byte pages)
+    lda $02E4       
+    cmp #$C0        ; 192 pages ($C000)
+    bcs _64k        ; >= 192 pages -> 64K base
+    cmp #$A0        ; 160 pages ($A000)
+    bcs _48k        ; >= 160 pages -> 48K base (or 64K with BASIC enabled)
+    cmp #$80        ; 128 pages ($8000)
+    bcs _32k        ; >= 128 pages -> 32K base
+    
+    ; Anything less, assume 16K
+    jsr printf
+    .byte '16K ',0
+    jmp _machType
+
+_32k
+    jsr printf
+    .byte '32K ',0
+    jmp _machType
+
+_48k
+    jsr printf
+    .byte '48K ',0
+    jmp _machType
+
+_64k
+    jsr printf
+    .byte '64K ',0
+
+_machType
+    ; 2. Check Machine Type (OS Signature)
+    lda $FCD8
+    cmp #$4C
+    beq _xlxe
+    jsr printf
+    .byte '400/800 ',0
+    jmp _vidType
+
+_xlxe
+    jsr printf
+    .byte 'XL/XE ',0
+
+_vidType
+    ; 3. Check Video System (PAL/NTSC)
+    lda $D014
+    and #$02        ; Bit 1: 0=PAL, 1=NTSC
+    beq _pal
+    jsr printf
+    .byte 'NTSC',155,155,0
+    jmp _done
+
+_pal
+    jsr printf
+    .byte 'PAL',155,155,0
+
+_done
+
+    jsr printf
+	.byte 'A List Slot       K Auto Commit On',155
+	.byte 'B List Disk Image L Auto Commit Off',155
+	.byte 'C Create Disk     M Set Date',155
+	.byte 'D Mount Disk      N TD Line On',155,0
+	jsr printf	
+	.byte 'E UnMount Disk    O TD Line Off',155
+	.byte 'F Save Disk       P Start Printer',155
+	.byte 'G Swap Slot       Q Stop Printer',155
+	.byte 'H Boot .ATR       R AspeQt Path',155,0
+	jsr printf
+	.byte 'I Boot .XEX       S Exit to DOS',155
+	.byte 'J Toggle BASIC    T Reboot',155,155,0
+	
+	rts
 .endp
 	
 .proc GetKey

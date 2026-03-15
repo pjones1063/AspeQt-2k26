@@ -247,20 +247,6 @@ void OptionsDialog::on_serialPortHandshakeCombo_currentIndexChanged(int index)
     }
 }
 
-// [NEW] Method to Handle Checkbox Click
-void OptionsDialog::on_mDirectUart_toggled(bool checked)
-{
-    // If Hardware UART is checked, disable the artificial delay spinboxes entirely
-    m_ui->serialPortCompErrDelayBox->setEnabled(!checked);
-    m_ui->serialPortCompErrDelayLabel->setEnabled(!checked);
-    m_ui->serialPortWriteDelayCombo->setEnabled(!checked);
-    m_ui->serialPortWriteDelayLabel->setEnabled(!checked);
-
-    // If they checked it while using Software Handshake, we should probably warn or force CTS
-    if (checked && m_ui->serialPortHandshakeCombo->currentIndex() == HANDSHAKE_SOFTWARE) {
-        m_ui->serialPortHandshakeCombo->setCurrentIndex(HANDSHAKE_CTS); // Force CTS
-    }
-}
 
 void OptionsDialog::on_serialPortUseDivisorsBox_toggled(bool checked)
 {
@@ -337,10 +323,14 @@ void OptionsDialog::on_modemEnableBox_toggled(bool checked)
     m_ui->modemPhonebookBrowseBtn->setEnabled(phonebookEnabled);
 }
 
-
 void OptionsDialog::on_modemRBox_toggled(bool checked)
 {
     if (checked) {
+        // --- NEW: R: Device strictly requires Hardware UART ---
+        if (!m_ui->mDirectUart->isChecked()) {
+            m_ui->mDirectUart->setChecked(true);
+        }
+
         // 1. If R: Device is ON, turn Modem Bridge OFF
         if (m_ui->modemEnableBox->isChecked()) {
             m_ui->modemEnableBox->blockSignals(true);
@@ -361,12 +351,45 @@ void OptionsDialog::on_modemRBox_toggled(bool checked)
         // 3. ENABLE Phonebook options
         m_ui->modemPhonebookPathEdit->setEnabled(true);
         m_ui->modemPhonebookBrowseBtn->setEnabled(true);
+
+        // 4. --- NEW: Force standard 19200 baud for Altirra 850 compatibility ---
+        // Uncheck and disable "Use non-standard speeds" (Pokey divisors) [cite: 27]
+        m_ui->serialPortUseDivisorsBox->setChecked(false);
+        m_ui->serialPortUseDivisorsBox->setEnabled(false);
+
+        // Set High Speed Mode Baud Rate to 19200 (Index 0) and freeze the dropdown [cite: 25]
+        m_ui->serialPortBaudCombo->setCurrentIndex(0);
+        m_ui->serialPortBaudCombo->setEnabled(false);
     }
     else {
         // If unchecking R: Device, check if Modem Bridge is enabled to decide Phonebook state
         bool bridgeEnabled = m_ui->modemEnableBox->isChecked();
         m_ui->modemPhonebookPathEdit->setEnabled(bridgeEnabled);
         m_ui->modemPhonebookBrowseBtn->setEnabled(bridgeEnabled);
+
+        // --- NEW: Restore standard SIO configuration UI elements ---
+        m_ui->serialPortUseDivisorsBox->setEnabled(true);
+
+        // The baud combo should only re-enable if non-standard divisors are NOT checked
+        m_ui->serialPortBaudCombo->setEnabled(!m_ui->serialPortUseDivisorsBox->isChecked());
+    }
+}
+void OptionsDialog::on_mDirectUart_toggled(bool checked)
+{
+    // If Hardware UART is checked, disable the artificial delay spinboxes entirely
+    m_ui->serialPortCompErrDelayBox->setEnabled(!checked);
+    m_ui->serialPortCompErrDelayLabel->setEnabled(!checked);
+    m_ui->serialPortWriteDelayCombo->setEnabled(!checked);
+    m_ui->serialPortWriteDelayLabel->setEnabled(!checked);
+
+    // --- NEW: If HW UART is unchecked, the R: Device must also be disabled ---
+    if (!checked && m_ui->modemRBox->isChecked()) {
+        m_ui->modemRBox->setChecked(false);
+    }
+
+    // If they checked it while using Software Handshake, we should probably warn or force CTS
+    if (checked && m_ui->serialPortHandshakeCombo->currentIndex() == HANDSHAKE_SOFTWARE) {
+        m_ui->serialPortHandshakeCombo->setCurrentIndex(HANDSHAKE_CTS); // Force CTS
     }
 }
 

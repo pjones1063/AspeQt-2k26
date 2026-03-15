@@ -10,6 +10,7 @@
 #include <QDateTime>
 #include <QtDebug>
 #include <QCoreApplication>
+#include <chrono>
 
 /* SioDevice */
 SioDevice::SioDevice(SioWorker *worker)
@@ -101,6 +102,9 @@ void SioWorker::start(Priority p)
 }
 
 
+
+
+
 void SioWorker::run()
 {
     // Connect status signal (Existing)
@@ -118,7 +122,7 @@ void SioWorker::run()
     while (!mustTerminate) {
 
             // ====================================================================
-            // NEW: Stream Mode Handler (High Priority)
+            // Stream Mode Handler (High Priority)
             // ====================================================================
 #ifdef HAS_LIBGPIOD
         if (aspeqtSettings->serialPortHardwareUart()){
@@ -126,36 +130,52 @@ void SioWorker::run()
         }
 #endif
         if (m_isStreaming) {
+            bool hasActivity = false;
+
             deviceMutex->lock();
             SioDevice *device = devices[0x50]; // Grab R: Device
             RDevice *rdev = qobject_cast<RDevice*>(device);
 
-            // <--- CHANGED: DRAIN NETWORK BUFFER -> ATARI --->
+            // <--- DRAIN NETWORK BUFFER -> ATARI --->
             if (rdev) {
                 QByteArray txData = rdev->dequeueNetworkData();
                 if (!txData.isEmpty()) {
                     if (m_traceEnabled) emit sioTrace("TX (STRM)", txData);
                     mPort->writeRawFrame(txData);
                     emit txActivity();
+                    hasActivity = true;
                 }
             }
             deviceMutex->unlock();
 
-            // <--- CHANGED: READ UART -> NETWORK --->
+            // <--- READ UART -> NETWORK --->
             QByteArray rawData = mPort->readRawFrame(128, false);
 
             if (!rawData.isEmpty() && rdev) {
-                // NEW: Trace Stream RX Data
                 if (m_traceEnabled) emit sioTrace("RX (STRM)", rawData);
                 deviceMutex->lock();
                 rdev->processSerialData(rawData);
                 deviceMutex->unlock();
                 emit rxActivity();
+                hasActivity = true;
             }
-            usleep(100);
+
+            // --- CRITICAL FIX: The Dynamic Idle Sleep ---
+            // Replaces the blind 100-microsecond CPU-burning spin.
+            if (!hasActivity) {
+                // Yield the CPU core completely for 2 milliseconds.
+                // At 19200 baud, a maximum of 4 bytes can arrive during this time.
+                // Every hardware UART (Pi) and USB adapter (Windows/Mac) has a
+                // hardware FIFO safely buffering the data while the CPU rests.
+                usleep(2000);
+            }
+
             continue;
         }
 
+        // ====================================================================
+        // Standard SIO Command Handler
+        // ====================================================================
         QByteArray cmd = mPort->readCommandFrame();
         if (mustTerminate) {
             break;
@@ -196,6 +216,8 @@ void SioWorker::run()
     setHighSpeed(false);
     mPort->close();
 }
+
+
 
 
 
@@ -570,7 +592,6 @@ void SioWorker::onChangeBaudRate(int baudRate)
 }
 
 
-
 void SioWorker::onWriteRawData(const QByteArray &data)
 {
     if (port() && m_isStreaming) {
@@ -605,38 +626,43 @@ void SioWorker::restoreStandardBaudRate()
 // ==========================================================================
 // RASPBERRY PI 5: TRUE HARDWARE INTERRUPTS (SIO COMMAND PIN 7)
 // ==========================================================================
+
 #ifdef HAS_LIBGPIOD
 
 void SioWorker::initHardwareInterrupts()
 {
     try {
-        // --- FIX 1: Prevent "Device or resource busy" ---
         // Release any existing lock on the GPIO pin before claiming it again
         if (m_gpioRequest) {
             m_gpioRequest.reset();
         }
 
-        const std::string chip_path = "/dev/gpiochip4";
-        const ::gpiod::line::offset line_offset = 18; // GPIO 18 (Physical Pin 12)
+        const std::string chip_path = "/dev/gpiochip4"; // Pi 5 RP1 southbridge
+        const ::gpiod::line::offset line_offset = 18;   // GPIO 18 (Physical Pin 12)
 
+        ::gpiod::chip gpio_chip(chip_path);
+
+        // Native C++ v2 Builder Pattern with Kernel-level Debounce
         m_gpioRequest = std::make_unique<::gpiod::line_request>(
-            ::gpiod::chip(chip_path)
-                .prepare_request()
+            gpio_chip.prepare_request()
                 .set_consumer("AspeQt_Command_Watcher")
                 .add_line_settings(
                     line_offset,
                     ::gpiod::line_settings()
                         .set_direction(::gpiod::line::direction::INPUT)
-                        .set_edge_detection(::gpiod::line::edge::FALLING)
+                        .set_edge_detection(::gpiod::line::edge::RISING)
                         .set_bias(::gpiod::line::bias::PULL_UP)
+                        .set_debounce_period(std::chrono::microseconds(100)) // <--- THE KERNEL DEBOUNCE
                     )
                 .do_request()
             );
 
+        // Tie the file descriptor to our poll struct for the worker loop
         m_gpioPollFd.fd = m_gpioRequest->fd();
         m_gpioPollFd.events = POLLIN;
 
-        qDebug() << "!i" << "[SioWorker] Hardware interrupts enabled on Pi 5 GPIO 18 (Physical Pin 12).";
+        qDebug() << "!i" << "[SioWorker] Hardware interrupts enabled on Pi 5 GPIO 18 using libgpiod v2.";
+
     } catch (const std::exception& e) {
         qCritical() << "!e" << "[SioWorker] Failed to setup Pi 5 hardware interrupts:" << e.what();
         m_gpioRequest.reset();
@@ -654,39 +680,26 @@ void SioWorker::checkHardwareInterrupts()
         ::gpiod::edge_event_buffer buffer(16);
         m_gpioRequest->read_edge_events(buffer);
 
-        // REMOVED: m_streamGuardTimer check (Blinded the emulator to instant retries)
-
         for (const auto& event : buffer) {
-            if (event.type() == ::gpiod::edge_event::event_type::FALLING_EDGE) {
+            if (event.type() == ::gpiod::edge_event::event_type::RISING_EDGE) {
 
                 if (m_isStreaming) {
-                    // FIX: Atari command blocks at 19200 baud hold the line low for ~2.6ms.
-                    // A 20ms debounce will ALWAYS fail to catch it.
-                    // We use a light 100 microsecond debounce just to filter EMI noise.
-                    int lowCount = 0;
-                    for (int i = 0; i < 5; i++) {
-                        usleep(20); // 20 microseconds
-                        if (m_gpioRequest->get_values()[0] == ::gpiod::line::value::INACTIVE) {
-                            lowCount++;
-                        } else {
-                            break; // Noise spike bounced high. Ignore.
-                        }
+                    // The Linux kernel's native debounce guarantees this is a stable,
+                    // true line drop, not an electrical bounce. No manual sleep required!
+
+                    qDebug() << "!d" << "[SioWorker] >>> ATARI HANGUP DETECTED <<< SIO COMMAND line dropped cleanly. Exiting Stream.";
+
+                    deviceMutex->lock();
+                    SioDevice *rdev = devices[0x50]; // Grab R: Device
+
+                    // Safely cast to RDevice to call forceCommandMode()
+                    if (rdev) {
+                        RDevice *r = qobject_cast<RDevice*>(rdev);
+                        if (r) r->forceCommandMode();
                     }
 
-                    if (lowCount == 5) {
-                        qDebug() << "!d" << "[SioWorker] Atari asserted COMMAND line! Exiting Stream.";
-                        deviceMutex->lock();
-
-                        SioDevice *rdev = devices[0x50];
-                        // Safely cast to RDevice to call forceCommandMode()
-                        if (rdev) {
-                            RDevice *r = qobject_cast<RDevice*>(rdev);
-                            if (r) r->forceCommandMode();
-                        }
-
-                        deviceMutex->unlock();
-                        break;
-                    }
+                    deviceMutex->unlock();
+                    break;
                 }
             }
         }

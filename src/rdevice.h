@@ -82,6 +82,7 @@ private:
 
     bool echoEnabled = true;
     bool verboseResponses = true;
+    bool m_escPending = false;
     bool autoAnswer = false;
     int listenPort = 0;
 

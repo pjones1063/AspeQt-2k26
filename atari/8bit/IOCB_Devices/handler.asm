@@ -491,12 +491,6 @@ InitHandlersOnly
     ldy #>TableW
     jsr InstallOne
     
-    ; Fix MEMLO
-    lda #$00
-    sta $02E7
-    lda #$42
-    sta $02E8
-    rts
 
 InstallOne
     sta DeviceID

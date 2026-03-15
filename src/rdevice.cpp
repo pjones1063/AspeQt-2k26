@@ -207,39 +207,30 @@ void RDevice::handleRead(quint16 len) {
     sendDataToAtari(chunk);
 }
 
+
 void RDevice::handleStream() {
     // 1. Acknowledge the command block
     if (!sio->port()->writeCommandAck()) return;
 
-    // 2. Standard SIO t3 delay (Wait for Atari to switch to receive)
-    SioWorker::usleep(2000);
+    // 2. INCREASE SIO t3 delay to 10ms to give the Atari's 6502 CPU time to switch to receive mode
+    SioWorker::usleep(10000);
 
-    // 3. Send COMPLETE byte
-    QByteArray completeByte;
-    completeByte.append((char)0x43); // 'C'
-    sio->port()->writeRawFrame(completeByte);
+    // 3. Send COMPLETE byte ('C').
+    if (!sio->port()->writeComplete()) return;
 
-    // 4. CRITICAL FIX: The UART TX Flush Bug
-    // writeRawFrame only puts 'C' into the Linux OS buffer.
-    // If we change the baud rate right now, Linux resets the UART hardware
-    // and flushes the TX FIFO. The 'C' is destroyed and never reaches the Atari!
-    // We MUST sleep to guarantee the 'C' physically leaves the Raspberry Pi.
-    SioWorker::usleep(15000); // 15ms
+    // 4. Wait 10ms for COMPLETE to physically travel down the wire before we open the stream floodgates
+    SioWorker::usleep(10000);
 
     state = ModemState::StreamMode;
     m_escapeTimer.start();
     m_plusCount = 0;
 
-    // 5. This triggers the SioWorker to enter the stream mode loop
+    // 5. Trigger stream mode state switch
     sio->onChangeBaudRate(19200);
 
-    // 6. CRITICAL FIX: The Framing Error
-    // Give the Atari OS and Ice-T time to put POKEY into transparent mode
-    // before we allow AspeQt to blast any queued TCP/BBS network text at it.
-    SioWorker::usleep(20000); // 20ms
-
-    qDebug() << "!d" << "[RDevice] Stream active at 19200 Baud. Handing over to raw UART.";
+    qDebug() << "!d" << "[RDevice] Stream active - Handing over to raw UART.";
 }
+
 
 
 void RDevice::handleWrite(quint16 aux) {
@@ -380,17 +371,20 @@ void RDevice::onSocketReadyRead() {
     if (m_isSshMode) return;
     QByteArray data = tcpSocket->readAll();
 
+    // Always strip telnet control codes first
+    parseTelnet(data);
+
     if (state == ModemState::StreamMode) {
-        parseTelnet(data);
         if (!m_txBuffer.isEmpty()) {
             QMutexLocker locker(&m_bufferMutex);
             m_networkToSioBuffer.append(m_txBuffer);
             m_txBuffer.clear();
         }
-    } else {
-        m_txBuffer.append(data);
     }
+    // If in Command Mode, parseTelnet already safely placed the
+    // filtered text into m_txBuffer for the Atari to read later!
 }
+
 
 void RDevice::onSshDataReceived(const QByteArray &data) {
     if (state == ModemState::StreamMode) {

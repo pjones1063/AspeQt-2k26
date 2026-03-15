@@ -2679,45 +2679,58 @@ void MainWindow::onModemToggleClicked() {
 }
 
 
+
 void MainWindow::onSioTraceToggleClicked()
 {
-    bool enabled = btnSioTrace->isChecked();
-    if (sio) sio->setTraceEnabled(enabled);
+    bool showHex = btnSioTrace->isChecked();
+    bool showAsm = btnDisasmToggle->isChecked();
 
-    if (enabled) {
-        // monitor_go.png is in your QRC
+    // Enable backend tracing if EITHER tool is active
+    if (sio) sio->setTraceEnabled(showHex || showAsm);
+
+    if (showHex) {
         btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor_go.png"));
         btnSioTrace->setStyleSheet("background-color: #227722; color: white; border-radius: 4px;");
         qDebug() << "!i" << "[SIO Trace] Hex Dump Enabled";
     } else {
-        // monitor.png is in your QRC
         btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor.png"));
         btnSioTrace->setStyleSheet("");
         qDebug() << "!i" << "[SIO Trace] Hex Dump Disabled";
     }
 }
 
+
+
 void MainWindow::onDisasmToggleClicked()
 {
-    bool enabled = btnDisasmToggle->isChecked();
+    bool showHex = btnSioTrace->isChecked();
+    bool showAsm = btnDisasmToggle->isChecked();
 
-    if (enabled) {
-        // Change to "Go" arrow icon when active
+    // Enable backend tracing if EITHER tool is active
+    if (sio) sio->setTraceEnabled(showHex || showAsm);
+
+    if (showAsm) {
         btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_go.png"));
         btnDisasmToggle->setStyleSheet("background-color: #227722; color: white; border-radius: 4px;");
-        qDebug() << "!i" << "[Disassembler] Forced 6502 Disassembly Enabled";
+        qDebug() << "!i" << "[Disassembler] 6502 Disassembly Enabled";
     } else {
-        // Revert to normal icon
         btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
         btnDisasmToggle->setStyleSheet("");
-        qDebug() << "!i" << "[Disassembler] Forced 6502 Disassembly Disabled";
+        qDebug() << "!i" << "[Disassembler] 6502 Disassembly Disabled";
     }
 }
 
 
+
 void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
 {
-    if (data.isEmpty() || !btnSioTrace->isChecked()) return;
+    if (data.isEmpty()) return;
+
+    bool showHex = btnSioTrace->isChecked();
+    bool showAsm = btnDisasmToggle->isChecked();
+
+    // Safeguard: If neither is enabled, do nothing
+    if (!showHex && !showAsm) return;
 
     // --- 1. RAW TIMING ANALYSIS ---
     static QElapsedTimer latencyTimer;
@@ -2734,84 +2747,82 @@ void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
 
     // --- 2. SMART COMMAND DECODER ---
     if (dir.contains("CMD") && (data.size() == 4 || data.size() == 5)) {
-        quint8 dev = static_cast<quint8>(data[0]);
-        quint8 cmd = static_cast<quint8>(data[1]);
-        quint16 aux = static_cast<quint8>(data[2]) | (static_cast<quint8>(data[3]) << 8);
+        // We only print the Command Block decoder if Hex Trace is enabled
+        if (showHex) {
+            quint8 dev = static_cast<quint8>(data[0]);
+            quint8 cmd = static_cast<quint8>(data[1]);
+            quint16 aux = static_cast<quint8>(data[2]) | (static_cast<quint8>(data[3]) << 8);
 
-        QString devName = "Unknown";
-        if (dev >= 0x31 && dev <= 0x3F) devName = QString("D%1:").arg(dev - 0x30);
-        else if (dev == 0x50) devName = "R1:";
-        else if (dev == 0x40) devName = "P1:";
-        else if (dev == 0x70) devName = "T1:";
+            QString devName = "Unknown";
+            if (dev >= 0x31 && dev <= 0x3F) devName = QString("D%1:").arg(dev - 0x30);
+            else if (dev == 0x50) devName = "R1:";
+            else if (dev == 0x40) devName = "P1:";
+            else if (dev == 0x70) devName = "T1:";
 
-        QString cmdName = QString("$%1").arg(cmd, 2, 16, QChar('0')).toUpper();
-        if (cmd == 'R' || cmd == 0x52) cmdName = "READ";
-        if (cmd == 'W' || cmd == 0x57) cmdName = "WRITE";
-        if (cmd == 'S' || cmd == 0x53) cmdName = "STATUS";
-        if (cmd == 'P' || cmd == 0x50) cmdName = "PUT/WRITE";
-        if (cmd == 0x21) cmdName = "FORMAT";
+            QString cmdName = QString("$%1").arg(cmd, 2, 16, QChar('0')).toUpper();
+            if (cmd == 'R' || cmd == 0x52) cmdName = "READ";
+            if (cmd == 'W' || cmd == 0x57) cmdName = "WRITE";
+            if (cmd == 'S' || cmd == 0x53) cmdName = "STATUS";
+            if (cmd == 'P' || cmd == 0x50) cmdName = "PUT/WRITE";
+            if (cmd == 0x21) cmdName = "FORMAT";
 
-        // Added font-family here just in case
-        QString cmdLog = QString("<pre style='margin: 0; font-family: \"Courier New\", Courier, monospace;'><font color='#882288'><b>[SIO CMD] %1 %2 (Aux: %3)</b></font></pre>")
-                             .arg(devName).arg(cmdName).arg(aux);
-        qDebug().noquote() << "!n" << cmdLog;
+            QString cmdLog = QString("<pre style='margin: 0; font-family: \"Courier New\", Courier, monospace;'><font color='#882288'><b>[SIO CMD] %1 %2 (Aux: %3)</b></font></pre>")
+                                 .arg(devName).arg(cmdName).arg(aux);
+            qDebug().noquote() << "!n" << cmdLog;
+        }
+
+        // Bail out. SIO commands are never executable ASM code anyway.
         return;
     }
 
     // --- 3. HEX DUMP WITH ZERO-DIMMING ---
-    QString headerColor = dir.startsWith("TX") ? "#C45911" : "#1177C4";
+    if (showHex) {
+        QString headerColor = dir.startsWith("TX") ? "#C45911" : "#1177C4";
+        QString dump = QString("<pre style='margin: 0; line-height: 1.2; font-family: \"Courier New\", Courier, monospace;'><font color='%1'><b>[SIO %2]</b></font> %3 bytes%4:\n")
+                           .arg(headerColor).arg(dir).arg(data.size()).arg(latencyHeader);
 
-    // Explicit font-family rule applied to stop the columns from wobbling
-    QString dump = QString("<pre style='margin: 0; line-height: 1.2; font-family: \"Courier New\", Courier, monospace;'><font color='%1'><b>[SIO %2]</b></font> %3 bytes%4:\n")
-                       .arg(headerColor).arg(dir).arg(data.size()).arg(latencyHeader);
+        for (int i = 0; i < data.size(); i += 16) {
+            QByteArray chunk = data.mid(i, 16);
+            QString offset = QString("%1").arg(i, 4, 16, QChar('0')).toUpper();
 
-    for (int i = 0; i < data.size(); i += 16) {
-        QByteArray chunk = data.mid(i, 16);
-        QString offset = QString("%1").arg(i, 4, 16, QChar('0')).toUpper();
+            QString hex;
+            for (int j = 0; j < 16; ++j) {
+                if (j == 8) hex += " "; // Middle Gutter
 
-        // Build Hex Column with Gutter and Zero-Dimming
-        QString hex;
-        for (int j = 0; j < 16; ++j) {
-            if (j == 8) hex += " "; // Middle Gutter
+                if (j < chunk.size()) {
+                    quint8 byte = static_cast<quint8>(chunk[j]);
+                    QString bHex = QString("%1").arg(byte, 2, 16, QChar('0')).toUpper();
 
-            if (j < chunk.size()) {
-                quint8 byte = static_cast<quint8>(chunk[j]);
-                QString bHex = QString("%1").arg(byte, 2, 16, QChar('0')).toUpper();
-
-                // Dim 00 (Null) and 20 (Space) to make data pop
-                if (byte == 0x00 || byte == 0x20) {
-                    hex += QString("<font color='#444444'>%1</font> ").arg(bHex);
+                    if (byte == 0x00 || byte == 0x20) {
+                        hex += QString("<font color='#444444'>%1</font> ").arg(bHex);
+                    } else {
+                        hex += bHex + " ";
+                    }
                 } else {
-                    hex += bHex + " ";
+                    hex += "   "; // Alignment padding
                 }
-            } else {
-                hex += "   "; // Alignment padding
             }
+
+            QString ascii;
+            for (char c : chunk) {
+                quint8 byte = static_cast<quint8>(c);
+                if (byte >= 32 && byte <= 126) ascii += static_cast<char>(byte);
+                else if (byte >= 160 && byte <= 254) ascii += static_cast<char>(byte - 128);
+                else ascii += '.';
+            }
+
+            dump += QString("<font color='#888888'>%1:</font>  %2  <font color='#888888'>|</font>  %3\n")
+                        .arg(offset).arg(hex).arg(ascii.toHtmlEscaped());
         }
 
-        // Build ASCII Column with ATASCII translation
-        QString ascii;
-        for (char c : chunk) {
-            quint8 byte = static_cast<quint8>(c);
-            if (byte >= 32 && byte <= 126) ascii += static_cast<char>(byte);
-            else if (byte >= 160 && byte <= 254) ascii += static_cast<char>(byte - 128);
-            else ascii += '.';
-        }
-
-        dump += QString("<font color='#888888'>%1:</font>  %2  <font color='#888888'>|</font>  %3\n")
-                    .arg(offset).arg(hex).arg(ascii.toHtmlEscaped());
+        dump += "</pre>";
+        qDebug().noquote() << "!n" << dump;
     }
 
-    dump += "</pre>";
-    qDebug().noquote() << "!n" << dump;
-
     // --- 4. EXECUTABLE HEURISTIC DISASSEMBLER ---
-    bool forceAsm = btnDisasmToggle->isChecked();
-    bool isExecutable = (data.size() > 5 && static_cast<quint8>(data[0]) == 0xFF && static_cast<quint8>(data[1]) == 0xFF);
+    if (showAsm) {
+        bool isExecutable = (data.size() > 5 && static_cast<quint8>(data[0]) == 0xFF && static_cast<quint8>(data[1]) == 0xFF);
 
-    if (forceAsm) {
-
-        // Explicit font-family rule applied here as well
         QString asmCode = "<pre style='color: #228822; margin: 0; font-family: \"Courier New\", Courier, monospace;'><b>[6502 Disassembly Suggestion]</b>\n";
 
         // Skip the FF FF header for disassembly
@@ -2847,6 +2858,9 @@ void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
         qDebug().noquote() << "!n" << asmCode;
     }
 }
+
+
+
 
 void MainWindow::on_actionInspectSectors_triggered(int deviceId)
 {

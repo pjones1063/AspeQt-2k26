@@ -1,0 +1,61 @@
+; =========================================================
+; ATARI DOS EXECUTABLE FILE HEADER
+; =========================================================
+        .BYTE $FF, $FF      ; Standard Atari executable signature
+
+; =========================================================
+; BLOCK 1: MAIN BOOTSTRAP CODE
+; =========================================================
+        .BYTE $00, $38      ; Block Start Address: $3800
+        .BYTE $4B, $38      ; Block End Address:   $384B
+
+        * = $3800
+
+; --- 1. Set up the Device Control Block (DCB) ---
+3800: A9 50     LDA #$50    ; Device ID = 'P' (Printer / 850 Interface)
+3802: 8D 00 03  STA $0300   ; DDEVIC
+3805: A9 01     LDA #$01    ; Unit = 1
+3807: 8D 01 03  STA $0301   ; DUNIT
+380A: A9 3F     LDA #$3F    ; Command = '?' ($3F) -> "Download Handler"
+380C: 8D 02 03  STA $0302   ; DCOMND
+380F: A9 40     LDA #$40    ; Status = $40 (Read from device)
+3811: 8D 03 03  STA $0303   ; DSTATS
+3814: A9 00     LDA #$00    ; Buffer Address Low = $00
+3816: 8D 04 03  STA $0304   ; DBUFLO
+3819: A9 09     LDA #$09    ; Buffer Address High = $09
+381B: 8D 05 03  STA $0305   ; DBUFHI  -> Buffer is at $0900
+381E: A9 00     LDA #$00    ; Bytes to read Low = $00
+3820: 8D 08 03  STA $0308   ; DBYTLO
+3823: A9 0A     LDA #$0A    ; Bytes to read High = $0A
+3825: 8D 09 03  STA $0309   ; DBYTHI  -> Read length is $0A00 (2560 bytes)
+3828: A9 0C     LDA #$0C    ; Timeout = 12 seconds
+382A: 8D 06 03  STA $0306   ; DTIMLO
+
+; --- 2. Request First Handler Block (PRN) ---
+382D: 20 59 E4  JSR $E459   ; Call SIOV (Downloads PRN handler to $0900)
+3830: 10 01     BPL $3833   ; If N=0 (Success), branch past the RTS
+3832: 60        RTS         ; Exit to DOS on error
+
+; --- 3. Copy PRN Handler to Safekeeping ---
+3833: A2 00     LDX #$00    ; Initialize X register to 0
+3835: BD 00 09  LDA $0900,X ; Load byte from downloaded block at $0900
+3838: 9D 00 0A  STA $0A00,X ; Store byte safely at $0A00
+383B: CA        DEX         ; Decrement X (wraps $00 -> $FF)
+383C: D0 F7     BNE $3835   ; Loop until X hits 0 (Copies exactly 256 bytes)
+
+; --- 4. Request Second Handler Block (RS-232) ---
+383E: 20 59 E4  JSR $E459   ; Call SIOV again! (Downloads RS-232 handler to $0900)
+3841: 30 03     BMI $3846   ; If N=1 (Error), branch to RTS
+3843: 6C 0C 0A  JMP ($0A0C) ; Success! Jump to PRN handler init vector at $0A0C
+3846: 60        RTS         ; Exit to DOS
+
+; (Note: Addresses $3847 to $384B are unused padding in the file)
+
+; =========================================================
+; BLOCK 2: INIT VECTOR SEGMENT
+; =========================================================
+        .BYTE $E2, $02      ; Block Start Address: $02E2 (DOS INIT Vector)
+        .BYTE $E3, $02      ; Block End Address:   $02E3
+
+        * = $02E2
+        .WORD $3800         ; Write $3800 into the INIT vector
