@@ -60,8 +60,11 @@
     jeq GetHostPath	
 	cmp #'S'			// S Exit to Dos
     jeq Exit
-	cmp #'T'			// T Cold Reboot
+	cmp #'T'			// T Run Cartridge
+    jeq RunCart
+	cmp #'U'			// U Reboot
     jeq Reboot
+
 
 	jmp Start
 	
@@ -920,6 +923,22 @@ Enabled
     jmp Main
 .endp
 
+//
+//  Run inserted cartridge (or built-in BASIC)
+//
+.proc RunCart
+    lda $BFFC       // Check Cartridge Present Flag
+    bne NoCart      
+    ldx #$FF        
+    txs             
+    jmp ($BFFA) // Jump to the cartridge Run Vector
+NoCart
+    jsr Printf
+    .byte 155,'No cartridge detected!',155,0
+        
+    jmp Main        // Return to the menu
+.endp
+
 
 //
 //  Print System Hardware Banner
@@ -996,8 +1015,8 @@ _done
 	.byte 'H Boot .ATR       R AspeQt Path',155,0
 	jsr printf
 	.byte 'I Boot .XEX       S Exit to DOS',155
-	.byte 'J Toggle BASIC    T Reboot',155,155,0
-	
+	.byte 'J Toggle BASIC    T Run Cartridge',155
+	.byte '                  U Reboot',155,0
 	rts
 .endp
 	

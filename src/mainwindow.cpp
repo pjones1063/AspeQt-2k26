@@ -2678,11 +2678,17 @@ void MainWindow::onModemToggleClicked() {
     }
 }
 
-
-
 void MainWindow::onSioTraceToggleClicked()
 {
     bool showHex = btnSioTrace->isChecked();
+
+    // If turning ON Hex Dump, force Disassembler OFF
+    if (showHex) {
+        btnDisasmToggle->setChecked(false);
+        btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
+        btnDisasmToggle->setStyleSheet("");
+    }
+
     bool showAsm = btnDisasmToggle->isChecked();
 
     // Enable backend tracing if EITHER tool is active
@@ -2699,12 +2705,18 @@ void MainWindow::onSioTraceToggleClicked()
     }
 }
 
-
-
 void MainWindow::onDisasmToggleClicked()
 {
-    bool showHex = btnSioTrace->isChecked();
     bool showAsm = btnDisasmToggle->isChecked();
+
+    // If turning ON Disassembler, force Hex Dump OFF
+    if (showAsm) {
+        btnSioTrace->setChecked(false);
+        btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor.png"));
+        btnSioTrace->setStyleSheet("");
+    }
+
+    bool showHex = btnSioTrace->isChecked();
 
     // Enable backend tracing if EITHER tool is active
     if (sio) sio->setTraceEnabled(showHex || showAsm);
@@ -2719,7 +2731,6 @@ void MainWindow::onDisasmToggleClicked()
         qDebug() << "!i" << "[Disassembler] 6502 Disassembly Disabled";
     }
 }
-
 
 
 void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
