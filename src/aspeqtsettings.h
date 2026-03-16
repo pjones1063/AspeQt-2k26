@@ -25,7 +25,7 @@ public:
 
     bool isFirstTime();
 
-    bool enableRDevice();
+    bool isRDeviceEnabled();
     void setEnableRDevice(bool enabled);
 
     QString serialPortName();

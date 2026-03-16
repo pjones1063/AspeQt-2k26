@@ -305,28 +305,58 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 1. Modem Toggle
     btnModemToggle = new QToolButton(this);
-    setupBtn(btnModemToggle, ":/icons/silk-icons/icons/world.png", "M", tr("Toggle Modem Bridge On/Off"));
+    bool activeOnBoot = aspeqtSettings->isModemBridgeEnabled() || aspeqtSettings->isRDeviceEnabled();
     btnModemToggle->setCheckable(true);
+    btnModemToggle->setChecked(activeOnBoot);
+
+    // Ensure mutual exclusivity: If both were somehow checked in settings, R: Device wins.
+    if (aspeqtSettings->isRDeviceEnabled() && aspeqtSettings->isModemBridgeEnabled()) {
+        aspeqtSettings->setModemBridgeEnabled(false); // Force legacy bridge off
+    }
+
+    if (activeOnBoot) {
+        btnModemToggle->setIcon(QIcon(":/icons/oxygen-icons/16x16/actions/network_connect.png"));
+        btnModemToggle->setToolTip(aspeqtSettings->isRDeviceEnabled() ? tr("R: Device Modem: ON") : tr("Legacy Modem Bridge: ON"));
+    } else {
+        btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/world.png"));
+        btnModemToggle->setToolTip(aspeqtSettings->isRDeviceEnabled() ? tr("R: Device Modem: OFF") : tr("Legacy Modem Bridge: OFF"));
+    }
     connect(btnModemToggle, &QToolButton::clicked, this, &MainWindow::onModemToggleClicked);
+
 
     // 2. Hangup
     btnHangup = new QToolButton(this);
     setupBtn(btnHangup, ":/icons/silk-icons/icons/disconnect.png", "H", tr("Hangup (NO CARRIER)"));
     connect(btnHangup, &QToolButton::clicked, [this]() {
-        if (modemBridge) modemBridge->hangup();
+        if (aspeqtSettings->isRDeviceEnabled()) {
+            RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+            if (rDev) rDev->hangup();
+        } else if (modemBridge) {
+            modemBridge->hangup();
+        }
     });
 
     // 3. Macros
     btnMacroUser = new QToolButton(this);
     setupBtn(btnMacroUser, ":/icons/silk-icons/icons/application.png", "U", tr("Send Auto-User (ESC-U)"));
     connect(btnMacroUser, &QToolButton::clicked, [this]() {
-        if (modemBridge) modemBridge->injectMacro('U');
+        if (aspeqtSettings->isRDeviceEnabled()) {
+            RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+            if (rDev) rDev->injectMacro('U');
+        } else if (modemBridge) {
+            modemBridge->injectMacro('U');
+        }
     });
 
     btnMacroPass = new QToolButton(this);
     setupBtn(btnMacroPass, ":/icons/silk-icons/icons/lock.png", "P", tr("Send Auto-Pass (ESC-P)"));
     connect(btnMacroPass, &QToolButton::clicked, [this]() {
-        if (modemBridge) modemBridge->injectMacro('P');
+        if (aspeqtSettings->isRDeviceEnabled()) {
+            RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+            if (rDev) rDev->injectMacro('P');
+        } else if (modemBridge) {
+            modemBridge->injectMacro('P');
+        }
     });
 
 
@@ -397,10 +427,6 @@ MainWindow::MainWindow(QWidget *parent)
     // (speedLabel, onOffLabel, etc. were already added earlier in the constructor)
     ui->statusBar->addPermanentWidget(ledRx);
     ui->statusBar->addPermanentWidget(ledTx);
-
-    // Sync initial state
-    btnModemToggle->setChecked(aspeqtSettings->isModemBridgeEnabled());
-
 
     sio = new SioWorker();
 
@@ -1461,7 +1487,7 @@ void MainWindow::on_actionOptions_triggered()
 
     RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
     if (rDev) {
-        bool isRDeviceActive = aspeqtSettings->enableRDevice();
+        bool isRDeviceActive = aspeqtSettings->isRDeviceEnabled();
         rDev->setEnabled(isRDeviceActive); // Updates internal flag and closes active sockets
 
         // If newly enabled, ensure the phonebook is loaded from the current path
@@ -2527,17 +2553,18 @@ void MainWindow::on_actionPhonebook_triggered()
         BbsEntry entry = pd.getSelectedEntry();
 
         if (!entry.name.isEmpty()) {
-            if (!modemBridge || !aspeqtSettings->isModemBridgeEnabled()) {
-                // ... error handling ...
-                return;
+            // [FIX] Route to the correct active modem!
+            if (aspeqtSettings->isRDeviceEnabled()) {
+                RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+                if (rDev) rDev->dial(entry);
             }
-
-            // [FIX] Pass the FULL entry, not just the name!
-            // This ensures the Login/Pass we just edited is used.
-            modemBridge->dial(entry);
+            else if (aspeqtSettings->isModemBridgeEnabled() && modemBridge) {
+                modemBridge->dial(entry);
+            }
         }
     }
 }
+
 
 void MainWindow::onFireAndForget(QString urlStr, QByteArray data)
 {
@@ -2649,34 +2676,51 @@ void MainWindow::resetLeds() {
 
 void MainWindow::onModemToggleClicked() {
     bool enabled = btnModemToggle->isChecked();
+    RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
 
-    // 1. Update Settings
-    aspeqtSettings->setModemBridgeEnabled(enabled);
+    // 1. If R: Device is configured as the primary emulator
+    if (aspeqtSettings->isRDeviceEnabled()) {
+        if (rDev) {
+            if (enabled) {
+                // "Power On" the virtual modem
+                rDev->setEnabled(true);
+                rDev->loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
+                qDebug() << "!i" << tr("R: Device Virtual Modem: ONLINE");
+            } else {
+                // [CRITICAL FIX] Safely tear down the stream and network connections
+                // BEFORE disabling, simulating a physical modem power-off.
+                rDev->hangup();
+                rDev->forceCommandMode(true);
+                rDev->setEnabled(false);
 
-    // 2. Start/Stop Bridge
-    if (modemBridge) {
-        if (enabled) {
-            // Reload settings in case they changed in Options
-            modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
-                                       aspeqtSettings->modemBridgeBaudRate());
-            modemBridge->start();
-
-        } else {
-            modemBridge->stop();
+                qDebug() << "!w" << tr("R: Device Virtual Modem: OFFLINE (Carrier Dropped)");
+            }
+        }
+    }
+    // 2. Otherwise, toggle the legacy Modem Bridge
+    else {
+        aspeqtSettings->setModemBridgeEnabled(enabled);
+        if (modemBridge) {
+            if (enabled) {
+                modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(), aspeqtSettings->modemBridgeBaudRate());
+                modemBridge->start();
+            } else {
+                modemBridge->stop();
+            }
         }
     }
 
     // 3. Update Visuals
     if (enabled) {
-        // Use network_connect.png from your oxygen-icons resource
         btnModemToggle->setIcon(QIcon(":/icons/oxygen-icons/16x16/actions/network_connect.png"));
-        btnModemToggle->setToolTip(tr("Modem Bridge: ON"));
+        btnModemToggle->setToolTip(aspeqtSettings->isRDeviceEnabled() ? tr("R: Device Modem: ON") : tr("Legacy Modem Bridge: ON"));
     } else {
-        // Revert to world.png
         btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/world.png"));
-        btnModemToggle->setToolTip(tr("Modem Bridge: OFF"));
+        btnModemToggle->setToolTip(aspeqtSettings->isRDeviceEnabled() ? tr("R: Device Modem: OFF") : tr("Legacy Modem Bridge: OFF"));
     }
 }
+
+
 
 void MainWindow::onSioTraceToggleClicked()
 {

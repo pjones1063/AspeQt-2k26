@@ -125,7 +125,7 @@ private:
     std::unique_ptr<::gpiod::line_request> m_gpioRequest;
     struct pollfd m_gpioPollFd;
     void initHardwareInterrupts();
-    void checkHardwareInterrupts();
+    void checkHardwareInterrupts(int timeout_ms = 0);
     QElapsedTimer m_streamGuardTimer;
 #endif
 

@@ -945,7 +945,7 @@ void AspeQtSettings::setTranslateEolOnGet(bool enabled) {
     if(mSessionFileName == "") mSettings->setValue("PipeNetwork/TranslateEolOnGet", enabled);
 }
 
-bool AspeQtSettings::enableRDevice()
+bool AspeQtSettings::isRDeviceEnabled()
 {
     return mEnableRDevice;
 }

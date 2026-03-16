@@ -78,7 +78,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->modemLocalEchoBox->setChecked(aspeqtSettings->modemBridgeLocalEcho());
 
     // Set R: Device Defaults
-    m_ui->modemRBox->setChecked(aspeqtSettings->enableRDevice());
+    m_ui->modemRBox->setChecked(aspeqtSettings->isRDeviceEnabled());
 
     // Trigger initial state for Modem UI
     // Note: This function now checks both boxes to determine phonebook state
@@ -86,7 +86,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     // If R-Device is specifically enabled, make sure we run its logic too
     // to potentially disable the conflicting bridge controls
-    if (aspeqtSettings->enableRDevice()) {
+    if (aspeqtSettings->isRDeviceEnabled()) {
         on_modemRBox_toggled(true);
     }
 
@@ -412,7 +412,8 @@ void OptionsDialog::OptionsDialog_accepted()
     // Added warning per request for R: device enablement
     if (m_ui->modemRBox->isChecked()) {
         QMessageBox::warning(this, tr("Experimental Feature"),
-                             tr("The 850 R: Device requires hardware-level interrupts to exit Concurrent Stream Mode. This feature is incompatible with standard USB SIO2PC adapters. It requires a Raspberry Pi using raw UART, with the SIO COMMAND line mapped to a GPIO pin."));
+                             tr("The 850 R: Device requires a Raspberry Pi using raw UART and a GPIO interrupt. It is incompatible with standard USB SIO2PC adapters.<br><br>"
+                                "For wiring and setup instructions, please see the <a href=\"https://github.com/pjones1063/AspeQt-2k26/blob/main/doc/RaspberryPi.pdf\">Raspberry Pi Hardware Guide</a>."));
     }
     // ---------------------------------------
 

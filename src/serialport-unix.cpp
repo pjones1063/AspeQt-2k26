@@ -203,6 +203,7 @@ bool StandardSerialPortBackend::setHighSpeed()
     }
 }
 
+
 #ifdef Q_OS_LINUX
 bool StandardSerialPortBackend::setSpeed(int speed)
 {
@@ -212,10 +213,35 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     tcgetattr(mHandle, &tios);
     tios.c_cflag &= ~CSTOPB;
     cfmakeraw(&tios);
+
     switch (speed) {
+    case 300:
+        cfsetispeed(&tios, B300);
+        cfsetospeed(&tios, B300);
+        break;
     case 600:
         cfsetispeed(&tios, B600);
         cfsetospeed(&tios, B600);
+        break;
+    case 1200:
+        cfsetispeed(&tios, B1200);
+        cfsetospeed(&tios, B1200);
+        break;
+    case 1800:
+        cfsetispeed(&tios, B1800);
+        cfsetospeed(&tios, B1800);
+        break;
+    case 2400:
+        cfsetispeed(&tios, B2400);
+        cfsetospeed(&tios, B2400);
+        break;
+    case 4800:
+        cfsetispeed(&tios, B4800);
+        cfsetospeed(&tios, B4800);
+        break;
+    case 9600:
+        cfsetispeed(&tios, B9600);
+        cfsetospeed(&tios, B9600);
         break;
     case 19200:
         cfsetispeed(&tios, B19200);
@@ -235,7 +261,7 @@ bool StandardSerialPortBackend::setSpeed(int speed)
         cfsetospeed(&tios, B57600);
         break;
     default:
-        // configure port to use custom speed instead of 38400
+        // configure port to use custom speed instead of 38400 (ONLY for non-standard speeds like 52631)
         ioctl(mHandle, TIOCGSERIAL, &ss);
         ss.flags = (ss.flags & ~ASYNC_SPD_MASK) | ASYNC_SPD_CUST;
         ss.custom_divisor = (ss.baud_base + (speed / 2)) / speed;
@@ -254,7 +280,10 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     }
 
     /* Set serial port state */
-    if (tcsetattr(mHandle, TCSANOW, &tios) != 0) {
+    // [CRITICAL FIX] Changed TCSANOW to TCSAFLUSH.
+    // This forces the Linux kernel to physically destroy any unread garbage
+    // data sitting in the copper UART buffer before applying the new speed!
+    if (tcsetattr(mHandle, TCSAFLUSH, &tios) != 0) {
         qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2")
         .arg(speed)
             .arg(lastErrorMessage());
@@ -266,7 +295,10 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     mSpeed = speed;
     return true;
 }
+
 #endif
+
+
 
 #ifdef Q_OS_MAC
 bool StandardSerialPortBackend::setSpeed(int speed)
@@ -624,7 +656,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
     // [PERFECT FIX] If the 850 Handler explicitly engaged Stream Mode,
     // reduce latency to 15ms for snappy typing and fast modem responses.
     if (m_isStreamMode) {
-        timeOut = 15;
+        timeOut = 0;
     }
 
     int elapsed;

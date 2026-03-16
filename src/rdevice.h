@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QQueue>
 #include <QMutex>
+#include <atomic>
 #include "bbsdata.h"
 #include "sshclient.h"
 
@@ -39,11 +40,16 @@ public:
     void setEnabled(bool enable);
     bool isEnabled() const { return m_isEnabled; }
     void loadPhonebook(const QString &path);
-    void forceCommandMode();
     QByteArray dequeueNetworkData();
     void processSerialData(const QByteArray &data);
+    void dial(const BbsEntry &entry);
+    void injectMacro(char macroType);
+    void forceCommandMode(bool sendAlert = false);
 
-    // --- THE MISSING SIGNALS BLOCK ---
+public slots:
+    // [FIX] Moved to slots so SioWorker can safely invoke it across threads!
+    void hangup();
+
 signals:
     void dispatchToNetwork(const QByteArray &data);
     void executeAtCommand(const QString &cmd);
@@ -68,10 +74,10 @@ private:
     TelnetState m_telnetState = TelnetState::Normal;
     bool m_isEnabled;
     bool m_isSshMode = false;
+    std::atomic<bool> m_isNetworkConnected{false};
 
     QByteArray m_txBuffer;
     QString m_atCmdBuffer;
-
     QByteArray m_networkToSioBuffer;
     QMutex m_bufferMutex;
 
@@ -84,7 +90,9 @@ private:
     bool verboseResponses = true;
     bool m_escPending = false;
     bool autoAnswer = false;
+
     int listenPort = 0;
+    int m_currentBaudRate = 19200;
 
     QElapsedTimer m_escapeTimer;
     int m_plusCount = 0;
@@ -98,12 +106,11 @@ private:
     void parseTelnet(const QByteArray &data);
     void checkEscapeSequence(const QByteArray &data);
 
-    // Core helper to handle SIO Reads (Device to Host)
     void sendDataToAtari(const QByteArray &data);
 
-    // SIO Handlers
     void handlePollType1();
     void handlePollType3(quint8 aux1, quint8 aux2);
+    void handleConfigure(quint8 aux1, quint8 aux2);
     void handleDownloadRelocator();
     void handleDownloadDriver();
     void handleStatus();
@@ -112,7 +119,6 @@ private:
     void handleControl(quint16 aux);
     void handleListen(quint16 aux);
     void handleStream();
-
     void at_handle_dial(const QString &target);
 };
 

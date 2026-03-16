@@ -18,7 +18,6 @@
 
 RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
 {
-    // Initialize standard Telnet socket
     tcpSocket = new QTcpSocket(this);
     tcpSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
 
@@ -27,43 +26,63 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
     connect(tcpSocket, &QTcpSocket::readyRead, this, &RDevice::onSocketReadyRead);
     connect(tcpSocket, &QTcpSocket::errorOccurred, this, &RDevice::onSocketError);
 
-    // Initialize SSH client for secure BBS/Linux connections
     m_ssh = new SshClient(this);
     connect(m_ssh, &SshClient::connected, this, &RDevice::onSshConnected);
     connect(m_ssh, &SshClient::disconnected, this, &RDevice::onSshDisconnected);
     connect(m_ssh, &SshClient::rxData, this, &RDevice::onSshDataReceived);
     connect(m_ssh, &SshClient::error, this, &RDevice::onSshError);
 
-    // Initialize inbound listener server (for Answer Mode)
     tcpServer = new QTcpServer(this);
     connect(tcpServer, &QTcpServer::newConnection, this, &RDevice::onNewConnection);
     pendingSocket = nullptr;
 
-    // Load initial settings and phonebook
-    m_isEnabled = (aspeqtSettings && aspeqtSettings->enableRDevice());
+    m_isEnabled = (aspeqtSettings && aspeqtSettings->isRDeviceEnabled());
     if (m_isEnabled) loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
 
-    // --- UPDATED DISPATCH LOGIC: Smart Routing ---
     connect(this, &RDevice::dispatchToNetwork, this, [this](const QByteArray &data){
-        bool isConnected = (m_isSshMode && m_ssh->isConnected()) ||
-                           (!m_isSshMode && tcpSocket->state() == QAbstractSocket::ConnectedState);
+        if (m_isNetworkConnected) {
+            QByteArray filteredData;
 
-        if (isConnected) {
-            // We are ONLINE. Route all stream data straight to the remote BBS/Server.
-            if (m_isSshMode) m_ssh->write(data);
-            else tcpSocket->write(data);
+            for (char c : data) {
+                if (m_escPending) {
+                    m_escPending = false;
+                    if (c == 'U' || c == 'u') {
+                        QString inject = m_currentConnection.login + "\r";
+                        filteredData.append(inject.toUtf8());
+                        continue;
+                    }
+                    if (c == 'P' || c == 'p') {
+                        QString inject = m_currentConnection.password + "\r";
+                        filteredData.append(inject.toUtf8());
+                        continue;
+                    }
+                    if (c == 'H' || c == 'h') {
+                        hangup();
+                        continue;
+                    }
+                    filteredData.append(0x1B);
+                    filteredData.append(c);
+                } else if (c == 0x1B) {
+                    m_escPending = true;
+                } else {
+                    filteredData.append(c);
+                }
+            }
+
+            checkEscapeSequence(filteredData);
+
+            if (!filteredData.isEmpty()) {
+                if (m_isSshMode) m_ssh->write(filteredData);
+                else tcpSocket->write(filteredData);
+            }
         }
         else {
-            // We are OFFLINE. (Even if the Atari is physically in Concurrent/Stream Mode!)
-            // Route typing to the local AT Command Parser so the user can dial.
             for (char c : data) {
-                // Handle local echo for terminal typing
                 if (echoEnabled) {
                     QMutexLocker locker(&m_bufferMutex);
                     m_networkToSioBuffer.append(c);
                 }
 
-                // Translate ATASCII Return (0x9B) to standard Return (0x0D) for the parser
                 if (c == 0x0D || (quint8)c == 0x9B) {
                     emit executeAtCommand(m_atCmdBuffer);
                     m_atCmdBuffer.clear();
@@ -74,10 +93,8 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
         }
     }, Qt::QueuedConnection);
 
-    // Route parsed AT commands back to the Main Thread for safe socket operations
     connect(this, &RDevice::executeAtCommand, this, &RDevice::processAtCommand, Qt::QueuedConnection);
 }
-
 
 RDevice::~RDevice()
 {
@@ -94,11 +111,10 @@ void RDevice::setEnabled(bool enable)
         m_ssh->disconnectFromHost();
         tcpServer->close();
         state = ModemState::CommandMode;
+        QMutexLocker locker(&m_bufferMutex);
         m_txBuffer.clear();
     }
 }
-
-
 
 void RDevice::handleCommand(quint8 command, quint16 aux)
 {
@@ -107,7 +123,6 @@ void RDevice::handleCommand(quint8 command, quint16 aux)
     quint8 aux1 = (aux & 0xFF);
     quint8 aux2 = (aux >> 8) & 0xFF;
 
-    // Filter out the high-frequency polling/status commands to keep the logs readable
     if (command != CMD_STATUS && command != CMD_POLL_TYPE1 &&
         command != CMD_POLL_TYPE3 && command != CMD_RELOCATOR &&
         command != CMD_DOWNLOAD && command != CMD_STREAM) {
@@ -124,38 +139,48 @@ void RDevice::handleCommand(quint8 command, quint16 aux)
     case CMD_STATUS:     handleStatus(); break;
     case CMD_WRITE:      handleWrite(aux); break;
     case CMD_READ:       handleRead(aux); break;
-
-        // --- HANDSHAKING HANDLERS ---
-        // Catch these (XIO 34, 36, 38) so they don't leak into the stream.
-    case CMD_CONTROL:    // 0x41 ('A') - DTR/RTS toggle
-    case CMD_CONFIGURE:  // 0x42 ('B') - Baud/Protocol
-    case CMD_AUTOANSWER: // 0x4F ('O') - Translation
+    case CMD_CONFIGURE:  handleConfigure(aux1, aux2); break;
+    case CMD_CONTROL:
+    case CMD_AUTOANSWER:
         if (!sio->port()->writeCommandAck()) return;
         sio->port()->writeComplete();
         break;
-
-        // --- MODE SWITCHING ---
-    case CMD_STREAM:     // 0x58 ('X') - Enter Concurrent Mode
+    case CMD_STREAM:
         handleStream();
         break;
-
     case CMD_LISTEN:     handleListen(aux); break;
     case CMD_UNLISTEN:
         sio->port()->writeCommandAck();
         tcpServer->close();
         sio->port()->writeComplete();
         break;
-
     default:
         sio->port()->writeCommandNak();
         break;
     }
 }
 
+void RDevice::handleConfigure(quint8 aux1, quint8 aux2) {
+    Q_UNUSED(aux2);
+    if (!sio->port()->writeCommandAck()) return;
 
-// --------------------------------------------------------------------------
-// SIO Core Helper (READ from Peripheral to Host)
-// --------------------------------------------------------------------------
+    quint8 speedCode = aux1 & 0x0F;
+    switch (speedCode) {
+    case 0x08: m_currentBaudRate = 300; break;
+    case 0x09: m_currentBaudRate = 600; break;
+    case 0x0A: m_currentBaudRate = 1200; break;
+    case 0x0B: m_currentBaudRate = 1800; break;
+    case 0x0C: m_currentBaudRate = 2400; break;
+    case 0x0D: m_currentBaudRate = 4800; break;
+    case 0x0E: m_currentBaudRate = 9600; break;
+    case 0x0F: m_currentBaudRate = 19200; break;
+    default:   m_currentBaudRate = 19200; break;
+    }
+
+    qDebug() << "!d" << "[RDevice] Configure: Ice-T requested Baud Rate set to:" << m_currentBaudRate;
+    sio->port()->writeComplete();
+}
+
 void RDevice::sendDataToAtari(const QByteArray &data)
 {
     SioWorker::usleep(2000);
@@ -163,10 +188,6 @@ void RDevice::sendDataToAtari(const QByteArray &data)
     SioWorker::usleep(2000);
     sio->port()->writeDataFrame(data);
 }
-
-// --------------------------------------------------------------------------
-// SIO Handlers
-// --------------------------------------------------------------------------
 
 void RDevice::handlePollType1() {
     if (!sio->port()->writeCommandAck()) return;
@@ -215,13 +236,11 @@ void RDevice::handleStatus() {
     if (!sio->port()->writeCommandAck()) return;
 
     QByteArray status(4, 0);
+    status[1] = 0xC0 | 0x30;
 
-    // Set DSR (0xC0) and CTS (0x30) to Always High so Ice-T is allowed to transmit.
-    status[1] = 0xC0 | 0x30; // 0xF0
-
-    // If we have an active Telnet/SSH socket, raise the Carrier Detect (CRX) bit.
-    if (tcpSocket->state() == QAbstractSocket::ConnectedState || (m_isSshMode && m_ssh->isConnected())) {
-        status[1] |= 0x0C; // 0x0C is '11' for bits 3 and 2.
+    // [FIX] We now use the thread-safe atomic flag instead of touching tcpSocket
+    if (m_isNetworkConnected) {
+        status[1] |= 0x0C;
     }
 
     sendDataToAtari(status);
@@ -231,54 +250,61 @@ void RDevice::handleRead(quint16 len) {
     if (!sio->port()->writeCommandAck()) return;
 
     int readLen = (len > 0) ? len : 128;
-    QByteArray chunk = m_txBuffer.left(readLen);
-    m_txBuffer.remove(0, chunk.size());
+    QByteArray chunk;
+
+    // [FIX] Protect the extraction of data to prevent Main Thread crashes
+    {
+        QMutexLocker locker(&m_bufferMutex);
+        chunk = m_txBuffer.left(readLen);
+        m_txBuffer.remove(0, chunk.size());
+    }
 
     while (chunk.size() < readLen) chunk.append((char)0x00);
 
     sendDataToAtari(chunk);
 }
 
-
 void RDevice::handleStream() {
-    // 1. Acknowledge the SIO command block
     if (!sio->port()->writeCommandAck()) return;
 
-    // 2. Send the 9-byte POKEY divisor payload for 19200 baud!
     QByteArray response;
     response.resize(9);
     response[0] = 0x28; response[1] = 0xA0; response[2] = 0x00;
     response[3] = 0xA0; response[4] = 0x28; response[5] = 0xA0;
     response[6] = 0x00; response[7] = 0xA0; response[8] = 0x78;
 
-    // This helper method sends the 2ms delay, the COMPLETE byte ('C'),
-    // the 9 bytes of data, and the hardware SIO Checksum!
+    switch (m_currentBaudRate) {
+    case 300:   response[0] = response[4] = 0xA0; response[2] = response[6] = 0x0B; break;
+    case 600:   response[0] = response[4] = 0xCC; response[2] = response[6] = 0x05; break;
+    case 1200:  response[0] = response[4] = 0xE3; response[2] = response[6] = 0x02; break;
+    case 1800:  response[0] = response[4] = 0xEA; response[2] = response[6] = 0x01; break;
+    case 2400:  response[0] = response[4] = 0x6E; response[2] = response[6] = 0x01; break;
+    case 4800:  response[0] = response[4] = 0xB3; response[2] = response[6] = 0x00; break;
+    case 9600:  response[0] = response[4] = 0x56; response[2] = response[6] = 0x00; break;
+    case 19200: break;
+    }
+
     sendDataToAtari(response);
 
-    // 3. The Hardware Drain Guard
-    // Wait 40ms to ensure the OS physically transmits the 12 bytes
-    // (ACK + COMPLETE + 9 Data + Checksum) down the copper wire before we touch the baud rate.
-    SioWorker::usleep(40000);
-
-    // 4. Purge buffers immediately so the stream starts clean
     {
         QMutexLocker locker(&m_bufferMutex);
         m_networkToSioBuffer.clear();
         m_txBuffer.clear();
     }
 
-    // 5. Transition to Stream Mode Safely!
-    // NO QTimer! Because we are running linearly inside the SioWorker thread,
-    // changing the baud rate here is 100% thread-safe and prevents the QByteArray crash.
     state = ModemState::StreamMode;
     m_escapeTimer.start();
     m_plusCount = 0;
 
-    sio->onChangeBaudRate(19200);
+    sio->onChangeBaudRate(m_currentBaudRate);
 
-    qDebug() << "!d" << "[RDevice] Stream active - Handing over to Pi 5 Hardware UART at 19200.";
+    SioWorker::usleep(2000);
+    if (sio->port()) {
+        sio->port()->readRawFrame(256, false);
+    }
+
+    qDebug() << "!d" << "[RDevice] Stream active - Handing over to Pi 5 Hardware UART at" << m_currentBaudRate;
 }
-
 
 void RDevice::handleWrite(quint16 aux) {
     if (!sio->port()->writeCommandAck()) return;
@@ -292,16 +318,6 @@ void RDevice::handleWrite(quint16 aux) {
     }
 
     sio->port()->writeDataAck();
-
-    QString debugStr;
-    for (int i = 0; i < logicalLen && i < data.size(); i++) {
-        char c = data.at(i);
-        if (c >= 32 && c <= 126) {
-            debugStr.append(c);
-        } else {
-            debugStr.append(QString("<%1>").arg((quint8)c, 2, 16, QLatin1Char('0')).toUpper());
-        }
-    }
 
     for (int i = 0; i < logicalLen && i < data.size(); i++) {
         char c = data.at(i);
@@ -330,17 +346,12 @@ void RDevice::handleListen(quint16 aux) {
     }
 }
 
-// --------------------------------------------------------------------------
-// Boilerplate Networking / Phonebook / Parsing
-// --------------------------------------------------------------------------
-
 void RDevice::processSerialData(const QByteArray &data) {
     if (state != ModemState::StreamMode) return;
 
     static bool escPending = false;
     QByteArray filteredData;
 
-    // Trap Atari Keyboard Macros (ESC U / ESC P / ESC H) in the SIO stream
     for (int i = 0; i < data.size(); ++i) {
         char c = data[i];
 
@@ -348,44 +359,35 @@ void RDevice::processSerialData(const QByteArray &data) {
             escPending = false;
 
             if (c == 'U' || c == 'u') {
-                // Inject UserID directly into the network stream
                 QString inject = m_currentConnection.login + "\r";
                 emit dispatchToNetwork(inject.toUtf8());
                 continue;
             }
             if (c == 'P' || c == 'p') {
-                // Inject Password directly into the network stream
                 QString inject = m_currentConnection.password + "\r";
                 emit dispatchToNetwork(inject.toUtf8());
                 continue;
             }
             if (c == 'H' || c == 'h') {
-                // Hangup Macro: Drop carrier instantly
-                if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
-                if (m_isSshMode && m_ssh->isConnected()) m_ssh->disconnectFromHost();
+                // [FIX] Use Thread-Safe invokeMethod to call the hangup slot
+                QMetaObject::invokeMethod(this, "hangup", Qt::QueuedConnection);
                 continue;
             }
 
-            // Not a macro, put the ESC byte and the character back
             filteredData.append(0x1B);
             filteredData.append(c);
         } else if (c == 0x1B) {
-            // 0x1B is the ESC key. Hold it and wait for the next byte.
             escPending = true;
         } else {
             filteredData.append(c);
         }
     }
 
-    // Only process the '+++' check and send to network if there is standard typing left
     if (!filteredData.isEmpty()) {
         checkEscapeSequence(filteredData);
-
-        // Safely jump to the Main Thread via queued signal
         emit dispatchToNetwork(filteredData);
     }
 }
-
 
 void RDevice::checkEscapeSequence(const QByteArray &data) {
     for (char c : data) {
@@ -404,12 +406,8 @@ void RDevice::checkEscapeSequence(const QByteArray &data) {
     }
 
     if (m_plusCount >= 3 && m_escapeTimer.elapsed() > ESCAPE_GUARD_TIME) {
-        // --- FIX 4: DECOUPLE SIO STATE FROM MODEM STATE ---
-        // Drop the remote connection, but KEEP the Atari SIO stream alive
-        if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
-        if (m_isSshMode && m_ssh->isConnected()) m_ssh->disconnectFromHost();
-
-        sendResultCode(RESULT_OK); // Tell Ice-T the modem is listening
+        // [FIX] Use Thread-Safe invokeMethod to call the hangup slot
+        QMetaObject::invokeMethod(this, "hangup", Qt::QueuedConnection);
         m_plusCount = 0;
     }
 }
@@ -418,24 +416,21 @@ void RDevice::onSocketReadyRead() {
     if (m_isSshMode) return;
     QByteArray data = tcpSocket->readAll();
 
-    // Always strip telnet control codes first
+    // [FIX] Wrap all background modifications to the Tx buffer in a mutex lock
+    QMutexLocker locker(&m_bufferMutex);
     parseTelnet(data);
 
     if (state == ModemState::StreamMode) {
         if (!m_txBuffer.isEmpty()) {
-            QMutexLocker locker(&m_bufferMutex);
             m_networkToSioBuffer.append(m_txBuffer);
             m_txBuffer.clear();
         }
     }
-    // If in Command Mode, parseTelnet already safely placed the
-    // filtered text into m_txBuffer for the Atari to read later!
 }
 
-
 void RDevice::onSshDataReceived(const QByteArray &data) {
+    QMutexLocker locker(&m_bufferMutex);
     if (state == ModemState::StreamMode) {
-        QMutexLocker locker(&m_bufferMutex);
         m_networkToSioBuffer.append(data);
     } else {
         m_txBuffer.append(data);
@@ -488,19 +483,15 @@ void RDevice::processAtCommand(const QString &rawCmd) {
         at_handle_dial(target);
     }
     else if (cmd == "H") {
-        if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
-        if (m_isSshMode && m_ssh->isConnected()) m_ssh->disconnectFromHost();
-        sendResultCode(RESULT_OK);
+        hangup();
     }
     else if (cmd == "Z") {
         tcpSocket->abort();
         if (m_isSshMode && m_ssh) m_ssh->disconnectFromHost();
-        // REMOVED: state = ModemState::CommandMode; (Do not kill SIO stream)
         sendResultCode(RESULT_OK);
     }
     else if (cmd == "O") {
-        bool active = (tcpSocket->state() == QAbstractSocket::ConnectedState) || (m_isSshMode && m_ssh->isConnected());
-        if (active) {
+        if (m_isNetworkConnected) {
             sendResultCode(RESULT_CONNECT);
         } else {
             sendResultCode(RESULT_ERROR);
@@ -522,9 +513,8 @@ void RDevice::sendResultCode(int code) {
         resp = QString("%1\r").arg(code).toLatin1();
     }
 
-    // Crucial: Route to the active stream buffer if in Concurrent Mode
+    QMutexLocker locker(&m_bufferMutex);
     if (state == ModemState::StreamMode) {
-        QMutexLocker locker(&m_bufferMutex);
         m_networkToSioBuffer.append(resp);
     } else {
         m_txBuffer.append(resp);
@@ -545,7 +535,6 @@ void RDevice::at_handle_dial(const QString &target) {
     if (!found) {
         m_currentConnection = BbsEntry();
 
-        // --- NEW: Allow manual SSH-AUTH or SSH prefixes via AT commands ---
         if (host.startsWith("SSH-AUTH:")) {
             m_currentConnection.protocol = "SSH-AUTH"; host = host.mid(9); port = 22;
         }
@@ -562,31 +551,26 @@ void RDevice::at_handle_dial(const QString &target) {
 
     QString proto = m_currentConnection.protocol.toUpper();
 
-    // --- SMART PROTOCOL LOGIC ---
     if (proto.startsWith("SSH") || port == 22) {
         m_isSshMode = true;
         if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
 
         if (proto == "SSH-AUTH") {
-            // Linux Box Mode: Strict cryptographic SSH authentication
             QString user = m_currentConnection.login.isEmpty() ? "guest" : m_currentConnection.login;
             m_ssh->connectToHost(host, port, user, m_currentConnection.password);
         } else {
-            // Retro BBS Mode: Anonymous connection, bypass protocol auth
             m_ssh->connectToHost(host, port, "", "");
         }
     } else {
-        // Telnet Mode
         m_isSshMode = false;
         if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
         tcpSocket->connectToHost(host, port);
     }
 }
 
-
 void RDevice::sendAtResponse(const QString &text) {
+    QMutexLocker locker(&m_bufferMutex);
     if (state == ModemState::StreamMode) {
-        QMutexLocker locker(&m_bufferMutex);
         m_networkToSioBuffer.append(text.toLatin1());
     } else {
         m_txBuffer.append(text.toLatin1());
@@ -616,24 +600,44 @@ void RDevice::loadPhonebook(const QString &path) {
     }
 }
 
-void RDevice::forceCommandMode()
-{
+void RDevice::forceCommandMode(bool sendAlert) {
     if (state == ModemState::StreamMode) {
+        if (sendAlert) {
+            QByteArray alert;
+            alert.append(0x9B);
+            alert.append("*** VIRTUAL MODEM POWERED OFF ***");
+            alert.append(0x9B);
+            alert.append("*** SIO IS OUT OF SYNC ***");
+            alert.append(0x9B);
+
+            if (sio && sio->port()) {
+                sio->port()->writeRawFrame(alert);
+                SioWorker::usleep(50000); // 50ms drain time
+            }
+        }
+
         state = ModemState::CommandMode;
-        m_plusCount = 0;
 
-        // Reset the SioWorker's stream flags and hardware block mode
+        {
+            QMutexLocker locker(&m_bufferMutex);
+            m_txBuffer.clear();
+            m_networkToSioBuffer.clear();
+        }
+
         sio->onStreamFinished();
-
-        qDebug() << "!d" << "[RDevice] Emulation stopped: Forced back to Command Mode.";
+        qDebug() << "!d" << "[RDevice] Exited Stream Mode. Signaled SioWorker to restore SIO state.";
     }
 }
 
-void RDevice::onSocketConnected() { sendResultCode(RESULT_CONNECT); }
+// [FIX] Update Atomic State flag on connect/disconnect
+void RDevice::onSocketConnected() {
+    m_isNetworkConnected = true;
+    sendResultCode(RESULT_CONNECT);
+}
 void RDevice::onSocketDisconnected() {
+    m_isNetworkConnected = false;
     if (m_isSshMode) return;
     sendResultCode(RESULT_NO_CARRIER);
-    // REMOVED: state = ModemState::CommandMode; (Do not kill SIO stream)
 }
 void RDevice::onSocketError(QAbstractSocket::SocketError) {
     if (m_isSshMode) return;
@@ -641,11 +645,14 @@ void RDevice::onSocketError(QAbstractSocket::SocketError) {
 }
 void RDevice::onNewConnection() { }
 
-void RDevice::onSshConnected() { sendResultCode(RESULT_CONNECT); }
+void RDevice::onSshConnected() {
+    m_isNetworkConnected = true;
+    sendResultCode(RESULT_CONNECT);
+}
 void RDevice::onSshDisconnected() {
+    m_isNetworkConnected = false;
     if (!m_isSshMode) return;
     sendResultCode(RESULT_NO_CARRIER);
-    // REMOVED: state = ModemState::CommandMode; (Do not kill SIO stream)
 }
 void RDevice::onSshError(const QString &msg) {
     Q_UNUSED(msg);
@@ -653,10 +660,51 @@ void RDevice::onSshError(const QString &msg) {
     sendResultCode(RESULT_ERROR);
 }
 
-// --- NEW METHOD FOR SIOWORKER TO CALL ---
 QByteArray RDevice::dequeueNetworkData() {
     QMutexLocker locker(&m_bufferMutex);
     QByteArray data = m_networkToSioBuffer;
     m_networkToSioBuffer.clear();
     return data;
+}
+
+void RDevice::dial(const BbsEntry &entry) {
+    m_currentConnection = entry;
+    QString proto = entry.protocol.toUpper();
+    m_isSshMode = proto.startsWith("SSH");
+
+    if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
+    if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+
+    sendAtResponse("\r\nDIALING " + entry.name + "...\r\n");
+
+    if (m_isSshMode) {
+        QString safeUser = entry.login.isEmpty() ? "guest" : entry.login;
+        if (proto == "SSH-AUTH") {
+            m_ssh->connectToHost(entry.ip, entry.port, safeUser, entry.password);
+        } else {
+            m_ssh->connectToHost(entry.ip, entry.port, safeUser, "");
+        }
+    } else {
+        tcpSocket->connectToHost(entry.ip, entry.port);
+    }
+}
+
+void RDevice::hangup() {
+    if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
+    if (m_isSshMode && m_ssh->isConnected()) m_ssh->disconnectFromHost();
+    sendResultCode(RESULT_OK);
+}
+
+void RDevice::injectMacro(char macroType) {
+    if (!m_isNetworkConnected) return; // Ignore if offline
+
+    QString textToSend;
+    if (macroType == 'U' || macroType == 'u') textToSend = m_currentConnection.login;
+    else if (macroType == 'P' || macroType == 'p') textToSend = m_currentConnection.password;
+
+    if (!textToSend.isEmpty()) {
+        QByteArray bytes = textToSend.toUtf8() + "\r";
+        if (m_isSshMode) m_ssh->write(bytes);
+        else tcpSocket->write(bytes);
+    }
 }

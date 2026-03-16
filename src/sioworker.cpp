@@ -120,15 +120,9 @@ void SioWorker::run()
 #endif
     /* Process SIO commands until we're explicitly stopped */
     while (!mustTerminate) {
-
-            // ====================================================================
-            // Stream Mode Handler (High Priority)
-            // ====================================================================
-#ifdef HAS_LIBGPIOD
-        if (aspeqtSettings->serialPortHardwareUart()){
-            checkHardwareInterrupts();
-        }
-#endif
+        // ====================================================================
+        // Stream Mode Handler (High Priority)
+        // ====================================================================
         if (m_isStreaming) {
             bool hasActivity = false;
 
@@ -160,18 +154,25 @@ void SioWorker::run()
                 hasActivity = true;
             }
 
-            // --- CRITICAL FIX: The Dynamic Idle Sleep ---
-            // Replaces the blind 100-microsecond CPU-burning spin.
-            if (!hasActivity) {
-                // Yield the CPU core completely for 2 milliseconds.
-                // At 19200 baud, a maximum of 4 bytes can arrive during this time.
-                // Every hardware UART (Pi) and USB adapter (Windows/Mac) has a
-                // hardware FIFO safely buffering the data while the CPU rests.
-                usleep(2000);
+            // --- CRITICAL FIX: The Dynamic GPIO Sleep ---
+            // If we did nothing this loop, we sleep for 1ms INSIDE the kernel poll.
+            // If the Atari drops the line during this 1ms, it instantly wakes us!
+            int idleSleep = hasActivity ? 0 : 1;
+
+#ifdef HAS_LIBGPIOD
+            if (aspeqtSettings->serialPortHardwareUart()){
+                checkHardwareInterrupts(idleSleep);
+            } else {
+                if (!hasActivity) usleep(1000);
             }
+#else
+            if (!hasActivity) usleep(1000);
+#endif
 
             continue;
         }
+
+
 
         // ====================================================================
         // Standard SIO Command Handler
@@ -568,19 +569,24 @@ void SioWorker::onChangeBaudRate(int baudRate)
     if (port()) {
         qDebug() << "[SioWorker] Changing Baud Rate to:" << baudRate;
 
-        if (baudRate != 19200) {
-            port()->setSpeed(baudRate);
-        }
+        // Force Linux kernel to reset the UART registers cleanly
+        port()->setSpeed(baudRate);
 
 #ifdef HAS_LIBGPIOD
-        // <--- ADDED: PURGE THE STALE EVENTS --->
-        // Read any pending edges left over from the Command Block
+        // <--- FIXED: COMPLETE KERNEL PURGE --->
+        // Loop until poll() returns 0 to ensure EVERY stale edge is removed,
+        // even if the copper wire bounced 50 times during the SIO command!
         if (m_gpioRequest) {
             ::gpiod::edge_event_buffer purge_buffer(16);
-            int purge_ret = poll(&m_gpioPollFd, 1, 0);
-            if (purge_ret > 0) {
+            int purged_count = 0;
+
+            while (poll(&m_gpioPollFd, 1, 0) > 0) {
                 m_gpioRequest->read_edge_events(purge_buffer);
-                qDebug() << "!d" << "[SioWorker] Purged stale COMMAND edges from kernel queue.";
+                purged_count++;
+            }
+
+            if (purged_count > 0) {
+                qDebug() << "!d" << "[SioWorker] Purged all stale COMMAND edges from kernel queue.";
             }
         }
         m_streamGuardTimer.start();
@@ -670,11 +676,13 @@ void SioWorker::initHardwareInterrupts()
 }
 
 
-void SioWorker::checkHardwareInterrupts()
+
+void SioWorker::checkHardwareInterrupts(int timeout_ms)
 {
     if (!m_gpioRequest) return;
 
-    int ret = poll(&m_gpioPollFd, 1, 0);
+    // Pass the dynamic timeout to the kernel poll!
+    int ret = poll(&m_gpioPollFd, 1, timeout_ms);
 
     if (ret > 0) {
         ::gpiod::edge_event_buffer buffer(16);
@@ -684,20 +692,15 @@ void SioWorker::checkHardwareInterrupts()
             if (event.type() == ::gpiod::edge_event::event_type::FALLING_EDGE) {
 
                 if (m_isStreaming) {
-                    // The Linux kernel's native debounce guarantees this is a stable,
-                    // true line drop, not an electrical bounce. No manual sleep required!
-
                     qDebug() << "!d" << "[SioWorker] >>> ATARI HANGUP DETECTED <<< SIO COMMAND line dropped cleanly. Exiting Stream.";
 
                     deviceMutex->lock();
                     SioDevice *rdev = devices[0x50]; // Grab R: Device
 
-                    // Safely cast to RDevice to call forceCommandMode()
                     if (rdev) {
                         RDevice *r = qobject_cast<RDevice*>(rdev);
-                        if (r) r->forceCommandMode();
+                        if (r) r->forceCommandMode(false);
                     }
-
                     deviceMutex->unlock();
                     break;
                 }
@@ -705,5 +708,6 @@ void SioWorker::checkHardwareInterrupts()
         }
     }
 }
+
 
 #endif
