@@ -650,7 +650,7 @@ void SioWorker::initHardwareInterrupts()
                     line_offset,
                     ::gpiod::line_settings()
                         .set_direction(::gpiod::line::direction::INPUT)
-                        .set_edge_detection(::gpiod::line::edge::RISING)
+                        .set_edge_detection(::gpiod::line::edge::FALLING)
                         .set_bias(::gpiod::line::bias::PULL_UP)
                         .set_debounce_period(std::chrono::microseconds(100)) // <--- THE KERNEL DEBOUNCE
                     )
@@ -681,7 +681,7 @@ void SioWorker::checkHardwareInterrupts()
         m_gpioRequest->read_edge_events(buffer);
 
         for (const auto& event : buffer) {
-            if (event.type() == ::gpiod::edge_event::event_type::RISING_EDGE) {
+            if (event.type() == ::gpiod::edge_event::event_type::FALLING_EDGE) {
 
                 if (m_isStreaming) {
                     // The Linux kernel's native debounce guarantees this is a stable,
