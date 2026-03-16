@@ -26,15 +26,17 @@ This version migrates the codebase to **Qt 6**, fixing critical stability issues
 * **W: (Network Device):** A native SIO implementation of the Network Streaming Device. Supports HTTP and FTP (via system `curl`) for downloading data directly to the Atari. Includes EOL translation between Unix (LF) and ATASCII (EOL).
 * **Y: (Clipboard Device):** Bridges the Atari to your modern OS clipboard. Use `OPEN #1,4,0,"Y:"` to read the PC clipboard or `OPEN #1,8,0,"Y:"` to write to it.
 
-#### 4. Modem RS232 Bridge
-* **Hayes Emulation:** Bridges a secondary serial port to the Internet, allowing you to use a real Atari and 850 interface to access modern BBSes.
+#### 4. Legacy Modem Bridge (RS232 to TCP)
+* **Hayes Emulation:** Bridges a secondary PC serial port to the Internet, allowing you to use a physical Atari 850 Interface, P:R: Connection, or R-Verter to access modern BBSes.
 * **BBS Phonebook:** Integrated XML phonebook support for quick dialing.
-* **Macros & Automation:** Built-in Macro support (Auto-User/Auto-Pass) to speed up BBS logins.
+* **Macros & Automation:** Built-in Macro support (Auto-User/Auto-Pass) to speed up BBS logins using `ESC-U` and `ESC-P`.
 
-#### 5. Experimental 850 R: Emulation
-* **Direct Hardware Emulation:** A kernel-bypass, SIO-level emulation of the **Atari 850 Interface Module**.
-* **TCP/IP Integration:** Maps the 850 driver's RS-232 commands directly to TCP/IP sockets for modern "modem-less" networking.
-* **Stream Mode:** Optimized for Raspberry Pi 5 native UARTs, providing FujiNet-level precision for R: device polls.
+#### 5. Native 850 R: Device Emulation (Virtual Modem)
+* **Hardware-Free Telecommunications:** A kernel-bypass, SIO-level emulation of the **Atari 850 Interface Module**. It intercepts SIO Poll (`$40`) and Stream (`$58`) commands, allowing the Atari to connect directly to Telnet and SSH hosts without physical RS-232 hardware.
+* **Smart Protocols:** Features native SSH authentication (Linux boxes) and raw Telnet parsing (Retro BBSes), mapping standard AT commands directly to TCP/IP sockets.
+* **Dynamic Baud Rates:** Automatically handles the Atari's 19200 baud SIO initialization and dynamically down-shifts to 9600 baud for concurrent stream mode (highly recommended for Ice-T and BobTerm).
+* **⚠️ STRICT HARDWARE REQUIREMENTS:** This feature is **incompatible** with standard USB SIO2PC adapters due to USB polling latency. It requires a Raspberry Pi 5 using Direct Hardware UART. The Atari's SIO `COMMAND` line must be physically wired to **GPIO 18** via a 3.3v-5v logic level shifter to trigger microsecond-level hardware interrupts.
+* **Documentation:** Please refer to the [Raspberry Pi Hardware Guide](doc/RaspberryPi.pdf) for SIO-to-GPIO wiring diagrams and UART configuration.
 
 ---
 
@@ -56,11 +58,11 @@ Support and inquiries can be made on our BBS or via our GitHub issues page. We l
 ### Building from Source
 **Requirements:**
 * CMake 3.16+
-* Qt 6.x Development Libraries
+* Qt 6.x Development Libraries (`qt6-base-dev`, `libqt6network6`, etc.)
+* `libgpiod` C++ v2 bindings (Required on Linux for R: Device interrupts)
 * C++17 Compiler
 
+**Debian/Ubuntu/Raspberry Pi OS Dependencies:**
 ```bash
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-cmake --build . --parallel
+sudo apt update
+sudo apt install build-essential cmake qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 libqt6network6 libgpiod-dev libgpiodcxx-dev
