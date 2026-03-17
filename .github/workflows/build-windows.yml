@@ -40,29 +40,28 @@ jobs:
       run: cmake --build build --parallel
 
     - name: Deploy
-      shell: pwsh
       run: |
-        New-Item -ItemType Directory -Force deploy
-        Copy-Item build/AspeQt.exe deploy/
-        # Copy required MinGW/Qt DLLs
-        $mingw = "D:/a/_temp/msys64/mingw64/bin"
-        $qtPlugins = "D:/a/_temp/msys64/mingw64/share/qt6/plugins"
-        # Core MinGW runtime
-        Copy-Item "$mingw/libgcc_s_seh-1.dll" deploy/
-        Copy-Item "$mingw/libstdc++-6.dll" deploy/
-        Copy-Item "$mingw/libwinpthread-1.dll" deploy/
-        # Qt6 core
-        Get-ChildItem "$mingw/Qt6*.dll" | Copy-Item -Destination deploy/
-        # libssh and deps
-        Copy-Item "$mingw/libssh.dll" deploy/ -ErrorAction SilentlyContinue
-        Copy-Item "$mingw/libcrypto-*.dll" deploy/ -ErrorAction SilentlyContinue
-        # zlib
-        Copy-Item "$mingw/zlib1.dll" deploy/ -ErrorAction SilentlyContinue
+        mkdir -p deploy
+        cp build/AspeQt.exe deploy/
+        # Use ldd to find ALL required DLLs from mingw64
+        ldd build/AspeQt.exe | grep '/mingw64/' | awk '{print $3}' | while read dll; do
+          cp "$dll" deploy/
+        done
         # Qt plugins
-        New-Item -ItemType Directory -Force deploy/platforms
-        Copy-Item "$qtPlugins/platforms/qwindows.dll" deploy/platforms/
-        New-Item -ItemType Directory -Force deploy/styles
-        Copy-Item "$qtPlugins/styles/qmodernwindowsstyle.dll" deploy/styles/ -ErrorAction SilentlyContinue
+        QTPLUGINS="/mingw64/share/qt6/plugins"
+        mkdir -p deploy/platforms deploy/styles deploy/tls deploy/imageformats
+        cp "$QTPLUGINS/platforms/qwindows.dll" deploy/platforms/
+        # Copy plugin deps too
+        for dir in platforms styles tls imageformats; do
+          if [ -d "$QTPLUGINS/$dir" ]; then
+            cp "$QTPLUGINS/$dir"/*.dll deploy/$dir/ 2>/dev/null || true
+            for pdll in deploy/$dir/*.dll; do
+              ldd "$pdll" 2>/dev/null | grep '/mingw64/' | awk '{print $3}' | while read dll; do
+                cp -n "$dll" deploy/ 2>/dev/null || true
+              done
+            done
+          fi
+        done
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
