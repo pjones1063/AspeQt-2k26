@@ -55,6 +55,7 @@ if(WIN32)
     list(FILTER PROJECT_SOURCES EXCLUDE REGEX ".*unix.*")
 elseif(UNIX)
     list(FILTER PROJECT_SOURCES EXCLUDE REGEX ".*win32.*")
+    list(FILTER PROJECT_SOURCES EXCLUDE REGEX ".*windows.*")
 endif()
 
 # --- 5. Add the Executable ---
