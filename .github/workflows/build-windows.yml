@@ -9,31 +9,60 @@ jobs:
   build:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        shell: msys2 {0}
+
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install Qt 6
-      uses: jurplel/install-qt-action@v4
+    - name: Setup MSYS2
+      uses: msys2/setup-msys2@v2
       with:
-        version: '6.7.*'
-        modules: 'qtserialport'
-
-    - name: Install libssh via vcpkg
-      run: vcpkg install libssh:x64-windows
+        msystem: MINGW64
+        update: false
+        install: >-
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-qt6-base
+          mingw-w64-x86_64-qt6-serialport
+          mingw-w64-x86_64-qt6-5compat
+          mingw-w64-x86_64-libssh
+          mingw-w64-x86_64-zlib
+          make
 
     - name: Configure CMake
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release `
-          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+        cmake -B build -G "MSYS Makefiles" \
+          -DCMAKE_BUILD_TYPE=Release
 
     - name: Build
-      run: cmake --build build --config Release --parallel
+      run: cmake --build build --parallel
 
-    - name: Deploy Qt DLLs
+    - name: Deploy
+      shell: pwsh
       run: |
-        mkdir deploy
-        copy build\Release\AspeQt.exe deploy\
-        windeployqt deploy\AspeQt.exe
+        New-Item -ItemType Directory -Force deploy
+        Copy-Item build/AspeQt.exe deploy/
+        # Copy required MinGW/Qt DLLs
+        $mingw = "D:/a/_temp/msys64/mingw64/bin"
+        $qtPlugins = "D:/a/_temp/msys64/mingw64/share/qt6/plugins"
+        # Core MinGW runtime
+        Copy-Item "$mingw/libgcc_s_seh-1.dll" deploy/
+        Copy-Item "$mingw/libstdc++-6.dll" deploy/
+        Copy-Item "$mingw/libwinpthread-1.dll" deploy/
+        # Qt6 core
+        Get-ChildItem "$mingw/Qt6*.dll" | Copy-Item -Destination deploy/
+        # libssh and deps
+        Copy-Item "$mingw/libssh.dll" deploy/ -ErrorAction SilentlyContinue
+        Copy-Item "$mingw/libcrypto-*.dll" deploy/ -ErrorAction SilentlyContinue
+        # zlib
+        Copy-Item "$mingw/zlib1.dll" deploy/ -ErrorAction SilentlyContinue
+        # Qt plugins
+        New-Item -ItemType Directory -Force deploy/platforms
+        Copy-Item "$qtPlugins/platforms/qwindows.dll" deploy/platforms/
+        New-Item -ItemType Directory -Force deploy/styles
+        Copy-Item "$qtPlugins/styles/qmodernwindowsstyle.dll" deploy/styles/ -ErrorAction SilentlyContinue
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
