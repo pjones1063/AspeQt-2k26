@@ -468,8 +468,12 @@ bool CassetteWorker::loadCasImage(const QString &fileName)
             mTotalDuration += record.totalDuration;
             mRecords.append(record);
         } else {
-            qCritical() << "!e" << tr("Cannot open '%1': Unknown chunk header %2.").arg(fileName).arg(magic);
-            return false;
+            // Skip unsupported chunks (fsk, pwms, pwmc, pwml, pwmd, etc.)
+            // with a warning — they are not needed for SIO/UART playback.
+            char id[5] = {(char)(magic&0xFF), (char)((magic>>8)&0xFF),
+                          (char)((magic>>16)&0xFF), (char)((magic>>24)&0xFF), 0};
+            qWarning() << "!n" << tr("[Cassette] Skipping unsupported chunk '%1' (%2 bytes)")
+                       .arg(id).arg(length);
         }
 
     } while (!casFile.atEnd());
