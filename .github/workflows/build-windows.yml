@@ -1,0 +1,42 @@
+name: Build Windows
+
+on:
+  push:
+    branches: [ fix/skip-unsupported-cas-chunks ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Qt 6
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.7.*'
+        modules: 'qtserialport'
+
+    - name: Install libssh via vcpkg
+      run: vcpkg install libssh:x64-windows
+
+    - name: Configure CMake
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release `
+          -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+    - name: Build
+      run: cmake --build build --config Release --parallel
+
+    - name: Deploy Qt DLLs
+      run: |
+        mkdir deploy
+        copy build\Release\AspeQt.exe deploy\
+        windeployqt deploy\AspeQt.exe
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: AspeQt-Windows
+        path: deploy/
