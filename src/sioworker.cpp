@@ -173,7 +173,6 @@ void SioWorker::run()
         }
 
 
-
         // ====================================================================
         // Standard SIO Command Handler
         // ====================================================================
@@ -573,22 +572,8 @@ void SioWorker::onChangeBaudRate(int baudRate)
         port()->setSpeed(baudRate);
 
 #ifdef HAS_LIBGPIOD
-        // <--- FIXED: COMPLETE KERNEL PURGE --->
-        // Loop until poll() returns 0 to ensure EVERY stale edge is removed,
-        // even if the copper wire bounced 50 times during the SIO command!
-        if (m_gpioRequest) {
-            ::gpiod::edge_event_buffer purge_buffer(16);
-            int purged_count = 0;
-
-            while (poll(&m_gpioPollFd, 1, 0) > 0) {
-                m_gpioRequest->read_edge_events(purge_buffer);
-                purged_count++;
-            }
-
-            if (purged_count > 0) {
-                qDebug() << "!d" << "[SioWorker] Purged all stale COMMAND edges from kernel queue.";
-            }
-        }
+        // Start the blind-spot timer so we don't instantly read the LOW state
+        // from the Atari's stream negotiation command.
         m_streamGuardTimer.start();
 #endif
 
@@ -623,7 +608,6 @@ void SioWorker::onStreamFinished()
 void SioWorker::restoreStandardBaudRate()
 {
     if (port()) {
-        // Standard SIO is usually 19200
         port()->setSpeed(19200);
     }
 }
@@ -638,7 +622,6 @@ void SioWorker::restoreStandardBaudRate()
 void SioWorker::initHardwareInterrupts()
 {
     try {
-        // Release any existing lock on the GPIO pin before claiming it again
         if (m_gpioRequest) {
             m_gpioRequest.reset();
         }
@@ -648,7 +631,9 @@ void SioWorker::initHardwareInterrupts()
 
         ::gpiod::chip gpio_chip(chip_path);
 
-        // Native C++ v2 Builder Pattern with Kernel-level Debounce
+        // --- THE "LEVEL CHECK" SETUP ---
+        // Just set it as an INPUT with a PULL_UP.
+        // No edge detection or debounce needed.
         m_gpioRequest = std::make_unique<::gpiod::line_request>(
             gpio_chip.prepare_request()
                 .set_consumer("AspeQt_Command_Watcher")
@@ -656,56 +641,57 @@ void SioWorker::initHardwareInterrupts()
                     line_offset,
                     ::gpiod::line_settings()
                         .set_direction(::gpiod::line::direction::INPUT)
-                        .set_edge_detection(::gpiod::line::edge::FALLING)
                         .set_bias(::gpiod::line::bias::PULL_UP)
-                        .set_debounce_period(std::chrono::microseconds(100)) // <--- THE KERNEL DEBOUNCE
                     )
                 .do_request()
             );
 
-        // Tie the file descriptor to our poll struct for the worker loop
-        m_gpioPollFd.fd = m_gpioRequest->fd();
-        m_gpioPollFd.events = POLLIN;
-
-        qDebug() << "!i" << "[SioWorker] Hardware interrupts enabled on Pi 5 GPIO 18 using libgpiod v2.";
+        qDebug() << "!i" << "[SioWorker] Hardware polling enabled on Pi 5 GPIO 18 using libgpiod v2.";
 
     } catch (const std::exception& e) {
-        qCritical() << "!e" << "[SioWorker] Failed to setup Pi 5 hardware interrupts:" << e.what();
+        qCritical() << "!e" << "[SioWorker] Failed to setup Pi 5 hardware GPIO:" << e.what();
         m_gpioRequest.reset();
     }
 }
-
 
 
 void SioWorker::checkHardwareInterrupts(int timeout_ms)
 {
     if (!m_gpioRequest) return;
 
-    // Pass the dynamic timeout to the kernel poll!
-    int ret = poll(&m_gpioPollFd, 1, timeout_ms);
+    if (timeout_ms > 0) {
+        QThread::msleep(timeout_ms);
+    }
 
-    if (ret > 0) {
-        ::gpiod::edge_event_buffer buffer(16);
-        m_gpioRequest->read_edge_events(buffer);
+    // --- CRITICAL FIX: The Guard Timer ---
+    // Ignore the pin state for the first 250ms of stream mode.
+    // This allows the Atari to safely release the SIO COMMAND line.
+    if (m_isStreaming && m_streamGuardTimer.isValid() && m_streamGuardTimer.elapsed() < 250) {
+        return;
+    }
 
-        for (const auto& event : buffer) {
-            if (event.type() == ::gpiod::edge_event::event_type::FALLING_EDGE) {
+    try {
+        // Read the instantaneous physical voltage level of GPIO 18
+        auto pin_state = m_gpioRequest->get_value(18);
 
-                if (m_isStreaming) {
-                    qDebug() << "!d" << "[SioWorker] >>> ATARI HANGUP DETECTED <<< SIO COMMAND line dropped cleanly. Exiting Stream.";
+        // In libgpiod v2, pulling a PULL_UP line to ground makes it INACTIVE (0)
+        if (pin_state == ::gpiod::line::value::INACTIVE) {
 
-                    deviceMutex->lock();
-                    SioDevice *rdev = devices[0x50]; // Grab R: Device
+            if (m_isStreaming) {
+                qDebug() << "!d" << "[SioWorker] >>> SIO COMMAND LINE IS LOW <<< Atari is asserting command. Exiting Stream.";
 
-                    if (rdev) {
-                        RDevice *r = qobject_cast<RDevice*>(rdev);
-                        if (r) r->forceCommandMode(false);
-                    }
-                    deviceMutex->unlock();
-                    break;
+                deviceMutex->lock();
+                SioDevice *rdev = devices[0x50]; // Grab R: Device
+
+                if (rdev) {
+                    RDevice *r = qobject_cast<RDevice*>(rdev);
+                    if (r) r->forceCommandMode(false);
                 }
+                deviceMutex->unlock();
             }
         }
+    } catch (const std::exception& e) {
+        qCritical() << "!e" << "[SioWorker] Failed to read GPIO state:" << e.what();
     }
 }
 

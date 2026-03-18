@@ -60,12 +60,13 @@ private slots:
 private:
     QSerialPort *m_serial;
     QTcpSocket *m_socket;
-    SshClient *m_ssh; // [NEW] The SSH Controller
-
+    SshClient *m_ssh;
     bool m_isActive;
-    bool m_isConnected;     // True = Online (Data Mode)
-    bool m_isSshMode;       // [NEW] True = SSH, False = TCP/Telnet
-
+    bool m_isConnected;
+    bool m_isSshMode;
+    enum class TelnetState { Normal, IacReceived, Will, Wont, Do, Dont, SubNegotiation, SubIac };
+    TelnetState m_telnetState = TelnetState::Normal;
+    void parseTelnet(const QByteArray &data);
     QByteArray m_serialBuffer;
     QByteArray m_escapeBuffer;
     QTimer *m_escapeTimer;
@@ -73,18 +74,14 @@ private:
     bool m_localEcho = false;
     bool m_isTelnetMode = true;
     bool m_suppressCarrierMessage = false;
-
     QString m_currentLogin;
     QString m_currentPassword;
-
     void processAtCommand(const QByteArray &cmd);
     void sendToSerial(const QByteArray &data);
     void connectTo(const QString &host, int port);
-
     QList<BbsEntry> m_phonebook;
     BbsEntry m_currentConnection;
     bool m_escPressed = false;
-
     void loadPhonebook(const QString &path);
     BbsEntry findBbsByName(const QString &name);
 };

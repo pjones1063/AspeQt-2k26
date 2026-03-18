@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QMessageBox>
+#include <QCheckBox>
 
 OptionsDialog::OptionsDialog(QWidget *parent) :
     QDialog(parent),
@@ -83,13 +84,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     // Trigger initial state for Modem UI
     // Note: This function now checks both boxes to determine phonebook state
     on_modemEnableBox_toggled(aspeqtSettings->isModemBridgeEnabled());
-
-    // If R-Device is specifically enabled, make sure we run its logic too
-    // to potentially disable the conflicting bridge controls
-    if (aspeqtSettings->isRDeviceEnabled()) {
-        on_modemRBox_toggled(true);
-    }
-
 
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
     m_ui->serialPortFallingEdge->setChecked(aspeqtSettings->serialPortTriggerOnFallingEdge());
@@ -190,6 +184,10 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     else
     {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(true);
+    }
+
+    if (aspeqtSettings->isRDeviceEnabled()) {
+        on_modemRBox_toggled(true);
     }
 }
 
@@ -352,28 +350,20 @@ void OptionsDialog::on_modemRBox_toggled(bool checked)
         m_ui->modemPhonebookPathEdit->setEnabled(true);
         m_ui->modemPhonebookBrowseBtn->setEnabled(true);
 
-        // 4. --- NEW: Force standard 19200 baud for Altirra 850 compatibility ---
-        // Uncheck and disable "Use non-standard speeds" (Pokey divisors) [cite: 27]
-        m_ui->serialPortUseDivisorsBox->setChecked(false);
-        m_ui->serialPortUseDivisorsBox->setEnabled(false);
-
-        // Set High Speed Mode Baud Rate to 19200 (Index 0) and freeze the dropdown [cite: 25]
-        m_ui->serialPortBaudCombo->setCurrentIndex(0);
-        m_ui->serialPortBaudCombo->setEnabled(false);
+        // (Step 4 forcing standard 19200 baud removed due to stable hardware interrupts)
     }
     else {
         // If unchecking R: Device, check if Modem Bridge is enabled to decide Phonebook state
         bool bridgeEnabled = m_ui->modemEnableBox->isChecked();
         m_ui->modemPhonebookPathEdit->setEnabled(bridgeEnabled);
         m_ui->modemPhonebookBrowseBtn->setEnabled(bridgeEnabled);
-
-        // --- NEW: Restore standard SIO configuration UI elements ---
-        m_ui->serialPortUseDivisorsBox->setEnabled(true);
-
-        // The baud combo should only re-enable if non-standard divisors are NOT checked
-        m_ui->serialPortBaudCombo->setEnabled(!m_ui->serialPortUseDivisorsBox->isChecked());
     }
 }
+
+
+
+
+
 void OptionsDialog::on_mDirectUart_toggled(bool checked)
 {
     // If Hardware UART is checked, disable the artificial delay spinboxes entirely
@@ -406,16 +396,32 @@ void OptionsDialog::OptionsDialog_accepted()
                               tr("You cannot use the same Serial Port (%1) for both\nSIO Emulation and the Modem Bridge.\n\nPlease select a different port for the Modem.").arg(sioPort));
         return; // Do not accept(), keep dialog open
     }
-    // -------------------------------------------
 
-    // --- WARNING: Experimental R: Device ---
-    // Added warning per request for R: device enablement
-    if (m_ui->modemRBox->isChecked()) {
-        QMessageBox::warning(this, tr("Experimental Feature"),
-                             tr("The 850 R: Device requires a Raspberry Pi using raw UART and a GPIO interrupt. It is incompatible with standard USB SIO2PC adapters.<br><br>"
-                                "For wiring and setup instructions, please see the <a href=\"https://github.com/pjones1063/AspeQt-2k26/blob/main/doc/RaspberryPi.pdf\">Raspberry Pi Hardware Guide</a>."));
+    // --- WARNING: R: Device ---
+    if (m_ui->modemRBox->isChecked() && aspeqtSettings->showRDeviceWarning()) {
+        QMessageBox msgBox(this);
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowTitle(tr("850 R: Device Emulation"));
+        msgBox.setText(tr("The 850 R: Device requires a Raspberry Pi using raw UART and a GPIO interrupt. It is incompatible with standard USB SIO2PC adapters.<br><br>"
+                          "For wiring and setup instructions, please see the <a href=\"https://github.com/pjones1063/AspeQt-2k26/blob/main/doc/RaspberryPi.pdf\">Raspberry Pi Hardware Guide</a>."));
+
+        // Ensure links are clickable
+        msgBox.setTextFormat(Qt::RichText);
+        msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
+
+        // Add the "Don't show again" checkbox
+        QCheckBox *cb = new QCheckBox(tr("Don't show this warning again"));
+        msgBox.setCheckBox(cb);
+
+        msgBox.exec();
+
+        // Save the user's preference if they checked the box
+        if (cb->isChecked()) {
+            aspeqtSettings->setShowRDeviceWarning(false);
+        }
     }
     // ---------------------------------------
+
 
     aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());

@@ -86,6 +86,18 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
                 if (c == 0x0D || (quint8)c == 0x9B) {
                     emit executeAtCommand(m_atCmdBuffer);
                     m_atCmdBuffer.clear();
+                }    else if (c == 8 || c == 126 || c == 127) { // Backspace or Delete
+                        if (!m_atCmdBuffer.isEmpty()) {
+                            m_atCmdBuffer.chop(1); // Remove from the internal command buffer
+                            if (echoEnabled) {
+                                QMutexLocker locker(&m_bufferMutex);
+                                // Visually erase the character: Backspace, Space, Backspace
+                                m_networkToSioBuffer.append(char(8));
+                                m_networkToSioBuffer.append(' ');
+                                m_networkToSioBuffer.append(char(8));
+                        }
+                    }
+
                 } else {
                     m_atCmdBuffer.append(c);
                 }
@@ -183,9 +195,9 @@ void RDevice::handleConfigure(quint8 aux1, quint8 aux2) {
 
 void RDevice::sendDataToAtari(const QByteArray &data)
 {
-    SioWorker::usleep(2000);
+    // SioWorker::usleep(2000);
     sio->port()->writeComplete();
-    SioWorker::usleep(2000);
+    // SioWorker::usleep(2000);
     sio->port()->writeDataFrame(data);
 }
 
@@ -298,7 +310,7 @@ void RDevice::handleStream() {
 
     sio->onChangeBaudRate(m_currentBaudRate);
 
-    SioWorker::usleep(2000);
+    SioWorker::usleep(1100);
     if (sio->port()) {
         sio->port()->readRawFrame(256, false);
     }
@@ -324,11 +336,20 @@ void RDevice::handleWrite(quint16 aux) {
         if (c == 0x0D || (quint8)c == 0x9B) {
             emit executeAtCommand(m_atCmdBuffer);
             m_atCmdBuffer.clear();
-        } else {
+        }
+        else if (c == 8 || c == 126 || c == 127) {
+                if (!m_atCmdBuffer.isEmpty()) {
+                    m_atCmdBuffer.chop(1); // Remove from the actual command buffer
+                    if (echoEnabled) {
+                        // Visually erase the character: Backspace, Print Space, Backspace
+                        sendAtResponse(QByteArray(1, 8) + " " + QByteArray(1, 8));
+                    }
+                }
+        }
+        else {
             m_atCmdBuffer.append(c);
         }
     }
-
     sio->port()->writeComplete();
 }
 
@@ -460,6 +481,16 @@ void RDevice::parseTelnet(const QByteArray &data) {
         case TelnetState::Wont:
         case TelnetState::Do:
         case TelnetState::Dont:
+            // <-- The rejection logic belongs out here in the main state switch!
+            if (m_telnetState == TelnetState::Will || m_telnetState == TelnetState::Do) {
+                QByteArray reject;
+                reject.append((char)0xFF);
+                reject.append(m_telnetState == TelnetState::Will ? (char)0xFE : (char)0xFC); // DONT or WONT
+                reject.append((char)byte);
+                if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
+                    tcpSocket->write(reject);
+                }
+            }
             m_telnetState = TelnetState::Normal;
             break;
         case TelnetState::SubNegotiation:
@@ -467,8 +498,7 @@ void RDevice::parseTelnet(const QByteArray &data) {
             break;
         case TelnetState::SubIac:
             if (byte == 0xF0) m_telnetState = TelnetState::Normal;
-            else if (byte == 0xFF) m_telnetState = TelnetState::SubNegotiation;
-            else m_telnetState = TelnetState::SubNegotiation;
+            else if (byte != 0xFF) m_telnetState = TelnetState::SubNegotiation;
             break;
         }
     }
@@ -478,7 +508,19 @@ void RDevice::processAtCommand(const QString &rawCmd) {
     QString cmd = rawCmd.trimmed().toUpper();
     if (cmd.startsWith("AT")) cmd.remove(0, 2);
 
-    if (cmd.startsWith("DT")) {
+    if (cmd.contains("E0")) {
+        echoEnabled = false; cmd.replace("E0", "");
+    }
+    else if (cmd.contains("E1")) {
+        echoEnabled = true; cmd.replace("E1", "");
+    }
+    if (cmd.contains("V0")) {
+        verboseResponses = false; cmd.replace("V0", "");
+    }
+    else if (cmd.contains("V1")) {
+        verboseResponses = true; cmd.replace("V1", "");
+    }
+    else if (cmd.startsWith("DT")) {
         QString target = cmd.mid(2).trimmed();
         at_handle_dial(target);
     }
@@ -507,6 +549,7 @@ void RDevice::sendResultCode(int code) {
     if (verboseResponses) {
         if (code == RESULT_OK) resp = "\r\nOK\r\n";
         else if (code == RESULT_CONNECT) resp = "\r\nCONNECT\r\n";
+        else if (code == RESULT_RING) resp = "\r\nRING\r\n";
         else if (code == RESULT_NO_CARRIER) resp = "\r\nNO CARRIER\r\n";
         else if (code == RESULT_ERROR) resp = "\r\nERROR\r\n";
     } else {
@@ -612,12 +655,11 @@ void RDevice::forceCommandMode(bool sendAlert) {
 
             if (sio && sio->port()) {
                 sio->port()->writeRawFrame(alert);
-                SioWorker::usleep(50000); // 50ms drain time
+                SioWorker::usleep(5000);
             }
         }
 
         state = ModemState::CommandMode;
-
         {
             QMutexLocker locker(&m_bufferMutex);
             m_txBuffer.clear();
@@ -625,6 +667,7 @@ void RDevice::forceCommandMode(bool sendAlert) {
         }
 
         sio->onStreamFinished();
+
         qDebug() << "!d" << "[RDevice] Exited Stream Mode. Signaled SioWorker to restore SIO state.";
     }
 }
@@ -643,7 +686,18 @@ void RDevice::onSocketError(QAbstractSocket::SocketError) {
     if (m_isSshMode) return;
     sendResultCode(RESULT_ERROR);
 }
-void RDevice::onNewConnection() { }
+
+void RDevice::onNewConnection() {
+    if (!pendingSocket) {
+        pendingSocket = tcpServer->nextPendingConnection();
+        sendResultCode(RESULT_RING);
+    } else {
+        QTcpSocket *temp = tcpServer->nextPendingConnection();
+        temp->disconnectFromHost();
+        temp->deleteLater();
+    }
+}
+
 
 void RDevice::onSshConnected() {
     m_isNetworkConnected = true;

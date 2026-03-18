@@ -112,6 +112,7 @@ AspeQtSettings::AspeQtSettings()
     mDisablePicoHiSpeed = mSettings->value("DisablePicoHiSpeed", false).toBool();
     mTranslateEolOnPost = mSettings->value("PipeNetwork/TranslateEolOnPost", true).toBool();
     mTranslateEolOnGet = mSettings->value("PipeNetwork/TranslateEolOnGet", false).toBool();
+    mShowRDeviceWarning = mSettings->value("ShowRDeviceWarning", true).toBool();
 
     // Modem Bridge Defaults
     mModemBridgeEnabled = mSettings->value("ModemBridge/Enabled", false).toBool();
@@ -1030,3 +1031,11 @@ void AspeQtSettings::setLastRclDir(const QString &dir)
     if(mSessionFileName == "") mSettings->setValue("LastRclDir", dir);
 }
 
+bool AspeQtSettings::showRDeviceWarning() {
+    return mShowRDeviceWarning;
+}
+
+void AspeQtSettings::setShowRDeviceWarning(bool show) {
+    mShowRDeviceWarning = show;
+    if(mSessionFileName == "") mSettings->setValue("ShowRDeviceWarning", mShowRDeviceWarning);
+}

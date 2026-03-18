@@ -85,6 +85,7 @@ void ModemBridge::stop() {
     m_isConnected = false;
 }
 
+
 // ============================================================================
 // DATA ROUTING (Serial -> Internet)
 // ============================================================================
@@ -100,8 +101,8 @@ void ModemBridge::onSerialDataReceived() {
         emit traceData(m_isSshMode ? "TX (SSH)" : "TX (TCP)", data);
 
         for (char c : data) {
-            // Atari Backspace Fix (126/127 -> 8)
-            if (c == 126 || c == 127) c = 8;
+            // Atari Backspace Fix (126/127 -> 127 for modern Telnet/SSH/Linux)
+            if (c == 126 || c == 127) c = 127;
 
             // 1. ESCAPE SEQUENCE (+++)
             if (c == '+') {
@@ -149,22 +150,28 @@ void ModemBridge::onSerialDataReceived() {
         // --- NEW: Trace AT Commands so you can see what you type ---
         emit traceData("TX (CMD)", data);
 
-        if (m_localEcho) sendToSerial(data); // Changed to sendToSerial
-
         for (char c : data) {
             if (c == '\r' || c == 155) {
-                sendToSerial("\n"); // Changed to sendToSerial
+                if (m_localEcho) {
+                    sendToSerial("\r\n"); // Cleanly echo the carriage return
+                }
                 processAtCommand(m_serialBuffer);
                 m_serialBuffer.clear();
             } else if (c != '\n') {
                 if (c == 126 || c == 127 || c == 8) {
                     if (!m_serialBuffer.isEmpty()) {
                         m_serialBuffer.chop(1);
-                        sendToSerial(QByteArray(1, 8)); // BS
-                        sendToSerial(" ");              // Space
-                        sendToSerial(QByteArray(1, 8)); // BS
+                        if (m_localEcho) {
+                            // Visually erase the character: Backspace, Space, Backspace
+                            sendToSerial(QByteArray(1, 8)); // BS (UNCOMMENTED!)
+                            sendToSerial(" ");              // Space
+                            sendToSerial(QByteArray(1, 8)); // BS
+                        }
                     }
                 } else {
+                    if (m_localEcho) {
+                        sendToSerial(QByteArray(1, c)); // Echo the typed character
+                    }
                     m_serialBuffer.append(c);
                 }
             }
@@ -319,9 +326,54 @@ void ModemBridge::onSocketConnected() {
 void ModemBridge::onSocketDataReceived() {
     QByteArray data = m_socket->readAll();
     emit traceData("RX (TCP)", data);
-    sendToSerial(data); // RX Blinks automatically here now
+    parseTelnet(data); // Route through filter instead of direct to serial
 }
 
+
+void ModemBridge::parseTelnet(const QByteArray &data) {
+    QByteArray cleanData;
+    for (char c : data) {
+        unsigned char byte = (unsigned char)c;
+        switch (m_telnetState) {
+        case TelnetState::Normal:
+            if (byte == 0xFF) m_telnetState = TelnetState::IacReceived;
+            else cleanData.append(c);
+            break;
+        case TelnetState::IacReceived:
+            switch (byte) {
+            case 0xFF: cleanData.append((char)0xFF); m_telnetState = TelnetState::Normal; break;
+            case 0xFB: m_telnetState = TelnetState::Will; break;
+            case 0xFC: m_telnetState = TelnetState::Wont; break;
+            case 0xFD: m_telnetState = TelnetState::Do; break;
+            case 0xFE: m_telnetState = TelnetState::Dont; break;
+            case 0xFA: m_telnetState = TelnetState::SubNegotiation; break;
+            default:   m_telnetState = TelnetState::Normal; break;
+            }
+            break;
+        case TelnetState::Will:
+        case TelnetState::Wont:
+        case TelnetState::Do:
+        case TelnetState::Dont:
+            if (m_telnetState == TelnetState::Will || m_telnetState == TelnetState::Do) {
+                QByteArray reject;
+                reject.append((char)0xFF);
+                reject.append(m_telnetState == TelnetState::Will ? (char)0xFE : (char)0xFC);
+                reject.append((char)byte);
+                if (m_socket->state() == QAbstractSocket::ConnectedState) m_socket->write(reject);
+            }
+            m_telnetState = TelnetState::Normal;
+            break;
+        case TelnetState::SubNegotiation:
+            if (byte == 0xFF) m_telnetState = TelnetState::SubIac;
+            break;
+        case TelnetState::SubIac:
+            if (byte == 0xF0) m_telnetState = TelnetState::Normal;
+            else if (byte != 0xFF) m_telnetState = TelnetState::SubNegotiation;
+            break;
+        }
+    }
+    if (!cleanData.isEmpty()) sendToSerial(cleanData);
+}
 
 void ModemBridge::onSocketDisconnected() {
     if (m_isSshMode) return; // Ignore TCP signals if we are in SSH mode

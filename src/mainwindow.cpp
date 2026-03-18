@@ -2676,37 +2676,27 @@ void MainWindow::resetLeds() {
 
 void MainWindow::onModemToggleClicked() {
     bool enabled = btnModemToggle->isChecked();
-    RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
 
-    // 1. If R: Device is configured as the primary emulator
-    if (aspeqtSettings->isRDeviceEnabled()) {
-        if (rDev) {
-            if (enabled) {
-                // "Power On" the virtual modem
-                rDev->setEnabled(true);
-                rDev->loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
-                qDebug() << "!i" << tr("R: Device Virtual Modem: ONLINE");
-            } else {
-                // [CRITICAL FIX] Safely tear down the stream and network connections
-                // BEFORE disabling, simulating a physical modem power-off.
-                rDev->hangup();
-                rDev->forceCommandMode(true);
-                rDev->setEnabled(false);
-
-                qDebug() << "!w" << tr("R: Device Virtual Modem: OFFLINE (Carrier Dropped)");
-            }
+    if (enabled) {
+        // --- CRITICAL: Pause SIO Worker while Bridge is active ---
+        // This stops SioWorker from "stealing" bytes and resetting the baud rate
+        if (ui->actionStartEmulation->isChecked()) {
+            ui->actionStartEmulation->trigger(); // Stops the SioWorker thread
+            sio->wait();
         }
-    }
-    // 2. Otherwise, toggle the legacy Modem Bridge
-    else {
-        aspeqtSettings->setModemBridgeEnabled(enabled);
-        if (modemBridge) {
-            if (enabled) {
-                modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(), aspeqtSettings->modemBridgeBaudRate());
-                modemBridge->start();
-            } else {
-                modemBridge->stop();
-            }
+
+        // Start the bridge
+        aspeqtSettings->setModemBridgeEnabled(true);
+        modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(), aspeqtSettings->modemBridgeBaudRate());
+        modemBridge->start();
+    } else {
+        // Stop the bridge
+        modemBridge->stop();
+        aspeqtSettings->setModemBridgeEnabled(false);
+
+        // --- Restore SIO Worker ---
+        if (!ui->actionStartEmulation->isChecked()) {
+            ui->actionStartEmulation->trigger(); // Restarts SioWorker
         }
     }
 

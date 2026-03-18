@@ -627,7 +627,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
         {
             if(verbose)
             {
-                qCritical() << "!e" << tr("Serial port read timeout.");
+            //    qCritical() << "!e" << tr("Serial port read timeout.");
             }
             data.clear();
             return data;

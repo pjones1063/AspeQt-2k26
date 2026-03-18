@@ -106,7 +106,6 @@ public:
     QString lastExtractDir();
     void setLastExtractDir(const QString &dir);
 
-
     QString lastPrinterTextDir();
     void setLastPrinterTextDir(const QString &dir);
 
@@ -198,21 +197,6 @@ public:
     bool explorerOnTop();
     void setExplorerOnTop(bool expOnTop);
 
-
-    void setRestoreTnfsLocation(bool enabled);
-    bool restoreTnfsLocation();
-    void setShadeOpacity(int val);
-    int shadeOpacity();
-    bool translateEolOnPost();
-    void setTranslateEolOnPost(bool enabled);
-    bool translateEolOnGet();
-    void setTranslateEolOnGet(bool enabled);
-    QString lastBootDos();
-    void setLastBootDos(const QString &dos);
-    bool disablePicoHiSpeed();
-    void setDisablePicoHiSpeed(bool disable);
-
-    // Modem Bridge Settings
     bool isModemBridgeEnabled();
     void setModemBridgeEnabled(bool enabled);
 
@@ -237,6 +221,21 @@ public:
     QString lastRclDir();
     void setLastRclDir(const QString &dir);
 
+    void setShowRDeviceWarning(bool show);
+    bool showRDeviceWarning();
+
+    void setRestoreTnfsLocation(bool enabled);
+    bool restoreTnfsLocation();
+    void setShadeOpacity(int val);
+    int shadeOpacity();
+    bool translateEolOnPost();
+    void setTranslateEolOnPost(bool enabled);
+    bool translateEolOnGet();
+    void setTranslateEolOnGet(bool enabled);
+    QString lastBootDos();
+    void setLastBootDos(const QString &dos);
+    bool disablePicoHiSpeed();
+    void setDisablePicoHiSpeed(bool disable);
 
 
 private:
@@ -250,7 +249,7 @@ private:
     bool mTranslateEolOnGet;
     bool mEnableRDevice;
     QString mModemBridgePhonebookPath;
-
+    bool mShowRDeviceWarning;
 
     // Modem Bridge Members
     bool mModemBridgeEnabled;

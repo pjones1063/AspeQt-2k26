@@ -696,9 +696,10 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool /*verbose*/)
         }
 
         // Standard SIO failure logging (Ignored during stream polling)
-        if (size > 1 && !m_isStreamMode) {
-            qCritical() << "!e" << tr("Serial port read timeout. %1 of %2 read in %3 ms").arg(total).arg(size).arg(elapsed);
-        }
+        //if (size > 1 && !m_isStreamMode) {
+        //    qCritical() << "!e" << tr("Serial port read timeout. %1 of %2 read in %3 ms").arg(total).arg(size).arg(elapsed);
+        //}
+
         data.clear();
         return data;
     }
