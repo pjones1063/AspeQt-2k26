@@ -36,9 +36,14 @@ public:
     QByteArray readRawFrame(uint size, bool verbose = true);
     void setActiveSioDevices(const QByteArray &data);
 
+    virtual void setStreamMode(bool stream) { m_isStreamMode = stream; }
+    virtual bool isStreamMode() const { return m_isStreamMode; }
+    bool isCommandLineAsserted();
+
 private:
     bool mCanceled;
     bool mHighSpeed;
+    bool m_isStreamMode = false;
     void *mHandle, *mCancelHandle;
     int mSpeed;
     int mMethod;

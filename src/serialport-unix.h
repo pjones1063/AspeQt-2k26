@@ -37,6 +37,7 @@ public:
     void setActiveSioDevices(const QByteArray &data);
     virtual void setStreamMode(bool stream) { m_isStreamMode = stream; }
     virtual bool isStreamMode() const { return m_isStreamMode; }
+    bool isCommandLineAsserted();
 
 private:
     bool mCanceled;

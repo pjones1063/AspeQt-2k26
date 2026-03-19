@@ -166,6 +166,21 @@ void SioWorker::run()
                 if (!hasActivity) usleep(1000);
             }
 #else
+            // 2. NEW: Modem Status Line Check (Windows/Mac/Linux via FTDI)
+            if (!aspeqtSettings->serialPortHardwareUart() && m_streamGuardTimer.elapsed() > 250) {
+                if (mPort->isCommandLineAsserted()) {
+                    qDebug() << "!d" << "[SioWorker] >>> FTDI CTS/DSR LOW <<< Atari asserted Command. Exiting Stream.";
+
+                    deviceMutex->lock();
+                    SioDevice *rdev = devices[0x50]; // Grab R: Device
+                    if (rdev) {
+                        RDevice *r = qobject_cast<RDevice*>(rdev);
+                        if (r) r->forceCommandMode(false);
+                    }
+                    deviceMutex->unlock();
+                }
+            }
+
             if (!hasActivity) usleep(1000);
 #endif
 
@@ -567,16 +582,9 @@ void SioWorker::onChangeBaudRate(int baudRate)
 {
     if (port()) {
         qDebug() << "[SioWorker] Changing Baud Rate to:" << baudRate;
-
         // Force Linux kernel to reset the UART registers cleanly
         port()->setSpeed(baudRate);
-
-#ifdef HAS_LIBGPIOD
-        // Start the blind-spot timer so we don't instantly read the LOW state
-        // from the Atari's stream negotiation command.
         m_streamGuardTimer.start();
-#endif
-
         port()->setStreamMode(true);
         m_isStreaming = true;
     }

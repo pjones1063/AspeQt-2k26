@@ -477,31 +477,87 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
     return data;
 }
 
-QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
+QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
 {
-//    qDebug() << "!d" << tr("DBG -- Serial Port readDataFrame...");
+    QByteArray data;
+    DWORD result = 0;
 
-    QByteArray data = readRawFrame(size + 1, verbose);
-    if (data.isEmpty()) {
-        return data;
-    }
-    quint8 expected = (quint8)data.at(size);
-    quint8 got = sioChecksum(data, size);
-    if (expected == got) {
-        data.resize(size);
-        if (isTraceEnabled()) emit sioTrace("RX (Data)", data);
-        return data;
-    } else {
-        if (verbose) {
-            qWarning() << "!w" << tr("Data frame checksum error, expected: %1, got: %2. (%3)")
-                           .arg(expected)
-                           .arg(got)
-                           .arg(QString(data.toHex()));
+    // --- NEW: Non-Blocking Stream Mode Peek ---
+    // In Stream Mode, we only want to read bytes that have already arrived.
+    // If we ask Windows for 256 bytes, it will block the thread until it gets them.
+    if (m_isStreamMode) {
+        DWORD errors;
+        COMSTAT stat;
+        ClearCommError(mHandle, &errors, &stat);
+
+        if (stat.cbInQue == 0) {
+            return data; // Buffer is empty, return instantly!
         }
-        data.clear();
-        return data;
+        // Only ask for what is available, up to our max requested size
+        size = qMin(size, (uint)stat.cbInQue);
     }
+    // ------------------------------------------
+
+    if(mMethod==HANDSHAKE_SOFTWARE)
+    {
+        data.resize(size);
+        if (!ReadFile(mHandle, data.data(), size, &result, NULL) || (result != (DWORD)size))
+        {
+            // Allow partial reads during Stream Mode
+            if (m_isStreamMode && result > 0) {
+                data.resize(result);
+                return data;
+            }
+            data.clear();
+        }
+    }
+    else
+    {
+        OVERLAPPED ov;
+        memset(&ov, 0, sizeof(ov));
+        ov.hEvent = CreateEvent(0, true, false, 0);
+
+        if (ov.hEvent == INVALID_HANDLE_VALUE) {
+            qCritical() << "!e" << tr("Cannot create event: %1").arg(lastErrorMessage());
+            return data;
+        }
+
+        data.resize(size);
+        if (!ReadFile(mHandle, data.data(), size, &result, &ov)) {
+            if (GetLastError() == ERROR_IO_PENDING) {
+                if (!GetOverlappedResult(mHandle, &ov, &result, true)) {
+                    qCritical() << "!e" << tr("Cannot read from serial port: %1").arg(lastErrorMessage());
+                    data.clear();
+                    CloseHandle(ov.hEvent);
+                    return data;
+                }
+            } else {
+                qCritical() << "!e" << tr("Cannot read from serial port: %1").arg(lastErrorMessage());
+                data.clear();
+                CloseHandle(ov.hEvent);
+                return data;
+            }
+        }
+        CloseHandle(ov.hEvent);
+
+        if (result != (DWORD)size)
+        {
+            // Allow partial reads during Stream Mode
+            if (m_isStreamMode && result > 0) {
+                data.resize(result);
+                return data;
+            }
+            if(verbose)
+            {
+                //    qCritical() << "!e" << tr("Serial port read timeout.");
+            }
+            data.clear();
+            return data;
+        }
+    }
+    return data;
 }
+
 
 bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
 {
@@ -706,6 +762,43 @@ void StandardSerialPortBackend::setActiveSioDevices(const QByteArray &data)
 {
     mSioDevices = data;
 }
+
+
+bool StandardSerialPortBackend::isCommandLineAsserted()
+{
+    // If they have no hardware lines wired up, they can't detect the exit
+    if (mMethod == HANDSHAKE_SOFTWARE || mMethod == HANDSHAKE_NO_HANDSHAKE) {
+        return false;
+    }
+
+    DWORD status;
+    if (GetCommModemStatus(mHandle, &status)) {
+        bool isLineHigh = false;
+
+        // Check the physical voltage of the pin they mapped the Command line to
+        if (mMethod == HANDSHAKE_CTS) isLineHigh = (status & MS_CTS_ON);
+        else if (mMethod == HANDSHAKE_DSR) isLineHigh = (status & MS_DSR_ON);
+        else if (mMethod == HANDSHAKE_RI)  isLineHigh = (status & MS_RING_ON);
+
+        // [NEW] If the Virtual Modem / R: Device is active, use our dedicated FTDI logic
+        if (aspeqtSettings->isRDeviceEnabled()) {
+            if (aspeqtSettings->invertCtsLogic()) {
+                return isLineHigh;
+            } else {
+                return !isLineHigh; // Legacy RS-232 expected line to go LOW
+            }
+        }
+
+        // [LEGACY] Standard SIO disk emulation behavior (Windows only)
+        if (aspeqtSettings->serialPortTriggerOnFallingEdge()) {
+            return !isLineHigh; // Asserted means the line was pulled LOW
+        } else {
+            return isLineHigh;  // Asserted means the line was pulled HIGH
+        }
+    }
+    return false;
+}
+
 
 /* Dummy AtariSIO backend */
 

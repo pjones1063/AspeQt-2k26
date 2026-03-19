@@ -97,8 +97,8 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>306</x>
-     <y>9</y>
+     <x>300</x>
+     <y>10</y>
      <width>420</width>
      <height>620</height>
     </rect>
@@ -110,7 +110,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_serialPort">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -708,6 +708,29 @@ Disable for binary files.</string>
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="modemInvertCtsBox">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="toolTip">
+           <string>Enable if using a standard FTDI USB adapter. Leave unchecked for direct Raspberry Pi GPIO.</string>
+          </property>
+          <property name="text">
+           <string>Invert CTS Logic (Standard USB Adapters)</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_modem_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLabel" name="modemPortLabel">
           <property name="text">
            <string>Bridge Serial Port:</string>
@@ -851,6 +874,16 @@ Disable for binary files.</string>
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QToolButton" name="modemPhonebookNewBtn">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>New</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -891,7 +924,7 @@ Disable for binary files.</string>
      <item row="0" column="0">
       <widget class="QGroupBox" name="uiGroup">
        <property name="title">
-        <string>User inteface</string>
+        <string>User interface</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">

@@ -170,6 +170,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     m_ui->eolPostCheckBox->setChecked(aspeqtSettings->translateEolOnPost());
     m_ui->eolGetCheckBox->setChecked(aspeqtSettings->translateEolOnGet());
+    m_ui->modemInvertCtsBox->setChecked(aspeqtSettings->invertCtsLogic());
 
 #ifdef Q_OS_WIN
     m_ui->serialPortFallingEdge->setVisible(!no_handshake && !software_handshake);
@@ -319,19 +320,17 @@ void OptionsDialog::on_modemEnableBox_toggled(bool checked)
 
     m_ui->modemPhonebookPathEdit->setEnabled(phonebookEnabled);
     m_ui->modemPhonebookBrowseBtn->setEnabled(phonebookEnabled);
+    m_ui->modemPhonebookNewBtn->setEnabled(phonebookEnabled);
 }
+
 
 void OptionsDialog::on_modemRBox_toggled(bool checked)
 {
     if (checked) {
-        // --- NEW: R: Device strictly requires Hardware UART ---
-        if (!m_ui->mDirectUart->isChecked()) {
-            m_ui->mDirectUart->setChecked(true);
-        }
-
         // 1. If R: Device is ON, turn Modem Bridge OFF
         if (m_ui->modemEnableBox->isChecked()) {
             m_ui->modemEnableBox->blockSignals(true);
+            m_ui->modemInvertCtsBox->setEnabled(true);
             m_ui->modemEnableBox->setChecked(false);
             m_ui->modemEnableBox->blockSignals(false);
 
@@ -349,19 +348,20 @@ void OptionsDialog::on_modemRBox_toggled(bool checked)
         // 3. ENABLE Phonebook options
         m_ui->modemPhonebookPathEdit->setEnabled(true);
         m_ui->modemPhonebookBrowseBtn->setEnabled(true);
+        m_ui->modemPhonebookNewBtn->setEnabled(true);
 
-        // (Step 4 forcing standard 19200 baud removed due to stable hardware interrupts)
+        m_ui->modemInvertCtsBox->setEnabled(true);
     }
     else {
         // If unchecking R: Device, check if Modem Bridge is enabled to decide Phonebook state
         bool bridgeEnabled = m_ui->modemEnableBox->isChecked();
         m_ui->modemPhonebookPathEdit->setEnabled(bridgeEnabled);
         m_ui->modemPhonebookBrowseBtn->setEnabled(bridgeEnabled);
+        m_ui->modemPhonebookNewBtn->setEnabled(bridgeEnabled);
+
+        m_ui->modemInvertCtsBox->setEnabled(false);
     }
 }
-
-
-
 
 
 void OptionsDialog::on_mDirectUart_toggled(bool checked)
@@ -372,16 +372,12 @@ void OptionsDialog::on_mDirectUart_toggled(bool checked)
     m_ui->serialPortWriteDelayCombo->setEnabled(!checked);
     m_ui->serialPortWriteDelayLabel->setEnabled(!checked);
 
-    // --- NEW: If HW UART is unchecked, the R: Device must also be disabled ---
-    if (!checked && m_ui->modemRBox->isChecked()) {
-        m_ui->modemRBox->setChecked(false);
-    }
-
     // If they checked it while using Software Handshake, we should probably warn or force CTS
     if (checked && m_ui->serialPortHandshakeCombo->currentIndex() == HANDSHAKE_SOFTWARE) {
         m_ui->serialPortHandshakeCombo->setCurrentIndex(HANDSHAKE_CTS); // Force CTS
     }
 }
+
 
 void OptionsDialog::OptionsDialog_accepted()
 {
@@ -398,11 +394,14 @@ void OptionsDialog::OptionsDialog_accepted()
     }
 
     // --- WARNING: R: Device ---
+    // Commented out since R: Device now supports FTDI CTS/DSR hardware lines!
+
     if (m_ui->modemRBox->isChecked() && aspeqtSettings->showRDeviceWarning()) {
         QMessageBox msgBox(this);
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.setWindowTitle(tr("850 R: Device Emulation"));
-        msgBox.setText(tr("The 850 R: Device requires a Raspberry Pi using raw UART and a GPIO interrupt. It is incompatible with standard USB SIO2PC adapters.<br><br>"
+        msgBox.setText(tr("The 850 R: Device emulation supports both standard USB SIO2PC adapters and Raspberry Pi raw UART connections.<br><br>"
+                          "<b>Note:</b> If you are using a generic USB-to-TTL adapter (like an FT232) instead of a dedicated SIO2PC cable, ensure your CTS logic is configured correctly.<br><br>"
                           "For wiring and setup instructions, please see the <a href=\"https://github.com/pjones1063/AspeQt-2k26/blob/main/doc/RaspberryPi.pdf\">Raspberry Pi Hardware Guide</a>."));
 
         // Ensure links are clickable
@@ -420,8 +419,8 @@ void OptionsDialog::OptionsDialog_accepted()
             aspeqtSettings->setShowRDeviceWarning(false);
         }
     }
-    // ---------------------------------------
 
+    // ---------------------------------------
 
     aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
@@ -445,7 +444,6 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
     aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
     aspeqtSettings->setRestoreTnfsLocation(m_ui->tnfsAutoConnectBox->isChecked());
-    aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
     aspeqtSettings->setTranslateEolOnPost(m_ui->eolPostCheckBox->isChecked());
     aspeqtSettings->setTranslateEolOnGet(m_ui->eolGetCheckBox->isChecked());
 
@@ -458,6 +456,7 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setModemBridgeLocalEcho(m_ui->modemLocalEchoBox->isChecked());
     aspeqtSettings->setModemBridgePhonebookPath(m_ui->modemPhonebookPathEdit->text());
     aspeqtSettings->setEnableRDevice(m_ui->modemRBox->isChecked());
+    aspeqtSettings->setInvertCtsLogic(m_ui->modemInvertCtsBox->isChecked());
 
     int backend = SERIAL_BACKEND_STANDARD;
     if (itemAtariSio->checkState(0) == Qt::Checked)
@@ -473,6 +472,8 @@ void OptionsDialog::OptionsDialog_accepted()
     accept();
 }
 
+
+
 void OptionsDialog::on_useEmulationCustomCasBaudBox_toggled(bool checked)
 {
     m_ui->emulationCustomCasBaudSpin->setEnabled(checked);
@@ -487,5 +488,38 @@ void OptionsDialog::on_modemPhonebookBrowseBtn_clicked()
 
     if (!fileName.isEmpty()) {
         m_ui->modemPhonebookPathEdit->setText(fileName);
+    }
+}
+
+void OptionsDialog::on_modemPhonebookNewBtn_clicked()
+{
+    // 1. Prompt user for save location, default to "phonebook.xml" in their home folder
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Create New Dial Directory"),
+                                                    QDir::homePath() + "/phonebook.xml",
+                                                    tr("XML Files (*.xml);;All Files (*)"));
+
+    if (!fileName.isEmpty()) {
+        // 2. Force .xml extension just in case they type "my_bbs_list" without it
+        if (!fileName.endsWith(".xml", Qt::CaseInsensitive)) {
+            fileName += ".xml";
+        }
+
+        // 3. Create the file and write the root XML elements
+        QFile file(fileName);
+        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream out(&file);
+            out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+            out << "<Phonebook>\n";
+            out << "    \n";
+            out << "    \n";
+            out << "</Phonebook>\n";
+            file.close();
+
+            // 4. Update the line edit so it's ready to use
+            m_ui->modemPhonebookPathEdit->setText(fileName);
+        } else {
+            QMessageBox::critical(this, tr("Error"), tr("Could not create the phonebook file."));
+        }
     }
 }

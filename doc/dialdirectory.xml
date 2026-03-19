@@ -1063,5 +1063,6 @@
   <BBS ip="new@wintermutebbs.ddns.net" login="" name="Wintermute BBS (ssh)" password="" port="2222" protocol="ssh"/>
   <BBS ip="x-bit.org" login="" name="X-Bit BBS (ssh)" password="" port="22222" protocol="ssh"/>
   <BBS ip="xibalba.l33t.codes" login="" name="Xibalba (ssh)" password="" port="44511" protocol="SSH"/>
+  <BBS ip="10.5.5.5" login="paul" name="10.5.5.5" password="dads" port="22" protocol="SSH-AUTH"/>
  </Phonebook>
 </EtherTerm>

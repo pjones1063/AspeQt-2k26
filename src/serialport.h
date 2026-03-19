@@ -83,6 +83,7 @@ public:
     virtual void setActiveSioDevices(const QByteArray &data) = 0;
     virtual void setStreamMode(bool stream) { Q_UNUSED(stream); }
     virtual bool isStreamMode() const { return false; }
+    virtual bool isCommandLineAsserted() { return false; }
 
 protected:
     bool m_traceEnabled = false;

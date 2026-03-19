@@ -40,7 +40,8 @@ private slots:
     void on_modemEnableBox_toggled(bool checked);
     void on_modemRBox_toggled(bool checked);
     void on_modemPhonebookBrowseBtn_clicked();
-    void on_mDirectUart_toggled(bool checked); // [NEW] Handles UART Checkbox UI state
+    void on_mDirectUart_toggled(bool checked);
+    void on_modemPhonebookNewBtn_clicked();
 };
 
 #endif // OPTIONSDIALOG_H

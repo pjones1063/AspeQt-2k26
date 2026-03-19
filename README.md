@@ -35,8 +35,9 @@ This version migrates the codebase to **Qt 6**, fixing critical stability issues
 * **Hardware-Free Telecommunications:** A kernel-bypass, SIO-level emulation of the **Atari 850 Interface Module**. It intercepts SIO Poll (`$40`) and Stream (`$58`) commands, allowing the Atari to connect directly to Telnet and SSH hosts without physical RS-232 hardware.
 * **Smart Protocols:** Features native SSH authentication (Linux boxes) and raw Telnet parsing (Retro BBSes), mapping standard AT commands directly to TCP/IP sockets.
 * **Dynamic Baud Rates:** Automatically handles the Atari's 19200 baud SIO initialization and dynamically down-shifts to 9600 baud for concurrent stream mode (highly recommended for Ice-T and BobTerm).
-* **⚠️ STRICT HARDWARE REQUIREMENTS:** This feature is **incompatible** with standard USB SIO2PC adapters due to USB polling latency. It requires a Raspberry Pi 5 using Direct Hardware UART. The Atari's SIO `COMMAND` line must be physically wired to **GPIO 18** via a 3.3v-5v logic level shifter to trigger microsecond-level hardware interrupts.
-* **Documentation:** Please refer to the [Raspberry Pi Hardware Guide](doc/RaspberryPi.pdf) for SIO-to-GPIO wiring diagrams and UART configuration.
+* **💻 HARDWARE COMPATIBILITY:** This feature fully supports both **standard USB SIO2PC adapters** (FTDI) and direct **Raspberry Pi raw UART** connections.
+* **FT-232 / USB Adapter Note:** If using a USB adapter, ensure it has the `CTS` pin connected to the Atari's `COMMAND` line. Depending on how your specific FTDI chip was configured at the factory, you may need to toggle the "Invert CTS Logic" setting in AspeQt's options for it to communicate properly.
+* **Documentation:** Please refer to the [Hardware Documentation](doc/) for USB SIO2PC wiring, CTS configuration, and Raspberry Pi SIO-to-GPIO setup.
 
 ---
 

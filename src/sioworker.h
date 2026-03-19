@@ -126,10 +126,8 @@ private:
     struct pollfd m_gpioPollFd;
     void initHardwareInterrupts();
     void checkHardwareInterrupts(int timeout_ms = 0);
-    QElapsedTimer m_streamGuardTimer;
 #endif
-
-
+    QElapsedTimer m_streamGuardTimer;
 };
 
 class CassetteRecord {

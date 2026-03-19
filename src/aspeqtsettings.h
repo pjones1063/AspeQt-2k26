@@ -214,16 +214,12 @@ public:
 
     bool modemBridgeLocalEcho();
     void setModemBridgeLocalEcho(bool enabled);
-
     QString modemBridgePhonebookPath();
     void setModemBridgePhonebookPath(const QString &path);
-
     QString lastRclDir();
     void setLastRclDir(const QString &dir);
-
     void setShowRDeviceWarning(bool show);
     bool showRDeviceWarning();
-
     void setRestoreTnfsLocation(bool enabled);
     bool restoreTnfsLocation();
     void setShadeOpacity(int val);
@@ -236,6 +232,9 @@ public:
     void setLastBootDos(const QString &dos);
     bool disablePicoHiSpeed();
     void setDisablePicoHiSpeed(bool disable);
+    bool invertCtsLogic();
+    void setInvertCtsLogic(bool invert);
+
 
 
 private:
@@ -258,7 +257,7 @@ private:
     bool mModemBridgeFlowControl;
     bool mModemBridgeSshEnabled;
     bool mModemBridgeLocalEcho;
-
+    bool mInvertCtsLogic;
 
     // To pass values from Mainwindow //
     int mMainX;

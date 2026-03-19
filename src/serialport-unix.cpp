@@ -345,6 +345,34 @@ int StandardSerialPortBackend::speed()
     return mSpeed;
 }
 
+bool StandardSerialPortBackend::isCommandLineAsserted()
+{
+    if (mMethod == HANDSHAKE_SOFTWARE || mMethod == HANDSHAKE_NO_HANDSHAKE) {
+        return false;
+    }
+
+    int status;
+    if (ioctl(mHandle, TIOCMGET, &status) < 0) {
+        return false;
+    }
+
+    int mask = 0;
+    if (mMethod == HANDSHAKE_CTS) mask = TIOCM_CTS;
+    else if (mMethod == HANDSHAKE_DSR) mask = TIOCM_DSR;
+    else if (mMethod == HANDSHAKE_RI)  mask = TIOCM_RI;
+
+    bool isLineHigh = (status & mask);
+
+    // In the Unix backend's readCommandFrame, it waits for the line to go
+    // from HIGH to LOW (active). So if it's NOT high, it's asserted.
+    if (aspeqtSettings->invertCtsLogic()) {
+        return isLineHigh;
+    } else {
+        // Legacy AspeQt behavior (expects line to go LOW to be active)
+        return !isLineHigh;
+    }
+}
+
 
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
@@ -763,6 +791,10 @@ void StandardSerialPortBackend::setActiveSioDevices(const QByteArray &data)
 {
     mSioDevices = data;
 }
+
+
+//---------------------------------------------------------------------
+
 
 AtariSioBackend::AtariSioBackend(QObject *parent)
     : AbstractSerialPortBackend(parent)

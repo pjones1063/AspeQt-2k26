@@ -490,8 +490,9 @@ void ModemBridge::setPhonebookPath(const QString &path) {
 }
 
 void ModemBridge::loadPhonebook(const QString &path) {
-    if (path.isEmpty()) return;
     m_phonebook.clear();
+    if (path.isEmpty()) return;
+
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)) return;
 

@@ -338,7 +338,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 3. Macros
     btnMacroUser = new QToolButton(this);
-    setupBtn(btnMacroUser, ":/icons/silk-icons/icons/application.png", "U", tr("Send Auto-User (ESC-U)"));
+    setupBtn(btnMacroUser, ":/icons/silk-icons/icons/user.png", "U", tr("Send Auto-User (ESC-U)"));
     connect(btnMacroUser, &QToolButton::clicked, [this]() {
         if (aspeqtSettings->isRDeviceEnabled()) {
             RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
@@ -403,7 +403,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupBtn(btnShowLog, ":/icons/silk-icons/icons/page_white.png", "L", tr("Show Log Window"));
     connect(btnShowLog, &QToolButton::clicked, this, &MainWindow::on_actionLogWindow_triggered);
 
-    ui->actionPhonebook->setIcon(QIcon(":/icons/silk-icons/icons/folder.png"));
+    ui->actionPhonebook->setIcon(QIcon(":/icons/silk-icons/icons/phone.png"));
 
     // 2. Add Diagnostic Tools to Toolbar
     mainToolBar->addWidget(btnShowLog);
@@ -416,8 +416,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 3. Add Modem Tools to Toolbar
     mainToolBar->addWidget(btnModemToggle);
-    mainToolBar->addAction(ui->actionPhonebook);
     mainToolBar->addWidget(btnHangup);
+   mainToolBar->addAction(ui->actionPhonebook);
     mainToolBar->addWidget(btnMacroUser);
     mainToolBar->addWidget(btnMacroPass);
 
@@ -1479,6 +1479,9 @@ void MainWindow::on_actionOptions_triggered()
 // retranslate Designer Form
     ui->retranslateUi(this);
 
+// update phonebook state
+    updatePhonebookMenuState();
+
     for (int i = DISK_BASE_CDEVIC; i < (DISK_BASE_CDEVIC+DISK_COUNT); i++) {    // 0x31 - 0x3E
         deviceStatusChanged(i);
     }
@@ -1519,7 +1522,6 @@ void MainWindow::on_actionOptions_triggered()
         // 2. Update Configuration (in case Port/Baud changed)
         // Note: setSerialPort calls stop() internally if it's already running, so this is safe.
 
-        updatePhonebookMenuState();
 
         modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
                                    aspeqtSettings->modemBridgeBaudRate());
@@ -2598,17 +2600,25 @@ void MainWindow::onFireAndForget(QString urlStr, QByteArray data)
 void MainWindow::updatePhonebookMenuState()
 {
     QString pbPath = aspeqtSettings->modemBridgePhonebookPath();
+    bool hasPhonebook = !pbPath.isEmpty();
 
-    // Disable the menu action if string is empty
-    ui->actionPhonebook->setEnabled(!pbPath.isEmpty());
+    // Enable or disable the actions based on whether the path exists
+    ui->actionPhonebook->setEnabled(hasPhonebook);
+    btnMacroUser->setEnabled(hasPhonebook);
+    btnMacroPass->setEnabled(hasPhonebook);
 
-    // Optional: Tooltip explanation
-    if (pbPath.isEmpty()) {
+    // Update tooltips to reflect the current state
+    if (!hasPhonebook) {
         ui->actionPhonebook->setToolTip(tr("Phonebook disabled. Set XML path in Options -> Modem Bridge."));
+        btnMacroUser->setToolTip(tr("Macro User disabled. Set Phonebook XML path in Options."));
+        btnMacroPass->setToolTip(tr("Macro Pass disabled. Set Phonebook XML path in Options."));
     } else {
         ui->actionPhonebook->setToolTip(tr("Open BBS Phonebook"));
+        btnMacroUser->setToolTip(tr("Send Auto-User (ESC-U)"));
+        btnMacroPass->setToolTip(tr("Send Auto-Pass (ESC-P)"));
     }
 }
+
 
 
 /* mainwindow.cpp */

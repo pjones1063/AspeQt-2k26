@@ -123,6 +123,7 @@ AspeQtSettings::AspeQtSettings()
     mModemBridgeLocalEcho = mSettings->value("ModemBridge/LocalEcho", false).toBool();
     mModemBridgePhonebookPath = mSettings->value("ModemBridge/PhonebookPath", "").toString();
     mEnableRDevice = mSettings->value("EnableRDevice", false).toBool(); // Default to OFF
+    mInvertCtsLogic = mSettings->value("ModemBridge/InvertCts", true).toBool();
 
 }
 
@@ -196,6 +197,7 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("ModemBridge/LocalEcho", mModemBridgeLocalEcho);
     s.setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
     s.setValue("EnableRDevice", mEnableRDevice);
+    s.setValue("ModemBridge/InvertCts", mInvertCtsLogic);
 
     s.endGroup();
     //
@@ -265,6 +267,7 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mModemBridgeLocalEcho = s.value("ModemBridge/LocalEcho", false).toBool();
     mModemBridgePhonebookPath = s.value("ModemBridge/PhonebookPath", "").toString();
     mEnableRDevice = s.value("EnableRDevice", false).toBool();
+    mInvertCtsLogic = s.value("ModemBridge/InvertCts", true).toBool();
 
     s.endGroup();
     //
@@ -796,7 +799,7 @@ QString AspeQtSettings::lastExtractDir()
 void AspeQtSettings::setLastExtractDir(const QString &dir)
 {
     mLastExtractDir = dir;
-    mSettings->setValue("LastExtractDir", mLastExeDir);
+    mSettings->setValue("LastExtractDir", mLastExtractDir);
 }
 
 QString AspeQtSettings::lastPrinterTextDir()
@@ -895,6 +898,14 @@ void AspeQtSettings::setRestoreTnfsLocation(bool enabled)
     mSettings->setValue("RestoreTnfsLocation", mRestoreTnfsLocation);
 }
 
+void AspeQtSettings::setEnableRDevice(bool enabled)
+{
+    mEnableRDevice = enabled;
+    if(mSessionFileName == "") {
+        mSettings->setValue("EnableRDevice", mEnableRDevice);
+    }
+}
+
 bool AspeQtSettings::restoreTnfsLocation()
 {
     return mRestoreTnfsLocation;
@@ -988,16 +999,6 @@ void AspeQtSettings::setModemBridgeLocalEcho(bool enabled) {
     if(mSessionFileName == "") mSettings->setValue("ModemBridge/LocalEcho", mModemBridgeLocalEcho);
 }
 
-void AspeQtSettings::setEnableRDevice(bool enabled)
-{
-    mEnableRDevice = enabled;
-    if(mSessionFileName == "") mSettings->setValue("EnableRDevice", mEnableRDevice);
-
-    if (enabled) {
-        setSerialPortHardwareUart(true);
-    }
-
-}
 
 // Implementation:
 QString AspeQtSettings::modemBridgePhonebookPath() { return mModemBridgePhonebookPath; }
@@ -1038,4 +1039,10 @@ bool AspeQtSettings::showRDeviceWarning() {
 void AspeQtSettings::setShowRDeviceWarning(bool show) {
     mShowRDeviceWarning = show;
     if(mSessionFileName == "") mSettings->setValue("ShowRDeviceWarning", mShowRDeviceWarning);
+}
+
+bool AspeQtSettings::invertCtsLogic() { return mInvertCtsLogic; }
+void AspeQtSettings::setInvertCtsLogic(bool invert) {
+    mInvertCtsLogic = invert;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/InvertCts", mInvertCtsLogic);
 }
