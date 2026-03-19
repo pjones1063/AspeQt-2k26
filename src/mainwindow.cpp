@@ -303,25 +303,10 @@ MainWindow::MainWindow(QWidget *parent)
         btn->setIconSize(QSize(16, 16));
     };
 
-    // 1. Modem Toggle
-    btnModemToggle = new QToolButton(this);
-    bool activeOnBoot = aspeqtSettings->isModemBridgeEnabled() || aspeqtSettings->isRDeviceEnabled();
-    btnModemToggle->setCheckable(true);
-    btnModemToggle->setChecked(activeOnBoot);
-
     // Ensure mutual exclusivity: If both were somehow checked in settings, R: Device wins.
     if (aspeqtSettings->isRDeviceEnabled() && aspeqtSettings->isModemBridgeEnabled()) {
         aspeqtSettings->setModemBridgeEnabled(false); // Force legacy bridge off
     }
-
-    if (activeOnBoot) {
-        btnModemToggle->setIcon(QIcon(":/icons/oxygen-icons/16x16/actions/network_connect.png"));
-        btnModemToggle->setToolTip(aspeqtSettings->isRDeviceEnabled() ? tr("R: Device Modem: ON") : tr("Legacy Modem Bridge: ON"));
-    } else {
-        btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/world.png"));
-        btnModemToggle->setToolTip(aspeqtSettings->isRDeviceEnabled() ? tr("R: Device Modem: OFF") : tr("Legacy Modem Bridge: OFF"));
-    }
-    connect(btnModemToggle, &QToolButton::clicked, this, &MainWindow::onModemToggleClicked);
 
 
     // 2. Hangup
@@ -415,9 +400,8 @@ MainWindow::MainWindow(QWidget *parent)
     mainToolBar->addSeparator();
 
     // 3. Add Modem Tools to Toolbar
-    mainToolBar->addWidget(btnModemToggle);
     mainToolBar->addWidget(btnHangup);
-   mainToolBar->addAction(ui->actionPhonebook);
+    mainToolBar->addAction(ui->actionPhonebook);
     mainToolBar->addWidget(btnMacroUser);
     mainToolBar->addWidget(btnMacroPass);
 
@@ -472,6 +456,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         modemBridge->start();
     }
+
 
     updatePhonebookMenuState();
 
@@ -2683,43 +2668,6 @@ void MainWindow::resetLeds() {
     ledRx->setStyleSheet("min-width: 12px; min-height: 12px; border-radius: 7px; background-color: #004400; border: 1px solid #555;");
     ledTx->setStyleSheet("min-width: 12px; min-height: 12px; border-radius: 7px; background-color: #440000; border: 1px solid #555;");
 }
-
-void MainWindow::onModemToggleClicked() {
-    bool enabled = btnModemToggle->isChecked();
-
-    if (enabled) {
-        // --- CRITICAL: Pause SIO Worker while Bridge is active ---
-        // This stops SioWorker from "stealing" bytes and resetting the baud rate
-        if (ui->actionStartEmulation->isChecked()) {
-            ui->actionStartEmulation->trigger(); // Stops the SioWorker thread
-            sio->wait();
-        }
-
-        // Start the bridge
-        aspeqtSettings->setModemBridgeEnabled(true);
-        modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(), aspeqtSettings->modemBridgeBaudRate());
-        modemBridge->start();
-    } else {
-        // Stop the bridge
-        modemBridge->stop();
-        aspeqtSettings->setModemBridgeEnabled(false);
-
-        // --- Restore SIO Worker ---
-        if (!ui->actionStartEmulation->isChecked()) {
-            ui->actionStartEmulation->trigger(); // Restarts SioWorker
-        }
-    }
-
-    // 3. Update Visuals
-    if (enabled) {
-        btnModemToggle->setIcon(QIcon(":/icons/oxygen-icons/16x16/actions/network_connect.png"));
-        btnModemToggle->setToolTip(aspeqtSettings->isRDeviceEnabled() ? tr("R: Device Modem: ON") : tr("Legacy Modem Bridge: ON"));
-    } else {
-        btnModemToggle->setIcon(QIcon(":/icons/silk-icons/icons/world.png"));
-        btnModemToggle->setToolTip(aspeqtSettings->isRDeviceEnabled() ? tr("R: Device Modem: OFF") : tr("Legacy Modem Bridge: OFF"));
-    }
-}
-
 
 
 void MainWindow::onSioTraceToggleClicked()

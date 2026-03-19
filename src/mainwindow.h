@@ -114,7 +114,6 @@ private:
 
     ModemBridge *modemBridge;
 
-    QToolButton *btnModemToggle; // On/Off Icon
     QToolButton *btnMacroUser;   // Auto-User (ESC-U)
     QToolButton *btnMacroPass;   // Auto-Pass (ESC-P)
     QToolButton *btnHangup;      // Hangup Command
@@ -230,7 +229,6 @@ private slots:
     void onSioTraceToggleClicked();
     void onDisasmToggleClicked();
     void onSioTraceData(const QString &dir, const QByteArray &data);
-    void onModemToggleClicked();
 
 };
 

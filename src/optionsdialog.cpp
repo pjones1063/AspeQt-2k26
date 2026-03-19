@@ -493,14 +493,23 @@ void OptionsDialog::on_modemPhonebookBrowseBtn_clicked()
 
 void OptionsDialog::on_modemPhonebookNewBtn_clicked()
 {
-    // 1. Prompt user for save location, default to "phonebook.xml" in their home folder
+    // 1. Prompt user for location.
+#ifdef Q_OS_MAC
+    // On macOS, we use getOpenFileName to match the Browse button browser style
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Create New Dial Directory"),
+                                                    QDir::homePath(),
+                                                    tr("XML Files (*.xml);;All Files (*)"));
+#else
+    // Standard behavior: getSaveFileName allows typing a new filename on Windows/Linux
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Create New Dial Directory"),
                                                     QDir::homePath() + "/phonebook.xml",
                                                     tr("XML Files (*.xml);;All Files (*)"));
+#endif
 
     if (!fileName.isEmpty()) {
-        // 2. Force .xml extension just in case they type "my_bbs_list" without it
+        // 2. Force .xml extension just in case
         if (!fileName.endsWith(".xml", Qt::CaseInsensitive)) {
             fileName += ".xml";
         }
