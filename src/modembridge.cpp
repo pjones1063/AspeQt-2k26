@@ -161,15 +161,14 @@ void ModemBridge::onSerialDataReceived() {
                 if (c == 126 || c == 127 || c == 8) {
                     if (!m_serialBuffer.isEmpty()) {
                         m_serialBuffer.chop(1);
-                        if (m_localEcho) {
-                            // Visually erase the character: Backspace, Space, Backspace
+                        if (m_localEcho && !m_waitingForSshPassword) { // Visually erase the character: Backspace, Space, Backspace
                             sendToSerial(QByteArray(1, 8)); // BS (UNCOMMENTED!)
                             sendToSerial(" ");              // Space
                             sendToSerial(QByteArray(1, 8)); // BS
                         }
                     }
                 } else {
-                    if (m_localEcho) {
+                    if (m_localEcho && !m_waitingForSshPassword) {
                         sendToSerial(QByteArray(1, c)); // Echo the typed character
                     }
                     m_serialBuffer.append(c);
@@ -183,13 +182,30 @@ void ModemBridge::onSerialDataReceived() {
 // CONNECTION LOGIC
 // ============================================================================
 void ModemBridge::processAtCommand(const QByteArray &cmd) {
+
+    if (m_waitingForSshPassword) {
+        m_waitingForSshPassword = false;
+        m_currentConnection.password = QString::fromLatin1(cmd).trimmed();
+        executeInteractiveSshDial();
+        return;
+    }
+
     QString upperCmd = QString::fromLatin1(cmd).trimmed().toUpper();
     if (upperCmd.startsWith("AT")) upperCmd = upperCmd.mid(2);
 
     // --- DIAL (ATDT) ---
     if (upperCmd.startsWith("D")) {
-        QString target = upperCmd.mid(1).trimmed();
-        if (target.startsWith("T")) target = target.mid(1).trimmed();
+        // [FIX] Extract target from the ORIGINAL QByteArray to preserve SSH username case!
+        QString originalCmd = QString::fromLatin1(cmd).trimmed();
+        int dIndex = originalCmd.toUpper().indexOf("D");
+        QString target = originalCmd.mid(dIndex + 1).trimmed();
+
+        if (target.toUpper().startsWith("T")) target = target.mid(1).trimmed();
+
+        if (target.startsWith("SSH:", Qt::CaseInsensitive) && target.contains("@")) {
+            parseInteractiveSshTarget(target);
+            return;
+        }
 
         QString host = target;
         int port = 23;
@@ -522,7 +538,43 @@ BbsEntry ModemBridge::findBbsByName(const QString &name) {
     return BbsEntry();
 }
 
+void ModemBridge::parseInteractiveSshTarget(const QString &target) {
+    QString connectionStr = target.mid(4);
+    int atIndex = connectionStr.indexOf('@');
+    QString user = connectionStr.left(atIndex);
+    QString hostPort = connectionStr.mid(atIndex + 1);
 
+    QString host = hostPort;
+    int port = 22;
+    if (hostPort.contains(":")) {
+        QStringList parts = hostPort.split(":");
+        host = parts[0];
+        port = parts[1].toInt();
+    }
+
+    m_currentConnection = BbsEntry();
+    m_currentConnection.protocol = "SSH-AUTH";
+    m_currentConnection.login = user;
+    m_currentConnection.ip = host;
+    m_currentConnection.port = port;
+    m_currentConnection.name = host;
+
+    m_waitingForSshPassword = true;
+    sendToSerial("\r\nPASSWORD: ");
+}
+
+void ModemBridge::executeInteractiveSshDial() {
+    m_isSshMode = true;
+    m_isConnected = false;
+
+    if (m_socket->state() != QAbstractSocket::UnconnectedState) m_socket->abort();
+    if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+
+    emit statusMessage(QString("Modem Bridge: Dialing %1:%2...").arg(m_currentConnection.ip).arg(m_currentConnection.port));
+    m_serial->write("\r\nDIALING...\r\n");
+
+    m_ssh->connectToHost(m_currentConnection.ip, m_currentConnection.port, m_currentConnection.login, m_currentConnection.password);
+}
 
 
 

@@ -78,27 +78,31 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
         }
         else {
             for (char c : data) {
-                if (echoEnabled) {
-                    QMutexLocker locker(&m_bufferMutex);
-                    m_networkToSioBuffer.append(c);
-                }
+                // [FIX] The stray unconditional echo block has been deleted from here!
 
-                if (c == 0x0D || (quint8)c == 0x9B) {
+                if (c == 0x0D || (quint8)c == 0x9B) { // Carriage Return
+                    if (echoEnabled) {
+                        QMutexLocker locker(&m_bufferMutex);
+                        m_networkToSioBuffer.append(c); // Echo the CR cleanly
+                    }
                     emit executeAtCommand(m_atCmdBuffer);
                     m_atCmdBuffer.clear();
-                }    else if (c == 8 || c == 126 || c == 127) { // Backspace or Delete
-                        if (!m_atCmdBuffer.isEmpty()) {
-                            m_atCmdBuffer.chop(1); // Remove from the internal command buffer
-                            if (echoEnabled) {
-                                QMutexLocker locker(&m_bufferMutex);
-                                // Visually erase the character: Backspace, Space, Backspace
-                                m_networkToSioBuffer.append(char(8));
-                                m_networkToSioBuffer.append(' ');
-                                m_networkToSioBuffer.append(char(8));
+                } else if (c == 8 || c == 126 || c == 127) { // Backspace or Delete
+                    if (!m_atCmdBuffer.isEmpty()) {
+                        m_atCmdBuffer.chop(1); // Remove from the internal command buffer
+                        if (echoEnabled && !m_waitingForSshPassword) {
+                            QMutexLocker locker(&m_bufferMutex);
+                            // Visually erase the character: Backspace, Space, Backspace
+                            m_networkToSioBuffer.append(char(8));
+                            m_networkToSioBuffer.append(' ');
+                            m_networkToSioBuffer.append(char(8));
                         }
                     }
-
-                } else {
+                } else { // Normal typing
+                    if (echoEnabled && !m_waitingForSshPassword) {
+                        QMutexLocker locker(&m_bufferMutex);
+                        m_networkToSioBuffer.append(c); // Echo normal characters
+                    }
                     m_atCmdBuffer.append(c);
                 }
             }
@@ -338,13 +342,9 @@ void RDevice::handleWrite(quint16 aux) {
             m_atCmdBuffer.clear();
         }
         else if (c == 8 || c == 126 || c == 127) {
-                if (!m_atCmdBuffer.isEmpty()) {
-                    m_atCmdBuffer.chop(1); // Remove from the actual command buffer
-                    if (echoEnabled) {
-                        // Visually erase the character: Backspace, Print Space, Backspace
-                        sendAtResponse(QByteArray(1, 8) + " " + QByteArray(1, 8));
-                    }
-                }
+            if (!m_atCmdBuffer.isEmpty()) {
+                m_atCmdBuffer.chop(1); // Silently remove from the actual command buffer
+            }
         }
         else {
             m_atCmdBuffer.append(c);
@@ -505,6 +505,14 @@ void RDevice::parseTelnet(const QByteArray &data) {
 }
 
 void RDevice::processAtCommand(const QString &rawCmd) {
+
+    if (m_waitingForSshPassword) {
+        m_waitingForSshPassword = false;
+        m_currentConnection.password = rawCmd.trimmed();
+        executeInteractiveSshDial();
+        return;
+    }
+
     QString cmd = rawCmd.trimmed().toUpper();
     if (cmd.startsWith("AT")) cmd.remove(0, 2);
 
@@ -521,7 +529,8 @@ void RDevice::processAtCommand(const QString &rawCmd) {
         verboseResponses = true; cmd.replace("V1", "");
     }
     else if (cmd.startsWith("DT")) {
-        QString target = cmd.mid(2).trimmed();
+        int dtIndex = rawCmd.toUpper().indexOf("DT");
+        QString target = rawCmd.mid(dtIndex + 2).trimmed();
         at_handle_dial(target);
     }
     else if (cmd == "H") {
@@ -565,6 +574,12 @@ void RDevice::sendResultCode(int code) {
 }
 
 void RDevice::at_handle_dial(const QString &target) {
+
+    if (target.startsWith("SSH:", Qt::CaseInsensitive) && target.contains("@")) {
+        parseInteractiveSshTarget(target);
+        return;
+    }
+
     QString host = target;
     int port = 23;
     bool found = false;
@@ -764,3 +779,43 @@ void RDevice::injectMacro(char macroType) {
         else tcpSocket->write(bytes);
     }
 }
+
+
+void RDevice::parseInteractiveSshTarget(const QString &target) {
+    // Format: SSH:user@host:port OR SSH:user@host
+    QString connectionStr = target.mid(4);
+    int atIndex = connectionStr.indexOf('@');
+    QString user = connectionStr.left(atIndex);
+    QString hostPort = connectionStr.mid(atIndex + 1);
+
+    QString host = hostPort;
+    int port = 22;
+    if (hostPort.contains(":")) {
+        QStringList parts = hostPort.split(":");
+        host = parts[0];
+        port = parts[1].toInt();
+    }
+
+    // Stage the connection details
+    m_currentConnection = BbsEntry();
+    m_currentConnection.protocol = "SSH-AUTH";
+    m_currentConnection.login = user;
+    m_currentConnection.ip = host;
+    m_currentConnection.port = port;
+    m_currentConnection.name = host;
+
+    m_waitingForSshPassword = true;
+    sendAtResponse("\r\nPASSWORD: ");
+}
+
+
+void RDevice::executeInteractiveSshDial() {
+    sendAtResponse("\r\nDIALING " + m_currentConnection.ip + "...\r\n");
+    m_isSshMode = true;
+
+    if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
+    if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+
+    m_ssh->connectToHost(m_currentConnection.ip, m_currentConnection.port, m_currentConnection.login, m_currentConnection.password);
+}
+

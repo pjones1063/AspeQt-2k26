@@ -90,6 +90,7 @@ private:
     bool verboseResponses = true;
     bool m_escPending = false;
     bool autoAnswer = false;
+    bool m_waitingForSshPassword = false;
 
     int listenPort = 0;
     int m_currentBaudRate = 19200;
@@ -120,6 +121,9 @@ private:
     void handleListen(quint16 aux);
     void handleStream();
     void at_handle_dial(const QString &target);
+    void parseInteractiveSshTarget(const QString &target);
+    void executeInteractiveSshDial();
+
 };
 
 #endif // RDEVICE_H

@@ -84,6 +84,10 @@ private:
     bool m_escPressed = false;
     void loadPhonebook(const QString &path);
     BbsEntry findBbsByName(const QString &name);
+    bool m_waitingForSshPassword = false;
+    void parseInteractiveSshTarget(const QString &target);
+    void executeInteractiveSshDial();
+
 };
 
 #endif // MODEMBRIDGE_H

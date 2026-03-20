@@ -167,7 +167,15 @@ void SioWorker::run()
             }
 #else
             // 2. NEW: Modem Status Line Check (Windows/Mac/Linux via FTDI)
-            if (!aspeqtSettings->serialPortHardwareUart() && m_streamGuardTimer.elapsed() > 250) {
+            // Determine safe USB buffer flush time based on the OS
+#if defined(Q_OS_WIN)
+            int guardDelay = 50;  // Safely clears the Windows 16ms FTDI buffer
+#elif defined(Q_OS_MAC)
+            int guardDelay = 20;  // macOS USB polling is faster, but still batches
+#else
+            int guardDelay = 10;  // Linux USB stack is highly efficient
+#endif
+            if (!aspeqtSettings->serialPortHardwareUart() && m_streamGuardTimer.elapsed() > guardDelay) {
                 if (mPort->isCommandLineAsserted()) {
                     qDebug() << "!d" << "[SioWorker] >>> FTDI CTS/DSR LOW <<< Atari asserted Command. Exiting Stream.";
 

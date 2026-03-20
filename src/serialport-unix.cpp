@@ -305,7 +305,11 @@ bool StandardSerialPortBackend::setSpeed(int speed)
 {
     termios tios;
 
-    tcgetattr(mHandle, &tios);
+    if (tcgetattr(mHandle, &tios) != 0) {
+        qCritical() << "!e" << tr("Cannot get serial port attributes");
+        return false;
+    }
+
     tios.c_cflag &= ~CSTOPB;
     cfmakeraw(&tios);
     tios.c_cflag |= CREAD | CLOCAL;     // turn on READ
@@ -314,23 +318,49 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     tios.c_cc[VMIN] = 0;
     tios.c_cc[VTIME] = 10;     // 1 sec timeout
 
-    /* Default speed */
-    cfsetispeed(&tios, B19200);
-    cfsetospeed(&tios, B19200);
-
-    /* Set serial port state */
-    if (tcsetattr(mHandle, TCSANOW, &tios) != 0) {
-        qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2")
-        .arg(speed)
-            .arg(lastErrorMessage());
-        return false;
+    // 1. Map standard speeds to POSIX constants
+    speed_t posixSpeed = 0;
+    switch (speed) {
+    case 300:    posixSpeed = B300; break;
+    case 600:    posixSpeed = B600; break;
+    case 1200:   posixSpeed = B1200; break;
+    case 2400:   posixSpeed = B2400; break;
+    case 4800:   posixSpeed = B4800; break;
+    case 9600:   posixSpeed = B9600; break;
+    case 19200:  posixSpeed = B19200; break;
+    case 38400:  posixSpeed = B38400; break;
+    case 57600:  posixSpeed = B57600; break;
+    case 115200: posixSpeed = B115200; break;
+    case 230400: posixSpeed = B230400; break;
     }
 
-    /* Set requested speed */
-    speed_t spd = speed;
-    if (ioctl(mHandle, IOSSIOSPEED, &spd) < 0) {
-        qCritical() << "!e" << tr("Failed to set serial port speed to %1").arg(speed);
-        return false;
+    if (posixSpeed != 0) {
+        // 2. It is a standard speed. Use standard POSIX configuration.
+        cfsetispeed(&tios, posixSpeed);
+        cfsetospeed(&tios, posixSpeed);
+
+        if (tcsetattr(mHandle, TCSANOW, &tios) != 0) {
+            qCritical() << "!e" << tr("Cannot set standard serial port speed to %1: %2")
+            .arg(speed).arg(lastErrorMessage());
+            return false;
+        }
+    } else {
+        // 3. It is a custom SIO speed (e.g. 52631).
+        // Set a standard baseline first, then override with Apple's IOSSIOSPEED.
+        cfsetispeed(&tios, B19200);
+        cfsetospeed(&tios, B19200);
+
+        if (tcsetattr(mHandle, TCSANOW, &tios) != 0) {
+            qCritical() << "!e" << tr("Cannot set baseline serial port speed: %1")
+            .arg(lastErrorMessage());
+            return false;
+        }
+
+        speed_t spd = speed;
+        if (ioctl(mHandle, IOSSIOSPEED, &spd) < 0) {
+            qCritical() << "!e" << tr("Failed to set custom serial port speed to %1").arg(speed);
+            return false;
+        }
     }
 
     emit statusChanged(tr("%1 bits/sec").arg(speed));
@@ -339,6 +369,7 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     return true;
 }
 #endif
+
 
 int StandardSerialPortBackend::speed()
 {
