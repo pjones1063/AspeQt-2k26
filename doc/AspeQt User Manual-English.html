@@ -440,7 +440,7 @@
             <b>Important Note on CTS Inversion:</b> Legacy Atari software was built around physical RS-232 adapters that inverted logic signals. Most modern, generic FT232 breakout boards use standard TTL logic (non-inverted). If your R: Device emulation instantly drops or exits stream mode, the software is expecting an inverted signal. To fix this, simply toggle the <b>"Invert CTS Logic"</b> setting in the AspeQt-2k26 options, or use the free FT_PROG utility to flash the hardware EEPROM on your FTDI chip to invert the CTS pin permanently.
         </div>
 
-        <h3>Method 2: Raspberry Pi Direct UART Implementation</h3>
+        <h3>Method 2: Raspberry Pi Direct UART Implementation - (Recommended Method) </h3>
         <p>This section details the configuration for advanced users running AspeQt-2k26 directly on a Raspberry Pi. By utilizing the Pi's native GPIO pins and hardware interrupts, we can bypass standard USB adapters entirely. This provides microsecond-accurate timing.</p>
 
         <h4>1. Software Dependencies (libgpiod)</h4>
@@ -508,9 +508,12 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
         <h4>AspeQt Configuration (Pi Specifics)</h4>
         <p>In AspeQt's Options menu, apply the following settings for the R: Device:</p>
         <ul>
-            <li><b>Modem Bridge -&gt; Enable 850 Device (R: to TCP):</b> Checked. (This automatically enables "Direct Hardware UART" and CTS handshaking).</li>
-            <li><b>Modem Bridge -&gt; Serial Port:</b> /dev/ttyAMA0 (or /dev/serial0)</li>
-            <li><b>Standard Serial Port -&gt; Baud Rate:</b> 19200 (Required for initial 850 driver load)</li>
+            <li><b>Modem Bridge -&gt; Enable 850 Device (R: to TCP):</b> Checked.</li>
+            <li><b>Modem Bridge -&gt; Serial Port:</b> not used </li>
+            <li><b>Modem Bridge -&gt; Baud Rate:</b> not used </li>
+            <li><b>Standard Serial Port Backend -&gt; Direct Hardware UART </b> Checked.</li>
+            <li><b>Standard Serial Port Backend -&gt; Port Name:</b> /dev/ttyAMA0 (or /dev/serial0) </li>
+            <li><b>Standard Serial Port Backend -&gt; Baud Rate:</b> 19200 x1 </li>
         </ul>
 
         <a name="timesync"></a>
