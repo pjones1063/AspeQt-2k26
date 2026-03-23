@@ -40,8 +40,8 @@
     jeq BootATR
     cmp #'I'   			// I Boot XEX/Exe 
     jeq BootXEX   
-	cmp #'J'			// J Toggle BASIC
-    jeq ToggleBasic
+	cmp #'J'			// J Disable BASIC
+    jeq DisableBasic
     cmp #'K' 			// K Auto Commit On   
     jeq CommitOn
     cmp #'L'  			// L Auto Commit Off  
@@ -60,7 +60,7 @@
     jeq GetHostPath	
 	cmp #'S'			// S Exit to Dos
     jeq Exit
-	cmp #'T'			// T Run Cartridge
+	cmp #'T'			// T Run Cart/BASIC
     jeq RunCart
 	cmp #'U'			// U Reboot
     jeq Reboot
@@ -886,60 +886,90 @@ Abort
 	jmp $E477
 .endp
 
-//
-//  Toggle internal BASIC ROM (XL/XE only)
-//
-.proc ToggleBasic
+// =================================================================
+//  "J" Disable internal BASIC ROM (XL/XE only) to free RAM
+// =================================================================
+.proc DisableBasic
     lda $FCD8       // Check OS signature ($4C = XL/XE, $A2 = 400/800)
     cmp #$4C
     beq IsXL
     
     jsr Printf
-    .byte 155,'Must be an XL/XE to toggle BASIC!',155,0
+    .byte 155,'Must be an XL/XE to disable BASIC!',155,0
     jmp Main
 
 IsXL
+    lda $03F8       // Read current OS BASIC flag (00=Enabled, 02=Disabled)
+    cmp #$02
+    beq AlreadyOff
+
+    // BASIC is ON. We are turning it OFF.
     sei
     lda $D301
-    eor #$02        // Toggle bit 1 (BASIC ROM: 0=Enabled, 1=Disabled)
+    ora #$02        // Set bit 1 (1 = Disabled)
     sta $D301
     cli
     
-    // Update the OS flag at $03F8 (BASICF) so Reset doesn't revert it
-    lda $D301
-    and #$02
-    sta $03F8       // 02 = Disabled, 00 = Enabled
-    
-    cmp #$00
-    beq Enabled
-    
+    lda #$02
+    sta $03F8       // Mark BASIC as Disabled
+
+    // Reclaim the extra 8K of RAM for the screen!
+    lda #$C0        // Set RAMTOP to $C000 (Empty RAM)
+    sta $06A4       
     jsr Printf
-    .byte 155,'BASIC ROM is now OFF',155,0
+    .byte 155,'BASIC disabled.',155,0
     jmp Main
-    
-Enabled
+
+AlreadyOff
     jsr Printf
-    .byte 155,'BASIC ROM is now ON',155,0
+    .byte 155,'BASIC is already disabled.',155,0
     jmp Main
+
+
 .endp
 
-//
-//  Run inserted cartridge (or built-in BASIC)
-//
+
+
+// =================================================================
+//  "T" Run inserted cartridge OR Enable BASIC 
+// =================================================================
 .proc RunCart
-    lda $BFFC       // Check Cartridge Present Flag
-    bne NoCart      
+    lda $BFFC       // Check Cartridge Present Flag (0 = present)
+    beq GoCart      
+    
+NoCart
+    // No Cartridge. Check if BASIC is Disabled so we can turn it on.
+    lda $FCD8       // Check XL/XE
+    cmp #$4C
+    bne NoCartMsg   // If not XL/XE, just show error
+
+    lda $03F8       // Check BASIC flag
+    cmp #$02        // Is it Disabled?
+    bne NoCartMsg   // If already enabled but no cart, show error
+
+    // BASIC is Disabled. Turn it ON and Warm Start!
+    sei
+    lda $D301
+    and #$FD        // Clear bit 1 (0 = Enabled)
+    sta $D301
+    cli
+    
+    lda #$00
+    sta $03F8       // Mark BASIC as Enabled
+
+    // Let the OS safely rebuild the screen and init BASIC
+    jmp $E474       
+
+GoCart
     ldx #$FF        
     txs             
-    jmp ($BFFA) // Jump to the cartridge Run Vector
-NoCart
+    jmp ($BFFA)     // Jump to the physical cartridge Run Vector   
+
+NoCartMsg
     jsr Printf
     .byte 155,'No cartridge detected!',155,0
-        
-    jmp Main        // Return to the menu
+    jmp Main        
 .endp
-
-
 //
 //  Print System Hardware Banner
 //
@@ -1015,7 +1045,7 @@ _done
 	.byte 'H Boot .ATR       R AspeQt Path',155,0
 	jsr printf
 	.byte 'I Boot .XEX       S Exit to DOS',155
-	.byte 'J Toggle BASIC    T Run Cartridge',155
+	.byte 'J Disable BASIC   T Run Cart/BASIC',155
 	.byte '                  U Reboot',155,0
 	rts
 .endp

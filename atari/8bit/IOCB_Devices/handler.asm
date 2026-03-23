@@ -1,7 +1,7 @@
-; =====; =================================================================
+; ==================================================================
 ; AspeQt Dual Device Handler (Y: & W:) - PLATINUM FIX (PATCHED)
 ; -----------------------------------------------------------------
-; TARGET: Atari 8-bit (MADS Assembler)
+; TARGET: Atari 8-bit (MADS Assembler) - Atari Dos 2.x
 ; MEMORY: Code at $2800, Data at $0600 (Page 6)
 ; FIXES:  SetupDCB_Open now preserves DAUX1/DAUX2 for ALL Ops
 ; =================================================================

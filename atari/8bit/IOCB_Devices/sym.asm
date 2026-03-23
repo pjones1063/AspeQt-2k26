@@ -52,6 +52,7 @@ I_SETTD	equ $FFC3
 I_TDON	equ $FFC6
 I_GETTD equ $FFC0
 
+DOSINI_V equ $000C 
 
 DOSVEC	equ $0A
 DOSINI	equ $0C
