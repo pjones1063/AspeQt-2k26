@@ -60,9 +60,9 @@
     jeq GetHostPath	
 	cmp #'S'			// S Exit to Dos
     jeq Exit
-	cmp #'T'			// T Run Cart/BASIC
-    jeq RunCart
-	cmp #'U'			// U Reboot
+	cmp #'T'			// T Reboot
+//  jeq RunCart
+//	cmp #'U'			
     jeq Reboot
 
 
@@ -929,9 +929,8 @@ AlreadyOff
 .endp
 
 
-
 // =================================================================
-//  "T" Run inserted cartridge OR Enable BASIC 
+//  "T" Run inserted cartridge OR Enable BASIC
 // =================================================================
 .proc RunCart
     lda $BFFC       // Check Cartridge Present Flag (0 = present)
@@ -947,7 +946,12 @@ NoCart
     cmp #$02        // Is it Disabled?
     bne NoCartMsg   // If already enabled but no cart, show error
 
-    // BASIC is Disabled. Turn it ON and Warm Start!
+    // --- THE CRITICAL FIX: RESTORE RAMTOP ---
+    // We must warn DOS and BASIC that the ROM is back!
+    lda #$A0
+    sta $06A4
+
+    // BASIC is Disabled. Turn it ON!
     sei
     lda $D301
     and #$FD        // Clear bit 1 (0 = Enabled)
@@ -956,9 +960,6 @@ NoCart
     
     lda #$00
     sta $03F8       // Mark BASIC as Enabled
-
-    // Let the OS safely rebuild the screen and init BASIC
-    jmp $E474       
 
 GoCart
     ldx #$FF        
@@ -970,6 +971,7 @@ NoCartMsg
     .byte 155,'No cartridge detected!',155,0
     jmp Main        
 .endp
+
 //
 //  Print System Hardware Banner
 //
@@ -1045,8 +1047,11 @@ _done
 	.byte 'H Boot .ATR       R AspeQt Path',155,0
 	jsr printf
 	.byte 'I Boot .XEX       S Exit to DOS',155
-	.byte 'J Disable BASIC   T Run Cart/BASIC',155
-	.byte '                  U Reboot',155,0
+	.byte 'J Disable BASIC   T Reboot',155,0
+	
+//	.byte 'J Disable BASIC   T Run Cart/BASIC',155
+//	.byte '                  U Reboot',155,0
+	
 	rts
 .endp
 	
