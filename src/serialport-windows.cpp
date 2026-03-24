@@ -251,6 +251,12 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     dcb.EvtChar = 0;
     dcb.wReserved1 = 0;
 
+    if (mHandle != INVALID_HANDLE_VALUE && mSpeed > 0) {
+        FlushFileBuffers(mHandle);         // 1. Drain Windows OS buffer
+        QThread::msleep(25);               // 2. Allow FTDI physical hardware buffer to clear out
+        PurgeComm(mHandle, PURGE_RXCLEAR); // 3. Purge unread transition garbage
+    }
+
     /* Set serial port state */
     if (!SetCommState(mHandle, &dcb)) {
         qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2")
@@ -260,21 +266,22 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     }
 
     /* Adjust serial port timeouts */
-    to.ReadIntervalTimeout = 0;
+    int multiplier = 12000 / speed;
+    if (multiplier == 0) multiplier = 1; // Minimum 1ms per byte
 
     if(mMethod==HANDSHAKE_SOFTWARE)
     {
-        to.ReadTotalTimeoutConstant = 300;
-        to.WriteTotalTimeoutConstant = 300;
-        to.ReadTotalTimeoutMultiplier = 200;
-        to.WriteTotalTimeoutMultiplier = 200;
+        to.ReadTotalTimeoutConstant = 500;
+        to.WriteTotalTimeoutConstant = 500;
+        to.ReadTotalTimeoutMultiplier = multiplier;
+        to.WriteTotalTimeoutMultiplier = multiplier;
     }
     else
     {
-        to.ReadTotalTimeoutConstant = 0;
-        to.WriteTotalTimeoutConstant = 0;
-        to.ReadTotalTimeoutMultiplier = 100;
-        to.WriteTotalTimeoutMultiplier = 100;
+        to.ReadTotalTimeoutConstant = 400;
+        to.WriteTotalTimeoutConstant = 400;
+        to.ReadTotalTimeoutMultiplier = multiplier;
+        to.WriteTotalTimeoutMultiplier = multiplier;
     }
 
     /* Set serial port timeouts */
@@ -704,6 +711,9 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
         qCritical() << "!e" << tr("Serial port write timeout.");
         return false;
     }
+
+
+
     return true;
 }
 

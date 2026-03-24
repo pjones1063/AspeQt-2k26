@@ -110,7 +110,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page_serialPort">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -214,13 +214,6 @@
             <string>SOFTWARE (SIO2BT)</string>
            </property>
           </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="serialPortFallingEdge">
-          <property name="text">
-           <string>Trigger on falling edge</string>
-          </property>
          </widget>
         </item>
         <item>

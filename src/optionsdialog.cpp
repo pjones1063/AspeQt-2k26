@@ -86,7 +86,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     on_modemEnableBox_toggled(aspeqtSettings->isModemBridgeEnabled());
 
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
-    m_ui->serialPortFallingEdge->setChecked(aspeqtSettings->serialPortTriggerOnFallingEdge());
     m_ui->mDirectUart->setChecked(aspeqtSettings->serialPortHardwareUart()); // [NEW] Set Direct UART UI State
 
     // Call UI handler to gray out delay boxes if HW UART is active
@@ -172,12 +171,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->eolGetCheckBox->setChecked(aspeqtSettings->translateEolOnGet());
     m_ui->modemInvertCtsBox->setChecked(aspeqtSettings->invertCtsLogic());
 
-#ifdef Q_OS_WIN
-    m_ui->serialPortFallingEdge->setVisible(!no_handshake && !software_handshake);
-#else
-    m_ui->serialPortFallingEdge->setVisible(false);
-#endif
-
     if((SERIAL_BACKEND_STANDARD == aspeqtSettings->backend()) && software_handshake)
     {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(false);
@@ -237,9 +230,6 @@ void OptionsDialog::on_serialPortHandshakeCombo_currentIndexChanged(int index)
     m_ui->serialPortWriteDelayCombo->setEnabled(!hwUart);
     m_ui->serialPortWriteDelayLabel->setEnabled(!hwUart);
 
-#ifdef Q_OS_WIN
-    m_ui->serialPortFallingEdge->setVisible(!no_handshake && !software_handshake);
-#endif
     if(itemStandard->checkState((0)) == Qt::Checked)
     {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(!software_handshake);
@@ -424,7 +414,6 @@ void OptionsDialog::OptionsDialog_accepted()
 
     aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
-    aspeqtSettings->setSerialPortTriggerOnFallingEdge(m_ui->serialPortFallingEdge->isChecked());
     aspeqtSettings->setSerialPortHardwareUart(m_ui->mDirectUart->isChecked()); // [NEW] Save HW UART setting
     aspeqtSettings->setSerialPortWriteDelay(m_ui->serialPortWriteDelayCombo->currentIndex());
     aspeqtSettings->setSerialPortCompErrDelay(m_ui->serialPortCompErrDelayBox->value());
