@@ -505,13 +505,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                 int bytes;
                 do {
                     ioctl(mHandle, FIONREAD, &bytes);
-#ifdef Q_OS_UNIX
-                    QThread::yieldCurrentThread();
-#endif
-
-#ifdef Q_OS_MAC
                     QThread::usleep(300);
-#endif
                 } while ((bytes==0) && !mCanceled);
             }
             else
@@ -524,13 +518,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                         return data;
                     }
                     if (status & mask) {
-#ifdef Q_OS_UNIX
-                        QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
-#endif
-
-#ifdef Q_OS_MAC
                         QThread::usleep(500);
-#endif
                     }
                 } while ((status & mask) && !mCanceled);
 
@@ -544,13 +532,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                             return data;
                         }
                         if (!(status & mask)) {
-#ifdef Q_OS_UNIX
-                            QThread::yieldCurrentThread();   // Venkman 07132015 OS definition blocks added
-#endif
-
-#ifdef Q_OS_MAC
                             QThread::usleep(500);
-#endif
                         }
                     } while (!(status & mask) && !mCanceled);
                 }
