@@ -334,6 +334,13 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     case 230400: posixSpeed = B230400; break;
     }
 
+    // [CRITICAL MAC FIX: MANUAL HARDWARE DRAIN]
+    // macOS USB-Serial drivers often ignore baud rate changes (TCSANOW) if the
+    // hardware is actively transmitting, but commands like tcdrain() or TCSAFLUSH
+    // can cause kernel hangs or delete valid incoming bytes.
+    // We manually sleep to ensure the physical line is idle before changing the clock.
+    QThread::msleep(30);
+
     if (posixSpeed != 0) {
         // 2. It is a standard speed. Use standard POSIX configuration.
         cfsetispeed(&tios, posixSpeed);
@@ -362,6 +369,7 @@ bool StandardSerialPortBackend::setSpeed(int speed)
             return false;
         }
     }
+
 
     emit statusChanged(tr("%1 bits/sec").arg(speed));
     qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
