@@ -640,48 +640,22 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // -------------------------------------------------------
-    // START WEB UI SERVER
+    // SETUP WEB UI SERVERS (Do not start them yet)
     // -------------------------------------------------------
-    webSocketServer = new QWebSocketServer("AspeQtWeb", QWebSocketServer::NonSecureMode, this);
-    if (webSocketServer->listen(QHostAddress::Any, 12345)) {
-        qDebug() << "!i" << "Web UI Server started on port 12345";
-    }
-    clientWrapper = new WebSocketClientWrapper(webSocketServer, this);
+
+    webSocketServer = nullptr;
+    clientWrapper = nullptr;
+    httpServer = nullptr;
+    httpTcpServer = nullptr;
+
     webChannel = new QWebChannel(this);
-    connect(clientWrapper, &WebSocketClientWrapper::clientConnected,
-            webChannel, &QWebChannel::connectTo);
     webBridge = new WebBridge(this, this);
     webChannel->registerObject("aspeqtBridge", webBridge);
 
-    // -------------------------------------------------------
-    // START HTTP SERVER (Serves the Web UI)
-    // -------------------------------------------------------
-    httpServer = new QHttpServer(this);
-    httpServer->route("/", QHttpServerRequest::Method::Get, []() {
-        QFile file(":/webui/index.html");
-         if (file.open(QIODevice::ReadOnly)) {
-            // BUG FIX: MIME Type comes FIRST, Data comes SECOND!
-            return QHttpServerResponse("text/html", file.readAll());
-        }
-        return QHttpServerResponse(QHttpServerResponder::StatusCode::NotFound);
-    });
-    httpServer->route("/qwebchannel.js", QHttpServerRequest::Method::Get, []() {
-        QFile file(":/webui/qwebchannel.js");
-        if (file.open(QIODevice::ReadOnly)) {
-            // BUG FIX: MIME Type comes FIRST, Data comes SECOND!
-            return QHttpServerResponse("application/javascript", file.readAll());
-        }
-        return QHttpServerResponse(QHttpServerResponder::StatusCode::NotFound);
-    });
-
-    QTcpServer *tcpServer = new QTcpServer(this);
-   if (tcpServer->listen(QHostAddress::Any, 8080) && httpServer->bind(tcpServer)) {
-        qDebug() << "!i" << "HTTP Dashboard available at http://localhost:8080";
-    } else {
-        qDebug() << "!e" << "Failed to start HTTP Server on port 8080";
-        tcpServer->deleteLater();
+    // Start servers immediately if enabled in settings
+    if (aspeqtSettings->isWebUiEnabled()) {
+        startWebUi();
     }
-
 
 }
 
@@ -1539,6 +1513,12 @@ void MainWindow::on_actionOptions_triggered()
 
 // update phonebook state
     updatePhonebookMenuState();
+
+// Cycle the Web UI to apply any port or toggle changes
+    stopWebUi();
+    if (aspeqtSettings->isWebUiEnabled()) {
+        startWebUi();
+    }
 
     for (int i = DISK_BASE_CDEVIC; i < (DISK_BASE_CDEVIC+DISK_COUNT); i++) {    // 0x31 - 0x3E
         deviceStatusChanged(i);
@@ -3128,4 +3108,77 @@ void MainWindow::mountTnfsHeadless(int no, const QString &url)
         }
         qDebug() << "!e" << tr("[Web UI] Failed to mount TNFS Stream: %1").arg(url);
     }
+}
+
+
+void MainWindow::startWebUi() {
+    // 1. Create and start WebSocket Server
+    if (!webSocketServer) {
+        webSocketServer = new QWebSocketServer("AspeQtWeb", QWebSocketServer::NonSecureMode, this);
+        clientWrapper = new WebSocketClientWrapper(webSocketServer, this);
+        connect(clientWrapper, &WebSocketClientWrapper::clientConnected, webChannel, &QWebChannel::connectTo);
+
+        if (webSocketServer->listen(QHostAddress::Any, aspeqtSettings->webUiWsPort())) {
+            qDebug() << "!i" << tr("Web UI WebSocket Server started on port %1").arg(aspeqtSettings->webUiWsPort());
+        } else {
+            qDebug() << "!e" << tr("Failed to start Web UI WebSocket Server.");
+        }
+    }
+
+    // 2. Create and start HTTP Server
+    if (!httpServer) {
+        httpServer = new QHttpServer(this);
+        httpTcpServer = new QTcpServer(this);
+
+        httpServer->route("/", [this]() {
+            QFile file(":/webui/index.html");
+            if (file.open(QIODevice::ReadOnly)) {
+                QString html = QString::fromUtf8(file.readAll());
+                html.replace("12345", QString::number(aspeqtSettings->webUiWsPort()));
+                return QHttpServerResponse("text/html", html.toUtf8());
+            }
+            return QHttpServerResponse(QHttpServerResponder::StatusCode::NotFound);
+        });
+
+        httpServer->route("/qwebchannel.js", QHttpServerRequest::Method::Get, []() {
+            QFile file(":/webui/qwebchannel.js");
+            if (file.open(QIODevice::ReadOnly)) {
+                return QHttpServerResponse("application/javascript", file.readAll());
+            }
+            return QHttpServerResponse(QHttpServerResponder::StatusCode::NotFound);
+        });
+
+        if (httpTcpServer->listen(QHostAddress::Any, aspeqtSettings->webUiPort())) {
+            httpServer->bind(httpTcpServer);
+            qDebug() << "!i" << tr("HTTP Dashboard available at http://localhost:%1").arg(aspeqtSettings->webUiPort());
+        } else {
+            qDebug() << "!e" << tr("Failed to start HTTP Server.");
+        }
+    }
+}
+
+void MainWindow::stopWebUi() {
+    // 1. Completely destroy the HTTP Server
+    // Note: QHttpServer takes ownership of the QTcpServer when bound,
+    // so deleting httpServer automatically deletes httpTcpServer safely.
+    if (httpServer) {
+        delete httpServer;
+        httpServer = nullptr;
+        httpTcpServer = nullptr;
+    } else if (httpTcpServer) {
+        delete httpTcpServer;
+        httpTcpServer = nullptr;
+    }
+
+    // 2. Completely destroy the WebSocket Server & Clients
+    if (clientWrapper) {
+        delete clientWrapper;
+        clientWrapper = nullptr;
+    }
+    if (webSocketServer) {
+        delete webSocketServer;
+        webSocketServer = nullptr;
+    }
+
+    qDebug() << "!w" << tr("Web Dashboard and WebSocket servers completely shut down.");
 }

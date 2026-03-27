@@ -81,6 +81,7 @@ public:
     WebSocketClientWrapper *clientWrapper = nullptr;
     QWebChannel *webChannel = nullptr;
     WebBridge *webBridge = nullptr;
+    QTcpServer *httpTcpServer = nullptr;
 
 
 
@@ -103,6 +104,8 @@ public slots:
     void toggleEmulationHeadless();
     void togglePrinterHeadless();
     void mountTnfsHeadless(int no, const QString &url);
+    void startWebUi();
+    void stopWebUi();
 
 
 private:

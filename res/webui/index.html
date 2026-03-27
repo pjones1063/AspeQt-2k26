@@ -7,50 +7,96 @@
     <title>AspeQt-2k26 - Web Dashboard</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-main: #f0f0f0;
+            --bg-panel: #fff;
+            --text-main: #333;
+            --text-muted: #888;
+            --border-color: #ccc;
+            --border-light: #eee;
+            --hover-bg: #e0e0e0;
+            --row-hover: #f9f9f9;
+            --primary: #0055A4;
+            --btn-bg: #f8f8f8;
+            --btn-border: #ddd;
+            --btn-text: #555;
+            --btn-hover: #e8e8e8;
+            --btn-hover-text: #000;
+            --input-bg: #fff;
+            --modal-bg: rgba(0,0,0,0.5);
+            --header-bg: #e9ecef;
+            --item-hover: #e3f2fd;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #121212;
+            --bg-panel: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #aaa;
+            --border-color: #444;
+            --border-light: #333;
+            --hover-bg: #2a2a2a;
+            --row-hover: #252525;
+            --primary: #4da8da;
+            --btn-bg: #2a2a2a;
+            --btn-border: #444;
+            --btn-text: #ccc;
+            --btn-hover: #3a3a3a;
+            --btn-hover-text: #fff;
+            --input-bg: #2a2a2a;
+            --modal-bg: rgba(0,0,0,0.8);
+            --header-bg: #252525;
+            --item-hover: #2c3e50;
+        }
+
         /* Base Styles */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f0f0; margin: 0; color: #333; }
-        .toolbar { background: #fff; padding: 10px; border-bottom: 1px solid #ccc; display: flex; gap: 8px; align-items: center; }
-        .tool-btn { background: none; border: 1px solid transparent; padding: 6px; cursor: pointer; border-radius: 4px; font-size: 16px; transition: all 0.2s ease; }
-        .tool-btn:hover { background: #e0e0e0; border: 1px solid #ccc; }
-        .divider { width: 1px; height: 24px; background: #ccc; margin: 0 5px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-main); margin: 0; color: var(--text-main); transition: background 0.3s, color 0.3s; }
+        .toolbar { background: var(--bg-panel); padding: 10px; border-bottom: 1px solid var(--border-color); display: flex; gap: 8px; align-items: center; transition: background 0.3s; }
+        .tool-btn { background: none; border: 1px solid transparent; padding: 6px; cursor: pointer; border-radius: 4px; font-size: 16px; color: var(--text-main); transition: all 0.2s ease; }
+        .tool-btn:hover { background: var(--hover-bg); border: 1px solid var(--border-color); }
+        .divider { width: 1px; height: 24px; background: var(--border-color); margin: 0 5px; }
         
         /* Layout */
         .container { display: flex; padding: 15px; gap: 15px; height: calc(100vh - 60px); box-sizing: border-box; }
-        .drives-panel { flex: 1; background: #fff; border: 1px solid #ccc; border-radius: 5px; overflow-y: auto; padding: 10px; }
+        .drives-panel { flex: 1; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 5px; overflow-y: auto; padding: 10px; transition: background 0.3s; }
         
         /* Drive Row Styles */
-        .drive-row { display: flex; align-items: center; padding: 8px; border-bottom: 1px solid #eee; gap: 8px; }
-        .drive-row:hover { background: #f9f9f9; }
-        .drive-label { font-weight: bold; width: 30px; color: #0055A4; }
+        .drive-row { display: flex; align-items: center; padding: 8px; border-bottom: 1px solid var(--border-light); gap: 8px; transition: background 0.2s; }
+        .drive-row:hover { background: var(--row-hover); }
+        .drive-label { font-weight: bold; width: 30px; color: var(--primary); }
         .drive-actions { display: flex; gap: 4px; }
-        .drive-btn { background: #f8f8f8; border: 1px solid #ddd; padding: 4px 6px; cursor: pointer; border-radius: 3px; color: #555; transition: all 0.2s ease; }
-        .drive-btn:hover { background: #e8e8e8; color: #000; }
+        .drive-btn { background: var(--btn-bg); border: 1px solid var(--btn-border); padding: 4px 6px; cursor: pointer; border-radius: 3px; color: var(--btn-text); transition: all 0.2s ease; }
+        .drive-btn:hover { background: var(--btn-hover); color: var(--btn-hover-text); }
         .file-info { flex: 1; display: flex; flex-direction: column; font-size: 12px; margin-left: 10px; }
-        .file-name { font-family: monospace; font-size: 13px; color: #222; }
-        .file-props { color: #888; }
+        .file-name { font-family: monospace; font-size: 13px; color: var(--text-main); }
+        .file-props { color: var(--text-muted); }
 
         /* Modal Base Styles */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
-        .modal-content { background-color: #fff; margin: 5% auto; padding: 0; width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; max-height: 85vh; }
-        .modal-header { padding: 15px; background: #0055A4; color: white; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: var(--modal-bg); }
+        .modal-content { background-color: var(--bg-panel); margin: 5% auto; padding: 0; width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; max-height: 85vh; border: 1px solid var(--border-color); }
+        .modal-header { padding: 15px; background: var(--primary); color: white; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0; }
         .modal-header h3 { margin: 0; font-size: 18px; }
         .close-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
         .modal-body { padding: 0; overflow-y: auto; flex: 1; }
         
         /* File Browser Specifics */
-        .path-header { padding: 8px 15px; background: #e9ecef; font-family: monospace; font-size: 12px; border-bottom: 1px solid #ccc; word-break: break-all; color: #555; }
-        .file-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; }
-        .file-item:hover { background-color: #e3f2fd; }
+        .path-header { padding: 8px 15px; background: var(--header-bg); font-family: monospace; font-size: 12px; border-bottom: 1px solid var(--border-color); word-break: break-all; color: var(--text-main); }
+        .file-item { padding: 12px 15px; border-bottom: 1px solid var(--border-light); cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; }
+        .file-item:hover { background-color: var(--item-hover); }
         .btn-success { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
         .btn-success:hover { background: #218838; }
 
+        /* Input overrides for dark mode */
+        input[type="text"], select { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--border-color); }
+
         /* Phonebook Specifics */
-        .pb-search-container { padding: 10px 15px; background: #e9ecef; border-bottom: 1px solid #ccc; }
-        .pb-search-input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
-        .pb-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
-        .pb-item:hover { background-color: #e3f2fd; }
-        .pb-title { font-size: 16px; font-weight: bold; color: #0055A4; }
-        .pb-details { font-size: 12px; color: #555; font-family: monospace; }
+        .pb-search-container { padding: 10px 15px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); }
+        .pb-search-input { width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        .pb-item { padding: 12px 15px; border-bottom: 1px solid var(--border-light); cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+        .pb-item:hover { background-color: var(--item-hover); }
+        .pb-title { font-size: 16px; font-weight: bold; color: var(--primary); }
+        .pb-details { font-size: 12px; color: var(--text-muted); font-family: monospace; }
         
         /* Log Specifics */
         .log-content { background: #1e1e1e; color: #d4d4d4; font-family: monospace; font-size: 12px; padding: 15px; margin: 0; min-height: 200px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; }
@@ -63,10 +109,11 @@
 <body>
 
     <div class="toolbar">
-        <strong style="margin-right: 15px; color:#0055A4;">AspeQt Web</strong>
+        <strong style="margin-right: 15px; color: var(--primary);">AspeQt Web</strong>
         <button id="btn-emulation" class="tool-btn" onclick="if(backend) backend.toggleEmulationUi()" title="Start/Stop Emulation"><i class="bi bi-play-fill"></i></button>
         <button id="btn-printer" class="tool-btn" onclick="if(backend) backend.togglePrinterUi()" title="Toggle Printer"><i class="bi bi-printer"></i></button>
         <button class="tool-btn" onclick="if(backend) backend.requestLogTextUi()" title="Show System Log"><i class="bi bi-card-text"></i></button>
+        <button id="btn-theme" class="tool-btn" onclick="toggleTheme()" title="Toggle Dark Mode" style="margin-left: auto;"><i class="bi bi-moon-fill"></i></button>
         <div class="divider"></div>
         <button id="btn-hangup" class="tool-btn" onclick="uiActionHangup()" title="Hangup Modem"><i class="bi bi-telephone-x"></i></button>
         <button class="tool-btn" onclick="if(backend) backend.requestPhonebookList()" title="BBS Phonebook"><i class="bi bi-book"></i></button>
@@ -98,16 +145,18 @@
                 <h3>TNFS Network Browser</h3>
                 <button class="close-btn" onclick="closeTnfsModal()"><i class="bi bi-x-lg"></i></button>
             </div>
-            <div style="padding: 10px; background: #e9ecef; border-bottom: 1px solid #ccc; display: flex; gap: 8px;">
-                <select id="tnfs-host-select" style="max-width: 150px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;" onchange="if(this.value) document.getElementById('tnfs-host').value = this.value;">
+            <div style="padding: 10px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
+                <select id="tnfs-host-select" style="width: 100%; padding: 6px; border-radius: 4px;" onchange="if(this.value) document.getElementById('tnfs-host').value = this.value;">
                     <option value="" disabled selected>History...</option>
                 </select>
-                <input type="text" id="tnfs-host" value="tnfs.atari8.info" placeholder="tnfs.atari8.info" style="flex: 1; padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
-                <button class="btn-success" onclick="connectTnfs()">Connect</button>
+                <div style="display: flex; gap: 8px; width: 100%;">
+                    <input type="text" id="tnfs-host" value="tnfs.atari8.info" placeholder="tnfs.atari8.info" style="flex: 1; padding: 6px; border-radius: 4px;">
+                    <button class="btn-success" onclick="connectTnfs()">Connect</button>
+                </div>
             </div>
             <div class="path-header" style="display:flex; justify-content: space-between; align-items: center;">
                 <span id="tnfs-current-path">Not Connected</span>
-                <div id="tnfs-loading" style="display: none; color: #0055A4; font-weight: bold;">
+                <div id="tnfs-loading" style="display: none; color: var(--primary); font-weight: bold;">
                     <i class="bi bi-arrow-repeat spin"></i> Fetching...
                 </div>
             </div>
@@ -141,6 +190,27 @@
     </div>
 
     <script>
+        // --- Theme Logic ---
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('btn-theme');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                btn.innerHTML = '<i class="bi bi-moon-fill"></i>';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                btn.innerHTML = '<i class="bi bi-sun-fill"></i>';
+            }
+        }
+        
+        // Apply saved theme on load
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.getElementById('btn-theme').innerHTML = '<i class="bi bi-sun-fill"></i>';
+        }
+
         // 1. Generate the 15 Drive Widgets
         const container = document.getElementById('drives-container');
         const driveLetters = ['1','2','3','4','5','6','7','8','9','J','K','L','M','N','O'];
@@ -201,7 +271,7 @@
                             btnEmu.innerHTML = '<i class="bi bi-stop-fill"></i>';
                         } else {
                             btnEmu.style.background = 'transparent'; 
-                            btnEmu.style.color = '#333';
+                            btnEmu.style.color = 'var(--text-main)';
                             btnEmu.innerHTML = '<i class="bi bi-play-fill"></i>';
                         }
 
@@ -211,7 +281,7 @@
                             btnPrint.style.color = '#fff';
                         } else {
                             btnPrint.style.background = 'transparent'; 
-                            btnPrint.style.color = '#333';
+                            btnPrint.style.color = 'var(--text-main)';
                         }
                     });
 
@@ -228,9 +298,9 @@
                             btnAuto.style.color = '#fff';
                             btnAuto.style.borderColor = '#1e7e34';
                         } else {
-                            btnAuto.style.background = '#f8f8f8'; 
-                            btnAuto.style.color = '#555';
-                            btnAuto.style.borderColor = '#ddd';
+                            btnAuto.style.background = 'var(--btn-bg)'; 
+                            btnAuto.style.color = 'var(--btn-text)';
+                            btnAuto.style.borderColor = 'var(--btn-border)';
                         }
 
                         const btnHappy = document.getElementById(`btn-happy-${slot}`);
@@ -239,9 +309,9 @@
                             btnHappy.style.color = '#000';
                             btnHappy.style.borderColor = '#d39e00';
                         } else {
-                            btnHappy.style.background = '#f8f8f8'; 
-                            btnHappy.style.color = '#555';
-                            btnHappy.style.borderColor = '#ddd';
+                            btnHappy.style.background = 'var(--btn-bg)'; 
+                            btnHappy.style.color = 'var(--btn-text)';
+                            btnHappy.style.borderColor = 'var(--btn-border)';
                         }
                     });
 
@@ -299,7 +369,7 @@
                             const item = document.createElement('div');
                             item.className = 'file-item';
                             
-                            let icon = file.isDir ? '<i class="bi bi-folder-fill" style="color:#f3da35; font-size:18px;"></i>' : '<i class="bi bi-globe" style="color:#0055A4; font-size:18px;"></i>';
+                            let icon = file.isDir ? '<i class="bi bi-folder-fill" style="color:#f3da35; font-size:18px;"></i>' : '<i class="bi bi-globe" style="color:var(--primary); font-size:18px;"></i>';
                             item.innerHTML = `${icon} <span>${file.name}</span>`;
                             
                             item.onclick = function() {
@@ -344,12 +414,11 @@
                         }
                     });
 
-                    // --- NEW: Bulletproof TNFS History Listener ---
+                    // --- Bulletproof TNFS History Listener ---
                     backend.tnfsHostHistoryReceived.connect(function(history) {
                         const select = document.getElementById('tnfs-host-select');
                         select.innerHTML = '<option value="" disabled selected>History...</option>'; 
                         
-                        // Safety fallback: Ensure QWebChannel gave us an Array
                         let hostArray = Array.isArray(history) ? history : Object.values(history);
 
                         hostArray.forEach(host => {
@@ -359,7 +428,6 @@
                             select.appendChild(option);
                         });
 
-                        // Set default text to the most recent host if one exists
                         if (hostArray.length > 0) {
                             document.getElementById('tnfs-host').value = hostArray[0];
                         }
@@ -415,7 +483,7 @@
             const filtered = cachedPbEntries.filter(bbs => bbs.name.toLowerCase().includes(filterString));
 
             if (filtered.length === 0) {
-                listDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #888;">No matching BBS entries.</div>';
+                listDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">No matching BBS entries.</div>';
             } else {
                 filtered.forEach(bbs => {
                     const item = document.createElement('div');

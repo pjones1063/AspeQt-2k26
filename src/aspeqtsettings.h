@@ -234,8 +234,12 @@ public:
     void setDisablePicoHiSpeed(bool disable);
     bool invertCtsLogic();
     void setInvertCtsLogic(bool invert);
-
-
+    bool isWebUiEnabled();
+    void setWebUiEnabled(bool enabled);
+    int webUiPort();
+    void setWebUiPort(int port);
+    int webUiWsPort();
+    void setWebUiWsPort(int port);
 
 private:
     QSettings *mSettings;
@@ -318,6 +322,9 @@ private:
     bool mUseLargeFont;
     bool mExplorerOnTop;
     bool mEnableShade;
+    bool mWebUiEnabled;
+    int mWebUiPort;
+    int mWebUiWsPort;
 };
 
 

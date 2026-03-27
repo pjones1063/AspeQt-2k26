@@ -125,6 +125,11 @@ AspeQtSettings::AspeQtSettings()
     mEnableRDevice = mSettings->value("EnableRDevice", false).toBool(); // Default to OFF
     mInvertCtsLogic = mSettings->value("ModemBridge/InvertCts", true).toBool();
 
+    // Web UI Defaults
+    mWebUiEnabled = mSettings->value("WebUI/Enabled", false).toBool();
+    mWebUiPort = mSettings->value("WebUI/HttpPort", 8080).toInt();
+    mWebUiWsPort = mSettings->value("WebUI/WsPort", 12345).toInt();
+
 }
 
 AspeQtSettings::~AspeQtSettings()
@@ -198,6 +203,9 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
     s.setValue("EnableRDevice", mEnableRDevice);
     s.setValue("ModemBridge/InvertCts", mInvertCtsLogic);
+    s.setValue("WebUI/Enabled", mWebUiEnabled);
+    s.setValue("WebUI/HttpPort", mWebUiPort);
+    s.setValue("WebUI/WsPort", mWebUiWsPort);
 
     s.endGroup();
     //
@@ -268,6 +276,9 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mModemBridgePhonebookPath = s.value("ModemBridge/PhonebookPath", "").toString();
     mEnableRDevice = s.value("EnableRDevice", false).toBool();
     mInvertCtsLogic = s.value("ModemBridge/InvertCts", true).toBool();
+    mWebUiEnabled = s.value("WebUI/Enabled", false).toBool();
+    mWebUiPort = s.value("WebUI/HttpPort", 8080).toInt();
+    mWebUiWsPort = s.value("WebUI/WsPort", 12345).toInt();
 
     s.endGroup();
     //
@@ -1045,4 +1056,23 @@ bool AspeQtSettings::invertCtsLogic() { return mInvertCtsLogic; }
 void AspeQtSettings::setInvertCtsLogic(bool invert) {
     mInvertCtsLogic = invert;
     if(mSessionFileName == "") mSettings->setValue("ModemBridge/InvertCts", mInvertCtsLogic);
+}
+
+// --- WEB UI SETTINGS ---
+bool AspeQtSettings::isWebUiEnabled() { return mWebUiEnabled; }
+void AspeQtSettings::setWebUiEnabled(bool enabled) {
+    mWebUiEnabled = enabled;
+    if(mSessionFileName == "") mSettings->setValue("WebUI/Enabled", mWebUiEnabled);
+}
+
+int AspeQtSettings::webUiPort() { return mWebUiPort; }
+void AspeQtSettings::setWebUiPort(int port) {
+    mWebUiPort = port;
+    if(mSessionFileName == "") mSettings->setValue("WebUI/HttpPort", mWebUiPort);
+}
+
+int AspeQtSettings::webUiWsPort() { return mWebUiWsPort; }
+void AspeQtSettings::setWebUiWsPort(int port) {
+    mWebUiWsPort = port;
+    if(mSessionFileName == "") mSettings->setValue("WebUI/WsPort", mWebUiWsPort);
 }

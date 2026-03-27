@@ -34,8 +34,9 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     itemStandard = m_ui->treeWidget->topLevelItem(0)->child(0);
     itemAtariSio = m_ui->treeWidget->topLevelItem(0)->child(1);
     itemEmulation = m_ui->treeWidget->topLevelItem(1);
-    itemModemBridge = m_ui->treeWidget->topLevelItem(2); // New Modem Item
+    itemModemBridge = m_ui->treeWidget->topLevelItem(2);
     itemI18n = m_ui->treeWidget->topLevelItem(3);
+    itemWebUi = m_ui->treeWidget->topLevelItem(4);
 
 #ifndef Q_OS_LINUX
     m_ui->treeWidget->topLevelItem(0)->removeChild(itemAtariSio);
@@ -77,6 +78,12 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->modemFlowControlBox->setChecked(aspeqtSettings->modemBridgeFlowControl());
     m_ui->modemSshBox->setChecked(aspeqtSettings->modemBridgeSshEnabled());
     m_ui->modemLocalEchoBox->setChecked(aspeqtSettings->modemBridgeLocalEcho());
+
+    // Set Web UI Defaults
+    m_ui->cbEnableWebUi->setChecked(aspeqtSettings->isWebUiEnabled());
+    m_ui->sbHttpPort->setValue(aspeqtSettings->webUiPort());
+    m_ui->sbWsPort->setValue(aspeqtSettings->webUiWsPort());
+
 
     // Set R: Device Defaults
     m_ui->modemRBox->setChecked(aspeqtSettings->isRDeviceEnabled());
@@ -284,9 +291,11 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
     } else if (current == itemEmulation) {
         m_ui->stackedWidget->setCurrentIndex(2);
     } else if (current == itemModemBridge) {
-        m_ui->stackedWidget->setCurrentIndex(3); // PAGE_MODEM
+        m_ui->stackedWidget->setCurrentIndex(3);
     } else if (current == itemI18n) {
         m_ui->stackedWidget->setCurrentIndex(4);
+    } else if (current == itemWebUi) {
+        m_ui->stackedWidget->setCurrentIndex(5);
     }
 }
 
@@ -371,7 +380,7 @@ void OptionsDialog::on_mDirectUart_toggled(bool checked)
 
 void OptionsDialog::OptionsDialog_accepted()
 {
-    // --- VALIDATION: Check for Port Conflict ---
+    // --- VALIDATION: Check for Port Conflict! ---
     bool modemEnabled = m_ui->modemEnableBox->isChecked();
     QString sioPort = m_ui->serialPortComboBox->currentText();
     QString modemPort = m_ui->modemPortComboBox->currentText();
@@ -381,6 +390,13 @@ void OptionsDialog::OptionsDialog_accepted()
         QMessageBox::critical(this, tr("Port Conflict"),
                               tr("You cannot use the same Serial Port (%1) for both\nSIO Emulation and the Modem Bridge.\n\nPlease select a different port for the Modem.").arg(sioPort));
         return; // Do not accept(), keep dialog open
+    }
+
+    if (m_ui->cbEnableWebUi->isChecked()) {
+        if (m_ui->sbHttpPort->value() == m_ui->sbWsPort->value()) {
+            QMessageBox::critical(this, tr("Port Conflict"), tr("The HTTP Dashboard Port and WebSocket Bridge Port cannot be the same.\n\nPlease assign different ports."));
+            return; // Stops the save and keeps the dialog open!
+        }
     }
 
     // --- WARNING: R: Device ---
@@ -446,6 +462,12 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setModemBridgePhonebookPath(m_ui->modemPhonebookPathEdit->text());
     aspeqtSettings->setEnableRDevice(m_ui->modemRBox->isChecked());
     aspeqtSettings->setInvertCtsLogic(m_ui->modemInvertCtsBox->isChecked());
+
+    // Save Web UI
+    aspeqtSettings->setWebUiEnabled(m_ui->cbEnableWebUi->isChecked());
+    aspeqtSettings->setWebUiPort(m_ui->sbHttpPort->value());
+    aspeqtSettings->setWebUiWsPort(m_ui->sbWsPort->value());
+
 
     int backend = SERIAL_BACKEND_STANDARD;
     if (itemAtariSio->checkState(0) == Qt::Checked)
