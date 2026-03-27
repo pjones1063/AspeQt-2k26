@@ -113,12 +113,13 @@ private:
     Ui::MainWindow *ui;
     SioWorker *sio;
     bool shownFirstTime;
-    DriveWidget* diskWidgets[DISK_COUNT];    //
+    DriveWidget* diskWidgets[DISK_COUNT];
+    volatile int m_slotDownloadId[DISK_COUNT];
+    int m_downloadCounter;
     InfoWidget* infoWidget;
-
-    QLabel *speedLabel;  //
+    QLabel *speedLabel;
     TextPrinterWindow *textPrinterWindow;
-    DocDisplayWindow *docDisplayWindow;    //
+    DocDisplayWindow *docDisplayWindow;
     QTranslator aspeqt_translator, aspeqt_qt_translator;
     QSystemTrayIcon trayIcon;
     Qt::WindowFlags oldWindowFlags;
@@ -146,6 +147,12 @@ private:
     QToolButton *btnDisasmToggle; // dis-asm
 
     QHttpServer *httpServer = nullptr;
+
+    // --- Headless Cassette Deck ---
+    CassetteWorker *m_casWorker;
+    QTimer *m_casTimer;
+    QString m_casFileName;
+    bool m_casIsPlaying;
 
 
     void setSession();  //
@@ -251,6 +258,12 @@ private slots:
     void blinkRx();
     void blinkTx();
     void resetLeds();
+
+    void mountCasHeadless(const QString &fileName);
+    void playCasHeadless();
+    void rewindCasHeadless();
+    void ejectCasHeadless();
+    void updateCasProgress();
 
     void onSioTraceToggleClicked();
     void onDisasmToggleClicked();

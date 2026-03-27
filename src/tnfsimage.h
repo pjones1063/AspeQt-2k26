@@ -27,7 +27,7 @@ public:
     virtual ~TnfsImage() override;
 
     // Downloads to RAM, Detects Format, Prepares Loader
-    bool openUrl(const QString &url);
+    bool openUrl(const QString &url, volatile int *activeIdPtr = nullptr, int myId = 0);
 
     QString originalFileName() const { return m_originalFileName; }
 

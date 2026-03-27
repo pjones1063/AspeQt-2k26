@@ -34,7 +34,7 @@ void TnfsImage::cleanupAtx()
 }
 
 
-bool TnfsImage::openUrl(const QString &url)
+bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -52,8 +52,10 @@ bool TnfsImage::openUrl(const QString &url)
 
     // 1. Force UI Update immediately to show "Connecting..."
     qDebug() << "!n" << "TNFS: Connecting to" << host << "...";
-    // Drain event queue to ensure the log line renders NOW
     QCoreApplication::processEvents();
+
+    // --- KILL SWITCH CHECK 1 ---
+    if (activeIdPtr && *activeIdPtr != myId) { QApplication::restoreOverrideCursor(); return false; }
 
     TnfsClient client;
     if (!client.connectToHost(host)) {
@@ -103,6 +105,12 @@ bool TnfsImage::openUrl(const QString &url)
     QCoreApplication::sendPostedEvents();
     QCoreApplication::processEvents();
 
+    if (activeIdPtr && *activeIdPtr != myId) {
+        if (totalSize > 0) client.closeFile(handle);
+        QApplication::restoreOverrideCursor();
+        return false;
+    }
+
     this->m_originalFileName = url;
     m_imgData.clear();
     if (totalSize > 0) m_imgData.reserve(totalSize);
@@ -116,6 +124,14 @@ bool TnfsImage::openUrl(const QString &url)
     QCoreApplication::processEvents();
 
     while (true) {
+
+        if (activeIdPtr && *activeIdPtr != myId) {
+            qDebug() << "!w" << "TNFS: Download aborted by user.";
+            client.closeFile(handle);
+            QApplication::restoreOverrideCursor();
+            return false; // Safely exit!
+        }
+
         // Download in 1KB chunks
         QByteArray chunk = client.readFile(handle, offset, 1024);
 

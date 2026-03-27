@@ -81,7 +81,7 @@ void WebBridge::requestDirectoryList(int slot, const QString &path) {
 
 void WebBridge::mountFileSilentUi(int slot, const QString &filePath) {
     if (mainWindow) {
-        QMetaObject::invokeMethod(mainWindow, "mountFileHeadless", Q_ARG(int, slot), Q_ARG(QString, filePath));
+        QMetaObject::invokeMethod(mainWindow, "mountFileHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(QString, filePath));
     }
 }
 
@@ -193,6 +193,22 @@ void WebBridge::fetchNextTnfsBatch() {
 void WebBridge::mountTnfsSilentUi(int slot, const QString &url) {
     // Forward the command to the Main Window headless mounter
     if (mainWindow) {
-        QMetaObject::invokeMethod(mainWindow, "mountTnfsHeadless", Q_ARG(int, slot), Q_ARG(QString, url));
+        QMetaObject::invokeMethod(mainWindow, "mountTnfsHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(QString, url));
     }
+}
+
+void WebBridge::mountCasSilentUi(const QString &filePath) {
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "mountCasHeadless", Q_ARG(QString, filePath));
+}
+
+void WebBridge::playCasUi() {
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "playCasHeadless");
+}
+
+void WebBridge::rewindCasUi() {
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "rewindCasHeadless");
+}
+
+void WebBridge::ejectCasUi() {
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "ejectCasHeadless");
 }

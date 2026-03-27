@@ -45,6 +45,13 @@ public slots:
     void requestTnfsDirectoryList(int slot, const QString &host, const QString &path);
     void mountTnfsSilentUi(int slot, const QString &url);
 
+    // --- CAS SLOTS ---
+    void mountCasSilentUi(const QString &filePath);
+    void playCasUi();
+    void rewindCasUi();
+    void ejectCasUi();
+
+
 private slots:
     void fetchNextTnfsBatch(); // Fired by the QTimer
 
@@ -57,6 +64,8 @@ signals:
     void logTextReceived(const QString &logText);
     void tnfsDirectoryListReceived(int slot, const QString &host, const QString &path, const QJsonArray &files, bool isFinished);
     void tnfsHostHistoryReceived(const QStringList &history);
+    void casStatusChanged(QString filename, bool isPlaying);
+
 
 private:
     MainWindow *mainWindow;

@@ -120,6 +120,7 @@ void XexImage::handleCommand(quint8 command, quint16 aux)
         sio->port()->writeCommandAck();
         sio->port()->writeComplete();
         sio->port()->writeDataFrame(m_chunks.at(aux).data);
+        qDebug() << "!n" << "XEX Booter: Chunk" << aux << "sent.";
         break;
 
     case 0xFF: // Get Chunk Info

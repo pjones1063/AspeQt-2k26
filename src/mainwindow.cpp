@@ -153,6 +153,11 @@ MainWindow::MainWindow(QWidget *parent)
     g_aspeQtAppPath = QCoreApplication::applicationDirPath();
     g_disablePicoHiSpeed = false;
 
+    m_downloadCounter = 0;
+    for (int i = 0; i < DISK_COUNT; i++) {
+        m_slotDownloadId[i] = 0;
+    }
+
     // Create/Open the log file immediately
     logFile = new QFile(QDir::temp().absoluteFilePath("aspeqt.log"));
     logFile->open(QFile::WriteOnly | QFile::Truncate | QFile::Unbuffered | QFile::Text);
@@ -251,14 +256,17 @@ MainWindow::MainWindow(QWidget *parent)
     }
     setGeometry(aspeqtSettings->lastHorizontalPos(),aspeqtSettings->lastVerticalPos(),aspeqtSettings->lastWidth(),aspeqtSettings->lastHeight());
 
+
+    // Initialize Headless Cassette Deck
+    m_casWorker = nullptr;
+    m_casTimer = new QTimer(this);
+    m_casIsPlaying = false;
+    connect(m_casTimer, &QTimer::timeout, this, &MainWindow::updateCasProgress);
+
     /* Setup status bar */
     speedLabel = new QLabel(this);
-
     speedLabel->setText(tr("19200 bits/sec"));
-
-
     speedLabel->setMinimumWidth(80);
-
     dlProgressBar = new QProgressBar(this);
     dlProgressBar->setRange(0, 100);
     dlProgressBar->setValue(0);
@@ -1335,31 +1343,30 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 {
     if (deviceNo >= DISK_BASE_CDEVIC && deviceNo < (DISK_BASE_CDEVIC+DISK_COUNT)) { // 0x31 - 0x3E
 
+        if (m_slotDownloadId[deviceNo - DISK_BASE_CDEVIC] != 0) {
+            diskWidgets[deviceNo - DISK_BASE_CDEVIC]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
+            if (webBridge) emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Loading...", "Downloading from TNFS...", false, false);
+            return;
+        }
+
         // 1. Get Generic Device
         SioDevice *device = sio->getDevice(deviceNo);
         DriveWidget *diskWidget = diskWidgets[deviceNo - DISK_BASE_CDEVIC];
 
-        // --- NEW: Handle Local Executable Images (XEX/COM) ---
         XexImage *xex = qobject_cast<XexImage *>(device);
         if (xex) {
             QString fullPath = xex->originalFileName();
             QFileInfo fi(fullPath);
             QString name = fi.fileName();
 
-            // 1. Update Native Desktop UI properly using DriveWidget's methods
             diskWidget->setLabelToolTips(fi.absolutePath(), fullPath, tr("Executable (Local)"));
             diskWidget->setHappyMode(false);
-
-            // showAsImageMounted(Filename, Properties, EnableEdit, EnableSave)
-            // We pass false, false to disable the edit/save buttons for executables
             diskWidget->showAsImageMounted(name, tr("Executable (Local)"), false, false);
 
-            // 2. Update Web UI Dashboard
-            if (webBridge) {
-                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, name, "Executable (Local)", false, false);
-            }
+            if (webBridge) emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, name, "Executable (Local)", false, false);
             return;
         }
+
 
         // 2. Check for TNFS Image FIRST
         TnfsImage *tnfsImg = qobject_cast<TnfsImage*>(device);
@@ -1695,6 +1702,15 @@ void MainWindow::updateRecentFileActions()
 
 bool MainWindow::ejectImage(int no, bool ask)
 {
+
+    if (no >= 0 && no < DISK_COUNT && m_slotDownloadId[no] != 0) {
+        qDebug() << "!w" << tr("Slot %1 download aborted by user.").arg(no+1);
+        m_slotDownloadId[no] = 0; // Signals openUrl to terminate instantly
+        diskWidgets[no]->showAsEmpty();
+        if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--", false, false);
+        return true; // Slot is successfully freed!
+    }
+
     PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(PCLINK_CDEVIC));
     if(pclink->hasLink(no+1))
     {
@@ -1723,7 +1739,7 @@ bool MainWindow::ejectImage(int no, bool ask)
         sio->setHighSpeed(false);
 
         // This virtual destructor cleans up TnfsImage OR SimpleDiskImage
-        delete device;
+        device->deleteLater();
 
         // Force UI update
         diskWidgets[no]->showAsEmpty();
@@ -2523,12 +2539,6 @@ void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
 }
 
 
-/*
- * mainwindow.cpp
- * (Snippet showing updated on_actionMountTnfs_triggered)
- */
-
-
 
 void MainWindow::on_actionMountTnfs_triggered(int deviceId)
 {
@@ -2545,10 +2555,15 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
         QString url = browser.getSelectedUrl();
         g_lastTnfsUrl = url;
 
-        // Eject whatever is currently in that slot
+        // Eject whatever is currently in that slot (This will ALSO abort an active download)
         if (!ejectImage(deviceId)) return;
 
-        // --- NEW: Instant "Loading..." Feedback ---
+        // --- NEW: Claim the slot with a unique Session ID ---
+        m_downloadCounter++;
+        int myId = m_downloadCounter;
+        m_slotDownloadId[deviceId] = myId;
+
+        // Instant "Loading..." Feedback
         diskWidgets[deviceId]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
         if (webBridge) {
             emit webBridge->diskStatusChanged(deviceId, "Loading...", "Downloading from TNFS...", false, false);
@@ -2557,31 +2572,47 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
 
         TnfsImage *tnfs = new TnfsImage(sio);
         tnfs->setParent(nullptr);   // Detach
-        tnfs->moveToThread(sio);    // Move to SIO Thread
         connect(tnfs, &TnfsImage::downloadProgress, this, &MainWindow::updateDownloadProgress);
 
-        // Connect/Open the stream
-        if (tnfs->openUrl(url)) {
+        // --- NEW: Pass the Session ID pointers to the network loop! ---
+        if (tnfs->openUrl(url, &m_slotDownloadId[deviceId], myId)) {
+
+            // Did the user click Eject at the very last millisecond?
+            if (m_slotDownloadId[deviceId] != myId) { delete tnfs; return; }
+
+            // NOW safely push to the background!
+            tnfs->moveToThread(sio);
             // Install into the SIO chain
             sio->installDevice(DISK_BASE_CDEVIC + deviceId, tnfs);
-            // Trigger UI Update via the central handler (This overwrites "Loading..." with the real filename)
+
+            // Clear the lock
+            m_slotDownloadId[deviceId] = 0;
+
+            // Trigger UI Update via the central handler
             deviceStatusChanged(DISK_BASE_CDEVIC + deviceId);
             qDebug() << "!i" << tr("Mounted TNFS Stream: %1").arg(url);
             dlProgressBar->hide();
+
         } else {
-            QMessageBox::critical(this, tr("Mount Error"), tr("Could not open TNFS stream from %1").arg(url));
             delete tnfs;
             dlProgressBar->hide();
 
-            // --- NEW: Revert to Empty on failure ---
-            diskWidgets[deviceId]->showAsEmpty();
-            if (webBridge) {
-                emit webBridge->diskStatusChanged(deviceId, "Empty", "--", false, false);
+            // --- NEW: Only show the error & reset UI if WE are still the active process ---
+            // If the ID changed, it means the user clicked Eject to abort it,
+            // so we stay silent and let Eject handle the UI cleanup!
+            if (m_slotDownloadId[deviceId] == myId) {
+                m_slotDownloadId[deviceId] = 0; // Clear the lock
+
+                diskWidgets[deviceId]->showAsEmpty();
+                if (webBridge) {
+                    emit webBridge->diskStatusChanged(deviceId, "Empty", "--", false, false);
+                }
+
+                QMessageBox::critical(this, tr("Mount Error"), tr("Could not open TNFS stream from %1").arg(url));
             }
         }
     }
 }
-
 
 void MainWindow::updateDownloadProgress(qint64 bytesRead, qint64 totalBytes)
 {
@@ -2987,8 +3018,12 @@ void MainWindow::mountFileHeadless(int no, const QString &fileName)
     if (fileName.endsWith(".xex", Qt::CaseInsensitive) || fileName.endsWith(".com", Qt::CaseInsensitive)) {
         XexImage *xex = new XexImage(sio);
         xex->setParent(nullptr);
-        xex->moveToThread(sio);
+        // (Deleted moveToThread from here)
+
         if (xex->openLocalFile(fileName)) {
+
+            // THEN move to the background!
+            xex->moveToThread(sio); // <--- ADD IT HERE INSTEAD!
             sio->installDevice(DISK_BASE_CDEVIC + no, xex);
             deviceStatusChanged(DISK_BASE_CDEVIC + no);
 
@@ -3103,43 +3138,49 @@ QString MainWindow::getLogText() {
     return ui->textEdit->toPlainText();
 }
 
+
 void MainWindow::mountTnfsHeadless(int no, const QString &url)
 {
-    // 1. Eject current disk silently
+    // Eject disk OR abort existing download
     if (!ejectImage(no, false)) return;
 
-    // --- NEW: Instant "Loading..." Feedback ---
+    // Claim the slot with a unique Session ID
+    m_downloadCounter++;
+    int myId = m_downloadCounter;
+    m_slotDownloadId[no] = myId;
+
     diskWidgets[no]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
     if (webBridge) {
         emit webBridge->diskStatusChanged(no, "Loading...", "Downloading from TNFS...", false, false);
     }
-    QCoreApplication::processEvents(); // Force UI update before blocking network call
+    QCoreApplication::processEvents();
 
-    // 2. Create the TNFS Image object and move it to the SIO Thread
     TnfsImage *tnfs = new TnfsImage(sio);
     tnfs->setParent(nullptr);
-    tnfs->moveToThread(sio);
-
-    // 3. Connect progress so the native PC UI still shows the download bar if you look at it
     connect(tnfs, &TnfsImage::downloadProgress, this, &MainWindow::updateDownloadProgress);
 
-    // 4. Open the URL and mount it!
-    if (tnfs->openUrl(url)) {
+    // Pass the Session ID pointers!
+    if (tnfs->openUrl(url, &m_slotDownloadId[no], myId)) {
+        // Did an abort happen right at the very end?
+        if (m_slotDownloadId[no] != myId) { delete tnfs; return; }
+
+        tnfs->moveToThread(sio);
         sio->installDevice(DISK_BASE_CDEVIC + no, tnfs);
-        // This overwrites "Loading..." with the real filename
+
+        m_slotDownloadId[no] = 0; // Clear lock
         deviceStatusChanged(DISK_BASE_CDEVIC + no);
         qDebug() << "!i" << tr("[Web UI] Mounted TNFS Stream: %1").arg(url);
         dlProgressBar->hide();
     } else {
         delete tnfs;
         dlProgressBar->hide();
-
-        // --- NEW: Revert to Empty on failure ---
-        diskWidgets[no]->showAsEmpty();
-        if (webBridge) {
-            emit webBridge->diskStatusChanged(no, "Empty", "--", false, false);
+        // Only reset the UI to empty if WE are still the active process
+        if (m_slotDownloadId[no] == myId) {
+            m_slotDownloadId[no] = 0;
+            diskWidgets[no]->showAsEmpty();
+            if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--", false, false);
+            qDebug() << "!e" << tr("[Web UI] Failed to mount TNFS Stream: %1").arg(url);
         }
-        qDebug() << "!e" << tr("[Web UI] Failed to mount TNFS Stream: %1").arg(url);
     }
 }
 
@@ -3214,4 +3255,105 @@ void MainWindow::stopWebUi() {
     }
 
     qDebug() << "!w" << tr("Web Dashboard and WebSocket servers completely shut down.");
+}
+
+// =========================================================
+// HEADLESS CASSETTE DECK (WEB UI)
+// =========================================================
+
+void MainWindow::mountCasHeadless(const QString &fileName)
+{
+    ejectCasHeadless(); // Clean up any currently running tape
+
+    m_casWorker = new CassetteWorker();
+    if (!m_casWorker->loadCasImage(fileName)) {
+        qWarning() << "!e" << tr("[Web UI] Failed to load cassette image: %1").arg(fileName);
+        delete m_casWorker;
+        m_casWorker = nullptr;
+        return;
+    }
+
+    m_casFileName = fileName;
+    m_casIsPlaying = false;
+
+    QFileInfo fi(fileName);
+    qDebug() << "!i" << tr("[Web UI] Cassette Mounted: %1").arg(fi.fileName());
+
+    // Broadcast state to the Web UI
+    if (webBridge) {
+        emit webBridge->casStatusChanged(fi.fileName(), false);
+    }
+}
+
+void MainWindow::playCasHeadless()
+{
+    if (!m_casWorker) return;
+
+    if (m_casWorker->isRunning()) {
+        qDebug() << "!w" << tr("[Web UI] Cassette is already playing.");
+        return;
+    }
+
+    qDebug() << "!n" << tr("[Web UI] Starting Cassette Playback.");
+
+    // Start the FSK Audio generation thread!
+    m_casWorker->start(QThread::TimeCriticalPriority);
+    m_casIsPlaying = true;
+    m_casTimer->start(1000); // Check status every second
+
+    QFileInfo fi(m_casFileName);
+    if (webBridge) emit webBridge->casStatusChanged(fi.fileName(), true);
+}
+
+void MainWindow::rewindCasHeadless()
+{
+    if (m_casFileName.isEmpty()) return;
+
+    qDebug() << "!n" << tr("[Web UI] Rewinding Cassette...");
+
+    // To rewind, we simply stop the worker and reload the file from the beginning
+    QString currentFile = m_casFileName;
+    ejectCasHeadless();
+    mountCasHeadless(currentFile);
+}
+
+void MainWindow::ejectCasHeadless()
+{
+    if (m_casWorker) {
+        if (m_casWorker->isRunning()) {
+            // Force the background thread to stop streaming audio
+            m_casWorker->terminate();
+            m_casWorker->wait();
+        }
+        delete m_casWorker;
+        m_casWorker = nullptr;
+    }
+
+    m_casTimer->stop();
+    m_casIsPlaying = false;
+    m_casFileName.clear();
+
+    qDebug() << "!i" << tr("[Web UI] Cassette Ejected.");
+
+    if (webBridge) {
+        emit webBridge->casStatusChanged("", false);
+    }
+}
+
+void MainWindow::updateCasProgress()
+{
+    // The timer checks if the tape has naturally reached the end of the file
+    if (m_casWorker && !m_casWorker->isRunning()) {
+
+        m_casTimer->stop();
+        m_casIsPlaying = false;
+
+        QFileInfo fi(m_casFileName);
+        qDebug() << "!i" << tr("[Web UI] Cassette Playback Finished.");
+
+        // Turn the green "Play" button back to gray on the phone
+        if (webBridge) {
+            emit webBridge->casStatusChanged(fi.fileName(), false);
+        }
+    }
 }

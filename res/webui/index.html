@@ -9,99 +9,93 @@
     <style>
         /* --- THEME VARIABLES --- */
         :root {
-            --bg-main: #f0f0f0;
-            --bg-panel: #fff;
-            --text-main: #333;
-            --text-muted: #888;
-            --border-color: #ccc;
-            --border-light: #eee;
-            --hover-bg: #e0e0e0;
-            --row-hover: #f9f9f9;
-            --primary: #0055A4;
-            --btn-bg: #f8f8f8;
-            --btn-border: #ddd;
-            --btn-text: #555;
-            --btn-hover: #e8e8e8;
-            --btn-hover-text: #000;
-            --input-bg: #fff;
-            --modal-bg: rgba(0,0,0,0.5);
-            --header-bg: #e9ecef;
-            --item-hover: #e3f2fd;
+            --bg-main: #f0f0f0; --bg-panel: #fff; --text-main: #333; --text-muted: #888;
+            --border-color: #ccc; --border-light: #eee; --hover-bg: #e0e0e0; --row-hover: #f9f9f9;
+            --primary: #0055A4; --btn-bg: #f8f8f8; --btn-border: #ddd; --btn-text: #555;
+            --btn-hover: #e8e8e8; --btn-hover-text: #000; --input-bg: #fff;
+            --modal-bg: rgba(0,0,0,0.5); --header-bg: #e9ecef; --item-hover: #e3f2fd;
         }
 
         [data-theme="dark"] {
-            --bg-main: #121212;
-            --bg-panel: #1e1e1e;
-            --text-main: #e0e0e0;
-            --text-muted: #aaa;
-            --border-color: #444;
-            --border-light: #333;
-            --hover-bg: #2a2a2a;
-            --row-hover: #252525;
-            --primary: #4da8da;
-            --btn-bg: #2a2a2a;
-            --btn-border: #444;
-            --btn-text: #ccc;
-            --btn-hover: #3a3a3a;
-            --btn-hover-text: #fff;
-            --input-bg: #2a2a2a;
-            --modal-bg: rgba(0,0,0,0.8);
-            --header-bg: #252525;
-            --item-hover: #2c3e50;
+            --bg-main: #121212; --bg-panel: #1e1e1e; --text-main: #e0e0e0; --text-muted: #aaa;
+            --border-color: #444; --border-light: #333; --hover-bg: #2a2a2a; --row-hover: #252525;
+            --primary: #4da8da; --btn-bg: #2a2a2a; --btn-border: #444; --btn-text: #ccc;
+            --btn-hover: #3a3a3a; --btn-hover-text: #fff; --input-bg: #2a2a2a;
+            --modal-bg: rgba(0,0,0,0.8); --header-bg: #252525; --item-hover: #2c3e50;
         }
 
         /* Base Styles */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-main); margin: 0; color: var(--text-main); transition: background 0.3s, color 0.3s; }
-        .toolbar { background: var(--bg-panel); padding: 10px; border-bottom: 1px solid var(--border-color); display: flex; gap: 8px; align-items: center; transition: background 0.3s; }
+        
+        /* Horizontally Scrollable Toolbar */
+        .toolbar { 
+            background: var(--bg-panel); padding: 10px; border-bottom: 1px solid var(--border-color); 
+            display: flex; gap: 10px; align-items: center; 
+            flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; 
+        }
+        .toolbar::-webkit-scrollbar { display: none; } 
+        
+        .toolbar-group { 
+            display: flex; align-items: center; gap: 4px; background: var(--header-bg); 
+            padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-color); 
+            flex-shrink: 0; 
+        }
+        .toolbar-group.bare { background: transparent; border: none; padding: 0; }
+        
         .tool-btn { background: none; border: 1px solid transparent; padding: 6px; cursor: pointer; border-radius: 4px; font-size: 16px; color: var(--text-main); transition: all 0.2s ease; }
         .tool-btn:hover { background: var(--hover-bg); border: 1px solid var(--border-color); }
-        .divider { width: 1px; height: 24px; background: var(--border-color); margin: 0 5px; }
+        .tape-lcd { font-family: monospace; font-size: 12px; margin-left: 8px; color: var(--primary); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: bold; }
         
         /* Layout */
-        .container { display: flex; padding: 15px; gap: 15px; height: calc(100vh - 60px); box-sizing: border-box; }
-        .drives-panel { flex: 1; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 5px; overflow-y: auto; padding: 10px; transition: background 0.3s; }
+        .container { display: flex; padding: 15px; gap: 15px; height: calc(100vh - 65px); box-sizing: border-box; }
+        .drives-panel { flex: 1; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 5px; overflow-y: auto; padding: 10px; }
         
-        /* Drive Row Styles */
-        .drive-row { display: flex; align-items: center; padding: 8px; border-bottom: 1px solid var(--border-light); gap: 8px; transition: background 0.2s; }
-        .drive-row:hover { background: var(--row-hover); }
-        .drive-label { font-weight: bold; width: 30px; color: var(--primary); }
-        .drive-actions { display: flex; gap: 4px; }
-        .drive-btn { background: var(--btn-bg); border: 1px solid var(--btn-border); padding: 4px 6px; cursor: pointer; border-radius: 3px; color: var(--btn-text); transition: all 0.2s ease; }
+        /* Dashboard Card Drive Rows */
+        .drive-item { padding: 12px; border-bottom: 1px solid var(--border-light); transition: background 0.2s; display: flex; flex-direction: column; gap: 8px; }
+        .drive-item:hover { background: var(--row-hover); }
+        
+        /* Top Row: Label + Actions */
+        .drive-actions { display: flex; align-items: center; gap: 6px; width: 100%; }
+        .drive-label { font-weight: bold; font-size: 16px; color: var(--primary); flex-shrink: 0; width: 24px; }
+        
+        .drive-btn { 
+            background: var(--btn-bg); border: 1px solid var(--btn-border); color: var(--btn-text); 
+            cursor: pointer; border-radius: 4px; transition: all 0.2s ease; font-size: 15px; 
+            display: flex; justify-content: center; align-items: center; padding: 8px 0; flex: 1;
+        }
         .drive-btn:hover { background: var(--btn-hover); color: var(--btn-hover-text); }
-        .file-info { flex: 1; display: flex; flex-direction: column; font-size: 12px; margin-left: 10px; }
-        .file-name { font-family: monospace; font-size: 13px; color: var(--text-main); }
-        .file-props { color: var(--text-muted); }
+        
+        /* Bottom Row: Info + Eject */
+        .drive-info-row { display: flex; align-items: center; gap: 10px; width: 100%; padding-left: 30px; box-sizing: border-box; }
+        
+        .file-info { 
+            flex: 1; min-width: 0; background: var(--header-bg); padding: 6px 10px; border-radius: 4px; 
+            border: 1px solid var(--border-color); display: flex; flex-direction: column; 
+        }
+        .file-name { font-family: monospace; font-size: 13px; color: var(--primary); font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .file-props { color: var(--text-muted); font-size: 11px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .btn-eject { flex: 0 0 auto; padding: 8px 14px; color:#d9534f; }
 
-        /* Modal Base Styles */
+        /* Modals */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: var(--modal-bg); }
-        .modal-content { background-color: var(--bg-panel); margin: 5% auto; padding: 0; width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; max-height: 85vh; border: 1px solid var(--border-color); }
+        .modal-content { background-color: var(--bg-panel); margin: 5% auto; padding: 0; width: 90%; max-width: 600px; border-radius: 8px; display: flex; flex-direction: column; max-height: 85vh; border: 1px solid var(--border-color); }
         .modal-header { padding: 15px; background: var(--primary); color: white; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0; }
         .modal-header h3 { margin: 0; font-size: 18px; }
         .close-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
         .modal-body { padding: 0; overflow-y: auto; flex: 1; }
-        
-        /* File Browser Specifics */
         .path-header { padding: 8px 15px; background: var(--header-bg); font-family: monospace; font-size: 12px; border-bottom: 1px solid var(--border-color); word-break: break-all; color: var(--text-main); }
         .file-item { padding: 12px 15px; border-bottom: 1px solid var(--border-light); cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; }
         .file-item:hover { background-color: var(--item-hover); }
-        .btn-success { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
-        .btn-success:hover { background: #218838; }
-
-        /* Input overrides for dark mode */
+        .btn-success { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         input[type="text"], select { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--border-color); }
-
-        /* Phonebook Specifics */
         .pb-search-container { padding: 10px 15px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); }
-        .pb-search-input { width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        .pb-search-input { width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; }
         .pb-item { padding: 12px 15px; border-bottom: 1px solid var(--border-light); cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
         .pb-item:hover { background-color: var(--item-hover); }
         .pb-title { font-size: 16px; font-weight: bold; color: var(--primary); }
         .pb-details { font-size: 12px; color: var(--text-muted); font-family: monospace; }
-        
-        /* Log Specifics */
-        .log-content { background: #1e1e1e; color: #d4d4d4; font-family: monospace; font-size: 12px; padding: 15px; margin: 0; min-height: 200px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; }
-
-        /* Animation */
+        .log-content { background: #1e1e1e; color: #d4d4d4; font-family: monospace; font-size: 12px; padding: 15px; margin: 0; min-height: 200px; overflow-y: auto; white-space: pre-wrap; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .spin { display: inline-block; animation: spin 1s linear infinite; }
     </style>
@@ -109,16 +103,31 @@
 <body>
 
     <div class="toolbar">
-        <strong style="margin-right: 15px; color: var(--primary);">AspeQt Web</strong>
-        <button id="btn-emulation" class="tool-btn" onclick="if(backend) backend.toggleEmulationUi()" title="Start/Stop Emulation"><i class="bi bi-play-fill"></i></button>
-        <button id="btn-printer" class="tool-btn" onclick="if(backend) backend.togglePrinterUi()" title="Toggle Printer"><i class="bi bi-printer"></i></button>
-        <button class="tool-btn" onclick="if(backend) backend.requestLogTextUi()" title="Show System Log"><i class="bi bi-card-text"></i></button>
-        <button id="btn-theme" class="tool-btn" onclick="toggleTheme()" title="Toggle Dark Mode" style="margin-left: auto;"><i class="bi bi-moon-fill"></i></button>
-        <div class="divider"></div>
-        <button id="btn-hangup" class="tool-btn" onclick="uiActionHangup()" title="Hangup Modem"><i class="bi bi-telephone-x"></i></button>
-        <button class="tool-btn" onclick="if(backend) backend.requestPhonebookList()" title="BBS Phonebook"><i class="bi bi-book"></i></button>
-        <button id="btn-user" class="tool-btn" onclick="uiActionMacroUser()" title="Send Auto-User"><i class="bi bi-person-fill"></i></button>
-        <button id="btn-pass" class="tool-btn" onclick="uiActionMacroPass()" title="Send Auto-Pass"><i class="bi bi-key-fill"></i></button>
+        <div class="toolbar-group bare">
+            <strong style="color: var(--primary); font-size: 18px;">AspeQt Web</strong>
+            <button id="btn-theme" class="tool-btn" onclick="toggleTheme()" title="Toggle Dark Mode"><i class="bi bi-moon-fill"></i></button>
+        </div>
+        
+        <div class="toolbar-group">
+            <button id="btn-emulation" class="tool-btn" onclick="if(backend) backend.toggleEmulationUi()" title="Start/Stop Emulation"><i class="bi bi-play-fill"></i></button>
+            <button id="btn-printer" class="tool-btn" onclick="if(backend) backend.togglePrinterUi()" title="Toggle Printer"><i class="bi bi-printer"></i></button>
+            <button class="tool-btn" onclick="if(backend) backend.requestLogTextUi()" title="Show System Log"><i class="bi bi-card-text"></i></button>
+        </div>
+
+        <div class="toolbar-group tape-deck">
+            <button class="tool-btn" onclick="uiActionMountCas()" title="Insert Cassette"><i class="bi bi-cassette"></i></button>
+            <button id="btn-cas-play" class="tool-btn" onclick="if(backend) backend.playCasUi()" title="Play/Pause Tape"><i class="bi bi-play-fill"></i></button>
+            <button class="tool-btn" onclick="if(backend) backend.rewindCasUi()" title="Rewind Tape"><i class="bi bi-skip-backward-fill"></i></button>
+            <button class="tool-btn" onclick="if(backend) backend.ejectCasUi()" style="color:#d9534f;" title="Eject Tape"><i class="bi bi-eject-fill"></i></button>
+            <div class="tape-lcd" id="cas-filename">No Tape</div>
+        </div>
+
+        <div class="toolbar-group">
+            <button id="btn-hangup" class="tool-btn" onclick="uiActionHangup()" title="Hangup Modem"><i class="bi bi-telephone-x"></i></button>
+            <button class="tool-btn" onclick="if(backend) backend.requestPhonebookList()" title="BBS Phonebook"><i class="bi bi-book"></i></button>
+            <button id="btn-user" class="tool-btn" onclick="uiActionMacroUser()" title="Send Auto-User"><i class="bi bi-person-fill"></i></button>
+            <button id="btn-pass" class="tool-btn" onclick="uiActionMacroPass()" title="Send Auto-Pass"><i class="bi bi-key-fill"></i></button>
+        </div>
     </div>
 
     <div class="container">
@@ -190,37 +199,32 @@
     </div>
 
     <script>
-        // --- Theme Logic ---
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('btn-theme');
             if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
+                body.removeAttribute('data-theme'); localStorage.setItem('theme', 'light');
                 btn.innerHTML = '<i class="bi bi-moon-fill"></i>';
             } else {
-                body.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
+                body.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark');
                 btn.innerHTML = '<i class="bi bi-sun-fill"></i>';
             }
         }
-        
-        // Apply saved theme on load
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             document.getElementById('btn-theme').innerHTML = '<i class="bi bi-sun-fill"></i>';
         }
 
-        // 1. Generate the 15 Drive Widgets
         const container = document.getElementById('drives-container');
         const driveLetters = ['1','2','3','4','5','6','7','8','9','J','K','L','M','N','O'];
-
+        
+        // DASHBOARD CARD GENERATOR: Buttons on Top, Info on Bottom
         driveLetters.forEach((letter, index) => {
-            const row = document.createElement('div');
-            row.className = 'drive-row';
-            row.innerHTML = `
-                <div class="drive-label">${letter}:</div>
+            const item = document.createElement('div');
+            item.className = 'drive-item';
+            item.innerHTML = `
                 <div class="drive-actions">
+                    <div class="drive-label">${letter}:</div>
                     <button class="drive-btn" onclick="uiActionMountTnfs(${index})" title="Mount from TNFS"><i class="bi bi-globe"></i></button>
                     <button class="drive-btn" onclick="uiActionMountDisk(${index})" title="Mount Disk"><i class="bi bi-floppy"></i></button>
                     <button class="drive-btn" onclick="uiActionMountFolder(${index})" title="Mount Folder"><i class="bi bi-folder"></i></button>
@@ -228,28 +232,23 @@
                     <button id="btn-autosave-${index}" class="drive-btn" onclick="uiActionAutoSave(${index})" title="Auto Save"><i class="bi bi-arrow-repeat"></i></button>
                     <button id="btn-happy-${index}" class="drive-btn" onclick="uiActionHappy(${index})" title="Happy Mode"><i class="bi bi-emoji-smile"></i></button>
                 </div>
-                <div class="file-info">
-                    <span class="file-name" id="filename-${index}">Empty</span>
-                    <span class="file-props" id="props-${index}">--</span>
+                <div class="drive-info-row">
+                    <div class="file-info">
+                        <span class="file-name" id="filename-${index}">Empty</span>
+                        <span class="file-props" id="props-${index}">--</span>
+                    </div>
+                    <button class="drive-btn btn-eject" onclick="uiActionEject(${index})" title="Eject"><i class="bi bi-eject-fill"></i></button>
                 </div>
-                <button class="drive-btn" style="margin-left:auto; color:#d9534f;" onclick="uiActionEject(${index})" title="Eject"><i class="bi bi-eject-fill"></i></button>
             `;
-            container.appendChild(row);
+            container.appendChild(item);
         });
 
-        // ==========================================
-        // 2. THE QT WEBCHANNEL BRIDGE LOGIC
-        // ==========================================
         let backend = null;
-        
-        // --- State Tracking ---
         const driveStates = Array.from({length: 15}, () => ({ happyMode: false }));
         let modalMode = 'file';       
         let modalCurrentSlot = 0;     
         let modalCurrentPath = "";    
         let cachedPbEntries = []; 
-        
-        // --- TNFS State Tracking ---
         let tnfsCurrentSlot = 0;
         let tnfsCurrentHost = "tnfs.atari8.info";
         let tnfsCurrentPath = "/";
@@ -262,73 +261,62 @@
                 new QWebChannel(socket, function(channel) {
                     backend = channel.objects.aspeqtBridge;
 
-                    // A. Global Status
                     backend.globalStatusChanged.connect(function(emulationRunning, printerRunning) {
                         const btnEmu = document.getElementById('btn-emulation');
                         if (emulationRunning) {
-                            btnEmu.style.background = '#28a745'; 
-                            btnEmu.style.color = '#fff';
-                            btnEmu.innerHTML = '<i class="bi bi-stop-fill"></i>';
+                            btnEmu.style.background = '#28a745'; btnEmu.style.color = '#fff'; btnEmu.innerHTML = '<i class="bi bi-stop-fill"></i>';
                         } else {
-                            btnEmu.style.background = 'transparent'; 
-                            btnEmu.style.color = 'var(--text-main)';
-                            btnEmu.innerHTML = '<i class="bi bi-play-fill"></i>';
+                            btnEmu.style.background = 'transparent'; btnEmu.style.color = 'var(--text-main)'; btnEmu.innerHTML = '<i class="bi bi-play-fill"></i>';
                         }
-
                         const btnPrint = document.getElementById('btn-printer');
                         if (printerRunning) {
-                            btnPrint.style.background = '#28a745'; 
-                            btnPrint.style.color = '#fff';
+                            btnPrint.style.background = '#28a745'; btnPrint.style.color = '#fff';
                         } else {
-                            btnPrint.style.background = 'transparent'; 
-                            btnPrint.style.color = 'var(--text-main)';
+                            btnPrint.style.background = 'transparent'; btnPrint.style.color = 'var(--text-main)';
                         }
                     });
 
-                    // B. Drive Status Updates
                     backend.diskStatusChanged.connect(function(slot, filename, props, autoSave, happyMode) {
                         driveStates[slot].happyMode = happyMode;
-                        
                         document.getElementById(`filename-${slot}`).innerText = filename;
                         document.getElementById(`props-${slot}`).innerText = props;
 
                         const btnAuto = document.getElementById(`btn-autosave-${slot}`);
                         if (autoSave) {
-                            btnAuto.style.background = '#28a745'; 
-                            btnAuto.style.color = '#fff';
-                            btnAuto.style.borderColor = '#1e7e34';
+                            btnAuto.style.background = '#28a745'; btnAuto.style.color = '#fff'; btnAuto.style.borderColor = '#1e7e34';
                         } else {
-                            btnAuto.style.background = 'var(--btn-bg)'; 
-                            btnAuto.style.color = 'var(--btn-text)';
-                            btnAuto.style.borderColor = 'var(--btn-border)';
+                            btnAuto.style.background = 'var(--btn-bg)'; btnAuto.style.color = 'var(--btn-text)'; btnAuto.style.borderColor = 'var(--btn-border)';
                         }
-
                         const btnHappy = document.getElementById(`btn-happy-${slot}`);
                         if (happyMode) {
-                            btnHappy.style.background = '#ffc107'; 
-                            btnHappy.style.color = '#000';
-                            btnHappy.style.borderColor = '#d39e00';
+                            btnHappy.style.background = '#ffc107'; btnHappy.style.color = '#000'; btnHappy.style.borderColor = '#d39e00';
                         } else {
-                            btnHappy.style.background = 'var(--btn-bg)'; 
-                            btnHappy.style.color = 'var(--btn-text)';
-                            btnHappy.style.borderColor = 'var(--btn-border)';
+                            btnHappy.style.background = 'var(--btn-bg)'; btnHappy.style.color = 'var(--btn-text)'; btnHappy.style.borderColor = 'var(--btn-border)';
                         }
                     });
 
-                    // C. Local Directory
+                    backend.casStatusChanged.connect(function(filename, isPlaying) {
+                        document.getElementById('cas-filename').innerText = filename || "No Tape";
+                        const playBtn = document.getElementById('btn-cas-play');
+                        if (isPlaying) {
+                            playBtn.innerHTML = '<i class="bi bi-pause-fill"></i>'; playBtn.style.color = '#28a745';
+                        } else {
+                            playBtn.innerHTML = '<i class="bi bi-play-fill"></i>'; playBtn.style.color = 'var(--text-main)';
+                        }
+                    });
+
                     backend.directoryListReceived.connect(function(slot, currentPath, files) {
                         modalCurrentPath = currentPath; 
                         document.getElementById('current-path').innerText = currentPath;
-                        
                         const titleUI = document.getElementById('modal-title');
                         const folderBtnUI = document.getElementById('btn-select-folder');
                         
                         if (modalMode === 'folder') {
-                            titleUI.innerText = "Select Folder to Mount";
-                            folderBtnUI.style.display = "block"; 
+                            titleUI.innerText = "Select Folder to Mount"; folderBtnUI.style.display = "block"; 
+                        } else if (modalMode === 'cas') {
+                            titleUI.innerText = "Select Cassette File"; folderBtnUI.style.display = "none";
                         } else {
-                            titleUI.innerText = "Select Disk Image";
-                            folderBtnUI.style.display = "none";  
+                            titleUI.innerText = "Select Disk Image"; folderBtnUI.style.display = "none";  
                         }
 
                         const listDiv = document.getElementById('file-list');
@@ -336,48 +324,44 @@
 
                         files.forEach(file => {
                             if (modalMode === 'folder' && !file.isDir) return;
+                            if (modalMode === 'cas' && !file.isDir && !file.name.toLowerCase().endsWith('.cas')) return;
+                            if (modalMode === 'file' && !file.isDir && file.name.toLowerCase().endsWith('.cas')) return;
 
                             const item = document.createElement('div');
                             item.className = 'file-item';
-                            
                             let icon = file.isDir ? '<i class="bi bi-folder-fill" style="color:#f3da35; font-size:18px;"></i>' : '<i class="bi bi-floppy" style="color:#666; font-size:18px;"></i>';
+                            if (file.name.toLowerCase().endsWith('.cas')) icon = '<i class="bi bi-cassette" style="color:#0055A4; font-size:18px;"></i>';
+
                             item.innerHTML = `${icon} <span>${file.name}</span>`;
-                            
                             item.onclick = function() {
                                 if (file.isDir) {
                                     backend.requestDirectoryList(slot, file.path); 
                                 } else {
-                                    backend.mountFileSilentUi(slot, file.path); 
+                                    if (modalMode === 'cas') backend.mountCasSilentUi(file.path);
+                                    else backend.mountFileSilentUi(slot, file.path); 
                                     closeModal(); 
                                 }
                             };
                             listDiv.appendChild(item);
                         });
-
                         document.getElementById('file-modal').style.display = 'block';
                     });
 
-                    // D. TNFS Streaming Directory Receiver
                     backend.tnfsDirectoryListReceived.connect(function(slot, host, path, files, isFinished) {
-                        tnfsCurrentPath = path;
-                        tnfsCurrentHost = host;
-                        
+                        tnfsCurrentPath = path; tnfsCurrentHost = host;
                         document.getElementById('tnfs-current-path').innerText = "tnfs://" + host + path;
                         const listDiv = document.getElementById('tnfs-list');
                         
                         files.forEach(file => {
                             const item = document.createElement('div');
                             item.className = 'file-item';
-                            
                             let icon = file.isDir ? '<i class="bi bi-folder-fill" style="color:#f3da35; font-size:18px;"></i>' : '<i class="bi bi-globe" style="color:var(--primary); font-size:18px;"></i>';
                             item.innerHTML = `${icon} <span>${file.name}</span>`;
-                            
                             item.onclick = function() {
                                 if (file.isDir) {
                                     let newPath = path;
                                     if (!newPath.endsWith('/')) newPath += '/';
                                     newPath += file.name;
-                                    
                                     listDiv.innerHTML = '';
                                     document.getElementById('tnfs-loading').style.display = 'block';
                                     backend.requestTnfsDirectoryList(slot, host, newPath);
@@ -385,7 +369,6 @@
                                     let fullUrl = "tnfs://" + host + path;
                                     if (!fullUrl.endsWith('/')) fullUrl += '/';
                                     fullUrl += file.name;
-                                    
                                     backend.mountTnfsSilentUi(slot, fullUrl);
                                     closeTnfsModal();
                                 }
@@ -395,7 +378,6 @@
 
                         if (isFinished) {
                             document.getElementById('tnfs-loading').style.display = 'none';
-                            
                             if (path !== "/" && path !== "") {
                                 const upItem = document.createElement('div');
                                 upItem.className = 'file-item';
@@ -404,7 +386,6 @@
                                      let parts = path.split('/').filter(p => p.length > 0);
                                      parts.pop(); 
                                      let newPath = "/" + parts.join('/');
-                                     
                                      listDiv.innerHTML = ''; 
                                      document.getElementById('tnfs-loading').style.display = 'block';
                                      backend.requestTnfsDirectoryList(slot, host, newPath);
@@ -414,34 +395,23 @@
                         }
                     });
 
-                    // --- Bulletproof TNFS History Listener ---
                     backend.tnfsHostHistoryReceived.connect(function(history) {
                         const select = document.getElementById('tnfs-host-select');
                         select.innerHTML = '<option value="" disabled selected>History...</option>'; 
-                        
                         let hostArray = Array.isArray(history) ? history : Object.values(history);
-
                         hostArray.forEach(host => {
                             const option = document.createElement('option');
-                            option.value = host;
-                            option.innerText = host;
-                            select.appendChild(option);
+                            option.value = host; option.innerText = host; select.appendChild(option);
                         });
-
-                        if (hostArray.length > 0) {
-                            document.getElementById('tnfs-host').value = hostArray[0];
-                        }
+                        if (hostArray.length > 0) document.getElementById('tnfs-host').value = hostArray[0];
                     });
 
-                    // E. Phonebook
                     backend.phonebookListReceived.connect(function(entries) {
                         cachedPbEntries = entries; 
                         document.getElementById('pb-search').value = ""; 
-                        renderPhonebook(""); 
-                        document.getElementById('pb-modal').style.display = 'block';
+                        renderPhonebook(""); document.getElementById('pb-modal').style.display = 'block';
                     });
 
-                    // F. Log Text
                     backend.logTextReceived.connect(function(logText) {
                         const textArea = document.getElementById('log-text-area');
                         textArea.innerText = logText || "Log is empty.";
@@ -449,106 +419,56 @@
                         textArea.scrollTop = textArea.scrollHeight;
                     });
 
-                    // Initial request
                     backend.requestFullStatus();
                 });
             };
         }
 
-        // --- Clean Button Animations ---
         function flashButtonFeedback(btnId) {
             const btn = document.getElementById(btnId);
             if (btn) {
                 const originalHtml = btn.innerHTML;
-                btn.innerHTML = '<i class="bi bi-check-lg"></i>';
-                btn.style.background = '#28a745';
-                btn.style.color = '#fff';
-                setTimeout(() => {
-                    btn.innerHTML = originalHtml;
-                    btn.style.background = '';
-                    btn.style.color = '';
-                }, 1000);
+                btn.innerHTML = '<i class="bi bi-check-lg"></i>'; btn.style.background = '#28a745'; btn.style.color = '#fff';
+                setTimeout(() => { btn.innerHTML = originalHtml; btn.style.background = ''; btn.style.color = ''; }, 1000);
             }
         }
 
-        // --- Phonebook Search Logic ---
-        function filterPhonebook() {
-            const query = document.getElementById('pb-search').value.toLowerCase();
-            renderPhonebook(query);
-        }
-
+        function filterPhonebook() { renderPhonebook(document.getElementById('pb-search').value.toLowerCase()); }
         function renderPhonebook(filterString) {
-            const listDiv = document.getElementById('pb-list');
-            listDiv.innerHTML = ''; 
+            const listDiv = document.getElementById('pb-list'); listDiv.innerHTML = ''; 
             const filtered = cachedPbEntries.filter(bbs => bbs.name.toLowerCase().includes(filterString));
-
-            if (filtered.length === 0) {
-                listDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">No matching BBS entries.</div>';
-            } else {
-                filtered.forEach(bbs => {
-                    const item = document.createElement('div');
-                    item.className = 'pb-item';
-                    item.innerHTML = `
-                        <div class="pb-title"><i class="bi bi-modem"></i> ${bbs.name}</div>
-                        <div class="pb-details">${bbs.ip}:${bbs.port}  |  ${bbs.protocol}  |  User: ${bbs.login}</div>
-                    `;
-                    item.onclick = function() {
-                        backend.dialBbsUi(bbs.name, bbs.ip, bbs.port, bbs.protocol, bbs.login, bbs.password);
-                        closePbModal();
-                    };
-                    listDiv.appendChild(item);
-                });
-            }
+            if (filtered.length === 0) listDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">No matching BBS entries.</div>';
+            else filtered.forEach(bbs => {
+                const item = document.createElement('div'); item.className = 'pb-item';
+                item.innerHTML = `<div class="pb-title"><i class="bi bi-modem"></i> ${bbs.name}</div><div class="pb-details">${bbs.ip}:${bbs.port}  |  ${bbs.protocol}  |  User: ${bbs.login}</div>`;
+                item.onclick = function() { backend.dialBbsUi(bbs.name, bbs.ip, bbs.port, bbs.protocol, bbs.login, bbs.password); closePbModal(); };
+                listDiv.appendChild(item);
+            });
         }
 
-        // --- UI Modal Controls ---
         function closeModal() { document.getElementById('file-modal').style.display = 'none'; }
         function closePbModal() { document.getElementById('pb-modal').style.display = 'none'; }
         function closeLogModal() { document.getElementById('log-modal').style.display = 'none'; }
         function closeTnfsModal() { document.getElementById('tnfs-modal').style.display = 'none'; }
+        function commitFolderSelection() { if (backend && modalCurrentPath !== "") { backend.mountFileSilentUi(modalCurrentSlot, modalCurrentPath); closeModal(); } }
 
-        function commitFolderSelection() {
-            if (backend && modalCurrentPath !== "") {
-                backend.mountFileSilentUi(modalCurrentSlot, modalCurrentPath);
-                closeModal();
-            }
-        }
-
-        // --- TNFS UI Actions ---
+        function uiActionMountCas() { modalMode = 'cas'; if(backend) backend.requestDirectoryList(-1, ""); }
         function uiActionMountTnfs(slot) {
-            tnfsCurrentSlot = slot;
-            document.getElementById('tnfs-list').innerHTML = '';
-            document.getElementById('tnfs-current-path').innerText = "Ready";
-            document.getElementById('tnfs-loading').style.display = 'none';
-            document.getElementById('tnfs-modal').style.display = 'block';
+            tnfsCurrentSlot = slot; document.getElementById('tnfs-list').innerHTML = ''; document.getElementById('tnfs-current-path').innerText = "Ready";
+            document.getElementById('tnfs-loading').style.display = 'none'; document.getElementById('tnfs-modal').style.display = 'block';
         }
-
         function connectTnfs() {
-            let hostInput = document.getElementById('tnfs-host').value.trim();
-            if (!hostInput) return;
-            
-            // Clean up if user pasted "tnfs://"
+            let hostInput = document.getElementById('tnfs-host').value.trim(); if (!hostInput) return;
             tnfsCurrentHost = hostInput.replace("tnfs://", "").split('/')[0];
-            
-            document.getElementById('tnfs-list').innerHTML = '';
-            document.getElementById('tnfs-loading').style.display = 'block';
-            
+            document.getElementById('tnfs-list').innerHTML = ''; document.getElementById('tnfs-loading').style.display = 'block';
             if(backend) backend.requestTnfsDirectoryList(tnfsCurrentSlot, tnfsCurrentHost, "/");
         }
-
-        // --- Drive Actions ---
         function uiActionMountDisk(slot) { modalMode = 'file'; modalCurrentSlot = slot; if(backend) backend.requestDirectoryList(slot, ""); }
         function uiActionMountFolder(slot) { modalMode = 'folder'; modalCurrentSlot = slot; if(backend) backend.requestDirectoryList(slot, ""); }
         function uiActionAutoSave(slot) { if(backend) backend.toggleAutoSaveUi(slot); }
         function uiActionHappy(slot) { if(backend) backend.setHappyModeUi(slot, !driveStates[slot].happyMode); }
         function uiActionEject(slot) { if(backend) backend.ejectDiskUi(slot); }
-
-        function uiActionSave(slot) {
-            if(backend) backend.saveDiskUi(slot);
-            flashButtonFeedback(`btn-save-${slot}`);
-        }
-
-        // --- Modem Actions ---
+        function uiActionSave(slot) { if(backend) backend.saveDiskUi(slot); flashButtonFeedback(`btn-save-${slot}`); }
         function uiActionHangup() { if(backend) backend.hangupUi(); flashButtonFeedback('btn-hangup'); }
         function uiActionMacroUser() { if(backend) backend.macroUserUi(); flashButtonFeedback('btn-user'); }
         function uiActionMacroPass() { if(backend) backend.macroPassUi(); flashButtonFeedback('btn-pass'); }
