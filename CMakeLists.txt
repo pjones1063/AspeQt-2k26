@@ -13,7 +13,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # --- 0. Define Icon Path (MacOS specific) ---
-# We define this early so we can use it in the executable source list
 set(MACOS_ICON_FILE "res/icons.icns")
 
 # --- 1. Setup ZLIB (Cross-platform Fetch) ---
@@ -33,11 +32,10 @@ if(NOT TARGET ZLIB::ZLIB)
 endif()
 
 # --- 2. Find Dependencies ---
-
 # Find Qt 6 Components
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml WebSockets WebChannel HttpServer)
 
-# Find LibSSH (New Addition)
+# Find LibSSH
 find_package(libssh REQUIRED)
 
 # --- 3. Find ALL source files in src/ ---
@@ -46,7 +44,6 @@ file(GLOB_RECURSE PROJECT_SOURCES
     "src/*.h"
     "src/*.ui"
 )
-
 
 # --- 4. Filter out files for the wrong OS ---
 if(WIN32)
@@ -59,8 +56,6 @@ elseif(UNIX)
 endif()
 
 # --- 5. Add the Executable ---
-# NOTE: We include ${MACOS_ICON_FILE} in the source list.
-# This ensures CMake is aware of the file and can copy it into the bundle.
 qt_add_executable(AspeQt
     ${PROJECT_SOURCES}
     ${MACOS_ICON_FILE}
@@ -69,6 +64,7 @@ qt_add_executable(AspeQt
     "res/documentation.qrc"
     "res/i18n.qrc"
     "res/firmware.qrc"
+    "res/webui.qrc"
 )
 
 # --- 6. Include Directories ---
@@ -87,8 +83,11 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::PrintSupport
     Qt6::Concurrent
     Qt6::Xml
+    Qt6::WebSockets   
+    Qt6::WebChannel    
+    Qt6::HttpServer
     ZLIB::ZLIB
-    ssh  # Link against libssh
+    ssh 
 )
 
 # REQUIRED FIX: Link Windows Multimedia API for timing functions
@@ -99,40 +98,30 @@ endif()
 
 # --- 8. MacOS Bundle & Icon Settings ---
 if(APPLE)
-    # A. Mark the .icns file as a resource file so it goes into Contents/Resources
     set_source_files_properties(${MACOS_ICON_FILE} PROPERTIES
         MACOSX_PACKAGE_LOCATION "Resources"
     )
-
-    # B. Set the Bundle properties
     set_target_properties(AspeQt PROPERTIES
         MACOSX_BUNDLE ON
         MACOSX_BUNDLE_GUI_IDENTIFIER "net.13leader.AspeQt"
         MACOSX_BUNDLE_BUNDLE_NAME "AspeQt"
-        # C. Tell Info.plist to use the filename "icons.icns"
         MACOSX_BUNDLE_ICON_FILE "icons.icns"
     )
 endif()
 
 if(UNIX AND NOT APPLE)
     find_package(PkgConfig REQUIRED)
-    # Quietly check if libgpiod (v2) is installed
     pkg_check_modules(GPIOD QUIET libgpiodcxx)
 
     if(GPIOD_FOUND)
         message(STATUS "Found libgpiod: Hardware SIO interrupts enabled.")
-
-        # Add a C++ preprocessor flag so our code knows it's active
         add_compile_definitions(HAS_LIBGPIOD)
-
-        # Link the library to your main executable (replace 'AspeQt' with your target name)
         target_link_libraries(AspeQt PRIVATE ${GPIOD_LIBRARIES})
         target_include_directories(AspeQt PRIVATE ${GPIOD_INCLUDE_DIRS})
     else()
         message(STATUS "libgpiod not found. Falling back to software SIO interrupts.")
     endif()
 endif()
-
 
 # --- 9. Install Definitions ---
 install(TARGETS AspeQt
@@ -146,7 +135,6 @@ target_compile_definitions(AspeQt PRIVATE
 )
 
 # --- 10. Copy Resources to Build Directory ---
-# This ensures non-embedded resources (like help files) are available near the binary
 file(GLOB_RECURSE RESOURCES_TO_COPY
     "${CMAKE_SOURCE_DIR}/res/help/*"
     "${CMAKE_SOURCE_DIR}/res/images/*"
@@ -171,10 +159,9 @@ set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Atari Serial Peripheral Emulator")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "AspeQt-2K26")
 
-# Debian specific settings
 if(UNIX AND NOT APPLE)
     set(CPACK_GENERATOR "DEB")
-    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Paul Jones") # Required for .deb
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Paul Jones")
     set(CPACK_DEBIAN_PACKAGE_SECTION "utils")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
     set(CPACK_DEBIAN_FILE_NAME "DEB-DEFAULT")

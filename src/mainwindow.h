@@ -19,6 +19,9 @@
 #include <QSlider>
 #include <QEnterEvent>
 #include <QProgressBar>
+#include <QWebSocketServer>
+#include <QWebChannel>
+#include <QHttpServer>
 
 #include "modembridge.h"
 #include "optionsdialog.h"
@@ -37,6 +40,10 @@
 #include "bbsdata.h"
 #include "aspeqtclientdevice.h"
 
+
+
+class WebBridge;
+class WebSocketClientWrapper;
 
 namespace Ui
 {
@@ -70,6 +77,11 @@ public:
     QString g_sessionFile;
     QString g_sessionFilePath;
     QString g_mainWindowTitle;
+    QWebSocketServer *webSocketServer = nullptr;
+    WebSocketClientWrapper *clientWrapper = nullptr;
+    QWebChannel *webChannel = nullptr;
+    WebBridge *webBridge = nullptr;
+
 
 
 public slots:
@@ -84,6 +96,13 @@ public slots:
     void updateDownloadProgress(qint64 bytesRead, qint64 totalBytes);
     void onFireAndForget(QString url, QByteArray data);
     void on_actionPhonebook_triggered();
+    void refreshWebUi();
+    void mountFileHeadless(int no, const QString &fileName);
+    void ejectHeadless(int no);
+    void toggleAutoSaveHeadless(int no);
+    void toggleEmulationHeadless();
+    void togglePrinterHeadless();
+    void mountTnfsHeadless(int no, const QString &url);
 
 
 private:
@@ -122,6 +141,9 @@ private:
     QTimer *ledResetTimer;       // Turns LEDs off after 50m
     QToolButton *btnSioTrace;    // SIO Tracer
     QToolButton *btnDisasmToggle; // dis-asm
+
+    QHttpServer *httpServer = nullptr;
+
 
     void setSession();  //
     void updateRecentFileActions();
@@ -168,6 +190,7 @@ signals:
 
 public:
     void doLogMessage(int type, const QString &msg);
+    QString getLogText();
 
 private slots:
     void on_actionPlaybackCassette_triggered();
@@ -229,6 +252,10 @@ private slots:
     void onSioTraceToggleClicked();
     void onDisasmToggleClicked();
     void onSioTraceData(const QString &dir, const QByteArray &data);
+    void hangupModem();
+    void sendMacroUser();
+    void sendMacroPass();
+    void dialBbsSilent(const QString &name, const QString &ip, int port, const QString &protocol, const QString &login, const QString &password);
 
 };
 

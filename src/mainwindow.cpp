@@ -8,6 +8,14 @@
 #include <QToolButton>
 #include <QLayout>
 #include <QElapsedTimer>
+#include <QWebSocketServer>
+#include <QWebChannel>
+#include <QHttpServer>
+#include <QHttpServerResponse>
+#include <QHttpServerResponder>
+#include <QFile>
+#include <QTcpServer>
+
 #include "tnfsbrowser.h"
 #include "tnfsimage.h"
 #include "rdevice.h"
@@ -28,6 +36,9 @@
 #include "logdisplaydialog.h"
 #include "infowidget.h"
 #include "opcodes6502.h"
+
+#include "websocketclientwrapper.h"
+#include "webbridge.h"
 
 
 #include <QEvent>
@@ -456,12 +467,10 @@ MainWindow::MainWindow(QWidget *parent)
 
         modemBridge->start();
     }
-
-
     updatePhonebookMenuState();
 
     // -------------------------------------------------------
-    // R: Device testing
+    // R: Device
     // -------------------------------------------------------
     // When you create RDevice:
     RDevice *rDev = new RDevice(sio);
@@ -628,6 +637,52 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(&trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
     trayIcon.setIcon(windowIcon());
+
+
+    // -------------------------------------------------------
+    // START WEB UI SERVER
+    // -------------------------------------------------------
+    webSocketServer = new QWebSocketServer("AspeQtWeb", QWebSocketServer::NonSecureMode, this);
+    if (webSocketServer->listen(QHostAddress::Any, 12345)) {
+        qDebug() << "!i" << "Web UI Server started on port 12345";
+    }
+    clientWrapper = new WebSocketClientWrapper(webSocketServer, this);
+    webChannel = new QWebChannel(this);
+    connect(clientWrapper, &WebSocketClientWrapper::clientConnected,
+            webChannel, &QWebChannel::connectTo);
+    webBridge = new WebBridge(this, this);
+    webChannel->registerObject("aspeqtBridge", webBridge);
+
+    // -------------------------------------------------------
+    // START HTTP SERVER (Serves the Web UI)
+    // -------------------------------------------------------
+    httpServer = new QHttpServer(this);
+    httpServer->route("/", QHttpServerRequest::Method::Get, []() {
+        QFile file(":/webui/index.html");
+         if (file.open(QIODevice::ReadOnly)) {
+            // BUG FIX: MIME Type comes FIRST, Data comes SECOND!
+            return QHttpServerResponse("text/html", file.readAll());
+        }
+        return QHttpServerResponse(QHttpServerResponder::StatusCode::NotFound);
+    });
+    httpServer->route("/qwebchannel.js", QHttpServerRequest::Method::Get, []() {
+        QFile file(":/webui/qwebchannel.js");
+        if (file.open(QIODevice::ReadOnly)) {
+            // BUG FIX: MIME Type comes FIRST, Data comes SECOND!
+            return QHttpServerResponse("application/javascript", file.readAll());
+        }
+        return QHttpServerResponse(QHttpServerResponder::StatusCode::NotFound);
+    });
+
+    QTcpServer *tcpServer = new QTcpServer(this);
+   if (tcpServer->listen(QHostAddress::Any, 8080) && httpServer->bind(tcpServer)) {
+        qDebug() << "!i" << "HTTP Dashboard available at http://localhost:8080";
+    } else {
+        qDebug() << "!e" << "Failed to start HTTP Server on port 8080";
+        tcpServer->deleteLater();
+    }
+
+
 }
 
 MainWindow::~MainWindow()
@@ -1240,7 +1295,9 @@ void MainWindow::printServer(bool enable)
     else
         qWarning() << "!i" << tr("Printer emulation started.");
 
+    if (webBridge) emit webBridge->globalStatusChanged(ui->actionStartEmulation->isChecked(), enable);
 }
+
 
 void MainWindow::setUpPrinterEmulationWidgets(bool enable)
 {
@@ -1271,6 +1328,8 @@ void MainWindow::sioStarted()
     ui->actionStartEmulation->setText(tr("&Stop emulation"));
     ui->actionStartEmulation->setToolTip(tr("Stop SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Stop SIO peripheral emulation"));
+    if (webBridge) emit webBridge->globalStatusChanged(true, aspeqtSettings->printerEmulation());
+
 }
 
 void MainWindow::sioFinished()
@@ -1285,10 +1344,8 @@ void MainWindow::sioFinished()
     qWarning() << "!i" << tr("Emulation stopped.");
 
     RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
-    if (rDev) {
-        rDev->forceCommandMode();
-    }
-
+    if (rDev) {   rDev->forceCommandMode();  }
+    if (webBridge) emit webBridge->globalStatusChanged(false, aspeqtSettings->printerEmulation());
 }
 
 void MainWindow::sioStatusChanged(QString status)
@@ -1299,6 +1356,7 @@ void MainWindow::sioStatusChanged(QString status)
     blinkRx();
     blinkTx();
 }
+
 
 void MainWindow::deviceStatusChanged(int deviceNo)
 {
@@ -1315,7 +1373,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             QString fullUrl = tnfsImg->originalFileName();
             QString fileNameOnly = fullUrl;
 
-            // --- FIX: Extract purely the filename from the URL ---
+            // Extract purely the filename from the URL
             int lastSlash = fullUrl.lastIndexOf('/');
             if (lastSlash != -1) {
                 fileNameOnly = fullUrl.mid(lastSlash + 1);
@@ -1323,12 +1381,13 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             if (fileNameOnly.isEmpty()) fileNameOnly = fullUrl;
 
             diskWidget->setLabelToolTips(fullUrl, fullUrl, tr("TNFS Network Stream To Ram"));
-
-            // --- FIX: Force Happy Mode OFF for TNFS streams ---
             diskWidget->setHappyMode(false);
-
-            // Arg 3 (Edit) = false, Arg 4 (Save) = false
             diskWidget->showAsTNFSMounted(fileNameOnly, tr("TNFS Stream to RAM"));
+
+            // --- WEB UI UPDATE: TNFS ---
+            if (webBridge) {
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, fileNameOnly, "TNFS Stream", false, false);
+            }
             return; // EXIT HERE so SimpleDiskImage logic doesn't override it
         }
 
@@ -1374,8 +1433,8 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                         saved = img->save();
                         if (!saved) {
                             int response = QMessageBox::question(this, tr("Save failed"),
-                                            tr("'%1' cannot be saved, do you want to save the image with another name?").arg(img->originalFileName()),
-                                            QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
+                                                                 tr("'%1' cannot be saved, do you want to save the image with another name?").arg(img->originalFileName()),
+                                                                 QMessageBox::StandardButton::Yes, QMessageBox::StandardButton::No);
                             if (response == QMessageBox::StandardButton::Yes) {
                                 saveDiskAs(deviceNo);
                             }
@@ -1384,11 +1443,25 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                 }
                 diskWidget->showAsImageMounted(filenamelabel, img->description(), enableEdit, enableSave);
             }
+
+            // --- WEB UI UPDATE: STANDARD IMAGE ---
+            if (webBridge) {
+                bool autoSave = diskWidget->isAutoSaveEnabled();
+                bool happy = aspeqtSettings->mountedImageSetting(deviceNo - DISK_BASE_CDEVIC).isHappyMode;
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, filenamelabel, img->description(), autoSave, happy);
+            }
+
         } else {
             diskWidget->showAsEmpty();
+
+            // --- WEB UI UPDATE: EMPTY SLOT ---
+            if (webBridge) {
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Empty", "--", false, false);
+            }
         }
     }
 }
+
 
 void MainWindow::uiMessage(int t, QString message)
 {
@@ -2449,6 +2522,14 @@ void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
     qDebug() << "!i" << tr("Drive %1 Happy Mode %2.")
                             .arg(deviceId + 1)
                             .arg(enabled ? tr("Enabled") : tr("Disabled"));
+
+    // 3. FIX: Ensure the native Qt UI widget reflects this change (crucial for Web UI clicks)
+    if (deviceId >= 0 && deviceId < DISK_COUNT) {
+        diskWidgets[deviceId]->setHappyMode(enabled);
+    }
+
+    // 4. FIX: Broadcast the new state to the Web UI so the button turns yellow!
+    deviceStatusChanged(deviceId + DISK_BASE_CDEVIC);
 }
 
 
@@ -2461,24 +2542,28 @@ void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
 
 void MainWindow::on_actionMountTnfs_triggered(int deviceId)
 {
-    // 1. Set Busy Cursor immediately (from Main Window context)
-    // This covers the time taken by TnfsBrowser's constructor to Connect & Refresh.
+    // 1. Set Busy Cursor immediately
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // 2. Launch the thread-safe browser with the LAST SAVED URL
     TnfsBrowser browser(this, aspeqtSettings->restoreTnfsLocation() ? g_lastTnfsUrl : "");
 
-    // 3. Restore Cursor (Constructor is done, UI is ready to show)
+    // 3. Restore Cursor
     QApplication::restoreOverrideCursor();
 
     if (browser.exec() == QDialog::Accepted) {
         QString url = browser.getSelectedUrl();
-
-        // --- Save the URL for next time ---
         g_lastTnfsUrl = url;
 
         // Eject whatever is currently in that slot
         if (!ejectImage(deviceId)) return;
+
+        // --- NEW: Instant "Loading..." Feedback ---
+        diskWidgets[deviceId]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
+        if (webBridge) {
+            emit webBridge->diskStatusChanged(deviceId, "Loading...", "Downloading from TNFS...", false, false);
+        }
+        QCoreApplication::processEvents(); // Force UI update before blocking network call
 
         TnfsImage *tnfs = new TnfsImage(sio);
         tnfs->setParent(nullptr);   // Detach
@@ -2489,18 +2574,23 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
         if (tnfs->openUrl(url)) {
             // Install into the SIO chain
             sio->installDevice(DISK_BASE_CDEVIC + deviceId, tnfs);
-            // Trigger UI Update via the central handler
+            // Trigger UI Update via the central handler (This overwrites "Loading..." with the real filename)
             deviceStatusChanged(DISK_BASE_CDEVIC + deviceId);
             qDebug() << "!i" << tr("Mounted TNFS Stream: %1").arg(url);
             dlProgressBar->hide();
         } else {
-            QMessageBox::critical(this, tr("Mount Error"), tr("Could not open TNFS stream from 13leader.net"));
+            QMessageBox::critical(this, tr("Mount Error"), tr("Could not open TNFS stream from %1").arg(url));
             delete tnfs;
             dlProgressBar->hide();
+
+            // --- NEW: Revert to Empty on failure ---
+            diskWidgets[deviceId]->showAsEmpty();
+            if (webBridge) {
+                emit webBridge->diskStatusChanged(deviceId, "Empty", "--", false, false);
+            }
         }
     }
 }
-
 
 
 void MainWindow::updateDownloadProgress(qint64 bytesRead, qint64 totalBytes)
@@ -2863,8 +2953,6 @@ void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
 }
 
 
-
-
 void MainWindow::on_actionInspectSectors_triggered(int deviceId)
 {
     SimpleDiskImage *img = qobject_cast<SimpleDiskImage*>(sio->getDevice(deviceId + DISK_BASE_CDEVIC));
@@ -2876,3 +2964,168 @@ void MainWindow::on_actionInspectSectors_triggered(int deviceId)
     }
 }
 
+
+// -----------------------------------------------------------------
+// WEB UI slots
+// -----------------------------------------------------------------
+
+
+void MainWindow::refreshWebUi()
+{
+    // Loop through all 15 slots and force an update to the web browser
+    for (int i = DISK_BASE_CDEVIC; i < (DISK_BASE_CDEVIC + DISK_COUNT); i++) {
+        deviceStatusChanged(i);
+    }
+
+    if (webBridge) {
+        emit webBridge->globalStatusChanged(ui->actionStartEmulation->isChecked(), aspeqtSettings->printerEmulation());
+    }
+}
+
+void MainWindow::mountFileHeadless(int no, const QString &fileName)
+{
+    // 1. Check if there are unsaved changes just so we can log a warning
+    SimpleDiskImage *img = qobject_cast<SimpleDiskImage*>(sio->getDevice(no + DISK_BASE_CDEVIC));
+
+    if (img && img->isModified()) {
+        qDebug() << "!w" << tr("[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.").arg(no+1);
+    }
+
+    // 2. Forcibly eject the current disk WITHOUT triggering the GUI pop-up (ask = false)
+    ejectImage(no, false);
+
+    // 3. Now that the slot is safely empty, mount the new file normally!
+    const AspeQtSettings::ImageSettings* imgSetting = aspeqtSettings->getImageSettingsFromName(fileName);
+    bool prot = (imgSetting != NULL) && imgSetting->isWriteProtected;
+    mountFile(no, fileName, prot);
+}
+
+
+void MainWindow::ejectHeadless(int no)
+{
+    // 1. Check if modified to log a warning
+    SimpleDiskImage *img = qobject_cast<SimpleDiskImage*>(sio->getDevice(no + DISK_BASE_CDEVIC));
+    if (img && img->isModified()) {
+        qDebug() << "!w" << tr("[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.").arg(no+1);
+    }
+
+    // 2. Forcibly eject the current disk WITHOUT triggering the GUI pop-up (ask = false)
+    ejectImage(no, false);
+}
+
+void MainWindow::toggleAutoSaveHeadless(int no)
+{
+    // Safely trigger the native checkbox click inside the DriveWidget
+    if (no >= 0 && no < DISK_COUNT) {
+        diskWidgets[no]->triggerAutoSaveClickIfEnabled();
+
+        // Broadcast the new state to the Web UI
+        deviceStatusChanged(DISK_BASE_CDEVIC + no);
+    }
+}
+
+
+void MainWindow::hangupModem() {
+    if (aspeqtSettings->isRDeviceEnabled()) {
+        RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+        if (rDev) rDev->hangup();
+    } else if (modemBridge) {
+        modemBridge->hangup();
+    }
+}
+
+void MainWindow::sendMacroUser() {
+    if (aspeqtSettings->isRDeviceEnabled()) {
+        RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+        if (rDev) rDev->injectMacro('U');
+    } else if (modemBridge) {
+        modemBridge->injectMacro('U');
+    }
+}
+
+void MainWindow::sendMacroPass() {
+    if (aspeqtSettings->isRDeviceEnabled()) {
+        RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+        if (rDev) rDev->injectMacro('P');
+    } else if (modemBridge) {
+        modemBridge->injectMacro('P');
+    }
+}
+
+void MainWindow::dialBbsSilent(const QString &name, const QString &ip, int port, const QString &protocol, const QString &login, const QString &password) {
+    // 1. Reconstruct the BbsEntry object
+    BbsEntry entry;
+    entry.name = name;
+    entry.ip = ip;
+    entry.port = port;
+    entry.protocol = protocol;
+    entry.login = login;
+    entry.password = password;
+
+    // 2. Send it to whichever modem is active!
+    if (aspeqtSettings->isRDeviceEnabled()) {
+        RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+        if (rDev) rDev->dial(entry);
+    } else if (aspeqtSettings->isModemBridgeEnabled() && modemBridge) {
+        modemBridge->dial(entry);
+    }
+
+    qDebug() << "!i" << tr("[Web UI] Dialing BBS: %1 (%2)").arg(name, ip);
+}
+
+void MainWindow::toggleEmulationHeadless()
+{
+    // Safely simulate a real mouse click on the UI action
+    ui->actionStartEmulation->trigger();
+}
+
+void MainWindow::togglePrinterHeadless()
+{
+    // Safely simulate a real mouse click on the UI action
+    ui->actionPrinterEmulation->trigger();
+}
+
+QString MainWindow::getLogText() {
+    // Grabs the plain text out of the native Qt Log window
+    return ui->textEdit->toPlainText();
+}
+
+void MainWindow::mountTnfsHeadless(int no, const QString &url)
+{
+    // 1. Eject current disk silently
+    if (!ejectImage(no, false)) return;
+
+    // --- NEW: Instant "Loading..." Feedback ---
+    diskWidgets[no]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
+    if (webBridge) {
+        emit webBridge->diskStatusChanged(no, "Loading...", "Downloading from TNFS...", false, false);
+    }
+    QCoreApplication::processEvents(); // Force UI update before blocking network call
+
+    // 2. Create the TNFS Image object and move it to the SIO Thread
+    TnfsImage *tnfs = new TnfsImage(sio);
+    tnfs->setParent(nullptr);
+    tnfs->moveToThread(sio);
+
+    // 3. Connect progress so the native PC UI still shows the download bar if you look at it
+    connect(tnfs, &TnfsImage::downloadProgress, this, &MainWindow::updateDownloadProgress);
+
+    // 4. Open the URL and mount it!
+    if (tnfs->openUrl(url)) {
+        sio->installDevice(DISK_BASE_CDEVIC + no, tnfs);
+        // This overwrites "Loading..." with the real filename
+        deviceStatusChanged(DISK_BASE_CDEVIC + no);
+        qDebug() << "!i" << tr("[Web UI] Mounted TNFS Stream: %1").arg(url);
+        dlProgressBar->hide();
+    } else {
+        delete tnfs;
+        dlProgressBar->hide();
+
+        // --- NEW: Revert to Empty on failure ---
+        diskWidgets[no]->showAsEmpty();
+        if (webBridge) {
+            emit webBridge->diskStatusChanged(no, "Empty", "--", false, false);
+        }
+        qDebug() << "!e" << tr("[Web UI] Failed to mount TNFS Stream: %1").arg(url);
+    }
+}

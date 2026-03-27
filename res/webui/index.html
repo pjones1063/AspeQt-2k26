@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="qwebchannel.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AspeQt-2k26 - Web Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Base Styles */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f0f0; margin: 0; color: #333; }
+        .toolbar { background: #fff; padding: 10px; border-bottom: 1px solid #ccc; display: flex; gap: 8px; align-items: center; }
+        .tool-btn { background: none; border: 1px solid transparent; padding: 6px; cursor: pointer; border-radius: 4px; font-size: 16px; transition: all 0.2s ease; }
+        .tool-btn:hover { background: #e0e0e0; border: 1px solid #ccc; }
+        .divider { width: 1px; height: 24px; background: #ccc; margin: 0 5px; }
+        
+        /* Layout */
+        .container { display: flex; padding: 15px; gap: 15px; height: calc(100vh - 60px); box-sizing: border-box; }
+        .drives-panel { flex: 1; background: #fff; border: 1px solid #ccc; border-radius: 5px; overflow-y: auto; padding: 10px; }
+        
+        /* Drive Row Styles */
+        .drive-row { display: flex; align-items: center; padding: 8px; border-bottom: 1px solid #eee; gap: 8px; }
+        .drive-row:hover { background: #f9f9f9; }
+        .drive-label { font-weight: bold; width: 30px; color: #0055A4; }
+        .drive-actions { display: flex; gap: 4px; }
+        .drive-btn { background: #f8f8f8; border: 1px solid #ddd; padding: 4px 6px; cursor: pointer; border-radius: 3px; color: #555; transition: all 0.2s ease; }
+        .drive-btn:hover { background: #e8e8e8; color: #000; }
+        .file-info { flex: 1; display: flex; flex-direction: column; font-size: 12px; margin-left: 10px; }
+        .file-name { font-family: monospace; font-size: 13px; color: #222; }
+        .file-props { color: #888; }
+
+        /* Modal Base Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fff; margin: 5% auto; padding: 0; width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; max-height: 85vh; }
+        .modal-header { padding: 15px; background: #0055A4; color: white; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0; }
+        .modal-header h3 { margin: 0; font-size: 18px; }
+        .close-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+        .modal-body { padding: 0; overflow-y: auto; flex: 1; }
+        
+        /* File Browser Specifics */
+        .path-header { padding: 8px 15px; background: #e9ecef; font-family: monospace; font-size: 12px; border-bottom: 1px solid #ccc; word-break: break-all; color: #555; }
+        .file-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; }
+        .file-item:hover { background-color: #e3f2fd; }
+        .btn-success { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
+        .btn-success:hover { background: #218838; }
+
+        /* Phonebook Specifics */
+        .pb-search-container { padding: 10px 15px; background: #e9ecef; border-bottom: 1px solid #ccc; }
+        .pb-search-input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        .pb-item { padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
+        .pb-item:hover { background-color: #e3f2fd; }
+        .pb-title { font-size: 16px; font-weight: bold; color: #0055A4; }
+        .pb-details { font-size: 12px; color: #555; font-family: monospace; }
+        
+        /* Log Specifics */
+        .log-content { background: #1e1e1e; color: #d4d4d4; font-family: monospace; font-size: 12px; padding: 15px; margin: 0; min-height: 200px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; }
+
+        /* Animation */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .spin { display: inline-block; animation: spin 1s linear infinite; }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <strong style="margin-right: 15px; color:#0055A4;">AspeQt Web</strong>
+        <button id="btn-emulation" class="tool-btn" onclick="if(backend) backend.toggleEmulationUi()" title="Start/Stop Emulation"><i class="bi bi-play-fill"></i></button>
+        <button id="btn-printer" class="tool-btn" onclick="if(backend) backend.togglePrinterUi()" title="Toggle Printer"><i class="bi bi-printer"></i></button>
+        <button class="tool-btn" onclick="if(backend) backend.requestLogTextUi()" title="Show System Log"><i class="bi bi-card-text"></i></button>
+        <div class="divider"></div>
+        <button id="btn-hangup" class="tool-btn" onclick="uiActionHangup()" title="Hangup Modem"><i class="bi bi-telephone-x"></i></button>
+        <button class="tool-btn" onclick="if(backend) backend.requestPhonebookList()" title="BBS Phonebook"><i class="bi bi-book"></i></button>
+        <button id="btn-user" class="tool-btn" onclick="uiActionMacroUser()" title="Send Auto-User"><i class="bi bi-person-fill"></i></button>
+        <button id="btn-pass" class="tool-btn" onclick="uiActionMacroPass()" title="Send Auto-Pass"><i class="bi bi-key-fill"></i></button>
+    </div>
+
+    <div class="container">
+        <div class="drives-panel" id="drives-container"></div>
+    </div>
+
+    <div id="file-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Select Disk Image</h3>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <button id="btn-select-folder" class="btn-success" style="display: none;" onclick="commitFolderSelection()">Mount This Folder</button>
+                    <button class="close-btn" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+                </div>
+            </div>
+            <div class="path-header" id="current-path">Loading...</div>
+            <div class="modal-body" id="file-list"></div>
+        </div>
+    </div>
+
+    <div id="tnfs-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>TNFS Network Browser</h3>
+                <button class="close-btn" onclick="closeTnfsModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div style="padding: 10px; background: #e9ecef; border-bottom: 1px solid #ccc; display: flex; gap: 8px;">
+                <select id="tnfs-host-select" style="max-width: 150px; padding: 6px; border: 1px solid #ccc; border-radius: 4px;" onchange="if(this.value) document.getElementById('tnfs-host').value = this.value;">
+                    <option value="" disabled selected>History...</option>
+                </select>
+                <input type="text" id="tnfs-host" value="tnfs.atari8.info" placeholder="tnfs.atari8.info" style="flex: 1; padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
+                <button class="btn-success" onclick="connectTnfs()">Connect</button>
+            </div>
+            <div class="path-header" style="display:flex; justify-content: space-between; align-items: center;">
+                <span id="tnfs-current-path">Not Connected</span>
+                <div id="tnfs-loading" style="display: none; color: #0055A4; font-weight: bold;">
+                    <i class="bi bi-arrow-repeat spin"></i> Fetching...
+                </div>
+            </div>
+            <div class="modal-body" id="tnfs-list"></div>
+        </div>
+    </div>
+
+    <div id="pb-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>BBS Phonebook</h3>
+                <button class="close-btn" onclick="closePbModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="pb-search-container">
+                <input type="text" id="pb-search" class="pb-search-input" placeholder="Search BBS Name..." onkeyup="filterPhonebook()">
+            </div>
+            <div class="modal-body" id="pb-list"></div>
+        </div>
+    </div>
+
+    <div id="log-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>System Log</h3>
+                <button class="close-btn" onclick="closeLogModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body">
+                <pre class="log-content" id="log-text-area">Loading...</pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Generate the 15 Drive Widgets
+        const container = document.getElementById('drives-container');
+        const driveLetters = ['1','2','3','4','5','6','7','8','9','J','K','L','M','N','O'];
+
+        driveLetters.forEach((letter, index) => {
+            const row = document.createElement('div');
+            row.className = 'drive-row';
+            row.innerHTML = `
+                <div class="drive-label">${letter}:</div>
+                <div class="drive-actions">
+                    <button class="drive-btn" onclick="uiActionMountTnfs(${index})" title="Mount from TNFS"><i class="bi bi-globe"></i></button>
+                    <button class="drive-btn" onclick="uiActionMountDisk(${index})" title="Mount Disk"><i class="bi bi-floppy"></i></button>
+                    <button class="drive-btn" onclick="uiActionMountFolder(${index})" title="Mount Folder"><i class="bi bi-folder"></i></button>
+                    <button id="btn-save-${index}" class="drive-btn" onclick="uiActionSave(${index})" title="Save"><i class="bi bi-device-hdd"></i></button>
+                    <button id="btn-autosave-${index}" class="drive-btn" onclick="uiActionAutoSave(${index})" title="Auto Save"><i class="bi bi-arrow-repeat"></i></button>
+                    <button id="btn-happy-${index}" class="drive-btn" onclick="uiActionHappy(${index})" title="Happy Mode"><i class="bi bi-emoji-smile"></i></button>
+                </div>
+                <div class="file-info">
+                    <span class="file-name" id="filename-${index}">Empty</span>
+                    <span class="file-props" id="props-${index}">--</span>
+                </div>
+                <button class="drive-btn" style="margin-left:auto; color:#d9534f;" onclick="uiActionEject(${index})" title="Eject"><i class="bi bi-eject-fill"></i></button>
+            `;
+            container.appendChild(row);
+        });
+
+        // ==========================================
+        // 2. THE QT WEBCHANNEL BRIDGE LOGIC
+        // ==========================================
+        let backend = null;
+        
+        // --- State Tracking ---
+        const driveStates = Array.from({length: 15}, () => ({ happyMode: false }));
+        let modalMode = 'file';       
+        let modalCurrentSlot = 0;     
+        let modalCurrentPath = "";    
+        let cachedPbEntries = []; 
+        
+        // --- TNFS State Tracking ---
+        let tnfsCurrentSlot = 0;
+        let tnfsCurrentHost = "tnfs.atari8.info";
+        let tnfsCurrentPath = "/";
+
+        function initWebChannel() {
+            const serverIp = window.location.hostname;
+            const socket = new WebSocket(`ws://${serverIp}:12345`);
+            
+            socket.onopen = function() {
+                new QWebChannel(socket, function(channel) {
+                    backend = channel.objects.aspeqtBridge;
+
+                    // A. Global Status
+                    backend.globalStatusChanged.connect(function(emulationRunning, printerRunning) {
+                        const btnEmu = document.getElementById('btn-emulation');
+                        if (emulationRunning) {
+                            btnEmu.style.background = '#28a745'; 
+                            btnEmu.style.color = '#fff';
+                            btnEmu.innerHTML = '<i class="bi bi-stop-fill"></i>';
+                        } else {
+                            btnEmu.style.background = 'transparent'; 
+                            btnEmu.style.color = '#333';
+                            btnEmu.innerHTML = '<i class="bi bi-play-fill"></i>';
+                        }
+
+                        const btnPrint = document.getElementById('btn-printer');
+                        if (printerRunning) {
+                            btnPrint.style.background = '#28a745'; 
+                            btnPrint.style.color = '#fff';
+                        } else {
+                            btnPrint.style.background = 'transparent'; 
+                            btnPrint.style.color = '#333';
+                        }
+                    });
+
+                    // B. Drive Status Updates
+                    backend.diskStatusChanged.connect(function(slot, filename, props, autoSave, happyMode) {
+                        driveStates[slot].happyMode = happyMode;
+                        
+                        document.getElementById(`filename-${slot}`).innerText = filename;
+                        document.getElementById(`props-${slot}`).innerText = props;
+
+                        const btnAuto = document.getElementById(`btn-autosave-${slot}`);
+                        if (autoSave) {
+                            btnAuto.style.background = '#28a745'; 
+                            btnAuto.style.color = '#fff';
+                            btnAuto.style.borderColor = '#1e7e34';
+                        } else {
+                            btnAuto.style.background = '#f8f8f8'; 
+                            btnAuto.style.color = '#555';
+                            btnAuto.style.borderColor = '#ddd';
+                        }
+
+                        const btnHappy = document.getElementById(`btn-happy-${slot}`);
+                        if (happyMode) {
+                            btnHappy.style.background = '#ffc107'; 
+                            btnHappy.style.color = '#000';
+                            btnHappy.style.borderColor = '#d39e00';
+                        } else {
+                            btnHappy.style.background = '#f8f8f8'; 
+                            btnHappy.style.color = '#555';
+                            btnHappy.style.borderColor = '#ddd';
+                        }
+                    });
+
+                    // C. Local Directory
+                    backend.directoryListReceived.connect(function(slot, currentPath, files) {
+                        modalCurrentPath = currentPath; 
+                        document.getElementById('current-path').innerText = currentPath;
+                        
+                        const titleUI = document.getElementById('modal-title');
+                        const folderBtnUI = document.getElementById('btn-select-folder');
+                        
+                        if (modalMode === 'folder') {
+                            titleUI.innerText = "Select Folder to Mount";
+                            folderBtnUI.style.display = "block"; 
+                        } else {
+                            titleUI.innerText = "Select Disk Image";
+                            folderBtnUI.style.display = "none";  
+                        }
+
+                        const listDiv = document.getElementById('file-list');
+                        listDiv.innerHTML = ''; 
+
+                        files.forEach(file => {
+                            if (modalMode === 'folder' && !file.isDir) return;
+
+                            const item = document.createElement('div');
+                            item.className = 'file-item';
+                            
+                            let icon = file.isDir ? '<i class="bi bi-folder-fill" style="color:#f3da35; font-size:18px;"></i>' : '<i class="bi bi-floppy" style="color:#666; font-size:18px;"></i>';
+                            item.innerHTML = `${icon} <span>${file.name}</span>`;
+                            
+                            item.onclick = function() {
+                                if (file.isDir) {
+                                    backend.requestDirectoryList(slot, file.path); 
+                                } else {
+                                    backend.mountFileSilentUi(slot, file.path); 
+                                    closeModal(); 
+                                }
+                            };
+                            listDiv.appendChild(item);
+                        });
+
+                        document.getElementById('file-modal').style.display = 'block';
+                    });
+
+                    // D. TNFS Streaming Directory Receiver
+                    backend.tnfsDirectoryListReceived.connect(function(slot, host, path, files, isFinished) {
+                        tnfsCurrentPath = path;
+                        tnfsCurrentHost = host;
+                        
+                        document.getElementById('tnfs-current-path').innerText = "tnfs://" + host + path;
+                        const listDiv = document.getElementById('tnfs-list');
+                        
+                        files.forEach(file => {
+                            const item = document.createElement('div');
+                            item.className = 'file-item';
+                            
+                            let icon = file.isDir ? '<i class="bi bi-folder-fill" style="color:#f3da35; font-size:18px;"></i>' : '<i class="bi bi-globe" style="color:#0055A4; font-size:18px;"></i>';
+                            item.innerHTML = `${icon} <span>${file.name}</span>`;
+                            
+                            item.onclick = function() {
+                                if (file.isDir) {
+                                    let newPath = path;
+                                    if (!newPath.endsWith('/')) newPath += '/';
+                                    newPath += file.name;
+                                    
+                                    listDiv.innerHTML = '';
+                                    document.getElementById('tnfs-loading').style.display = 'block';
+                                    backend.requestTnfsDirectoryList(slot, host, newPath);
+                                } else {
+                                    let fullUrl = "tnfs://" + host + path;
+                                    if (!fullUrl.endsWith('/')) fullUrl += '/';
+                                    fullUrl += file.name;
+                                    
+                                    backend.mountTnfsSilentUi(slot, fullUrl);
+                                    closeTnfsModal();
+                                }
+                            };
+                            listDiv.appendChild(item);
+                        });
+
+                        if (isFinished) {
+                            document.getElementById('tnfs-loading').style.display = 'none';
+                            
+                            if (path !== "/" && path !== "") {
+                                const upItem = document.createElement('div');
+                                upItem.className = 'file-item';
+                                upItem.innerHTML = `<i class="bi bi-arrow-90deg-up" style="color:#666; font-size:18px;"></i> <span>.. (Up)</span>`;
+                                upItem.onclick = function() {
+                                     let parts = path.split('/').filter(p => p.length > 0);
+                                     parts.pop(); 
+                                     let newPath = "/" + parts.join('/');
+                                     
+                                     listDiv.innerHTML = ''; 
+                                     document.getElementById('tnfs-loading').style.display = 'block';
+                                     backend.requestTnfsDirectoryList(slot, host, newPath);
+                                };
+                                listDiv.insertBefore(upItem, listDiv.firstChild);
+                            }
+                        }
+                    });
+
+                    // --- NEW: Bulletproof TNFS History Listener ---
+                    backend.tnfsHostHistoryReceived.connect(function(history) {
+                        const select = document.getElementById('tnfs-host-select');
+                        select.innerHTML = '<option value="" disabled selected>History...</option>'; 
+                        
+                        // Safety fallback: Ensure QWebChannel gave us an Array
+                        let hostArray = Array.isArray(history) ? history : Object.values(history);
+
+                        hostArray.forEach(host => {
+                            const option = document.createElement('option');
+                            option.value = host;
+                            option.innerText = host;
+                            select.appendChild(option);
+                        });
+
+                        // Set default text to the most recent host if one exists
+                        if (hostArray.length > 0) {
+                            document.getElementById('tnfs-host').value = hostArray[0];
+                        }
+                    });
+
+                    // E. Phonebook
+                    backend.phonebookListReceived.connect(function(entries) {
+                        cachedPbEntries = entries; 
+                        document.getElementById('pb-search').value = ""; 
+                        renderPhonebook(""); 
+                        document.getElementById('pb-modal').style.display = 'block';
+                    });
+
+                    // F. Log Text
+                    backend.logTextReceived.connect(function(logText) {
+                        const textArea = document.getElementById('log-text-area');
+                        textArea.innerText = logText || "Log is empty.";
+                        document.getElementById('log-modal').style.display = 'block';
+                        textArea.scrollTop = textArea.scrollHeight;
+                    });
+
+                    // Initial request
+                    backend.requestFullStatus();
+                });
+            };
+        }
+
+        // --- Clean Button Animations ---
+        function flashButtonFeedback(btnId) {
+            const btn = document.getElementById(btnId);
+            if (btn) {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-check-lg"></i>';
+                btn.style.background = '#28a745';
+                btn.style.color = '#fff';
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }, 1000);
+            }
+        }
+
+        // --- Phonebook Search Logic ---
+        function filterPhonebook() {
+            const query = document.getElementById('pb-search').value.toLowerCase();
+            renderPhonebook(query);
+        }
+
+        function renderPhonebook(filterString) {
+            const listDiv = document.getElementById('pb-list');
+            listDiv.innerHTML = ''; 
+            const filtered = cachedPbEntries.filter(bbs => bbs.name.toLowerCase().includes(filterString));
+
+            if (filtered.length === 0) {
+                listDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #888;">No matching BBS entries.</div>';
+            } else {
+                filtered.forEach(bbs => {
+                    const item = document.createElement('div');
+                    item.className = 'pb-item';
+                    item.innerHTML = `
+                        <div class="pb-title"><i class="bi bi-modem"></i> ${bbs.name}</div>
+                        <div class="pb-details">${bbs.ip}:${bbs.port}  |  ${bbs.protocol}  |  User: ${bbs.login}</div>
+                    `;
+                    item.onclick = function() {
+                        backend.dialBbsUi(bbs.name, bbs.ip, bbs.port, bbs.protocol, bbs.login, bbs.password);
+                        closePbModal();
+                    };
+                    listDiv.appendChild(item);
+                });
+            }
+        }
+
+        // --- UI Modal Controls ---
+        function closeModal() { document.getElementById('file-modal').style.display = 'none'; }
+        function closePbModal() { document.getElementById('pb-modal').style.display = 'none'; }
+        function closeLogModal() { document.getElementById('log-modal').style.display = 'none'; }
+        function closeTnfsModal() { document.getElementById('tnfs-modal').style.display = 'none'; }
+
+        function commitFolderSelection() {
+            if (backend && modalCurrentPath !== "") {
+                backend.mountFileSilentUi(modalCurrentSlot, modalCurrentPath);
+                closeModal();
+            }
+        }
+
+        // --- TNFS UI Actions ---
+        function uiActionMountTnfs(slot) {
+            tnfsCurrentSlot = slot;
+            document.getElementById('tnfs-list').innerHTML = '';
+            document.getElementById('tnfs-current-path').innerText = "Ready";
+            document.getElementById('tnfs-loading').style.display = 'none';
+            document.getElementById('tnfs-modal').style.display = 'block';
+        }
+
+        function connectTnfs() {
+            let hostInput = document.getElementById('tnfs-host').value.trim();
+            if (!hostInput) return;
+            
+            // Clean up if user pasted "tnfs://"
+            tnfsCurrentHost = hostInput.replace("tnfs://", "").split('/')[0];
+            
+            document.getElementById('tnfs-list').innerHTML = '';
+            document.getElementById('tnfs-loading').style.display = 'block';
+            
+            if(backend) backend.requestTnfsDirectoryList(tnfsCurrentSlot, tnfsCurrentHost, "/");
+        }
+
+        // --- Drive Actions ---
+        function uiActionMountDisk(slot) { modalMode = 'file'; modalCurrentSlot = slot; if(backend) backend.requestDirectoryList(slot, ""); }
+        function uiActionMountFolder(slot) { modalMode = 'folder'; modalCurrentSlot = slot; if(backend) backend.requestDirectoryList(slot, ""); }
+        function uiActionAutoSave(slot) { if(backend) backend.toggleAutoSaveUi(slot); }
+        function uiActionHappy(slot) { if(backend) backend.setHappyModeUi(slot, !driveStates[slot].happyMode); }
+        function uiActionEject(slot) { if(backend) backend.ejectDiskUi(slot); }
+
+        function uiActionSave(slot) {
+            if(backend) backend.saveDiskUi(slot);
+            flashButtonFeedback(`btn-save-${slot}`);
+        }
+
+        // --- Modem Actions ---
+        function uiActionHangup() { if(backend) backend.hangupUi(); flashButtonFeedback('btn-hangup'); }
+        function uiActionMacroUser() { if(backend) backend.macroUserUi(); flashButtonFeedback('btn-user'); }
+        function uiActionMacroPass() { if(backend) backend.macroPassUi(); flashButtonFeedback('btn-pass'); }
+
+        initWebChannel(); 
+    </script>
+</body>
+</html>
