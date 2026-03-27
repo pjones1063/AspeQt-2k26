@@ -29,13 +29,12 @@
 #include "miscdevices.h"
 #include "pipenetwork.h"
 #include "aspeqtsettings.h"
-#include "autobootdialog.h"
-#include "autoboot.h"
 #include "cassettedialog.h"
 #include "bootoptionsdialog.h"
 #include "logdisplaydialog.h"
 #include "infowidget.h"
 #include "opcodes6502.h"
+#include "xeximage.h"
 
 #include "websocketclientwrapper.h"
 #include "webbridge.h"
@@ -1340,6 +1339,28 @@ void MainWindow::deviceStatusChanged(int deviceNo)
         SioDevice *device = sio->getDevice(deviceNo);
         DriveWidget *diskWidget = diskWidgets[deviceNo - DISK_BASE_CDEVIC];
 
+        // --- NEW: Handle Local Executable Images (XEX/COM) ---
+        XexImage *xex = qobject_cast<XexImage *>(device);
+        if (xex) {
+            QString fullPath = xex->originalFileName();
+            QFileInfo fi(fullPath);
+            QString name = fi.fileName();
+
+            // 1. Update Native Desktop UI properly using DriveWidget's methods
+            diskWidget->setLabelToolTips(fi.absolutePath(), fullPath, tr("Executable (Local)"));
+            diskWidget->setHappyMode(false);
+
+            // showAsImageMounted(Filename, Properties, EnableEdit, EnableSave)
+            // We pass false, false to disable the edit/save buttons for executables
+            diskWidget->showAsImageMounted(name, tr("Executable (Local)"), false, false);
+
+            // 2. Update Web UI Dashboard
+            if (webBridge) {
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, name, "Executable (Local)", false, false);
+            }
+            return;
+        }
+
         // 2. Check for TNFS Image FIRST
         TnfsImage *tnfsImg = qobject_cast<TnfsImage*>(device);
         if (tnfsImg) {
@@ -1750,37 +1771,19 @@ int MainWindow::firstEmptyDiskSlot(int startFrom, bool createOne)
     return i;
 }
 
-void MainWindow::bootExe(const QString &fileName)
+void MainWindow::bootExe(const QString& fileName)
 {
-    SioDevice *old = sio->getDevice(DISK_BASE_CDEVIC);
-    AutoBoot loader(sio, old);    
-    AutoBootDialog dlg(this);
+    if (fileName.isEmpty()) return;
 
-    bool highSpeed =    aspeqtSettings->useHighSpeedExeLoader() &&
-                        (aspeqtSettings->serialPortHandshakingMethod() != HANDSHAKE_SOFTWARE);
+    // Use our new modern, non-blocking XEX class via the headless mounter!
+    // We force it to slot 0 (Drive 1) because Atari requires executables to boot from D1:
+    mountFileHeadless(0, fileName);
 
-    if (!loader.open(fileName, highSpeed)) {
-        return;
-    }
-
-    sio->uninstallDevice(DISK_BASE_CDEVIC);
-    sio->installDevice(DISK_BASE_CDEVIC, &loader);
-    connect(&loader, SIGNAL(booterStarted()), &dlg, SLOT(booterStarted()));
-    connect(&loader, SIGNAL(booterLoaded()), &dlg, SLOT(booterLoaded()));
-    connect(&loader, SIGNAL(blockRead(int, int)), &dlg, SLOT(blockRead(int, int)));
-    connect(&loader, SIGNAL(loaderDone()), &dlg, SLOT(loaderDone()));
-    //connect(&dlg, SIGNAL(keepOpen()), this, SLOT(keepBootExeOpen()));
-
-    dlg.exec();
-
-    sio->uninstallDevice(DISK_BASE_CDEVIC);
-    if (old) {
-        sio->installDevice(DISK_BASE_CDEVIC, old);
-        SimpleDiskImage *d = qobject_cast <SimpleDiskImage*> (old);
-        d = qobject_cast <SimpleDiskImage*> (sio->getDevice(DISK_BASE_CDEVIC));
-    }
-    if(!g_exefileName.isEmpty()) bootExe(g_exefileName);
+    // Optionally update the "Last Executable Directory" setting
+    QFileInfo fi(fileName);
+    aspeqtSettings->setLastExeDir(fi.absolutePath());
 }
+
 
 // Make boot executable dialog persistant until it's manually closed //
 void MainWindow::keepBootExeOpen()
@@ -1911,30 +1914,37 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 
 void MainWindow::mountDiskImage(int no)
 {
-    QString dir;
-// Always mount from "last image dir" //
-//    if (diskWidgets[no].fileNameLabel->text().isEmpty()) {
-        dir = aspeqtSettings->lastDiskImageDir();
-//    } else {
-//        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
-//    }
+    // Always mount from "last image dir"
+    QString dir = aspeqtSettings->lastDiskImageDir();
+
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open a disk image"),
+                                                    tr("Open a disk or executable image"),
                                                     dir,
-                                                    tr(
-                                                   "All Atari disk images (*.atr *.xfd *.atx *.pro);;"
-//                                                    "All Atari disk images (*.atr *.xfd *.pro);;"
-                                                    "SIO2PC ATR images (*.atr);;"
-                                                    "XFormer XFD images (*.xfd);;"
-                                                    "ATX images (*.atx);;"
-                                                    "Pro images (*.pro);;"
-                                                    "All files (*)"));
+                                                    tr("All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;"
+                                                       "Atari Executables (*.xex *.com);;"
+                                                       "SIO2PC ATR images (*.atr);;"
+                                                       "XFormer XFD images (*.xfd);;"
+                                                       "ATX images (*.atx);;"
+                                                       "Pro images (*.pro);;"
+                                                       "All files (*)"));
+
+    // User canceled the dialog
     if (fileName.isEmpty()) {
         return;
     }
+
+    // Save the directory for next time
     aspeqtSettings->setLastDiskImageDir(QFileInfo(fileName).absolutePath());
-    mountFileWithDefaultProtection(no, fileName);
+
+    // --- NEW: Route Executables to the modern headless loader ---
+    if (fileName.endsWith(".xex", Qt::CaseInsensitive) || fileName.endsWith(".com", Qt::CaseInsensitive)) {
+        mountFileHeadless(no, fileName);
+    } else {
+        // Standard floppy disk image mounting
+        mountFileWithDefaultProtection(no, fileName);
+    }
 }
+
 
 void MainWindow::mountFolderImage(int no)
 {
@@ -2973,6 +2983,29 @@ void MainWindow::mountFileHeadless(int no, const QString &fileName)
 
     // 2. Forcibly eject the current disk WITHOUT triggering the GUI pop-up (ask = false)
     ejectImage(no, false);
+
+    if (fileName.endsWith(".xex", Qt::CaseInsensitive) || fileName.endsWith(".com", Qt::CaseInsensitive)) {
+        XexImage *xex = new XexImage(sio);
+        xex->setParent(nullptr);
+        xex->moveToThread(sio);
+        if (xex->openLocalFile(fileName)) {
+            sio->installDevice(DISK_BASE_CDEVIC + no, xex);
+            deviceStatusChanged(DISK_BASE_CDEVIC + no);
+
+            // Log it and notify the user
+            qDebug() << "!i" << tr("[Web UI] Mounted Executable to slot %1: %2").arg(no+1).arg(fileName);
+            if (no == 0) {
+                uiMessage(0, tr("[Web UI] Executable ready. Please cold start the Atari."));
+            }
+        } else {
+            delete xex;
+            qDebug() << "!e" << tr("[Web UI] Failed to parse Executable: %1").arg(fileName);
+            if (webBridge) {
+                emit webBridge->diskStatusChanged(no, "Empty", "--", false, false);
+            }
+        }
+        return; // EXIT EARLY! Do not proceed to standard disk mounting.
+    }
 
     // 3. Now that the slot is safely empty, mount the new file normally!
     const AspeQtSettings::ImageSettings* imgSetting = aspeqtSettings->getImageSettingsFromName(fileName);

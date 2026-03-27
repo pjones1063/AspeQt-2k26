@@ -65,7 +65,7 @@ void WebBridge::requestDirectoryList(int slot, const QString &path) {
     }
 
     QStringList filters;
-    filters << "*.atr" << "*.xfd" << "*.atx" << "*.pro";
+    filters << "*.atr" << "*.xfd" << "*.pro" << "*.atx" << "*.xex" << "*.com" << "*.cas";
 
     QFileInfoList fileList = dir.entryInfoList(filters, QDir::Dirs | QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot, QDir::DirsFirst | QDir::Name);
 
