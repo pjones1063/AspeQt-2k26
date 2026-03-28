@@ -26,9 +26,11 @@ public slots:
     void toggleWriteProtectUi(int slot, bool enabled);
     void requestFullStatus();
     void toggleAutoSaveUi(int slot);
+    void requestPrinterTextUi();
 
     void requestDirectoryList(int slot, const QString &path);
     void mountFileSilentUi(int slot, const QString &filePath);
+    void createBlankDiskUi(int slot, const QString &filename, int type);
 
     // --- TOOLBAR & MODEM SLOTS ---
     void toggleEmulationUi();
@@ -66,8 +68,8 @@ signals:
     void tnfsDirectoryListReceived(int slot, const QString &host, const QString &path, const QJsonArray &files, bool isFinished);
     void tnfsHostHistoryReceived(const QStringList &history);
     void casStatusChanged(QString filename, bool isPlaying);
-
     void notificationReceived(QString message, bool isError);
+    void printerTextReceived(const QString &text);
 
 private:
     MainWindow *mainWindow;

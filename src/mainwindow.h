@@ -82,8 +82,7 @@ public:
     QWebChannel *webChannel = nullptr;
     WebBridge *webBridge = nullptr;
     QTcpServer *httpTcpServer = nullptr;
-
-
+    QString getPrinterText();
 
 public slots:
     void show();
@@ -105,9 +104,9 @@ public slots:
     void toggleEmulationHeadless();
     void togglePrinterHeadless();
     void mountTnfsHeadless(int no, const QString &url);
+    void createBlankDiskHeadless(int slot, const QString &fileName, int type);
     void startWebUi();
     void stopWebUi();
-
 
 private:
     int untitledName;

@@ -3195,6 +3195,13 @@ void MainWindow::toggleWriteProtectHeadless(int no, bool enabled)
     }
 }
 
+QString MainWindow::getPrinterText() {
+    if (textPrinterWindow) {
+        return textPrinterWindow->getAsciiText();
+    }
+    return "";
+}
+
 void MainWindow::startWebUi() {
     // 1. Create and start WebSocket Server
     if (!webSocketServer) {
@@ -3267,9 +3274,6 @@ void MainWindow::stopWebUi() {
     qDebug() << "!w" << tr("Web Dashboard and WebSocket servers completely shut down.");
 }
 
-// =========================================================
-// HEADLESS CASSETTE DECK (WEB UI)
-// =========================================================
 
 void MainWindow::mountCasHeadless(const QString &fileName)
 {
@@ -3367,3 +3371,73 @@ void MainWindow::updateCasProgress()
         }
     }
 }
+
+
+void MainWindow::createBlankDiskHeadless(int slot, const QString &fileName, int type)
+{
+    if (slot < 0 || slot >= DISK_COUNT) return;
+
+    // 1. Eject whatever is currently in the slot safely
+    if (!ejectImage(slot, false)) return;
+
+    // 2. Create the raw disk image in memory
+    SimpleDiskImage *disk = new SimpleDiskImage(sio);
+    connect(disk, SIGNAL(statusChanged(int)), this, SLOT(deviceStatusChanged(int)), Qt::QueuedConnection);
+
+    if (!disk->create(++untitledName)) {
+        delete disk;
+        if (webBridge) emit webBridge->notificationReceived(tr("Failed to initialize blank disk in memory."), true);
+        return;
+    }
+
+    // 3. Configure the Sector Geometry based on the user's selection
+    DiskGeometry g;
+    int secCount = 720;
+    int secSize = 128;
+
+    if (type == 1) { secCount = 1040; secSize = 128; }      // Enhanced Density (130K)
+    else if (type == 2) { secCount = 720; secSize = 256; }  // Double Density (180K)
+    // type == 0 is standard Single Density (90K)
+
+    uint size = secCount * secSize;
+    if (secSize == 256) {
+        if (secCount >= 3) size -= 384;
+        else size -= secCount * 128;
+    }
+
+    g.initialize(size, secSize);
+
+    // 4. Format the disk with Atari DOS parameters
+    if (!disk->format(g)) {
+        delete disk;
+        if (webBridge) emit webBridge->notificationReceived(tr("Failed to format blank disk."), true);
+        return;
+    }
+
+    // 5. Save the physical .atr file to the host PC immediately
+    QString safeFileName = fileName;
+    if (!safeFileName.toLower().endsWith(".atr")) safeFileName += ".atr";
+
+    // Save it to the last directory the user accessed
+    QString fullPath = aspeqtSettings->lastDiskImageDir() + "/" + safeFileName;
+
+    disk->lock();
+    bool saved = disk->saveAs(fullPath);
+    disk->unlock();
+
+    if (!saved) {
+        delete disk;
+        if (webBridge) emit webBridge->notificationReceived(tr("Failed to save blank disk to host PC."), true);
+        return;
+    }
+
+    // 6. Mount it to the active SIO chain!
+    sio->installDevice(DISK_BASE_CDEVIC + slot, disk);
+    aspeqtSettings->mountImage(slot, fullPath, false);
+    deviceStatusChanged(DISK_BASE_CDEVIC + slot);
+
+    // 7. Tell the webUI we succeeded
+    if (webBridge) emit webBridge->notificationReceived(tr("Blank disk created: %1").arg(safeFileName), false);
+    qDebug() << "!i" << tr("[Web UI] Created and mounted blank disk: %1 in slot %2").arg(fullPath).arg(slot+1);
+}
+

@@ -277,3 +277,9 @@ void TextPrinterWindow::on_actionSave_triggered()
 //         ui->actionStrip_Line_Numbers->setEnabled(false);
      }
  }
+
+// --- ADD THIS NEW FUNCTION ---
+QString TextPrinterWindow::getAsciiText() const {
+    // We grab the ASCII version specifically so it renders cleanly in standard web fonts!
+    return ui->printerTextEditASCII->toPlainText();
+}

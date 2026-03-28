@@ -241,3 +241,16 @@ void WebBridge::toggleWriteProtectUi(int slot, bool enabled) {
     if (mainWindow)  QMetaObject::invokeMethod(mainWindow, "toggleWriteProtectHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(bool, enabled));
 
 }
+
+void WebBridge::requestPrinterTextUi() {
+    if (mainWindow) {
+        QString text = mainWindow->getPrinterText();
+        emit printerTextReceived(text);
+    }
+}
+
+void WebBridge::createBlankDiskUi(int slot, const QString &filename, int type) {
+    if (mainWindow) {
+        QMetaObject::invokeMethod(mainWindow, "createBlankDiskHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(QString, filename), Q_ARG(int, type));
+    }
+}

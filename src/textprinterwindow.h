@@ -16,6 +16,7 @@ class TextPrinterWindow : public QMainWindow {
 public:
     TextPrinterWindow(QWidget *parent = 0);
     ~TextPrinterWindow();
+    QString getAsciiText() const;
 
 protected:
     void changeEvent(QEvent *e);

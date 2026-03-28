@@ -117,6 +117,7 @@
         <div class="toolbar-group">
             <button id="btn-emulation" class="tool-btn" onclick="if(backend) backend.toggleEmulationUi()" title="Start/Stop Emulation"><i class="bi bi-play-fill"></i></button>
             <button id="btn-printer" class="tool-btn" onclick="if(backend) backend.togglePrinterUi()" title="Toggle Printer"><i class="bi bi-printer"></i></button>
+            <button class="tool-btn" onclick="if(backend) backend.requestPrinterTextUi()" title="View Printed Text"><i class="bi bi-receipt"></i></button>
             <button class="tool-btn" onclick="if(backend) backend.requestLogTextUi()" title="Show System Log"><i class="bi bi-card-text"></i></button>
         </div>
 
@@ -179,6 +180,30 @@
         </div>
     </div>
 
+     <div id="new-disk-modal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Create Blank Disk</h3>
+                <button class="close-btn" onclick="closeNewDiskModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div style="padding: 20px; display: flex; flex-direction: column; gap: 15px;">
+                <div>
+                    <label style="font-weight: bold; font-size: 14px; color: var(--text-muted);">File Name</label>
+                    <input type="text" id="new-disk-name" placeholder="MyNewDisk.atr" style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid var(--border-color); box-sizing: border-box;">
+                </div>
+                <div>
+                    <label style="font-weight: bold; font-size: 14px; color: var(--text-muted);">Disk Format</label>
+                    <select id="new-disk-type" style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <option value="0">Single Density (90K - 720 Sectors)</option>
+                        <option value="1">Enhanced Density (130K - 1040 Sectors)</option>
+                        <option value="2">Double Density (180K - 720x256 Sectors)</option>
+                    </select>
+                </div>
+                <button class="btn-success" style="padding: 10px; font-size: 16px; margin-top: 10px;" onclick="commitNewDisk()">Create & Mount</button>
+            </div>
+        </div>
+    </div>
+
     <div id="pb-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -200,6 +225,18 @@
             </div>
             <div class="modal-body">
                 <pre class="log-content" id="log-text-area">Loading...</pre>
+            </div>
+        </div>
+    </div>
+
+    <div id="printer-modal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>Printer Spool (ASCII)</h3>
+                <button class="close-btn" onclick="closePrinterModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div class="modal-body">
+                <pre class="log-content" id="printer-text-area" style="color: #55ff55;">Loading...</pre>
             </div>
         </div>
     </div>
@@ -235,6 +272,7 @@
                     <div class="drive-label">${letter}:</div>
                     <button class="drive-btn" onclick="uiActionMountTnfs(${index})" title="Mount from TNFS"><i class="bi bi-globe"></i></button>
                     <button class="drive-btn" onclick="uiActionMountDisk(${index})" title="Mount Disk"><i class="bi bi-floppy"></i></button>
+                    <button class="drive-btn" style="color: var(--primary);" onclick="uiActionPromptNewDisk(${index})" title="Create Blank Disk"><i class="bi bi-file-earmark-plus"></i></button>
                     <button class="drive-btn" onclick="uiActionMountFolder(${index})" title="Mount Folder"><i class="bi bi-folder"></i></button>
                     <button id="btn-save-${index}" class="drive-btn" onclick="uiActionSave(${index})" title="Save"><i class="bi bi-device-hdd"></i></button>
                     <button id="btn-autosave-${index}" class="drive-btn" onclick="uiActionAutoSave(${index})" title="Auto Save"><i class="bi bi-arrow-repeat"></i></button>
@@ -450,6 +488,14 @@
                         textArea.scrollTop = textArea.scrollHeight;
                     });
                     
+                    // --- NEW: Catch Printer Text ---
+                    backend.printerTextReceived.connect(function(text) {
+                        const textArea = document.getElementById('printer-text-area');
+                        textArea.innerText = text || "Printer spool is currently empty.";
+                        document.getElementById('printer-modal').style.display = 'block';
+                        textArea.scrollTop = textArea.scrollHeight;
+                    });
+                    
                     // --- NEW: Catch Notifications ---
                     backend.notificationReceived.connect(function(message, isError) {
                         showToast(message, isError);
@@ -485,6 +531,7 @@
         function closeModal() { document.getElementById('file-modal').style.display = 'none'; }
         function closePbModal() { document.getElementById('pb-modal').style.display = 'none'; }
         function closeLogModal() { document.getElementById('log-modal').style.display = 'none'; }
+        function closePrinterModal() { document.getElementById('printer-modal').style.display = 'none'; } 
         function closeTnfsModal() { document.getElementById('tnfs-modal').style.display = 'none'; }
         function commitFolderSelection() { if (backend && modalCurrentPath !== "") { backend.mountFileSilentUi(modalCurrentSlot, modalCurrentPath); closeModal(); } }
 
@@ -527,7 +574,35 @@
             }, 4000);
         }
 
+        let newDiskTargetSlot = 0;
+
+        function uiActionPromptNewDisk(slot) {
+            newDiskTargetSlot = slot;
+            document.getElementById('new-disk-name').value = '';
+            document.getElementById('new-disk-modal').style.display = 'block';
+            document.getElementById('new-disk-name').focus();
+        }
+
+        function closeNewDiskModal() {
+            document.getElementById('new-disk-modal').style.display = 'none';
+        }
+
+        function commitNewDisk() {
+            let filename = document.getElementById('new-disk-name').value.trim();
+            if (!filename) {
+                showToast("Please enter a valid filename.", true);
+                return;
+            }
+            let type = parseInt(document.getElementById('new-disk-type').value);
+
+            if (backend) {
+                backend.createBlankDiskUi(newDiskTargetSlot, filename, type);
+                closeNewDiskModal();
+            }
+        }
+
         initWebChannel(); 
+
     </script>
 </body>
 </html>
