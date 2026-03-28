@@ -279,6 +279,14 @@ void DriveWidget::on_actionAutoSave_toggled(bool state) {
     emit actionAutoSave(driveNo_, state);
 }
 
+void DriveWidget::setWriteProtect(bool enabled) {
+    // Block signals to safely update the UI without triggering an infinite loop
+    ui->actionWriteProtect->blockSignals(true);
+    ui->actionWriteProtect->setChecked(enabled);
+    ui->actionWriteProtect->blockSignals(false);
+}
+
+
 void DriveWidget::on_actionMountFolder_triggered()  { emit actionMountFolder(driveNo_); }
 void DriveWidget::on_actionMountDisk_triggered()    { emit actionMountDisk(driveNo_); }
 void DriveWidget::on_actionEject_triggered()        { emit actionEject(driveNo_); }

@@ -23,6 +23,7 @@ public slots:
     void ejectDiskUi(int slot);
     void saveDiskUi(int slot);
     void setHappyModeUi(int slot, bool enabled);
+    void toggleWriteProtectUi(int slot, bool enabled);
     void requestFullStatus();
     void toggleAutoSaveUi(int slot);
 
@@ -56,7 +57,7 @@ private slots:
     void fetchNextTnfsBatch(); // Fired by the QTimer
 
 signals:
-    void diskStatusChanged(int slot, const QString &filename, const QString &properties, bool autoSave, bool happyMode);
+    void diskStatusChanged(int slot, const QString &filename, const QString &properties, bool autoSave, bool happyMode, bool writeProtected);
     void driveEmpty(int slot);
     void directoryListReceived(int slot, const QString &currentPath, const QJsonArray &files);
     void phonebookListReceived(const QJsonArray &entries);
@@ -66,6 +67,7 @@ signals:
     void tnfsHostHistoryReceived(const QStringList &history);
     void casStatusChanged(QString filename, bool isPlaying);
 
+    void notificationReceived(QString message, bool isError);
 
 private:
     MainWindow *mainWindow;

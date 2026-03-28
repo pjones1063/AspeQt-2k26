@@ -55,7 +55,7 @@
         .drive-item:hover { background: var(--row-hover); }
         
         /* Top Row: Label + Actions */
-        .drive-actions { display: flex; align-items: center; gap: 6px; width: 100%; }
+        .drive-actions { display: flex; align-items: center; gap: 6px; width: 100%; flex-wrap: wrap; }
         .drive-label { font-weight: bold; font-size: 16px; color: var(--primary); flex-shrink: 0; width: 24px; }
         
         .drive-btn { 
@@ -98,6 +98,12 @@
         .log-content { background: #1e1e1e; color: #d4d4d4; font-family: monospace; font-size: 12px; padding: 15px; margin: 0; min-height: 200px; overflow-y: auto; white-space: pre-wrap; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         .spin { display: inline-block; animation: spin 1s linear infinite; }
+        
+        /* --- TOAST NOTIFICATIONS --- */
+        #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; width: 90%; max-width: 400px; }
+        .toast { background: #333; color: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); font-size: 14px; opacity: 0; transform: translateY(20px); transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; }
+        .toast.error { background: #dc3545; border: 1px solid #a71d2a; }
+        .toast.show { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -198,6 +204,8 @@
         </div>
     </div>
 
+    <div id="toast-container"></div>
+
     <script>
         function toggleTheme() {
             const body = document.body;
@@ -218,7 +226,7 @@
         const container = document.getElementById('drives-container');
         const driveLetters = ['1','2','3','4','5','6','7','8','9','J','K','L','M','N','O'];
         
-        // DASHBOARD CARD GENERATOR: Buttons on Top, Info on Bottom
+        // DASHBOARD CARD GENERATOR: Includes the new Padlock button!
         driveLetters.forEach((letter, index) => {
             const item = document.createElement('div');
             item.className = 'drive-item';
@@ -231,6 +239,7 @@
                     <button id="btn-save-${index}" class="drive-btn" onclick="uiActionSave(${index})" title="Save"><i class="bi bi-device-hdd"></i></button>
                     <button id="btn-autosave-${index}" class="drive-btn" onclick="uiActionAutoSave(${index})" title="Auto Save"><i class="bi bi-arrow-repeat"></i></button>
                     <button id="btn-happy-${index}" class="drive-btn" onclick="uiActionHappy(${index})" title="Happy Mode"><i class="bi bi-emoji-smile"></i></button>
+                    <button id="btn-lock-${index}" class="drive-btn" onclick="uiActionToggleLock(${index})" title="Write Protect"><i class="bi bi-unlock"></i></button>
                 </div>
                 <div class="drive-info-row">
                     <div class="file-info">
@@ -244,7 +253,9 @@
         });
 
         let backend = null;
-        const driveStates = Array.from({length: 15}, () => ({ happyMode: false }));
+        
+        // State Array updated to track write protection status
+        const driveStates = Array.from({length: 15}, () => ({ happyMode: false, writeProtected: false }));
         let modalMode = 'file';       
         let modalCurrentSlot = 0;     
         let modalCurrentPath = "";    
@@ -276,8 +287,11 @@
                         }
                     });
 
-                    backend.diskStatusChanged.connect(function(slot, filename, props, autoSave, happyMode) {
+                    // Updated Signature to accept writeProtected boolean
+                    backend.diskStatusChanged.connect(function(slot, filename, props, autoSave, happyMode, writeProtected) {
                         driveStates[slot].happyMode = happyMode;
+                        driveStates[slot].writeProtected = writeProtected;
+                        
                         document.getElementById(`filename-${slot}`).innerText = filename;
                         document.getElementById(`props-${slot}`).innerText = props;
 
@@ -287,12 +301,29 @@
                         } else {
                             btnAuto.style.background = 'var(--btn-bg)'; btnAuto.style.color = 'var(--btn-text)'; btnAuto.style.borderColor = 'var(--btn-border)';
                         }
+                        
                         const btnHappy = document.getElementById(`btn-happy-${slot}`);
                         if (happyMode) {
                             btnHappy.style.background = '#ffc107'; btnHappy.style.color = '#000'; btnHappy.style.borderColor = '#d39e00';
                         } else {
                             btnHappy.style.background = 'var(--btn-bg)'; btnHappy.style.color = 'var(--btn-text)'; btnHappy.style.borderColor = 'var(--btn-border)';
                         }
+
+                         // Update Padlock Visuals
+                        const btnLock = document.getElementById(`btn-lock-${slot}`);
+                        if (btnLock) {
+                            if (writeProtected) {
+                                btnLock.innerHTML = '<i class="bi bi-lock-fill"></i>';
+                                btnLock.style.backgroundColor = '#dc3545'; // Solid Red Background
+                                btnLock.style.color = '#fff';         // White Icon
+                                btnLock.style.borderColor = '#c82333';// Darker Red Border
+                            } else {
+                                btnLock.innerHTML = '<i class="bi bi-unlock"></i>';
+                                btnLock.style.backgroundColor = '';   // Clear to let CSS take over
+                                btnLock.style.color = '';             // Clear
+                                btnLock.style.borderColor = '';       // Clear
+                            }
+                         }  
                     });
 
                     backend.casStatusChanged.connect(function(filename, isPlaying) {
@@ -418,6 +449,11 @@
                         document.getElementById('log-modal').style.display = 'block';
                         textArea.scrollTop = textArea.scrollHeight;
                     });
+                    
+                    // --- NEW: Catch Notifications ---
+                    backend.notificationReceived.connect(function(message, isError) {
+                        showToast(message, isError);
+                    });
 
                     backend.requestFullStatus();
                 });
@@ -467,11 +503,29 @@
         function uiActionMountFolder(slot) { modalMode = 'folder'; modalCurrentSlot = slot; if(backend) backend.requestDirectoryList(slot, ""); }
         function uiActionAutoSave(slot) { if(backend) backend.toggleAutoSaveUi(slot); }
         function uiActionHappy(slot) { if(backend) backend.setHappyModeUi(slot, !driveStates[slot].happyMode); }
+        function uiActionToggleLock(slot) { if(backend) backend.toggleWriteProtectUi(slot, !driveStates[slot].writeProtected); }
         function uiActionEject(slot) { if(backend) backend.ejectDiskUi(slot); }
         function uiActionSave(slot) { if(backend) backend.saveDiskUi(slot); flashButtonFeedback(`btn-save-${slot}`); }
         function uiActionHangup() { if(backend) backend.hangupUi(); flashButtonFeedback('btn-hangup'); }
         function uiActionMacroUser() { if(backend) backend.macroUserUi(); flashButtonFeedback('btn-user'); }
         function uiActionMacroPass() { if(backend) backend.macroPassUi(); flashButtonFeedback('btn-pass'); }
+
+        function showToast(msg, isError) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast ' + (isError ? 'error' : '');
+            toast.innerHTML = `<i class="bi ${isError ? 'bi-exclamation-triangle-fill' : 'bi-info-circle-fill'}"></i> <span>${msg}</span>`;
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
 
         initWebChannel(); 
     </script>

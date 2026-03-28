@@ -56,6 +56,12 @@ void WebBridge::requestDirectoryList(int slot, const QString &path) {
     QDir dir(targetPath);
     QJsonArray list;
 
+    if (!dir.exists() || !dir.isReadable()) {
+        emit notificationReceived(tr("Cannot access directory: %1").arg(targetPath), true);
+        emit directoryListReceived(slot, targetPath, list); // Send empty list to clear UI
+        return;
+    }
+
     if (!dir.isRoot()) {
         QJsonObject up;
         up["name"] = "..";
@@ -99,6 +105,8 @@ void WebBridge::requestPhonebookList() {
     // 2. Parse the XML and build the JSON Array
     if (file.open(QIODevice::ReadOnly)) {
         QDomDocument doc;
+
+        // --- NEW: Catch XML parsing errors! ---
         if (doc.setContent(&file)) {
             QDomNodeList bbsNodes = doc.elementsByTagName("BBS");
             for (int i = 0; i < bbsNodes.size(); i++) {
@@ -112,12 +120,19 @@ void WebBridge::requestPhonebookList() {
                 item["password"] = e.attribute("password");
                 list.append(item);
             }
+        } else {
+            emit notificationReceived(tr("Phonebook XML is corrupted or invalid!"), true);
         }
         file.close();
+    } else {
+        // --- NEW: Catch missing file errors! ---
+        emit notificationReceived(tr("No phonebook found at: %1").arg(pbPath), true);
     }
+
     // 3. Send it to the Web UI!
     emit phonebookListReceived(list);
 }
+
 
 void WebBridge::dialBbsUi(const QString &name, const QString &ip, int port, const QString &protocol, const QString &login, const QString &password) {
     if (mainWindow) {
@@ -151,21 +166,30 @@ void WebBridge::requestTnfsDirectoryList(int slot, const QString &host, const QS
         if (!savedHosts.contains(host)) {
             savedHosts.prepend(host); // Add to the top!
             settings.setValue("hostHistory", savedHosts);
-
-            // Send the QStringList directly!
             emit tnfsHostHistoryReceived(savedHosts);
         }
 
         if (m_tnfsClient->mount("/")) {
             if (m_tnfsClient->beginListing(path)) {
-                // Start pulling batches every 10ms to keep the UI buttery smooth
+                // SUCCESS! Start pulling batches every 10ms
                 m_tnfsTimer->start(10);
                 return;
+            } else {
+                // --- Connected, but the specific Folder wasn't found ---
+                emit notificationReceived(tr("TNFS path not found: %1").arg(path), true);
+                emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
+                return;
             }
+        } else {
+            // --- Connected to IP, but the TNFS Mount command was rejected ---
+            emit notificationReceived(tr("Failed to mount TNFS host: %1").arg(host), true);
+            emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
+            return;
         }
     }
 
-    // If connection failed, send an empty finished packet to kill the spinner
+    // --- The IP address doesn't exist or timed out ---
+    emit notificationReceived(tr("Failed to connect to TNFS host: %1").arg(host), true);
     emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
 }
 
@@ -211,4 +235,9 @@ void WebBridge::rewindCasUi() {
 
 void WebBridge::ejectCasUi() {
     if (mainWindow) QMetaObject::invokeMethod(mainWindow, "ejectCasHeadless");
+}
+
+void WebBridge::toggleWriteProtectUi(int slot, bool enabled) {
+    if (mainWindow)  QMetaObject::invokeMethod(mainWindow, "toggleWriteProtectHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(bool, enabled));
+
 }

@@ -39,7 +39,9 @@ public:
     void setLabelToolTips(const QString &one, const QString &two, const QString &three);
 
     void triggerAutoSaveClickIfEnabled();
-    void setHappyMode(bool enabled); // Add this line
+    void setHappyMode(bool enabled);
+    void setWriteProtect(bool enabled);
+
 
 signals:
     void actionMountDisk(int deviceId);

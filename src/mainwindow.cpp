@@ -1345,7 +1345,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 
         if (m_slotDownloadId[deviceNo - DISK_BASE_CDEVIC] != 0) {
             diskWidgets[deviceNo - DISK_BASE_CDEVIC]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
-            if (webBridge) emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Loading...", "Downloading from TNFS...", false, false);
+            if (webBridge) emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Loading...", "Downloading from TNFS...", false, false, true);
             return;
         }
 
@@ -1363,7 +1363,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             diskWidget->setHappyMode(false);
             diskWidget->showAsImageMounted(name, tr("Executable (Local)"), false, false);
 
-            if (webBridge) emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, name, "Executable (Local)", false, false);
+            if (webBridge) emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, name, "Executable (Local)", false, false, true);
             return;
         }
 
@@ -1388,7 +1388,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 
             // --- WEB UI UPDATE: TNFS ---
             if (webBridge) {
-                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, fileNameOnly, "TNFS Stream", false, false);
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, fileNameOnly, "TNFS Stream", false, false, true);
             }
             return; // EXIT HERE so SimpleDiskImage logic doesn't override it
         }
@@ -1450,7 +1450,8 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             if (webBridge) {
                 bool autoSave = diskWidget->isAutoSaveEnabled();
                 bool happy = aspeqtSettings->mountedImageSetting(deviceNo - DISK_BASE_CDEVIC).isHappyMode;
-                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, filenamelabel, img->description(), autoSave, happy);
+                bool writeProtected = aspeqtSettings->mountedImageSetting(deviceNo - DISK_BASE_CDEVIC).isWriteProtected;
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, filenamelabel, img->description(), autoSave, happy, writeProtected);
             }
 
         } else {
@@ -1458,7 +1459,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 
             // --- WEB UI UPDATE: EMPTY SLOT ---
             if (webBridge) {
-                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Empty", "--", false, false);
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Empty", "--", false, false, false);
             }
         }
     }
@@ -1707,7 +1708,7 @@ bool MainWindow::ejectImage(int no, bool ask)
         qDebug() << "!w" << tr("Slot %1 download aborted by user.").arg(no+1);
         m_slotDownloadId[no] = 0; // Signals openUrl to terminate instantly
         diskWidgets[no]->showAsEmpty();
-        if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--", false, false);
+        if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--", false, false, false);
         return true; // Slot is successfully freed!
     }
 
@@ -1979,13 +1980,11 @@ void MainWindow::mountFolderImage(int no)
 void MainWindow::toggleWriteProtection(int no, bool protectionEnabled)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + DISK_BASE_CDEVIC));
-    
-    // --- SAFETY CHECK ---
     if (!img) return; 
-    // --------------------
-
     img->setReadOnly(protectionEnabled);
     aspeqtSettings->setMountedImageProtection(no, protectionEnabled);
+    diskWidgets[no]->setWriteProtect(protectionEnabled);
+    deviceStatusChanged(no + DISK_BASE_CDEVIC);
 }
 
 void MainWindow::openEditor(int no)
@@ -2566,7 +2565,7 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
         // Instant "Loading..." Feedback
         diskWidgets[deviceId]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
         if (webBridge) {
-            emit webBridge->diskStatusChanged(deviceId, "Loading...", "Downloading from TNFS...", false, false);
+            emit webBridge->diskStatusChanged(deviceId, "Loading...", "Downloading from TNFS...", false, false, false);
         }
         QCoreApplication::processEvents(); // Force UI update before blocking network call
 
@@ -2605,7 +2604,7 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
 
                 diskWidgets[deviceId]->showAsEmpty();
                 if (webBridge) {
-                    emit webBridge->diskStatusChanged(deviceId, "Empty", "--", false, false);
+                    emit webBridge->diskStatusChanged(deviceId, "Empty", "--", false, false,false);
                 }
 
                 QMessageBox::critical(this, tr("Mount Error"), tr("Could not open TNFS stream from %1").arg(url));
@@ -3036,7 +3035,7 @@ void MainWindow::mountFileHeadless(int no, const QString &fileName)
             delete xex;
             qDebug() << "!e" << tr("[Web UI] Failed to parse Executable: %1").arg(fileName);
             if (webBridge) {
-                emit webBridge->diskStatusChanged(no, "Empty", "--", false, false);
+                emit webBridge->diskStatusChanged(no, "Empty", "--", false, false, false);
             }
         }
         return; // EXIT EARLY! Do not proceed to standard disk mounting.
@@ -3151,7 +3150,7 @@ void MainWindow::mountTnfsHeadless(int no, const QString &url)
 
     diskWidgets[no]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
     if (webBridge) {
-        emit webBridge->diskStatusChanged(no, "Loading...", "Downloading from TNFS...", false, false);
+        emit webBridge->diskStatusChanged(no, "Loading...", "Downloading from TNFS...", false, false, false);
     }
     QCoreApplication::processEvents();
 
@@ -3178,12 +3177,23 @@ void MainWindow::mountTnfsHeadless(int no, const QString &url)
         if (m_slotDownloadId[no] == myId) {
             m_slotDownloadId[no] = 0;
             diskWidgets[no]->showAsEmpty();
-            if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--", false, false);
+            if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--", false, false, false);
             qDebug() << "!e" << tr("[Web UI] Failed to mount TNFS Stream: %1").arg(url);
+            emit webBridge->notificationReceived(tr("Download failed or aborted: %1").arg(url), true);
         }
     }
 }
 
+void MainWindow::toggleWriteProtectHeadless(int no, bool enabled)
+{
+    if (no >= 0 && no < DISK_COUNT) {
+        // Log it so you can see the Web UI command arriving
+        qDebug() << "!i" << tr("[Web UI] Write Protect for slot %1 set to %2").arg(no+1).arg(enabled ? "ON" : "OFF");
+
+        // Trigger the core logic directly (which now also updates the Qt UI automatically!)
+        toggleWriteProtection(no, enabled);
+    }
+}
 
 void MainWindow::startWebUi() {
     // 1. Create and start WebSocket Server

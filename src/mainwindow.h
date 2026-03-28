@@ -93,6 +93,7 @@ public slots:
     void openRecent();
     void bootExeTriggered(const QString &fileName);
     void bootCasTriggered(const QString &fileName);
+    void toggleWriteProtectHeadless(int no, bool enabled);
     void printServer(bool on);
     void updateDownloadProgress(qint64 bytesRead, qint64 totalBytes);
     void onFireAndForget(QString url, QByteArray data);
