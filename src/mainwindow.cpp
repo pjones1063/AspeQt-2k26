@@ -719,7 +719,7 @@ void MainWindow::createDeviceWidgets()
         }
 
         connect(mountTnfsAction, &QAction::triggered, this, [this, i]() {
-            on_actionMountTnfs_triggered(i);
+            handle_actionMountTnfs_triggered(i);
         });
 
         // 3. Add to Context Menu (Right Click)
@@ -749,21 +749,21 @@ void MainWindow::createDeviceWidgets()
 
         // Connect existing signals to slots
         // [FIX 1] Corrected Slot Name: on_actionSave -> on_actionSave_triggered
-        connect(deviceWidget, SIGNAL(actionSave(int)), this, SLOT(on_actionSave_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionAutoSave(int,bool)), this, SLOT(on_actionAutoSave_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionRevert(int)), this, SLOT(on_actionRevert_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionSave(int)), this, SLOT(handle_actionSave_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionAutoSave(int,bool)), this, SLOT(handle_actionAutoSave_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionRevert(int)), this, SLOT(handle_actionRevert_triggered(int)));
 
-        connect(deviceWidget, SIGNAL(actionMountDisk(int)), this, SLOT(on_actionMountDisk_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionMountFolder(int)), this, SLOT(on_actionMountFolder_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionEject(int)), this, SLOT(on_actionEject_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionWriteProtect(int,bool)), this, SLOT(on_actionWriteProtect_triggered(int,bool)));
-        connect(deviceWidget, SIGNAL(actionEditDisk(int)), this, SLOT(on_actionEditDisk_triggered(int)));
-        connect(deviceWidget, SIGNAL(actionSaveAs(int)), this, SLOT(on_actionSaveAs_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionMountDisk(int)), this, SLOT(handle_actionMountDisk_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionMountFolder(int)), this, SLOT(handle_actionMountFolder_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionEject(int)), this, SLOT(handle_actionEject_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionWriteProtect(int,bool)), this, SLOT(handle_actionWriteProtect_triggered(int,bool)));
+        connect(deviceWidget, SIGNAL(actionEditDisk(int)), this, SLOT(handle_actionEditDisk_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionSaveAs(int)), this, SLOT(handle_actionSaveAs_triggered(int)));
         connect(deviceWidget, SIGNAL(actionBootOptions(int)), this, SLOT(on_actionBootOption_triggered()));
         connect(this, SIGNAL(setFont(const QFont&)), deviceWidget, SLOT(setFont(const QFont&)));
-        connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(on_actionHappyMode_triggered(int,bool)));
-        connect(deviceWidget, SIGNAL(actionInspectSectors(int)), this, SLOT(on_actionInspectSectors_triggered(int)));
-        connect(diskWidgets[i], SIGNAL(actionInfo(int)), this, SLOT(on_actionInfo_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(handle_actionHappyMode_triggered(int,bool)));
+        connect(deviceWidget, SIGNAL(actionInspectSectors(int)), this, SLOT(handle_actionInspectSectors_triggered(int)));
+        connect(diskWidgets[i], SIGNAL(actionInfo(int)), this, SLOT(handle_actionInfo_triggered(int)));
 
     }
 
@@ -2211,19 +2211,19 @@ void MainWindow::revertDisk(int no)
 
 
 // Slots for handling actions for devices.
-void MainWindow::on_actionMountDisk_triggered(int deviceId) {mountDiskImage(deviceId);}
-void MainWindow::on_actionMountFolder_triggered(int deviceId) {mountFolderImage(deviceId);}
-void MainWindow::on_actionEject_triggered(int deviceId) {ejectImage(deviceId);}
-void MainWindow::on_actionWriteProtect_triggered(int deviceId, bool writeProtectEnabled) {toggleWriteProtection(deviceId, writeProtectEnabled);}
-void MainWindow::on_actionEditDisk_triggered(int deviceId) {openEditor(deviceId);}
-void MainWindow::on_actionSave_triggered(int deviceId) {saveDisk(deviceId);}
+void MainWindow::handle_actionMountDisk_triggered(int deviceId) {mountDiskImage(deviceId);}
+void MainWindow::handle_actionMountFolder_triggered(int deviceId) {mountFolderImage(deviceId);}
+void MainWindow::handle_actionEject_triggered(int deviceId) {ejectImage(deviceId);}
+void MainWindow::handle_actionWriteProtect_triggered(int deviceId, bool writeProtectEnabled) {toggleWriteProtection(deviceId, writeProtectEnabled);}
+void MainWindow::handle_actionEditDisk_triggered(int deviceId) {openEditor(deviceId);}
+void MainWindow::handle_actionSave_triggered(int deviceId) {saveDisk(deviceId);}
 //
-void MainWindow::on_actionAutoSave_triggered(int deviceId) {autoSaveDisk(deviceId);}
-void MainWindow::on_actionSaveAs_triggered(int deviceId) {saveDiskAs(deviceId);}
-void MainWindow::on_actionRevert_triggered(int deviceId) {revertDisk(deviceId);}
+void MainWindow::handle_actionAutoSave_triggered(int deviceId) {autoSaveDisk(deviceId);}
+void MainWindow::handle_actionSaveAs_triggered(int deviceId) {saveDiskAs(deviceId);}
+void MainWindow::handle_actionRevert_triggered(int deviceId) {revertDisk(deviceId);}
 
 
-void MainWindow::on_actionMountRecent_triggered(const QString &fileName) {mountFileWithDefaultProtection(firstEmptyDiskSlot(), fileName);}
+void MainWindow::handle_actionMountRecent_triggered(const QString &fileName) {mountFileWithDefaultProtection(firstEmptyDiskSlot(), fileName);}
 
 
 void MainWindow::on_actionEjectAll_triggered()
@@ -2524,7 +2524,7 @@ void MainWindow::on_actionBootOption_triggered()
 
 
 
-void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
+void MainWindow::handle_actionHappyMode_triggered(int deviceId, bool enabled)
 {
     // 1. Update the internal Disk Image object if it exists
     SimpleDiskImage *img = qobject_cast<SimpleDiskImage*>(sio->getDevice(deviceId + DISK_BASE_CDEVIC));
@@ -2551,7 +2551,7 @@ void MainWindow::on_actionHappyMode_triggered(int deviceId, bool enabled)
 
 
 
-void MainWindow::on_actionMountTnfs_triggered(int deviceId)
+void MainWindow::handle_actionMountTnfs_triggered(int deviceId)
 {
     // 1. Set Busy Cursor immediately
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -2985,7 +2985,7 @@ void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
 }
 
 
-void MainWindow::on_actionInspectSectors_triggered(int deviceId)
+void MainWindow::handle_actionInspectSectors_triggered(int deviceId)
 {
     SimpleDiskImage *img = qobject_cast<SimpleDiskImage*>(sio->getDevice(deviceId + DISK_BASE_CDEVIC));
 
@@ -3447,7 +3447,7 @@ void MainWindow::createBlankDiskHeadless(int slot, const QString &folder, const 
 }
 
 
-void MainWindow::on_actionInfo_triggered(int deviceId)
+void MainWindow::handle_actionInfo_triggered(int deviceId)
 {
     DriveWidget *dw = diskWidgets[deviceId];
     if (!dw) return;

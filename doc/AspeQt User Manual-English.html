@@ -200,6 +200,7 @@
             <a href="#timesync">Time Sync</a>
             <a href="#printer">Printer (P:)</a>
             <a href="#wdevice">Web Pipe (W:)</a>
+            <a href="#webui">Web Dashboard (UI)</a>
         </div>
     </div>
 
@@ -216,6 +217,7 @@
             <li><b>Printers (P:)</b> - Captures printed output to text or graphical view.</li>
             <li><b>Clipboard Bridge (Y:)</b> - Bi-directional copy/paste between PC and Atari.</li>
             <li><b>Web Pipe (W:)</b> - Multi-channel gateway for Python scripts and AI.</li>
+            <li><b>Web Dashboard</b> - Remote control your Atari peripherals from any browser or smartphone.</li>
         </ul>
 
         <a name="sio"></a>
@@ -635,6 +637,28 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
             <li><b>BASIC File:</b> FILE_UPLOAD.LST</li>
             <li><b>Python Script:</b> file_upload.py</li>
         </ul>
+
+        <a name="webui"></a>
+        <h2>Interactive Web Dashboard (Remote UI)</h2>
+        <p>AspeQt-2k26 features a fully responsive HTML5 web interface that allows you to control the emulator remotely from your smartphone, tablet, or another PC on your local network.</p>
+        
+        <h3>Accessing the Web UI</h3>
+        <p>Ensure that the Web UI is enabled in <b>Options &gt; General</b>. Once enabled, open a web browser on any device connected to your local network and navigate to:</p>
+        <div class="code-block">http://&lt;Your-PC-IP-Address&gt;:8080</div>
+        <p><i>(Note: Port 8080 is the default. If you changed the HTTP port in the options, use that port instead. You can also use http://localhost:8080 if browsing from the same PC.)</i></p>
+
+        <h3>Available Features</h3>
+        <ul>
+            <li><b>Full Drive Management:</b> Mount local disk/folder images, eject, toggle write-protection, and enable "Happy Mode" directly from your browser.</li>
+            <li><b>TNFS Network Streaming:</b> Browse TNFS servers and mount streaming disk images headlessly over the air. You can sort directories dynamically.</li>
+            <li><b>Create Blank Disks:</b> Instantly format and mount new .ATR images to any drive slot.</li>
+            <li><b>Cassette Deck:</b> Control the virtual cassette player (Insert, Play, Pause, Rewind, Eject).</li>
+            <li><b>BBS Auto-Dialer:</b> Access your XML Phonebook to one-tap dial BBSes and trigger User/Password macros.</li>
+            <li><b>Remote Diagnostics:</b> View the live System Log and the ASCII Printer Spooler without touching the host PC.</li>
+        </ul>
+        <div class="note">
+            <b>Note:</b> The Web UI utilizes a bidirectional WebSocket bridge, meaning any changes made on the host PC's UI will instantly reflect on your phone, and vice-versa. If the connection drops, the browser will automatically attempt to reconnect.
+        </div>
     </div>
 
     <div class="footer">

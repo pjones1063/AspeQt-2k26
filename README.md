@@ -48,6 +48,13 @@ This version migrates the codebase to **Qt 6**, fixing critical stability issues
 
 ---
 
+### 💾 Atari Drivers & Software
+The required Atari-side drivers to utilize the `R:`, `Y:`, and `W:` devices are included directly in this repository.
+* **Ready-to-Use Disk Image:** You can find the compiled drivers on the `mydos drivers.atr` disk image located in the [`/atari` folder](https://github.com/pjones1063/AspeQt-2k26/tree/main/atari). Mount this to D1: to easily load the handlers into your Atari's memory.
+* **Source Code:** The original 6502 assembly source code for these drivers is also available in the same folder under the `8-bit` directory for anyone who wants to modify or study them.
+
+---
+
 ### 🕒 Time Synchronization (Real-Time Clock)
 AspeQt-2k26 features built-in support for the **ApeTime** protocol, allowing your Atari to synchronize its clock with your PC automatically.
 

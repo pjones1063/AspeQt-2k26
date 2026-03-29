@@ -279,7 +279,7 @@
 
     <div id="toast-container"></div>
 
-    <script>
+<script>
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('btn-theme');
@@ -326,7 +326,11 @@
             container.appendChild(item);
         });
 
+        // --- STATE VARIABLES ---
         let backend = null;
+        let socket = null;
+        let heartbeatTimer = null;
+        let isReconnecting = false;
         
         const driveStates = Array.from({length: 15}, () => ({ filename: "Empty", props: "--", fullPath: "", happyMode: false, writeProtected: false }));
         let modalMode = 'file';       
@@ -338,17 +342,39 @@
         let tnfsCurrentSlot = 0;
         let tnfsCurrentHost = "13leader.net";
         let tnfsCurrentPath = "/";
-        let tnfsSortMode = 0; // 0: Raw, 1: A-Z, 2: Z-A
+        let tnfsSortMode = 0; 
         let currentTnfsFiles = [];    
         let isTnfsFinished = false;   
 
+        // --- CONNECTION LOGIC ---
         function initWebChannel() {
+            // Prevent multiple socket instances from spawning
+            if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) {
+                return;
+            }
+
             const serverIp = window.location.hostname;
-            const socket = new WebSocket(`ws://${serverIp}:12345`);
+            socket = new WebSocket(`ws://${serverIp}:12345`);
             
             socket.onopen = function() {
+                // UI Feedback on Reconnect
+                document.querySelector('.toolbar-group.bare strong').style.color = 'var(--primary)';
+                document.querySelector('.toolbar-group.bare strong').innerText = "AspeQt Web";
+                if (isReconnecting) {
+                    showToast("Reconnected to AspeQt!", false);
+                    isReconnecting = false;
+                }
+
                 new QWebChannel(socket, function(channel) {
                     backend = channel.objects.aspeqtBridge;
+
+                    // Start Heartbeat to keep connection alive (Ping every 30s)
+                    if (heartbeatTimer) clearInterval(heartbeatTimer);
+                    heartbeatTimer = setInterval(() => {
+                        if (backend && socket.readyState === WebSocket.OPEN) {
+                            backend.requestFullStatus();
+                        }
+                    }, 30000);
 
                     backend.globalStatusChanged.connect(function(emulationRunning, printerRunning) {
                         const btnEmu = document.getElementById('btn-emulation');
@@ -512,8 +538,32 @@
                     backend.requestFullStatus();
                 });
             };
+
+            // --- AUTO-RECONNECT LOGIC ---
+            socket.onclose = function(event) {
+                backend = null;
+                if (heartbeatTimer) clearInterval(heartbeatTimer);
+                
+                // Show visual disconnected state
+                document.querySelector('.toolbar-group.bare strong').style.color = '#dc3545';
+                document.querySelector('.toolbar-group.bare strong').innerText = "AspeQt Web (Offline)";
+
+                if (!isReconnecting) {
+                    showToast("Connection lost. Trying to reconnect...", true);
+                    isReconnecting = true;
+                }
+
+                // Try to connect again in 3 seconds
+                setTimeout(initWebChannel, 3000);
+            };
+
+            socket.onerror = function(error) {
+                // Let onclose handle the reconnection looping
+                socket.close();
+            };
         }
 
+        // --- REMAINING HELPER FUNCTIONS ---
         function renderTnfsList() {
             const listDiv = document.getElementById('tnfs-list');
             listDiv.innerHTML = '';
@@ -731,6 +781,7 @@
 
         initWebChannel(); 
 
-    </script>
+    </script>  
+
 </body>
 </html>

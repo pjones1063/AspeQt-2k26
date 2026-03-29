@@ -219,21 +219,21 @@ private slots:
     void on_actionQuit_triggered();
     void on_actionAbout_triggered();
     void on_actionDocumentation_triggered();
-    void on_actionMountTnfs_triggered(int deviceId);
+    void handle_actionMountTnfs_triggered(int deviceId);
 
     // Device widget events
-    void on_actionMountDisk_triggered(int deviceId);
-    void on_actionMountFolder_triggered(int deviceId);
-    void on_actionEject_triggered(int deviceId);
-    void on_actionWriteProtect_triggered(int deviceId, bool writeProtectEnabled);
-    void on_actionMountRecent_triggered(const QString &fileName);
-    void on_actionEditDisk_triggered(int deviceId);
-    void on_actionSave_triggered(int deviceId);
-    void on_actionAutoSave_triggered(int deviceId);
-    void on_actionSaveAs_triggered(int deviceId);
-    void on_actionRevert_triggered(int deviceId);
-    void on_actionInspectSectors_triggered(int deviceId);
-    void on_actionInfo_triggered(int deviceId);
+    void handle_actionMountDisk_triggered(int deviceId);
+    void handle_actionMountFolder_triggered(int deviceId);
+    void handle_actionEject_triggered(int deviceId);
+    void handle_actionWriteProtect_triggered(int deviceId, bool writeProtectEnabled);
+    void handle_actionMountRecent_triggered(const QString &fileName);
+    void handle_actionEditDisk_triggered(int deviceId);
+    void handle_actionSave_triggered(int deviceId);
+    void handle_actionAutoSave_triggered(int deviceId);
+    void handle_actionSaveAs_triggered(int deviceId);
+    void handle_actionRevert_triggered(int deviceId);
+    void handle_actionInspectSectors_triggered(int deviceId);
+    void handle_actionInfo_triggered(int deviceId);
 
     void on_actionBootOption_triggered();
     void on_actionToggleMiniMode_triggered();
@@ -254,7 +254,7 @@ private slots:
     void saveMiniWindowGeometry();
     void logChanged(QString text);
     void changeFonts();
-    void on_actionHappyMode_triggered(int deviceId, bool enabled);
+    void handle_actionHappyMode_triggered(int deviceId, bool enabled);
 
     void blinkRx();
     void blinkTx();
