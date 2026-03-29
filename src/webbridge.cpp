@@ -262,3 +262,13 @@ void WebBridge::requestCurrentSavePathUi() {
 
     emit currentSavePathReceived(path);
 }
+
+void WebBridge::uploadAndMountUi(int slot, const QString &filename, const QString &base64Data) {
+    // Forward the base64 string from the browser directly to the Main Window
+    if (mainWindow) {
+        QMetaObject::invokeMethod(mainWindow, "uploadAndMountHeadless", Qt::QueuedConnection,
+                                  Q_ARG(int, slot),
+                                  Q_ARG(QString, filename),
+                                  Q_ARG(QString, base64Data));
+    }
+}

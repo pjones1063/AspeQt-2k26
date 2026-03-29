@@ -31,6 +31,7 @@ public slots:
     void requestDirectoryList(int slot, const QString &path);
     void mountFileSilentUi(int slot, const QString &filePath);
     void createBlankDiskUi(int slot, const QString &folder, const QString &filename, int type);
+    void uploadAndMountUi(int slot, const QString &filename, const QString &base64Data);
 
     // --- TOOLBAR & MODEM SLOTS ---
     void toggleEmulationUi();

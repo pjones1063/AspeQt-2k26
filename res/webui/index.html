@@ -51,7 +51,7 @@
         .drives-panel { flex: 1; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 5px; overflow-y: auto; padding: 10px; }
         
         /* Dashboard Card Drive Rows */
-        .drive-item { padding: 12px; border-bottom: 1px solid var(--border-light); transition: background 0.2s; display: flex; flex-direction: column; gap: 8px; }
+        .drive-item { padding: 12px; border-bottom: 1px solid var(--border-light); transition: all 0.2s ease; display: flex; flex-direction: column; gap: 8px; }
         .drive-item:hover { background: var(--row-hover); }
         
         /* Top Row: Label + Actions */
@@ -70,7 +70,7 @@
         
         .file-info { 
             flex: 1; min-width: 0; background: var(--header-bg); padding: 6px 10px; border-radius: 4px; 
-            border: 1px solid var(--border-color); display: flex; flex-direction: column; 
+            border: 1px solid var(--border-color); display: flex; flex-direction: column; pointer-events: none;
         }
         .file-name { font-family: monospace; font-size: 13px; color: var(--primary); font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .file-props { color: var(--text-muted); font-size: 11px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -167,7 +167,7 @@
                     <option value="" disabled selected>History...</option>
                 </select>
                 <div style="display: flex; gap: 8px; width: 100%;">
-                    <input type="text" id="tnfs-host" value="13leader,net" placeholder="13leader.net" style="flex: 1; padding: 6px; border-radius: 4px;">
+                    <input type="text" id="tnfs-host" value="13leader.net" placeholder="13leader.net" style="flex: 1; padding: 6px; border-radius: 4px;">
                     <button class="btn-success" onclick="connectTnfs()">Connect</button>
                 </div>
             </div>
@@ -196,7 +196,7 @@
                 <div style="background: var(--header-bg); padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                         <div style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">Saving To:</div>
-                        <button class="tool-btn" style="padding: 2px 6px; font-size: 12px; background: var(--bg-panel);" onclick="uiActionSelectNewDiskFolder()" title="Change Folder"><i class="bi bi-folder-symlink"></i> + </button>
+                        <button class="tool-btn" style="padding: 2px 6px; font-size: 12px; background: var(--bg-panel);" onclick="uiActionSelectNewDiskFolder()" title="Change Folder"><i class="bi bi-folder-symlink"></i> Change</button>
                     </div>
                     <div id="new-disk-target-path" style="font-family: monospace; font-size: 13px; word-break: break-all; color: var(--primary);">Loading...</div>
                 </div>
@@ -279,7 +279,7 @@
 
     <div id="toast-container"></div>
 
-<script>
+    <script>
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('btn-theme');
@@ -323,6 +323,30 @@
                     <button class="drive-btn btn-eject" onclick="uiActionEject(${index})" title="Eject"><i class="bi bi-eject-fill"></i></button>
                 </div>
             `;
+            
+            // --- NEW: HTML5 Drag & Drop Listeners ---
+            item.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                item.style.outline = '2px dashed var(--primary)';
+                item.style.outlineOffset = '-2px';
+                item.style.backgroundColor = 'var(--item-hover)';
+            });
+            item.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                item.style.outline = '';
+                item.style.outlineOffset = '';
+                item.style.backgroundColor = '';
+            });
+            item.addEventListener('drop', (e) => {
+                e.preventDefault();
+                item.style.outline = '';
+                item.style.outlineOffset = '';
+                item.style.backgroundColor = '';
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    handleFileUpload(index, e.dataTransfer.files[0]);
+                }
+            });
+
             container.appendChild(item);
         });
 
@@ -348,7 +372,6 @@
 
         // --- CONNECTION LOGIC ---
         function initWebChannel() {
-            // Prevent multiple socket instances from spawning
             if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) {
                 return;
             }
@@ -357,7 +380,6 @@
             socket = new WebSocket(`ws://${serverIp}:12345`);
             
             socket.onopen = function() {
-                // UI Feedback on Reconnect
                 document.querySelector('.toolbar-group.bare strong').style.color = 'var(--primary)';
                 document.querySelector('.toolbar-group.bare strong').innerText = "AspeQt Web";
                 if (isReconnecting) {
@@ -368,7 +390,6 @@
                 new QWebChannel(socket, function(channel) {
                     backend = channel.objects.aspeqtBridge;
 
-                    // Start Heartbeat to keep connection alive (Ping every 30s)
                     if (heartbeatTimer) clearInterval(heartbeatTimer);
                     heartbeatTimer = setInterval(() => {
                         if (backend && socket.readyState === WebSocket.OPEN) {
@@ -539,12 +560,10 @@
                 });
             };
 
-            // --- AUTO-RECONNECT LOGIC ---
             socket.onclose = function(event) {
                 backend = null;
                 if (heartbeatTimer) clearInterval(heartbeatTimer);
                 
-                // Show visual disconnected state
                 document.querySelector('.toolbar-group.bare strong').style.color = '#dc3545';
                 document.querySelector('.toolbar-group.bare strong').innerText = "AspeQt Web (Offline)";
 
@@ -553,14 +572,44 @@
                     isReconnecting = true;
                 }
 
-                // Try to connect again in 3 seconds
                 setTimeout(initWebChannel, 3000);
             };
 
             socket.onerror = function(error) {
-                // Let onclose handle the reconnection looping
                 socket.close();
             };
+        }
+
+        // --- NEW: DRAG & DROP FILE UPLOAD LOGIC ---
+        function handleFileUpload(slot, file) {
+            if (!backend) {
+                showToast("Not connected to AspeQt.", true);
+                return;
+            }
+
+            // Quick validation for common Atari extensions (optional, but good UX)
+            const validExts = ['.atr', '.atx', '.pro', '.xfd', '.xex', '.com', '.cas'];
+            const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+            if (!validExts.includes(ext)) {
+                showToast("Unsupported file type: " + ext, true);
+                return;
+            }
+
+            showToast(`Uploading ${file.name}...`, false);
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // e.target.result is a Data URL like: "data:application/octet-stream;base64,...."
+                // We just want the raw Base64 string to send to C++
+                const base64Data = e.target.result.split(',')[1];
+                
+                // Blast it over the WebSocket!
+                backend.uploadAndMountUi(slot, file.name, base64Data);
+            };
+            reader.onerror = function() {
+                showToast(`Failed to read ${file.name}.`, true);
+            };
+            reader.readAsDataURL(file); // Triggers onload when done
         }
 
         // --- REMAINING HELPER FUNCTIONS ---

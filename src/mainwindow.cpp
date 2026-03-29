@@ -16,6 +16,7 @@
 #include <QHttpServerResponder>
 #include <QFile>
 #include <QTcpServer>
+#include <QDateTime>
 
 #include "tnfsbrowser.h"
 #include "tnfsimage.h"
@@ -3199,10 +3200,7 @@ void MainWindow::mountTnfsHeadless(int no, const QString &url)
 void MainWindow::toggleWriteProtectHeadless(int no, bool enabled)
 {
     if (no >= 0 && no < DISK_COUNT) {
-        // Log it so you can see the Web UI command arriving
         qDebug() << "!i" << tr("[Web UI] Write Protect for slot %1 set to %2").arg(no+1).arg(enabled ? "ON" : "OFF");
-
-        // Trigger the core logic directly (which now also updates the Qt UI automatically!)
         toggleWriteProtection(no, enabled);
     }
 }
@@ -3421,7 +3419,6 @@ void MainWindow::createBlankDiskHeadless(int slot, const QString &folder, const 
     QString safeFileName = fileName;
     if (!safeFileName.toLower().endsWith(".atr")) safeFileName += ".atr";
 
-    // --- NEW LOGIC: Use the folder from the WebUI, fallback to settings if empty ---
     QString targetDir = folder;
     if (targetDir.isEmpty() || targetDir == "Loading..." || targetDir == "Fetching path...") {
         targetDir = aspeqtSettings->lastDiskImageDir();
@@ -3463,7 +3460,6 @@ void MainWindow::handle_actionInfo_triggered(int deviceId)
     if (path.isEmpty()) path = tr("No file mounted.");
 
     // Format a sleek, rich-text message box to match the Web UI
-    // Format a sleek, rich-text message box to match the Web UI
     // Wrapping it in an HTML table forces Qt to render it with a minimum width!
     QString msg = tr("<table width='350'><tr><td>"
                      "<b>Slot %1:</b><br><br>"
@@ -3479,3 +3475,39 @@ void MainWindow::handle_actionInfo_triggered(int deviceId)
     QMessageBox::information(this, tr("Drive Details"), msg);
 
 }
+
+void MainWindow::uploadAndMountHeadless(int slot, const QString &fileName, const QString &base64Data)
+{
+    // 1. Decode the Base64 string back into raw binary data
+    QByteArray binaryData = QByteArray::fromBase64(base64Data.toUtf8());
+
+    // 2. Generate a guaranteed-unique filename to bypass Windows ADM file-locking!
+    QString uniquePrefix = QString::number(QDateTime::currentMSecsSinceEpoch());
+    QString tempPath = QDir::tempPath();
+
+    // Example: /tmp/aspeqt_drop_1711384021_MyGame.atr
+    QString fullPath = tempPath + "/aspeqt_drop_" + uniquePrefix + "_" + fileName;
+
+    // 3. Write the binary data to the unique temporary file
+    QFile file(fullPath);
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(binaryData);
+        file.close();
+
+        qDebug() << "!i" << tr("[Web UI] Successfully received and saved uploaded file: %1").arg(fullPath);
+
+        // 4. Pass the newly saved physical file to our existing headless mounter!
+        mountFileHeadless(slot, fullPath);
+
+        if (webBridge) {
+            emit webBridge->notificationReceived(tr("Successfully uploaded and mounted: %1").arg(fileName), false);
+        }
+
+    } else {
+        qDebug() << "!e" << tr("[Web UI] Failed to save uploaded file to: %1").arg(fullPath);
+        if (webBridge) {
+            emit webBridge->notificationReceived(tr("Failed to process upload for %1").arg(fileName), true);
+        }
+    }
+}
+

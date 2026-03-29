@@ -212,6 +212,11 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.beginWriteArray("MountedImageSettings");
     for (int i = 0; i < 15; i++) {                      //
         ImageSettings& is = mMountedImageSettings[i];
+        if (is.fileName.contains("aspeqt_drop_")) {
+            is.fileName = "";
+            is.isWriteProtected = false;
+            is.isHappyMode = false;
+        }
         s.setArrayIndex(i);
         s.setValue("FileName", is.fileName);
         s.setValue("IsWriteProtected", is.isWriteProtected);
@@ -528,12 +533,22 @@ void AspeQtSettings::setMountedImageSetting(int no, const QString &fileName, boo
     mMountedImageSettings[no].isHappyMode = happy; // Store in memory
 
     if(mSessionFileName == "") {
-        mSettings->setValue(QString("MountedImageSettings/%1/FileName").arg(no+1), fileName);
-        mSettings->setValue(QString("MountedImageSettings/%1/IsWriteProtected").arg(no+1), prot);
-        mSettings->setValue(QString("MountedImageSettings/%1/IsHappyMode").arg(no+1), happy); // Persist to disk
+        // --- NEW: Prevent Temp Files from persisting to Global Settings ---
+        QString fileToSave = fileName;
+        bool protToSave = prot;
+        bool happyToSave = happy;
+
+        if (fileToSave.contains("aspeqt_drop_")) {
+            fileToSave = ""; // Act as if the slot is empty on next boot
+            protToSave = false;
+            happyToSave = false;
+        }
+
+        mSettings->setValue(QString("MountedImageSettings/%1/FileName").arg(no+1), fileToSave);
+        mSettings->setValue(QString("MountedImageSettings/%1/IsWriteProtected").arg(no+1), protToSave);
+        mSettings->setValue(QString("MountedImageSettings/%1/IsHappyMode").arg(no+1), happyToSave); // Persist to disk
     }
 }
-
 
 
 void AspeQtSettings::mountImage(int no, const QString &fileName, bool prot)
@@ -541,6 +556,12 @@ void AspeQtSettings::mountImage(int no, const QString &fileName, bool prot)
     if (fileName.isEmpty()) {
         return;
     }
+
+    if (fileName.contains("aspeqt_drop_")) {
+        setMountedImageSetting(no, fileName, prot);
+        return;
+    }
+
     int i;
     bool found = false;
     for (i = 0; i < NUM_RECENT_FILES; i++) {
@@ -563,14 +584,17 @@ void AspeQtSettings::unmountImage(int no)
 {
     ImageSettings is = mMountedImageSettings[no];
 
-    for (int i = (NUM_RECENT_FILES-1); i > 0; i--) {
-        mRecentImageSettings[i] = mRecentImageSettings[i - 1];
+    if (!is.fileName.isEmpty() && !is.fileName.contains("aspeqt_drop_")) {
+        for (int i = (NUM_RECENT_FILES-1); i > 0; i--) {
+            mRecentImageSettings[i] = mRecentImageSettings[i - 1];
+        }
+        mRecentImageSettings[0] = is;
+        writeRecentImageSettings();
     }
-    mRecentImageSettings[0] = is;
-    writeRecentImageSettings();
 
     setMountedImageSetting(no, "", false);
 }
+
 
 void AspeQtSettings::swapImages(int no1, int no2)
 {

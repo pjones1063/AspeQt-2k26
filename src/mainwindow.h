@@ -105,6 +105,7 @@ public slots:
     void togglePrinterHeadless();
     void mountTnfsHeadless(int no, const QString &url);
     void createBlankDiskHeadless(int slot, const QString &folder, const QString &fileName, int type);
+    void uploadAndMountHeadless(int slot, const QString &fileName, const QString &base64Data);
     void startWebUi();
     void stopWebUi();
 
