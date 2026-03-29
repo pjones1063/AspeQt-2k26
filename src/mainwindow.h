@@ -104,7 +104,7 @@ public slots:
     void toggleEmulationHeadless();
     void togglePrinterHeadless();
     void mountTnfsHeadless(int no, const QString &url);
-    void createBlankDiskHeadless(int slot, const QString &fileName, int type);
+    void createBlankDiskHeadless(int slot, const QString &folder, const QString &fileName, int type);
     void startWebUi();
     void stopWebUi();
 

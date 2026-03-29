@@ -30,7 +30,7 @@ public slots:
 
     void requestDirectoryList(int slot, const QString &path);
     void mountFileSilentUi(int slot, const QString &filePath);
-    void createBlankDiskUi(int slot, const QString &filename, int type);
+    void createBlankDiskUi(int slot, const QString &folder, const QString &filename, int type);
 
     // --- TOOLBAR & MODEM SLOTS ---
     void toggleEmulationUi();

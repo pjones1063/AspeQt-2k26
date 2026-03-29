@@ -249,9 +249,9 @@ void WebBridge::requestPrinterTextUi() {
     }
 }
 
-void WebBridge::createBlankDiskUi(int slot, const QString &filename, int type) {
+void WebBridge::createBlankDiskUi(int slot, const QString &folder, const QString &filename, int type) {
     if (mainWindow) {
-        QMetaObject::invokeMethod(mainWindow, "createBlankDiskHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(QString, filename), Q_ARG(int, type));
+        QMetaObject::invokeMethod(mainWindow, "createBlankDiskHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(QString, folder), Q_ARG(QString, filename), Q_ARG(int, type));
     }
 }
 

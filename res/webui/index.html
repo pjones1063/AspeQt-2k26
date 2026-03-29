@@ -167,16 +167,21 @@
                     <option value="" disabled selected>History...</option>
                 </select>
                 <div style="display: flex; gap: 8px; width: 100%;">
-                    <input type="text" id="tnfs-host" value="tnfs.atari8.info" placeholder="tnfs.atari8.info" style="flex: 1; padding: 6px; border-radius: 4px;">
+                    <input type="text" id="tnfs-host" value="13leader,net" placeholder="13leader.net" style="flex: 1; padding: 6px; border-radius: 4px;">
                     <button class="btn-success" onclick="connectTnfs()">Connect</button>
                 </div>
             </div>
+            
             <div class="path-header" style="display:flex; justify-content: space-between; align-items: center;">
-                <span id="tnfs-current-path">Not Connected</span>
-                <div id="tnfs-loading" style="display: none; color: var(--primary); font-weight: bold;">
-                    <i class="bi bi-arrow-repeat spin"></i> Fetching...
+                <span id="tnfs-current-path" style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Not Connected</span>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div id="tnfs-loading" style="display: none; color: var(--primary); font-weight: bold; white-space: nowrap;">
+                        <i class="bi bi-arrow-repeat spin"></i> Fetching...
+                    </div>
+                    <button class="tool-btn" id="btn-tnfs-sort" onclick="toggleTnfsSort()" title="Sort A-Z / Z-A" style="padding: 2px 8px; border: 1px solid var(--border-color); background: var(--btn-bg);"><i class="bi bi-filter"></i></button>
                 </div>
             </div>
+
             <div class="modal-body" id="tnfs-list"></div>
         </div>
     </div>
@@ -189,7 +194,10 @@
             </div>
             <div style="padding: 20px; display: flex; flex-direction: column; gap: 15px;">
                 <div style="background: var(--header-bg); padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">
-                    <div style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">Saving To:</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <div style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">Saving To:</div>
+                        <button class="tool-btn" style="padding: 2px 6px; font-size: 12px; background: var(--bg-panel);" onclick="uiActionSelectNewDiskFolder()" title="Change Folder"><i class="bi bi-folder-symlink"></i> + </button>
+                    </div>
                     <div id="new-disk-target-path" style="font-family: monospace; font-size: 13px; word-break: break-all; color: var(--primary);">Loading...</div>
                 </div>
                 <div>
@@ -320,15 +328,19 @@
 
         let backend = null;
         
-        // State Array updated to track all drive properties so the Info Modal can read it anytime
         const driveStates = Array.from({length: 15}, () => ({ filename: "Empty", props: "--", fullPath: "", happyMode: false, writeProtected: false }));
         let modalMode = 'file';       
         let modalCurrentSlot = 0;     
         let modalCurrentPath = "";    
         let cachedPbEntries = []; 
+        
+        // TNFS Tracker Vars
         let tnfsCurrentSlot = 0;
-        let tnfsCurrentHost = "tnfs.atari8.info";
+        let tnfsCurrentHost = "13leader.net";
         let tnfsCurrentPath = "/";
+        let tnfsSortMode = 0; // 0: Raw, 1: A-Z, 2: Z-A
+        let currentTnfsFiles = [];    
+        let isTnfsFinished = false;   
 
         function initWebChannel() {
             const serverIp = window.location.hostname;
@@ -353,7 +365,6 @@
                         }
                     });
 
-                    // Store all data internally when received so the Info modal can retrieve it
                     backend.diskStatusChanged.connect(function(slot, filename, props, fullPath, autoSave, happyMode, writeProtected) {
                         driveStates[slot].happyMode = happyMode;
                         driveStates[slot].writeProtected = writeProtected;
@@ -378,19 +389,18 @@
                             btnHappy.style.background = 'var(--btn-bg)'; btnHappy.style.color = 'var(--btn-text)'; btnHappy.style.borderColor = 'var(--btn-border)';
                         }
 
-                         // Update Padlock Visuals
                         const btnLock = document.getElementById(`btn-lock-${slot}`);
                         if (btnLock) {
                             if (writeProtected) {
                                 btnLock.innerHTML = '<i class="bi bi-lock-fill"></i>';
-                                btnLock.style.backgroundColor = '#dc3545'; // Solid Red Background
-                                btnLock.style.color = '#fff';         // White Icon
-                                btnLock.style.borderColor = '#c82333';// Darker Red Border
+                                btnLock.style.backgroundColor = '#dc3545';
+                                btnLock.style.color = '#fff';         
+                                btnLock.style.borderColor = '#c82333';
                             } else {
                                 btnLock.innerHTML = '<i class="bi bi-unlock"></i>';
-                                btnLock.style.backgroundColor = '';   // Clear to let CSS take over
-                                btnLock.style.color = '';             // Clear
-                                btnLock.style.borderColor = '';       // Clear
+                                btnLock.style.backgroundColor = '';   
+                                btnLock.style.color = '';             
+                                btnLock.style.borderColor = '';       
                             }
                          }  
                     });
@@ -412,9 +422,11 @@
                         const folderBtnUI = document.getElementById('btn-select-folder');
                         
                         if (modalMode === 'folder') {
-                            titleUI.innerText = "Select Folder to Mount"; folderBtnUI.style.display = "block"; 
+                            titleUI.innerText = "Select Folder to Mount"; folderBtnUI.style.display = "block"; folderBtnUI.innerText = "Mount This Folder";
                         } else if (modalMode === 'cas') {
                             titleUI.innerText = "Select Cassette File"; folderBtnUI.style.display = "none";
+                        } else if (modalMode === 'new_disk_folder') {
+                            titleUI.innerText = "Select Destination Folder"; folderBtnUI.style.display = "block"; folderBtnUI.innerText = "Select This Folder";
                         } else {
                             titleUI.innerText = "Select Disk Image"; folderBtnUI.style.display = "none";  
                         }
@@ -424,6 +436,7 @@
 
                         files.forEach(file => {
                             if (modalMode === 'folder' && !file.isDir) return;
+                            if (modalMode === 'new_disk_folder' && !file.isDir) return;
                             if (modalMode === 'cas' && !file.isDir && !file.name.toLowerCase().endsWith('.cas')) return;
                             if (modalMode === 'file' && !file.isDir && file.name.toLowerCase().endsWith('.cas')) return;
 
@@ -448,51 +461,13 @@
                     });
 
                     backend.tnfsDirectoryListReceived.connect(function(slot, host, path, files, isFinished) {
-                        tnfsCurrentPath = path; tnfsCurrentHost = host;
+                        tnfsCurrentPath = path; 
+                        tnfsCurrentHost = host;
+                        isTnfsFinished = isFinished;
                         document.getElementById('tnfs-current-path').innerText = "tnfs://" + host + path;
-                        const listDiv = document.getElementById('tnfs-list');
                         
-                        files.forEach(file => {
-                            const item = document.createElement('div');
-                            item.className = 'file-item';
-                            let icon = file.isDir ? '<i class="bi bi-folder-fill" style="color:#f3da35; font-size:18px;"></i>' : '<i class="bi bi-globe" style="color:var(--primary); font-size:18px;"></i>';
-                            item.innerHTML = `${icon} <span>${file.name}</span>`;
-                            item.onclick = function() {
-                                if (file.isDir) {
-                                    let newPath = path;
-                                    if (!newPath.endsWith('/')) newPath += '/';
-                                    newPath += file.name;
-                                    listDiv.innerHTML = '';
-                                    document.getElementById('tnfs-loading').style.display = 'block';
-                                    backend.requestTnfsDirectoryList(slot, host, newPath);
-                                } else {
-                                    let fullUrl = "tnfs://" + host + path;
-                                    if (!fullUrl.endsWith('/')) fullUrl += '/';
-                                    fullUrl += file.name;
-                                    backend.mountTnfsSilentUi(slot, fullUrl);
-                                    closeTnfsModal();
-                                }
-                            };
-                            listDiv.appendChild(item);
-                        });
-
-                        if (isFinished) {
-                            document.getElementById('tnfs-loading').style.display = 'none';
-                            if (path !== "/" && path !== "") {
-                                const upItem = document.createElement('div');
-                                upItem.className = 'file-item';
-                                upItem.innerHTML = `<i class="bi bi-arrow-90deg-up" style="color:#666; font-size:18px;"></i> <span>.. (Up)</span>`;
-                                upItem.onclick = function() {
-                                     let parts = path.split('/').filter(p => p.length > 0);
-                                     parts.pop(); 
-                                     let newPath = "/" + parts.join('/');
-                                     listDiv.innerHTML = ''; 
-                                     document.getElementById('tnfs-loading').style.display = 'block';
-                                     backend.requestTnfsDirectoryList(slot, host, newPath);
-                                };
-                                listDiv.insertBefore(upItem, listDiv.firstChild);
-                            }
-                        }
+                        currentTnfsFiles = currentTnfsFiles.concat(files);
+                        renderTnfsList();
                     });
 
                     backend.tnfsHostHistoryReceived.connect(function(history) {
@@ -539,6 +514,78 @@
             };
         }
 
+        function renderTnfsList() {
+            const listDiv = document.getElementById('tnfs-list');
+            listDiv.innerHTML = '';
+            
+            let sortedFiles = [...currentTnfsFiles];
+            
+            if (tnfsSortMode > 0) {
+                sortedFiles.sort((a, b) => {
+                    if (a.isDir !== b.isDir) return a.isDir ? -1 : 1; 
+                    let cmp = a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+                    return tnfsSortMode === 1 ? cmp : -cmp;
+                });
+            }
+
+            if (isTnfsFinished && tnfsCurrentPath !== "/" && tnfsCurrentPath !== "") {
+                const upItem = document.createElement('div');
+                upItem.className = 'file-item';
+                upItem.innerHTML = `<i class="bi bi-arrow-90deg-up" style="color:#666; font-size:18px;"></i> <span>.. (Up)</span>`;
+                upItem.onclick = function() {
+                     let parts = tnfsCurrentPath.split('/').filter(p => p.length > 0);
+                     parts.pop(); 
+                     let newPath = "/" + parts.join('/');
+                     listDiv.innerHTML = ''; 
+                     currentTnfsFiles = []; 
+                     document.getElementById('tnfs-loading').style.display = 'block';
+                     backend.requestTnfsDirectoryList(tnfsCurrentSlot, tnfsCurrentHost, newPath);
+                };
+                listDiv.appendChild(upItem);
+            }
+
+            sortedFiles.forEach(file => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                let icon = file.isDir ? '<i class="bi bi-folder-fill" style="color:#f3da35; font-size:18px;"></i>' : '<i class="bi bi-globe" style="color:var(--primary); font-size:18px;"></i>';
+                item.innerHTML = `${icon} <span>${file.name}</span>`;
+                item.onclick = function() {
+                    if (file.isDir) {
+                        let newPath = tnfsCurrentPath;
+                        if (!newPath.endsWith('/')) newPath += '/';
+                        newPath += file.name;
+                        listDiv.innerHTML = '';
+                        currentTnfsFiles = []; 
+                        document.getElementById('tnfs-loading').style.display = 'block';
+                        backend.requestTnfsDirectoryList(tnfsCurrentSlot, tnfsCurrentHost, newPath);
+                    } else {
+                        let fullUrl = "tnfs://" + tnfsCurrentHost + tnfsCurrentPath;
+                        if (!fullUrl.endsWith('/')) fullUrl += '/';
+                        fullUrl += file.name;
+                        backend.mountTnfsSilentUi(tnfsCurrentSlot, fullUrl);
+                        closeTnfsModal();
+                    }
+                };
+                listDiv.appendChild(item);
+            });
+
+            if (isTnfsFinished) {
+                document.getElementById('tnfs-loading').style.display = 'none';
+            }
+        }
+
+        function toggleTnfsSort() {
+            if (tnfsSortMode === 0 || tnfsSortMode === 2) {
+                tnfsSortMode = 1;
+                document.getElementById('btn-tnfs-sort').innerHTML = '<i class="bi bi-sort-alpha-down"></i>';
+                document.getElementById('btn-tnfs-sort').style.color = 'var(--primary)';
+            } else {
+                tnfsSortMode = 2;
+                document.getElementById('btn-tnfs-sort').innerHTML = '<i class="bi bi-sort-alpha-down-alt"></i>';
+            }
+            renderTnfsList();
+        }
+
         function flashButtonFeedback(btnId) {
             const btn = document.getElementById(btnId);
             if (btn) {
@@ -561,23 +608,59 @@
             });
         }
 
-        function closeModal() { document.getElementById('file-modal').style.display = 'none'; }
+        function closeModal() { 
+            document.getElementById('file-modal').style.display = 'none'; 
+            document.getElementById('file-modal').style.zIndex = 1000; 
+        }
         function closePbModal() { document.getElementById('pb-modal').style.display = 'none'; }
         function closeLogModal() { document.getElementById('log-modal').style.display = 'none'; }
         function closePrinterModal() { document.getElementById('printer-modal').style.display = 'none'; } 
         function closeTnfsModal() { document.getElementById('tnfs-modal').style.display = 'none'; }
         function closeDriveInfoModal() { document.getElementById('drive-info-modal').style.display = 'none'; }
-        function commitFolderSelection() { if (backend && modalCurrentPath !== "") { backend.mountFileSilentUi(modalCurrentSlot, modalCurrentPath); closeModal(); } }
+        
+        function commitFolderSelection() { 
+            if (backend && modalCurrentPath !== "") { 
+                if (modalMode === 'new_disk_folder') {
+                    document.getElementById('new-disk-target-path').innerText = modalCurrentPath;
+                    closeModal(); 
+                } else {
+                    backend.mountFileSilentUi(modalCurrentSlot, modalCurrentPath); 
+                    closeModal(); 
+                }
+            } 
+        }
+
+        function uiActionSelectNewDiskFolder() {
+            modalMode = 'new_disk_folder';
+            let currentPath = document.getElementById('new-disk-target-path').innerText;
+            if (currentPath === "Loading..." || currentPath === "Fetching path...") currentPath = "";
+            
+            document.getElementById('file-modal').style.zIndex = 1050; 
+            
+            if (backend) backend.requestDirectoryList(-1, currentPath);
+        }
 
         function uiActionMountCas() { modalMode = 'cas'; if(backend) backend.requestDirectoryList(-1, ""); }
         function uiActionMountTnfs(slot) {
-            tnfsCurrentSlot = slot; document.getElementById('tnfs-list').innerHTML = ''; document.getElementById('tnfs-current-path').innerText = "Ready";
-            document.getElementById('tnfs-loading').style.display = 'none'; document.getElementById('tnfs-modal').style.display = 'block';
+            tnfsCurrentSlot = slot; 
+            currentTnfsFiles = []; 
+            tnfsSortMode = 0;
+            document.getElementById('btn-tnfs-sort').innerHTML = '<i class="bi bi-filter"></i>';
+            document.getElementById('btn-tnfs-sort').style.color = '';
+            document.getElementById('tnfs-list').innerHTML = ''; 
+            document.getElementById('tnfs-current-path').innerText = "Ready";
+            document.getElementById('tnfs-loading').style.display = 'none'; 
+            document.getElementById('tnfs-modal').style.display = 'block';
         }
         function connectTnfs() {
             let hostInput = document.getElementById('tnfs-host').value.trim(); if (!hostInput) return;
             tnfsCurrentHost = hostInput.replace("tnfs://", "").split('/')[0];
-            document.getElementById('tnfs-list').innerHTML = ''; document.getElementById('tnfs-loading').style.display = 'block';
+            currentTnfsFiles = []; 
+            tnfsSortMode = 0;
+            document.getElementById('btn-tnfs-sort').innerHTML = '<i class="bi bi-filter"></i>';
+            document.getElementById('btn-tnfs-sort').style.color = '';
+            document.getElementById('tnfs-list').innerHTML = ''; 
+            document.getElementById('tnfs-loading').style.display = 'block';
             if(backend) backend.requestTnfsDirectoryList(tnfsCurrentSlot, tnfsCurrentHost, "/");
         }
         function uiActionMountDisk(slot) { modalMode = 'file'; modalCurrentSlot = slot; if(backend) backend.requestDirectoryList(slot, ""); }
@@ -606,10 +689,8 @@
             toast.innerHTML = `<i class="bi ${isError ? 'bi-exclamation-triangle-fill' : 'bi-info-circle-fill'}"></i> <span>${msg}</span>`;
             container.appendChild(toast);
             
-            // Trigger animation
             setTimeout(() => toast.classList.add('show'), 10);
             
-            // Auto-remove after 4 seconds
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 300);
@@ -640,9 +721,10 @@
                 return;
             }
             let type = parseInt(document.getElementById('new-disk-type').value);
+            let folder = document.getElementById('new-disk-target-path').innerText.trim();
 
             if (backend) {
-                backend.createBlankDiskUi(newDiskTargetSlot, filename, type);
+                backend.createBlankDiskUi(newDiskTargetSlot, folder, filename, type);
                 closeNewDiskModal();
             }
         }
