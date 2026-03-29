@@ -76,6 +76,7 @@
         .file-props { color: var(--text-muted); font-size: 11px; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .btn-eject { flex: 0 0 auto; padding: 8px 14px; color:#d9534f; }
+        .btn-info { flex: 0 0 auto; padding: 8px 14px; color: var(--primary); }
 
         /* Modals */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: var(--modal-bg); }
@@ -187,6 +188,10 @@
                 <button class="close-btn" onclick="closeNewDiskModal()"><i class="bi bi-x-lg"></i></button>
             </div>
             <div style="padding: 20px; display: flex; flex-direction: column; gap: 15px;">
+                <div style="background: var(--header-bg); padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 11px; font-weight: bold; color: var(--text-muted); text-transform: uppercase;">Saving To:</div>
+                    <div id="new-disk-target-path" style="font-family: monospace; font-size: 13px; word-break: break-all; color: var(--primary);">Loading...</div>
+                </div>
                 <div>
                     <label style="font-weight: bold; font-size: 14px; color: var(--text-muted);">File Name</label>
                     <input type="text" id="new-disk-name" placeholder="MyNewDisk.atr" style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid var(--border-color); box-sizing: border-box;">
@@ -241,6 +246,29 @@
         </div>
     </div>
 
+    <div id="drive-info-modal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Drive Details</h3>
+                <button class="close-btn" onclick="closeDriveInfoModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div style="padding: 20px; display: flex; flex-direction: column; gap: 15px;">
+                <div style="background: var(--header-bg); padding: 15px; border-radius: 4px; border: 1px solid var(--border-color);">
+                    <strong style="color: var(--primary); font-size: 18px; display: block; margin-bottom: 10px;" id="info-slot-name">Slot 1</strong>
+                    
+                    <strong style="font-size: 14px; color: var(--text-muted);">Filename:</strong><br>
+                    <span id="info-file-name" style="font-family: monospace; font-size: 15px;">Empty</span><br><br>
+                    
+                    <strong style="font-size: 14px; color: var(--text-muted);">Format / Type:</strong><br>
+                    <span id="info-file-props" style="font-size: 15px;">--</span><br><br>
+                    
+                    <strong style="font-size: 14px; color: var(--text-muted);">Absolute Path:</strong><br>
+                    <div id="info-file-path" style="font-family: monospace; font-size: 12px; word-break: break-all; color: var(--text-main); margin-top: 4px; background: var(--bg-main); padding: 10px; border-radius: 4px; border: 1px solid var(--border-light);">--</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="toast-container"></div>
 
     <script>
@@ -263,7 +291,6 @@
         const container = document.getElementById('drives-container');
         const driveLetters = ['1','2','3','4','5','6','7','8','9','J','K','L','M','N','O'];
         
-        // DASHBOARD CARD GENERATOR: Includes the new Padlock button!
         driveLetters.forEach((letter, index) => {
             const item = document.createElement('div');
             item.className = 'drive-item';
@@ -284,6 +311,7 @@
                         <span class="file-name" id="filename-${index}">Empty</span>
                         <span class="file-props" id="props-${index}">--</span>
                     </div>
+                    <button class="drive-btn btn-info" onclick="uiActionShowDriveInfo(${index})" title="Drive Details"><i class="bi bi-info-circle"></i></button>
                     <button class="drive-btn btn-eject" onclick="uiActionEject(${index})" title="Eject"><i class="bi bi-eject-fill"></i></button>
                 </div>
             `;
@@ -292,8 +320,8 @@
 
         let backend = null;
         
-        // State Array updated to track write protection status
-        const driveStates = Array.from({length: 15}, () => ({ happyMode: false, writeProtected: false }));
+        // State Array updated to track all drive properties so the Info Modal can read it anytime
+        const driveStates = Array.from({length: 15}, () => ({ filename: "Empty", props: "--", fullPath: "", happyMode: false, writeProtected: false }));
         let modalMode = 'file';       
         let modalCurrentSlot = 0;     
         let modalCurrentPath = "";    
@@ -325,14 +353,17 @@
                         }
                     });
 
-                    // Updated Signature to accept writeProtected boolean
-                    backend.diskStatusChanged.connect(function(slot, filename, props, autoSave, happyMode, writeProtected) {
+                    // Store all data internally when received so the Info modal can retrieve it
+                    backend.diskStatusChanged.connect(function(slot, filename, props, fullPath, autoSave, happyMode, writeProtected) {
                         driveStates[slot].happyMode = happyMode;
                         driveStates[slot].writeProtected = writeProtected;
+                        driveStates[slot].filename = filename;
+                        driveStates[slot].props = props;
+                        driveStates[slot].fullPath = fullPath;
                         
                         document.getElementById(`filename-${slot}`).innerText = filename;
                         document.getElementById(`props-${slot}`).innerText = props;
-
+                        
                         const btnAuto = document.getElementById(`btn-autosave-${slot}`);
                         if (autoSave) {
                             btnAuto.style.background = '#28a745'; btnAuto.style.color = '#fff'; btnAuto.style.borderColor = '#1e7e34';
@@ -488,7 +519,6 @@
                         textArea.scrollTop = textArea.scrollHeight;
                     });
                     
-                    // --- NEW: Catch Printer Text ---
                     backend.printerTextReceived.connect(function(text) {
                         const textArea = document.getElementById('printer-text-area');
                         textArea.innerText = text || "Printer spool is currently empty.";
@@ -496,9 +526,12 @@
                         textArea.scrollTop = textArea.scrollHeight;
                     });
                     
-                    // --- NEW: Catch Notifications ---
                     backend.notificationReceived.connect(function(message, isError) {
                         showToast(message, isError);
+                    });
+                    
+                    backend.currentSavePathReceived.connect(function(path) {
+                        document.getElementById('new-disk-target-path').innerText = path;
                     });
 
                     backend.requestFullStatus();
@@ -533,6 +566,7 @@
         function closeLogModal() { document.getElementById('log-modal').style.display = 'none'; }
         function closePrinterModal() { document.getElementById('printer-modal').style.display = 'none'; } 
         function closeTnfsModal() { document.getElementById('tnfs-modal').style.display = 'none'; }
+        function closeDriveInfoModal() { document.getElementById('drive-info-modal').style.display = 'none'; }
         function commitFolderSelection() { if (backend && modalCurrentPath !== "") { backend.mountFileSilentUi(modalCurrentSlot, modalCurrentPath); closeModal(); } }
 
         function uiActionMountCas() { modalMode = 'cas'; if(backend) backend.requestDirectoryList(-1, ""); }
@@ -556,6 +590,14 @@
         function uiActionHangup() { if(backend) backend.hangupUi(); flashButtonFeedback('btn-hangup'); }
         function uiActionMacroUser() { if(backend) backend.macroUserUi(); flashButtonFeedback('btn-user'); }
         function uiActionMacroPass() { if(backend) backend.macroPassUi(); flashButtonFeedback('btn-pass'); }
+        
+        function uiActionShowDriveInfo(slot) {
+            document.getElementById('info-slot-name').innerText = `Drive ${driveLetters[slot]}:`;
+            document.getElementById('info-file-name').innerText = driveStates[slot].filename;
+            document.getElementById('info-file-props').innerText = driveStates[slot].props;
+            document.getElementById('info-file-path').innerText = driveStates[slot].fullPath || "No file mounted.";
+            document.getElementById('drive-info-modal').style.display = 'block';
+        }
 
         function showToast(msg, isError) {
             const container = document.getElementById('toast-container');
@@ -579,6 +621,10 @@
         function uiActionPromptNewDisk(slot) {
             newDiskTargetSlot = slot;
             document.getElementById('new-disk-name').value = '';
+            document.getElementById('new-disk-target-path').innerText = "Fetching path..."; 
+            
+            if (backend) backend.requestCurrentSavePathUi(); 
+            
             document.getElementById('new-disk-modal').style.display = 'block';
             document.getElementById('new-disk-name').focus();
         }

@@ -254,3 +254,11 @@ void WebBridge::createBlankDiskUi(int slot, const QString &filename, int type) {
         QMetaObject::invokeMethod(mainWindow, "createBlankDiskHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(QString, filename), Q_ARG(int, type));
     }
 }
+
+void WebBridge::requestCurrentSavePathUi() {
+    // Grab the exact folder AspeQt is currently targeting
+    QString path = aspeqtSettings->lastDiskImageDir();
+    if (path.isEmpty()) path = QDir::homePath(); // Fallback
+
+    emit currentSavePathReceived(path);
+}

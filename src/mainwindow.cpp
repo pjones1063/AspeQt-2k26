@@ -3,6 +3,7 @@
  */
 
 #include "mainwindow.h"
+#include "src/ui_mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include <QToolButton>
@@ -711,10 +712,10 @@ void MainWindow::createDeviceWidgets()
         deviceWidget->setIconSize(dpiIconSize);
 
         // --- NEW: Mount TNFS Action ---
-        QAction *mountTnfsAction = new QAction(QIcon(":icons/silk-icons/icons/world.png"), tr("Mount from TNFS Network..."), this);
+        QAction *mountTnfsAction = new QAction(QIcon(":/icons/silk-icons/icons/world.png"), tr("Mount from TNFS Network..."), this);
 
         if (mountTnfsAction->icon().isNull()) {
-            mountTnfsAction->setIcon(QIcon(":icons/silk-icons/icons/connect.png"));
+            mountTnfsAction->setIcon(QIcon(":/icons/silk-icons/icons/connect.png"));
         }
 
         connect(mountTnfsAction, &QAction::triggered, this, [this, i]() {
@@ -762,6 +763,8 @@ void MainWindow::createDeviceWidgets()
         connect(this, SIGNAL(setFont(const QFont&)), deviceWidget, SLOT(setFont(const QFont&)));
         connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(on_actionHappyMode_triggered(int,bool)));
         connect(deviceWidget, SIGNAL(actionInspectSectors(int)), this, SLOT(on_actionInspectSectors_triggered(int)));
+        connect(diskWidgets[i], SIGNAL(actionInfo(int)), this, SLOT(on_actionInfo_triggered(int)));
+
     }
 
     ui->leftColumn->setAlignment(Qt::AlignTop);
@@ -1341,18 +1344,24 @@ void MainWindow::sioStatusChanged(QString status)
 
 void MainWindow::deviceStatusChanged(int deviceNo)
 {
-    if (deviceNo >= DISK_BASE_CDEVIC && deviceNo < (DISK_BASE_CDEVIC+DISK_COUNT)) { // 0x31 - 0x3E
+    if (deviceNo >= DISK_BASE_CDEVIC && deviceNo < (DISK_BASE_CDEVIC+DISK_COUNT)) {
 
+        DriveWidget *diskWidget = diskWidgets[deviceNo - DISK_BASE_CDEVIC];
+
+        // --- 1. HANDLING TNFS DOWNLOADS ---
         if (m_slotDownloadId[deviceNo - DISK_BASE_CDEVIC] != 0) {
-            diskWidgets[deviceNo - DISK_BASE_CDEVIC]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
-            if (webBridge) emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Loading...", "Downloading from TNFS...", false, false, true);
+            diskWidget->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
+            diskWidget->setFullPath(""); // Clear path while loading
+
+            if (webBridge) {
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Loading...", "Downloading from TNFS...", "", false, false, true);
+            }
             return;
         }
 
-        // 1. Get Generic Device
         SioDevice *device = sio->getDevice(deviceNo);
-        DriveWidget *diskWidget = diskWidgets[deviceNo - DISK_BASE_CDEVIC];
 
+        // --- 2. HANDLING LOCAL EXECUTABLES (XEX) ---
         XexImage *xex = qobject_cast<XexImage *>(device);
         if (xex) {
             QString fullPath = xex->originalFileName();
@@ -1361,21 +1370,22 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 
             diskWidget->setLabelToolTips(fi.absolutePath(), fullPath, tr("Executable (Local)"));
             diskWidget->setHappyMode(false);
-            diskWidget->showAsImageMounted(name, tr("Executable (Local)"), false, false);
 
-            if (webBridge) emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, name, "Executable (Local)", false, false, true);
+            diskWidget->showAsImageMounted(name, tr("Executable (Local)"), false, false);
+            diskWidget->setFullPath(fullPath); // Secretly set the path for the Info Modal
+
+            if (webBridge) {
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, name, "Executable (Local)", fullPath, false, false, true);
+            }
             return;
         }
 
-
-        // 2. Check for TNFS Image FIRST
+        // --- 3. HANDLING TNFS NETWORK STREAMS ---
         TnfsImage *tnfsImg = qobject_cast<TnfsImage*>(device);
         if (tnfsImg) {
-            // Force Save and Edit to FALSE (Gray out buttons)
             QString fullUrl = tnfsImg->originalFileName();
             QString fileNameOnly = fullUrl;
 
-            // Extract purely the filename from the URL
             int lastSlash = fullUrl.lastIndexOf('/');
             if (lastSlash != -1) {
                 fileNameOnly = fullUrl.mid(lastSlash + 1);
@@ -1384,25 +1394,25 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 
             diskWidget->setLabelToolTips(fullUrl, fullUrl, tr("TNFS Network Stream To Ram"));
             diskWidget->setHappyMode(false);
-            diskWidget->showAsTNFSMounted(fileNameOnly, tr("TNFS Stream to RAM"));
 
-            // --- WEB UI UPDATE: TNFS ---
+            diskWidget->showAsTNFSMounted(fileNameOnly, tr("TNFS Stream to RAM"));
+            diskWidget->setFullPath(fullUrl); // Secretly set the path for the Info Modal
+
             if (webBridge) {
-                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, fileNameOnly, "TNFS Stream", false, false, true);
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, fileNameOnly, "TNFS Stream", fullUrl, false, false, true);
             }
-            return; // EXIT HERE so SimpleDiskImage logic doesn't override it
+            return;
         }
 
-        // 3. Fallback to Standard Disk Image Logic
+        // --- 4. HANDLING STANDARD DISK IMAGES & FOLDERS ---
         SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (device);
         if (img) {
 
-            // Show file name without the path and set toolTip & statusTip to show the path separately //
             QString filenamelabel;
             int i = -1;
 
             if (img->description() == tr("Folder image")) {
-                i = img->originalFileName().lastIndexOf("\\"); // NOTE: This expects folder separators to be '\\'
+                i = img->originalFileName().lastIndexOf("\\");
             } else {
                 i = img->originalFileName().lastIndexOf("/");
             }
@@ -1420,6 +1430,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                                          img->description());
 
             bool enableEdit = img->editDialog() != 0;
+            QString fullPath = img->originalFileName(); // Grab the absolute path!
 
             if (img->description() == tr("Folder image")) {
                 diskWidget->showAsFolderMounted(filenamelabel, img->description(), enableEdit);
@@ -1427,10 +1438,9 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                 bool enableSave = false;
 
                 if (img->isModified()) {
-                    if (!diskWidget->isAutoSaveEnabled()) {    //
+                    if (!diskWidget->isAutoSaveEnabled()) {
                         enableSave = true;
                     } else {
-                        // Image is modified and autosave is checked, so save the image (no need to lock it)  //
                         bool saved;
                         saved = img->save();
                         if (!saved) {
@@ -1446,20 +1456,22 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                 diskWidget->showAsImageMounted(filenamelabel, img->description(), enableEdit, enableSave);
             }
 
-            // --- WEB UI UPDATE: STANDARD IMAGE ---
+            diskWidget->setFullPath(fullPath); // Secretly set the path for the Info Modal
+
             if (webBridge) {
                 bool autoSave = diskWidget->isAutoSaveEnabled();
                 bool happy = aspeqtSettings->mountedImageSetting(deviceNo - DISK_BASE_CDEVIC).isHappyMode;
                 bool writeProtected = aspeqtSettings->mountedImageSetting(deviceNo - DISK_BASE_CDEVIC).isWriteProtected;
-                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, filenamelabel, img->description(), autoSave, happy, writeProtected);
+
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, filenamelabel, img->description(), fullPath, autoSave, happy, writeProtected);
             }
 
         } else {
+            // --- 5. HANDLING EMPTY DRIVES ---
             diskWidget->showAsEmpty();
 
-            // --- WEB UI UPDATE: EMPTY SLOT ---
             if (webBridge) {
-                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Empty", "--", false, false, false);
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, "Empty", "--", "", false, false, false);
             }
         }
     }
@@ -1708,7 +1720,7 @@ bool MainWindow::ejectImage(int no, bool ask)
         qDebug() << "!w" << tr("Slot %1 download aborted by user.").arg(no+1);
         m_slotDownloadId[no] = 0; // Signals openUrl to terminate instantly
         diskWidgets[no]->showAsEmpty();
-        if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--", false, false, false);
+        if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--","", false, false, false);
         return true; // Slot is successfully freed!
     }
 
@@ -2565,7 +2577,7 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
         // Instant "Loading..." Feedback
         diskWidgets[deviceId]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
         if (webBridge) {
-            emit webBridge->diskStatusChanged(deviceId, "Loading...", "Downloading from TNFS...", false, false, false);
+            emit webBridge->diskStatusChanged(deviceId, "Loading...", "Downloading from TNFS...","", false, false, false);
         }
         QCoreApplication::processEvents(); // Force UI update before blocking network call
 
@@ -2604,7 +2616,7 @@ void MainWindow::on_actionMountTnfs_triggered(int deviceId)
 
                 diskWidgets[deviceId]->showAsEmpty();
                 if (webBridge) {
-                    emit webBridge->diskStatusChanged(deviceId, "Empty", "--", false, false,false);
+                    emit webBridge->diskStatusChanged(deviceId, "Empty", "--","", false, false,false);
                 }
 
                 QMessageBox::critical(this, tr("Mount Error"), tr("Could not open TNFS stream from %1").arg(url));
@@ -3035,7 +3047,7 @@ void MainWindow::mountFileHeadless(int no, const QString &fileName)
             delete xex;
             qDebug() << "!e" << tr("[Web UI] Failed to parse Executable: %1").arg(fileName);
             if (webBridge) {
-                emit webBridge->diskStatusChanged(no, "Empty", "--", false, false, false);
+                emit webBridge->diskStatusChanged(no, "Empty", "--","", false, false, false);
             }
         }
         return; // EXIT EARLY! Do not proceed to standard disk mounting.
@@ -3150,7 +3162,7 @@ void MainWindow::mountTnfsHeadless(int no, const QString &url)
 
     diskWidgets[no]->showAsTNFSMounted(tr("Loading..."), tr("Downloading from TNFS..."));
     if (webBridge) {
-        emit webBridge->diskStatusChanged(no, "Loading...", "Downloading from TNFS...", false, false, false);
+        emit webBridge->diskStatusChanged(no, "Loading...", "Downloading from TNFS...","", false, false, false);
     }
     QCoreApplication::processEvents();
 
@@ -3177,7 +3189,7 @@ void MainWindow::mountTnfsHeadless(int no, const QString &url)
         if (m_slotDownloadId[no] == myId) {
             m_slotDownloadId[no] = 0;
             diskWidgets[no]->showAsEmpty();
-            if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--", false, false, false);
+            if (webBridge) emit webBridge->diskStatusChanged(no, "Empty", "--","", false, false, false);
             qDebug() << "!e" << tr("[Web UI] Failed to mount TNFS Stream: %1").arg(url);
             emit webBridge->notificationReceived(tr("Download failed or aborted: %1").arg(url), true);
         }
@@ -3441,3 +3453,37 @@ void MainWindow::createBlankDiskHeadless(int slot, const QString &fileName, int 
     qDebug() << "!i" << tr("[Web UI] Created and mounted blank disk: %1 in slot %2").arg(fullPath).arg(slot+1);
 }
 
+
+
+void MainWindow::on_actionInfo_triggered(int deviceId)
+{
+    DriveWidget *dw = diskWidgets[deviceId];
+    if (!dw) return;
+
+    QString driveLetter = (deviceId < 9) ? QString::number(deviceId + 1) : QString((char)('J' + deviceId - 9));
+
+    QString fileName = dw->getFileName();
+    QString props = dw->getFileProps();
+    QString path = dw->getFullPath();
+
+    if (fileName.isEmpty()) fileName = tr("Empty");
+    if (props.isEmpty()) props = "--";
+    if (path.isEmpty()) path = tr("No file mounted.");
+
+    // Format a sleek, rich-text message box to match the Web UI
+    // Format a sleek, rich-text message box to match the Web UI
+    // Wrapping it in an HTML table forces Qt to render it with a minimum width!
+    QString msg = tr("<table width='350'><tr><td>"
+                     "<b>Slot %1:</b><br><br>"
+                     "<b>Filename:</b><br>%2<br><br>"
+                     "<b>Format / Type:</b><br>%3<br><br>"
+                     "<b>Absolute Path:</b><br>%4"
+                     "</td></tr></table>")
+                      .arg(driveLetter)
+                      .arg(fileName)
+                      .arg(props)
+                      .arg(path);
+
+    QMessageBox::information(this, tr("Drive Details"), msg);
+
+}

@@ -2,7 +2,6 @@
  * drivewidget.h
  */
 
-
 #ifndef DRIVEWIDGET_H
 #define DRIVEWIDGET_H
 
@@ -27,7 +26,6 @@ public:
     int getDriveNumber() { return driveNo_; }
     void setup();
 
-
     void showAsEmpty();
     void showAsFolderMounted(const QString &fileName, const QString &description, bool editEnabled);
     void showAsImageMounted(const QString &fileName, const QString &description, bool editEnabled, bool enableSave);
@@ -41,7 +39,12 @@ public:
     void triggerAutoSaveClickIfEnabled();
     void setHappyMode(bool enabled);
     void setWriteProtect(bool enabled);
+    void setFullPath(const QString &path) { m_fullPath = path; }
 
+    // Getters for the Info Modal
+    QString getFileName() const;
+    QString getFileProps() const;
+    QString getFullPath() const;
 
 signals:
     void actionMountDisk(int deviceId);
@@ -57,36 +60,27 @@ signals:
     void actionBootOptions(int deviceId);
     void actionHappyMode(int deviceId, bool enabled);
     void actionInspectSectors(int deviceId);
+    void actionInfo(int deviceId);
 
 private slots:
     void setFont(const QFont& font);
     void on_actionMountFolder_triggered();
     void on_actionMountDisk_triggered();
-
     void on_actionEject_triggered();
-
     void on_actionWriteProtect_toggled(bool state);
-
     void on_actionEditDisk_triggered();
-
     void on_actionSave_triggered();
-
     void on_actionRevert_triggered();
-
     void on_actionSaveAs_triggered();
-
     void on_actionAutoSave_toggled(bool arg1);
-
     void on_actionBootOption_triggered();
-
     void on_actionHappyMode_toggled(bool state);
-
+    void on_actionInfo_triggered();
 
 private:
     Ui::DriveWidget *ui;
     int driveNo_;
+    QString m_fullPath; // <-- Stores the path invisibly
 };
-
-
 
 #endif // DRIVEWIDGET_H

@@ -1,15 +1,15 @@
 /*
  * drivewidget.cpp
  */
- 
+
 #include "drivewidget.h"
 #include "ui_drivewidget.h"
 #include "diskimage.h"
 
 DriveWidget::DriveWidget(int driveNum, QWidget *parent)
-   : QFrame(parent)
-   , ui(new Ui::DriveWidget)
-   , driveNo_(driveNum)
+    : QFrame(parent)
+    , ui(new Ui::DriveWidget)
+    , driveNo_(driveNum)
 {
     ui->setupUi(this);
 }
@@ -19,11 +19,9 @@ DriveWidget::~DriveWidget()
     delete ui;
 }
 
-
 static void FormatStatusTip(QAction* action, QString& driveNum)
 {
     QString tip = action->statusTip();
-    // Only attempt to format if the placeholder %1 actually exists
     if (tip.contains("%1")) {
         action->setStatusTip(tip.arg(driveNum));
     }
@@ -41,7 +39,6 @@ void DriveWidget::setup()
 
     ui->driveLabel->setText(QString("%1:").arg(driveTxt));
 
-    // Fixup status tips (Note: not all of these have an %1 in the status tip
     FormatStatusTip(ui->actionBootOption, driveTxt);
     FormatStatusTip(ui->actionSave, driveTxt);
     FormatStatusTip(ui->actionAutoSave, driveTxt);
@@ -53,10 +50,9 @@ void DriveWidget::setup()
     FormatStatusTip(ui->actionWriteProtect, driveTxt);
     FormatStatusTip(ui->actionEditDisk, driveTxt);
 
-    // Add actions to context menu
     if(driveNo_ == 0) insertAction(0, ui->actionBootOption );
     insertAction(0, ui->actionSave);
-    insertAction(0, ui->actionAutoSave);       //
+    insertAction(0, ui->actionAutoSave);
     insertAction(0, ui->actionSaveAs);
     insertAction(0, ui->actionRevert);
     insertAction(0, ui->actionMountDisk);
@@ -64,38 +60,32 @@ void DriveWidget::setup()
     insertAction(0, ui->actionEject);
     insertAction(0, ui->actionWriteProtect);
     insertAction(0, ui->actionEditDisk);
+    insertAction(0, ui->actionInfo);
 
     ui->actionSaveAs->setIcon(QIcon(":/icons/silk-icons/icons/disk.png"));
     ui->actionRevert->setIcon(QIcon(":/icons/silk-icons/icons/arrow_undo.png"));
+    ui->actionInfo->setIcon(QIcon(":/icons/silk-icons/icons/information.png"));
 
-    // Connect widget actions to buttons
     ui->buttonMountDisk->setDefaultAction(ui->actionMountDisk);
     ui->buttonMountFolder->setDefaultAction(ui->actionMountFolder);
     ui->buttonEject->setDefaultAction(ui->actionEject);
+    ui->buttonInfo->setDefaultAction(ui->actionInfo);
     ui->buttonSave->setDefaultAction(ui->actionSave);
     ui->autoSave->setDefaultAction(ui->actionAutoSave);
     ui->buttonEditDisk->setDefaultAction(ui->actionEditDisk);
-    // 1. Fixup the status tip
+
     FormatStatusTip(ui->actionHappyMode, driveTxt);
-    // 2. Add to context menu (placing it near Write Protect)
     insertAction(0, ui->actionHappyMode);
-    // 3. Connect the widget button to the action
     ui->buttonHappyMode->setDefaultAction(ui->actionHappyMode);
 
     ui->actionInspectSectors->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
     FormatStatusTip(ui->actionInspectSectors, driveTxt);
     ui->buttonInspectSectors->setDefaultAction(ui->actionInspectSectors);
-
-    // 2. Add it to the context menu (Right-click)
-    // We'll place it right below the Edit (Explore) option
     insertAction(0, ui->actionInspectSectors);
 
-    // 3. Connect the action to its own signal
     connect(ui->actionInspectSectors, &QAction::triggered, this, [this]() {
         emit actionInspectSectors(driveNo_);
     });
-
-
 }
 
 void DriveWidget::updateFromImage(SimpleDiskImage *diskImage)
@@ -109,35 +99,33 @@ void DriveWidget::updateFromImage(SimpleDiskImage *diskImage)
     const QString &fileName = diskImage->originalFileName();
     ui->labelFileName->setText(fileName);
     ui->labelImageProperties->setText(diskImage->description());
+
+    m_fullPath = fileName;
+
     ui->actionEject->setEnabled(true);
 
     bool enableEdit = diskImage->editDialog() != NULL;
     ui->actionEditDisk->setChecked(enableEdit);
-
-    // --- FIX: ALWAYS ENABLE SAVE ---
-    // Do not check !modified. Always allow the user to click Save.
     ui->actionSave->setEnabled(true);
-    // -------------------------------
-
     ui->actionRevert->setEnabled(diskImage->isModified());
 
-    // Ensure visual feedback matches the forced writable state
     ui->actionWriteProtect->setChecked(diskImage->isReadOnly());
     ui->actionWriteProtect->setEnabled(!diskImage->isUnmodifiable());
 }
-
 
 void DriveWidget::triggerAutoSaveClickIfEnabled()
 {
     if(ui->autoSave->isEnabled()) ui->autoSave->click();
 }
 
-
 void DriveWidget::showAsEmpty()
 {
     ui->actionSave->setEnabled(false);
     ui->labelFileName->clear();
     ui->labelImageProperties->clear();
+
+    m_fullPath.clear(); // Clear internal path
+
     ui->actionEject->setEnabled(false);
     ui->actionRevert->setEnabled(false);
     ui->actionSaveAs->setEnabled(false);
@@ -156,9 +144,9 @@ void DriveWidget::showAsEmpty()
 
 void DriveWidget::showAsFolderMounted(const QString &fileName, const QString &description, bool editEnabled)
 {
-    // code dupe
     ui->labelFileName->setText(fileName);
     ui->labelImageProperties->setText(description);
+
     ui->actionEject->setEnabled(true);
     ui->actionEditDisk->setChecked(editEnabled);
 
@@ -172,21 +160,19 @@ void DriveWidget::showAsFolderMounted(const QString &fileName, const QString &de
     ui->actionInspectSectors->setEnabled(false);
 
     if(driveNo_ == 0) ui->actionBootOption->setEnabled(true);
-
 }
 
 void DriveWidget::showAsImageMounted(const QString &fileName, const QString &description, bool editEnabled, bool enableSave)
 {
     ui->labelFileName->setText(fileName);
     ui->labelImageProperties->setText(description);
+
     ui->actionEject->setEnabled(true);
     ui->actionEditDisk->setChecked(editEnabled);
 
-
-    ui->labelFileName->setStyleSheet("color: rgb(0, 0, 0); font-weight: normal");  //
+    ui->labelFileName->setStyleSheet("color: rgb(0, 0, 0); font-weight: normal");
 
     ui->actionEditDisk->setEnabled(true);
-
     ui->actionSaveAs->setEnabled(true);
     ui->actionSave->setEnabled(false);
 
@@ -198,45 +184,35 @@ void DriveWidget::showAsImageMounted(const QString &fileName, const QString &des
 
     if(driveNo_ == 0) ui->actionBootOption->setEnabled(false);
 
-    //ui->actionSave->setEnabled(enableSave);
-    // --- FIX: ALWAYS ENABLE SAVE ---
     ui->actionSave->setEnabled(true);
-    // -------------------------------
     ui->actionRevert->setEnabled(enableSave);
 }
 
 void DriveWidget::showAsTNFSMounted(const QString &fileName, const QString &description)
 {
-    // 1. Set Visuals
     ui->labelFileName->setText(fileName);
     ui->labelImageProperties->setText(description);
 
-    // Set text color to differentiate (Optional: Blue-ish to indicate network?)
     ui->labelFileName->setStyleSheet("color: rgb(0, 0, 150); font-weight: normal");
 
-    // 2. DISABLE Incompatible Actions
     ui->actionSave->setEnabled(false);
     ui->actionSaveAs->setEnabled(false);
     ui->actionRevert->setEnabled(false);
 
-    ui->actionAutoSave->setChecked(false); // Uncheck it first
-    ui->actionAutoSave->setEnabled(false); // Then disable it
+    ui->actionAutoSave->setChecked(false);
+    ui->actionAutoSave->setEnabled(false);
 
-    ui->actionEditDisk->setEnabled(false); // Disable "Explore"
-
-    // Disable Happy Mode toggle
+    ui->actionEditDisk->setEnabled(false);
     ui->actionHappyMode->setEnabled(false);
 
-    // 3. ENABLE Navigation Actions
     ui->actionEject->setEnabled(true);
-    ui->actionMountDisk->setEnabled(true);   // Allow swapping
-    ui->actionMountFolder->setEnabled(true); // Allow swapping
+    ui->actionMountDisk->setEnabled(true);
+    ui->actionMountFolder->setEnabled(true);
 
     ui->actionHappyMode->setChecked(false);
     ui->actionHappyMode->setEnabled(false);
     ui->actionInspectSectors->setEnabled(false);
 
-    // 4. Update Status Tips
     setLabelToolTips(fileName, fileName, description);
 }
 
@@ -245,14 +221,12 @@ bool DriveWidget::isAutoSaveEnabled()
     return ui->actionAutoSave->isChecked();
 }
 
-
 void DriveWidget::setLabelToolTips(const QString &one, const QString &two, const QString &three)
 {
     ui->labelFileName->setToolTip(one);
     ui->labelFileName->setStatusTip(two);
     ui->labelImageProperties->setToolTip(three);
 }
-
 
 void DriveWidget::setFont(const QFont& font) {
     ui->labelFileName->setFont(font);
@@ -268,11 +242,10 @@ void DriveWidget::setIconSize(const QSize &size)
     ui->buttonInspectSectors->setIconSize(size);
     ui->buttonHappyMode->setIconSize(size);
     ui->buttonEject->setIconSize(size);
+    ui->buttonInfo->setIconSize(size);
 }
 
 void DriveWidget::on_actionAutoSave_toggled(bool state) {
-    // --- FIX: DO NOT DISABLE SAVE BUTTON ---
-    // Ensure button stays enabled
     if (ui->labelFileName->text().length() > 0) {
         ui->actionSave->setEnabled(true);
     }
@@ -280,12 +253,10 @@ void DriveWidget::on_actionAutoSave_toggled(bool state) {
 }
 
 void DriveWidget::setWriteProtect(bool enabled) {
-    // Block signals to safely update the UI without triggering an infinite loop
     ui->actionWriteProtect->blockSignals(true);
     ui->actionWriteProtect->setChecked(enabled);
     ui->actionWriteProtect->blockSignals(false);
 }
-
 
 void DriveWidget::on_actionMountFolder_triggered()  { emit actionMountFolder(driveNo_); }
 void DriveWidget::on_actionMountDisk_triggered()    { emit actionMountDisk(driveNo_); }
@@ -295,7 +266,12 @@ void DriveWidget::on_actionEditDisk_triggered()     { emit actionEditDisk(driveN
 void DriveWidget::on_actionSave_triggered()         { emit actionSave(driveNo_); }
 void DriveWidget::on_actionRevert_triggered()       { emit actionRevert(driveNo_); }
 void DriveWidget::on_actionSaveAs_triggered()       { emit actionSaveAs(driveNo_); }
-
 void DriveWidget::on_actionBootOption_triggered()   { emit actionBootOptions(driveNo_); }
 void DriveWidget::on_actionHappyMode_toggled(bool state) {  emit actionHappyMode(driveNo_, state); }
 void DriveWidget::setHappyMode(bool enabled) { ui->buttonHappyMode->setChecked(enabled); }
+
+QString DriveWidget::getFileName() const { return ui->labelFileName->text(); }
+QString DriveWidget::getFileProps() const { return ui->labelImageProperties->text(); }
+QString DriveWidget::getFullPath() const { return m_fullPath; } // Return internal path
+
+void DriveWidget::on_actionInfo_triggered() { emit actionInfo(driveNo_); }

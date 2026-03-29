@@ -54,12 +54,15 @@ public slots:
     void rewindCasUi();
     void ejectCasUi();
 
+    void requestCurrentSavePathUi(); // NEW
 
 private slots:
     void fetchNextTnfsBatch(); // Fired by the QTimer
 
 signals:
-    void diskStatusChanged(int slot, const QString &filename, const QString &properties, bool autoSave, bool happyMode, bool writeProtected);
+    // ADDED FULLPATH TO THIS SIGNAL
+    void diskStatusChanged(int slot, const QString &filename, const QString &properties, const QString &fullPath, bool autoSave, bool happyMode, bool writeProtected);
+
     void driveEmpty(int slot);
     void directoryListReceived(int slot, const QString &currentPath, const QJsonArray &files);
     void phonebookListReceived(const QJsonArray &entries);
@@ -70,6 +73,7 @@ signals:
     void casStatusChanged(QString filename, bool isPlaying);
     void notificationReceived(QString message, bool isError);
     void printerTextReceived(const QString &text);
+    void currentSavePathReceived(const QString &path); // NEW
 
 private:
     MainWindow *mainWindow;

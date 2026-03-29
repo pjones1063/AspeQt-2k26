@@ -121,6 +121,9 @@
     </layout>
    </item>
    <item>
+    <widget class="QToolButton" name="buttonInfo" />
+   </item>
+   <item>
     <widget class="QToolButton" name="buttonEject" />
    </item>
   </layout>
@@ -247,6 +250,18 @@
    </property>
    <property name="statusTip">
     <string>Open low-level sector inspector for D%1</string>
+   </property>
+  </action>
+  <action name="actionInfo">
+   <property name="icon">
+    <iconset resource="../res/icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/information.png</normaloff>:/icons/silk-icons/icons/information.png</iconset>
+   </property>
+   <property name="text">
+    <string>Drive Info</string>
+   </property>
+   <property name="toolTip">
+    <string>Show Drive Information</string>
    </property>
   </action>
  </widget>

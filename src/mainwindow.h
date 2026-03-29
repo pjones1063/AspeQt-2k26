@@ -233,6 +233,7 @@ private slots:
     void on_actionSaveAs_triggered(int deviceId);
     void on_actionRevert_triggered(int deviceId);
     void on_actionInspectSectors_triggered(int deviceId);
+    void on_actionInfo_triggered(int deviceId);
 
     void on_actionBootOption_triggered();
     void on_actionToggleMiniMode_triggered();
