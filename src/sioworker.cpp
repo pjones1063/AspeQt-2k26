@@ -195,11 +195,30 @@ void SioWorker::run()
             continue;
         }
 
-
         // ====================================================================
         // Standard SIO Command Handler
         // ====================================================================
-        QByteArray cmd = mPort->readCommandFrame();
+        QByteArray cmd;
+
+        // --- NEW: VIRTUAL INJECTOR HOOK ---
+        // Check if a packet was injected from the GUI debugger before asking the real COM port
+        m_virtualBufferMutex.lock();
+        if (!m_virtualBuffer.isEmpty()) {
+            cmd = m_virtualBuffer.dequeue();
+            m_virtualBufferMutex.unlock();
+
+            // Artificial delay so the UI thread doesn't lock up if you spam the inject button
+            usleep(2000);
+            qDebug() << "!d" << "[SioWorker] Processing VIRTUAL injected command packet.";
+        } else {
+            m_virtualBufferMutex.unlock();
+
+            // Standard behavior: Wait for the physical Atari to send something
+            cmd = mPort->readCommandFrame();
+        }
+
+
+        // ----------------------------------
         if (mustTerminate) {
             break;
         }
@@ -630,6 +649,12 @@ void SioWorker::restoreStandardBaudRate()
     if (port()) {
         port()->setSpeed(19200);
     }
+}
+
+void SioWorker::injectVirtualPacket(const QByteArray &data)
+{
+    QMutexLocker locker(&m_virtualBufferMutex);
+    m_virtualBuffer.enqueue(data);
 }
 
 

@@ -10,6 +10,8 @@
 #include <QRecursiveMutex>
 #include <climits>
 #include <QElapsedTimer>
+#include <QQueue>
+
 #include "serialport.h"
 
 #ifdef HAS_LIBGPIOD
@@ -59,6 +61,8 @@ public:
     inline void setDeviceNo(int no) {emit statusChanged(m_deviceNo); m_deviceNo = no; emit statusChanged(no);}
     inline int deviceNo() const {return m_deviceNo;}
 
+
+
 signals:
     void statusChanged(int deviceNo);
 
@@ -70,13 +74,17 @@ class SioWorker : public QThread
 
 private:
     quint8 sioChecksum(const QByteArray &data, uint size);
-    QRecursiveMutex *deviceMutex;  // <--- NEW
+    QRecursiveMutex *deviceMutex;
     SioDevice* devices[256];
     AbstractSerialPortBackend *mPort;
     bool mustTerminate;
+    QMutex m_virtualBufferMutex;
+    QQueue<QByteArray> m_virtualBuffer;
+
 public:
     AbstractSerialPortBackend* port() {return mPort;}
     int maxSpeed;
+    void injectVirtualPacket(const QByteArray &data);
 
     SioWorker();
     ~SioWorker();

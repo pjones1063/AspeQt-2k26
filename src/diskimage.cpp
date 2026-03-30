@@ -1263,3 +1263,4 @@ void SimpleDiskImage::setModified(bool modified)
         emit statusChanged(m_deviceNo);
     }
 }
+

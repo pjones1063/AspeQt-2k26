@@ -29,11 +29,16 @@ public:
     // Downloads to RAM, Detects Format, Prepares Loader
     bool openUrl(const QString &url, volatile int *activeIdPtr = nullptr, int myId = 0);
 
+    // --- NEW: Directly load a payload into RAM (For Web UI Drops) ---
+    bool openFromMemory(const QString &fileName, const QByteArray &data);
+
     QString originalFileName() const { return m_originalFileName; }
 
     // SIO Interface
     virtual void handleCommand(quint8 command, quint16 aux) override;
-    virtual QString deviceName() override { return "TNFS (RAM)"; }
+
+    // Dynamic Name Tag
+    virtual QString deviceName() override { return m_driveIdentity; }
 
 signals:
     void downloadProgress(qint64 bytesRead, qint64 totalBytes);
@@ -42,6 +47,7 @@ private:
     // Core Data
     QByteArray m_imgData;
     QString m_originalFileName;
+    QString m_driveIdentity; // Holds "TNFS (RAM)" or "Web Drop (RAM)"
 
     // Format Flags
     bool m_isAtx;

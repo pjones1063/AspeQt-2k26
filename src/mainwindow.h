@@ -39,6 +39,7 @@
 #include "phonedirectory.h"
 #include "bbsdata.h"
 #include "aspeqtclientdevice.h"
+#include "siopacketdialog.h"
 
 
 
@@ -108,6 +109,9 @@ public slots:
     void uploadAndMountHeadless(int slot, const QString &fileName, const QString &base64Data);
     void startWebUi();
     void stopWebUi();
+    void onPacketSnifferToggleClicked();
+    void onPacketSnifferClosed();
+
 
 private:
     int untitledName;
@@ -146,6 +150,8 @@ private:
     QTimer *ledResetTimer;       // Turns LEDs off after 50m
     QToolButton *btnSioTrace;    // SIO Tracer
     QToolButton *btnDisasmToggle; // dis-asm
+    QToolButton *btnPacketSniffer;
+
 
     QHttpServer *httpServer = nullptr;
 
@@ -155,6 +161,8 @@ private:
     QString m_casFileName;
     bool m_casIsPlaying;
 
+    SioPacketDialog *packetDialog = nullptr;
+    QElapsedTimer m_sioTimer;
 
     void setSession();  //
     void updateRecentFileActions();
@@ -256,6 +264,7 @@ private slots:
     void logChanged(QString text);
     void changeFonts();
     void handle_actionHappyMode_triggered(int deviceId, bool enabled);
+    void onPacketInjectionRequested(const QByteArray &data);
 
     void blinkRx();
     void blinkTx();

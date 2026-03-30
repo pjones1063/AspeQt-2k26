@@ -5,6 +5,7 @@
 #include <QString>
 #include "diskimage.h"
 
+
 namespace Ui {
 class SectorInspectorDialog;
 }
@@ -31,6 +32,7 @@ private:
     int m_lastSearchType = -1;
     int m_lastMatchSector = -1;
     int m_lastMatchOffset = -1;
+
 };
 
 #endif // SECTORINSPECTORDIALOG_H

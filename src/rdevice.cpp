@@ -199,9 +199,9 @@ void RDevice::handleConfigure(quint8 aux1, quint8 aux2) {
 
 void RDevice::sendDataToAtari(const QByteArray &data)
 {
-    // SioWorker::usleep(2000);
+    SioWorker::usleep(2000);
     sio->port()->writeComplete();
-    // SioWorker::usleep(2000);
+    SioWorker::usleep(2000);
     sio->port()->writeDataFrame(data);
 }
 

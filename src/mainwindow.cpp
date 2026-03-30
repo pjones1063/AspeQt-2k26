@@ -377,6 +377,11 @@ MainWindow::MainWindow(QWidget *parent)
     btnDisasmToggle->setCheckable(true);
     connect(btnDisasmToggle, &QToolButton::clicked, this, &MainWindow::onDisasmToggleClicked);
 
+    btnPacketSniffer = new QToolButton(this);
+    setupBtn(btnPacketSniffer, ":/icons/silk-icons/icons/table.png", "PKT", tr("Toggle SIO Packet Sniffer"));
+    btnPacketSniffer->setCheckable(true);
+    connect(btnPacketSniffer, &QToolButton::clicked, this, &MainWindow::onPacketSnifferToggleClicked);
+
 
     // C. Add to Status Bar
     ui->statusBar->addPermanentWidget(ledRx);
@@ -415,6 +420,7 @@ MainWindow::MainWindow(QWidget *parent)
     mainToolBar->addWidget(btnClearLog);
     mainToolBar->addWidget(btnSioTrace);
     mainToolBar->addWidget(btnDisasmToggle);
+    mainToolBar->addWidget(btnPacketSniffer);
 
     // Built-in Qt Toolbar Separator
     mainToolBar->addSeparator();
@@ -1381,10 +1387,10 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             return;
         }
 
-        // --- 3. HANDLING TNFS NETWORK STREAMS ---
-        TnfsImage *tnfsImg = qobject_cast<TnfsImage*>(device);
-        if (tnfsImg) {
-            QString fullUrl = tnfsImg->originalFileName();
+        // --- 3. HANDLING RAM DRIVES (TNFS & Web Drops) ---
+        TnfsImage *ramImg = qobject_cast<TnfsImage*>(device);
+        if (ramImg) {
+            QString fullUrl = ramImg->originalFileName();
             QString fileNameOnly = fullUrl;
 
             int lastSlash = fullUrl.lastIndexOf('/');
@@ -1393,17 +1399,23 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             }
             if (fileNameOnly.isEmpty()) fileNameOnly = fullUrl;
 
-            diskWidget->setLabelToolTips(fullUrl, fullUrl, tr("TNFS Network Stream To Ram"));
+            // Use the dynamic deviceName() we just set!
+            QString driveName = ramImg->deviceName();
+
+            diskWidget->setLabelToolTips(fullUrl, fullUrl, driveName);
             diskWidget->setHappyMode(false);
 
-            diskWidget->showAsTNFSMounted(fileNameOnly, tr("TNFS Stream to RAM"));
+            // showAsTNFSMounted is just a UI styling function (yellow text, etc.)
+            // We pass our dynamic 'driveName' so it says "TNFS" or "Web Drop"
+            diskWidget->showAsTNFSMounted(fileNameOnly, driveName);
             diskWidget->setFullPath(fullUrl); // Secretly set the path for the Info Modal
 
             if (webBridge) {
-                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, fileNameOnly, "TNFS Stream", fullUrl, false, false, true);
+                emit webBridge->diskStatusChanged(deviceNo - DISK_BASE_CDEVIC, fileNameOnly, driveName, fullUrl, false, false, true);
             }
             return;
         }
+
 
         // --- 4. HANDLING STANDARD DISK IMAGES & FOLDERS ---
         SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (device);
@@ -2793,30 +2805,31 @@ void MainWindow::resetLeds() {
 }
 
 
+
 void MainWindow::onSioTraceToggleClicked()
 {
     bool showHex = btnSioTrace->isChecked();
 
-    // If turning ON Hex Dump, force Disassembler OFF
     if (showHex) {
         btnDisasmToggle->setChecked(false);
         btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
         btnDisasmToggle->setStyleSheet("");
+
+        btnPacketSniffer->setChecked(false); // New
+        if (packetDialog) packetDialog->hide(); // New
     }
 
     bool showAsm = btnDisasmToggle->isChecked();
+    bool showPkt = btnPacketSniffer->isChecked();
 
-    // Enable backend tracing if EITHER tool is active
-    if (sio) sio->setTraceEnabled(showHex || showAsm);
+    if (sio) sio->setTraceEnabled(showHex || showAsm || showPkt);
 
     if (showHex) {
         btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor_go.png"));
         btnSioTrace->setStyleSheet("background-color: #227722; color: white; border-radius: 4px;");
-        qDebug() << "!i" << "[SIO Trace] Hex Dump Enabled";
     } else {
         btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor.png"));
         btnSioTrace->setStyleSheet("");
-        qDebug() << "!i" << "[SIO Trace] Hex Dump Disabled";
     }
 }
 
@@ -2824,33 +2837,92 @@ void MainWindow::onDisasmToggleClicked()
 {
     bool showAsm = btnDisasmToggle->isChecked();
 
-    // If turning ON Disassembler, force Hex Dump OFF
     if (showAsm) {
         btnSioTrace->setChecked(false);
         btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor.png"));
         btnSioTrace->setStyleSheet("");
+
+        btnPacketSniffer->setChecked(false); // New
+        if (packetDialog) packetDialog->hide(); // New
     }
 
     bool showHex = btnSioTrace->isChecked();
+    bool showPkt = btnPacketSniffer->isChecked();
 
-    // Enable backend tracing if EITHER tool is active
-    if (sio) sio->setTraceEnabled(showHex || showAsm);
+    if (sio) sio->setTraceEnabled(showHex || showAsm || showPkt);
 
     if (showAsm) {
         btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_go.png"));
         btnDisasmToggle->setStyleSheet("background-color: #227722; color: white; border-radius: 4px;");
-        qDebug() << "!i" << "[Disassembler] 6502 Disassembly Enabled";
     } else {
         btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
         btnDisasmToggle->setStyleSheet("");
-        qDebug() << "!i" << "[Disassembler] 6502 Disassembly Disabled";
     }
 }
+
+// --- NEW SLOT ---
+void MainWindow::onPacketSnifferToggleClicked()
+{
+    bool showPkt = btnPacketSniffer->isChecked();
+
+    if (showPkt) {
+        btnSioTrace->setChecked(false);
+        btnSioTrace->setIcon(QIcon(":/icons/silk-icons/icons/monitor.png"));
+        btnSioTrace->setStyleSheet("");
+
+        btnDisasmToggle->setChecked(false);
+        btnDisasmToggle->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
+        btnDisasmToggle->setStyleSheet("");
+
+        if (!packetDialog) {
+            packetDialog = new SioPacketDialog(this);
+            connect(packetDialog, &SioPacketDialog::dialogClosed, this, &MainWindow::onPacketSnifferClosed);
+            connect(packetDialog, &SioPacketDialog::injectPacketRequested, this, &MainWindow::onPacketInjectionRequested);
+
+        }
+        packetDialog->show();
+        packetDialog->raise();
+        packetDialog->activateWindow();
+    } else {
+        if (packetDialog) packetDialog->hide();
+    }
+
+    bool showHex = btnSioTrace->isChecked();
+    bool showAsm = btnDisasmToggle->isChecked();
+
+    if (sio) sio->setTraceEnabled(showHex || showAsm || showPkt);
+}
+
+// --- NEW SLOT ---
+void MainWindow::onPacketSnifferClosed()
+{
+    btnPacketSniffer->setChecked(false);
+
+    bool showHex = btnSioTrace->isChecked();
+    bool showAsm = btnDisasmToggle->isChecked();
+
+    // Disable backend tracing entirely if the window was closed and others are off
+    if (sio) sio->setTraceEnabled(showHex || showAsm);
+}
+
 
 
 void MainWindow::onSioTraceData(const QString &dir, const QByteArray &data)
 {
     if (data.isEmpty()) return;
+
+    // Manage the global SIO timestamp timer
+    if (!m_sioTimer.isValid() || dir.contains("CMD")) {
+        m_sioTimer.restart();
+    }
+    qint64 elapsedMs = m_sioTimer.elapsed();
+
+    // --- NEW: Route to Packet Sniffer GUI ---
+    if (btnPacketSniffer->isChecked() && packetDialog) {
+        packetDialog->appendPacket(dir, data, elapsedMs);
+        return; // Bail out so we don't spam the text log while in table mode
+    }
+
 
     bool showHex = btnSioTrace->isChecked();
     bool showAsm = btnDisasmToggle->isChecked();
@@ -3476,38 +3548,50 @@ void MainWindow::handle_actionInfo_triggered(int deviceId)
 
 }
 
+
 void MainWindow::uploadAndMountHeadless(int slot, const QString &fileName, const QString &base64Data)
 {
     // 1. Decode the Base64 string back into raw binary data
     QByteArray binaryData = QByteArray::fromBase64(base64Data.toUtf8());
 
-    // 2. Generate a guaranteed-unique filename to bypass Windows ADM file-locking!
-    QString uniquePrefix = QString::number(QDateTime::currentMSecsSinceEpoch());
-    QString tempPath = QDir::tempPath();
+    // 2. Eject whatever is currently in the slot safely
+    if (!ejectImage(slot, false)) return;
 
-    // Example: /tmp/aspeqt_drop_1711384021_MyGame.atr
-    QString fullPath = tempPath + "/aspeqt_drop_" + uniquePrefix + "_" + fileName;
+    // 3. Instantiate your TNFS class as a pure RAM Drive
+    TnfsImage *ramDisk = new TnfsImage(sio);
+    ramDisk->setParent(nullptr);
 
-    // 3. Write the binary data to the unique temporary file
-    QFile file(fullPath);
-    if (file.open(QIODevice::WriteOnly)) {
-        file.write(binaryData);
-        file.close();
+    // 4. Load the data directly into memory!
+    if (ramDisk->openFromMemory(fileName, binaryData)) {
 
-        qDebug() << "!i" << tr("[Web UI] Successfully received and saved uploaded file: %1").arg(fullPath);
+        // 5. Move to the background thread and mount!
+        ramDisk->moveToThread(sio);
+        sio->installDevice(DISK_BASE_CDEVIC + slot, ramDisk);
+        deviceStatusChanged(DISK_BASE_CDEVIC + slot);
 
-        // 4. Pass the newly saved physical file to our existing headless mounter!
-        mountFileHeadless(slot, fullPath);
+        qDebug() << "!i" << tr("[Web UI] Mounted file directly to RAM in slot %1: %2").arg(slot+1).arg(fileName);
 
         if (webBridge) {
-            emit webBridge->notificationReceived(tr("Successfully uploaded and mounted: %1").arg(fileName), false);
+            emit webBridge->notificationReceived(tr("Mounted to RAM: %1").arg(fileName), false);
         }
-
     } else {
-        qDebug() << "!e" << tr("[Web UI] Failed to save uploaded file to: %1").arg(fullPath);
+        delete ramDisk;
+        qDebug() << "!e" << tr("[Web UI] Failed to parse RAM image: %1").arg(fileName);
+
         if (webBridge) {
-            emit webBridge->notificationReceived(tr("Failed to process upload for %1").arg(fileName), true);
+            emit webBridge->notificationReceived(tr("Failed to parse: %1").arg(fileName), true);
         }
     }
 }
 
+void MainWindow::onPacketInjectionRequested(const QByteArray &data) {
+    if (!sio || !sio->isRunning()) {
+        qDebug() << "!e" << "[Injector] Cannot inject packet: SIO emulation is stopped.";
+        return;
+    }
+
+    qDebug() << "!i" << tr("[Injector] Virtual Packet Step Triggered: %1 bytes").arg(data.size());
+
+    // We pass the raw bytes down to the SioWorker thread
+    sio->injectVirtualPacket(data);
+}

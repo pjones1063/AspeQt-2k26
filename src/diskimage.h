@@ -49,6 +49,8 @@ public:
     QByteArray toPercomBlock();
     QString humanReadable() const;
 
+
+
 };
 
 class SimpleDiskImage: public SioDevice
@@ -93,8 +95,8 @@ public:
     inline DiskGeometry geometry() const {return m_geometry;}
     inline QString originalFileName() const {return m_originalFileName;}
     virtual QString description() const {return m_geometry.humanReadable();}
-
     int defaultFileSystem();
+
 
 protected:
     DiskGeometry m_geometry, m_newGeometry;

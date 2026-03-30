@@ -13,6 +13,7 @@ TnfsImage::TnfsImage(SioWorker *worker) : SioDevice(worker)
     m_tnfsSectorSize = 128;
     m_isAtx = false;
     m_isXex = false;
+    m_driveIdentity = "RAM Drive";
 
     // Initialize ATX pointers
     for(int i=0; i<100; i++) atx.tracks[i].sectors = nullptr;
@@ -36,6 +37,7 @@ void TnfsImage::cleanupAtx()
 
 bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
 {
+    m_driveIdentity = "TNFS (RAM)";
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     QUrl qurl(url);
@@ -51,7 +53,7 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     cleanupAtx();
 
     // 1. Force UI Update immediately to show "Connecting..."
-    qDebug() << "!n" << "TNFS: Connecting to" << host << "...";
+    qDebug() << "!n" << m_driveIdentity + ":" << "Connecting to" << host << "...";
     QCoreApplication::processEvents();
 
     // --- KILL SWITCH CHECK 1 ---
@@ -59,13 +61,13 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
 
     TnfsClient client;
     if (!client.connectToHost(host)) {
-        qWarning() << "!e" << "TNFS: Host Connection Failed:" << host;
+        qWarning() << "!e" << m_driveIdentity + ":" << "Host Connection Failed:" << host;
         QApplication::restoreOverrideCursor();
         return false;
     }
 
     if (!client.mount("/")) {
-        qWarning() << "!e" << "TNFS: Mount Session Failed";
+        qWarning() << "!e" << m_driveIdentity + ":" << "Mount Session Failed";
         QApplication::restoreOverrideCursor();
         return false;
     }
@@ -74,7 +76,6 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     QString pathWithSlash = fullPath.startsWith("/") ? fullPath : "/" + fullPath;
 
     // --- STRATEGY 1: Try STAT (Preferred) ---
-    // Try both formats because servers differ on leading slash handling
     quint32 totalSize = client.getFileSize(pathNoSlash);
     if (totalSize == 0) totalSize = client.getFileSize(pathWithSlash);
 
@@ -83,22 +84,21 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     if (handle == 0xFF) handle = client.openFile(pathWithSlash);
 
     if (handle == 0xFF) {
-        qWarning() << "!e" << "TNFS: Failed to open:" << fullPath;
+        qWarning() << "!e" << m_driveIdentity + ":" << "Failed to open:" << fullPath;
         QApplication::restoreOverrideCursor();
         return false;
     }
 
     // --- STRATEGY 2: Try LSEEK (Fallback) ---
-    // If STAT failed, try seeking to end of file
     if (totalSize == 0) {
         totalSize = client.getFileSize(handle);
     }
 
     // --- LOGGING & UI SETUP ---
     if (totalSize > 0) {
-        qDebug() << "!i" << "TNFS: Downloading" << pathNoSlash << "(" << totalSize << "bytes)...";
+        qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(" << totalSize << "bytes)...";
     } else {
-        qDebug() << "!i" << "TNFS: Downloading" << pathNoSlash << "(Stream mode)...";
+        qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(Stream mode)...";
     }
 
     // FORCE PAINT: Ensure the log window updates before we enter the loop
@@ -119,14 +119,14 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     QElapsedTimer progressTimer;
     progressTimer.start();
 
-    // Initial Signal: Send 0, but if totalSize is 0, this tells UI to go "Busy Mode"
+    // Initial Signal
     emit downloadProgress(0, totalSize);
     QCoreApplication::processEvents();
 
     while (true) {
 
         if (activeIdPtr && *activeIdPtr != myId) {
-            qDebug() << "!w" << "TNFS: Download aborted by user.";
+            qDebug() << "!w" << m_driveIdentity + ":" << "Download aborted by user.";
             client.closeFile(handle);
             QApplication::restoreOverrideCursor();
             return false; // Safely exit!
@@ -143,57 +143,51 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
         // Emit Progress
         emit downloadProgress(offset, totalSize);
 
-        // UI Refresh Logic
-        // Keep this low (50ms) to prevent "Application Not Responding" ghosting
+        // UI Refresh Logic (50ms)
         if (progressTimer.elapsed() > 50) {
             QCoreApplication::processEvents();
             progressTimer.restart();
         }
 
         if (m_imgData.size() > 16 * 1024 * 1024) {
-            qWarning() << "!e" << "TNFS: File too large (>16MB). Aborting.";
+            qWarning() << "!e" << m_driveIdentity + ":" << "File too large (>16MB). Aborting.";
             client.closeFile(handle);
             QApplication::restoreOverrideCursor();
             return false;
         }
     }
 
-    // Final 100% update (Only if we knew the size)
     if (totalSize > 0) {
         emit downloadProgress(totalSize, totalSize);
     } else {
-        // If size was unknown, we are done, so maybe hide the bar or set to 100% now
         emit downloadProgress(m_imgData.size(), m_imgData.size());
     }
 
     QCoreApplication::processEvents();
 
     client.closeFile(handle);
-    qDebug() << "!n" << "TNFS: Download Complete. Size:" << m_imgData.size();
-
-    // ... (rest of parsing logic: ATX, XEX, ATR) ...
-    // Copy the rest of your format detection code here
+    qDebug() << "!n" << m_driveIdentity + ":" << "Download Complete. Size:" << m_imgData.size();
 
     // 1. ATX Format (Copy Protected)
     if (fullPath.endsWith(".atx", Qt::CaseInsensitive)) {
         if (!parseAtx()) {
-            qWarning() << "!e" << "TNFS: Invalid ATX Header or Corrupt File.";
+            qWarning() << "!e" << m_driveIdentity + ":" << "Invalid ATX Header or Corrupt File.";
             QApplication::restoreOverrideCursor();
             return false;
         }
         m_isAtx = true;
-        qDebug() << "!n" << "TNFS: ATX Protection Loaded.";
+        qDebug() << "!n" << m_driveIdentity + ":" << "ATX Protection Loaded.";
     }
     // 2. XEX Format (Executable)
     else if (fullPath.endsWith(".xex", Qt::CaseInsensitive) || fullPath.endsWith(".exe", Qt::CaseInsensitive)) {
         if (!parseXex()) {
-            qWarning() << "!e" << "TNFS: Invalid XEX Executable.";
+            qWarning() << "!e" << m_driveIdentity + ":" << "Invalid XEX Executable.";
             QApplication::restoreOverrideCursor();
             return false;
         }
         m_isXex = true;
         m_booterLoaded = false;
-        qDebug() << "!n" << "TNFS: XEX Loader Prepared.";
+        qDebug() << "!n" << m_driveIdentity + ":" << "XEX Loader Prepared.";
     }
     // 3. Standard ATR Format
     else {
@@ -208,12 +202,12 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
             if (magic == 0x0296) {
                 m_headerSkip = 16;
                 m_tnfsSectorSize = secSz;
-                qDebug() << "!n" << "TNFS: ATR Header Valid. Sector Size:" << m_tnfsSectorSize;
+                qDebug() << "!n" << m_driveIdentity + ":" << "ATR Header Valid. Sector Size:" << m_tnfsSectorSize;
             }
         }
 
         if (m_imgData.size() < 128) {
-            qWarning() << "!e" << "TNFS: Image too small!";
+            qWarning() << "!e" << m_driveIdentity + ":" << "Image too small!";
             QApplication::restoreOverrideCursor();
             return false;
         }
@@ -223,15 +217,61 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     return true;
 }
 
+bool TnfsImage::openFromMemory(const QString &fileName, const QByteArray &data)
+{
+    m_driveIdentity = "Web Drop (RAM)";
 
- bool TnfsImage::parseXex()
+    // 1. Reset State
+    m_imgData.clear();
+    m_bootSectors.clear();
+    m_chunks.clear();
+    m_isAtx = false;
+    m_isXex = false;
+    cleanupAtx();
+
+    // 2. Load the payload directly into the RAM buffer
+    m_imgData = data;
+    m_originalFileName = fileName;
+
+    // 3. Parse the format safely
+    if (fileName.endsWith(".atx", Qt::CaseInsensitive)) {
+        if (!parseAtx()) {
+            qWarning() << "!e" << m_driveIdentity + ":" << "Invalid ATX Header or Corrupt File.";
+            return false;
+        }
+        m_isAtx = true;
+        qDebug() << "!n" << m_driveIdentity + ":" << "ATX Protection Loaded.";
+    }
+    else if (fileName.endsWith(".xex", Qt::CaseInsensitive) || fileName.endsWith(".com", Qt::CaseInsensitive)) {
+        if (!parseXex()) {
+            qWarning() << "!e" << m_driveIdentity + ":" << "Invalid XEX Executable.";
+            return false;
+        }
+        m_isXex = true;
+        m_booterLoaded = false;
+        qDebug() << "!n" << m_driveIdentity + ":" << "XEX Loader Prepared.";
+    }
+    else {
+        // Standard ATR Header parsing
+        m_headerSkip = 0;
+        m_tnfsSectorSize = 128;
+        if (m_imgData.size() >= 16 && (quint8)m_imgData[0] == 0x96 && (quint8)m_imgData[1] == 0x02) {
+            m_headerSkip = 16;
+            quint16 secSize = (quint8)m_imgData[4] | ((quint8)m_imgData[5] << 8);
+            m_tnfsSectorSize = (secSize == 256) ? 256 : 128;
+        }
+    }
+
+    return true;
+}
+
+bool TnfsImage::parseXex()
 {
     // Load the internal AspeQt loader binary
-    // Try High Speed first if available, otherwise standard
     QFile boot(":/binaries/autoboot.bin");
 
     if (!boot.open(QFile::ReadOnly)) {
-        qCritical() << "!e" << "TNFS: Missing internal resource 'autoboot.bin'!";
+        qCritical() << "!e" << m_driveIdentity + ":" << "Missing internal resource 'autoboot.bin'!";
         return false;
     }
     m_bootSectors = boot.readAll();
@@ -246,7 +286,7 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     cursor += 2;
 
     if (start != 0xFFFF) {
-        qCritical() << "!e" << "TNFS: XEX missing $FFFF header.";
+        qCritical() << "!e" << m_driveIdentity + ":" << "XEX missing $FFFF header.";
         return false;
     }
 
@@ -380,7 +420,7 @@ void TnfsImage::handleCommand(quint8 command, quint16 aux)
         sio->port()->writeCommandAck();
         sio->port()->writeComplete();
         sio->port()->writeDataFrame(m_chunks.at(aux).data);
-        qDebug() << "!n" << "TNFS: XEX Chunk" << aux << "sent.";
+        qDebug() << "!n" << m_driveIdentity + ":" << "XEX Chunk" << aux << "sent.";
         return;
     }
     case 0xFF: // Get Chunk Info
@@ -408,7 +448,7 @@ void TnfsImage::handleCommand(quint8 command, quint16 aux)
         if (!m_isXex) { sio->port()->writeCommandNak(); return; }
         sio->port()->writeCommandAck();
         sio->port()->writeComplete();
-        qDebug() << "!n" << "TNFS: XEX Boot Complete.";
+        qDebug() << "!n" << m_driveIdentity + ":" << "XEX Boot Complete.";
         return;
     }
     }
@@ -485,7 +525,7 @@ bool TnfsImage::readSector(quint16 sector, QByteArray &data)
     // --- ATX MODE ---
     if (m_isAtx) {
         bool result = readSectorAtx(sector, data);
-        if (result) qDebug() << "!n" << "TNFS: Read ATX Sector" << sector;
+        if (result) qDebug() << "!n" << m_driveIdentity + ":" << "Read ATX Sector" << sector;
         return result;
     }
 
@@ -502,12 +542,12 @@ bool TnfsImage::readSector(quint16 sector, QByteArray &data)
     }
 
     if (offset + bytesToRead > (quint32)m_imgData.size()) {
-        qWarning() << "!e" << "TNFS: Read past EOF. Sector:" << sector;
+        qWarning() << "!e" << m_driveIdentity + ":" << "Read past EOF. Sector:" << sector;
         return false;
     }
 
     data = m_imgData.mid(offset, bytesToRead);
-    qDebug() << "!n" << "TNFS: Read Sector" << sector;
+    qDebug() << "!n" << m_driveIdentity + ":" << "Read Sector" << sector;
     return true;
 }
 

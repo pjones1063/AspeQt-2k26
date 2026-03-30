@@ -19,6 +19,7 @@ public:
     bool writeSector(quint16 sector, const QByteArray &data);
     void getStatus(QByteArray &status);
     bool format(quint16 aSectorCount, quint16 aSectorSize);
+
 protected:
     struct atx_sector_list_header
     {

@@ -241,3 +241,4 @@ void DiskImageAtx::getStatus(QByteArray &status)
     status[2] = 3;
     status[3] = 0;
 }
+
