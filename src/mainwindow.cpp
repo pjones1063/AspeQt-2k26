@@ -377,11 +377,11 @@ MainWindow::MainWindow(QWidget *parent)
     btnDisasmToggle->setCheckable(true);
     connect(btnDisasmToggle, &QToolButton::clicked, this, &MainWindow::onDisasmToggleClicked);
 
+    // Packet Sniffer
     btnPacketSniffer = new QToolButton(this);
-    setupBtn(btnPacketSniffer, ":/icons/silk-icons/icons/table.png", "PKT", tr("Toggle SIO Packet Sniffer"));
+    setupBtn(btnPacketSniffer, ":/icons/silk-icons/icons/wrench.png", "PKT", tr("Toggle SIO Packet Sniffer"));
     btnPacketSniffer->setCheckable(true);
     connect(btnPacketSniffer, &QToolButton::clicked, this, &MainWindow::onPacketSnifferToggleClicked);
-
 
     // C. Add to Status Bar
     ui->statusBar->addPermanentWidget(ledRx);

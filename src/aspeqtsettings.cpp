@@ -128,7 +128,7 @@ AspeQtSettings::AspeQtSettings()
     // Web UI Defaults
     mWebUiEnabled = mSettings->value("WebUI/Enabled", false).toBool();
     mWebUiPort = mSettings->value("WebUI/HttpPort", 8080).toInt();
-    mWebUiWsPort = mSettings->value("WebUI/WsPort", 12345).toInt();
+    mWebUiWsPort = mSettings->value("WebUI/WsPort", 8090).toInt();
 
 }
 

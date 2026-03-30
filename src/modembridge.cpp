@@ -102,7 +102,7 @@ void ModemBridge::onSerialDataReceived() {
 
         for (char c : data) {
             // Atari Backspace Fix (126/127 -> 127 for modern Telnet/SSH/Linux)
-            if (c == 126 || c == 127) c = 127;
+            if (c == 126 || c == 127) c = 8;
 
             // 1. ESCAPE SEQUENCE (+++)
             if (c == '+') {

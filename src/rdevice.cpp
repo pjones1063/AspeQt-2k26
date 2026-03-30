@@ -65,7 +65,11 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
                 } else if (c == 0x1B) {
                     m_escPending = true;
                 } else {
-                    filteredData.append(c);
+                    if (c == 126 || c == 127) {
+                        filteredData.append(char(8));
+                    } else {
+                        filteredData.append(c);
+                    }
                 }
             }
 
