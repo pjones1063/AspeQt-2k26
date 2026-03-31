@@ -11,7 +11,8 @@
 #include <QNetworkReply>
 #include <QEventLoop>
 #include <QTimer>
-#include <QProcess> // Added for system curl support (FTP)
+#include <QProcess>
+#include <QTcpSocket>
 
 class PipeNetwork : public SioDevice
 {
@@ -25,7 +26,8 @@ public:
 private:
     QNetworkAccessManager *m_manager;
     QNetworkReply *m_reply;
-    QProcess *m_process; // Helper process for protocols Qt6 dropped (FTP)
+    QProcess *m_process;
+    QTcpSocket *m_tcpSocket;
 
     // Circular-ish buffer for incoming stream data
     QByteArray m_rxBuffer;
@@ -36,6 +38,7 @@ private:
     bool m_netFinished;
     bool m_isWriteMode;
     bool m_sessionTranslate;
+    bool m_isTcpMode;
     QString m_lastUrl;
 
     void reset();

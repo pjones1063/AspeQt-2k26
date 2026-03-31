@@ -1,7 +1,7 @@
 /*
  * pipenetwork.cpp
  * Network Streaming Device (W:) for AspeQt
- * Updated: FTP (curl) with EOL Translation & Error Handling
+ * Updated: FTP (curl), HTTP Native, and Raw TCP Streaming
  */
 
 #include "pipenetwork.h"
@@ -15,7 +15,8 @@ PipeNetwork::PipeNetwork(SioWorker *worker) :
     SioDevice(worker),
     m_manager(new QNetworkAccessManager(this)),
     m_reply(nullptr),
-    m_process(nullptr)
+    m_process(nullptr),
+    m_tcpSocket(nullptr)
 {
     reset();
 }
@@ -31,6 +32,7 @@ void PipeNetwork::reset()
     m_txAccumulator.clear();
     m_netFinished = false;
     m_isWriteMode = false;
+    m_isTcpMode = false;
 
     // Cleanup Network Reply (HTTP)
     if (m_reply) {
@@ -49,6 +51,14 @@ void PipeNetwork::reset()
         }
         m_process->deleteLater();
         m_process = nullptr;
+    }
+
+    // Cleanup TCP Socket
+    if (m_tcpSocket) {
+        m_tcpSocket->disconnect();
+        m_tcpSocket->abort();
+        m_tcpSocket->deleteLater();
+        m_tcpSocket = nullptr;
     }
 }
 
@@ -108,7 +118,41 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         if (!m_isWriteMode) {
             QUrl url(urlStr);
 
-            if (url.scheme().toLower() == "ftp") {
+            if (url.scheme().toLower() == "tcp") {
+                // --- USE RAW TCP ---
+                m_isTcpMode = true;
+                m_tcpSocket = new QTcpSocket(this);
+
+                connect(m_tcpSocket, &QTcpSocket::readyRead, this, [this](){
+                    QByteArray rawData = m_tcpSocket->readAll();
+                    if (m_sessionTranslate) {
+                        rawData.replace("\r", "");
+                        rawData.replace('\n', (char)0x9B);
+                    }
+                    m_rxBuffer.append(rawData);
+                });
+
+                connect(m_tcpSocket, &QTcpSocket::disconnected, this, [this](){
+                    m_netFinished = true;
+                    if (m_sessionTranslate && !m_rxBuffer.isEmpty() && !m_rxBuffer.endsWith((char)0x9B)) {
+                        m_rxBuffer.append((char)0x9B);
+                    }
+                });
+
+                connect(m_tcpSocket, &QTcpSocket::errorOccurred, this, [this](QAbstractSocket::SocketError){
+                    qWarning() << "!e" << "[W:] TCP Error:" << m_tcpSocket->errorString();
+                    m_netFinished = true;
+                });
+
+                m_tcpSocket->connectToHost(url.host(), url.port());
+
+                // Block SIO just long enough to ensure connection
+                if (!m_tcpSocket->waitForConnected(3000)) {
+                    qWarning() << "!e" << "[W:] TCP Connection failed to" << url.host() << ":" << url.port();
+                    m_netFinished = true; // Will cause subsequent reads to instantly throw an SIO error
+                }
+
+            } else if (url.scheme().toLower() == "ftp") {
                 // --- USE CURL (FTP GET) ---
                 m_process = new QProcess(this);
                 connect(m_process, &QProcess::errorOccurred, this, [this](QProcess::ProcessError error){
@@ -184,8 +228,6 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         break;
     }
 
-
-
         // ========================================================================
         // READ (0x52) - Stream Data to Atari
         // ========================================================================
@@ -215,6 +257,11 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
                         &loop, &QEventLoop::quit);
                 connect(m_process, &QProcess::errorOccurred, &loop, &QEventLoop::quit);
             }
+            if (m_tcpSocket) {
+                connect(m_tcpSocket, &QTcpSocket::readyRead, &loop, &QEventLoop::quit);
+                connect(m_tcpSocket, &QTcpSocket::disconnected, &loop, &QEventLoop::quit);
+                connect(m_tcpSocket, &QTcpSocket::errorOccurred, &loop, &QEventLoop::quit);
+            }
 
             connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
             timeout.start(5000);
@@ -241,9 +288,8 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         break;
     }
 
-
         // ========================================================================
-        // WRITE (0x57) - Buffer Data from Atari
+        // WRITE (0x57) - Buffer or Stream Data from Atari
         // ========================================================================
     case 0x57:
     {
@@ -254,6 +300,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         sio->port()->writeDataAck();
 
         // 2. Process Data based on Translation Mode
+        QByteArray chunkToSend;
         if (m_sessionTranslate) {
             // --- TEXT MODE ---
             // Convert to String, Replace EOLs, and Strip Null Padding
@@ -265,28 +312,35 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
             // Remove Nulls (Padding from the Atari buffer)
             chunkStr.remove(QChar(0x00));
 
-            m_txAccumulator.append(chunkStr.toLatin1());
+            chunkToSend = chunkStr.toLatin1();
         } else {
             // --- BINARY MODE ---
-            m_txAccumulator.append(data);
+            chunkToSend = data;
+        }
+
+        // 3. Send Immediately (TCP) or Buffer (HTTP/FTP)
+        if (m_isTcpMode) {
+            if (m_tcpSocket && m_tcpSocket->state() == QAbstractSocket::ConnectedState) {
+                m_tcpSocket->write(chunkToSend);
+            }
+        } else {
+            m_txAccumulator.append(chunkToSend);
         }
 
         sio->port()->writeComplete();
         break;
     }
 
-
         // ========================================================================
         // CLOSE (0x43) - Execute POST/PUT
         // ========================================================================
-
     case 0x43:
     {
         if (!sio->port()->writeCommandAck()) return;
 
-        if (m_isWriteMode && !m_txAccumulator.isEmpty()) {
+        // Only execute POST/PUT logic if we are NOT in TCP mode
+        if (!m_isTcpMode && m_isWriteMode && !m_txAccumulator.isEmpty()) {
             QUrl url(m_lastUrl);
-
 
             if (url.scheme().toLower() == "ftp") {
 
@@ -330,7 +384,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
             }
         }
 
-        reset();
+        reset(); // Cleanly aborts TCP socket or clears Accumulators
         sio->port()->writeComplete();
         break;
     }
@@ -393,10 +447,8 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         break;
     }
 
-
     default:
         sio->port()->writeCommandNak();
         break;
     }
-
 }
