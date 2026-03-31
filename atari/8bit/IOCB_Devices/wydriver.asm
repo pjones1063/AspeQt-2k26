@@ -20,7 +20,8 @@ IOBuf       .ds 256
 BufPtr      .byte 0 
 EOF_Flag    .byte 0 
 SaveX       .byte 0
-CurrentDev  .byte 0  
+CurrentDev  .byte 0
+CurrentMode .byte 0  
 TransMode   .byte 0  
 OldDOSINI   .word 0
 DeviceID    .byte 0
@@ -93,6 +94,9 @@ UnitOK_O
     sec
     sbc DBYTLO      
     sta CurrentDev  
+ 
+    lda $2A            
+    sta CurrentMode   
     
     jsr CommonReset
 
@@ -125,8 +129,8 @@ UnitOK_O
     
     ; 7. If Read Mode, Refill Now
     lda $2A         
-    and #$08
-    bne OpenSuccess
+    and #$04
+    beq OpenSuccess
     jsr RefillBuffer
 
 OpenSuccess
@@ -201,27 +205,53 @@ FoundNull
     sec
     rts
 
+
 HandlerPut
     stx SaveX
     ldx BufPtr
-    sta IOBuf,x
-    inc BufPtr
-    bne PutSuccess
+    sta IOBuf,x       ; Drop character into buffer
     
-    jsr FlushBuffer
+    ; --- THE LINE BUFFER HACK ---
+    cmp #$9B          ; Was the character a Return?
+    bne SkipFlush     ; No? Skip down to normal block buffering
+    
+    lda CurrentMode   ; Yes! Were we opened in Mode 12?
+    cmp #12
+    bne SkipFlush     ; No? Skip down to normal block buffering
+    
+    ; We have a Return in Mode 12. Force the flush!
+    inc BufPtr        ; Move the pointer forward so the Return is included
+    jsr FlushBuffer   ; Fire the SIO bus instantly to send the command!
+    
+    cpy #1            ; Did the flush succeed?
+    bne PutCheckErr   ; If network error, bail out immediately
+    
+    lda #0
+    sta EOF_Flag      ; Clear EOF flag from any previous reads
+    
+    jsr RefillBuffer  ; FETCH THE FRESH SERVER RESPONSE INTO IOBUF!
+    
+    jmp PutCheckErr   ; Check for SIO errors and exit
+    ; ----------------------------
+    
+SkipFlush
+    inc BufPtr        ; Normal block buffering: increment pointer
+    bne PutSuccess    ; If it didn't wrap to 0, exit successfully
+    jsr FlushBuffer   ; If it hit 256, flush it
+    
+PutCheckErr
     cpy #1
     bne PutError
-    
 PutSuccess
     ldx SaveX
     ldy #1
     clc
     rts
-
 PutError
     ldx SaveX
     sec
     rts
+    
 
 HandlerClose
     lda $2A

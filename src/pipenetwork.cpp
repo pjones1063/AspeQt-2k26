@@ -1,7 +1,7 @@
 /*
  * pipenetwork.cpp
  * Network Streaming Device (W:) for AspeQt
- * Updated: FTP (curl), HTTP Native, and Raw TCP Streaming
+ * Refactored Architecture
  */
 
 #include "pipenetwork.h"
@@ -9,7 +9,6 @@
 #include <QtDebug>
 #include <QUrl>
 #include <QNetworkRequest>
-#include <QThread>
 
 PipeNetwork::PipeNetwork(SioWorker *worker) :
     SioDevice(worker),
@@ -32,9 +31,8 @@ void PipeNetwork::reset()
     m_txAccumulator.clear();
     m_netFinished = false;
     m_isWriteMode = false;
-    m_isTcpMode = false;
+    m_protocol = ProtoNone;
 
-    // Cleanup Network Reply (HTTP)
     if (m_reply) {
         m_reply->disconnect();
         if (m_reply->isRunning()) m_reply->abort();
@@ -42,7 +40,6 @@ void PipeNetwork::reset()
         m_reply = nullptr;
     }
 
-    // Cleanup Process (FTP/Curl)
     if (m_process) {
         m_process->disconnect();
         if (m_process->state() != QProcess::NotRunning) {
@@ -53,7 +50,6 @@ void PipeNetwork::reset()
         m_process = nullptr;
     }
 
-    // Cleanup TCP Socket
     if (m_tcpSocket) {
         m_tcpSocket->disconnect();
         m_tcpSocket->abort();
@@ -64,262 +60,238 @@ void PipeNetwork::reset()
 
 bool PipeNetwork::shouldTranslate(quint16 aux, bool globalSetting)
 {
-    int aux2 = (aux >> 8) & 0xFF; // Extract High Byte
-    if (aux2 == 1) return true;   // Force TEXT (Translate)
-    if (aux2 == 2) return false;  // Force BINARY (Raw)
+    int aux2 = (aux >> 8) & 0xFF;
+    if (aux2 == 1) return true;   // Force TEXT
+    if (aux2 == 2) return false;  // Force BINARY
     return globalSetting;         // Default
 }
 
-
 QString PipeNetwork::cleanUrl(QString raw)
 {
-    // 1. Strip Atari EOLs (0x9B)
     int eol = raw.indexOf(QChar(0x9B));
     if (eol != -1) raw.truncate(eol);
 
-    // 2. Strip Device Prefix (W:, W1:, W2:)
-    // Check for colon in position 1 ("W:") or 2 ("W1:")
     int colon = raw.indexOf(':');
     if (colon == 1 || colon == 2) {
-        // Ensure strictly that we aren't stripping "http:" (colon at 4)
         return raw.mid(colon + 1);
     }
-
     return raw;
 }
 
-void PipeNetwork::handleCommand(quint8 command, quint16 aux)
+// Unified helper to apply EOL translation to incoming data
+void PipeNetwork::appendRxData(QByteArray rawData)
 {
-    switch (command) {
-        // ========================================================================
-        // OPEN (0x4F) - Receives URL from Atari
-        // ========================================================================
-    case 0x4F:
-    {
-        if (!sio->port()->writeCommandAck()) return;
+    if (m_sessionTranslate) {
+        rawData.replace("\r", "");
+        rawData.replace('\n', (char)0x9B);
+    }
+    m_rxBuffer.append(rawData);
+}
 
-        // 1. Read the URL string (Filename) from Atari
-        QByteArray urlFrame = sio->port()->readDataFrame(256);
+// ========================================================================
+// PROTOCOL CONNECTION HELPERS
+// ========================================================================
 
-        sio->port()->writeDataAck();
-        sio->port()->writeComplete();
+void PipeNetwork::openTcpConnection(const QUrl &url)
+{
+    m_protocol = ProtoTcp;
+    m_tcpSocket = new QTcpSocket(this);
 
-        // 2. Parse URL
-        QString raw = QString::fromLatin1(urlFrame);
-        QString urlStr = cleanUrl(raw);
+    connect(m_tcpSocket, &QTcpSocket::readyRead, this, [this](){
+        appendRxData(m_tcpSocket->readAll());
+    });
 
-        // 3. Setup State
-        reset();
-        m_isWriteMode = (aux & 0x08);
-        m_lastUrl = urlStr;
-        bool global = m_isWriteMode ? aspeqtSettings->translateEolOnPost() : aspeqtSettings->translateEolOnGet();
-        m_sessionTranslate = shouldTranslate(aux, global);
+    connect(m_tcpSocket, &QTcpSocket::disconnected, this, [this](){
+        m_netFinished = true;
+        if (m_sessionTranslate && !m_rxBuffer.isEmpty() && !m_rxBuffer.endsWith((char)0x9B)) {
+            m_rxBuffer.append((char)0x9B);
+        }
+    });
 
-        if (!m_isWriteMode) {
-            QUrl url(urlStr);
+    connect(m_tcpSocket, &QTcpSocket::errorOccurred, this, [this](QAbstractSocket::SocketError){
+        qWarning() << "!e" << "[W:] TCP Error:" << m_tcpSocket->errorString();
+        m_netFinished = true;
+    });
 
-            if (url.scheme().toLower() == "tcp") {
-                // --- USE RAW TCP ---
-                m_isTcpMode = true;
-                m_tcpSocket = new QTcpSocket(this);
+    m_tcpSocket->connectToHost(url.host(), url.port());
 
-                connect(m_tcpSocket, &QTcpSocket::readyRead, this, [this](){
-                    QByteArray rawData = m_tcpSocket->readAll();
-                    if (m_sessionTranslate) {
-                        rawData.replace("\r", "");
-                        rawData.replace('\n', (char)0x9B);
-                    }
-                    m_rxBuffer.append(rawData);
-                });
+    if (!m_tcpSocket->waitForConnected(3000)) {
+        qWarning() << "!e" << "[W:] TCP Connection failed to" << url.host() << ":" << url.port();
+        m_netFinished = true;
+    }
+}
 
-                connect(m_tcpSocket, &QTcpSocket::disconnected, this, [this](){
+void PipeNetwork::openFtpConnection(const QString &urlStr)
+{
+    m_protocol = ProtoFtp;
+    m_process = new QProcess(this);
+
+    connect(m_process, &QProcess::errorOccurred, this, [this](QProcess::ProcessError error){
+        qWarning() << "!e" << "[W:] Curl Process Failed:" << error;
+        m_netFinished = true;
+    });
+
+    connect(m_process, &QProcess::readyReadStandardOutput, this, [this](){
+        appendRxData(m_process->readAllStandardOutput());
+    });
+
+    connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            this, [this](int exitCode, QProcess::ExitStatus exitStatus){
+                if (exitStatus == QProcess::NormalExit && exitCode == 0) {
                     m_netFinished = true;
                     if (m_sessionTranslate && !m_rxBuffer.isEmpty() && !m_rxBuffer.endsWith((char)0x9B)) {
                         m_rxBuffer.append((char)0x9B);
                     }
-                });
-
-                connect(m_tcpSocket, &QTcpSocket::errorOccurred, this, [this](QAbstractSocket::SocketError){
-                    qWarning() << "!e" << "[W:] TCP Error:" << m_tcpSocket->errorString();
+                } else {
+                    qWarning() << "!e" << "[W:] FTP Error:" << m_process->readAllStandardError();
                     m_netFinished = true;
-                });
-
-                m_tcpSocket->connectToHost(url.host(), url.port());
-
-                // Block SIO just long enough to ensure connection
-                if (!m_tcpSocket->waitForConnected(3000)) {
-                    qWarning() << "!e" << "[W:] TCP Connection failed to" << url.host() << ":" << url.port();
-                    m_netFinished = true; // Will cause subsequent reads to instantly throw an SIO error
                 }
+            });
 
-            } else if (url.scheme().toLower() == "ftp") {
-                // --- USE CURL (FTP GET) ---
-                m_process = new QProcess(this);
-                connect(m_process, &QProcess::errorOccurred, this, [this](QProcess::ProcessError error){
-                    qWarning() << "!e" << "[W:] Curl Process Failed to Start:" << error;
-                    m_netFinished = true;
-                });
+    m_process->start("curl", QStringList() << "-sS" << urlStr);
+}
 
-                // Connect Output (Data Received)
-                connect(m_process, &QProcess::readyReadStandardOutput, this, [this](){
-                    QByteArray rawData = m_process->readAllStandardOutput();
+void PipeNetwork::openHttpConnection(const QUrl &url)
+{
+    m_protocol = ProtoHttp;
+    QNetworkRequest req(url);
+    req.setAttribute(QNetworkRequest::RedirectPolicyAttribute, true);
+    m_reply = m_manager->get(req);
 
-                    if (m_sessionTranslate) {
-                        rawData.replace("\r", "");
-                        rawData.replace('\n', (char)0x9B);
-                    }
+    connect(m_reply, &QNetworkReply::readyRead, this, [this](){
+        appendRxData(m_reply->readAll());
+    });
 
-                    m_rxBuffer.append(rawData);
-                });
+    connect(m_reply, &QNetworkReply::finished, this, [this](){
+        m_netFinished = true;
+        if (m_sessionTranslate && !m_rxBuffer.isEmpty() && !m_rxBuffer.endsWith((char)0x9B)) {
+            m_rxBuffer.append((char)0x9B);
+        }
+    });
 
-                // Connect Finished
-                connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-                        this, [this](int exitCode, QProcess::ExitStatus exitStatus){
+    connect(m_reply, &QNetworkReply::errorOccurred, this, [this](QNetworkReply::NetworkError){
+        if (m_reply) qWarning() << "!e" << "[W:] Network Error:" << m_reply->errorString();
+        m_netFinished = true;
+    });
+}
 
-                            if (exitStatus == QProcess::NormalExit && exitCode == 0) {
-                                m_netFinished = true;
-                                // Optional: Ensure file ends with EOL if translating
-                                if (m_sessionTranslate &&
-                                    !m_rxBuffer.isEmpty() && !m_rxBuffer.endsWith((char)0x9B)) {
-                                    m_rxBuffer.append((char)0x9B);
-                                }
-                            } else {
-                                qWarning() << "!e" << "[W:] FTP Error (curl):" << m_process->readAllStandardError();
-                                m_netFinished = true;
-                            }
-                        });
+// ========================================================================
+// SIO COMMAND HANDLER
+// ========================================================================
 
-                QStringList args;
-                args << "-sS" << urlStr;
-                m_process->start("curl", args);
+void PipeNetwork::handleCommand(quint8 command, quint16 aux)
+{
+    switch (command) {
 
-            } else {
-                // --- USE QT NATIVE (HTTP) ---
-                QNetworkRequest req(url);
-                req.setAttribute(QNetworkRequest::RedirectPolicyAttribute, true);
-                m_reply = m_manager->get(req);
+    case 0x4F: // OPEN
+    {
+        if (!sio->port()->writeCommandAck()) return;
 
-                connect(m_reply, &QNetworkReply::readyRead, this, [this](){
-                    QByteArray rawData = m_reply->readAll();
+        QByteArray urlFrame = sio->port()->readDataFrame(256);
+        sio->port()->writeDataAck();
+        sio->port()->writeComplete();
 
-                    if (m_sessionTranslate) {
-                        rawData.replace("\r", "");
-                        rawData.replace('\n', (char)0x9B);
-                    }
+        reset(); // Clear previous state
 
-                    m_rxBuffer.append(rawData);
-                });
+        m_lastUrl = cleanUrl(QString::fromLatin1(urlFrame));
+        m_isWriteMode = (aux & 0x08);
+        bool global = m_isWriteMode ? aspeqtSettings->translateEolOnPost() : aspeqtSettings->translateEolOnGet();
+        m_sessionTranslate = shouldTranslate(aux, global);
 
-                connect(m_reply, &QNetworkReply::finished, this, [this](){
-                    m_netFinished = true;
-                    if (m_sessionTranslate &&
-                        !m_rxBuffer.isEmpty() && !m_rxBuffer.endsWith((char)0x9B)) {
-                        m_rxBuffer.append((char)0x9B);
-                    }
-                });
+        QUrl url(m_lastUrl);
+        QString scheme = url.scheme().toLower();
 
-                connect(m_reply, &QNetworkReply::errorOccurred, this, [this](QNetworkReply::NetworkError){
-                    if (m_reply)
-                        qWarning() << "!e" << "[W:] Network Error:" << m_reply->errorString();
-                    m_netFinished = true;
-                });
-            }
+        // TCP opens instantly regardless of Read/Write Mode
+        if (scheme == "tcp") {
+            openTcpConnection(url);
+        }
+        // HTTP/FTP only open instantly if in READ mode.
+        // If in WRITE mode, they wait for CLOSE (0x43) to send accumulated data.
+        else if (!m_isWriteMode) {
+            if (scheme == "ftp") openFtpConnection(m_lastUrl);
+            else openHttpConnection(url);
+        }
+        // Track protocol for WRITE mode execution later
+        else {
+            m_protocol = (scheme == "ftp") ? ProtoFtp : ProtoHttp;
         }
         break;
     }
 
-        // ========================================================================
-        // READ (0x52) - Stream Data to Atari
-        // ========================================================================
-    case 0x52:
-    {
 
-        if (m_isWriteMode) {
-            sio->port()->writeCommandNak(); // Error: invalid command for this mode
+    case 0x52: // READ
+    {
+        // FIX: HTTP and FTP are one-way per session based on OPEN mode.
+        // TCP is bidirectional (Mode 12). Allow READ if protocol is TCP.
+        if (m_isWriteMode && m_protocol != ProtoTcp) {
+            sio->port()->writeCommandNak();
             return;
         }
 
         if (!sio->port()->writeCommandAck()) return;
 
-        // 1. Wait for data
+        // Smart Event Loop: Only wait on the active protocol
         if (m_rxBuffer.isEmpty() && !m_netFinished) {
             QEventLoop loop;
             QTimer timeout;
             timeout.setSingleShot(true);
 
-            if (m_reply) {
+            if (m_protocol == ProtoHttp && m_reply) {
                 connect(m_reply, &QNetworkReply::readyRead, &loop, &QEventLoop::quit);
                 connect(m_reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-            }
-            if (m_process) {
+            } else if (m_protocol == ProtoFtp && m_process) {
                 connect(m_process, &QProcess::readyReadStandardOutput, &loop, &QEventLoop::quit);
-                connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-                        &loop, &QEventLoop::quit);
-                connect(m_process, &QProcess::errorOccurred, &loop, &QEventLoop::quit);
-            }
-            if (m_tcpSocket) {
+                connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &loop, &QEventLoop::quit);
+            } else if (m_protocol == ProtoTcp && m_tcpSocket) {
                 connect(m_tcpSocket, &QTcpSocket::readyRead, &loop, &QEventLoop::quit);
                 connect(m_tcpSocket, &QTcpSocket::disconnected, &loop, &QEventLoop::quit);
-                connect(m_tcpSocket, &QTcpSocket::errorOccurred, &loop, &QEventLoop::quit);
             }
 
             connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
-            timeout.start(5000);
+            timeout.start(5000); // 5 second timeout to prevent Emulator UI freezing
             loop.exec();
         }
 
-        // 2. Send Frame
-        QByteArray chunk;
+        // Send Frame back to Atari
         if (m_rxBuffer.isEmpty() && m_netFinished) {
-            sio->port()->writeError();
-            return;
-
+            sio->port()->writeError(); // Connection closed
         } else {
+            // Grab up to 256 bytes from the network buffer
             int len = qMin(256, m_rxBuffer.size());
-            chunk = m_rxBuffer.left(len);
+            QByteArray chunk = m_rxBuffer.left(len);
             m_rxBuffer.remove(0, len);
+
+            // Pad the remainder with 0x00 to satisfy the Atari's 256-byte SIO requirement
             if (chunk.size() < 256) {
                 chunk.append(QByteArray(256 - chunk.size(), (char)0x00));
             }
-        }
 
-        sio->port()->writeComplete();
-        sio->port()->writeDataFrame(chunk);
+            sio->port()->writeComplete();
+            sio->port()->writeDataFrame(chunk);
+        }
         break;
     }
 
-        // ========================================================================
-        // WRITE (0x57) - Buffer or Stream Data from Atari
-        // ========================================================================
-    case 0x57:
+
+    case 0x57: // WRITE
     {
         if (!sio->port()->writeCommandAck()) return;
 
-        // 1. Read the 256-byte frame from Atari
         QByteArray data = sio->port()->readDataFrame(256);
         sio->port()->writeDataAck();
 
-        // 2. Process Data based on Translation Mode
         QByteArray chunkToSend;
         if (m_sessionTranslate) {
-            // --- TEXT MODE ---
-            // Convert to String, Replace EOLs, and Strip Null Padding
             QString chunkStr = QString::fromLatin1(data);
-
-            // Convert Atari EOL (0x9B) -> Unix Newline
             chunkStr.replace(QChar(0x9B), QString("\n"));
-
-            // Remove Nulls (Padding from the Atari buffer)
             chunkStr.remove(QChar(0x00));
-
             chunkToSend = chunkStr.toLatin1();
         } else {
-            // --- BINARY MODE ---
             chunkToSend = data;
         }
 
-        // 3. Send Immediately (TCP) or Buffer (HTTP/FTP)
-        if (m_isTcpMode) {
+        // Live Stream (TCP) vs Accumulate (HTTP/FTP)
+        if (m_protocol == ProtoTcp) {
             if (m_tcpSocket && m_tcpSocket->state() == QAbstractSocket::ConnectedState) {
                 m_tcpSocket->write(chunkToSend);
             }
@@ -331,50 +303,31 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         break;
     }
 
-        // ========================================================================
-        // CLOSE (0x43) - Execute POST/PUT
-        // ========================================================================
-    case 0x43:
+    case 0x43: // CLOSE
     {
         if (!sio->port()->writeCommandAck()) return;
 
-        // Only execute POST/PUT logic if we are NOT in TCP mode
-        if (!m_isTcpMode && m_isWriteMode && !m_txAccumulator.isEmpty()) {
-            QUrl url(m_lastUrl);
+        // Execute batch uploads only for HTTP/FTP
+        if (m_isWriteMode && m_protocol != ProtoTcp && !m_txAccumulator.isEmpty()) {
 
-            if (url.scheme().toLower() == "ftp") {
-
+            if (m_protocol == ProtoFtp) {
                 m_process = new QProcess(this);
-
                 connect(m_process, &QProcess::errorOccurred, this, [this](QProcess::ProcessError error){
-                    qWarning() << "!e" << "[W:] Curl Upload Process Error:" << error;
+                    qWarning() << "!e" << "[W:] Curl Upload Error:" << error;
                 });
 
-                QStringList args;
-                args << "-sS" << "-T" << "-" << m_lastUrl;
-
-                m_process->start("curl", args);
-
+                m_process->start("curl", QStringList() << "-sS" << "-T" << "-" << m_lastUrl);
                 if (m_process->waitForStarted()) {
                     m_process->write(m_txAccumulator);
                     m_process->closeWriteChannel();
-
                     m_process->waitForFinished(10000);
-
-                    if (m_process->exitCode() == 0) {
-                        qDebug() << "!n" << tr("[W:] FTP Upload Complete.");
-                    } else {
-                        qWarning() << "!e" << "[W:] FTP Upload Failed:" << m_process->readAllStandardError();
-                    }
-                } else {
-                    qWarning() << "!e" << "[W:] Failed to start curl for upload.";
+                    if (m_process->exitCode() == 0) qDebug() << "!n" << tr("[W:] FTP Upload Complete.");
+                    else qWarning() << "!e" << "[W:] FTP Upload Failed:" << m_process->readAllStandardError();
                 }
 
-            } else {
-                // --- USE QT NATIVE (HTTP POST) ---
-                QNetworkRequest req(url);
+            } else if (m_protocol == ProtoHttp) {
+                QNetworkRequest req((QUrl(m_lastUrl)));
                 req.setHeader(QNetworkRequest::ContentTypeHeader, "text/plain");
-
                 QNetworkReply *reply = m_manager->post(req, m_txAccumulator);
 
                 QEventLoop loop;
@@ -384,65 +337,43 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
             }
         }
 
-        reset(); // Cleanly aborts TCP socket or clears Accumulators
+        reset(); // Safely teardown sockets and clear memory
         sio->port()->writeComplete();
         break;
     }
 
-        // ========================================================================
-        // XIO 44 (0x50 'P') - ONE-SHOT POST
-        // ========================================================================
-    case 0x50:
+    case 0x50: // XIO 44 (ONE-SHOT POST)
     {
         if (!sio->port()->writeCommandAck()) return;
 
-        // 1. Read the "URL,Data" string
         QByteArray packet = sio->port()->readDataFrame(256);
         sio->port()->writeDataAck();
 
-        bool doTranslate  = shouldTranslate(aux, aspeqtSettings->translateEolOnPost());
-
-        // 2. Convert to String
+        bool doTranslate = shouldTranslate(aux, aspeqtSettings->translateEolOnPost());
         QString raw = QString::fromLatin1(packet);
 
-        // 3. Clean up the Frame
-        while (raw.endsWith(QChar(0x00))) {
-            raw.chop(1);
-        }
+        while (raw.endsWith(QChar(0x00))) raw.chop(1);
 
-        // 4. Handle End-Of-Line Logic
         if (doTranslate) {
-            // 1. If the very last char is 0x9B, it's just the command terminator. Remove it.
-            if (raw.endsWith(QChar(0x9B))) {
-                raw.chop(1);
-            }
-            // 2. Convert any remaining internal 0x9B to Newline (\n)
+            if (raw.endsWith(QChar(0x9B))) raw.chop(1);
             raw.replace(QChar(0x9B), QString("\n"));
         } else {
-            // --- LEGACY MODE (Translation OFF) ---
             int eol = raw.indexOf(QChar(0x9B));
             if (eol != -1) raw.truncate(eol);
         }
 
-        // 5. Split URL / Data
         QString urlStr;
         QByteArray postData;
-
         int commaPos = raw.indexOf(',');
+
         if (commaPos != -1) {
-            // Found a separator: "http://site.com,DataPayload"
             urlStr = cleanUrl(raw.left(commaPos).trimmed());
-            QString dataPart = raw.mid(commaPos + 1);
-            postData = dataPart.toLatin1();
+            postData = raw.mid(commaPos + 1).toLatin1();
         } else {
-            // No separator: Just a GET request (or empty POST)
             urlStr = cleanUrl(raw.trimmed());
-            postData = "";
         }
 
-        // 6. Handoff to Main Thread
         emit sendFireAndForget(urlStr, postData);
-
         sio->port()->writeComplete();
         break;
     }
