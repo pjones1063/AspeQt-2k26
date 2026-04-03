@@ -71,13 +71,28 @@ Support and inquiries can be made on our BBS or via our GitHub issues page. We l
 ---
 
 ### Building from Source
-**Requirements:**
-* CMake 3.16+
-* Qt 6.x Development Libraries (`qt6-base-dev`, `libqt6network6`, `libqt6websockets6-dev`, etc.)
-* `libgpiod` C++ v2 bindings (Required on Linux for R: Device interrupts)
-* C++17 Compiler
 
-**Debian/Ubuntu/Raspberry Pi OS Dependencies:**
+**Core Requirements:**
+* CMake 3.16+
+* Qt 6.x Development Libraries
+* C++17 Compiler
+* `libssh` (Required for encrypted TNFS client connections)
+* `libgpiod` (Linux/Raspberry Pi only - Required for hardware SIO interrupts)
+
+#### Debian / Ubuntu / Raspberry Pi OS (Bookworm)
+To install all necessary build tools and dependencies in one shot, run the following command in your terminal:
 ```bash
 sudo apt update
-sudo apt install build-essential cmake qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 libqt6network6 libqt6websockets6-dev libgpiod-dev libgpiodcxx-dev
+sudo apt install build-essential cmake git unzip ca-certificates \
+qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev \
+libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev
+
+
+#### Compilation
+Once your dependencies are installed, you can build the project:
+
+```bash
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . --parallel
