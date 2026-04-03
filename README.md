@@ -88,10 +88,6 @@ qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev \
 libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev
 
 
-#### Compilation
-Once your dependencies are installed, you can build the project:
-
-```bash
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
