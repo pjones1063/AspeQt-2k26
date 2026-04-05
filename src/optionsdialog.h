@@ -42,6 +42,7 @@ private slots:
     void on_modemPhonebookBrowseBtn_clicked();
     void on_mDirectUart_toggled(bool checked);
     void on_modemPhonebookNewBtn_clicked();
+    void on_modemPortComboBox_currentIndexChanged(int index);
 };
 
 #endif // OPTIONSDIALOG_H

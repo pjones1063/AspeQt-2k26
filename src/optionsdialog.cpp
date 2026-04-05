@@ -2,7 +2,6 @@
  * optionsdialog.cpp
  */
 
-
 #include "optionsdialog.h"
 #include "ui_optionsdialog.h"
 #include "aspeqtsettings.h"
@@ -44,6 +43,10 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     /* Retrieve application settings */
 
+    // MUTE SIGNALS: Prevent the UI from crashing while we load data
+    m_ui->serialPortComboBox->blockSignals(true);
+    m_ui->modemPortComboBox->blockSignals(true);
+
     // --- Standard Serial Port Combo Setup ---
     m_ui->serialPortComboBox->clear();
     const QList<QSerialPortInfo>& infos = QSerialPortInfo::availablePorts();
@@ -52,15 +55,9 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         m_ui->serialPortComboBox->addItem(info.portName(), info.systemLocation());
     }
 
-    // --- Modem Bridge Port Combo Setup ---
-    m_ui->modemPortComboBox->clear();
-    for (const QSerialPortInfo &info : infos) {
-        m_ui->modemPortComboBox->addItem(info.portName(), info.systemLocation());
-    }
-
-    // Set current SIO Port
+    // Set current SIO Port and handle custom values
     m_ui->serialPortComboBox->setCurrentText(aspeqtSettings->serialPortName());
-    if(0 != m_ui->serialPortComboBox->currentText().compare(aspeqtSettings->serialPortName(),Qt::CaseInsensitive))
+    if(0 != m_ui->serialPortComboBox->currentText().compare(aspeqtSettings->serialPortName(), Qt::CaseInsensitive))
     {
         m_ui->serialPortComboBox->setEditable(true);
         m_ui->serialPortComboBox->addItem(aspeqtSettings->serialPortName());
@@ -70,6 +67,29 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     {
         m_ui->serialPortComboBox->addItem(tr("Custom"));
     }
+
+    // --- Modem Bridge Port Combo Setup ---
+    m_ui->modemPortComboBox->clear();
+    for (const QSerialPortInfo &info : infos) {
+        m_ui->modemPortComboBox->addItem(info.portName(), info.systemLocation());
+    }
+
+    // Set current Modem Port and handle custom values
+    m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
+    if(0 != m_ui->modemPortComboBox->currentText().compare(aspeqtSettings->modemBridgePortName(), Qt::CaseInsensitive))
+    {
+        m_ui->modemPortComboBox->setEditable(true);
+        m_ui->modemPortComboBox->addItem(aspeqtSettings->modemBridgePortName());
+        m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
+    }
+    else
+    {
+        m_ui->modemPortComboBox->addItem(tr("Custom"));
+    }
+
+    // UNMUTE SIGNALS: The UI is fully loaded, safe to listen for clicks again
+    m_ui->serialPortComboBox->blockSignals(false);
+    m_ui->modemPortComboBox->blockSignals(false);
 
     // Set Modem Bridge Defaults
     m_ui->modemEnableBox->setChecked(aspeqtSettings->isModemBridgeEnabled());
@@ -83,7 +103,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->cbEnableWebUi->setChecked(aspeqtSettings->isWebUiEnabled());
     m_ui->sbHttpPort->setValue(aspeqtSettings->webUiPort());
     m_ui->sbWsPort->setValue(aspeqtSettings->webUiWsPort());
-
 
     // Set R: Device Defaults
     m_ui->modemRBox->setChecked(aspeqtSettings->isRDeviceEnabled());
@@ -103,6 +122,8 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
     m_ui->serialPortDivisorEdit->setValue(aspeqtSettings->serialPortPokeyDivisor());
     m_ui->serialPortCompErrDelayBox->setValue(aspeqtSettings->serialPortCompErrDelay());
+    m_ui->sbStreamGuardDelay->setValue(aspeqtSettings->streamGuardDelay()); // [NEW] Set Stream Guard Delay
+
     m_ui->atariSioDriverNameEdit->setText(aspeqtSettings->atariSioDriverName());
     m_ui->atariSioHandshakingMethodCombo->setCurrentIndex(aspeqtSettings->atariSioHandshakingMethod());
     m_ui->emulationHighSpeedExeLoaderBox->setChecked(aspeqtSettings->useHighSpeedExeLoader());
@@ -156,7 +177,8 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     bool no_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_NO_HANDSHAKE);
     bool software_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_SOFTWARE);
-    bool hwUart = m_ui->mDirectUart->isChecked(); // [NEW] Get state for visibility
+    bool hwUart = m_ui->mDirectUart->isChecked();
+    bool rDevice = m_ui->modemRBox->isChecked();
 
     m_ui->serialPortWriteDelayLabel->setVisible(software_handshake);
     m_ui->serialPortWriteDelayCombo->setVisible(software_handshake);
@@ -168,11 +190,15 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->serialPortCompErrDelayLabel->setVisible(!software_handshake);
     m_ui->serialPortCompErrDelayBox->setVisible(!software_handshake);
 
-    // [NEW] Respect HW UART Checkbox when enabling/disabling
+    // Respect HW UART Checkbox when enabling/disabling standard artificial delays
     m_ui->serialPortCompErrDelayBox->setEnabled(!hwUart);
     m_ui->serialPortCompErrDelayLabel->setEnabled(!hwUart);
     m_ui->serialPortWriteDelayCombo->setEnabled(!hwUart);
     m_ui->serialPortWriteDelayLabel->setEnabled(!hwUart);
+
+    // [NEW] Stream Guard is ONLY enabled if R: device is ON AND HW UART is OFF
+    m_ui->sbStreamGuardDelay->setEnabled(rDevice && !hwUart);
+    m_ui->label_streamGuardDelay->setEnabled(rDevice && !hwUart);
 
     m_ui->eolPostCheckBox->setChecked(aspeqtSettings->translateEolOnPost());
     m_ui->eolGetCheckBox->setChecked(aspeqtSettings->translateEolOnGet());
@@ -231,7 +257,7 @@ void OptionsDialog::on_serialPortHandshakeCombo_currentIndexChanged(int index)
     m_ui->serialPortCompErrDelayLabel->setVisible(!software_handshake);
     m_ui->serialPortCompErrDelayBox->setVisible(!software_handshake);
 
-    // [NEW] Keep artificial delay boxes disabled if Hardware UART is selected
+    // Keep artificial delay boxes disabled if Hardware UART is selected
     m_ui->serialPortCompErrDelayBox->setEnabled(!hwUart);
     m_ui->serialPortCompErrDelayLabel->setEnabled(!hwUart);
     m_ui->serialPortWriteDelayCombo->setEnabled(!hwUart);
@@ -360,8 +386,18 @@ void OptionsDialog::on_modemRBox_toggled(bool checked)
 
         m_ui->modemInvertCtsBox->setEnabled(false);
     }
+
+    // [NEW] Link the Stream Guard Delay to the R: Device state (and HW Uart)
+    bool hwUart = m_ui->mDirectUart->isChecked();
+    m_ui->sbStreamGuardDelay->setEnabled(checked && !hwUart);
+    m_ui->label_streamGuardDelay->setEnabled(checked && !hwUart);
 }
 
+void OptionsDialog::on_modemPortComboBox_currentIndexChanged(int index)
+{
+    bool isCustomPath = !m_ui->modemPortComboBox->itemData(index).isValid();
+    m_ui->modemPortComboBox->setEditable(isCustomPath);
+}
 
 void OptionsDialog::on_mDirectUart_toggled(bool checked)
 {
@@ -370,6 +406,11 @@ void OptionsDialog::on_mDirectUart_toggled(bool checked)
     m_ui->serialPortCompErrDelayLabel->setEnabled(!checked);
     m_ui->serialPortWriteDelayCombo->setEnabled(!checked);
     m_ui->serialPortWriteDelayLabel->setEnabled(!checked);
+
+    // [NEW] Also evaluate Stream Guard Delay (Requires R: Device to be checked AND HW UART to be OFF)
+    bool rDevice = m_ui->modemRBox->isChecked();
+    m_ui->sbStreamGuardDelay->setEnabled(rDevice && !checked);
+    m_ui->label_streamGuardDelay->setEnabled(rDevice && !checked);
 
     // If they checked it while using Software Handshake, we should probably warn or force CTS
     if (checked && m_ui->serialPortHandshakeCombo->currentIndex() == HANDSHAKE_SOFTWARE) {
@@ -430,9 +471,10 @@ void OptionsDialog::OptionsDialog_accepted()
 
     aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
-    aspeqtSettings->setSerialPortHardwareUart(m_ui->mDirectUart->isChecked()); // [NEW] Save HW UART setting
+    aspeqtSettings->setSerialPortHardwareUart(m_ui->mDirectUart->isChecked()); // Save HW UART setting
     aspeqtSettings->setSerialPortWriteDelay(m_ui->serialPortWriteDelayCombo->currentIndex());
     aspeqtSettings->setSerialPortCompErrDelay(m_ui->serialPortCompErrDelayBox->value());
+    aspeqtSettings->setStreamGuardDelay(m_ui->sbStreamGuardDelay->value()); // [NEW] Save Stream Guard Delay
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
     aspeqtSettings->setSerialPortUsePokeyDivisors(m_ui->serialPortUseDivisorsBox->isChecked());
     aspeqtSettings->setSerialPortPokeyDivisor(m_ui->serialPortDivisorEdit->value());
@@ -543,3 +585,4 @@ void OptionsDialog::on_modemPhonebookNewBtn_clicked()
         }
     }
 }
+

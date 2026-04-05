@@ -401,8 +401,13 @@ void ModemBridge::onSocketDisconnected() {
 void ModemBridge::onSocketError(QAbstractSocket::SocketError socketError) {
     Q_UNUSED(socketError);
     if (m_isSshMode) return;
+
+    QString errorMsg = m_socket->errorString();
     emit errorOccurred(m_socket->errorString());
-    if (!m_isConnected) sendToSerial("\r\nNO CARRIER\r\n");
+    if (!m_isConnected) {
+        sendToSerial(("\r\nERROR: " + errorMsg + "\r\n").toUtf8());
+        sendToSerial("\r\nNO CARRIER\r\n");
+    }
 }
 
 // ============================================================================
@@ -431,7 +436,10 @@ void ModemBridge::onSshError(const QString &msg) {
     // Only report error if we are actively trying to use SSH
     if (m_isSshMode) {
         emit errorOccurred("SSH Error: " + msg);
-        if (!m_isConnected) sendToSerial("\r\nNO CARRIER\r\n");
+        if (!m_isConnected) {
+            sendToSerial(("\r\nERROR: SSH - " + msg + "\r\n").toUtf8());
+            sendToSerial("\r\nNO CARRIER\r\n");
+        }
     }
 }
 

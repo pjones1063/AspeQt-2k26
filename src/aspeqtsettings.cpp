@@ -124,6 +124,14 @@ AspeQtSettings::AspeQtSettings()
     mModemBridgePhonebookPath = mSettings->value("ModemBridge/PhonebookPath", "").toString();
     mEnableRDevice = mSettings->value("EnableRDevice", false).toBool(); // Default to OFF
     mInvertCtsLogic = mSettings->value("ModemBridge/InvertCts", true).toBool();
+#if defined(Q_OS_WIN)
+    int defaultGuard = 50;
+#elif defined(Q_OS_MAC)
+    int defaultGuard = 20;
+#else
+    int defaultGuard = 10;
+#endif
+    mStreamGuardDelay = mSettings->value("StreamGuardDelay", defaultGuard).toInt();
 
     // Web UI Defaults
     mWebUiEnabled = mSettings->value("WebUI/Enabled", false).toBool();
@@ -204,6 +212,7 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("EnableRDevice", mEnableRDevice);
     s.setValue("ModemBridge/InvertCts", mInvertCtsLogic);
     s.setValue("WebUI/Enabled", mWebUiEnabled);
+    s.setValue("StreamGuardDelay", mStreamGuardDelay);
     s.setValue("WebUI/HttpPort", mWebUiPort);
     s.setValue("WebUI/WsPort", mWebUiWsPort);
 
@@ -274,6 +283,7 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mModemBridgeSshEnabled = s.value("ModemBridge/SshEnabled", false).toBool();
     mModemBridgeLocalEcho = s.value("ModemBridge/LocalEcho", false).toBool();
     mModemBridgePhonebookPath = s.value("ModemBridge/PhonebookPath", "").toString();
+    mStreamGuardDelay = s.value("StreamGuardDelay", 10).toInt();
     mEnableRDevice = s.value("EnableRDevice", false).toBool();
     mInvertCtsLogic = s.value("ModemBridge/InvertCts", true).toBool();
     mWebUiEnabled = s.value("WebUI/Enabled", false).toBool();
@@ -1063,6 +1073,13 @@ bool AspeQtSettings::invertCtsLogic() { return mInvertCtsLogic; }
 void AspeQtSettings::setInvertCtsLogic(bool invert) {
     mInvertCtsLogic = invert;
     if(mSessionFileName == "") mSettings->setValue("ModemBridge/InvertCts", mInvertCtsLogic);
+}
+
+int AspeQtSettings::streamGuardDelay() { return mStreamGuardDelay; }
+
+void AspeQtSettings::setStreamGuardDelay(int delay) {
+    mStreamGuardDelay = delay;
+    if(mSessionFileName == "") mSettings->setValue("StreamGuardDelay", mStreamGuardDelay);
 }
 
 // --- WEB UI SETTINGS ---

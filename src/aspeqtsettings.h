@@ -196,21 +196,18 @@ public:
     // Explorer Window On Top
     bool explorerOnTop();
     void setExplorerOnTop(bool expOnTop);
-
     bool isModemBridgeEnabled();
     void setModemBridgeEnabled(bool enabled);
-
     QString modemBridgePortName();
     void setModemBridgePortName(const QString &name);
-
     int modemBridgeBaudRate();
     void setModemBridgeBaudRate(int baud);
-
     bool modemBridgeFlowControl();
     void setModemBridgeFlowControl(bool enabled);
-
     bool modemBridgeSshEnabled();
     void setModemBridgeSshEnabled(bool enabled);
+    int streamGuardDelay();
+    void setStreamGuardDelay(int delay);
 
     bool modemBridgeLocalEcho();
     void setModemBridgeLocalEcho(bool enabled);
@@ -262,6 +259,7 @@ private:
     bool mModemBridgeSshEnabled;
     bool mModemBridgeLocalEcho;
     bool mInvertCtsLogic;
+    int mStreamGuardDelay;
 
     // To pass values from Mainwindow //
     int mMainX;

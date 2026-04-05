@@ -703,9 +703,21 @@ void RDevice::onSocketDisconnected() {
     if (m_isSshMode) return;
     sendResultCode(RESULT_NO_CARRIER);
 }
-void RDevice::onSocketError(QAbstractSocket::SocketError) {
+
+void RDevice::onSocketError(QAbstractSocket::SocketError socketError) {
+    Q_UNUSED(socketError);
     if (m_isSshMode) return;
-    sendResultCode(RESULT_ERROR);
+
+    QString errorMsg = tcpSocket->errorString();
+
+    // If we aren't connected yet (e.g. dialing failed), show the verbose error
+    if (!m_isNetworkConnected) {
+        sendAtResponse("\r\nERROR: " + errorMsg + "\r\n");
+        sendResultCode(RESULT_NO_CARRIER);
+    } else {
+        // If an error happens while connected
+        sendResultCode(RESULT_ERROR);
+    }
 }
 
 void RDevice::onNewConnection() {
@@ -729,10 +741,18 @@ void RDevice::onSshDisconnected() {
     if (!m_isSshMode) return;
     sendResultCode(RESULT_NO_CARRIER);
 }
+
 void RDevice::onSshError(const QString &msg) {
-    Q_UNUSED(msg);
     if (!m_isSshMode) return;
-    sendResultCode(RESULT_ERROR);
+
+    // If we aren't connected yet (e.g. auth failed, host unreachable), show the verbose error
+    if (!m_isNetworkConnected) {
+        sendAtResponse("\r\nERROR: SSH - " + msg + "\r\n");
+        sendResultCode(RESULT_NO_CARRIER);
+    } else {
+        // If an error happens while connected
+        sendResultCode(RESULT_ERROR);
+    }
 }
 
 QByteArray RDevice::dequeueNetworkData() {

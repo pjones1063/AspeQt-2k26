@@ -115,7 +115,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_serialPort">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -720,6 +720,26 @@ Leave unchecked for direct Raspberry Pi GPIO.</string>
           </property>
           <property name="checked">
            <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_streamGuardDelay">
+          <property name="text">
+           <string>FTDI/USB Latency:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="sbStreamGuardDelay">
+          <property name="suffix">
+           <string>ms</string>
+          </property>
+          <property name="minimum">
+           <number>5</number>
+          </property>
+          <property name="maximum">
+           <number>250</number>
           </property>
          </widget>
         </item>

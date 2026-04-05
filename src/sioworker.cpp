@@ -157,24 +157,13 @@ void SioWorker::run()
             // --- CRITICAL FIX: The Dynamic GPIO Sleep ---
             // If we did nothing this loop, we sleep for 1ms INSIDE the kernel poll.
             // If the Atari drops the line during this 1ms, it instantly wakes us!
-            int idleSleep = hasActivity ? 0 : 1;
-
 #ifdef HAS_LIBGPIOD
+            int idleSleep = hasActivity ? 0 : 1;
             if (aspeqtSettings->serialPortHardwareUart()){
                 checkHardwareInterrupts(idleSleep);
-            } else {
-                if (!hasActivity) usleep(1000);
             }
-#else
-            // 2. NEW: Modem Status Line Check (Windows/Mac/Linux via FTDI)
-            // Determine safe USB buffer flush time based on the OS
-#if defined(Q_OS_WIN)
-            int guardDelay = 50;  // Safely clears the Windows 16ms FTDI buffer
-#elif defined(Q_OS_MAC)
-            int guardDelay = 20;  // macOS USB polling is faster, but still batches
-#else
-            int guardDelay = 10;  // Linux USB stack is highly efficient
 #endif
+            int guardDelay = aspeqtSettings->streamGuardDelay();
             if (!aspeqtSettings->serialPortHardwareUart() && m_streamGuardTimer.elapsed() > guardDelay) {
                 if (mPort->isCommandLineAsserted()) {
                     qDebug() << "!d" << "[SioWorker] >>> FTDI CTS/DSR LOW <<< Atari asserted Command. Exiting Stream.";
@@ -189,8 +178,7 @@ void SioWorker::run()
                 }
             }
 
-            if (!hasActivity) usleep(1000);
-#endif
+            if (m_isStreaming && !hasActivity) usleep(1000);
 
             continue;
         }
