@@ -11,6 +11,10 @@
 #include <QList>
 #include <QString>
 #include <QByteArray>
+#include <QTextEdit>
+#include <QSplitter>
+#include <QToolButton>
+#include <QLabel>
 
 // The Core Data Structure
 struct SioPacket {
@@ -61,6 +65,8 @@ protected:
 private slots:
     void onSaveClicked();
     void onInjectClicked();
+    void onRowSelected(const QModelIndex &current, const QModelIndex &previous);
+    void toggleInspector();
 
 private:
     QTableView *tableView;
@@ -68,7 +74,13 @@ private:
     QPushButton *btnClear;
     QPushButton *btnSave;
     QPushButton *btnInject;
+    QTextEdit *txtDetails;
 
+    // Collapsible Pane Variables
+    QSplitter *splitter;
+    QWidget *inspectorContainer;
+    QToolButton *btnToggleInspector;
+    QList<int> savedSplitterSizes;
 };
 
 #endif // SIOPACKETDIALOG_H

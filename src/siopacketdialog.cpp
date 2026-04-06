@@ -4,6 +4,17 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QColor>
+#include <QItemSelectionModel>
+
+// --- Authentic Atari Checksum Algorithm ---
+quint8 calculateAtariChecksum(const QByteArray &data, int length) {
+    quint16 sum = 0;
+    for (int i = 0; i < length; ++i) {
+        sum += static_cast<quint8>(data[i]);
+        if (sum > 255) sum -= 255;
+    }
+    return static_cast<quint8>(sum);
+}
 
 // --- Model Implementation ---
 SioPacketModel::SioPacketModel(QObject *parent) : QAbstractTableModel(parent) {}
@@ -37,8 +48,11 @@ QVariant SioPacketModel::data(const QModelIndex &index, int role) const {
         }
     }
 
-    // Color code rows based on TX vs RX
+    // --- SMART COLOR CODING ---
     if (role == Qt::BackgroundRole) {
+        if (pkt.checksumStatus.startsWith("FAIL")) return QColor("#5A1515"); // Bright Red for Checksum Failures
+        if (pkt.payloadHex.startsWith("ACK") || pkt.payloadHex.startsWith("CMP")) return QColor("#153A5A"); // Blue for good control bytes
+        if (pkt.payloadHex.startsWith("NAK") || pkt.payloadHex.startsWith("ERR")) return QColor("#5A3A15"); // Orange/Yellow for NAKs
         if (pkt.direction.startsWith("TX")) return QColor("#2A1B14"); // Dark red tint
         if (pkt.direction.startsWith("RX")) return QColor("#142A1B"); // Dark green tint
     }
@@ -81,8 +95,8 @@ void SioPacketModel::clear() {
 
 // --- Dialog Implementation ---
 SioPacketDialog::SioPacketDialog(QWidget *parent) : QDialog(parent) {
-    setWindowTitle(tr("SIO Packet Sniffer"));
-    resize(850, 450);
+    setWindowTitle(tr("SIO Packet Sniffer & Inspector"));
+    resize(900, 600);
 
     model = new SioPacketModel(this);
     tableView = new QTableView(this);
@@ -91,36 +105,61 @@ SioPacketDialog::SioPacketDialog(QWidget *parent) : QDialog(parent) {
     tableView->setAlternatingRowColors(true);
     tableView->setStyleSheet("QTableView { background-color: #1E1E1E; gridline-color: #333333; }");
 
-    // ==========================================
-    // UI FIX 1: Full Row Selection
-    // ==========================================
     tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    tableView->setSelectionMode(QAbstractItemView::SingleSelection); // Only let them select one row to inject
-
-    // ==========================================
-    // UI FIX 2: Stop Column Jumping
-    // ==========================================
-    // Set to Interactive so the user can manually drag borders if they want
+    tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
 
-    // Lock in the initial pixel widths before data arrives
     tableView->setColumnWidth(0, 80);   // Time
-    tableView->setColumnWidth(1, 100);  // Dir (e.g., "RX (CMD)*")
-    tableView->setColumnWidth(2, 180);  // Cmd (e.g., "D1: STATUS ($53)")
+    tableView->setColumnWidth(1, 100);  // Dir
+    tableView->setColumnWidth(2, 180);  // Cmd
     tableView->setColumnWidth(3, 60);   // Aux1
     tableView->setColumnWidth(4, 60);   // Aux2
     tableView->setColumnWidth(5, 50);   // Len
-    tableView->setColumnWidth(7, 50);   // Chk (Checksum)
+    tableView->setColumnWidth(7, 130);  // Chk (Wide enough for "FAIL")
+    tableView->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Stretch); // Payload stretches
 
-    // Force the "Payload" column (index 6) to stretch and eat up all remaining blank space
-    tableView->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Stretch);
+    // --- Collapsible Packet Inspector Pane ---
+    inspectorContainer = new QWidget(this);
+    QVBoxLayout *inspectorLayout = new QVBoxLayout(inspectorContainer);
+    inspectorLayout->setContentsMargins(0, 0, 0, 0);
+
+    // Header Bar (Native OS styling)
+    QHBoxLayout *headerLayout = new QHBoxLayout();
+    QLabel *lblInspector = new QLabel(tr("Packet Inspector Details"), this);
+    lblInspector->setStyleSheet("font-weight: bold; font-size: 11px; text-transform: uppercase;");
+
+    btnToggleInspector = new QToolButton(this);
+    btnToggleInspector->setText("▲"); // Points UP indicating it will maximize over the table
+    btnToggleInspector->setStyleSheet("border: none; background: transparent; font-weight: bold; font-size: 14px;");
+    btnToggleInspector->setCursor(Qt::PointingHandCursor);
+    connect(btnToggleInspector, &QToolButton::clicked, this, &SioPacketDialog::toggleInspector);
+
+    headerLayout->addWidget(lblInspector);
+    headerLayout->addStretch();
+    headerLayout->addWidget(btnToggleInspector);
+
+    // Text Area
+    txtDetails = new QTextEdit(this);
+    txtDetails->setReadOnly(true);
+    txtDetails->setStyleSheet("background-color: #121212; color: #d4d4d4; font-family: 'Courier New', monospace;");
+    txtDetails->setHtml("<span style='color:#888;'>Click a packet row to view details...</span>");
+
+    inspectorLayout->addLayout(headerLayout);
+    inspectorLayout->addWidget(txtDetails);
+
+    // Splitter Wrapper
+    splitter = new QSplitter(Qt::Vertical, this);
+    splitter->addWidget(tableView);
+    splitter->addWidget(inspectorContainer);
+    splitter->setStretchFactor(0, 3);
+    splitter->setStretchFactor(1, 1);
+
+    connect(tableView->selectionModel(), &QItemSelectionModel::currentChanged, this, &SioPacketDialog::onRowSelected);
 
     // Buttons
     btnClear = new QPushButton(tr("Clear"), this);
     btnSave = new QPushButton(tr("Save CSV..."), this);
     btnInject = new QPushButton(tr("Inject Selected (Step)"), this);
-
-    // Make the inject button pop a bit so it feels like a debugger action
     btnInject->setStyleSheet("background-color: #2D5A2D; color: white; font-weight: bold;");
 
     connect(btnClear, &QPushButton::clicked, model, &SioPacketModel::clear);
@@ -135,8 +174,80 @@ SioPacketDialog::SioPacketDialog(QWidget *parent) : QDialog(parent) {
     btnLayout->addWidget(btnClear);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    mainLayout->addWidget(tableView);
+    mainLayout->addWidget(splitter);
     mainLayout->addLayout(btnLayout);
+}
+
+
+// --- Inspector Toggle Logic ---
+void SioPacketDialog::toggleInspector() {
+    if (tableView->isVisible()) {
+        // Hide the table so the text area takes up 100% of the screen
+        savedSplitterSizes = splitter->sizes();
+        tableView->hide();
+        btnToggleInspector->setText("▼"); // Point down to say "Shrink me back"
+    } else {
+        // Show the table again
+        tableView->show();
+        btnToggleInspector->setText("▲"); // Point up to say "Maximize me"
+
+        if (!savedSplitterSizes.isEmpty()) {
+            splitter->setSizes(savedSplitterSizes); // Snap back to how it was dragged
+        }
+    }
+}
+
+
+
+void SioPacketDialog::onRowSelected(const QModelIndex &current, const QModelIndex &previous) {
+    Q_UNUSED(previous);
+    if (!current.isValid()) return;
+    int row = current.row();
+    const SioPacket &pkt = model->getPackets().at(row);
+
+    QString html = QString("<div style='margin-bottom: 10px;'>"
+                           "<b style='color:#8be9fd;'>Direction:</b> %1 &nbsp;&nbsp;|&nbsp;&nbsp; "
+                           "<b style='color:#8be9fd;'>Command:</b> %2<br>"
+                           "<b style='color:#8be9fd;'>Aux1:</b> %3 &nbsp;&nbsp;|&nbsp;&nbsp; "
+                           "<b style='color:#8be9fd;'>Aux2:</b> %4 &nbsp;&nbsp;|&nbsp;&nbsp; "
+                           "<b style='color:#8be9fd;'>Checksum:</b> %5"
+                           "</div>")
+                       .arg(pkt.direction).arg(pkt.command)
+                       .arg(pkt.aux1).arg(pkt.aux2).arg(pkt.checksumStatus);
+
+    if (!pkt.rawData.isEmpty()) {
+        html += "<b style='color:#ff79c6;'>Payload Hex & ATASCII:</b><br><pre style='margin-top: 5px; color: #d4d4d4;'>";
+
+        for (int i = 0; i < pkt.rawData.size(); i += 16) {
+            QByteArray chunk = pkt.rawData.mid(i, 16);
+            QString offset = QString("%1").arg(i, 4, 16, QChar('0')).toUpper();
+
+            QString hex;
+            QString ascii;
+            for (int j = 0; j < 16; ++j) {
+                if (j < chunk.size()) {
+                    quint8 byte = static_cast<quint8>(chunk[j]);
+                    hex += QString("%1 ").arg(byte, 2, 16, QChar('0')).toUpper();
+
+                    // Unified ATASCII & Inverse Video Mappings
+                    if (byte >= 32 && byte <= 126) {
+                        ascii += QString(QChar(byte)).toHtmlEscaped();
+                    } else if (byte >= 160 && byte <= 254) {
+                        ascii += QString(QChar(byte - 128)).toHtmlEscaped();
+                    } else if (byte == 155) {
+                        ascii += "<font color='#ffb86c'>&para;</font>";
+                    } else {
+                        ascii += "<font color='#6272a4'>.</font>";
+                    }
+                } else {
+                    hex += "   ";
+                }
+            }
+            html += QString("<font color='#6272a4'>%1:</font>  %2  <font color='#6272a4'>|</font>  %3\n").arg(offset).arg(hex).arg(ascii);
+        }
+        html += "</pre>";
+    }
+    txtDetails->setHtml(html);
 }
 
 
@@ -148,23 +259,16 @@ void SioPacketDialog::onInjectClicked() {
         return;
     }
 
-    // Get the row index
     int row = selection.first().row();
-
-    // Grab the original raw bytes
     const SioPacket &pkt = model->getPackets().at(row);
 
-    // Safety check: Only inject packets that originally came from the Atari (RX)
     if (!pkt.direction.startsWith("RX")) {
-        QMessageBox::warning(this, tr("Invalid Direction"),
-                             tr("You can only inject RX packets (traffic originating from the Atari)."));
+        QMessageBox::warning(this, tr("Invalid Direction"), tr("You can only inject RX packets (traffic originating from the Atari)."));
         return;
     }
 
-    // Fire the bytes out to MainWindow!
     emit injectPacketRequested(pkt.rawData);
 }
-
 
 void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, qint64 elapsedMs) {
     SioPacket pkt;
@@ -173,20 +277,34 @@ void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, q
     pkt.dataLength = data.size();
     pkt.rawData = data;
 
-    // --- SMART DECODER & HEURISTIC FIX ---
-    // Hardware handshakes often emit commands as "RX (Data)".
-    // We catch them by checking if it's an RX packet exactly 4 bytes long.
-    bool isCmdFrame = dir.contains("CMD") || (dir.contains("RX") && data.size() == 4);
+    // Allow both 4-byte (header only) and 5-byte (header + checksum) command frames
+    bool isCmdFrame = dir.contains("CMD") || (dir.contains("RX") && (data.size() == 4 || data.size() == 5));
 
-    if (isCmdFrame) {
+    // 1. Intercept 1-Byte Protocol Control Characters
+    if (data.size() == 1) {
+        quint8 byte = static_cast<quint8>(data[0]);
+        pkt.command = "--";
+        pkt.aux1 = "--";
+        pkt.aux2 = "--";
+        pkt.checksumStatus = "--";
 
-        // Correct the label for the UI if it was mislabeled by the backend
-        if (pkt.direction.contains("Data")) {
-            pkt.direction = "RX (CMD)*";
-        }
+        if (byte == 'A') pkt.payloadHex = "ACK (0x41)";
+        else if (byte == 'N') pkt.payloadHex = "NAK (0x4E)";
+        else if (byte == 'C') pkt.payloadHex = "CMP (0x43)";
+        else if (byte == 'E') pkt.payloadHex = "ERR (0x45)";
+        else pkt.payloadHex = QString("UNK: %1").arg(byte, 2, 16, QChar('0')).toUpper();
+
+        model->addPacket(pkt);
+        tableView->scrollToBottom();
+        return;
+    }
+
+    if (isCmdFrame && data.size() >= 4) {
+        if (pkt.direction.contains("Data")) pkt.direction = "RX (CMD)*";
 
         quint8 devByte = static_cast<quint8>(data[0]);
         quint8 cmdByte = static_cast<quint8>(data[1]);
+
 
         // 1. Decode Device ID
         QString devStr;
@@ -200,6 +318,8 @@ void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, q
         else if (devByte == 0x59) devStr = "Y1: (Clip)";
         else if (devByte == 0x45) devStr = "PC-LINK";
         else if (devByte == 0x46) devStr = "ASPEQT";
+        else if (devByte == 0x4F) devStr = "O1: (FujiNet)";
+        else if (devByte == 0x70) devStr = "T1: (APE/Smart)";
         else devStr = QString("DEV($%1)").arg(devByte, 2, 16, QChar('0')).toUpper();
 
         // 2. Decode Command Opcode
@@ -207,38 +327,57 @@ void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, q
         if (cmdByte == 0x52 || cmdByte == 'R') cmdStr = "READ";
         else if (cmdByte == 0x57 || cmdByte == 'W') cmdStr = "WRITE";
         else if (cmdByte == 0x53 || cmdByte == 'S') cmdStr = "STATUS";
-        else if (cmdByte == 0x50 || cmdByte == 'P') cmdStr = "PUT";
+        else if (cmdByte == 0x50 || cmdByte == 'P') cmdStr = "PUT/POST";
+        else if (cmdByte == 0x4F || cmdByte == 'O') cmdStr = "OPEN";
+        else if (cmdByte == 0x43 || cmdByte == 'C') cmdStr = "CLOSE";
         else if (cmdByte == 0x21) cmdStr = "FORMAT";
         else if (cmdByte == 0x22) cmdStr = "FMT_DUAL";
-        else if (cmdByte == 0x3F) cmdStr = "CAPACITY";
+        else if (cmdByte == 0x3F) {
+            // $3F is CAPACITY for Disk Drives, but SMART POLL for the T1: Device
+            if (devByte == 0x70) cmdStr = "SMART_POLL";
+            else cmdStr = "CAPACITY";
+        }
+        else if (cmdByte == 0x93 && devByte == 0x70) cmdStr = "APE_TIME"; // NEW: Smart Device Date/Time
         else if (cmdByte == 0xFE) cmdStr = "MOUNT";
+        else if (cmdByte == 0x40 && devByte == 0x4F) cmdStr = "PING";
         else cmdStr = "UNK";
 
-        // 3. Format output
-        pkt.command = QString("%1 %2 ($%3)")
-                          .arg(devStr)
-                          .arg(cmdStr)
-                          .arg(cmdByte, 2, 16, QChar('0')).toUpper();
 
+        pkt.command = QString("%1 %2 ($%3)").arg(devStr).arg(cmdStr).arg(cmdByte, 2, 16, QChar('0')).toUpper();
         pkt.aux1 = QString("$%1").arg(static_cast<quint8>(data[2]), 2, 16, QChar('0')).toUpper();
         pkt.aux2 = QString("$%1").arg(static_cast<quint8>(data[3]), 2, 16, QChar('0')).toUpper();
         pkt.payloadHex = "--";
 
+        if (data.size() == 5) {
+            quint8 calcSum = calculateAtariChecksum(data, 4);
+            quint8 actualSum = static_cast<quint8>(data[4]);
+            pkt.checksumStatus = (calcSum == actualSum) ? "OK" : QString("FAIL (Expected $%1)").arg(calcSum, 2, 16, QChar('0')).toUpper();
+        } else {
+            pkt.checksumStatus = "N/A (Header)";
+        }
+
     } else {
-        // It's a Data Payload or ACK/NAK
         pkt.command = "--";
         pkt.aux1 = "--";
         pkt.aux2 = "--";
 
-        // Convert up to 16 bytes for preview
-        QByteArray preview = data.mid(0, 16);
+        int payloadEnd = data.size() > 1 ? data.size() - 1 : data.size();
+        int previewLen = std::min(payloadEnd, 16);
+
+        QByteArray preview = data.mid(0, previewLen);
         for (char c : preview) {
             pkt.payloadHex += QString("%1 ").arg(static_cast<quint8>(c), 2, 16, QChar('0')).toUpper();
         }
-        if (data.size() > 16) pkt.payloadHex += "...";
-    }
+        if (payloadEnd > 16) pkt.payloadHex += "...";
 
-    pkt.checksumStatus = "OK";
+        if (data.size() > 1) {
+            quint8 calcSum = calculateAtariChecksum(data, data.size() - 1);
+            quint8 actualSum = static_cast<quint8>(data[data.size() - 1]);
+            pkt.checksumStatus = (calcSum == actualSum) ? "OK" : QString("FAIL (Expected $%1)").arg(calcSum, 2, 16, QChar('0')).toUpper();
+        } else {
+            pkt.checksumStatus = "--";
+        }
+    }
 
     model->addPacket(pkt);
     tableView->scrollToBottom();
@@ -260,14 +399,10 @@ void SioPacketDialog::onSaveClicked() {
     }
 
     QTextStream out(&file);
-
-    // Write CSV Header
     out << "Time(ms),Direction,Command,Aux1,Aux2,Length,Payload,Checksum\n";
 
-    // Write Data Rows
     const QList<SioPacket> &packets = model->getPackets();
     for (const SioPacket &pkt : packets) {
-        // Enclose strings in quotes to prevent issues with commas inside the data
         out << pkt.timestamp << ","
             << "\"" << pkt.direction << "\","
             << "\"" << pkt.command << "\","
