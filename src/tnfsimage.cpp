@@ -5,6 +5,8 @@
 #include <QApplication>
 #include <QFile>
 #include <QtGlobal>
+#include <QThread>
+#include <cmath>
 #include <QRandomGenerator>
 
 TnfsImage::TnfsImage(SioWorker *worker) : SioDevice(worker)
@@ -13,9 +15,11 @@ TnfsImage::TnfsImage(SioWorker *worker) : SioDevice(worker)
     m_tnfsSectorSize = 128;
     m_isAtx = false;
     m_isXex = false;
+    m_spt = 18;
+    m_currentWeakOffset = 0xFFFF;
+    m_targetAngularPosition = 0;
     m_driveIdentity = "RAM Drive";
 
-    // Initialize ATX pointers
     for(int i=0; i<100; i++) atx.tracks[i].sectors = nullptr;
 }
 
@@ -34,7 +38,6 @@ void TnfsImage::cleanupAtx()
     }
 }
 
-
 bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
 {
     m_driveIdentity = "TNFS (RAM)";
@@ -44,7 +47,6 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     QString fullPath = qurl.path(QUrl::ComponentFormattingOption::FullyDecoded);
     QString host = qurl.host();
 
-    // --- RESET STATE ---
     m_imgData.clear();
     m_bootSectors.clear();
     m_chunks.clear();
@@ -52,11 +54,9 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     m_isXex = false;
     cleanupAtx();
 
-    // 1. Force UI Update immediately to show "Connecting..."
     qDebug() << "!n" << m_driveIdentity + ":" << "Connecting to" << host << "...";
     QCoreApplication::processEvents();
 
-    // --- KILL SWITCH CHECK 1 ---
     if (activeIdPtr && *activeIdPtr != myId) { QApplication::restoreOverrideCursor(); return false; }
 
     TnfsClient client;
@@ -75,11 +75,9 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     QString pathNoSlash = fullPath.startsWith("/") ? fullPath.mid(1) : fullPath;
     QString pathWithSlash = fullPath.startsWith("/") ? fullPath : "/" + fullPath;
 
-    // --- STRATEGY 1: Try STAT (Preferred) ---
     quint32 totalSize = client.getFileSize(pathNoSlash);
     if (totalSize == 0) totalSize = client.getFileSize(pathWithSlash);
 
-    // --- OPEN FILE ---
     quint8 handle = client.openFile(pathNoSlash);
     if (handle == 0xFF) handle = client.openFile(pathWithSlash);
 
@@ -89,19 +87,11 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
         return false;
     }
 
-    // --- STRATEGY 2: Try LSEEK (Fallback) ---
-    if (totalSize == 0) {
-        totalSize = client.getFileSize(handle);
-    }
+    if (totalSize == 0) totalSize = client.getFileSize(handle);
 
-    // --- LOGGING & UI SETUP ---
-    if (totalSize > 0) {
-        qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(" << totalSize << "bytes)...";
-    } else {
-        qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(Stream mode)...";
-    }
+    if (totalSize > 0) qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(" << totalSize << "bytes)...";
+    else qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(Stream mode)...";
 
-    // FORCE PAINT: Ensure the log window updates before we enter the loop
     QCoreApplication::sendPostedEvents();
     QCoreApplication::processEvents();
 
@@ -119,31 +109,25 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     QElapsedTimer progressTimer;
     progressTimer.start();
 
-    // Initial Signal
     emit downloadProgress(0, totalSize);
     QCoreApplication::processEvents();
 
     while (true) {
-
         if (activeIdPtr && *activeIdPtr != myId) {
             qDebug() << "!w" << m_driveIdentity + ":" << "Download aborted by user.";
             client.closeFile(handle);
             QApplication::restoreOverrideCursor();
-            return false; // Safely exit!
+            return false;
         }
 
-        // Download in 1KB chunks
         QByteArray chunk = client.readFile(handle, offset, 1024);
-
         if (chunk.isEmpty()) break;
 
         m_imgData.append(chunk);
         offset += chunk.size();
 
-        // Emit Progress
         emit downloadProgress(offset, totalSize);
 
-        // UI Refresh Logic (50ms)
         if (progressTimer.elapsed() > 50) {
             QCoreApplication::processEvents();
             progressTimer.restart();
@@ -157,18 +141,14 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
         }
     }
 
-    if (totalSize > 0) {
-        emit downloadProgress(totalSize, totalSize);
-    } else {
-        emit downloadProgress(m_imgData.size(), m_imgData.size());
-    }
+    if (totalSize > 0) emit downloadProgress(totalSize, totalSize);
+    else emit downloadProgress(m_imgData.size(), m_imgData.size());
 
     QCoreApplication::processEvents();
-
     client.closeFile(handle);
     qDebug() << "!n" << m_driveIdentity + ":" << "Download Complete. Size:" << m_imgData.size();
 
-    // 1. ATX Format (Copy Protected)
+    // 1. ATX Format
     if (fullPath.endsWith(".atx", Qt::CaseInsensitive)) {
         if (!parseAtx()) {
             qWarning() << "!e" << m_driveIdentity + ":" << "Invalid ATX Header or Corrupt File.";
@@ -178,7 +158,7 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
         m_isAtx = true;
         qDebug() << "!n" << m_driveIdentity + ":" << "ATX Protection Loaded.";
     }
-    // 2. XEX Format (Executable)
+    // 2. XEX Format
     else if (fullPath.endsWith(".xex", Qt::CaseInsensitive) || fullPath.endsWith(".exe", Qt::CaseInsensitive)) {
         if (!parseXex()) {
             qWarning() << "!e" << m_driveIdentity + ":" << "Invalid XEX Executable.";
@@ -194,7 +174,6 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
         m_headerSkip = 0;
         m_tnfsSectorSize = 128;
 
-        // Validate Magic Number (0x96 0x02)
         if (m_imgData.size() >= 16) {
             quint16 magic = (quint8)m_imgData[0] + ((quint8)m_imgData[1] << 8);
             quint16 secSz = (quint8)m_imgData[4] + ((quint8)m_imgData[5] << 8);
@@ -205,7 +184,6 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
                 qDebug() << "!n" << m_driveIdentity + ":" << "ATR Header Valid. Sector Size:" << m_tnfsSectorSize;
             }
         }
-
         if (m_imgData.size() < 128) {
             qWarning() << "!e" << m_driveIdentity + ":" << "Image too small!";
             QApplication::restoreOverrideCursor();
@@ -221,7 +199,6 @@ bool TnfsImage::openFromMemory(const QString &fileName, const QByteArray &data)
 {
     m_driveIdentity = "Web Drop (RAM)";
 
-    // 1. Reset State
     m_imgData.clear();
     m_bootSectors.clear();
     m_chunks.clear();
@@ -229,11 +206,9 @@ bool TnfsImage::openFromMemory(const QString &fileName, const QByteArray &data)
     m_isXex = false;
     cleanupAtx();
 
-    // 2. Load the payload directly into the RAM buffer
     m_imgData = data;
     m_originalFileName = fileName;
 
-    // 3. Parse the format safely
     if (fileName.endsWith(".atx", Qt::CaseInsensitive)) {
         if (!parseAtx()) {
             qWarning() << "!e" << m_driveIdentity + ":" << "Invalid ATX Header or Corrupt File.";
@@ -252,7 +227,6 @@ bool TnfsImage::openFromMemory(const QString &fileName, const QByteArray &data)
         qDebug() << "!n" << m_driveIdentity + ":" << "XEX Loader Prepared.";
     }
     else {
-        // Standard ATR Header parsing
         m_headerSkip = 0;
         m_tnfsSectorSize = 128;
         if (m_imgData.size() >= 16 && (quint8)m_imgData[0] == 0x96 && (quint8)m_imgData[1] == 0x02) {
@@ -267,7 +241,6 @@ bool TnfsImage::openFromMemory(const QString &fileName, const QByteArray &data)
 
 bool TnfsImage::parseXex()
 {
-    // Load the internal AspeQt loader binary
     QFile boot(":/binaries/autoboot.bin");
 
     if (!boot.open(QFile::ReadOnly)) {
@@ -280,7 +253,6 @@ bool TnfsImage::parseXex()
     int cursor = 0;
     int size = m_imgData.size();
 
-    // Check Header (0xFF 0xFF)
     if (size < 2) return false;
     int start = (quint8)m_imgData[0] + (quint8)m_imgData[1] * 256;
     cursor += 2;
@@ -290,31 +262,26 @@ bool TnfsImage::parseXex()
         return false;
     }
 
-    // Read First Segment Start
     if (cursor + 2 > size) return false;
     start = (quint8)m_imgData[cursor] + (quint8)m_imgData[cursor+1] * 256;
     cursor += 2;
 
-    // Segment Loop
     while (true) {
-        // Read Segment End
         if (cursor + 2 > size) break;
         int end = (quint8)m_imgData[cursor] + (quint8)m_imgData[cursor+1] * 256;
         cursor += 2;
 
-        if (end < start) break; // Invalid
+        if (end < start) break;
 
         int segLen = end - start + 1;
         if (cursor + segLen > size) break;
 
-        // Split large segments into SIO-friendly chunks (max 1024)
         QByteArray segData = m_imgData.mid(cursor, segLen);
         cursor += segLen;
 
         int maxChunkSize = 1024;
         for (int i = 0; i < segData.size(); i += maxChunkSize) {
             TnfsExeChunk ch;
-            // Use qMin to avoid overrun
             int len = 0;
             if (i + maxChunkSize > segData.size()) len = segData.size() - i;
             else len = maxChunkSize;
@@ -327,12 +294,10 @@ bool TnfsImage::parseXex()
 
         if (cursor >= size) break;
 
-        // Read Next Segment Header
         if (cursor + 2 > size) break;
         start = (quint8)m_imgData[cursor] + (quint8)m_imgData[cursor+1] * 256;
         cursor += 2;
 
-        // Handle optional internal $FFFF headers
         if (start == 0xFFFF) {
             if (cursor + 2 > size) break;
             start = (quint8)m_imgData[cursor] + (quint8)m_imgData[cursor+1] * 256;
@@ -348,11 +313,13 @@ bool TnfsImage::parseAtx()
 {
     if (m_imgData.size() < 48) return false;
 
-    // Check Header "AT8X"
     if (m_imgData[0] != 'A' || m_imgData[1] != 'T' || m_imgData[2] != '8' || m_imgData[3] != 'X') return false;
 
     atx.version = VAPI_16(m_imgData, 4);
     atx.start = VAPI_32(m_imgData, 28);
+
+    quint8 density = VAPI_8(m_imgData, 18);
+    m_spt = (density == 1) ? 26 : 18;
 
     quint32 start = atx.start;
     quint8 track = 0;
@@ -383,15 +350,46 @@ bool TnfsImage::parseAtx()
             atx.tracks[track].sectors[s].status   = ~VAPI_8 (m_imgData, currentSectorPos + 1);
             atx.tracks[track].sectors[s].position = VAPI_16(m_imgData, currentSectorPos + 2);
             atx.tracks[track].sectors[s].start    = VAPI_32(m_imgData, currentSectorPos + 4);
+            atx.tracks[track].sectors[s].weakOffset = 0xFFFF;
 
             currentSectorPos += 8;
+        }
+
+        // VAPI Proper: Scan remaining chunks in this track for Extended Sector Info (0x08)
+        quint32 currentChunkPos = sectorListPos + atx.tracks[track].sector_list_header.size;
+        quint32 endOfTrack = start + atx.tracks[track].next;
+
+        while (currentChunkPos < endOfTrack) {
+            if (currentChunkPos + 8 > (quint32)m_imgData.size()) break;
+
+            quint32 chunkSize = VAPI_32(m_imgData, currentChunkPos);
+            quint8 chunkType = VAPI_8(m_imgData, currentChunkPos + 4);
+
+            if (chunkType == 0x08) {
+                quint32 extDataPos = currentChunkPos + 8;
+                for (int s = 0; s < atx.tracks[track].numsectors; s++) {
+                    if (extDataPos + 8 > (quint32)m_imgData.size()) break;
+
+                    quint16 wOffset = VAPI_16(m_imgData, extDataPos + 6);
+                    atx.tracks[track].sectors[s].weakOffset = wOffset;
+
+                    // Clear the inverted 0x40 bit flag
+                    if (wOffset != 0xFFFF) {
+                        atx.tracks[track].sectors[s].status &= ~0x40;
+                    }
+                    extDataPos += 8;
+                }
+                break;
+            }
+            if (chunkSize == 0) break;
+            currentChunkPos += chunkSize;
         }
 
         start += atx.tracks[track].next;
         track++;
     }
 
-    phantomflip = 0;
+    m_driveTimer.start(); // Begin continuous 288 RPM spin
     return true;
 }
 
@@ -487,7 +485,6 @@ void TnfsImage::sendStatus()
     status.append((char)0xE0);
     status.append((char)0x00);
 
-    // Inject WD1772 status if ATX
     if (m_isAtx) status[1] = wd1772status;
 
     sio->port()->writeComplete();
@@ -502,20 +499,16 @@ bool TnfsImage::readSector(quint16 sector, QByteArray &data)
 
         quint32 offset = (sector - 1) * 128;
 
-        // --- FIX: Bounds Checking & Padding ---
-        // If the start of the sector is beyond the file, just return zeros
         if (offset >= (quint32)m_bootSectors.size()) {
             data.fill(0, 128);
             return true;
         }
 
-        // Calculate actual bytes available to read
         int bytesAvailable = m_bootSectors.size() - offset;
         int bytesToRead = qMin(128, bytesAvailable);
 
         data = m_bootSectors.mid(offset, bytesToRead);
 
-        // Pad with zeros if we read less than 128 bytes
         if (data.size() < 128) {
             data.append(QByteArray(128 - data.size(), 0));
         }
@@ -554,28 +547,50 @@ bool TnfsImage::readSector(quint16 sector, QByteArray &data)
 // --- ATX HELPERS ---
 bool TnfsImage::seekToSectorAtx(quint16 sector, quint32 &offset)
 {
-    int track = (sector - 1) / 18;
-    int tracksector = (sector - 1) % 18;
-    int trackindex = 0;
+    int track = (sector - 1) / m_spt;
+    int tracksector = (sector - 1) % m_spt;
 
     if (track >= 100) return false;
 
     int actualSectors = atx.tracks[track].numsectors;
-    bool found = false;
+    int matchedIndices[256];
+    int matchCount = 0;
 
     for (int i = 0; i < actualSectors; i++) {
         if (atx.tracks[track].sectors[i].number == (tracksector + 1)) {
-            trackindex = i;
-            found = true;
-            if (phantomflip) break;
+            matchedIndices[matchCount] = i;
+            matchCount++;
         }
     }
 
-    if (found) phantomflip = !phantomflip;
-    else return false;
+    if (matchCount == 0) return false;
+
+    // Geographic Closest Sector Logic
+    double rotations = m_driveTimer.elapsed() / 208.3333333;
+    quint16 current_angular_pos = (quint16)(std::fmod(rotations, 1.0) * 26042.0);
+
+    int best_index = matchedIndices[0];
+    int min_distance = 26043;
+
+    for (int i = 0; i < matchCount; i++) {
+        quint16 sec_pos = atx.tracks[track].sectors[matchedIndices[i]].position;
+
+        int dist = (sec_pos >= current_angular_pos) ?
+                       (sec_pos - current_angular_pos) :
+                       (sec_pos + 26042 - current_angular_pos);
+
+        if (dist < min_distance) {
+            min_distance = dist;
+            best_index = matchedIndices[i];
+        }
+    }
+
+    int trackindex = best_index;
 
     offset = atx.tracks[track].pos + atx.tracks[track].sectors[trackindex].start;
     wd1772status = atx.tracks[track].sectors[trackindex].status;
+    m_currentWeakOffset = atx.tracks[track].sectors[trackindex].weakOffset;
+    m_targetAngularPosition = atx.tracks[track].sectors[trackindex].position;
 
     return true;
 }
@@ -585,20 +600,44 @@ bool TnfsImage::readSectorAtx(quint16 sector, QByteArray &data)
     quint32 offset = 0;
     if (!seekToSectorAtx(sector, offset)) return false;
 
-    if (wd1772status != 0xff) {
-        data = m_imgData.mid(offset, 128);
-        // Zorro Hack
-        if (wd1772status == 0xB7) {
-            for (int i=0; i<data.size(); i++) {
-                if (data[i] == '\x33') {
-                    data[i] = QRandomGenerator::global()->generate() & 0xFF;
-                }
-            }
-            return true;
+    // 288 RPM Rotational Delay
+    double rotations = m_driveTimer.elapsed() / 208.3333333;
+    quint16 current_angular_pos = (quint16)(std::fmod(rotations, 1.0) * 26042.0);
+
+    int distance = (m_targetAngularPosition >= current_angular_pos) ?
+                       (m_targetAngularPosition - current_angular_pos) :
+                       (m_targetAngularPosition + 26042 - current_angular_pos);
+
+    int expectedDelayMs = (int)((distance / 26042.0) * 208.333);
+
+    if (expectedDelayMs > 0) {
+        QThread::msleep(expectedDelayMs);
+    }
+
+    // Determine payload size based on density
+    int bytesToRead = (m_spt == 18 && m_imgData[18] == 2) ? 256 : 128;
+    data = m_imgData.mid(offset, bytesToRead);
+
+    bool isWeak = false;
+
+    if (m_currentWeakOffset != 0xFFFF && m_currentWeakOffset < data.size()) {
+        for (int i = m_currentWeakOffset; i < data.size(); i++) {
+            data[i] = QRandomGenerator::global()->generate() % 0xFF;
         }
+        isWeak = true;
+    }
+    else if (wd1772status == 0xB7) {
+        for (int i=0; i<data.size(); i++) {
+            if (data[i] == '\x33') {
+                data[i] = QRandomGenerator::global()->generate() % 0xFF;
+            }
+        }
+        isWeak = true;
+    }
+
+    if (wd1772status != 0xff && !isWeak) {
         return false;
     }
 
-    data = m_imgData.mid(offset, 128);
     return true;
 }

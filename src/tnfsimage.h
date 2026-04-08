@@ -13,7 +13,7 @@
 #define VAPI_16(x, y) ((quint8)x[y] + ((quint8)x[y+1] << 8))
 #define VAPI_8(x, y) ((quint8)x[y])
 
-// --- XEX CHUNK STRUCTURE (Renamed to avoid conflict with AutoBoot) ---
+// --- XEX CHUNK STRUCTURE ---
 struct TnfsExeChunk {
     int address;
     QByteArray data;
@@ -29,7 +29,7 @@ public:
     // Downloads to RAM, Detects Format, Prepares Loader
     bool openUrl(const QString &url, volatile int *activeIdPtr = nullptr, int myId = 0);
 
-    // --- NEW: Directly load a payload into RAM (For Web UI Drops) ---
+    // Directly load a payload into RAM (For Web UI Drops)
     bool openFromMemory(const QString &fileName, const QByteArray &data);
 
     QString originalFileName() const { return m_originalFileName; }
@@ -47,16 +47,16 @@ private:
     // Core Data
     QByteArray m_imgData;
     QString m_originalFileName;
-    QString m_driveIdentity; // Holds "TNFS (RAM)" or "Web Drop (RAM)"
+    QString m_driveIdentity;
 
     // Format Flags
     bool m_isAtx;
     bool m_isXex;
 
     // --- XEX SPECIFIC ---
-    QByteArray m_bootSectors;      // The "Micro-DOS" loader code
-    QList<TnfsExeChunk> m_chunks;  // The broken-down executable parts
-    bool m_booterLoaded;           // State tracking for the loader
+    QByteArray m_bootSectors;
+    QList<TnfsExeChunk> m_chunks;
+    bool m_booterLoaded;
 
     // --- ATR SPECIFIC ---
     int m_headerSkip;
@@ -64,7 +64,13 @@ private:
 
     // --- ATX / VAPI DATA STRUCTURES ---
     struct atx_sector_list_header { quint32 size; quint8 type; };
-    struct atx_sector { quint8 number; quint8 status; quint16 position; quint32 start; };
+    struct atx_sector {
+        quint8 number;
+        quint8 status;
+        quint16 position;
+        quint32 start;
+        quint16 weakOffset;
+    };
     struct atx_track_header {
         quint32 pos; quint32 next; quint16 type; quint8 track; quint16 numsectors; quint32 start;
         atx_sector_list_header sector_list_header; atx_sector *sectors;
@@ -72,8 +78,13 @@ private:
     struct atx_file { quint16 version; quint32 start; atx_track_header tracks[100]; };
 
     atx_file atx;
-    int phantomflip;
     quint8 wd1772status;
+
+    // Hardware Emulation State
+    int m_spt; // Sectors per track
+    quint16 m_currentWeakOffset;
+    quint16 m_targetAngularPosition;
+    QElapsedTimer m_driveTimer;
 
     // --- METHODS ---
     void sendStatus();

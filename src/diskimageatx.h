@@ -1,8 +1,9 @@
 #ifndef DISKIMAGEATX_H
 #define DISKIMAGEATX_H
+
 #include <QAction>
 #include "diskimage.h"
-
+#include <QElapsedTimer>
 
 class DiskImageAtx : public SimpleDiskImage
 {
@@ -32,6 +33,7 @@ protected:
         quint8 status;
         quint16 position;
         quint32 start;
+        quint16 weakOffset; // Added for dynamic fuzzy sector support
     };
     struct atx_track_header
     {
@@ -54,9 +56,10 @@ protected:
     QFile *sourceFile;
     quint8 count[1040];
     quint8 wd1772status;
+    quint16 m_currentWeakOffset; // Stores weak offset of currently seeked sector
+    quint16 m_targetAngularPosition; // Replaces the old duplicate/sequential counters
     atx_file atx;
-    int lastsector;
-    int phantomflip;
+    QElapsedTimer m_driveTimer;
 };
 
 #endif // DISKIMAGEATX_H

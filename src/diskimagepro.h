@@ -1,12 +1,8 @@
-/*
- * diskimagepro.h
- */
-
 #ifndef DISKIMAGEPRO_H
 #define DISKIMAGEPRO_H
 
 #include "diskimage.h"
-#include <QAction>
+#include <QElapsedTimer>
 
 class DiskImagePro : public SimpleDiskImage
 {
@@ -25,8 +21,10 @@ public:
     bool format(const DiskGeometry& );
 protected:
     QFile *sourceFile;
-    quint8 count[1040];
+    quint8 count[2048]; // Expanded to prevent off-by-one crashes on 1040 ED sectors
     quint8 wd1772status;
+    QElapsedTimer m_driveTimer;
+    int m_lastRequestedSector;
 };
 
 #endif // DISKIMAGEPRO_H
