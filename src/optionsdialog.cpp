@@ -23,8 +23,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->setupUi(this);
 
     // --- SIGNAL/SLOT ADJUSTMENT FOR VALIDATION ---
-    // We disconnect the default "accepted" signal so the window doesn't close immediately.
-    // Instead, we route the OK button to our save/validate slot first.
     disconnect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(OptionsDialog_accepted()));
     // ---------------------------------------------
@@ -41,8 +39,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->treeWidget->topLevelItem(0)->removeChild(itemAtariSio);
 #endif
 
-    /* Retrieve application settings */
-
     // MUTE SIGNALS: Prevent the UI from crashing while we load data
     m_ui->serialPortComboBox->blockSignals(true);
     m_ui->modemPortComboBox->blockSignals(true);
@@ -50,21 +46,16 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     // --- Standard Serial Port Combo Setup ---
     m_ui->serialPortComboBox->clear();
     const QList<QSerialPortInfo>& infos = QSerialPortInfo::availablePorts();
-    for (const QSerialPortInfo &info : infos)
-    {
+    for (const QSerialPortInfo &info : infos) {
         m_ui->serialPortComboBox->addItem(info.portName(), info.systemLocation());
     }
 
-    // Set current SIO Port and handle custom values
     m_ui->serialPortComboBox->setCurrentText(aspeqtSettings->serialPortName());
-    if(0 != m_ui->serialPortComboBox->currentText().compare(aspeqtSettings->serialPortName(), Qt::CaseInsensitive))
-    {
+    if(0 != m_ui->serialPortComboBox->currentText().compare(aspeqtSettings->serialPortName(), Qt::CaseInsensitive)) {
         m_ui->serialPortComboBox->setEditable(true);
         m_ui->serialPortComboBox->addItem(aspeqtSettings->serialPortName());
         m_ui->serialPortComboBox->setCurrentText(aspeqtSettings->serialPortName());
-    }
-    else
-    {
+    } else {
         m_ui->serialPortComboBox->addItem(tr("Custom"));
     }
 
@@ -74,61 +65,22 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         m_ui->modemPortComboBox->addItem(info.portName(), info.systemLocation());
     }
 
-    // Set current Modem Port and handle custom values
     m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
-    if(0 != m_ui->modemPortComboBox->currentText().compare(aspeqtSettings->modemBridgePortName(), Qt::CaseInsensitive))
-    {
+    if(0 != m_ui->modemPortComboBox->currentText().compare(aspeqtSettings->modemBridgePortName(), Qt::CaseInsensitive)) {
         m_ui->modemPortComboBox->setEditable(true);
         m_ui->modemPortComboBox->addItem(aspeqtSettings->modemBridgePortName());
         m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
-    }
-    else
-    {
+    } else {
         m_ui->modemPortComboBox->addItem(tr("Custom"));
     }
 
-    // UNMUTE SIGNALS: The UI is fully loaded, safe to listen for clicks again
+    // UNMUTE SIGNALS
     m_ui->serialPortComboBox->blockSignals(false);
     m_ui->modemPortComboBox->blockSignals(false);
 
-    // Set Modem Bridge Defaults
-    m_ui->modemEnableBox->setChecked(aspeqtSettings->isModemBridgeEnabled());
-    m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
-    m_ui->modemBaudComboBox->setCurrentText(QString::number(aspeqtSettings->modemBridgeBaudRate()));
-    m_ui->modemFlowControlBox->setChecked(aspeqtSettings->modemBridgeFlowControl());
-    m_ui->modemSshBox->setChecked(aspeqtSettings->modemBridgeSshEnabled());
-    m_ui->modemLocalEchoBox->setChecked(aspeqtSettings->modemBridgeLocalEcho());
-
-    // Set Web UI Defaults
-    m_ui->cbEnableWebUi->setChecked(aspeqtSettings->isWebUiEnabled());
-    m_ui->sbHttpPort->setValue(aspeqtSettings->webUiPort());
-    m_ui->sbWsPort->setValue(aspeqtSettings->webUiWsPort());
-
-    // Set R: Device Defaults
-    m_ui->modemRBox->setChecked(aspeqtSettings->isRDeviceEnabled());
-
-    // Trigger initial state for Modem UI
-    // Note: This function now checks both boxes to determine phonebook state
-    on_modemEnableBox_toggled(aspeqtSettings->isModemBridgeEnabled());
-
-    m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
-    m_ui->mDirectUart->setChecked(aspeqtSettings->serialPortHardwareUart()); // [NEW] Set Direct UART UI State
-
-    // Call UI handler to gray out delay boxes if HW UART is active
-    on_mDirectUart_toggled(aspeqtSettings->serialPortHardwareUart());
-
-    m_ui->serialPortWriteDelayCombo->setCurrentIndex(aspeqtSettings->serialPortWriteDelay());
-    m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
-    m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
-    m_ui->serialPortDivisorEdit->setValue(aspeqtSettings->serialPortPokeyDivisor());
-    m_ui->serialPortCompErrDelayBox->setValue(aspeqtSettings->serialPortCompErrDelay());
-    m_ui->sbStreamGuardDelay->setValue(aspeqtSettings->streamGuardDelay()); // [NEW] Set Stream Guard Delay
-
-    m_ui->atariSioDriverNameEdit->setText(aspeqtSettings->atariSioDriverName());
-    m_ui->atariSioHandshakingMethodCombo->setCurrentIndex(aspeqtSettings->atariSioHandshakingMethod());
-    m_ui->emulationHighSpeedExeLoaderBox->setChecked(aspeqtSettings->useHighSpeedExeLoader());
-    m_ui->emulationUseCustomCasBaudBox->setChecked(aspeqtSettings->useCustomCasBaud());
-    m_ui->emulationCustomCasBaudSpin->setValue(aspeqtSettings->customCasBaud());
+    // ==========================================
+    // 1. General & UI Settings
+    // ==========================================
     m_ui->minimizeToTrayBox->setChecked(aspeqtSettings->minimizeToTray());
     m_ui->saveWinPosBox->setChecked(aspeqtSettings->saveWindowsPos());
     m_ui->saveDiskVisBox->setChecked(aspeqtSettings->saveDiskVis());
@@ -136,9 +88,63 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->capitalLettersPCLINK->setChecked(aspeqtSettings->capitalLettersInPCLINK());
     m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
     m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
-    m_ui->tnfsAutoConnectBox->setChecked(aspeqtSettings->restoreTnfsLocation());
-    m_ui->modemPhonebookPathEdit->setText(aspeqtSettings->modemBridgePhonebookPath());
 
+    // ==========================================
+    // 2. Standard Serial Port Backend
+    // ==========================================
+    m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
+    m_ui->mDirectUart->setChecked(aspeqtSettings->serialPortHardwareUart());
+    on_mDirectUart_toggled(aspeqtSettings->serialPortHardwareUart()); // Trigger gray-outs
+    m_ui->serialPortWriteDelayCombo->setCurrentIndex(aspeqtSettings->serialPortWriteDelay());
+    m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
+    m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
+    m_ui->serialPortDivisorEdit->setValue(aspeqtSettings->serialPortPokeyDivisor());
+    m_ui->serialPortCompErrDelayBox->setValue(aspeqtSettings->serialPortCompErrDelay());
+
+    // ==========================================
+    // 3. Emulation & Virtual Devices
+    // ==========================================
+    m_ui->atariSioDriverNameEdit->setText(aspeqtSettings->atariSioDriverName());
+    m_ui->atariSioHandshakingMethodCombo->setCurrentIndex(aspeqtSettings->atariSioHandshakingMethod());
+    m_ui->emulationHighSpeedExeLoaderBox->setChecked(aspeqtSettings->useHighSpeedExeLoader());
+    m_ui->emulationUseCustomCasBaudBox->setChecked(aspeqtSettings->useCustomCasBaud());
+    m_ui->emulationCustomCasBaudSpin->setValue(aspeqtSettings->customCasBaud());
+
+    // ==========================================
+    // 4. Modem Bridge, RDevice & BBS Listener
+    // ==========================================
+    m_ui->modemEnableBox->setChecked(aspeqtSettings->isModemBridgeEnabled());
+    m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
+    m_ui->modemBaudComboBox->setCurrentText(QString::number(aspeqtSettings->modemBridgeBaudRate()));
+    m_ui->modemFlowControlBox->setChecked(aspeqtSettings->modemBridgeFlowControl());
+    m_ui->modemSshBox->setChecked(aspeqtSettings->modemBridgeSshEnabled());
+    m_ui->modemLocalEchoBox->setChecked(aspeqtSettings->modemBridgeLocalEcho());
+    m_ui->modemPhonebookPathEdit->setText(aspeqtSettings->modemBridgePhonebookPath());
+    m_ui->modemInvertCtsBox->setChecked(aspeqtSettings->invertCtsLogic());
+    m_ui->sbStreamGuardDelay->setValue(aspeqtSettings->streamGuardDelay());
+
+    m_ui->modemRBox->setChecked(aspeqtSettings->isRDeviceEnabled());
+    on_modemEnableBox_toggled(aspeqtSettings->isModemBridgeEnabled()); // Trigger initial states
+
+    // [NEW] BBS Listener Setup
+    m_ui->enableBbsPort->setChecked(aspeqtSettings->bbsListenerEnabled());
+    m_ui->bbsPortBox->setMinimum(1024);
+    m_ui->bbsPortBox->setMaximum(65535);
+    m_ui->bbsPortBox->setValue(aspeqtSettings->modemListenPort());
+    m_ui->bbsPortBox->setEnabled(aspeqtSettings->bbsListenerEnabled());
+    connect(m_ui->enableBbsPort, &QCheckBox::toggled, m_ui->bbsPortBox, &QSpinBox::setEnabled);
+
+    // ==========================================
+    // 5. TNFS & Web UI
+    // ==========================================
+    m_ui->tnfsAutoConnectBox->setChecked(aspeqtSettings->restoreTnfsLocation());
+    m_ui->eolPostCheckBox->setChecked(aspeqtSettings->translateEolOnPost());
+    m_ui->eolGetCheckBox->setChecked(aspeqtSettings->translateEolOnGet());
+    m_ui->cbEnableWebUi->setChecked(aspeqtSettings->isWebUiEnabled());
+    m_ui->sbHttpPort->setValue(aspeqtSettings->webUiPort());
+    m_ui->sbWsPort->setValue(aspeqtSettings->webUiWsPort());
+
+    // --- Backend Tree Mapping ---
     switch (aspeqtSettings->backend()) {
     case SERIAL_BACKEND_STANDARD:
         itemStandard->setCheckState(0, Qt::Checked);
@@ -154,7 +160,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
     m_ui->atariSioBox->setCheckState(itemAtariSio->checkState(0));
 
-    /* list available translations */
+    // --- Translations ---
     QTranslator local_translator;
     m_ui->i18nLanguageCombo->clear();
     m_ui->i18nLanguageCombo->addItem(tr("Automatic"), "auto");
@@ -175,11 +181,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         }
     }
 
-    bool no_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_NO_HANDSHAKE);
     bool software_handshake = (aspeqtSettings->serialPortHandshakingMethod()==HANDSHAKE_SOFTWARE);
-    bool hwUart = m_ui->mDirectUart->isChecked();
-    bool rDevice = m_ui->modemRBox->isChecked();
-
     m_ui->serialPortWriteDelayLabel->setVisible(software_handshake);
     m_ui->serialPortWriteDelayCombo->setVisible(software_handshake);
     m_ui->serialPortBaudLabel->setVisible(!software_handshake);
@@ -190,26 +192,9 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->serialPortCompErrDelayLabel->setVisible(!software_handshake);
     m_ui->serialPortCompErrDelayBox->setVisible(!software_handshake);
 
-    // Respect HW UART Checkbox when enabling/disabling standard artificial delays
-    m_ui->serialPortCompErrDelayBox->setEnabled(!hwUart);
-    m_ui->serialPortCompErrDelayLabel->setEnabled(!hwUart);
-    m_ui->serialPortWriteDelayCombo->setEnabled(!hwUart);
-    m_ui->serialPortWriteDelayLabel->setEnabled(!hwUart);
-
-    // [NEW] Stream Guard is ONLY enabled if R: device is ON AND HW UART is OFF
-    m_ui->sbStreamGuardDelay->setEnabled(rDevice && !hwUart);
-    m_ui->label_streamGuardDelay->setEnabled(rDevice && !hwUart);
-
-    m_ui->eolPostCheckBox->setChecked(aspeqtSettings->translateEolOnPost());
-    m_ui->eolGetCheckBox->setChecked(aspeqtSettings->translateEolOnGet());
-    m_ui->modemInvertCtsBox->setChecked(aspeqtSettings->invertCtsLogic());
-
-    if((SERIAL_BACKEND_STANDARD == aspeqtSettings->backend()) && software_handshake)
-    {
+    if((SERIAL_BACKEND_STANDARD == aspeqtSettings->backend()) && software_handshake) {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(false);
-    }
-    else
-    {
+    } else {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(true);
     }
 
@@ -243,9 +228,8 @@ void OptionsDialog::on_serialPortComboBox_currentIndexChanged(int index)
 
 void OptionsDialog::on_serialPortHandshakeCombo_currentIndexChanged(int index)
 {
-    bool no_handshake = (index==HANDSHAKE_NO_HANDSHAKE);
     bool software_handshake = (index==HANDSHAKE_SOFTWARE);
-    bool hwUart = m_ui->mDirectUart->isChecked(); // [NEW] Get state
+    bool hwUart = m_ui->mDirectUart->isChecked();
 
     m_ui->serialPortWriteDelayLabel->setVisible(software_handshake);
     m_ui->serialPortWriteDelayCombo->setVisible(software_handshake);
@@ -257,18 +241,15 @@ void OptionsDialog::on_serialPortHandshakeCombo_currentIndexChanged(int index)
     m_ui->serialPortCompErrDelayLabel->setVisible(!software_handshake);
     m_ui->serialPortCompErrDelayBox->setVisible(!software_handshake);
 
-    // Keep artificial delay boxes disabled if Hardware UART is selected
     m_ui->serialPortCompErrDelayBox->setEnabled(!hwUart);
     m_ui->serialPortCompErrDelayLabel->setEnabled(!hwUart);
     m_ui->serialPortWriteDelayCombo->setEnabled(!hwUart);
     m_ui->serialPortWriteDelayLabel->setEnabled(!hwUart);
 
-    if(itemStandard->checkState((0)) == Qt::Checked)
-    {
+    if(itemStandard->checkState((0)) == Qt::Checked) {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(!software_handshake);
     }
 }
-
 
 void OptionsDialog::on_serialPortUseDivisorsBox_toggled(bool checked)
 {
@@ -280,28 +261,18 @@ void OptionsDialog::on_serialPortUseDivisorsBox_toggled(bool checked)
 
 void OptionsDialog::on_treeWidget_itemClicked(QTreeWidgetItem* item, int /*column*/)
 {
-    if (item->checkState(0) == Qt::Checked)
-    {
-        if (item == itemStandard)
-        {
+    if (item->checkState(0) == Qt::Checked) {
+        if (item == itemStandard) {
             m_ui->emulationHighSpeedExeLoaderBox->setVisible(HANDSHAKE_SOFTWARE != m_ui->serialPortHandshakeCombo->currentIndex());
-        }
-        else
-        {
+        } else {
             itemStandard->setCheckState(0, Qt::Unchecked);
         }
-        if (item == itemAtariSio)
-        {
+        if (item == itemAtariSio) {
             m_ui->emulationHighSpeedExeLoaderBox->setVisible(true);
-        }
-        else
-        {
+        } else {
             itemAtariSio->setCheckState(0, Qt::Unchecked);
         }
-    }
-    else if ((itemStandard->checkState(0) == Qt::Unchecked) &&
-             (itemAtariSio->checkState(0) == Qt::Unchecked))
-    {
+    } else if ((itemStandard->checkState(0) == Qt::Unchecked) && (itemAtariSio->checkState(0) == Qt::Unchecked)) {
         item->setCheckState(0, Qt::Checked);
     }
     m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
@@ -325,21 +296,17 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
     }
 }
 
-
 void OptionsDialog::on_modemEnableBox_toggled(bool checked)
 {
     if (checked) {
         m_ui->modemRBox->setChecked(false);
     }
-    // 1. Manage UI State for Modem Bridge (Physical Port Stuff)
     m_ui->modemPortComboBox->setEnabled(checked);
     m_ui->modemBaudComboBox->setEnabled(checked);
     m_ui->modemFlowControlBox->setEnabled(checked);
     m_ui->modemSshBox->setEnabled(checked);
     m_ui->modemLocalEchoBox->setEnabled(checked);
 
-    // 2. Manage Phonebook (Shared Resource)
-    // It should be enabled if Modem Bridge OR R: Device is enabled.
     bool rDeviceEnabled = m_ui->modemRBox->isChecked();
     bool phonebookEnabled = checked || rDeviceEnabled;
 
@@ -348,46 +315,33 @@ void OptionsDialog::on_modemEnableBox_toggled(bool checked)
     m_ui->modemPhonebookNewBtn->setEnabled(phonebookEnabled);
 }
 
-
 void OptionsDialog::on_modemRBox_toggled(bool checked)
 {
     if (checked) {
-        // 1. If R: Device is ON, turn Modem Bridge OFF
         if (m_ui->modemEnableBox->isChecked()) {
             m_ui->modemEnableBox->blockSignals(true);
             m_ui->modemInvertCtsBox->setEnabled(true);
             m_ui->modemEnableBox->setChecked(false);
             m_ui->modemEnableBox->blockSignals(false);
-
-            // Manually trigger the disable logic for the Bridge UI since we blocked signals
             on_modemEnableBox_toggled(false);
         }
-
-        // 2. Disable Physical Serial Port options (irrelevant for R: emulation)
         m_ui->modemPortComboBox->setEnabled(false);
         m_ui->modemBaudComboBox->setEnabled(false);
         m_ui->modemFlowControlBox->setEnabled(false);
         m_ui->modemSshBox->setEnabled(false);
         m_ui->modemLocalEchoBox->setEnabled(false);
-
-        // 3. ENABLE Phonebook options
         m_ui->modemPhonebookPathEdit->setEnabled(true);
         m_ui->modemPhonebookBrowseBtn->setEnabled(true);
         m_ui->modemPhonebookNewBtn->setEnabled(true);
-
         m_ui->modemInvertCtsBox->setEnabled(true);
-    }
-    else {
-        // If unchecking R: Device, check if Modem Bridge is enabled to decide Phonebook state
+    } else {
         bool bridgeEnabled = m_ui->modemEnableBox->isChecked();
         m_ui->modemPhonebookPathEdit->setEnabled(bridgeEnabled);
         m_ui->modemPhonebookBrowseBtn->setEnabled(bridgeEnabled);
         m_ui->modemPhonebookNewBtn->setEnabled(bridgeEnabled);
-
         m_ui->modemInvertCtsBox->setEnabled(false);
     }
 
-    // [NEW] Link the Stream Guard Delay to the R: Device state (and HW Uart)
     bool hwUart = m_ui->mDirectUart->isChecked();
     m_ui->sbStreamGuardDelay->setEnabled(checked && !hwUart);
     m_ui->label_streamGuardDelay->setEnabled(checked && !hwUart);
@@ -401,27 +355,23 @@ void OptionsDialog::on_modemPortComboBox_currentIndexChanged(int index)
 
 void OptionsDialog::on_mDirectUart_toggled(bool checked)
 {
-    // If Hardware UART is checked, disable the artificial delay spinboxes entirely
     m_ui->serialPortCompErrDelayBox->setEnabled(!checked);
     m_ui->serialPortCompErrDelayLabel->setEnabled(!checked);
     m_ui->serialPortWriteDelayCombo->setEnabled(!checked);
     m_ui->serialPortWriteDelayLabel->setEnabled(!checked);
 
-    // [NEW] Also evaluate Stream Guard Delay (Requires R: Device to be checked AND HW UART to be OFF)
     bool rDevice = m_ui->modemRBox->isChecked();
     m_ui->sbStreamGuardDelay->setEnabled(rDevice && !checked);
     m_ui->label_streamGuardDelay->setEnabled(rDevice && !checked);
 
-    // If they checked it while using Software Handshake, we should probably warn or force CTS
     if (checked && m_ui->serialPortHandshakeCombo->currentIndex() == HANDSHAKE_SOFTWARE) {
-        m_ui->serialPortHandshakeCombo->setCurrentIndex(HANDSHAKE_CTS); // Force CTS
+        m_ui->serialPortHandshakeCombo->setCurrentIndex(HANDSHAKE_CTS);
     }
 }
 
-
 void OptionsDialog::OptionsDialog_accepted()
 {
-    // --- VALIDATION: Check for Port Conflict! ---
+    // --- VALIDATION ---
     bool modemEnabled = m_ui->modemEnableBox->isChecked();
     QString sioPort = m_ui->serialPortComboBox->currentText();
     QString modemPort = m_ui->modemPortComboBox->currentText();
@@ -430,51 +380,23 @@ void OptionsDialog::OptionsDialog_accepted()
     if (modemEnabled && standardBackend && (sioPort == modemPort)) {
         QMessageBox::critical(this, tr("Port Conflict"),
                               tr("You cannot use the same Serial Port (%1) for both\nSIO Emulation and the Modem Bridge.\n\nPlease select a different port for the Modem.").arg(sioPort));
-        return; // Do not accept(), keep dialog open
+        return;
     }
 
     if (m_ui->cbEnableWebUi->isChecked()) {
         if (m_ui->sbHttpPort->value() == m_ui->sbWsPort->value()) {
             QMessageBox::critical(this, tr("Port Conflict"), tr("The HTTP Dashboard Port and WebSocket Bridge Port cannot be the same.\n\nPlease assign different ports."));
-            return; // Stops the save and keeps the dialog open!
+            return;
         }
     }
 
-    // --- WARNING: R: Device ---
-    // Commented out since R: Device now supports FTDI CTS/DSR hardware lines!
-
-    if (m_ui->modemRBox->isChecked() && aspeqtSettings->showRDeviceWarning()) {
-        QMessageBox msgBox(this);
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setWindowTitle(tr("850 R: Device Emulation"));
-        msgBox.setText(tr("The 850 R: Device emulation supports both standard USB SIO2PC adapters and Raspberry Pi raw UART connections.<br><br>"
-                          "<b>Note:</b> If you are using a generic USB-to-TTL adapter (like an FT232) instead of a dedicated SIO2PC cable, ensure your CTS logic is configured correctly.<br><br>"
-                          "For wiring and setup instructions, please see the <a href=\"https://github.com/pjones1063/AspeQt-2k26/blob/main/doc/RaspberryPi.pdf\">Raspberry Pi Hardware Guide</a>."));
-
-        // Ensure links are clickable
-        msgBox.setTextFormat(Qt::RichText);
-        msgBox.setTextInteractionFlags(Qt::TextBrowserInteraction);
-
-        // Add the "Don't show again" checkbox
-        QCheckBox *cb = new QCheckBox(tr("Don't show this warning again"));
-        msgBox.setCheckBox(cb);
-
-        msgBox.exec();
-
-        // Save the user's preference if they checked the box
-        if (cb->isChecked()) {
-            aspeqtSettings->setShowRDeviceWarning(false);
-        }
-    }
-
-    // ---------------------------------------
-
+    // --- SAVING ---
     aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
-    aspeqtSettings->setSerialPortHardwareUart(m_ui->mDirectUart->isChecked()); // Save HW UART setting
+    aspeqtSettings->setSerialPortHardwareUart(m_ui->mDirectUart->isChecked());
     aspeqtSettings->setSerialPortWriteDelay(m_ui->serialPortWriteDelayCombo->currentIndex());
     aspeqtSettings->setSerialPortCompErrDelay(m_ui->serialPortCompErrDelayBox->value());
-    aspeqtSettings->setStreamGuardDelay(m_ui->sbStreamGuardDelay->value()); // [NEW] Save Stream Guard Delay
+    aspeqtSettings->setStreamGuardDelay(m_ui->sbStreamGuardDelay->value());
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
     aspeqtSettings->setSerialPortUsePokeyDivisors(m_ui->serialPortUseDivisorsBox->isChecked());
     aspeqtSettings->setSerialPortPokeyDivisor(m_ui->serialPortDivisorEdit->value());
@@ -494,7 +416,7 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setTranslateEolOnPost(m_ui->eolPostCheckBox->isChecked());
     aspeqtSettings->setTranslateEolOnGet(m_ui->eolGetCheckBox->isChecked());
 
-    // Save Modem Bridge Settings
+    // Modem Bridge Settings
     aspeqtSettings->setModemBridgeEnabled(m_ui->modemEnableBox->isChecked());
     aspeqtSettings->setModemBridgePortName(m_ui->modemPortComboBox->currentText());
     aspeqtSettings->setModemBridgeBaudRate(m_ui->modemBaudComboBox->currentText().toInt());
@@ -505,27 +427,24 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setEnableRDevice(m_ui->modemRBox->isChecked());
     aspeqtSettings->setInvertCtsLogic(m_ui->modemInvertCtsBox->isChecked());
 
-    // Save Web UI
+    // [NEW] BBS Listener Settings
+    aspeqtSettings->setBbsListenerEnabled(m_ui->enableBbsPort->isChecked());
+    aspeqtSettings->setModemListenPort(m_ui->bbsPortBox->value());
+
+    // Web UI
     aspeqtSettings->setWebUiEnabled(m_ui->cbEnableWebUi->isChecked());
     aspeqtSettings->setWebUiPort(m_ui->sbHttpPort->value());
     aspeqtSettings->setWebUiWsPort(m_ui->sbWsPort->value());
 
-
     int backend = SERIAL_BACKEND_STANDARD;
-    if (itemAtariSio->checkState(0) == Qt::Checked)
-    {
+    if (itemAtariSio->checkState(0) == Qt::Checked) {
         backend = SERIAL_BACKEND_SIO_DRIVER;
     }
-
     aspeqtSettings->setBackend(backend);
-
     aspeqtSettings->setI18nLanguage(m_ui->i18nLanguageCombo->itemData(m_ui->i18nLanguageCombo->currentIndex()).toString());
 
-    // Only accept() if validation passed (which it did if we are here)
     accept();
 }
-
-
 
 void OptionsDialog::on_useEmulationCustomCasBaudBox_toggled(bool checked)
 {
@@ -534,11 +453,7 @@ void OptionsDialog::on_useEmulationCustomCasBaudBox_toggled(bool checked)
 
 void OptionsDialog::on_modemPhonebookBrowseBtn_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Select Dial Directory"),
-                                                    QDir::homePath(),
-                                                    tr("XML Files (*.xml);;All Files (*)"));
-
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select Dial Directory"), QDir::homePath(), tr("XML Files (*.xml);;All Files (*)"));
     if (!fileName.isEmpty()) {
         m_ui->modemPhonebookPathEdit->setText(fileName);
     }
@@ -546,43 +461,24 @@ void OptionsDialog::on_modemPhonebookBrowseBtn_clicked()
 
 void OptionsDialog::on_modemPhonebookNewBtn_clicked()
 {
-    // 1. Prompt user for location.
 #ifdef Q_OS_MAC
-    // On macOS, we use getOpenFileName to match the Browse button browser style
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Create New Dial Directory"),
-                                                    QDir::homePath(),
-                                                    tr("XML Files (*.xml);;All Files (*)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Create New Dial Directory"), QDir::homePath(), tr("XML Files (*.xml);;All Files (*)"));
 #else
-    // Standard behavior: getSaveFileName allows typing a new filename on Windows/Linux
-    QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Create New Dial Directory"),
-                                                    QDir::homePath() + "/phonebook.xml",
-                                                    tr("XML Files (*.xml);;All Files (*)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Create New Dial Directory"), QDir::homePath() + "/phonebook.xml", tr("XML Files (*.xml);;All Files (*)"));
 #endif
 
     if (!fileName.isEmpty()) {
-        // 2. Force .xml extension just in case
         if (!fileName.endsWith(".xml", Qt::CaseInsensitive)) {
             fileName += ".xml";
         }
-
-        // 3. Create the file and write the root XML elements
         QFile file(fileName);
         if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream out(&file);
-            out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-            out << "<Phonebook>\n";
-            out << "    \n";
-            out << "    \n";
-            out << "</Phonebook>\n";
+            out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Phonebook>\n    \n    \n</Phonebook>\n";
             file.close();
-
-            // 4. Update the line edit so it's ready to use
             m_ui->modemPhonebookPathEdit->setText(fileName);
         } else {
             QMessageBox::critical(this, tr("Error"), tr("Could not create the phonebook file."));
         }
     }
 }
-

@@ -744,6 +744,40 @@ Leave unchecked for direct Raspberry Pi GPIO.</string>
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="enableBbsPort">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="toolTip">
+           <string>Enable if using a standard FTDI USB adapter.
+Leave unchecked for direct Raspberry Pi GPIO.</string>
+          </property>
+          <property name="text">
+           <string>Enable BBS Listener (Auto-Answer):</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="bbsPort">
+          <property name="text">
+           <string>BBS Listener TCP Port</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="bbsPortBox">
+          <property name="minimum">
+           <number>1025</number>
+          </property>
+          <property name="maximum">
+           <number>65000</number>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="Line" name="line_modem_2">
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
@@ -779,7 +813,17 @@ Leave unchecked for direct Raspberry Pi GPIO.</string>
           <property name="enabled">
            <bool>false</bool>
           </property>
-          <item>
+         <item>
+           <property name="text">
+            <string>300</string>
+           </property>
+          </item>
+         <item>
+           <property name="text">
+            <string>600</string>
+           </property>
+          </item>
+         <item>
            <property name="text">
             <string>1200</string>
            </property>

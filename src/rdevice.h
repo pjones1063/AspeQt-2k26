@@ -45,6 +45,7 @@ public:
     void dial(const BbsEntry &entry);
     void injectMacro(char macroType);
     void forceCommandMode(bool sendAlert = false);
+    void updateListenerConfig();
 
 public slots:
     // [FIX] Moved to slots so SioWorker can safely invoke it across threads!
@@ -59,12 +60,19 @@ private slots:
     void onSocketDisconnected();
     void onSocketReadyRead();
     void onSocketError(QAbstractSocket::SocketError);
+
     void onNewConnection();
+    void onPendingSocketDisconnected();
+    void onRingTimeout();
+    void onEscapeTriggered();
 
     void onSshConnected();
     void onSshDisconnected();
     void onSshDataReceived(const QByteArray &data);
     void onSshError(const QString &msg);
+    void onAutoAnswerTriggered();
+
+
 
 private:
     enum class ModemState { CommandMode, StreamMode };
@@ -74,12 +82,15 @@ private:
     TelnetState m_telnetState = TelnetState::Normal;
     bool m_isEnabled;
     bool m_isSshMode = false;
+    bool m_ringPhase = false;
     std::atomic<bool> m_isNetworkConnected{false};
 
     QByteArray m_txBuffer;
     QString m_atCmdBuffer;
     QByteArray m_networkToSioBuffer;
     QMutex m_bufferMutex;
+    QTimer *m_ringTimer;
+    QTimer *m_escapeActionTimer;
 
     QTcpSocket *tcpSocket;
     QTcpServer *tcpServer;
@@ -91,6 +102,7 @@ private:
     bool m_escPending = false;
     bool autoAnswer = false;
     bool m_waitingForSshPassword = false;
+    int m_s0Register = 0;
 
     int listenPort = 0;
     int m_currentBaudRate = 19200;

@@ -20,6 +20,7 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
 {
     tcpSocket = new QTcpSocket(this);
     tcpSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    m_ringPhase = false;
 
     connect(tcpSocket, &QTcpSocket::connected, this, &RDevice::onSocketConnected);
     connect(tcpSocket, &QTcpSocket::disconnected, this, &RDevice::onSocketDisconnected);
@@ -36,8 +37,17 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
     connect(tcpServer, &QTcpServer::newConnection, this, &RDevice::onNewConnection);
     pendingSocket = nullptr;
 
+    m_ringTimer = new QTimer(this);
+    m_ringTimer->setSingleShot(true);
+    connect(m_ringTimer, &QTimer::timeout, this, &RDevice::onRingTimeout);
+    m_escapeActionTimer = new QTimer(this);
+    m_escapeActionTimer->setSingleShot(true);
+    connect(m_escapeActionTimer, &QTimer::timeout, this, &RDevice::onEscapeTriggered);
+
     m_isEnabled = (aspeqtSettings && aspeqtSettings->isRDeviceEnabled());
     if (m_isEnabled) loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
+
+    updateListenerConfig();
 
     connect(this, &RDevice::dispatchToNetwork, this, [this](const QByteArray &data){
         if (m_isNetworkConnected) {
@@ -133,8 +143,11 @@ void RDevice::setEnabled(bool enable)
         state = ModemState::CommandMode;
         QMutexLocker locker(&m_bufferMutex);
         m_txBuffer.clear();
+    } else {
+        updateListenerConfig();
     }
 }
+
 
 void RDevice::handleCommand(quint8 command, quint16 aux)
 {
@@ -160,7 +173,7 @@ void RDevice::handleCommand(quint8 command, quint16 aux)
     case CMD_WRITE:      handleWrite(aux); break;
     case CMD_READ:       handleRead(aux); break;
     case CMD_CONFIGURE:  handleConfigure(aux1, aux2); break;
-    case CMD_CONTROL:
+    case CMD_CONTROL:    handleControl(aux); break;
     case CMD_AUTOANSWER:
         if (!sio->port()->writeCommandAck()) return;
         sio->port()->writeComplete();
@@ -359,17 +372,33 @@ void RDevice::handleWrite(quint16 aux) {
 
 void RDevice::handleControl(quint16 aux) {
     if (!sio->port()->writeCommandAck()) return;
+
+    quint8 ctrl = aux & 0xFF;
+
+    // Atari 850 CMD_CONTROL (0x41) Aux1 bits:
+    // Bit 7 (0x80) = DTR (Data Terminal Ready).
+    // If BBS Express clears this bit, it physically drops the line to hang up.
+    if ((ctrl & 0x80) == 0) {
+        qDebug() << "!i [RDevice] DTR drop detected via CMD_CONTROL. Forcing hangup.";
+        QMetaObject::invokeMethod(this, "hangup", Qt::QueuedConnection);
+    }
+
     sio->port()->writeComplete();
 }
 
 void RDevice::handleListen(quint16 aux) {
-    if (tcpServer->listen(QHostAddress::Any, aux)) {
+    if (tcpServer->isListening()) {
+        // [FIX] If BBS Listener is already active, acknowledge silently
+        sio->port()->writeCommandAck();
+        sio->port()->writeComplete();
+    } else if (tcpServer->listen(QHostAddress::Any, aux)) {
         sio->port()->writeCommandAck();
         sio->port()->writeComplete();
     } else {
         sio->port()->writeCommandNak();
     }
 }
+
 
 void RDevice::processSerialData(const QByteArray &data) {
     if (state != ModemState::StreamMode) return;
@@ -417,25 +446,39 @@ void RDevice::processSerialData(const QByteArray &data) {
 void RDevice::checkEscapeSequence(const QByteArray &data) {
     for (char c : data) {
         if (c == '+') {
-            if (m_escapeTimer.elapsed() > ESCAPE_GUARD_TIME) {
-                if (m_plusCount == 0) m_plusCount = 1;
-                else m_plusCount++;
-            } else {
-                if (m_plusCount > 0) m_plusCount++;
-                else m_plusCount = 0;
+            // Check the Leading Pause for the first plus
+            if (m_plusCount == 0) {
+                if (m_escapeTimer.elapsed() >= ESCAPE_GUARD_TIME) {
+                    m_plusCount = 1;
+                }
+            } else if (m_plusCount < 3) {
+                m_plusCount++;
+            }
+
+            // If we hit 3 pluses, start the Trailing Pause timer
+            if (m_plusCount == 3) {
+                m_escapeActionTimer->start(ESCAPE_GUARD_TIME);
             }
         } else {
+            // Any non-'+' character breaks the sequence and cancels the timer
             m_plusCount = 0;
             m_escapeTimer.restart();
+            if (m_escapeActionTimer->isActive()) {
+                m_escapeActionTimer->stop();
+            }
         }
     }
-
-    if (m_plusCount >= 3 && m_escapeTimer.elapsed() > ESCAPE_GUARD_TIME) {
-        // [FIX] Use Thread-Safe invokeMethod to call the hangup slot
-        QMetaObject::invokeMethod(this, "hangup", Qt::QueuedConnection);
-        m_plusCount = 0;
-    }
 }
+
+void RDevice::onEscapeTriggered() {
+    m_plusCount = 0;
+    qDebug() << "!i [RDevice] +++ Escape Sequence detected. Dropping to Command Mode.";
+
+    // Return to AT command mode without severing the TCP connection
+    forceCommandMode(false);
+    sendResultCode(RESULT_OK); // Send 'OK' to the Atari terminal
+}
+
 
 void RDevice::onSocketReadyRead() {
     if (m_isSshMode) return;
@@ -532,30 +575,101 @@ void RDevice::processAtCommand(const QString &rawCmd) {
     else if (cmd.contains("V1")) {
         verboseResponses = true; cmd.replace("V1", "");
     }
-    else if (cmd.startsWith("DT")) {
-        int dtIndex = rawCmd.toUpper().indexOf("DT");
-        QString target = rawCmd.mid(dtIndex + 2).trimmed();
-        at_handle_dial(target);
-    }
-    else if (cmd == "H") {
-        hangup();
-    }
-    else if (cmd == "Z") {
-        tcpSocket->abort();
-        if (m_isSshMode && m_ssh) m_ssh->disconnectFromHost();
-        sendResultCode(RESULT_OK);
-    }
-    else if (cmd == "O") {
-        if (m_isNetworkConnected) {
+
+    else if (cmd == "A" || cmd.startsWith("A ")) {
+        if (m_ringPhase && pendingSocket) {
+            m_ringTimer->stop();
+            tcpSocket->disconnect(this); // [FIX] Safe disconnect
+            tcpSocket->deleteLater();
+            tcpSocket = pendingSocket;
+            pendingSocket = nullptr;
+            m_ringPhase = false;
+            m_isSshMode = false;
+            m_isNetworkConnected = true;
+
+            connect(tcpSocket, &QTcpSocket::connected, this, &RDevice::onSocketConnected);
+            connect(tcpSocket, &QTcpSocket::disconnected, this, &RDevice::onSocketDisconnected);
+            connect(tcpSocket, &QTcpSocket::readyRead, this, &RDevice::onSocketReadyRead);
+            connect(tcpSocket, &QTcpSocket::errorOccurred, this, &RDevice::onSocketError);
+
             sendResultCode(RESULT_CONNECT);
         } else {
             sendResultCode(RESULT_ERROR);
         }
     }
-    else {
+
+    // --- S0 REGISTER (Auto-Answer) ---
+    else if (cmd.startsWith("S0=")) {
+        bool ok;
+        int val = cmd.mid(3).trimmed().toInt(&ok);
+        if (ok && val >= 0 && val <= 255) {
+            m_s0Register = val;
+            sendResultCode(RESULT_OK);
+        } else {
+            sendResultCode(RESULT_ERROR);
+        }
+    }
+    else if (cmd == "S0?") {
+        QString valStr = QString("%1\r\n").arg(m_s0Register, 3, 10, QChar('0'));
+        sendAtResponse(valStr);
         sendResultCode(RESULT_OK);
     }
+
+    else if (cmd.startsWith("DT")) {
+        int dtIndex = rawCmd.toUpper().indexOf("DT");
+        QString target = rawCmd.mid(dtIndex + 2).trimmed();
+        at_handle_dial(target);
+    }
+
+
+    else if (cmd == "H") {
+        hangup();
+    }
+    else if (cmd == "Z") {
+        {
+            QMutexLocker locker(&m_bufferMutex);
+            m_txBuffer.clear();
+            m_networkToSioBuffer.clear();
+            m_atCmdBuffer.clear();
+        }
+        tcpSocket->abort();
+        if (m_isSshMode && m_ssh) m_ssh->disconnectFromHost();
+
+        if (pendingSocket) {
+            pendingSocket->disconnect(this);
+            pendingSocket->disconnectFromHost();
+            pendingSocket->deleteLater();
+            pendingSocket = nullptr;
+            m_ringPhase = false;
+            m_ringTimer->stop();
+        }
+
+        sendResultCode(RESULT_OK);
+    }
+    // --- RETURN TO ONLINE (ATO) ---
+    else if (cmd == "O" || cmd.startsWith("O ")) {
+        if (m_isNetworkConnected) {
+            // Reset the escape sequence timers
+            m_plusCount = 0;
+            m_escapeTimer.restart();
+            if (m_escapeActionTimer->isActive()) m_escapeActionTimer->stop();
+
+            // The Atari terminal software sees this and resumes SIO Concurrent/Stream mode
+            sendResultCode(RESULT_CONNECT);
+        } else {
+            sendResultCode(RESULT_NO_CARRIER); // Authentic Hayes failure response
+        }
+    }
+
+    else if (cmd.isEmpty()) {
+            sendResultCode(0); // OK
+    }
+
+    else {
+            qDebug() << "!w Unrecognized AT command swallowed:" << cmd;
+    }
 }
+
 
 void RDevice::sendResultCode(int code) {
     QByteArray resp;
@@ -719,18 +833,47 @@ void RDevice::onSocketError(QAbstractSocket::SocketError socketError) {
         sendResultCode(RESULT_ERROR);
     }
 }
-
 void RDevice::onNewConnection() {
-    if (!pendingSocket) {
-        pendingSocket = tcpServer->nextPendingConnection();
-        sendResultCode(RESULT_RING);
-    } else {
-        QTcpSocket *temp = tcpServer->nextPendingConnection();
-        temp->disconnectFromHost();
-        temp->deleteLater();
+    QTcpSocket *client = tcpServer->nextPendingConnection();
+
+    // Busy check: Are we already connected, dialing, or already ringing?
+    if (m_isNetworkConnected || tcpSocket->state() != QAbstractSocket::UnconnectedState || m_isSshMode || pendingSocket) {
+        qDebug() << "!i [RDevice] Rejected inbound call (Busy).";
+        client->disconnectFromHost();
+        client->deleteLater();
+        return;
     }
+
+    // Park the caller and trigger the Ring Phase
+    pendingSocket = client;
+    if (m_s0Register > 0) {
+        int ringDelay = m_s0Register * 2000;
+        QTimer::singleShot(ringDelay, this, &RDevice::onAutoAnswerTriggered);
+    } else {
+        m_ringTimer->start(30000);
+    }
+    m_ringPhase = true;
+    connect(pendingSocket, &QTcpSocket::disconnected, this, &RDevice::onPendingSocketDisconnected);
+
+    sendResultCode(RESULT_RING);
 }
 
+void RDevice::onRingTimeout() {
+    qDebug() << "!w [RDevice] Ring timeout: No ATA received within 30s. Dropping caller.";
+    if (pendingSocket) pendingSocket->disconnectFromHost(); // Cleanly trigger the disconnect signal
+}
+
+void RDevice::onPendingSocketDisconnected() {
+    if (pendingSocket) {
+        pendingSocket->disconnect(this); // [FIX] Safe disconnect
+        pendingSocket->deleteLater();
+        pendingSocket = nullptr;
+        m_ringTimer->stop();
+        m_ringPhase = false;
+        sendResultCode(RESULT_NO_CARRIER);
+        qDebug() << "!i [RDevice] Caller disconnected before answer.";
+    }
+}
 
 void RDevice::onSshConnected() {
     m_isNetworkConnected = true;
@@ -785,8 +928,23 @@ void RDevice::dial(const BbsEntry &entry) {
 }
 
 void RDevice::hangup() {
+    {
+        QMutexLocker locker(&m_bufferMutex);
+        m_txBuffer.clear();
+        m_networkToSioBuffer.clear();
+        m_atCmdBuffer.clear();
+    }
     if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
     if (m_isSshMode && m_ssh->isConnected()) m_ssh->disconnectFromHost();
+    // [FIX] Moved this cleanup from injectMacro to here where it belongs!
+    if (pendingSocket) {
+        pendingSocket->disconnect(this); // Prevent signal loops
+        pendingSocket->disconnectFromHost();
+        pendingSocket->deleteLater();
+        pendingSocket = nullptr;
+        m_ringTimer->stop();
+        m_ringPhase = false;
+    }
     sendResultCode(RESULT_OK);
 }
 
@@ -843,3 +1001,59 @@ void RDevice::executeInteractiveSshDial() {
     m_ssh->connectToHost(m_currentConnection.ip, m_currentConnection.port, m_currentConnection.login, m_currentConnection.password);
 }
 
+
+void RDevice::updateListenerConfig() {
+    if (!aspeqtSettings) return;
+
+    // Only listen if both the R: Device AND the BBS Listener are enabled
+    bool shouldListen = aspeqtSettings->bbsListenerEnabled() && m_isEnabled;
+    int port = aspeqtSettings->modemListenPort();
+
+    if (shouldListen) {
+        if (tcpServer->isListening()) {
+            // If it's already listening but the user changed the port, restart it
+            if (tcpServer->serverPort() != port) {
+                tcpServer->close();
+                if (tcpServer->listen(QHostAddress::Any, port)) {
+                    qDebug() << "!i [RDevice] BBS listener restarted on new port:" << port;
+                }
+            }
+        } else {
+            // Start listening
+            if (tcpServer->listen(QHostAddress::Any, port)) {
+                qDebug() << "!i [RDevice] BBS listener started on port:" << port;
+            } else {
+                qDebug() << "!e [RDevice] Failed to start BBS listener on port:" << port;
+            }
+        }
+    } else {
+        // If the setting is toggled off, kill the server
+        if (tcpServer->isListening()) {
+            tcpServer->close();
+            qDebug() << "!i [RDevice] BBS listener stopped.";
+        }
+    }
+}
+
+
+void RDevice::onAutoAnswerTriggered() {
+    if (m_ringPhase && pendingSocket) {
+        qDebug() << "!i [RDevice] Auto-answering call (S0=" << m_s0Register << ")";
+
+        tcpSocket->disconnect(this);
+        tcpSocket->deleteLater();
+
+        tcpSocket = pendingSocket;
+        pendingSocket = nullptr;
+        m_ringPhase = false;
+        m_isSshMode = false;
+        m_isNetworkConnected = true;
+
+        connect(tcpSocket, &QTcpSocket::connected, this, &RDevice::onSocketConnected);
+        connect(tcpSocket, &QTcpSocket::disconnected, this, &RDevice::onSocketDisconnected);
+        connect(tcpSocket, &QTcpSocket::readyRead, this, &RDevice::onSocketReadyRead);
+        connect(tcpSocket, &QTcpSocket::errorOccurred, this, &RDevice::onSocketError);
+
+        sendResultCode(RESULT_CONNECT);
+    }
+}

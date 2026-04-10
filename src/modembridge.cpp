@@ -1,4 +1,5 @@
 #include "modembridge.h"
+#include "aspeqtsettings.h"
 #include <QDebug>
 #include <QFile>
 #include <QDomDocument>
@@ -6,16 +7,21 @@
 ModemBridge::ModemBridge(QObject *parent) : QObject(parent),
     m_serial(new QSerialPort(this)),
     m_socket(new QTcpSocket(this)),
-    m_ssh(new SshClient(this)), // [NEW] Init SSH
+    m_ssh(new SshClient(this)),
+    m_tcpServer(new QTcpServer(this)),
+    m_pendingSocket(nullptr),
     m_isActive(false),
     m_isConnected(false),
-    m_isSshMode(false), // Default to Telnet
-    m_escapeTimer(new QTimer(this))
+    m_isSshMode(false) // Default to Telnet
 {
     m_localEcho = true;
 
-    m_escapeTimer->setSingleShot(true);
-    connect(m_escapeTimer, &QTimer::timeout, this, &ModemBridge::checkEscapeSequence);
+    // [NEW] Setup the trailing pause timer
+    m_escapeActionTimer = new QTimer(this);
+    m_escapeActionTimer->setSingleShot(true);
+    connect(m_escapeActionTimer, &QTimer::timeout, this, &ModemBridge::onEscapeTriggered);
+
+    m_escapeTimer.start(); // Start elapsed timer
 
     // Serial
     connect(m_serial, &QSerialPort::readyRead, this, &ModemBridge::onSerialDataReceived);
@@ -26,11 +32,17 @@ ModemBridge::ModemBridge(QObject *parent) : QObject(parent),
     connect(m_socket, &QTcpSocket::disconnected, this, &ModemBridge::onSocketDisconnected);
     connect(m_socket, &QAbstractSocket::errorOccurred, this, &ModemBridge::onSocketError);
 
-    // [NEW] SSH Connections
+    // SSH Connections
     connect(m_ssh, &SshClient::connected, this, &ModemBridge::onSshConnected);
     connect(m_ssh, &SshClient::disconnected, this, &ModemBridge::onSshDisconnected);
     connect(m_ssh, &SshClient::rxData, this, &ModemBridge::onSshDataReceived);
     connect(m_ssh, &SshClient::error, this, &ModemBridge::onSshError);
+
+    connect(m_tcpServer, &QTcpServer::newConnection, this, &ModemBridge::onNewConnection);
+
+    m_ringTimer = new QTimer(this);
+    m_ringTimer->setSingleShot(true);
+    connect(m_ringTimer, &QTimer::timeout, this, &ModemBridge::onRingTimeout);
 }
 
 ModemBridge::~ModemBridge() {
@@ -69,6 +81,7 @@ void ModemBridge::start() {
         emit statusMessage("Modem Bridge: Serial port opened.");
         m_serial->setDataTerminalReady(true);
         m_serial->setRequestToSend(true);
+        updateListenerConfig();
     } else {
         emit errorOccurred("Modem Bridge: Failed to open serial port.");
     }
@@ -81,6 +94,13 @@ void ModemBridge::stop() {
     if (m_socket->state() != QAbstractSocket::UnconnectedState) m_socket->disconnectFromHost();
     if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
 
+    m_tcpServer->close();
+    if (m_pendingSocket) {
+        m_pendingSocket->disconnectFromHost();
+        m_pendingSocket->deleteLater();
+        m_pendingSocket = nullptr;
+    }
+    m_ringPhase = false;
     m_isActive = false;
     m_isConnected = false;
 }
@@ -93,90 +113,110 @@ void ModemBridge::onSerialDataReceived() {
     QByteArray data = m_serial->readAll();
     if (!m_isActive) return;
 
-    // --- CRITICAL FIX: ALWAYS BLINK TX ON ATARI TYPING ---
     emit txActivity();
 
     // --- MODE 1: CONNECTED (Data Mode) ---
     if (m_isConnected) {
-        emit traceData(m_isSshMode ? "TX (SSH)" : "TX (TCP)", data);
+        QByteArray filteredData;
 
         for (char c : data) {
-            // Atari Backspace Fix (126/127 -> 127 for modern Telnet/SSH/Linux)
+            // Atari Backspace Fix
             if (c == 126 || c == 127) c = 8;
 
-            // 1. ESCAPE SEQUENCE (+++)
-            if (c == '+') {
-                m_escapeBuffer.append(c);
-                if (m_escapeBuffer.length() > 3) {
-                    if (m_isSshMode) m_ssh->write(m_escapeBuffer);
-                    else             m_socket->write(m_escapeBuffer);
-                    m_escapeBuffer.clear();
-                } else if (m_escapeBuffer.length() == 3) {
-                    if (m_escapeTimer) m_escapeTimer->start(1000);
-                }
-                continue;
-            } else {
-                if (!m_escapeBuffer.isEmpty()) {
-                    if (m_isSshMode) m_ssh->write(m_escapeBuffer);
-                    else             m_socket->write(m_escapeBuffer);
-                    m_escapeBuffer.clear();
-                }
-                if (m_escapeTimer) m_escapeTimer->stop();
-            }
-
-            // 2. MACROS
+            // MACROS & ESCAPES
             if (m_escPressed) {
                 m_escPressed = false;
                 if (c == 'u' || c == 'U') { injectMacro('u'); continue; }
                 if (c == 'p' || c == 'P') { injectMacro('p'); continue; }
                 if (c == 'h' || c == 'H') { hangup(); continue; }
 
-                QByteArray esc(1, 0x1B);
-                esc.append(c);
-                if (m_isSshMode) m_ssh->write(esc);
-                else             m_socket->write(esc);
+                filteredData.append(0x1B);
+                filteredData.append(c);
             }
             else if (c == 0x1B) {
                 m_escPressed = true;
             }
             else {
-                if (m_isSshMode) m_ssh->write(QByteArray(1, c));
-                else             m_socket->write(QByteArray(1, c));
+                filteredData.append(c);
             }
+        }
+
+        if (!filteredData.isEmpty()) {
+            emit traceData(m_isSshMode ? "TX (SSH)" : "TX (TCP)", filteredData);
+            checkEscapeSequence(filteredData);
+
+            if (m_isSshMode) m_ssh->write(filteredData);
+            else             m_socket->write(filteredData);
         }
     }
     // --- MODE 2: COMMAND MODE ---
     else {
-        // --- NEW: Trace AT Commands so you can see what you type ---
+        // --- Trace AT Commands so you can see what you type ---
         emit traceData("TX (CMD)", data);
 
         for (char c : data) {
-            if (c == '\r' || c == 155) {
+            // 1. Handle Carriage Returns (ASCII or ATASCII)
+            if (c == '\r' || (quint8)c == 155) {
                 if (m_localEcho) {
-                    sendToSerial("\r\n"); // Cleanly echo the carriage return
+                    sendToSerial(QByteArray(1, c)); // ECHO THE EXACT NATIVE BYTE!
                 }
                 processAtCommand(m_serialBuffer);
                 m_serialBuffer.clear();
-            } else if (c != '\n') {
-                if (c == 126 || c == 127 || c == 8) {
-                    if (!m_serialBuffer.isEmpty()) {
-                        m_serialBuffer.chop(1);
-                        if (m_localEcho && !m_waitingForSshPassword) { // Visually erase the character: Backspace, Space, Backspace
-                            sendToSerial(QByteArray(1, 8)); // BS (UNCOMMENTED!)
-                            sendToSerial(" ");              // Space
-                            sendToSerial(QByteArray(1, 8)); // BS
-                        }
-                    }
-                } else {
+            }
+            // 2. Handle Backspaces / Deletes
+            else if (c == 8 || c == 126 || c == 127) {
+                if (!m_serialBuffer.isEmpty()) {
+                    m_serialBuffer.chop(1);
                     if (m_localEcho && !m_waitingForSshPassword) {
-                        sendToSerial(QByteArray(1, c)); // Echo the typed character
+                        // Visually erase the character: Backspace, Space, Backspace
+                        sendToSerial(QByteArray(1, 8));
+                        sendToSerial(" ");
+                        sendToSerial(QByteArray(1, 8));
                     }
-                    m_serialBuffer.append(c);
                 }
+            }
+            // 3. Normal Typing (Stop filtering \n natively)
+            else {
+                if (m_localEcho && !m_waitingForSshPassword) {
+                    sendToSerial(QByteArray(1, c)); // Echo the typed character
+                }
+                m_serialBuffer.append(c);
             }
         }
     }
 }
+
+
+
+void ModemBridge::checkEscapeSequence(const QByteArray &data) {
+    for (char c : data) {
+        if (c == '+') {
+            if (m_plusCount == 0) {
+                if (m_escapeTimer.elapsed() >= 1000) m_plusCount = 1;
+            } else if (m_plusCount < 3) {
+                m_plusCount++;
+            }
+
+            if (m_plusCount == 3) {
+                m_escapeActionTimer->start(1000); // Wait for trailing pause
+            }
+        } else {
+            m_plusCount = 0;
+            m_escapeTimer.restart();
+            if (m_escapeActionTimer->isActive()) {
+                m_escapeActionTimer->stop();
+            }
+        }
+    }
+}
+
+void ModemBridge::onEscapeTriggered() {
+    m_plusCount = 0;
+    emit statusMessage("Modem Bridge: +++ Escape Sequence detected. Dropping to Command Mode.");
+    m_isConnected = false;
+    sendResultCode(0); // OK
+}
+
 
 // ============================================================================
 // CONNECTION LOGIC
@@ -192,10 +232,47 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
 
     QString upperCmd = QString::fromLatin1(cmd).trimmed().toUpper();
     if (upperCmd.startsWith("AT")) upperCmd = upperCmd.mid(2);
+    upperCmd = upperCmd.trimmed();
+
+    // --- VERBOSE SETTINGS (V0 / V1) ---
+    if (upperCmd.contains("V0")) {
+        m_verboseResponses = false; upperCmd.replace("V0", "");
+    }
+    else if (upperCmd.contains("V1")) {
+        m_verboseResponses = true; upperCmd.replace("V1", "");
+    }
+
+    // --- ANSWER (ATA) ---
+    if (upperCmd == "A" || upperCmd.startsWith("A ")) {
+        if (m_ringPhase && m_pendingSocket) {
+            if (m_ringTimer->isActive()) m_ringTimer->stop();
+
+            m_socket->disconnect(this);
+            m_socket->deleteLater();
+
+            m_socket = m_pendingSocket;
+            m_pendingSocket = nullptr;
+
+            m_ringPhase = false;
+            m_isSshMode = false;
+            m_isConnected = true;
+            m_telnetState = TelnetState::Normal;
+
+            connect(m_socket, &QTcpSocket::readyRead, this, &ModemBridge::onSocketDataReceived);
+            connect(m_socket, &QTcpSocket::connected, this, &ModemBridge::onSocketConnected);
+            connect(m_socket, &QTcpSocket::disconnected, this, &ModemBridge::onSocketDisconnected);
+            connect(m_socket, &QAbstractSocket::errorOccurred, this, &ModemBridge::onSocketError);
+
+            sendToSerial("\r\nCONNECT 19200\r\n"); // Left untouched to preserve current baud display logic
+            emit statusMessage("Modem Bridge: Inbound call answered.");
+
+        } else {
+            sendResultCode(4); // ERROR
+        }
+    }
 
     // --- DIAL (ATDT) ---
-    if (upperCmd.startsWith("D")) {
-        // [FIX] Extract target from the ORIGINAL QByteArray to preserve SSH username case!
+    else if (upperCmd.startsWith("D")) {
         QString originalCmd = QString::fromLatin1(cmd).trimmed();
         int dIndex = originalCmd.toUpper().indexOf("D");
         QString target = originalCmd.mid(dIndex + 1).trimmed();
@@ -211,28 +288,23 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
         int port = 23;
         bool found = false;
 
-        // A. Phonebook Lookup
         for (const BbsEntry &entry : m_phonebook) {
             if (entry.name.compare(target, Qt::CaseInsensitive) == 0) {
                 host = entry.ip;
                 port = entry.port;
-                m_currentConnection = entry; // Loads Protocol, Login, Pass
+                m_currentConnection = entry;
                 found = true;
                 break;
             }
         }
 
-        // B. Manual Dial
         if (!found) {
             m_currentConnection = BbsEntry();
-
-            // Check for "SSH:" prefix (e.g., ATDT SSH:192.168.1.50)
             if (host.startsWith("SSH:")) {
                 m_currentConnection.protocol = "SSH";
                 host = host.mid(4);
-                port = 22; // Default SSH port
+                port = 22;
             }
-
             QStringList parts = host.split(':');
             host = parts[0];
             if (parts.size() > 1) port = parts[1].toInt();
@@ -243,28 +315,82 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
 
         connectTo(host, port);
     }
+
+    // --- RETURN TO ONLINE (ATO) ---
+    else if (upperCmd == "O" || upperCmd.startsWith("O ")) {
+        if (m_socket->state() == QAbstractSocket::ConnectedState || m_ssh->isConnected()) {
+            m_isConnected = true;
+
+            m_plusCount = 0;
+            m_escapeTimer.restart();
+            if (m_escapeActionTimer->isActive()) m_escapeActionTimer->stop();
+
+            sendToSerial("\r\nCONNECT 19200\r\n"); // Left untouched
+            emit statusMessage("Modem Bridge: Returned to Online Data Mode.");
+        } else {
+            sendResultCode(3); // NO CARRIER
+        }
+    }
+
+    // --- S0 REGISTER (Auto-Answer) ---
+    else if (upperCmd.startsWith("S0=")) {
+        bool ok;
+        int val = upperCmd.mid(3).trimmed().toInt(&ok);
+        if (ok && val >= 0 && val <= 255) {
+            m_s0Register = val;
+            sendResultCode(0); // OK
+        } else {
+            sendResultCode(4); // ERROR
+        }
+    }
+    else if (upperCmd == "S0?") {
+        QString valStr = QString("%1\r\n").arg(m_s0Register, 3, 10, QChar('0'));
+        sendToSerial(valStr.toUtf8());
+        sendResultCode(0); // OK
+    }
+
     // --- HANGUP (ATH) ---
     else if (upperCmd.startsWith("H")) {
         hangup();
-        m_serial->write("\r\nOK\r\n");
+        sendResultCode(0); // OK
     }
+
     // --- RESET (ATZ) ---
     else if (upperCmd.startsWith("Z")) {
         m_suppressCarrierMessage = true;
-
+        m_serialBuffer.clear();
+        if (m_serial->isOpen()) {
+            m_serial->clear(QSerialPort::Output);
+        }
         m_socket->abort();
         m_ssh->disconnectFromHost();
 
+        if (m_pendingSocket) {
+            m_pendingSocket->disconnect(this);
+            m_pendingSocket->disconnectFromHost();
+            m_pendingSocket->deleteLater();
+            m_pendingSocket = nullptr;
+        }
+
+        m_ringPhase = false;
+        m_plusCount = 0;
+        m_escapeTimer.restart();
+        if (m_escapeActionTimer->isActive()) m_escapeActionTimer->stop();
         m_isConnected = false;
         m_currentConnection = BbsEntry();
-        m_escapeBuffer.clear();
-        m_serial->write("\r\nOK\r\n");
+        sendResultCode(0); // OK
         m_suppressCarrierMessage = false;
     }
+
+    else if (upperCmd.isEmpty()) {
+            sendResultCode(0); // OK
+    }
+
     else {
-        m_serial->write("\r\nOK\r\n");
+            qDebug() << "!w Unrecognized AT command swallowed:" << upperCmd;
     }
 }
+
 
 void ModemBridge::dial(const BbsEntry &entry) {
 
@@ -392,23 +518,45 @@ void ModemBridge::parseTelnet(const QByteArray &data) {
 }
 
 void ModemBridge::onSocketDisconnected() {
-    if (m_isSshMode) return; // Ignore TCP signals if we are in SSH mode
+    if (m_isSshMode) return;
     m_isConnected = false;
-    if (!m_suppressCarrierMessage) sendToSerial("\r\nNO CARRIER\r\n");
+    if (!m_suppressCarrierMessage) sendResultCode(3); // NO CARRIER
     emit statusMessage("Modem Bridge: Disconnected.");
+    if (m_serial->isOpen()) {
+        m_serial->setDataTerminalReady(false); // Drop carrier
+        QTimer::singleShot(1500, this, [this](){
+            if (m_serial->isOpen()) m_serial->setDataTerminalReady(true); // Raise it for the next call
+        });
+    }
 }
+
 
 void ModemBridge::onSocketError(QAbstractSocket::SocketError socketError) {
     Q_UNUSED(socketError);
     if (m_isSshMode) return;
 
     QString errorMsg = m_socket->errorString();
-    emit errorOccurred(m_socket->errorString());
+    emit errorOccurred(errorMsg);
+
     if (!m_isConnected) {
+        // Error happened while trying to dial
         sendToSerial(("\r\nERROR: " + errorMsg + "\r\n").toUtf8());
-        sendToSerial("\r\nNO CARRIER\r\n");
+        sendResultCode(3); // NO CARRIER
+    } else {
+        // Error happened mid-connection! Force the hardware drop.
+        m_isConnected = false;
+        sendResultCode(3); // NO CARRIER
+
+        if (m_serial->isOpen()) {
+            m_serial->setDataTerminalReady(false); // Slam DTR down
+            QTimer::singleShot(1500, this, [this](){
+                if (m_serial->isOpen()) m_serial->setDataTerminalReady(true); // Raise it back up
+            });
+        }
     }
 }
+
+
 
 // ============================================================================
 // [NEW] SSH HANDLERS
@@ -428,20 +576,41 @@ void ModemBridge::onSshDataReceived(const QByteArray &data) {
 void ModemBridge::onSshDisconnected() {
     if (!m_isSshMode) return;
     m_isConnected = false;
-    if (!m_suppressCarrierMessage) sendToSerial("\r\nNO CARRIER\r\n");
+    if (!m_suppressCarrierMessage) sendResultCode(3); // NO CARRIER
     emit statusMessage("Modem Bridge: SSH Disconnected.");
+    if (m_serial->isOpen()) {
+        m_serial->setDataTerminalReady(false); // Drop carrier
+        QTimer::singleShot(1500, this, [this](){
+            if (m_serial->isOpen()) m_serial->setDataTerminalReady(true); // Raise it for the next call
+        });
+    }
 }
 
+
 void ModemBridge::onSshError(const QString &msg) {
-    // Only report error if we are actively trying to use SSH
-    if (m_isSshMode) {
-        emit errorOccurred("SSH Error: " + msg);
-        if (!m_isConnected) {
-            sendToSerial(("\r\nERROR: SSH - " + msg + "\r\n").toUtf8());
-            sendToSerial("\r\nNO CARRIER\r\n");
+    if (!m_isSshMode) return;
+
+    emit errorOccurred("SSH Error: " + msg);
+
+    if (!m_isConnected) {
+        // Error happened while trying to authenticate/dial
+        sendToSerial(("\r\nERROR: SSH - " + msg + "\r\n").toUtf8());
+        sendResultCode(3); // NO CARRIER
+    } else {
+        // Error happened mid-connection! Force the hardware drop.
+        m_isConnected = false;
+        sendResultCode(3); // NO CARRIER
+
+        if (m_serial->isOpen()) {
+            m_serial->setDataTerminalReady(false); // Slam DTR down
+            QTimer::singleShot(1500, this, [this](){
+                if (m_serial->isOpen()) m_serial->setDataTerminalReady(true); // Raise it back up
+            });
         }
     }
 }
+
+
 
 // ============================================================================
 // UTILITIES
@@ -449,9 +618,20 @@ void ModemBridge::onSshError(const QString &msg) {
 
 void ModemBridge::hangup() {
     emit statusMessage("Modem Bridge: Hangup.");
-
+    m_serialBuffer.clear();
+    if (m_serial->isOpen()) {
+        m_serial->clear(QSerialPort::Output);
+    }
     if (m_isSshMode) m_ssh->disconnectFromHost();
     else             m_socket->disconnectFromHost();
+
+    if (m_pendingSocket) {
+        m_pendingSocket->disconnect(this); // [FIX] Block signals before killing
+        m_pendingSocket->disconnectFromHost();
+        m_pendingSocket->deleteLater();
+        m_pendingSocket = nullptr;
+        m_ringPhase = false;
+    }
 
     m_isConnected = false;
 }
@@ -494,20 +674,6 @@ void ModemBridge::sendToSerial(const QByteArray &data) {
     }
 }
 
-
-void ModemBridge::checkEscapeSequence() {
-    if (m_escapeBuffer == "+++") {
-        m_escapeBuffer.clear();
-        m_isConnected = false; // Enter Command Mode
-        m_serial->write("\r\nOK\r\n");
-    } else {
-        if (!m_escapeBuffer.isEmpty()) {
-            if (m_isSshMode) m_ssh->write(m_escapeBuffer);
-            else             m_socket->write(m_escapeBuffer);
-        }
-        m_escapeBuffer.clear();
-    }
-}
 
 void ModemBridge::setPhonebookPath(const QString &path) {
     if (!path.isEmpty()) loadPhonebook(path);
@@ -585,4 +751,111 @@ void ModemBridge::executeInteractiveSshDial() {
 }
 
 
+void ModemBridge::onNewConnection() {
+    QTcpSocket *client = m_tcpServer->nextPendingConnection();
 
+    // Busy check: Are we already connected, or already ringing?
+    if (m_isConnected || m_socket->state() != QAbstractSocket::UnconnectedState || m_ssh->isConnected() || m_pendingSocket) {
+        emit statusMessage(QString("Modem Bridge: Rejected inbound call from %1 (Busy).").arg(client->peerAddress().toString()));
+        client->disconnectFromHost();
+        client->deleteLater();
+        return;
+    }
+
+    emit statusMessage(QString("Modem Bridge: RING from %1...").arg(client->peerAddress().toString()));
+    m_pendingSocket = client;
+    m_ringPhase = true;
+    connect(m_pendingSocket, &QTcpSocket::disconnected, this, &ModemBridge::onPendingSocketDisconnected);
+
+    // Auto-Answer Logic Evaluation
+    if (m_s0Register > 0) {
+        // Calculate delay: 2 seconds per ring cycle
+        int ringDelay = m_s0Register * 2000;
+        QTimer::singleShot(ringDelay, this, &ModemBridge::onAutoAnswerTriggered);
+    } else {
+        m_ringTimer->start(30000); // Standard watchdog if auto-answer is off
+    }
+   sendResultCode(2); // RING
+}
+
+
+void ModemBridge::onRingTimeout() {
+    emit statusMessage("Modem Bridge: Ring timeout (No ATA).");
+    if (m_pendingSocket) m_pendingSocket->disconnectFromHost();
+}
+
+
+void ModemBridge::onPendingSocketDisconnected() {
+    if (m_pendingSocket) {
+        m_pendingSocket->disconnect(this); // [FIX] Safe disconnect
+        m_pendingSocket->deleteLater();
+        m_pendingSocket = nullptr;
+        m_ringPhase = false;
+        sendResultCode(3);
+        emit statusMessage("Modem Bridge: Caller disconnected before answer.");
+    }
+}
+
+
+void ModemBridge::onAutoAnswerTriggered() {
+    if (m_ringPhase && m_pendingSocket) {
+        emit statusMessage(QString("Modem Bridge: Auto-answering call (S0=%1)").arg(m_s0Register));
+        m_socket->disconnect(this);
+        m_socket->deleteLater();
+        m_socket = m_pendingSocket;
+        m_pendingSocket = nullptr;
+        m_ringPhase = false;
+        m_isSshMode = false;
+        m_isConnected = true;
+        connect(m_socket, &QTcpSocket::readyRead, this, &ModemBridge::onSocketDataReceived);
+        connect(m_socket, &QTcpSocket::connected, this, &ModemBridge::onSocketConnected);
+        connect(m_socket, &QTcpSocket::disconnected, this, &ModemBridge::onSocketDisconnected);
+        connect(m_socket, &QTcpSocket::errorOccurred, this, &ModemBridge::onSocketError);
+        sendToSerial("\r\nCONNECT 19200\r\n");
+    }
+}
+
+
+void ModemBridge::updateListenerConfig() {
+    if (!aspeqtSettings) return;
+
+    // Only listen if the Modem Bridge serial port is actually open
+    bool shouldListen = aspeqtSettings->bbsListenerEnabled() && m_isActive;
+    int port = aspeqtSettings->modemListenPort();
+
+    if (shouldListen) {
+        if (m_tcpServer->isListening()) {
+            if (m_tcpServer->serverPort() != port) {
+                m_tcpServer->close();
+                if (m_tcpServer->listen(QHostAddress::Any, port)) {
+                    emit statusMessage(QString("Modem Bridge: BBS listener restarted on port %1").arg(port));
+                }
+            }
+        } else {
+            if (m_tcpServer->listen(QHostAddress::Any, port)) {
+                emit statusMessage(QString("Modem Bridge: Listening for callers on port %1").arg(port));
+            } else {
+                emit errorOccurred("Modem Bridge: Failed to start BBS listener.");
+            }
+        }
+    } else {
+        if (m_tcpServer->isListening()) {
+            m_tcpServer->close();
+            emit statusMessage("Modem Bridge: BBS listener stopped.");
+        }
+    }
+}
+void ModemBridge::sendResultCode(int code) {
+    QByteArray resp;
+    if (m_verboseResponses) {
+        if (code == 0) resp = "\r\nOK\r\n";
+        else if (code == 1) resp = "\r\nCONNECT\r\n";
+        else if (code == 2) resp = "\r\nRING\r\n";
+        else if (code == 3) resp = "\r\nNO CARRIER\r\n";
+        else if (code == 4) resp = "\r\nERROR\r\n";
+    } else {
+        resp = QString("%1\r").arg(code).toLatin1();
+    }
+
+    sendToSerial(resp);
+}

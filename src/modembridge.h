@@ -5,6 +5,8 @@
 #include <QSerialPort>
 #include <QTcpSocket>
 #include <QTimer>
+#include <QTcpServer>
+#include <QElapsedTimer>
 #include "bbsdata.h"
 #include "sshclient.h" // [NEW] Include SSH wrapper
 
@@ -32,6 +34,8 @@ public:
 public slots:
     void start();
     void stop();
+    void updateListenerConfig();
+
 
 signals:
     void statusMessage(const QString &msg);
@@ -43,7 +47,6 @@ signals:
 private slots:
     // Serial Port
     void onSerialDataReceived();
-    void checkEscapeSequence();
 
     // TCP / Telnet Slots
     void onSocketDataReceived();
@@ -57,36 +60,57 @@ private slots:
     void onSshDataReceived(const QByteArray &data);
     void onSshError(const QString &msg);
 
+    void onNewConnection();
+    void onPendingSocketDisconnected();
+    void onRingTimeout();
+    void onEscapeTriggered();
+    void onAutoAnswerTriggered();
+
+
 private:
     QSerialPort *m_serial;
     QTcpSocket *m_socket;
     SshClient *m_ssh;
+    QTcpServer *m_tcpServer;
+    QTcpSocket *m_pendingSocket;
+
     bool m_isActive;
     bool m_isConnected;
     bool m_isSshMode;
     enum class TelnetState { Normal, IacReceived, Will, Wont, Do, Dont, SubNegotiation, SubIac };
     TelnetState m_telnetState = TelnetState::Normal;
     void parseTelnet(const QByteArray &data);
+
     QByteArray m_serialBuffer;
-    QByteArray m_escapeBuffer;
-    QTimer *m_escapeTimer;
+    QElapsedTimer m_escapeTimer;
+    QTimer *m_escapeActionTimer;
+    int m_plusCount = 0;
+    void checkEscapeSequence(const QByteArray &data);
+
+    QTimer *m_ringTimer;
     bool m_flowControl = true;
     bool m_localEcho = false;
     bool m_isTelnetMode = true;
+    bool m_ringPhase;
     bool m_suppressCarrierMessage = false;
+    int m_s0Register = 0;
+    bool m_verboseResponses = true;
+    bool m_escPressed = false;
+
     QString m_currentLogin;
-    QString m_currentPassword;
+    QString m_currentPassword;    
+    BbsEntry m_currentConnection;
+
     void processAtCommand(const QByteArray &cmd);
     void sendToSerial(const QByteArray &data);
     void connectTo(const QString &host, int port);
     QList<BbsEntry> m_phonebook;
-    BbsEntry m_currentConnection;
-    bool m_escPressed = false;
     void loadPhonebook(const QString &path);
     BbsEntry findBbsByName(const QString &name);
     bool m_waitingForSshPassword = false;
     void parseInteractiveSshTarget(const QString &target);
     void executeInteractiveSshDial();
+    void sendResultCode(int code);
 
 };
 

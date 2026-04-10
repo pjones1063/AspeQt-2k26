@@ -1589,6 +1589,7 @@ void MainWindow::on_actionOptions_triggered()
         if (isRDeviceActive) {
             rDev->loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
         }
+        rDev->updateListenerConfig();
     }
 
 
@@ -1626,6 +1627,7 @@ void MainWindow::on_actionOptions_triggered()
         if (pbPath.isEmpty()) pbPath = g_aspeQtAppPath + "/phonebook.xml";
         modemBridge->setPhonebookPath(pbPath);
         modemBridge->start();
+        modemBridge->updateListenerConfig();
 
     }
     else {
