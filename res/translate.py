@@ -14,7 +14,8 @@ def auto_translate_ts():
     
     lang_map = {
         'de': 'de', 'es': 'es', 'pl': 'pl', 
-        'ru': 'ru', 'sk': 'sk', 'tr': 'tr'
+        'ru': 'ru', 'sk': 'sk', 'tr': 'tr', 
+        'fr': 'fr' 
     }
     
 

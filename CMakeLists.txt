@@ -74,12 +74,14 @@ set(TS_FILES
     "res/i18n/aspeqt_ru.ts"
     "res/i18n/aspeqt_sk.ts"
     "res/i18n/aspeqt_tr.ts"
+    "res/i18n/aspeqt_fr.ts"
     "res/i18n/qt_de.ts"
     "res/i18n/qt_es.ts"
     "res/i18n/qt_pl.ts"
     "res/i18n/qt_ru.ts"
     "res/i18n/qt_sk.ts"
     "res/i18n/qt_tr.ts"
+    "res/i18n/qt_fr.ts"
 )
 
 qt_add_translations(AspeQt
