@@ -1,0 +1,1068 @@
+<EtherTerm>
+ <Phonebook version="1.0">
+  <BBS ip="65.108.245.243" login="" name="0Day BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.decafbad.com" login="" name="0xDECAFBAD BBS" password="" port="6523" protocol="TELNET"/>
+  <BBS ip="13th.hoyvision.com" login="" name="13th Floor BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="13leader.net" login="" name="13th Leader BBS" password="" port="8023" protocol="TELNET"/>
+  <BBS ip="98.113.13.134" login="" name="1992 BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="20forbeers.com" login="" name="20 For Beers BBS" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="300baud.dynu.net" login="" name="300 F-ing Baud BBS" password="" port="2525" protocol="TELNET"/>
+  <BBS ip="x-bit.org" login="" name="32-Bit BBS" password="" port="23230" protocol="TELNET"/>
+  <BBS ip="bbs.4wheelham.com" login="" name="4 Wheel Ham BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.4d2.org" login="" name="4D2 Dot Org" password="" port="23" protocol="TELNET"/>
+  <BBS ip="64vintageremixbbs.dyndns.org" login="" name="64 Vintage BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.8-bitarchive.com" login="" name="8-Bit Archive" password="" port="2223" protocol="TELNET"/>
+  <BBS ip="bbs.8bitboyz.com" login="" name="8-Bit Boyz BBS" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="8bit.hoyvision.com" login="" name="8-Bit Playground" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.8bitclub.com" login="" name="8Bit Club BBS" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="game.a-net-online.lol" login="" name="A-Net Online (Game Server)" password="" port="513" protocol="TELNET"/>
+  <BBS ip="mystic-anet.online" login="" name="A-Net Online (Mystic)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sf.a-net.online" login="" name="A-Net Online (Spitfire)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="a-net.online" login="" name="A-Net Online (Synchronet)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="game.a-net-online.lol" login="" name="A-Net Online (TWGS)" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="x.a-net.online" login="" name="A-Net Online Beta BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="a1bbs.ddns.net" login="" name="A1 BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="abandonedstardock.ddns.net" login="" name="Abandoned StarDock TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="absinthebbs.net" login="" name="Absinthe BBS" password="" port="1940" protocol="TELNET"/>
+  <BBS ip="bbs.abyssnode.net" login="" name="Abyss BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="chaotix.ddns.net" login="" name="Ace of Spades BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="blackflag.acid.org" login="" name="Acid Underworld" password="" port="31337" protocol="TELNET"/>
+  <BBS ip="adeptbbs.com" login="" name="Adept BBS TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="adeptbbs.com" login="" name="Adept Online Entertainment" password="" port="23" protocol="TELNET"/>
+  <BBS ip="agency.bbs.nz" login="" name="Agency BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="krion.io" login="" name="Agon BBS" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="bbs.aghy.net" login="" name="Agster" password="" port="23" protocol="TELNET"/>
+  <BBS ip="67.205.168.255" login="" name="Aincrad BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.airandwave.net" login="" name="Air  And  Wave BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.alsgeeklab.com" login="" name="Al's Geek Lab BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="alamobbs.mywire.org" login="" name="Alamo BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.alcatrash.org" login="" name="AlcaBBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="alcatrazbbs.ddns.net" login="" name="Alcatraz Prison BBS" password="" port="9000" protocol="TELNET"/>
+  <BBS ip="alcoholidaybbs.com" login="" name="Alcoholiday BBS (Mystic)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="alcoholidaybbs.com" login="" name="Alcoholiday BBS (Renegade)" password="" port="95" protocol="TELNET"/>
+  <BBS ip="manalejandro.com" login="" name="Ale's BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.alecoexp.cz" login="" name="Aleco Experience BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="alephbbs.com" login="" name="Aleph BBS" password="" port="2626" protocol="TELNET"/>
+  <BBS ip="the.alienmindbenders.net" login="" name="Alien Mindbenders BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="66.188.66.37" login="" name="Alien Zone BBS, The" password="" port="23" protocol="TELNET"/>
+  <BBS ip="newt.aliens.ph" login="" name="Aliens' Alcove!" password="" port="23" protocol="TELNET"/>
+  <BBS ip="fido.alltsk.ru" login="" name="Alltsk" password="" port="23" protocol="TELNET"/>
+  <BBS ip="acentauribbs.no-ip.org" login="" name="Alpha Centauri BBS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="www.alphacomplex.us" login="" name="Alpha Complex" password="" port="2523" protocol="TELNET"/>
+  <BBS ip="altairiv.ddns.net" login="" name="Altair IV BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="altairminibbs.net" login="" name="Altair Mini BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="alterant.bbs.dege.au" login="" name="Alterant BBS" password="" port="123" protocol="TELNET"/>
+  <BBS ip="amiganer.amms-bbs.de" login="" name="Amiga CBM BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="amigacity.xyz" login="" name="Amiga City" password="" port="23" protocol="TELNET"/>
+  <BBS ip="www.amigaretro.com" login="" name="Amiga Retro Brisbane BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="amibbs.amigaretro.com" login="" name="Amiga Retro V4SA BBS" password="" port="6880" protocol="TELNET"/>
+  <BBS ip="amigaunderground.com" login="" name="Amiga Underground" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="amis86.ddns.net" login="" name="Amis XE" password="" port="9000" protocol="TELNET"/>
+  <BBS ip="amstrad.simulant.uk" login="" name="AMSTRAD BBS" password="" port="464" protocol="TELNET"/>
+  <BBS ip="waffle.c4bmore.com" login="" name="Analog Waffle" password="" port="2001" protocol="TELNET"/>
+  <BBS ip="bbs.androidsdungeon.co.uk" login="" name="Androids Dungeon" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.anduin.net" login="" name="Anduin BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="54.238.90.108" login="" name="Animation Game Station (Animeyo)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="andr01d.zapto.org" login="" name="Another Droid BBS" password="" port="9999" protocol="TELNET"/>
+  <BBS ip="anotherbbs.dynu.net" login="" name="Another F-ing BBS" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="alterant.bbs.dege.au" login="" name="ANSITex" password="" port="23" protocol="TELNET"/>
+  <BBS ip="aeug.asuscomm.com" login="" name="Anti Earth Union Government (Chinese)" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="antidote.triad.se" login="" name="Antidote" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="technotron.asuscomm.com" login="" name="Antikitera" password="" port="23" protocol="TELNET"/>
+  <BBS ip="anybox.freedyndns.de" login="" name="Anybox BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="rcfeed.concomcompany.com" login="" name="Aperture Science Employee Mainframe" password="" port="31810" protocol="TELNET"/>
+  <BBS ip="bbs.arcadiabbs.com" login="" name="Arcadia BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.archaicbinary.net" login="" name="Archaic Binary" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.arcticzonebbs.net" login="" name="ArcticZone Online Entertainment" password="" port="23" protocol="TELNET"/>
+  <BBS ip="arda-bbs.com" login="" name="ARDA-BBS.com" password="" port="23" protocol="TELNET"/>
+  <BBS ip="area52.tk" login="" name="Area 52" password="" port="5200" protocol="TELNET"/>
+  <BBS ip="netasylum.com" login="" name="Arena BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="ariabbs.com" login="" name="ARIA BBS HQ" password="" port="1985" protocol="TELNET"/>
+  <BBS ip="50.116.51.149" login="" name="ARTNET" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.at2k.org" login="" name="AT2K Design BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ataribbs.ddns.net" login="" name="Atari BBS Gateway" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="pofobbs.ddns.net" login="" name="Atari Portfolio BBS" password="" port="992" protocol="TELNET"/>
+  <BBS ip="bbs.atavachronbbs.net" login="" name="Atavachron BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="athelstan.org" login="" name="Athelstan BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="atl.ddns.net" login="" name="Atlantis BBS" password="" port="6401" protocol="TELNET"/>
+  <BBS ip="bbs.as.ntu.edu.tw" login="" name="Atmosphere BBS (NTU)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="theattic.v1cd3m1z3r.net" login="" name="Attic BBS (1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.millhill.org" login="" name="Attic BBS (2)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="76.104.161.135" login="" name="Avalon" password="" port="23" protocol="TELNET"/>
+  <BBS ip="atl.ddns.net" login="" name="Avalon Isle BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="avastbbs.servegame.com" login="" name="Avast! BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="68.98.101.79" login="" name="Baba Yaga's BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="backintime.ddns.net" login="" name="Back In Time" password="" port="6510" protocol="TELNET"/>
+  <BBS ip="bttfbbs.com" login="" name="Back to the Future (SSH)" password="" port="22" protocol="TELNET"/>
+  <BBS ip="bwrbbs.ddns.net" login="" name="Backwood Realm BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.gamer.com.tw" login="" name="Bahamut BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="barbaria.norbus.com" login="" name="Barbaria (SSH)" password="" port="22" protocol="TELNET"/>
+  <BBS ip="basementbbs.ddns.net" login="" name="Basement BBS" password="" port="9000" protocol="TELNET"/>
+  <BBS ip="thebassplanet.com" login="" name="Bass Planet" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="amis86.ddns.net" login="" name="Baudville" password="" port="9000" protocol="TELNET"/>
+  <BBS ip="jayctheriot.com" login="" name="Bayou BBS" password="" port="6401" protocol="TELNET"/>
+  <BBS ip="bbsdev.net" login="" name="BBS Development" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbsgamer.ddns.net" login="" name="BBS Gamer" password="" port="2600" protocol="TELNET"/>
+  <BBS ip="freespeak.hopto.org" login="" name="BBS GameTime (MajorBBS)" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="freespeak.hopto.org" login="" name="BBS GameTime (Menu)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="freespeak.hopto.org" login="" name="BBS GameTime (PCBoard)" password="" port="233" protocol="TELNET"/>
+  <BBS ip="bbs.oldchat.ru" login="" name="BBS OldChat" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.orreli.net" login="" name="BBS Orreli" password="" port="45023" protocol="TELNET"/>
+  <BBS ip="bbs.orreli.net" login="" name="BBS Orreli TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="bbs.retrocampus.com" login="" name="BBS Retrocampus" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbswordle.com" login="" name="BBS Tournament Wordle" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.jasonwalker.ca" login="" name="BBS.JasonWalker.ca" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.telearena.us" login="" name="BBS.Telearena.us" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbbs.net" login="" name="BCG-Box" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bcrgames.com" login="" name="BCR Games Server" password="" port="31337" protocol="TELNET"/>
+  <BBS ip="bbs.bearfather.net" login="" name="Bear's Den" password="" port="23" protocol="TELNET"/>
+  <BBS ip="31.220.63.185" login="" name="BEER-ISAC BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.byr.cn" login="" name="Beiyou Forum" password="" port="23" protocol="TELNET"/>
+  <BBS ip="beryl.h-o-soft.com" login="" name="Beryl BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.bigjim.ventures" login="" name="Big Jim's Secret Emporium" password="" port="6969" protocol="TELNET"/>
+  <BBS ip="bunnybbs.tw" login="" name="Big Rabbit BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bigtimebbs.net" login="" name="Big Time BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="39.106.161.147" login="" name="Big5 BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbsclubhouse.ddns.net" login="" name="Biker Bob's Clubhouse" password="" port="1040" protocol="TELNET"/>
+  <BBS ip="wa7npx.org" login="" name="BitPlane BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.bnbbbs.net" login="" name="Bits  And  Bytes BBS" password="" port="2023" protocol="TELNET"/>
+  <BBS ip="bitwoods.duckdns.org" login="" name="Bitwoods RBBS-PC" password="" port="23" protocol="TELNET"/>
+  <BBS ip="blackflag.acid.org" login="" name="Black Flag BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="blackflag.acid.org" login="" name="Black Tower BBS" password="" port="26" protocol="TELNET"/>
+  <BBS ip="blackice.bbsindex.de" login="" name="BlackICE" password="" port="23" protocol="TELNET"/>
+  <BBS ip="acentauribbs.no-ip.org" login="" name="Blacklight Underground" password="" port="2424" protocol="TELNET"/>
+  <BBS ip="blackstar-bbs.servegame.com" login="" name="Blackstar BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wwiv.bsbbs.com" login="" name="Blood Stone" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="blood.bbsn.us" login="" name="BLOODBBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.novass.net" login="" name="Blurred Vision" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="byob.hopto.org" login="" name="Boar's Head Tavern" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="bbs.beardy.se" login="" name="BodaX BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="66.228.38.176" login="" name="Boebertfeet" password="" port="52270" protocol="TELNET"/>
+  <BBS ip="bbs.wz5bbs.com" login="" name="BoobTube" password="" port="23" protocol="TELNET"/>
+  <BBS ip="books.internetking.us" login="" name="Books Chess Server" password="" port="5000" protocol="TELNET"/>
+  <BBS ip="bookworm.synchro.net" login="" name="Bookworm BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bfbbs.no-ip.com" login="" name="Boot Factory 2K+" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="borderlinebbs.dyndns.org" login="" name="Borderline BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.bottomlessabyss.net" login="" name="Bottomless Abyss BBS" password="" port="2023" protocol="TELNET"/>
+  <BBS ip="bsbbs.com.br" login="" name="Brain Storm BBS (SSH)" password="" port="22" protocol="TELNET"/>
+  <BBS ip="brazi.net" login="" name="Brazi.net" password="" port="23" protocol="TELNET"/>
+  <BBS ip="207.90.251.241" login="" name="Brett Bender BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="thebrewery.servebeer.com" login="" name="Brewery BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="tw2002.briancmoses.com" login="" name="Brian's Blog TWGS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="brigandine.org" login="" name="Brigandine" password="" port="9390" protocol="TELNET"/>
+  <BBS ip="palace.brokedownpalace.online" login="" name="Brokedown Palace BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.thebrokenbubble.com" login="" name="Broken Bubble" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.buema.ch" login="" name="BUEMA BBS" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="75.242.168.227" login="" name="Bunker 3" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="211.68.71.66" login="" name="Butterfly BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="chat.hohimer.org" login="" name="Byte Me BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.bytebarn.de" login="" name="ByteBarn BBS" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="c3bbs.retronetworking.org" login="" name="C3BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.c64.pub" login="" name="C64 Pub" password="" port="23" protocol="TELNET"/>
+  <BBS ip="c64u.club" login="" name="C64 Ultimate Club" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.cabanabar.net" login="" name="Cabana Bar BBS" password="" port="11123" protocol="TELNET"/>
+  <BBS ip="thecabinbbs.com" login="" name="Cabin BBS, The" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="camelotb.synchro.net" login="" name="Camelot BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.canerduh.com" login="" name="Canerduh BBS" password="" port="23905" protocol="TELNET"/>
+  <BBS ip="csbbs.dyndns.org" login="" name="Capital Station BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="capitolcityonline.net" login="" name="Capitol City Online BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="capitolshrill.com" login="" name="Capitol Shrill BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cqbbs.ddns.net" login="" name="Captain's Quarters BBS II" password="" port="6800" protocol="TELNET"/>
+  <BBS ip="casbah.goip.de" login="" name="Casbah BBS" password="" port="5354" protocol="TELNET"/>
+  <BBS ip="47.46.52.130" login="" name="Castle BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cedarvalleybbs.com" login="" name="Castle Rock BBS" password="" port="2424" protocol="TELNET"/>
+  <BBS ip="bbs.cis92.net" login="" name="Catpit BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cavebbs.homeip.net" login="" name="Cave BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="email.qrp.gr" login="" name="CB2 Micro BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="tdod.org" login="" name="Cbaxyz TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="cbbs.mitsaltair.com" login="" name="CBBS/TN" password="" port="8800" protocol="TELNET"/>
+  <BBS ip="rtc.to" login="" name="CCUW BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.ccxbbs.net" login="" name="CCX BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cedarvalleybbs.com" login="" name="CedarValley BBS" password="" port="2525" protocol="TELNET"/>
+  <BBS ip="cedarvalleybbs.com" login="" name="CedarValley BBS 2" password="" port="2626" protocol="TELNET"/>
+  <BBS ip="scenewall.bbs.io" login="" name="Cement City" password="" port="4000" protocol="TELNET"/>
+  <BBS ip="122.199.12.99" login="" name="Censorship BBS" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="centralontarioremote.net" login="" name="Central Ontario Remote (GameSrv)" password="" port="1123" protocol="TELNET"/>
+  <BBS ip="centralontarioremote.net" login="" name="Central Ontario Remote (Mystic)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="centralontarioremote.net" login="" name="Central Ontario Remote (WWIV)" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="bbs.centronian.ca" login="" name="Centronian BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.ninthchevron.com.au" login="" name="CENTRUM BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="174.169.223.236" login="" name="Chaotic Factor BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="chat.korokorok.com" login="" name="Chatter BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="chimia.se" login="" name="Chimia BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="1stchoicecore.co.nz" login="" name="Choice Core BBS (1st)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="2ndchoicecore.nz" login="" name="Choice Core BBS (2nd)" password="" port="1024" protocol="TELNET"/>
+  <BBS ip="1stchoicecore.co.nz" login="" name="Choice Core BBS (4th)" password="" port="1030" protocol="TELNET"/>
+  <BBS ip="1stchoicecore.co.nz" login="" name="Choice Core BBS (6th)" password="" port="1028" protocol="TELNET"/>
+  <BBS ip="cfbbs.no-ip.com" login="" name="Christian Fellowship" password="" port="26" protocol="TELNET"/>
+  <BBS ip="chrysalisbbs.org" login="" name="Chrysalis Online Services TBBS BBS" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="bbs.circl.lu" login="" name="CIRCL's BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="citadel64.thejlab.com" login="" name="Citadel 64 BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="citlmbbs.synchro.net" login="" name="Citrick BBS" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="bbs.cittadellabbs.it" login="" name="Cittadella BBS" password="" port="4001" protocol="TELNET"/>
+  <BBS ip="houseoftna.xyz" login="" name="City Of Angels BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="jamesmauler.net" login="" name="City on a Hill" password="" port="23" protocol="TELNET"/>
+  <BBS ip="interzone.annexia.xyz" login="" name="City on the Edge of Forever" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="cjsplace.thruhere.net" login="" name="CJ's Place" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cw.qc.to" login="" name="Clacker Works" password="" port="9000" protocol="TELNET"/>
+  <BBS ip="board.classicbbs.net" login="" name="Classic BBS" password="" port="9339" protocol="TELNET"/>
+  <BBS ip="bbs.classiccomputing.net" login="" name="Classic Computing BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="segaa.net" login="" name="Clover Love (Chinese)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.conf.eti.br" login="" name="Clube da Insonia BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="clutchbbs.com" login="" name="Clutch BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="84.104.78.157" login="" name="Coal Mine BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="coderedmud.servegame.com" login="" name="CodeRed BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="cfbbs.net" login="" name="Cold Fusion BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.coldwinterknights.net" login="" name="Cold Winter Knights" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="bbs.qzwx.com" login="" name="Colossus BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cib.dyndns.org" login="" name="Commodore Image" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="cib.dyndns.org" login="" name="Commodore Image II" password="" port="6401" protocol="TELNET"/>
+  <BBS ip="cib.dyndns.org" login="" name="Commodore Image III" password="" port="6402" protocol="TELNET"/>
+  <BBS ip="107.143.22.194" login="" name="Commodore Lounge" password="" port="23" protocol="TELNET"/>
+  <BBS ip="203.38.121.134" login="" name="Comms Nuts BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="www.companycitadel.us" login="" name="Company Citadel BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="64life.net" login="" name="COMPUTE!'s Gazette BBS" password="" port="1983" protocol="TELNET"/>
+  <BBS ip="cebbs.costakis.org" login="" name="Computer Express" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cpugod.synchro.net" login="" name="Computer God" password="" port="23" protocol="TELNET"/>
+  <BBS ip="concreteroots.servebbs.org" login="" name="Concrete Roots" password="" port="23" protocol="TELNET"/>
+  <BBS ip="conchaos.synchro.net" login="" name="Constructive Chaos BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="conchaos.synchro.net" login="" name="Constructive Chaos TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="convolution.us" login="" name="Convolution" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.cooldavid.org" login="" name="Cool David" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cottonwoodbbs.dyndns.org" login="" name="Cottonwood BBS" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="crackintimebbs.ddns.net" login="" name="Crack In Time BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="www.crappiecracker.com" login="" name="CrappieCracker Online BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.crazyerics.com" login="" name="Crazy Eric's BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cpbbs.de" login="" name="Crazy Paradise" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="crazyworldbbs.com" login="" name="Crazy World BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="crazyworldbbs.com" login="" name="Crazy World Game Server" password="" port="888" protocol="TELNET"/>
+  <BBS ip="crisisbbs.net" login="" name="Crisis/Line BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.crnet.net" login="" name="CrNet BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="69.4.62.151" login="" name="Crusty Chicken TWGS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="eow.lol" login="" name="Crypts BBS" password="" port="2377" protocol="TELNET"/>
+  <BBS ip="cptalker.com" login="" name="Crystal Palace" password="" port="9900" protocol="TELNET"/>
+  <BBS ip="zl4kj.nz" login="" name="Crystal Set" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.excalibursheath.com" login="" name="Cyber Sword" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sysgod.org" login="" name="Cyberia BBS" password="" port="23000" protocol="TELNET"/>
+  <BBS ip="cyberspacebbs.net" login="" name="Cyberspace BBS (Synchronet)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="cyberspacebbs.net" login="" name="Cyberspace BBS (Worldgroup)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.cyrellia.com" login="" name="Cyrellia BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.intersrv.net" login="" name="D0P3 BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dangerbaybbs.dyndns.org" login="" name="Danger Bay BBS" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="play.ddgame.us" login="" name="Dank Domain" password="" port="23" protocol="TELNET"/>
+  <BBS ip="darkgame.buanzo.org" login="" name="Dark Game BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.darkrealms.ca" login="" name="Dark Realms" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.dsbbs.ca" login="" name="Dark Systems BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="darkwastelands.com" login="" name="Dark Wastelands" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="darkagesbbs.com" login="" name="DarkAges BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="darkforce-bbs.dyndns.org" login="" name="DarkForce! BBS, The" password="" port="1040" protocol="TELNET"/>
+  <BBS ip="darklevel.hopto.org" login="" name="Darklevel" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="twgs.geekm0nkey.com" login="" name="DarkMatter's TWGS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="darkwood.ddns.net" login="" name="Darkwood BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="datgsguy.com" login="" name="DatGSguy BBS" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="datotal.net" login="" name="Datotal" password="" port="35723" protocol="TELNET"/>
+  <BBS ip="davesbbs.com" login="" name="Dave's BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tdod.org" login="" name="Dawn of Demise (Worldgroup)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dott.synchro.net" login="" name="Day Of The Tentacle" password="" port="2424" protocol="TELNET"/>
+  <BBS ip="the-rotten-core.strangled.net" login="" name="Dead Carrier BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="deadinternet.synchronetbbs.org" login="" name="Dead Internet Society" password="" port="23" protocol="TELNET"/>
+  <BBS ip="telnet.deadmodemsociety.com" login="" name="Dead Modem Society" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="deadbeatz.org" login="" name="Deadbeatz BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="deathrow.servebbs.org" login="" name="Death Row BBS" password="" port="1001" protocol="TELNET"/>
+  <BBS ip="decades.freeddns.org" login="" name="Decades BBS" password="" port="6401" protocol="TELNET"/>
+  <BBS ip="bbs.deepskies.com" login="" name="DeepSkies BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="50.110.169.17" login="" name="Defile BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="deltacity.se" login="" name="Delta City BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.demigoth.com" login="" name="Demigoth BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="demonsnet.com" login="" name="Demonsnet BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.kn6q.org" login="" name="Desert Rats Sanctuary TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="dhxy.info" login="" name="DHXY" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sbbs.dmine.net" login="" name="Diamond Mine Online (Synchronet)" password="" port="24" protocol="TELNET"/>
+  <BBS ip="wwiv.dmine.net" login="" name="Diamond Mine Online (WWIV)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="94.22.232.77" login="" name="Didstopia BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.digicombbs.com" login="" name="Digicom BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="digitaldial.homeunix.com" login="" name="Digital Dial BBS" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="bbs.digitaldistortionbbs.com" login="" name="Digital Distortion" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ddreams.synchro.net" login="" name="Digital Dreams" password="" port="23" protocol="TELNET"/>
+  <BBS ip="www.diglet.ca" login="" name="Digital Lethargia BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thedigitalpost.freeddns.org" login="" name="Digital Post" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.digitalrainbow.info" login="" name="Digital Rainbow" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.digital-warfare.net" login="" name="Digital Warfare" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="alcoholidaybbs.com" login="" name="Dime BBS" password="" port="94" protocol="TELNET"/>
+  <BBS ip="bbs.disconnected-by-peer.at" login="" name="Disconnected by Peer BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tag.diskbox2.net" login="" name="Diskbox ][" password="" port="23" protocol="TELNET"/>
+  <BBS ip="diskhopp.synchro.net" login="" name="Diskhoppers Palace BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.distantempires.com" login="" name="Distant Empires BBS" password="" port="8023" protocol="TELNET"/>
+  <BBS ip="d1st.org" login="" name="Distortion" password="" port="23" protocol="TELNET"/>
+  <BBS ip="djdave.uk" login="" name="DJ Dave BBS" password="" port="8088" protocol="TELNET"/>
+  <BBS ip="107.175.69.10" login="" name="DLWX BBS" password="" port="60023" protocol="TELNET"/>
+  <BBS ip="bbs.net.ua" login="" name="DniproWave BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.docksud.com.ar" login="" name="Dock Sud" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.kiwi.net" login="" name="Dogtown BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dgu.strangled.net" login="" name="Door Games Unlimited" password="" port="23" protocol="TELNET"/>
+  <BBS ip="doozy.thruhere.net" login="" name="Doozy" password="" port="23" protocol="TELNET"/>
+  <BBS ip="casper.homeip.net" login="" name="Dove Only" password="" port="23" protocol="TELNET"/>
+  <BBS ip="downlinkbbs.com" login="" name="Downlink BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="202.90.240.159" login="" name="DownUnder BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dragon.vk3heg.net" login="" name="Dragon's Lair BBS" password="" port="6800" protocol="TELNET"/>
+  <BBS ip="cd.csie.io" login="" name="Dream Garden" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ccns.cc" login="" name="Dream Land BBS" password="" port="3456" protocol="TELNET"/>
+  <BBS ip="bbs.dreamlandbbs.org" login="" name="Dreamland BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="din.asciiattic.com" login="" name="Dreamline BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="hermes.okyler.com" login="" name="DUAO BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.duensing.digital" login="" name="Duensing Digital" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dumuzi.lykaina.com" login="" name="Dumuzi BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dundarach.tplinkdns.com" login="" name="Dundarach BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="59.167.142.49" login="" name="Dungeon BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dura-bbs.net" login="" name="Dura-Europos" password="" port="6359" protocol="TELNET"/>
+  <BBS ip="dynamite.bbsing.com" login="" name="Dynamite BBS (1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dynamite.synchronetbbs.org" login="" name="Dynamite BBS (2)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dydo.erb.pw" login="" name="Dyslexic Donkey" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="bbsdoors.com" login="" name="Eagle's Dare BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ems-bbs.com" login="" name="Eat My Shorts! BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="96.27.249.221" login="" name="Echo Base BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="echochamber.zapto.org" login="" name="Echo Chamber BBS" password="" port="3640" protocol="TELNET"/>
+  <BBS ip="echoes.120v.ac" login="" name="Echoes BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="eclipsebbs.com" login="" name="Eclipse BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.efectolinux.com" login="" name="Efectolinux" password="" port="23" protocol="TELNET"/>
+  <BBS ip="elvicio.net" login="" name="El Vicio" password="" port="23" protocol="TELNET"/>
+  <BBS ip="eldritchclockwork.net" login="" name="Eldritch Clockwork" password="" port="23" protocol="TELNET"/>
+  <BBS ip="142.11.212.221" login="" name="Electraphysics TWGS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.electronicchicken.com" login="" name="Electronic Chicken BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="162.212.158.202" login="" name="Elevator BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.emeraldhill.org" login="" name="Emerald Hill BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.emeraldvalley.net" login="" name="Emerald Valley" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.eotd.com" login="" name="Empire of the Dragon BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.emu486.net" login="" name="EMU486" password="" port="23" protocol="TELNET"/>
+  <BBS ip="47.38.20.227" login="" name="Enchanted BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="endofthelinebbs.com" login="" name="End Of The Line BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="eniacv2.net" login="" name="ENiAC 2.0 BBS" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="enigma-bbs.com" login="" name="Enigma BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="enterprisebbs.ddns.net" login="" name="Enterprise BBS" password="" port="1701" protocol="TELNET"/>
+  <BBS ip="the.ericade.net" login="" name="ERICADE Network" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.error200.tech" login="" name="Error 200 Tech BBS" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="error404bbs.ddns.net" login="" name="Error 404 (TWGS)" password="" port="24" protocol="TELNET"/>
+  <BBS ip="error404bbs.ddns.net" login="" name="Error 404 BBS File Server" password="" port="513" protocol="TELNET"/>
+  <BBS ip="error404bbs.ddns.net" login="" name="Error 404 BBS Phone Book" password="" port="419" protocol="TELNET"/>
+  <BBS ip="etow.synchro.net" login="" name="Escape To Other Worlds" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.eternaldomain.net" login="" name="Eternal Domain BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ethernetgateway.com" login="" name="Ethernet Gateway" password="" port="23" protocol="TELNET"/>
+  <BBS ip="euphoria.mudinfo.net" login="" name="Euphoria BBS" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="exoplanetbbs.net" login="" name="Exoplanet" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bayvillewireless.com" login="" name="Extreme BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.extricate.org" login="" name="Extricate BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="fido.beholderbbs.org" login="" name="Eye of the Beholder" password="" port="23" protocol="TELNET"/>
+  <BBS ip="on.the.net.nz" login="" name="Eye of the Storm" password="" port="23" protocol="TELNET"/>
+  <BBS ip="23.95.146.28" login="" name="Fading Black" password="" port="8282" protocol="TELNET"/>
+  <BBS ip="bbs.faithcollapsing.com" login="" name="Faith Collapsing BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="familybbs.ddns.net" login="" name="Family BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="fatcatsbbs.com" login="" name="Fatcats BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="fdd.one" login="" name="FDD1" password="" port="23" protocol="TELNET"/>
+  <BBS ip="fedapoc.tel" login="" name="Federation Apocalypse" password="" port="2301" protocol="TELNET"/>
+  <BBS ip="50.116.41.177" login="" name="Fennec BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ferchobbs.ddns.net" login="" name="Fercho BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="tfb-bbs.org" login="" name="File Bank BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.f4fbbs.com" login="" name="Files 4 Fun BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="vadv.fireballex.com" login="" name="Fireball Express (VADV)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="firesidebbs.com" login="" name="Fireside BBS" password="" port="23231" protocol="TELNET"/>
+  <BBS ip="158.174.185.101" login="" name="First Division" password="" port="1987" protocol="TELNET"/>
+  <BBS ip="bbs.abbadabba.tech" login="" name="Flipnet" password="" port="4242" protocol="TELNET"/>
+  <BBS ip="bbs.gglab.cloud" login="" name="FlipperZero BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="fluph.zapto.org" login="" name="FlupH BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="fix.no" login="" name="Fluxpod Information Exchange" password="" port="24" protocol="TELNET"/>
+  <BBS ip="fmrl.throwbackbbs.com" login="" name="FMRL" password="" port="2324" protocol="TELNET"/>
+  <BBS ip="fqbbs.synchro.net" login="" name="Fool's Quarter BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="foremxebbs.ddns.net" login="" name="Forem XE BBS" password="" port="9999" protocol="TELNET"/>
+  <BBS ip="dazexy.synology.me" login="" name="Forgotten Memories" password="" port="52323" protocol="TELNET"/>
+  <BBS ip="bbs.opicron.eu" login="" name="Forze BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.debonne.eu" login="" name="Free Corner" password="" port="23" protocol="TELNET"/>
+  <BBS ip="freeside.bbs.io" login="" name="Freeside BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="freeway.vkradio.com" login="" name="Freeway BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="72.38.168.118" login="" name="French Connection" password="" port="31023" protocol="TELNET"/>
+  <BBS ip="friabad.hopto.org" login="" name="Fria Bad BBS" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="bbs.retrohack.se" login="" name="Frozen Floppy BBS" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="bbs.ftelnet.ca" login="" name="fTelnet Demo Server" password="" port="23" protocol="TELNET"/>
+  <BBS ip="winnow.1q1.me" login="" name="Fuji Summit" password="" port="23" protocol="TELNET"/>
+  <BBS ip="funtopia.synchro.net" login="" name="Funtopia BBS" password="" port="3023" protocol="TELNET"/>
+  <BBS ip="bbs.furryrefuge.com" login="" name="Furry Refuge" password="" port="23" protocol="TELNET"/>
+  <BBS ip="pruffino.com" login="" name="Fusion BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="fw2.cnetbbs.net" login="" name="Future World II" password="" port="6800" protocol="TELNET"/>
+  <BBS ip="futureland.today" login="" name="Futureland" password="" port="23" protocol="TELNET"/>
+  <BBS ip="galaxy74bbs.com" login="" name="Galaxy 74 BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.game-master.com" login="" name="Game Master" password="" port="23" protocol="TELNET"/>
+  <BBS ip="gamenet.synchronetbbs.org" login="" name="Gamenet BBS Network" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thegateb.synchro.net" login="" name="Gate BBS (Synchronet)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thegateb.synchro.net" login="" name="Gate BBS (WWIV)" password="" port="2424" protocol="TELNET"/>
+  <BBS ip="73.102.102.106" login="" name="GatorNet HQ BBS (Synchronet)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="gcc-bbs.com" login="" name="GCC-BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mbse.gzrbbs.net" login="" name="Geezer's Fido Hub" password="" port="2320" protocol="TELNET"/>
+  <BBS ip="geniv.dyndns.org" login="" name="Generation III Pot-D" password="" port="150" protocol="TELNET"/>
+  <BBS ip="g-point.tunk.org" login="" name="Genetic-Point BBS" password="" port="500" protocol="TELNET"/>
+  <BBS ip="alphacomplex.us" login="" name="GhostNet FTN Hub" password="" port="2423" protocol="TELNET"/>
+  <BBS ip="83.211.28.80" login="" name="Gibson BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.gigabite.se" login="" name="GigaBite BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="glitchtech.top" login="" name="GlitchNet" password="" port="23" protocol="TELNET"/>
+  <BBS ip="globalchaosbbs.com" login="" name="Global Chaos BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="the.globalvillagebbs.net" login="" name="Global Village BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="92.91.25.209" login="" name="Gods69.com BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.iswix.com" login="" name="Golden Temple, The" password="" port="6800" protocol="TELNET"/>
+  <BBS ip="goldminedoors.com" login="" name="Goldmine Community Door Game Server" password="" port="2513" protocol="TELNET"/>
+  <BBS ip="goofsgarage.com" login="" name="Goof's Garage" password="" port="6464" protocol="TELNET"/>
+  <BBS ip="bbs.g00r00.com" login="" name="Goosenet BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.greenhead.ca" login="" name="Greenhead BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="greywolf.synchro.net" login="" name="Greywolf's Den" password="" port="23" protocol="TELNET"/>
+  <BBS ip="80.189.184.12" login="" name="Grid BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="gridlock.synchronetbbs.org" login="" name="Gridlock BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="grimoirebbs.sytes.net" login="" name="Grimoire BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tgr.freeddns.org" login="" name="Grinches Realm, The" password="" port="23" protocol="TELNET"/>
+  <BBS ip="gcbbs.net" login="" name="Ground Control BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="71.239.223.149" login="" name="Ground Zero BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="guardian.synchro.net" login="" name="Guardian of Forever" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.bajer.cz" login="" name="Guru BBS" password="" port="32" protocol="TELNET"/>
+  <BBS ip="haciend.com" login="" name="Haciend El Bananas" password="" port="8821" protocol="TELNET"/>
+  <BBS ip="bbs.hackerforce.de" login="" name="Hackerforce BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="95.217.16.88" login="" name="Hackmeeting 0x1B BBS" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="hagars.org.uk" login="" name="Hagar's Helpline" password="" port="24" protocol="TELNET"/>
+  <BBS ip="halcyonbbs.scisweb.org" login="" name="Halcyon BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="hovalbbs.com" login="" name="Halls of Valhalla BBS" password="" port="2333" protocol="TELNET"/>
+  <BBS ip="hamshack.synchro.net" login="" name="Ham Shack BBS, The" password="" port="23" protocol="TELNET"/>
+  <BBS ip="citadel.dc540.org" login="" name="Happyland" password="" port="23230" protocol="TELNET"/>
+  <BBS ip="96.30.192.92" login="" name="Harbor BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="hatedreality.homeunix.net" login="" name="Hated Reality" password="" port="23" protocol="TELNET"/>
+  <BBS ip="atari-bbs.zapto.org" login="" name="Hawaii BBS Atari 8 Bit" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="telnet.unknownrealm.org" login="" name="Hax0r's Palace" password="" port="23" protocol="TELNET"/>
+  <BBS ip="heatwave.ddns.net" login="" name="Heatwave" password="" port="9640" protocol="TELNET"/>
+  <BBS ip="heightsbbs.heightspc.net" login="" name="Heights BBS" password="" port="6860" protocol="TELNET"/>
+  <BBS ip="herbies-bbs.ddns.net" login="" name="Herbies BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="herbies-bbs.ddns.net" login="" name="Herbies BBS II" password="" port="23" protocol="TELNET"/>
+  <BBS ip="herbies-bbs.ddns.net" login="" name="Herbies BBS III" password="" port="2424" protocol="TELNET"/>
+  <BBS ip="hexedbbs.com" login="" name="HeXed BBS" password="" port="23999" protocol="TELNET"/>
+  <BBS ip="the-hidden.hopto.org" login="" name="Hidden BBS" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="hpbbs.dyndns.org" login="" name="Hidden Paradise" password="" port="23" protocol="TELNET"/>
+  <BBS ip="highdesertbbs.ddns.net" login="" name="High Desert BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.hispamsx.org" login="" name="HispaMSX BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.hobbitempire.net" login="" name="Hobbit Empire" password="" port="6501" protocol="TELNET"/>
+  <BBS ip="wfido.ru" login="" name="Hobbit Station BBS" password="" port="1234" protocol="TELNET"/>
+  <BBS ip="hobbylinebbs.com" login="" name="Hobby Line! BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mail.hohimer.org" login="" name="Hohimer BBS" password="" port="1336" protocol="TELNET"/>
+  <BBS ip="interzone.annexia.xyz" login="" name="Hold Fast BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="ufpgc.com" login="" name="Holodeck BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="sbbs.hologramcomputing.net" login="" name="Hologram Computing BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="31.133.0.38" login="" name="Honey-At-Home" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.horizonbbs.org" login="" name="Horizon BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="houseofbaud.com" login="" name="House of Baud BBS" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="literature.twbbs.io" login="" name="Huanian Xiaoji" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.hyena.network" login="" name="HyNET BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.retrorewind.ca" login="" name="Hysteria BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.ibbs.be" login="" name="IB-BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="44.31.91.213" login="" name="ICARUS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="69.178.59.98" login="" name="Ice Castle BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="illusionforge.rocks" login="" name="Illusionforge BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="box.imzadi.de" login="" name="Imzadi Box" password="" port="23" protocol="TELNET"/>
+  <BBS ip="66.228.57.87" login="" name="Inconsistency BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="aws1.fmerino.com.br" login="" name="Infinite Dream BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.rclabs.com.br" login="" name="Infonet BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="sbbs.ricin.io" login="" name="Inner Core" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tiabbs.synchro.net" login="" name="Insane Asylum BBS (1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="insomnia.synchronetbbs.org" login="" name="Insomnia" password="" port="23" protocol="TELNET"/>
+  <BBS ip="itcbbs.ddns.net" login="" name="Integrated Telecommunications Centre" password="" port="23000" protocol="TELNET"/>
+  <BBS ip="bbs.idbbs.ca" login="" name="Internal Dimension BBS" password="" port="59" protocol="TELNET"/>
+  <BBS ip="tw.internetking.us" login="" name="Internetking's Tradewar 2002 Server" password="" port="23" protocol="TELNET"/>
+  <BBS ip="70.122.247.57" login="" name="Interstellar TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="bbs.interzone.cloud" login="" name="Interzone" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.iscabbs.com" login="" name="Iowa Student Assc. BBS (ISCA)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs2.ipingthereforeiam.com" login="" name="IPTIA BBS (Synchronet)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="isisunveiled.no-ip.org" login="" name="ISIS Unveiled" password="" port="23" protocol="TELNET"/>
+  <BBS ip="itchybutt.org" login="" name="Itchy Butt BBS (Color 64)" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="bbs.jacobcat.app" login="" name="Jacob's Hideout BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="joesbbs.com" login="" name="Joe's Computer BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.thejollyrogerbbs.com" login="" name="Jolly Roger BBS, The" password="" port="8023" protocol="TELNET"/>
+  <BBS ip="exciter.ws" login="" name="JumpStart BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="junglebbs.com" login="" name="Jungle BBS (1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.junglebbs.com" login="" name="Jungle BBS (2)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="jupiter.bbs.io" login="" name="Jupiter" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.theiguru.au" login="" name="Kalgoorlie Retro BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="tka.8bitboyz.com" login="" name="Kats Alley" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="kayprobbs.org" login="" name="Kaypro BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="zahrl.ddns.net" login="" name="KCM BBS System" password="" port="2023" protocol="TELNET"/>
+  <BBS ip="bbs.kd3.us" login="" name="KD3net" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.kd8hfx.net" login="" name="KD8HFX" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thekeep.net" login="" name="KEEP BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="kernelfortress.org" login="" name="Kernel Fortress" password="" port="23" protocol="TELNET"/>
+  <BBS ip="kia.zapto.org" login="" name="Killed In Action BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="24.166.43.233" login="" name="Kilobyte" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sbbs.kingdomsendbbs.net" login="" name="Kingdom's End BBS (Synchronet)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="andcycle.idv.tw" login="" name="Kirika BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="96.231.233.47" login="" name="KiwiMates" password="" port="23" protocol="TELNET"/>
+  <BBS ip="kk4qbn.synchro.net" login="" name="KK4QBN BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="klud.ge" login="" name="Kludge BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.korenblom.nl" login="" name="Korenblom" password="" port="23" protocol="TELNET"/>
+  <BBS ip="kraaby.synchro.net" login="" name="Kraaby Gamer BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="kry.pt" login="" name="KRY.PT BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="kuehlbox.wtf" login="" name="Kuehlbox" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.dicksonlabs.net" login="" name="Lab BBS, The" password="" port="2325" protocol="TELNET"/>
+  <BBS ip="lakehouse.lilpenguins.com" login="" name="Lake House BBS" password="" port="2333" protocol="TELNET"/>
+  <BBS ip="lofac.mintyfresh.love" login="" name="Land of Frogs and Contemplation" password="" port="23" protocol="TELNET"/>
+  <BBS ip="landofthelost.ca" login="" name="Land of the Lost" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="landover.synchronetbbs.org" login="" name="Landover BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="lastrangers.com" login="" name="Last Rangers' BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="latenight.diversidial.com" login="" name="LateNight DiversiDial" password="" port="313" protocol="TELNET"/>
+  <BBS ip="sgprobbs.com" login="" name="Lee Magazine" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="bbs.lightly-salted.com" login="" name="Lehigh Valley Vintage Computer Club" password="" port="8023" protocol="TELNET"/>
+  <BBS ip="bbs.riddells.net" login="" name="Leisure Time BBS" password="" port="10023" protocol="TELNET"/>
+  <BBS ip="bbs.fozztexx.com" login="" name="Level 29" password="" port="23" protocol="TELNET"/>
+  <BBS ip="lexiconbbs.com" login="" name="Lexicon BBS (Image BBS)" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.vslib.cz" login="" name="Liane BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="lilacbbs.com" login="" name="Lilac Community BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="98.212.225.126" login="" name="Liquid Digital" password="" port="23" protocol="TELNET"/>
+  <BBS ip="livewirebbs.com" login="" name="Live Wire BBS" password="" port="1025" protocol="TELNET"/>
+  <BBS ip="localyocalbbs.com" login="" name="Local Yocal BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="looneybinbbs.com" login="" name="Looney Bin BBS!" password="" port="2023" protocol="TELNET"/>
+  <BBS ip="150.221.218.212" login="" name="Lord Raptor's Domain" password="" port="23" protocol="TELNET"/>
+  <BBS ip="lord.stabs.org" login="" name="Lord.stabs.org" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.lostcause.house" login="" name="Lost Cause Halfway House" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tlcbbs.dynu.net" login="" name="Lost Caverns BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="tlcbbs.synchro.net" login="" name="Lost Chord BBS (Commodore BBS)" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="tlcbbs.synchro.net" login="" name="Lost Chord BBS (Searchlight BBS)" password="" port="6023" protocol="TELNET"/>
+  <BBS ip="tlcbbs.synchro.net" login="" name="Lost Chord BBS (Synchronet BBS)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.lostcrypt.com" login="" name="Lost Crypt BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="98.144.7.205" login="" name="Lostways BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.qeeai.com" login="" name="Love Of Net Endless (Chinese)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.lowcrash.dev" login="" name="LowCrash DEV BBS" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="bbs.lsnet.dev" login="" name="LSNET Archive" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.beanzilla.net" login="" name="Lunar Mod" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="lunarout.synchro.net" login="" name="Lunar Outpost" password="" port="8023" protocol="TELNET"/>
+  <BBS ip="lunaticsunleashed.ddns.net" login="" name="Lunatics Unleashed BBS" password="" port="2333" protocol="TELNET"/>
+  <BBS ip="lv426bbs.hopto.org" login="" name="LV-426" password="" port="6464" protocol="TELNET"/>
+  <BBS ip="134.209.40.1" login="" name="Lytical HackFund BBS" password="" port="31337" protocol="TELNET"/>
+  <BBS ip="mstation.servebbs.com" login="" name="M. Station" password="" port="23" protocol="TELNET"/>
+  <BBS ip="172.105.27.143" login="" name="M0n.de BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="206.189.226.31" login="" name="Machdyne BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.madetoraid.com" login="" name="Made To Raid" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="madmanbbs.ddns.net" login="" name="Madman with a Blue Box" password="" port="23" protocol="TELNET"/>
+  <BBS ip="www.madworldbbs.com" login="" name="MadWorld BBS" password="" port="52146" protocol="TELNET"/>
+  <BBS ip="bbs.magicbbs.eu" login="" name="Magic Systems" password="" port="6323" protocol="TELNET"/>
+  <BBS ip="magnumbbs.net" login="" name="Magnum BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.maik.ch" login="" name="Maiks Place BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="majormud.gotdns.com" login="" name="Major Mudd" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.themajorbbs.com" login="" name="MajorBBS Official Demo BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="24.131.193.139" login="" name="ManetherenWG" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tmz.synchronetbbs.org" login="" name="Maniac Zone" password="" port="23" protocol="TELNET"/>
+  <BBS ip="game.tw2002.net" login="" name="Mark Van Daele's TWGS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mbrserver.com" login="" name="Master Boot Record" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.sunspothq.dyndns.org" login="" name="MasterCom" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mastodon.uy" login="" name="Mastodon" password="" port="23" protocol="TELNET"/>
+  <BBS ip="maxbbs.ddns.net" login="" name="MaxBBS" password="" port="24023" protocol="TELNET"/>
+  <BBS ip="mbpeikert.ddns.net" login="" name="Mbpeikert" password="" port="23" protocol="TELNET"/>
+  <BBS ip="phoenix.bnbbbs.net" login="" name="MBSE Professional Dev BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="medusagaming.ca" login="" name="Medusa BBS" password="" port="230" protocol="TELNET"/>
+  <BBS ip="themegabbs.com" login="" name="Mega BBS Public BBS System" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="megadodo.online" login="" name="Megadodo Publications" password="" port="4242" protocol="TELNET"/>
+  <BBS ip="bbs.memphistw.org" login="" name="Memphis TW BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.memphistw.org" login="" name="Memphis TW TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="tmzbbs01.synchro.net" login="" name="Metal Zone" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.olografix.org" login="" name="Metro Olografix" password="" port="23" protocol="TELNET"/>
+  <BBS ip="microblaster.net" login="" name="MicroBlaster TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="microtownbbs.com" login="" name="Microtown BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="67.149.17.69" login="" name="Midnight Lounge" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mimac.bizzi.org" login="" name="Mimac Rebirth" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="mlinks.com" login="" name="Missing Links" password="" port="23" protocol="TELNET"/>
+  <BBS ip="miyanet.moe" login="" name="Miya Net" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.newsmth.net" login="" name="Mizuki Community (Newsmth BBS)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="66.55.66.25" login="" name="MMN" password="" port="23" protocol="TELNET"/>
+  <BBS ip="modematider.selstam.nu" login="" name="Modemo Tider" password="" port="50023" protocol="TELNET"/>
+  <BBS ip="173.217.78.103" login="" name="Modern Retro, The" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="moetiki.ddns.net" login="" name="Moe's Tavern" password="" port="27" protocol="TELNET"/>
+  <BBS ip="mojo.synchro.net" login="" name="Mojo's World BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mono.org" login="" name="Monochrome" password="" port="23" protocol="TELNET"/>
+  <BBS ip="montereybbs.com" login="" name="Monterey BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.greektimes.ca" login="" name="Montreal Greek Times BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mba.dnsalias.com" login="" name="Moon Base Alpha (TWGS)" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="mba.dnsalias.com" login="" name="Moon Base Alpha (VADV)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mortuary.ddns.net" login="" name="MorningSide Mortuary" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs-mousenet.dynip.online" login="" name="Mousenet" password="" port="8889" protocol="TELNET"/>
+  <BBS ip="mouthofhell.duckdns.org" login="" name="Mouth of Hell BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.mozysswamp.org" login="" name="Mozy's Swamp and Red Dwarf BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.mozysswamp.org" login="" name="Mozy's Swamp and Red Dwarf TWGS" password="" port="24" protocol="TELNET"/>
+  <BBS ip="msmacbbs.maletazul.pt" login="" name="MSmac BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mtlgeek.synchro.net" login="" name="MtlGeek (Synchronet)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mtlgeek.synchro.net" login="" name="MtlGeek (TWGS)" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="muinet.com" login="" name="Muinet" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="multinube.net" login="" name="MULTINUBE-BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="94.32.85.38" login="" name="Murphy BBS" password="" port="2023" protocol="TELNET"/>
+  <BBS ip="home.bsrealm.net" login="" name="Music Station" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mutinybbs.com" login="" name="Mutiny BBS (1)" password="" port="2332" protocol="TELNET"/>
+  <BBS ip="mutiny.cigdangle.com" login="" name="Mutiny BBS (2)" password="" port="65023" protocol="TELNET"/>
+  <BBS ip="mutinybbs.com" login="" name="Mutiny Community" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="mv2k.com" login="" name="MV2K BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="myretrocomp.com" login="" name="My Retro Computer" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.mysmth.net" login="" name="Mysmth BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="majicka.at2k.org" login="" name="Mysteria Majicka BBS" password="" port="1955" protocol="TELNET"/>
+  <BBS ip="mystic-hobbies.com" login="" name="Mystic Hobbies" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mysticrealms.ddns.net" login="" name="Mystic Realms" password="" port="11000" protocol="TELNET"/>
+  <BBS ip="mystic.wwivbbs.org" login="" name="Mystic Rhythms BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="mysticalrealmbbs.com" login="" name="Mystical Realm BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ice.lilacway.com" login="" name="Mythical Kingdom Tech BBS" password="" port="3000" protocol="TELNET"/>
+  <BBS ip="bbs.mythicalkingdom.com" login="" name="Mythical Kingdom Tech SBBS" password="" port="5023" protocol="TELNET"/>
+  <BBS ip="bbs.nykz.net" login="" name="Nanyang Inn" password="" port="23" protocol="TELNET"/>
+  <BBS ip="nebbs.servehttp.com" login="" name="NE BBS" password="" port="9223" protocol="TELNET"/>
+  <BBS ip="nerdragebbs.ddns.net" login="" name="NerdRage BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thenervoushospital.com" login="" name="Nervous Hospital" password="" port="1996" protocol="TELNET"/>
+  <BBS ip="188.81.201.94" login="" name="Nest BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="netpoint.webhop.me" login="" name="Netpoint BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="netpoint.webhop.me" login="" name="Netpoint TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="nettwerked.synchronetbbs.org" login="" name="Nettwerked BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="96.231.233.50" login="" name="NetVillage Sysop Community" password="" port="23" protocol="TELNET"/>
+  <BBS ip="neverneverlandbbs.com" login="" name="Never Never Land BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="209.141.35.127" login="" name="New World of the Internet" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.dosnetz.de" login="" name="News BBS" password="" port="3232" protocol="TELNET"/>
+  <BBS ip="bbs.newtoncity.org" login="" name="Newton City" password="" port="23" protocol="TELNET"/>
+  <BBS ip="nexus.aefinity.io" login="" name="Nexus BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="nightowlbbs.ddns.net     " login="" name="Night Owl BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="nightbite.redirectme.net" login="" name="Nightbite BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.nikom.org" login="" name="Nikom BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="nimbus.synchronetbbs.org" login="" name="Nimbus BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thenineworlds.dnshome.de" login="" name="Nine Worlds BBS" password="" port="923" protocol="TELNET"/>
+  <BBS ip="bbs.lizardmaster.com" login="" name="Nite Eyes BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="nitelite.ddns.net" login="" name="NiteLite BBS" password="" port="9000" protocol="TELNET"/>
+  <BBS ip="100.24.206.238" login="" name="Nitro Store" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.wehack.net" login="" name="No Carrier BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="217.154.107.144" login="" name="No Signal BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tnf.invisik.net" login="" name="Noise Forest BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="184.99.51.34" login="" name="Non-Existant BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thenorthernpalace.com" login="" name="Northern Palace" password="" port="2020" protocol="TELNET"/>
+  <BBS ip="nostalmania.com" login="" name="NostalMania" password="" port="23" protocol="TELNET"/>
+  <BBS ip="nottinghambbs.com" login="" name="Nottingham BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="noverdu.com" login="" name="Noverdu" password="" port="23" protocol="TELNET"/>
+  <BBS ip="joestavern.ddns.net" login="" name="NoWhere TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="nuke.club" login="" name="Nuclear Club" password="" port="513" protocol="TELNET"/>
+  <BBS ip="xtcbox.org" login="" name="Nut Asylum (Mystic)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="xtcbox.org" login="" name="Nut Asylum (Wildcat)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="oasisbbs.hopto.org" login="" name="Oasis BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="offthewall.dmxrob.net" login="" name="Off The Wall" password="" port="23" protocol="TELNET"/>
+  <BBS ip="libido.cx" login="" name="Oiran Alien Museum" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ohb.synchronetbbs.org" login="" name="Old Highland Borg" password="" port="23" protocol="TELNET"/>
+  <BBS ip="theoldnet.com" login="" name="Old Net BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="oldschool.synchronetbbs.org" login="" name="Old School BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="oldtimebbs.com" login="" name="Old Time BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="otsbbs.ddns.net" login="" name="Old Time's Sake BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="ofo.tw" login="" name="Oldest Future Object" password="" port="23" protocol="TELNET"/>
+  <BBS ip="onixbbs.servebbs.com" login="" name="Onix BBS" password="" port="2525" protocol="TELNET"/>
+  <BBS ip="185.139.32.178" login="" name="Onyx" password="" port="23" protocol="TELNET"/>
+  <BBS ip="opivy-bbs.com" login="" name="Operation Ivy BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="optical.c64bbs.nu" login="" name="Optical Illusion BBS" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="bbs.opto22.com" login="" name="OPTO 22 BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sacrebase.mywire.org" login="" name="Orchestra BBS" password="" port="486" protocol="TELNET"/>
+  <BBS ip="top-swadba.de" login="" name="Oshaboy BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="outerlimitsbbs.duckdns.org" login="" name="Outer Limits, The" password="" port="23" protocol="TELNET"/>
+  <BBS ip="outerwall.net" login="" name="Outer Wall, The" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.outpost9.co" login="" name="Outpost 9 (BBS)" password="" port="2023" protocol="TELNET"/>
+  <BBS ip="tradewars.outpost9.com" login="" name="Outpost 9 (TWGS)" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="bbs.outpostbbs.net" login="" name="Outpost BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="76.242.166.61" login="" name="Outta Control Hackers TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="76.242.166.61" login="" name="Outta Control MajorBBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="outwest.synchro.net" login="" name="Outwest BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="overfit.retrievo.xyz" login="" name="Overfit" password="" port="8023" protocol="TELNET"/>
+  <BBS ip="pulsebbs.hopto.org" login="" name="P.U.L.S.E. BBS World HQ" password="" port="1984" protocol="TELNET"/>
+  <BBS ip="paladium.servebbs.com" login="" name="Paladium BBS" password="" port="20" protocol="TELNET"/>
+  <BBS ip="palantirbbs.ddns.net" login="" name="Palantir BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="75.31.92.35" login="" name="PapiChulo's MajorBBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="paradoxbbs.synchronetbbs.org" login="" name="Paradox BBS (1)" password="" port="513" protocol="TELNET"/>
+  <BBS ip="paradoxbbs.qc.to" login="" name="Paradox BBS (3)" password="" port="57323" protocol="TELNET"/>
+  <BBS ip="www.kimmoviitanen.fi" login="" name="Parasite" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="ptbbs.ddns.net" login="" name="Part-Time BBS" password="" port="8000" protocol="TELNET"/>
+  <BBS ip="particlesbbs.dyndns.org" login="" name="Particles! BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="partybowlbbs.ddns.net" login="" name="Party Bowl BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="pathunknown.net" login="" name="Path Unknown BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="pebkac.lol" login="" name="Pebkac.lol" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thepenaltybox.org" login="" name="Penalty Box BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="pepzi.eu" login="" name="Pepzi BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="97.76.12.194" login="" name="Performance Leasing Systems" password="" port="23" protocol="TELNET"/>
+  <BBS ip="75.26.216.248" login="" name="Personal Home Cloud" password="" port="24" protocol="TELNET"/>
+  <BBS ip="bbs.pewp.us" login="" name="Pesto BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.jayscafe.net" login="" name="Petit Caillou BBS" password="" port="6402" protocol="TELNET"/>
+  <BBS ip="phantasm.bbs.io" login="" name="Phantasm" password="" port="4489" protocol="TELNET"/>
+  <BBS ip="bbs.phantombbs.info" login="" name="Phantom BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.pharcyde.org" login="" name="Pharcyde BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="phased.port0.org" login="" name="Phaseshift" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="198.71.48.13" login="" name="Phatstar Teleporter" password="" port="7777" protocol="TELNET"/>
+  <BBS ip="phoenix.bnbbbs.net" login="" name="Phoenix BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.phospher.com" login="" name="Phospher BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.phreaknet.org" login="" name="PhreakNet" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.wantit.net" login="" name="PipeLine BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="blackflag.acid.org" login="" name="Piranha BBS" password="" port="27" protocol="TELNET"/>
+  <BBS ip="38.188.130.43" login="" name="Pirate's Cove TWGS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.pixelgrounds.net" login="" name="Pixelgrounds BBS (Enigma 1/2)" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="bbs.pixelgrounds.net" login="" name="Pixelgrounds BBS (Worldgroup)" password="" port="8887" protocol="TELNET"/>
+  <BBS ip="planetafr0.org" login="" name="Planet Afr0" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="84.92.196.99" login="" name="Plasma Sphere BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="playlord.org" login="" name="Play LORD" password="" port="23" protocol="TELNET"/>
+  <BBS ip="playmajormud.com" login="" name="PlayMajorMUD.com" password="" port="23" protocol="TELNET"/>
+  <BBS ip="playpenbbs.com" login="" name="PlayPen BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.venerandi.it" login="" name="PMF BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.pharos.rocks" login="" name="Poignant Beacon (Pharos BBS)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="pocbbs.duckdns.org" login="" name="Port of Call BBS (Renegade)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="pocbbs.duckdns.org" login="" name="Port of Call BBS (Synchronet)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.powerbbs.com" login="" name="Power BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="proline.ksherlock.com" login="" name="Pro-Kegs" password="" port="6523" protocol="TELNET"/>
+  <BBS ip="45.79.37.227" login="" name="Protoweb BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ppc.synchro.net" login="" name="Proud Pirates Cove" password="" port="23" protocol="TELNET"/>
+  <BBS ip="psc.servebeer.com" login="" name="PSC BBS" password="" port="6870" protocol="TELNET"/>
+  <BBS ip="bbs.8yo.biz" login="" name="Psycho Ward" password="" port="5150" protocol="TELNET"/>
+  <BBS ip="penisys.online" login="" name="Public Electronic Networked Information System" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="001english-eu.no-ip.biz" login="" name="QL Dump" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.virtualoak.net" login="" name="Quantum Rift" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.erb.pw" login="" name="Quantum Wormhole, The" password="" port="23" protocol="TELNET"/>
+  <BBS ip="quazarbbs.dynu.net" login="" name="Quazar BBS Door Game Server" password="" port="2523" protocol="TELNET"/>
+  <BBS ip="96.231.233.46" login="" name="Quest for Zen" password="" port="23" protocol="TELNET"/>
+  <BBS ip="thequesttwgs.game-host.org" login="" name="Quest TWGS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="radiostream.amigaz.org" login="" name="Radio Freaks  And  Geeks" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="186.189.236.69" login="" name="Ragnarok's BBS" password="" port="23021" protocol="TELNET"/>
+  <BBS ip="raidersbbs.zapto.org" login="" name="Raiders Inc. BBS" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="euklid.ddns.net" login="" name="Ralser Lab BBS  And  BBSradio" password="" port="5745" protocol="TELNET"/>
+  <BBS ip="bbs.ramifications.ca" login="" name="RAMifications" password="" port="5128" protocol="TELNET"/>
+  <BBS ip="rapidfire.hopto.org" login="" name="RapidFire" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="bbs.catracing.org" login="" name="Rats Den BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="50.20.127.213" login="" name="Raven of the Storm" password="" port="23" protocol="TELNET"/>
+  <BBS ip="raveolution.hopto.org" login="" name="Raveolution" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="mail.hohimer.org" login="" name="Rayzer's BBS" password="" port="1336" protocol="TELNET"/>
+  <BBS ip="connect.rayzer.net" login="" name="RayzerNET BBS" password="" port="2112" protocol="TELNET"/>
+  <BBS ip="razzpie.ddns.net" login="" name="Razz Pie BBS" password="" port="2300" protocol="TELNET"/>
+  <BBS ip="rbb.fidonet.fi" login="" name="RBB Systems Int'l" password="" port="32" protocol="TELNET"/>
+  <BBS ip="rc2014.ddns.net" login="" name="RC-BOX" password="" port="2014" protocol="TELNET"/>
+  <BBS ip="realitycheckbbs.org" login="" name="Realitycheck BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="therealm.synchro.net" login="" name="Realm BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.trod.org" login="" name="Realm of Darkness" password="" port="23" protocol="TELNET"/>
+  <BBS ip="connect.serionbbs.com" login="" name="Realm of Serion" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.b-wells.us" login="" name="Realm of the Wizard's Lair" password="" port="23" protocol="TELNET"/>
+  <BBS ip="108.52.154.224" login="" name="Red Dragon BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="region15.net" login="" name="Region 15 HQ" password="" port="23" protocol="TELNET"/>
+  <BBS ip="192.227.222.151" login="" name="Reid BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="call.rofbbs.com" login="" name="Reign of Fire" password="" port="6800" protocol="TELNET"/>
+  <BBS ip="call.rofbbs.com" login="" name="Reign of Fire II" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="call.rofbbs.com" login="" name="Reign of Fire III" password="" port="8502" protocol="TELNET"/>
+  <BBS ip="bbs.acehoss.net" login="" name="Reticulum Ace" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.retroarchive.org" login="" name="Retro Archive" password="" port="23" protocol="TELNET"/>
+  <BBS ip="retrorunning.ddns.net" login="" name="Retro Running BBS" password="" port="8880" protocol="TELNET"/>
+  <BBS ip="flashbackbbs.sytes.net" login="" name="Retro Unboxers" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="mail.drf-solutions.net" login="" name="Retro16 BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.retro32.com" login="" name="Retro32 BBS" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="retr0aktiv.com" login="" name="Retroaktiv BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.retroboardbbs.com" login="" name="RetroBoard BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="retroconnect.org" login="" name="Retroconnect" password="" port="23" protocol="TELNET"/>
+  <BBS ip="rdnetbbs.com" login="" name="RetroDigital BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="react-bbs.nikoh.it" login="" name="Retrogaming Activities" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="rtg.dyndns.biz" login="" name="Retrograde BBS" password="" port="6428" protocol="TELNET"/>
+  <BBS ip="cib.dyndns.org" login="" name="Retrograde II BBS" password="" port="6404" protocol="TELNET"/>
+  <BBS ip="retrolair.amigaretro.net" login="" name="RetroLair BBS" password="" port="6800" protocol="TELNET"/>
+  <BBS ip="retronetneo.synchronetbbs.org" login="" name="RetroNet Neo" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ezycom.retroswim.net" login="" name="RetroSwim BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="revpol.lovelybits.org" login="" name="Reverse Polarity" password="" port="1337" protocol="TELNET"/>
+  <BBS ip="ricksbbs.synchro.net" login="" name="Ricks BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="rns.risenshinebbs.com" login="" name="Rise N' Shine BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="riverstyx.ddns.net" login="" name="River Styx BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="linuxdoc.no-ip.org" login="" name="RMSBBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="therockbbs.net" login="" name="Rock BBS III" password="" port="10023" protocol="TELNET"/>
+  <BBS ip="bbs.roonsbbs.hu" login="" name="Roon's BBS" password="" port="1212" protocol="TELNET"/>
+  <BBS ip="bbs.roguenet.work" login="" name="RougeNet BBS" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="host.roughneckbbs.com" login="" name="Roughneck BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="35.201.128.35" login="" name="Rougue BBS (Chinese)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="trmb.ca" login="" name="Rusty Mailbox" password="" port="2030" protocol="TELNET"/>
+  <BBS ip="bbs.vcgsa.co.za" login="" name="SA Vintage Computer Community BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sanctuary.zapto.org" login="" name="Sanctuary BBS" password="" port="1541" protocol="TELNET"/>
+  <BBS ip="sanctumbbs.com" login="" name="Sanctum II BBS (1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sanctumbbs.com" login="" name="Sanctum II BBS (2)" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="stokmarknes.org" login="" name="Sandnes BBS" password="" port="24" protocol="TELNET"/>
+  <BBS ip="162.243.54.214" login="" name="Sands of Time" password="" port="23" protocol="TELNET"/>
+  <BBS ip="3.132.92.116" login="" name="Santronics R And D Beta Site" password="" port="24" protocol="TELNET"/>
+  <BBS ip="online.winserver.com" login="" name="Santronics Software" password="" port="24" protocol="TELNET"/>
+  <BBS ip="99.85.80.17" login="" name="Saturn 5" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.sbbsystems.com" login="" name="SBB Systems" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="scenelist.org" login="" name="Scene List (1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="87.212.201.57" login="" name="Scene List (2)" password="" port="4000" protocol="TELNET"/>
+  <BBS ip="scoobysdoo.ddns.net" login="" name="Scooby's Doo BBS" password="" port="2023" protocol="TELNET"/>
+  <BBS ip="reality.throwbackbbs.com" login="" name="Scratched Reality" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="cib.dyndns.org" login="" name="SD2IEC Test BBS" password="" port="6403" protocol="TELNET"/>
+  <BBS ip="bbs.sdf1.net" login="" name="SDF-1 BBS" password="" port="5023" protocol="TELNET"/>
+  <BBS ip="seabreeze.servegame.com" login="" name="Sea Breeze Gaming Network (TWGS)" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="seabreeze.servegame.com" login="" name="Sea Breeze Gaming Network (Worldgroup #2)" password="" port="32" protocol="TELNET"/>
+  <BBS ip="seabreeze.servegame.com" login="" name="Sea Breeze Gaming Network (Worldgroup)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="seaoffantasy.synchronetbbs.org" login="" name="Sea of Fantasy" password="" port="23" protocol="TELNET"/>
+  <BBS ip="seattle.tw" login="" name="Seattle BBS (Chinese)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sector31.lorfinglab.com" login="" name="Section 31 TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="71.254.52.98" login="" name="Section One BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="shadowbbs.com" login="" name="Shadow BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.shadoworks.net" login="" name="ShadoWorks BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="shadowscope.noip.us" login="" name="Shadowscope" password="" port="23" protocol="TELNET"/>
+  <BBS ip="109.247.190.78" login="" name="ShadowThrone" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="104.246.170.121" login="" name="Shamrock BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="shenksxp.dyndns.org" login="" name="Shenk's Express" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.shift-bits.com" login="" name="Shift-Bits BBS" password="" port="2000" protocol="TELNET"/>
+  <BBS ip="shibboleths.org" login="" name="Shipwrecks  And  Shibboleths" password="" port="800" protocol="TELNET"/>
+  <BBS ip="shodanscore.com" login="" name="Shodan's Core" password="" port="8086" protocol="TELNET"/>
+  <BBS ip="shsbbs.net" login="" name="Shurato's Heavenly Sphere" password="" port="23" protocol="TELNET"/>
+  <BBS ip="silentnode.ddns.net" login="" name="Silent Node BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="bbs.silfenpath.com" login="" name="Silfen Path BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="siliconu.com" login="" name="SiliconUnderground" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.silverhawk.no" login="" name="Silverhawk BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="retrobbs.sinclair.homepc.it" login="" name="Sinclair Retro BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="207.246.74.70" login="" name="Sinner's Heaven" password="" port="23" protocol="TELNET"/>
+  <BBS ip="80.7.90.17" login="" name="Skara Brea" password="" port="31337" protocol="TELNET"/>
+  <BBS ip="134.185.84.52" login="" name="SKO BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="47.25.173.251" login="" name="Skynet BBS (1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.skynetbbs.com" login="" name="Skynet BBS (2)" password="" port="20023" protocol="TELNET"/>
+  <BBS ip="slackers.ovh" login="" name="Slackers BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="162.118.68.104" login="" name="Slasher BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.retrohack.se" login="" name="Slime City BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="slipstreambbs.net" login="" name="SlipStream BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="snobsoft.de" login="" name="Snobsoft BBS" password="" port="6401" protocol="TELNET"/>
+  <BBS ip="bbs.softsolutions.net.br" login="" name="Soft Solutions" password="" port="2023" protocol="TELNET"/>
+  <BBS ip="solarflow.dynu.net" login="" name="Solarflow BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="96.231.233.53" login="" name="Sorcerors Isle" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sotanomsxbbs.org" login="" name="Sotano MSX BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sos-bbs.net" login="" name="Sounds of Silence BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="southcentral.se" login="" name="South Central" password="" port="1023" protocol="TELNET"/>
+  <BBS ip="sestar.synchro.net" login="" name="SouthEast Star" password="" port="23" protocol="TELNET"/>
+  <BBS ip="southernamis.ddns.net" login="" name="Southern Amis" password="" port="23" protocol="TELNET"/>
+  <BBS ip="34.162.43.84" login="" name="Spacemyte BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="spaghettihut.amigaretro.net" login="" name="Spaghetti Hut" password="" port="6800" protocol="TELNET"/>
+  <BBS ip="bbs.spark.beer" login="" name="Spark Beer BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sparx.bbs.io" login="" name="Sparx BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="splatter.haus" login="" name="Splatter Haus" password="" port="666" protocol="TELNET"/>
+  <BBS ip="202.61.251.17" login="" name="Sprawl BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="45.79.93.198" login="" name="Squared Circle BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="scbbs.nsupdate.info" login="" name="Star Collision BBS" password="" port="61023" protocol="TELNET"/>
+  <BBS ip="bbs.sfhqbbs.org" login="" name="Star Fleet HQ" password="" port="5983" protocol="TELNET"/>
+  <BBS ip="stateoftheark.ca" login="" name="Star Flight BBS" password="" port="1990" protocol="TELNET"/>
+  <BBS ip="sk-twgs.com" login="" name="Star Killer's TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="66.23.221.29" login="" name="Star Mansion Returns" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.starbase11.de" login="" name="Starbase 11 BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.starbase21.net" login="" name="Starbase 21" password="" port="23" protocol="TELNET"/>
+  <BBS ip="beta.sb-discovery.com" login="" name="Starbase Beta" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sb-discovery.com" login="" name="Starbase Discovery" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.stardoc134.com" login="" name="StarDoc 134" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.starshipjunkyard.com" login="" name="Starship Junkyard" password="" port="23" protocol="TELNET"/>
+  <BBS ip="stevensbbs.stevenshive.xyz" login="" name="Steven's Hive BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="telnet.stormbbs.com " login="" name="Storm BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="storm-mountain.ddns.net" login="" name="Storm Mountain TWGS" password="" port="24000" protocol="TELNET"/>
+  <BBS ip="stormgate.synchronetbbs.org" login="" name="Stormgate BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="strangeplanet.org" login="" name="Strange Planet BBS" password="" port="6800" protocol="TELNET"/>
+  <BBS ip="streetcorner.ddns.net" login="" name="Street Corner BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="104.142.112.149" login="" name="Strip It To Ride" password="" port="9000" protocol="TELNET"/>
+  <BBS ip="subcarrier.ignorelist.com" login="" name="Subcarrier BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="subhuman.ddns.net" login="" name="Subhuman" password="" port="1338" protocol="TELNET"/>
+  <BBS ip="bbs.lizsugar.me" login="" name="Sugar Test BBS" password="" port="6000" protocol="TELNET"/>
+  <BBS ip="sdf.org" login="" name="Super Dimension Fortress (SDF-1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.ddybing.no" login="" name="Support BBS" password="" port="1223" protocol="TELNET"/>
+  <BBS ip="ssbbs.ddns.net" login="" name="Surf Shop BBS (1)" password="" port="6510" protocol="TELNET"/>
+  <BBS ip="sursum-corda.com" login="" name="Sursum Corda TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="sursum-corda.com" login="" name="Sursum Corda! BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="dose.0wnz.at" login="" name="Swap BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="swatsbbs.ddns.net" login="" name="SWATS BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="suga.se" login="" name="Swedish User Group Of Amiga" password="" port="42512" protocol="TELNET"/>
+  <BBS ip="bbs.swiftycode.ca" login="" name="Swifty BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.swissirc.net" login="" name="SwissIRC BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.soc4ever.com" login="" name="Swords Of Chaos Forever BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="nix.synchro.net" login="" name="Synchronix" password="" port="23" protocol="TELNET"/>
+  <BBS ip="synerchat.com" login="" name="Synerchat" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sysopsolaris.ddns.net" login="" name="Sysop Solaris Dot Com (Menu)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="cib.dyndns.org" login="" name="System One BBS" password="" port="6491" protocol="TELNET"/>
+  <BBS ip="t0kerZ.ddns.net" login="" name="T0kerz Hut" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tacopronto.bbs.io" login="" name="Taco Pronto" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs1.tardisbbs.com" login="" name="TARDIS 64" password="" port="6411" protocol="TELNET"/>
+  <BBS ip="bbs.cortex-media.info" login="" name="TARDIS BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs1.tardisbbs.com" login="" name="TARDIS PRO" password="" port="8023" protocol="TELNET"/>
+  <BBS ip="bbs.tassiebob.com" login="" name="Tassie Bob BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="technoanarchy.synchronetbbs.org" login="" name="Technoanarchy" password="" port="23" protocol="TELNET"/>
+  <BBS ip="techrono.synchro.net" login="" name="Techrono BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.techware2k.com" login="" name="Techware" password="" port="23" protocol="TELNET"/>
+  <BBS ip="telbox.net" login="" name="TelBox" password="" port="23" protocol="TELNET"/>
+  <BBS ip="telehack.com" login="" name="Telehack" password="" port="23" protocol="TELNET"/>
+  <BBS ip="telnetbible.com" login="" name="TelnetBible.com" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="terminal-obsession.hopto.org" login="" name="Terminal Obsession" password="" port="1541" protocol="TELNET"/>
+  <BBS ip="bbs.terminaltavern.com" login="" name="Terminal Tavern" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tbrasilis.ddns.net" login="" name="Terra Brasilis" password="" port="23000" protocol="TELNET"/>
+  <BBS ip="terranempire.ddns.net" login="" name="Terran Empire" password="" port="1071" protocol="TELNET"/>
+  <BBS ip="bbs.thisoldcabin.net" login="" name="This Old Cabin (English)" password="" port="6464" protocol="TELNET"/>
+  <BBS ip="bbs.thisoldcabin.net" login="" name="This Old Cabin (Swedish)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.tabakov.net" login="" name="Thrace BBS" password="" port="13023" protocol="TELNET"/>
+  <BBS ip="threeblindmice.synchronetbbs.org" login="" name="Three Blind Mice" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.throwbackbbs.com" login="" name="Throwback BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="149.56.47.118" login="" name="Thunder BBS" password="" port="1023" protocol="TELNET"/>
+  <BBS ip="thunder.synchro.net" login="" name="Thunder-Line BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wx4qzbbs.ddnsfree.com" login="" name="Thunderbolt BBS" password="" port="49815" protocol="TELNET"/>
+  <BBS ip="tigernet.dewindt.us" login="" name="Tigernet BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="clients.renebates.com" login="" name="Time Air BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="twb.wrgnbr.com" login="" name="Time Warp BBS" password="" port="6896" protocol="TELNET"/>
+  <BBS ip="time.synchro.net" login="" name="Time Warp of Future" password="" port="24" protocol="TELNET"/>
+  <BBS ip="teehill.adirondackpc.com" login="" name="Timelord BBS" password="" port="2020" protocol="TELNET"/>
+  <BBS ip="bbs.tingtao.net" login="" name="Tingtao (Chinese)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="ttb.rgbbs.info" login="" name="Titantic BBS Telnet, The" password="" port="23" protocol="TELNET"/>
+  <BBS ip="73.42.12.93" login="" name="TLH Vintage BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.tomato.place" login="" name="Tomato Place" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="vintage.thcbbs.com" login="" name="Tommy's Holiday Camp" password="" port="23" protocol="TELNET"/>
+  <BBS ip="toolazy.synchro.net" login="" name="Too Lazy BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="toolshed.synchro.net" login="" name="Tool Shed" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="toxicbbs.com" login="" name="Toxic Laboratory BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tqps.ddns.net" login="" name="TQPS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tradewarsacademy.com" login="" name="Trade Wars Academy TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="news.belchi.org" login="" name="Transfer Interruped BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.cs.nthu.edu.tw" login="" name="Tsinghua Univ. (Fengqiao Stn.)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.tuxedocatbbs.com" login="" name="TuxedoCat Lounge" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="bbs.twlounge.net" login="" name="TW Lounge BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="tzone.nxly.org" login="" name="Twilight Zone" password="" port="5000" protocol="TELNET"/>
+  <BBS ip="twixed.net" login="" name="Twixed BBS" password="" port="62323" protocol="TELNET"/>
+  <BBS ip="bbs.2girl.net" login="" name="Two Girl BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="67.163.148.95" login="" name="Ultimate World Online BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="uncensored.citadel.org" login="" name="Uncensored!" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.uncomfortable.business" login="" name="Uncomfortable Business" password="" port="6423" protocol="TELNET"/>
+  <BBS ip="undercurrents.io" login="" name="Undercurrents BBS" password="" port="8088" protocol="TELNET"/>
+  <BBS ip="bbs.undermine.ca" login="" name="Undermine BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="undernet.uy" login="" name="Undernet BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.unicyber.co.uk" login="" name="Unicyber BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="x-bit.org" login="" name="Unix-Bit BBS" password="" port="1336" protocol="TELNET"/>
+  <BBS ip="turealm.no-ip.org" login="" name="Unknown Realm (Mystic)" password="" port="3023" protocol="TELNET"/>
+  <BBS ip="turealm.no-ip.org" login="" name="Unknown Realm (PCBoard)" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="www.unleashedinet.org" login="" name="Unleashed BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.uorealms.com" login="" name="UORealms BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.quinnnet.org" login="" name="US 99 BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="userclub-bbs.com" login="" name="UserClub BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="excelsiorbbs.ddns.net" login="" name="USS Excelsior BBS" password="" port="2000" protocol="TELNET"/>
+  <BBS ip="retro.setsuid.net" login="" name="Util's Retro BBS" password="" port="8221" protocol="TELNET"/>
+  <BBS ip="uzisuicide.servebbs.org" login="" name="Uzi Suicide" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.canerduh.com" login="" name="V01d C1ph3r" password="" port="23056" protocol="TELNET"/>
+  <BBS ip="vague.ddns.net" login="" name="Vague BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="valley64.com" login="" name="Valley BBS (2)" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="thevaultbbs.ddns.net" login="" name="Vault BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="velenobbs.net" login="" name="Veleno BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="verify-nebula.kicks-ass.net" login="" name="Verify-Nebula" password="" port="23" protocol="TELNET"/>
+  <BBS ip="vern.cc" login="" name="Vern BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="vert.synchro.net" login="" name="Vertrauen" password="" port="23" protocol="TELNET"/>
+  <BBS ip="173.90.55.126" login="" name="Video Game Nirvana" password="" port="23" protocol="TELNET"/>
+  <BBS ip="violetyggdrasil.live" login="" name="Violeti BBS" password="" port="1144" protocol="TELNET"/>
+  <BBS ip="theviperbbs.ddnsfree.com" login="" name="Viper BBS, The" password="" port="23" protocol="TELNET"/>
+  <BBS ip="sk-twgs.com" login="" name="Viper's Pit TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="workstation.ddmcomputers.com.au" login="" name="VK7HDM's BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="my-workspace.us" login="" name="Vodnet BBS" password="" port="6764" protocol="TELNET"/>
+  <BBS ip="voidbbs.com" login="" name="VOID BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="vortexbbs.com" login="" name="Vortex BBS (1)" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wabac.ccsnet.com" login="" name="WABAC Machine BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="99.53.196.18" login="" name="Wall BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="warensemble.com" login="" name="War Ensemble BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wastelands-bbs.net" login="" name="Wastelands BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="wastelands-bbs.net" login="" name="Wastelands BBS II" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.weather-station.org" login="" name="Weather Station BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="weednet.synchronetbbs.org" login="" name="Weed Net" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.korenblom.nl" login="" name="Westland BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="westwoodbbs.net" login="" name="Westwood BBS" password="" port="64738" protocol="TELNET"/>
+  <BBS ip="wd1cks.org" login="" name="Whisky Lover's Amateur Radio BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="whodareswinsbbs.uk" login="" name="Who Dares Wins Amiga BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wgbbs.ddns.net" login="" name="Wicked Garden BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="demo.winserver.com" login="" name="Wildcat Demo Server" password="" port="24" protocol="TELNET"/>
+  <BBS ip="bbs.wccastle.net" login="" name="Wildcat's Castle BBS" password="" port="2424" protocol="TELNET"/>
+  <BBS ip="wacbbs.ddns.net" login="" name="Willamette Apple Connection (WAC) BBS" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="willowcreekbbs.dynu.net" login="" name="Willow Creek BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="wintermutebbs.ddns.net" login="" name="Wintermute BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wccastle.synchro.net" login="" name="Wizard's Castle" password="" port="24" protocol="TELNET"/>
+  <BBS ip="wizardsrainbow.com" login="" name="Wizard's Rainbow" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wizzybbs.win" login="" name="Wizzy BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wordbbs.hopto.org" login="" name="WORD BBS" password="" port="64128" protocol="TELNET"/>
+  <BBS ip="tw.worldsapart.net" login="" name="Worlds Apart (TWGS)" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="wh2bbs.us" login="" name="Wormhole II BBS" password="" port="2321" protocol="TELNET"/>
+  <BBS ip="bbs.wreckhall.net" login="" name="Wreck Hall" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.wretchedbeagle.com" login="" name="Wretched Beagle BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wn2.wrgnbr.com" login="" name="Wrong Number ][ BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="wn6.wrgnbr.com" login="" name="Wrong Number ][ BBS Retro 1993!!" password="" port="6411" protocol="TELNET"/>
+  <BBS ip="cib.dyndns.org" login="" name="Wrong Number ][ V2.0" password="" port="6405" protocol="TELNET"/>
+  <BBS ip="wn3.wrgnbr.com" login="" name="Wrong Number ]I[ BBS" password="" port="6400" protocol="TELNET"/>
+  <BBS ip="wn4.wrgnbr.com" login="" name="Wrong Number IV BBS" password="" port="3000" protocol="TELNET"/>
+  <BBS ip="x-bit.org" login="" name="X-Bit BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="1984.ws" login="" name="X/84 BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.x65.zone" login="" name="X65.zone BBS" password="" port="8888" protocol="TELNET"/>
+  <BBS ip="xibalba.l33t.codes" login="" name="Xibalba" password="" port="44510" protocol="TELNET"/>
+  <BBS ip="bbs.mycrowd.ca" login="" name="Yak Station BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="50.47.85.64" login="" name="YOUR SYSTEM NAME HERE" password="" port="23" protocol="TELNET"/>
+  <BBS ip="coffeemud.net" login="" name="Zelch BBS" password="" port="6502" protocol="TELNET"/>
+  <BBS ip="zen.kawasu.wtf" login="" name="ZenBBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="zenolab.synchro.net" login="" name="Zenolab" password="" port="23" protocol="TELNET"/>
+  <BBS ip="bbs.zerotwo.tech" login="" name="ZeroTwo's BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="192.243.111.121" login="" name="Zeus BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="zonebbs.net" login="" name="Zone BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="52.4.41.44" login="" name="Zooropa BBS" password="" port="2323" protocol="TELNET"/>
+  <BBS ip="tw2002.zot.org" login="" name="Zot TWGS" password="" port="2002" protocol="TELNET"/>
+  <BBS ip="bbs.zruspas.org" login="" name="Zruspa's BBS" password="" port="23" protocol="TELNET"/>
+  <BBS ip="20forbeers.com" login="" name="20 For Beers BBS (ssh)" password="" port="1338" protocol="ssh"/>
+  <BBS ip="bbs.4wheelham.com" login="" name="4 Wheel Ham BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="mystic-anet.online" login="" name="A-Net Online (Mystic) (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="a-net.online" login="" name="A-Net Online (Synchronet) (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="agency.bbs.nz" login="" name="Agency BBS (ssh)" password="" port="2024" protocol="ssh"/>
+  <BBS ip="bbs.alsgeeklab.com" login="" name="Al's Geek Lab BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bbs.archaicbinary.net" login="" name="Archaic Binary (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="arda-bbs.com" login="" name="ARDA-BBS.com (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbs.atavachronbbs.net" login="" name="Atavachron BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bttfbbs.com" login="" name="Back to the Future (SSH) (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="barbaria.norbus.com" login="" name="Barbaria (SSH) (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbsgamer.ddns.net" login="" name="BBS Gamer (ssh)" password="" port="2200" protocol="ssh"/>
+  <BBS ip="bigtimebbs.net" login="" name="Big Time BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bitwoods.duckdns.org" login="" name="Bitwoods RBBS-PC (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="wwiv.bsbbs.com" login="" name="Blood Stone (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbs.beardy.se" login="" name="BodaX BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bookworm.synchro.net" login="" name="Bookworm BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bbs.bottomlessabyss.net" login="" name="Bottomless Abyss BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bbs:bbs@bsbbs.com.br" login="" name="Brain Storm BBS (SSH) (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="c3bbs.retronetworking.org" login="" name="C3BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="capitolshrill.com" login="" name="Capitol Shrill BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="chat.korokorok.com" login="" name="Chatter BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="conchaos.synchro.net" login="" name="Constructive Chaos BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="datgsguy.com" login="" name="DatGSguy BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bbs.digitaldistortionbbs.com" login="" name="Digital Distortion (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="d1st.org" login="" name="Distortion (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="downlinkbbs.com" login="" name="Downlink BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bbs.dreamlandbbs.org" login="" name="Dreamland BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="59.167.142.49" login="" name="Dungeon BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="endofthelinebbs.com" login="" name="End Of The Line BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbs.gglab.cloud" login="" name="FlipperZero BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bbs.opicron.eu" login="" name="Forze BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="funtopia.synchro.net" login="" name="Funtopia BBS (ssh)" password="" port="3022" protocol="ssh"/>
+  <BBS ip="glitchtech.top" login="" name="GlitchNet (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="the.globalvillagebbs.net" login="" name="Global Village BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="thegrinchesrealm.dynv6.net" login="" name="Grinches Realm, The (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="hamshack.synchro.net" login="" name="Ham Shack BBS, The (ssh)" password="" port="22222" protocol="ssh"/>
+  <BBS ip="bbs.hyena.network" login="" name="HyNET BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="69.178.59.98" login="" name="Ice Castle BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="jupiter.bbs.io" login="" name="Jupiter (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bbs.kd3.us" login="" name="KD3net (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="lunaticsunleashed.ddns.net" login="" name="Lunatics Unleashed BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="magnumbbs.net" login="" name="Magnum BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="montereybbs.com" login="" name="Monterey BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="muinet.com" login="" name="Muinet (ssh)" password="" port="2233" protocol="ssh"/>
+  <BBS ip="mutinybbs.com" login="" name="Mutiny BBS (1) (ssh)" password="" port="2232" protocol="ssh"/>
+  <BBS ip="neverneverlandbbs.com" login="" name="Never Never Land BBS (ssh)" password="" port="1322" protocol="ssh"/>
+  <BBS ip="nottinghambbs.com" login="" name="Nottingham BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="noverdu.com" login="" name="Noverdu (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="outerwall.net" login="" name="Outer Wall, The (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="outwest.synchro.net" login="" name="Outwest BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="phoenix.bnbbbs.net" login="" name="Phoenix BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbs.phreaknet.org" login="" name="PhreakNet (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbs.erb.pw" login="" name="Quantum Wormhole, The (ssh)" password="" port="45022" protocol="ssh"/>
+  <BBS ip="riverstyx.ddns.net" login="" name="River Styx BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="bbs:shsbbs@shsbbs.net" login="" name="Shurato's Heavenly Sphere (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbs.silfenpath.com" login="" name="Silfen Path BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="slackers.ovh" login="" name="Slackers BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="scbbs.nsupdate.info" login="" name="Star Collision BBS (ssh)" password="" port="61022" protocol="ssh"/>
+  <BBS ip="bbs.swiftycode.ca" login="" name="Swifty BBS (ssh)" password="" port="77" protocol="ssh"/>
+  <BBS ip="tacopronto.bbs.io" login="" name="Taco Pronto (ssh)" password="" port="2022" protocol="ssh"/>
+  <BBS ip="thunder.synchro.net" login="" name="Thunder-Line BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="tboltbbs.synchro.net" login="" name="Thunderbolt BBS (ssh)" password="" port="52292" protocol="ssh"/>
+  <BBS ip="toolazy.synchro.net" login="" name="Too Lazy BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbs.twlounge.net" login="" name="TW Lounge BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="8086" login="" name="Undercurrents BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="vague.ddns.net" login="" name="Vague BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="warensemble.com" login="" name="War Ensemble BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="bbs.korenblom.nl" login="" name="Westland BBS (ssh)" password="" port="22" protocol="ssh"/>
+  <BBS ip="new@wintermutebbs.ddns.net" login="" name="Wintermute BBS (ssh)" password="" port="2222" protocol="ssh"/>
+  <BBS ip="x-bit.org" login="" name="X-Bit BBS (ssh)" password="" port="22222" protocol="ssh"/>
+  <BBS ip="xibalba.l33t.codes" login="" name="Xibalba (ssh)" password="" port="44511" protocol="SSH"/>
+  <BBS ip="10.5.5.5" login="paul" name="10.5.5.5" password="dads" port="22" protocol="SSH-AUTH"/>
+ </Phonebook>
+</EtherTerm>

@@ -1,0 +1,670 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>AspeQt-2k26 User Manual - Complete & Corrected</title>
+    <style type="text/css">
+        /* PRO / FANCY FONTS SETTINGS */
+        body {
+            font-family: "Segoe UI Semilight", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 15px;
+            color: #2b2b2b;
+            background-color: #ffffff;
+            margin: 0px;
+            line-height: 1.6;
+        }
+
+        /* HEADER AREA */
+        .header-container {
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #d0d0d0;
+            padding: 20px 30px;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+            font-weight: 100;
+            font-size: 32px;
+            margin: 0;
+            padding-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #666666;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* NAVIGATION */
+        .nav-bar {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: #0066cc;
+            margin-right: 15px;
+            font-weight: 600;
+        }
+
+        .nav-bar a:hover {
+            text-decoration: underline;
+            color: #003366;
+        }
+
+        /* MAIN CONTENT */
+        .content {
+            padding: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #005a9c;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            font-weight: 400;
+        }
+
+        h3 {
+            color: #333;
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        h4 {
+            color: #444;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* CODE SNIPPETS */
+        .code-snippet {
+            font-family: "Consolas", "Courier New", monospace;
+            background-color: #f0f0f0;
+            border: 1px solid #e0e0e0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #c7254e;
+            font-size: 0.95em;
+        }
+
+        /* DIAGRAM BOXES */
+        .diagram-block {
+            font-family: "Consolas", "Courier New", monospace;
+            background-color: #2b2b2b;
+            color: #00ff00;
+            border: 1px solid #444;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 13px;
+            line-height: 1.4;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .code-block {
+            font-family: "Consolas", "Courier New", monospace;
+            background-color: #f8f8f8;
+            border-left: 4px solid #005a9c;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* SPECIAL BOXES */
+        .note {
+            background-color: #eaf4ff;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        .warning {
+            background-color: #fff4e5;
+            border-left: 4px solid #ff9900;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #d0d0d0;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        /* FOOTER */
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .footer a { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <h1>AspeQt-2k26</h1>
+        <p class="subtitle">High-Performance Peripheral Emulator for Atari 8-Bit Computers</p>
+        
+        <div class="nav-bar">
+            <a href="#intro">Introduction</a>
+            <a href="#sio">High-Speed SIO</a>
+            <a href="#usage">Disk & Folder</a>
+            <a href="#tnfs">TNFS Client</a>
+            <a href="#modem">Modem Bridge</a>
+            <a href="#wiring">Wiring Diagram</a>
+            <a href="#raspberrypi">R: Device Emulation</a>
+            <a href="#timesync">Time Sync</a>
+            <a href="#printer">Printer (P:)</a>
+            <a href="#wdevice">Web Pipe (W:)</a>
+            <a href="#webui">Web Dashboard (UI)</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <a name="intro"></a>
+        <h2>Introduction</h2>
+        <p>AspeQt-2k26 is a modernized version of the classic AspeQt emulator, updated to use the Qt6 framework. It transforms your modern PC into a powerful peripheral server for Atari 8-bit computers (400/800/XL/XE).</p>
+        <p>Using a standard SIO2PC cable (USB or Serial), AspeQt can emulate:</p>
+        <ul>
+            <li><b>Disk Drives (D1:-D8:)</b> - Supports ATR, XFD, PRO images, and direct Folder Mounting.</li>
+            <li><b>TNFS Client</b> - Mount and stream disk images directly from the internet (FujiNet protocol).</li>
+            <li><b>Modem Bridge</b> - Connect physical Atari modems to Telnet BBSs via the PC.</li>
+            <li><b>R: Device (850 Emulation)</b> - A hardware-free virtual modem that intercepts SIO commands directly (Supports USB FTDI and Raspberry Pi).</li>
+            <li><b>Printers (P:)</b> - Captures printed output to text or graphical view.</li>
+            <li><b>Clipboard Bridge (Y:)</b> - Bi-directional copy/paste between PC and Atari.</li>
+            <li><b>Web Pipe (W:)</b> - Multi-channel gateway for Python scripts and AI.</li>
+            <li><b>Web Dashboard</b> - Remote control your Atari peripherals from any browser or smartphone.</li>
+        </ul>
+
+        <a name="sio"></a>
+        <h2>High-Speed SIO</h2>
+        <p>AspeQt supports "divisor 0" high-speed SIO (approx. 126kbps) with custom OS ROMs (like QMEG or Hiassoft) and standard high-speed protocols (UltraSpeed, Happy, etc.).</p>
+        <div class="note">
+            <b>Note:</b> Reliable high-speed operation depends on your SIO2PC hardware. FTDI-based USB cables generally offer the best performance.
+        </div>
+
+        <a name="usage"></a>
+        <h2>Disk & Folder Usage</h2>
+        <h3>Mounting Disk Images</h3>
+        <p>Drag and drop <span class="code-snippet">.atr</span>, <span class="code-snippet">.xfd</span>, or <span class="code-snippet">.pro</span> files directly into the drive slots (D1-D8). Double-clicking a slot opens the file browser.</p>
+
+        <h3>Virtual DOS (Folder Images)</h3>
+        <p>You can mount a local PC directory as a writable disk. To boot from a folder, right-click the slot and select <b>Mount Folder</b>.</p>
+
+        <a name="tnfs"></a>
+        <h2>TNFS Client</h2>
+        <p>AspeQt-2k26 includes native support for TNFS (The Network File System), allowing you to mount and stream disk images directly from the internet using the FujiNet protocol. Access this via the <b>Tools</b> menu.</p>
+
+        <a name="modem"></a>
+        <h2>Modem Bridge (Internet Adapter via PC)</h2>
+        <p>The AspeQt-2k26 Modem Bridge is a hardware-software hybrid solution that allows vintage Atari 8-bit computers to access modern Telnet BBSs and TCP/IP services. Unlike pure software emulators, this feature utilizes the physical Atari 850 Interface (or compatible RS-232 hardware like the P:R: Connection or ICD R-Verter). AspeQt acts as a "Virtual Hayes Modem," bridging the physical serial data from the Atari to a TCP/IP socket on the PC.</p>
+
+        <h3>1. The "Dual-Cable" Topology</h3>
+        <p>To utilize the Modem Bridge, your setup requires two distinct connections to the PC.</p>
+        <ul>
+            <li><b>Disk I/O Path:</b> Atari SIO -> SIO2PC -> PC USB (COM A). Handles D1: through D8:.</li>
+            <li><b>Modem Path:</b> Atari 850 (Port 1) -> Null Modem -> PC USB (COM B). Handles R: (The Modem Bridge).</li>
+        </ul>
+        
+        <div class="diagram-block">
+   [ ATARI COMPUTER ]                                      [ PC / ASPEQT ]
+   +----------------+                                   +---------------------+
+   |                |            (1)                    |                     |
+   |   SIO PORT     |=======[ SIO2PC ]=================>|   [ USB PORT 1 ]    |
+   |                |                                   |   (SIO / Disks)     |
+   +----------------+                                   +---------------------+
+           |
+           | (Daisy Chain SIO Cable)
+           |
+   +----------------+                                   +---------------------+
+   |  850 INTERFACE |            (2)                    |                     |
+   |   (R: DEVICE)  |======[ USB-SERIAL ]==============>|   [ USB PORT 2 ]    |
+   |     PORT 1     |    (Null Modem Cable)             |   (Modem Bridge)    |
+   +----------------+    see Null Modem Wiring          +---------------------+
+                                                                  |
+                                                                  v
+                                                             (TO INTERNET)
+        </div>
+
+        <h3>2. Configuration Reference</h3>
+        <p>Configure the bridge settings via Tools > Options > Modem Bridge. Correct settings are vital for stable communication.</p>
+        
+        <table>
+            <tr>
+                <th style="width: 180px;">Setting</th>
+                <th>Description & Recommended Value</th>
+            </tr>
+            <tr>
+                <td><b>Enable Modem Bridge</b></td>
+                <td>Master switch for the feature. When checked, AspeQt opens the serial port and asserts DTR/RTS signals. Note: If unchecked, the Atari will see the modem as "Offline" or "Not Ready".</td>
+            </tr>
+            <tr>
+                <td><b>Serial Port</b></td>
+                <td>Select the COM port (Windows) or TTY device (Linux/Mac) corresponding to your USB-to-Serial adapter. Do NOT select your SIO2PC adapter here.</td>
+            </tr>
+            <tr>
+                <td><b>Baud Rate</b></td>
+                <td>The communication speed between PC and Atari. Must match your terminal software settings. Recommended: 19200 (Standard for Atari 850).</td>
+            </tr>
+            <tr>
+                <td><b>Flow Control</b></td>
+                <td>Enables hardware RTS/CTS handshaking. Recommended: OFF (Unchecked) unless you have a high-quality 5-wire Null Modem cable. If enabled with a 3-wire cable, the connection will freeze.</td>
+            </tr>
+            <tr>
+                <td><b>Local Echo</b></td>
+                <td>If checked, AspeQt echoes all typed characters back to the Atari. Use this if you cannot see what you are typing in your terminal software. Recommended: OFF (Most BBS software handles echoing remotely).</td>
+            </tr>
+            <tr>
+                <td><b>Phonebook File</b></td>
+                <td>Path to the phonebook.xml file storing your BBS list. Defaults to the application directory.</td>
+            </tr>
+        </table>
+
+        <h3>3. Using the Phonebook</h3>
+        <p>The Phonebook is essential for managing BBS addresses and storing credentials for the macro system.</p>
+        <ul>
+            <li><b>Access:</b> Tools -> Phonebook.</li>
+            <li><b>Add Entry:</b> Click Add. Fill in Name, Address, Port, and optional Login/Password to use the Auto-Type macros.</li>
+            <li><b>Dialing:</b> Select an entry and click Dial. AspeQt will send the ATDT string to the Atari automatically.</li>
+        </ul>
+
+        <h3>4. Hayes Emulation & Command Set</h3>
+        <p>The bridge emulates a standard Hayes-compatible modem. You can issue these commands from any Atari terminal program.</p>
+
+        <table>
+            <tr>
+                <th style="width: 180px;">Command / Key</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">AT</span></td>
+                <td>Attention. Returns OK. Used to verify connection.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ATDT &lt;Name&gt;</span></td>
+                <td>Dial by Name. Example: ATDT Basement. Looks up IP/Port in Phonebook and loads credentials.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ATDT &lt;IP:Port&gt;</span></td>
+                <td>Raw Dial. Example: ATDT 192.168.1.5:23. Connects directly (No macros available).</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ATDT ssh:&lt;user&gt;@&lt;host:port&gt;</span></td>
+                <td>Interactive SSH Dial. Example: ATDT ssh:pi@192.168.1.5:22. Prompts securely for a password before connecting.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">ATH</span></td>
+                <td>Hangup. Disconnects the TCP session.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">+++</span></td>
+                <td>Escape. Pauses data mode and switches to command mode. Requires 1 second silence before/after.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">$ESC+U$</span></td>
+                <td>Auto-User. Types the Username saved in the current Phonebook entry.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">$ESC+P$</span></td>
+                <td>Auto-Pass. Types the Password saved in the current Phonebook entry.</td>
+            </tr>
+            <tr>
+                <td><span class="code-snippet">$ESC+H$</span></td>
+                <td>Panic Hangup. Immediately terminates the connection and forces Command Mode.</td>
+            </tr>
+        </table>
+
+        <h3>5. ATASCII Translation</h3>
+        <p>Modern servers expect ASCII. The bridge automatically performs these translations:</p>
+        <ul>
+            <li><b>Delete Key:</b> Atari Delete (126/127) is converted to ASCII Backspace (0x08).</li>
+            <li><b>EOL:</b> Atari EOL (155) is converted to CR/LF.</li>
+        </ul>
+
+        <h3>6. Troubleshooting</h3>
+        <ul>
+            <li><b>"Modem Not Responding" in Terminal:</b> Cause: The Atari 850 does not detect the DSR/CD signal. Fix: Verify the wiring in Section 3. Ensure AspeQt "Enable Modem Bridge" is checked.</li>
+            <li><b>"Garbage Characters" on Screen:</b> Cause: Baud rate mismatch. Fix: Ensure the baud rate in AspeQt Options matches the baud rate configured in your Atari terminal software (e.g., 19200).</li>
+            <li><b>"Session Frozen / Hanging":</b> Cause: Telnet flow control deadlock. Fix: Press ESC + H to force a disconnect, then type ATZ to reset the bridge.</li>
+        </ul>
+
+        <a name="wiring"></a>
+        <h2>Appendix: Corrected Wiring for Atari 850 Null Modem Cable</h2>
+        <p>Standard off-the-shelf Null Modem cables will not work with the Atari 850 without modification. The 850 requires the DSR (Data Set Ready) and CD (Carrier Detect) pins to be held HIGH to detect the presence of a modem. AspeQt asserts the PC's DTR (Data Terminal Ready) signal when the bridge is active. You must construct a cable that routes this DTR signal to the 850's DSR/CD pins.</p>
+
+        <h3>Null Modem Wiring - The "Magic" Signal: Loopbacks</h3>
+        <p><b>On the PC side:</b> Bridge Pin 1 (CD) and Pin 6 (DSR) together, and connect them to the wire coming from the Atari's Pin 1 (DTR). This ensures the PC knows the Atari is ready.</p>
+        <p><b>On the Atari side:</b> Bridge Pin 2 (CD) and Pin 6 (DSR) together, and connect them to the wire coming from the PC's Pin 4 (DTR). This ensures the Atari 850 detects a valid carrier tone and opens the port for data.</p>
+
+        <table>
+            <tr>
+                <th>Atari 850 (DB9 Male)</th>
+                <th>Direction</th>
+                <th>Connection Type</th>
+                <th>PC USB Adapter (DB9 Female)</th>
+            </tr>
+            <tr>
+                <td>Pin 1 (DTR)</td>
+                <td>Out &rarr;</td>
+                <td>Cross</td>
+                <td>Pin 1 (CD) + Pin 6 (DSR)</td>
+            </tr>
+            <tr>
+                <td>Pin 6 (DSR) + Pin 2 (CD)</td>
+                <td>&larr; In</td>
+                <td>Cross</td>
+                <td>Pin 4 (DTR)</td>
+            </tr>
+            <tr>
+                <td>Pin 3 (TX)</td>
+                <td>Out &rarr;</td>
+                <td>Cross</td>
+                <td>Pin 2 (RX)</td>
+            </tr>
+            <tr>
+                <td>Pin 4 (RX)</td>
+                <td>&larr; In</td>
+                <td>Cross</td>
+                <td>Pin 3 (TX)</td>
+            </tr>
+            <tr>
+                <td>Pin 7 (RTS)</td>
+                <td>Out &rarr;</td>
+                <td>Cross</td>
+                <td>Pin 8 (CTS)</td>
+            </tr>
+            <tr>
+                <td>Pin 8 (CTS)</td>
+                <td>&larr; In</td>
+                <td>Cross</td>
+                <td>Pin 7 (RTS)</td>
+            </tr>
+            <tr>
+                <td>Pin 5 (GND)</td>
+                <td>Common</td>
+                <td>Direct</td>
+                <td>Pin 5 (GND)</td>
+            </tr>
+        </table>
+
+        <a name="raspberrypi"></a>
+        <h2>Native R: Device Emulation (Virtual Modem)</h2>
+        <p>AspeQt-2k26 features a pure-software <b>R: Device (850 Emulation)</b> that intercepts SIO Poll ($40) and Stream ($58) commands, allowing the Atari to connect directly to Telnet and SSH hosts without physical RS-232 hardware. This feature fully supports both <b>standard USB FT232 adapters</b> and direct <b>Raspberry Pi raw UART</b> connections.</p>
+
+        <h3>Method 1: USB FTDI Adapters (Windows/macOS/Linux)</h3>
+        <p>You can use a standard USB-to-TTL adapter (like the FT232RL) for R: Device emulation, provided it has the <b>CTS pin</b> wired to the Atari's Command line (SIO Pin 7). Set Handshake to "CTS" in AspeQt's options.</p>
+        
+        <div class="warning">
+            <b>Important Note on CTS Inversion:</b> Legacy Atari software was built around physical RS-232 adapters that inverted logic signals. Most modern, generic FT232 breakout boards use standard TTL logic (non-inverted). If your R: Device emulation instantly drops or exits stream mode, the software is expecting an inverted signal. To fix this, simply toggle the <b>"Invert CTS Logic"</b> setting in the AspeQt-2k26 options, or use the free FT_PROG utility to flash the hardware EEPROM on your FTDI chip to invert the CTS pin permanently.
+        </div>
+
+        <h3>Method 2: Raspberry Pi Direct UART Implementation - (Recommended Method) </h3>
+        <p>This section details the configuration for advanced users running AspeQt-2k26 directly on a Raspberry Pi. By utilizing the Pi's native GPIO pins and hardware interrupts, we can bypass standard USB adapters entirely. This provides microsecond-accurate timing.</p>
+
+        <h4>1. Software Dependencies (libgpiod)</h4>
+        <p>To use the advanced hardware features (like the R: Device), you must install the Qt6 and libgpiod v2 libraries on your Raspberry Pi:</p>
+        <div class="code-block">sudo apt update
+sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 libqt6network6 libgpiod-dev libgpiodcxx-dev</div>
+        
+        <h4>2. Hardware Interfacing (GPIO to SIO)</h4>
+        <p>To use the pure-software R: Device emulation, you must wire the Atari SIO bus directly to the Raspberry Pi's UART and GPIO pins.</p>
+
+        <div class="warning">
+            <b>CRITICAL SAFETY NOTE:</b> Atari SIO logic levels are 5V. The Raspberry Pi GPIO header operates at 3.3V. Connecting these directly will result in permanent damage to the Pi's SoC. A 3.3V to 5V Logic Level Shifter is mandatory.
+        </div>
+
+        <table>
+            <tr>
+                <th>Connection Type</th>
+                <th>Atari SIO (5V Side)</th>
+                <th>Shifter Channel</th>
+                <th>Pi GPIO (3.3V Side)</th>
+            </tr>
+            <tr>
+                <td>Data In (Atari RX)</td>
+                <td>SIO Pin 3 [Diode] </td>
+                <td>HV1 &harr; LV1</td>
+                <td>Pin 8 (GPIO 14 / TX)</td>
+            </tr>
+            <tr>
+                <td>Data Out (Atari TX)</td>
+                <td>SIO Pin 5</td>
+                <td>HV2 &harr; LV2</td>
+                <td>Pin 10 (GPIO 15 / RX)</td>
+            </tr>
+            <tr>
+                <td>Command (Atari CMD)</td>
+                <td>SIO Pin 7</td>
+                <td>HV3 &harr; LV3</td>
+                <td>Pin 12 (GPIO 18)</td>
+            </tr>
+            <tr>
+                <td>Reference Power</td>
+                <td>SIO Pin 10 (+5V)</td>
+                <td>HV &harr; LV</td>
+                <td>Pi Pin 1 (+3.3V)</td>
+            </tr>
+            <tr>
+                <td>Common Ground</td>
+                <td>SIO Pin 4 (GND)</td>
+                <td>GND &harr; GND</td>
+                <td>Pi Pin 6 (GND)</td>
+            </tr>
+        </table>
+        
+        <div class="note">
+            <b>The Bus Contention Diode:</b> Because the Atari SIO bus is a shared daisy-chain, modern push-pull logic shifters will forcefully hold the SIO data line at 5V, overpowering vintage hardware (like the 1050 disk drive). You <b>must</b> install a switching diode (1N4148 or 1N914) inline on the Pi's Transmit TX line (between Shifter HV1 and SIO Pin 3). The diode's black stripe (Cathode) must point towards the Raspberry Pi.
+        </div>
+
+        <h4>3. Raspberry Pi OS Configuration</h4>
+        <p>Before running AspeQt, you must free the UART from the Linux console.</p>
+        <ol>
+            <li><b>Disable Serial Console:</b> Run <span class="code-snippet">sudo raspi-config</span>. Navigate to Interface Options -> Serial Port. Answer "No" to "login shell to be accessible over serial?". Answer "Yes" to "serial port hardware to be enabled?".</li>
+            <li><b>Optimize UART (Disable Bluetooth):</b> To ensure stable timing for the Atari 850, use the primary UART (PL011) by disabling Bluetooth. Edit config: <span class="code-snippet">sudo nano /boot/config.txt</span> and add line: <span class="code-snippet">dtoverlay=disable-bt</span>. Save and Reboot.</li>
+        </ol>
+
+        <h4>AspeQt Configuration (Pi Specifics)</h4>
+        <p>In AspeQt's Options menu, apply the following settings for the R: Device:</p>
+        <ul>
+            <li><b>Modem Bridge -&gt; Enable 850 Device (R: to TCP):</b> Checked.</li>
+            <li><b>Modem Bridge -&gt; Serial Port:</b> not used </li>
+            <li><b>Modem Bridge -&gt; Baud Rate:</b> not used </li>
+            <li><b>Standard Serial Port Backend -&gt; Direct Hardware UART </b> Checked.</li>
+            <li><b>Standard Serial Port Backend -&gt; Port Name:</b> /dev/ttyAMA0 (or /dev/serial0) </li>
+            <li><b>Standard Serial Port Backend -&gt; Baud Rate:</b> 19200 x1 </li>
+        </ul>
+
+        <a name="timesync"></a>
+        <h2>Time Synchronization (Real-Time Clock)</h2>
+        <p>AspeQt-2k26 allows your Atari 8-bit computer to read the current date and time from your PC. This is essential for file timestamps in DOS.</p>
+
+        <h3>Recommended Method: ApeTime Protocol</h3>
+        <p>AspeQt natively emulates the <b>ApeTime</b> device. This is the modern standard supported by most DOS variants.</p>
+        <ul>
+            <li><b>SpartaDOS X:</b> Enable the `DATE` and `TIME` drivers, or load `ATIME.SYS`.</li>
+            <li><b>RealDOS / BW-DOS:</b> Load the `ATIME.SYS` driver in your `CONFIG.SYS`.</li>
+            <li><b>MyDOS:</b> Requires a specialized autorun utility.</li>
+        </ul>
+        <div class="note">
+            <b>Note:</b> You do <b>not</b> need to run any special client software on the PC side. AspeQt handles the protocol automatically in the background.
+        </div>
+
+        <a name="printer"></a>
+        <h2>Printer Emulation (P:)</h2>
+        <p>Output sent to <span class="code-snippet">P:</span> is captured by AspeQt. View the output via <b>Tools &gt; View Printer Output</b>.</p>
+
+        <a name="clipboard"></a>
+        <h2>The Y: Device (Clipboard Bridge)</h2>
+        <p>The <b>Y: Device</b> bridges your Atari 8-bit and your modern PC's system clipboard. It allows you to "Paste" code from your PC directly into Atari BASIC, or "Copy" listings from the Atari back to your PC.</p>
+        <ul>
+            <li><b>Import Code (PC &rarr; Atari):</b> Copy text on PC, then type <span class="code-snippet">ENTER "Y:"</span> on Atari.</li>
+            <li><b>Export Code (Atari &rarr; PC):</b> Type <span class="code-snippet">LIST "Y:"</span> on Atari, then Paste on PC.</li>
+        </ul>
+
+        <a name="wdevice"></a>
+        <h2>The W: Device (Web Pipe)</h2>
+        <p>The <b>W:</b> device transforms the Atari 8-bit into a "Thin Client" capable of interacting with modern web services. It acts as a transparent proxy, forwarding standard BASIC text commands to a backend script running on your PC via HTTP.</p>
+
+        <h3>1. Multi-Channel Support (W1: - W4:)</h3>
+        <p>AspeQt-2k26 supports up to <b>4 simultaneous connections</b>. This allows for complex "Full Duplex" applications where one channel reads data while another writes data.</p>
+        <ul>
+            <li><b>W:</b> or <b>W1:</b> - Primary Channel (Device $57)</li>
+            <li><b>W2:</b> - Secondary Channel (Device $56)</li>
+            <li><b>W3:</b> - Tertiary Channel (Device $55)</li>
+            <li><b>W4:</b> - Quaternary Channel (Device $54)</li>
+        </ul>
+        <div class="code-block">
+10 REM -- QUAD CHANNEL EXAMPLE --
+20 OPEN #1,8,0,"W1:http://192.168.1.5:5000/cmd"  :REM Command Channel
+30 OPEN #2,4,0,"W2:http://192.168.1.5:5000/data" :REM Data Stream
+40 OPEN #3,4,0,"W3:http://192.168.1.5:5000/status":REM Background Poll
+50 PRINT #1;"GET STATUS"
+60 INPUT #3,STATUS$
+70 IF STATUS$="READY" THEN INPUT #2,DATA$
+80 CLOSE #1 : CLOSE #2 : CLOSE #3
+        </div>
+
+        <h3>2. Configuration: Text vs. Binary Mode</h3>
+        <p>The W: device can be configured globally via <b>Options &gt; Emulation</b>, or overridden per-connection using the command parameters.</p>
+        <ul>
+            <li><b>Text Mode:</b> Best for BASIC and Web APIs.
+                <ul>
+                    <li><i>Write:</i> Converts Atari EOL (<span class="code-snippet">$9B</span>) &rarr; Unix Newline (<span class="code-snippet">\n</span>).</li>
+                    <li><i>Read:</i> Converts Unix Newline (<span class="code-snippet">\n</span>) &rarr; Atari EOL (<span class="code-snippet">$9B</span>).</li>
+                </ul>
+            </li>
+            <li><b>Binary Mode:</b> Best for Game Loaders and Asset Streaming.
+                <ul>
+                    <li>Data is passed raw, byte-for-byte. No translation occurs.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>3. Application Examples Library</h3>
+        <p>This library contains a collection of "Hybrid Computing" examples:</p>
+
+        <h4>1. Gemini AI Chatbot</h4>
+        <p>Turns the Atari into a client for Google's Gemini Large Language Model. You can type natural language questions and receive summarized answers on the Atari screen.</p>
+        <ul>
+            <li><b>BASIC File:</b> GEMINI_AI.LST</li>
+            <li><b>Python Script:</b> gemini_ai.py</li>
+            <li><b>Dependencies:</b> <span class="code-snippet">pip install google-generativeai</span></li>
+        </ul>
+
+        <h4>2. Basic Graphical Weather Station</h4>
+        <p>Fetches live weather data from the Open-Meteo API and displays it on the Atari using GRAPHICS 5.</p>
+        <ul>
+            <li><b>BASIC File:</b> WEATHER.LST</li>
+            <li><b>Python Script:</b> weather.py</li>
+            <li><b>Dependencies:</b> <span class="code-snippet">pip install requests</span></li>
+        </ul>
+
+        <h4>3. Cloud Notepad</h4>
+        <p>Demonstrates Reading and Writing to the PC's hard drive. It acts as a "Cloud Drive" for text.</p>
+        <ul>
+            <li><b>BASIC File:</b> CLOUD_NOTE.LST</li>
+            <li><b>Python Script:</b> cloud_note.py</li>
+        </ul>
+
+        <h4>4. Text-to-Speech Synthesizer</h4>
+        <p>The "Talking Atari". Any text typed on the Atari is sent to the PC, where it is read aloud using the Linux espeak engine.</p>
+        <ul>
+            <li><b>BASIC File:</b> TTS_SERVER.LST</li>
+            <li><b>Python Script:</b> tts_server.py</li>
+        </ul>
+
+        <h4>5. Web News Scraper</h4>
+        <p>Connects to a news website, scrapes HTML, and delivers a plain-text headline summary to the Atari.</p>
+        <ul>
+            <li><b>BASIC File:</b> SCRAPER.LST</li>
+            <li><b>Python Script:</b> scraper.py</li>
+        </ul>
+
+        <h4>6. Remote Execution (Linux & Windows)</h4>
+        <p>Allows the Atari to execute shell commands or launch GUI applications on the Host PC.</p>
+        <ul>
+            <li><b>BASIC Files:</b> EXEC_LINUX.LST / EXEC_WIN.LST</li>
+            <li><b>Python Scripts:</b> exec_linux.py / exec_win.py</li>
+        </ul>
+
+        <h4>7. File Upload / Telemetry</h4>
+        <p>A utility to upload raw data or text files from the Atari to the PC.</p>
+        <ul>
+            <li><b>BASIC File:</b> FILE_UPLOAD.LST</li>
+            <li><b>Python Script:</b> file_upload.py</li>
+        </ul>
+
+        <a name="webui"></a>
+        <h2>Interactive Web Dashboard (Remote UI)</h2>
+        <p>AspeQt-2k26 features a fully responsive HTML5 web interface that allows you to control the emulator remotely from your smartphone, tablet, or another PC on your local network.</p>
+        
+        <h3>Accessing the Web UI</h3>
+        <p>Ensure that the Web UI is enabled in <b>Options &gt; General</b>. Once enabled, open a web browser on any device connected to your local network and navigate to:</p>
+        <div class="code-block">http://&lt;Your-PC-IP-Address&gt;:8080</div>
+        <p><i>(Note: Port 8080 is the default. If you changed the HTTP port in the options, use that port instead. You can also use http://localhost:8080 if browsing from the same PC.)</i></p>
+
+        <h3>Available Features</h3>
+        <ul>
+            <li><b>Full Drive Management:</b> Mount local disk/folder images, eject, toggle write-protection, and enable "Happy Mode" directly from your browser.</li>
+            <li><b>TNFS Network Streaming:</b> Browse TNFS servers and mount streaming disk images headlessly over the air. You can sort directories dynamically.</li>
+            <li><b>Create Blank Disks:</b> Instantly format and mount new .ATR images to any drive slot.</li>
+            <li><b>Cassette Deck:</b> Control the virtual cassette player (Insert, Play, Pause, Rewind, Eject).</li>
+            <li><b>BBS Auto-Dialer:</b> Access your XML Phonebook to one-tap dial BBSes and trigger User/Password macros.</li>
+            <li><b>Remote Diagnostics:</b> View the live System Log and the ASCII Printer Spooler without touching the host PC.</li>
+        </ul>
+        <div class="note">
+            <b>Note:</b> The Web UI utilizes a bidirectional WebSocket bridge, meaning any changes made on the host PC's UI will instantly reflect on your phone, and vice-versa. If the connection drops, the browser will automatically attempt to reconnect.
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2026 AspeQt-2k26 Development Team.<br>
+        Based on the original AspeQt by FJC and Ray Lidstrom.
+    </div>
+
+</body>
+</html>
