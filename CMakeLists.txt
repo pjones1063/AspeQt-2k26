@@ -33,7 +33,7 @@ endif()
 
 # --- 2. Find Dependencies ---
 # Find Qt 6 Components
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml WebSockets WebChannel HttpServer)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml WebSockets WebChannel HttpServer LinguistTools)
 
 # Find LibSSH
 find_package(libssh REQUIRED)
@@ -62,10 +62,31 @@ qt_add_executable(AspeQt
     "res/atarifiles.qrc"
     "res/icons.qrc"
     "res/documentation.qrc"
-    "res/i18n.qrc"
     "res/firmware.qrc"
     "res/webui.qrc"
 )
+
+# --- 5.5 Compile and Embed Translations ---
+set(TS_FILES
+    "res/i18n/aspeqt_de.ts"
+    "res/i18n/aspeqt_es.ts"
+    "res/i18n/aspeqt_pl.ts"
+    "res/i18n/aspeqt_ru.ts"
+    "res/i18n/aspeqt_sk.ts"
+    "res/i18n/aspeqt_tr.ts"
+    "res/i18n/qt_de.ts"
+    "res/i18n/qt_es.ts"
+    "res/i18n/qt_pl.ts"
+    "res/i18n/qt_ru.ts"
+    "res/i18n/qt_sk.ts"
+    "res/i18n/qt_tr.ts"
+)
+
+qt_add_translations(AspeQt
+    TS_FILES ${TS_FILES}
+    RESOURCE_PREFIX "/translations/i18n"
+)
+
 
 # --- 6. Include Directories ---
 target_include_directories(AspeQt PRIVATE

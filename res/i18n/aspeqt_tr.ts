@@ -4,159 +4,172 @@
 <context>
     <name>AboutDialog</name>
     <message>
+        <location filename="../../src/aboutdialog.ui" line="14" />
         <source>About AspeQt</source>
-        <translation type="vanished">AspeQT Hakkinda</translation>
+        <translation>AspeQT Hakkinda</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#000000;&quot;&gt;Aspe&lt;/span&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#55aa00;&quot;&gt;Qt	&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/icons/main-icon/AspeQt.ico&quot; /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Summary&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable. In that, respect it&apos;s similar to programs like APE and Atari810. The main difference is that it&apos;s free &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;(unlike APE)&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; and it&apos;s cross-platform&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt; (unlike Atari810 and APE)&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Ray Ataergin for Turkish translation, PC print support, ATASCII font support, AspeCl client, Multi session capability,  other fixes and UI / functional  improvements.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Krzysztof Pyrkosz for adding language selection, Polish translation, .PRO file support, Preliminary .ATX file support, and other fixes and improvements.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Matthias Reichl for creating AtariSIO package, letting me use his high speed SIO codes and even getting his hands dirty with the Unix serial port backend.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Sebastian Bartkowicz for kindly donating one of his Candle&apos;O&apos;Sin I/O boards, thus giving me the possibility to support it and other FTDI chip based USB adaptors.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Nikita Zimin for Russian translation.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;License&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* &lt;/span&gt;&lt;a href=&quot;https://sourceforge.net/projects/respeqt/&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;AspeQt&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;: Copyright 2009 by Fatih Aygün. You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Qt libraries: Copyright 2009 &lt;/span&gt;&lt;a href=&quot;http://qt.nokia.com/&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Nokia Corporation&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; and/or its subsidiary(-ies). Used in this package under LGPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Silk Icons: Copyright by &lt;/span&gt;&lt;a href=&quot;http://famfamfam.com&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Mark James&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. Used in this package under Creative Commons Attribution 3.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Additional Icons by &lt;/span&gt;&lt;a href=&quot;http://www.oxygen-icons.org/?page_id=16&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Oxygen Team&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. Used in this package under Creative Commons Attribution-ShareAlike 3.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* Atascii Fonts by &lt;/span&gt;&lt;a href=&quot;http://members.bitstream.net/~marksim/atarimac&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Mark Simonson&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. Used in this package under Freeware License.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;* AtariSIO Linux kernel module and high speed code used in the EXE loader: Copyright &lt;/span&gt;&lt;a href=&quot;mailto:hias@horus.com&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Matthias Reichl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;. Used in this package under GPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Contact&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;mailto:cyco130@yahoo.com&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Fatih Aygün&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, please include the word &amp;quot;respeqt&amp;quot; in the subject field.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;mailto:ray@atari8warez.com&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Ray Ataergin&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt; for SIO2PC/10502PC information and hardware please visit &lt;/span&gt;&lt;a href=&quot;http://www.atari8warez.com&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;atari8warez&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Kredi&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Ray Ataergin (Atari8Warez): Türkçe tercüme, yazıcı desteği, kullanim kılavuzu, ASPECL uzakdan kumanda yazılımı, ATASCII desteği, birden fazla oturum açma desteği, kullanıcı arayüzü geliştirme ve .ATR yükleme mantığında geliştirmeler.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Krzysztof Pyrkosz:  Lehce tercüme, kullanıcı dil seçimi, .PRO dosya desteği ve ceşitli düzeltme ve eklentiler.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Matthias Reichl: AtariSIO paketi, hızlı SIO kodu ve Unix seri bağlanma arka ucu.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Sebastian Bartkowicz:  Candle&apos;O&apos;Sin I/O board&apos;unu ödünç vererek, FTDI işlemcisi bazında imal edilmiş USB adaptörlerinin desteklenmesini sağlamak.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Lisans&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* AspeQt: Copyright 2009 Fatih Aygün. Serbestce kopyalayıp, kullanabilir, değiştirebilir ve GPL2.0 lisansı altında dağıtabilirsiniz. Detay için lutfen license.txt dosyasına bakınız.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Qt libraries: Copyright 2009 Nokia Corporation ve yan kuruluşları. Bu paket içerisinde LGPL 2.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Silk Icons: Copyright Mark James (famfamfam.com). Bu pakette  Creative Commons Attribution 3.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* EXE yükleyicisindeki AtariSIO Linux kernel modülü ve yüksek hız kodu: Copyright Matthias Reichl &amp;lt;hias@horus.com&amp;gt;. Bu pakette GPL 2.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;İletişim&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;ASPEQT ile ilgili sorularınız için Fatih Aygün&apos;e cyco130@yahoo.com adresinden eposta ile, konu kısmına &amp;quot;respeqt&amp;quot; yazarak ulaşabilirsiniz.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;SIO2PC donanım gereksinmelerinizi www.atari8warez.com  adresinden sağlayabilir, donanım ile ilgili sorularınızı atarı8warez@gmail.com adresine gönderebilirsiniz&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <location filename="../../src/aboutdialog.ui" line="31" />
+        <source>AspeQt 2k26: Atari Serial Peripheral Emulator for Qt</source>
+        <translation>AspeQt 2k26: Qt için Atari Seri Çevre Birimi Emülatörü</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <location filename="../../src/aboutdialog.ui" line="64" />
+        <location filename="../../src/aboutdialog.cpp" line="23" />
+        <source>qrc:/documentation/about.html</source>
+        <translation>qrc:/documentation/about.html</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Ray Ataergin &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-style:italic;&quot;&gt;(Atari8Warez)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt; for adding turkish translation and printer support.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Krzysztof Pyrkosz for adding language selection, polish translation, .PRO file support and other fixes and improvements.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Matthias Reichl for creating AtariSIO package, letting me use his high speed SIO codes and even getting his hands dirty with the Unix serial port backend.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Sebastian Bartkowicz for kindly donating one of his Candle&apos;O&apos;Sin I/O boards, thus giving me the possibility to support it and other FTDI chip based USB adaptors.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;License&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* AspeQt: Copyright 2009 by Fatih Aygün. You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Qt libraries: Copyright 2009 Nokia Corporation and/or its subsidiary(-ies). Used in this package under LGPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Silk Icons: Copyright by Mark James (famfamfam.com). Used in this package under Creative Commons Attribution 3.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* AtariSIO Linux kernel module and high speed code used in the EXE loader: Copyright Matthias Reichl &amp;lt;hias@horus.com&amp;gt;. Used in this package under GPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Contact&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;To contact Fatih Aygün Just drop a line at cyco130@yahoo.com, please include the word &amp;quot;respeqt&amp;quot; in the subject field.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;To contact Ray Ataergin for SIO2PC/10502PC information send email to atari8warez@gmaail.com.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;For SIO2PC/10502PC hardware please visit www.atari8warez.for-the.biz&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Arial'; font-size:8.25pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:16pt; font-weight:600; color:#000000;"&gt;Aspe&lt;/span&gt;&lt;span style=" font-size:16pt; font-weight:600; color:#55aa00;"&gt;Qt	&lt;/span&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;img src=":/icons/main-icon/AspeQt.ico" /&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt; font-weight:600;"&gt;Summary&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable. In that, respect it's similar to programs like APE and Atari810. The main difference is that it's free &lt;/span&gt;&lt;span style=" font-size:9pt; font-style:italic;"&gt;(unlike APE)&lt;/span&gt;&lt;span style=" font-size:9pt;"&gt; and it's cross-platform&lt;/span&gt;&lt;span style=" font-size:9pt; font-style:italic;"&gt; (unlike Atari810 and APE)&lt;/span&gt;&lt;span style=" font-size:9pt;"&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt; font-weight:600;"&gt;Credits&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Ray Ataergin for Turkish translation, PC print support, ATASCII font support, AspeCl client, Multi session capability,  other fixes and UI / functional  improvements.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Krzysztof Pyrkosz for adding language selection, Polish translation, .PRO file support, Preliminary .ATX file support, and other fixes and improvements.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Matthias Reichl for creating AtariSIO package, letting me use his high speed SIO codes and even getting his hands dirty with the Unix serial port backend.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Sebastian Bartkowicz for kindly donating one of his Candle'O'Sin I/O boards, thus giving me the possibility to support it and other FTDI chip based USB adaptors.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Nikita Zimin for Russian translation.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt; font-weight:600;"&gt;License&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* &lt;/span&gt;&lt;a href="https://sourceforge.net/projects/respeqt/"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;AspeQt&lt;/span&gt;&lt;/a&gt;&lt;span style=" font-size:9pt;"&gt;: Copyright 2009 by Fatih Aygün. You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Qt libraries: Copyright 2009 &lt;/span&gt;&lt;a href="http://qt.nokia.com/"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;Nokia Corporation&lt;/span&gt;&lt;/a&gt;&lt;span style=" font-size:9pt;"&gt; and/or its subsidiary(-ies). Used in this package under LGPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Silk Icons: Copyright by &lt;/span&gt;&lt;a href="http://famfamfam.com"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;Mark James&lt;/span&gt;&lt;/a&gt;&lt;span style=" font-size:9pt;"&gt;. Used in this package under Creative Commons Attribution 3.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Additional Icons by &lt;/span&gt;&lt;a href="http://www.oxygen-icons.org/?page_id=16"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;Oxygen Team&lt;/span&gt;&lt;/a&gt;&lt;span style=" font-size:9pt;"&gt;. Used in this package under Creative Commons Attribution-ShareAlike 3.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* Atascii Fonts by &lt;/span&gt;&lt;a href="http://members.bitstream.net/~marksim/atarimac"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;Mark Simonson&lt;/span&gt;&lt;/a&gt;&lt;span style=" font-size:9pt;"&gt;. Used in this package under Freeware License.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt;"&gt;* AtariSIO Linux kernel module and high speed code used in the EXE loader: Copyright &lt;/span&gt;&lt;a href="mailto:hias@horus.com"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;Matthias Reichl&lt;/span&gt;&lt;/a&gt;&lt;span style=" font-size:9pt;"&gt;. Used in this package under GPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-size:9pt; font-weight:600;"&gt;Contact&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="mailto:cyco130@yahoo.com"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;Fatih Aygün&lt;/span&gt;&lt;/a&gt;&lt;span style=" font-size:9pt;"&gt;, please include the word &amp;quot;respeqt&amp;quot; in the subject field.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;a href="mailto:ray@atari8warez.com"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;Ray Ataergin&lt;/span&gt;&lt;/a&gt;&lt;span style=" font-size:9pt;"&gt; for SIO2PC/10502PC information and hardware please visit &lt;/span&gt;&lt;a href="http://www.atari8warez.com"&gt;&lt;span style=" font-size:8pt; text-decoration: underline; color:#0000ff;"&gt;atari8warez&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Kredi&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Ray Ataergin (Atari8Warez): Türkçe tercüme, yazıcı desteği, kullanim kliavuzu ve .ATR yükleme mantığında geliştirmeler.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Krzysztof Pyrkosz:  Lehce tercüme, kullanıcı dil seçimi, .PRO dosya desteği ve ceşitli düzeltme ve eklentiler.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Matthias Reichl: AtariSIO paketi, hızlı SIO kodu ve Unix seri bağlanma arka ucu.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Sebastian Bartkowicz:  Candle&apos;O&apos;Sin I/O board&apos;unu ödünç vererek, FTDI işlemcisi bazında imal edilmiş USB adaptörlerinin desteklenmesini sağlamak.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Lisans&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* AspeQt: Copyright 2009 Fatih Aygün. Serbestce kopyalayıp, kullanabilir, değiştirebilir ve GPL2.0 lisansı altında dağıtabilirsiniz. Detay için lutfen license.txt dosyasına bakınız.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Qt libraries: Copyright 2009 Nokia Corporation ve yan kuruluşları. Bu paket içerisinde LGPL 2.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Silk Icons: Copyright Mark James (famfamfam.com). Bu pakette  Creative Commons Attribution 3.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* EXE yükleyicisindeki AtariSIO Linux kernel modülü ve yüksek hız kodu: Copyright Matthias Reichl &amp;lt;hias@horus.com&amp;gt;. Bu pakette GPL 2.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;İletişim&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;Kredi&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt; text-decoration: underline;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Ray Ataergin (Atari8Warez): Türkçe tercüme, yazıcı desteği, kullanim kılavuzu, ASPECL uzakdan kumanda yazılımı, ATASCII desteği, birden fazla oturum açma desteği, kullanıcı arayüzü geliştirme ve .ATR yükleme mantığında geliştirmeler.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Krzysztof Pyrkosz:  Lehce tercüme, kullanıcı dil seçimi, .PRO dosya desteği ve ceşitli düzeltme ve eklentiler.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Matthias Reichl: AtariSIO paketi, hızlı SIO kodu ve Unix seri bağlanma arka ucu.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Sebastian Bartkowicz:  Candle'O'Sin I/O board'unu ödünç vererek, FTDI işlemcisi bazında imal edilmiş USB adaptörlerinin desteklenmesini sağlamak.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;Lisans&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* AspeQt: Copyright 2009 Fatih Aygün. Serbestce kopyalayıp, kullanabilir, değiştirebilir ve GPL2.0 lisansı altında dağıtabilirsiniz. Detay için lutfen license.txt dosyasına bakınız.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Qt libraries: Copyright 2009 Nokia Corporation ve yan kuruluşları. Bu paket içerisinde LGPL 2.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Silk Icons: Copyright Mark James (famfamfam.com). Bu pakette  Creative Commons Attribution 3.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* EXE yükleyicisindeki AtariSIO Linux kernel modülü ve yüksek hız kodu: Copyright Matthias Reichl &amp;lt;hias@horus.com&amp;gt;. Bu pakette GPL 2.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;İletişim&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
 
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;ASPEQT ile ilgili sorularınız için Fatih Aygün&apos;e cyco130@yahoo.com adresinden eposta ile, konu kısmına &amp;quot;respeqt&amp;quot; yazarak ulaşabilirsiniz.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;SIO2PC donanım gereksinmelerinizi www.atari8warez.for-the.biz  adresinden sağlayabilir, donanım ile ilgili sorularınızı atarı8warez@gmail.com adresine gönderebilirsiniz&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;ASPEQT ile ilgili sorularınız için Fatih Aygün'e cyco130@yahoo.com adresinden eposta ile, konu kısmına &amp;quot;respeqt&amp;quot; yazarak ulaşabilirsiniz.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;SIO2PC donanım gereksinmelerinizi www.atari8warez.com  adresinden sağlayabilir, donanım ile ilgili sorularınızı atarı8warez@gmail.com adresine gönderebilirsiniz&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;Credits&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt; text-decoration: underline;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Ray Ataergin &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-style:italic;"&gt;(Atari8Warez)&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt; for adding turkish translation and printer support.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Krzysztof Pyrkosz for adding language selection, polish translation, .PRO file support and other fixes and improvements.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Matthias Reichl for creating AtariSIO package, letting me use his high speed SIO codes and even getting his hands dirty with the Unix serial port backend.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Sebastian Bartkowicz for kindly donating one of his Candle'O'Sin I/O boards, thus giving me the possibility to support it and other FTDI chip based USB adaptors.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;License&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* AspeQt: Copyright 2009 by Fatih Aygün. You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Qt libraries: Copyright 2009 Nokia Corporation and/or its subsidiary(-ies). Used in this package under LGPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Silk Icons: Copyright by Mark James (famfamfam.com). Used in this package under Creative Commons Attribution 3.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* AtariSIO Linux kernel module and high speed code used in the EXE loader: Copyright Matthias Reichl &amp;lt;hias@horus.com&amp;gt;. Used in this package under GPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;Contact&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;To contact Fatih Aygün Just drop a line at cyco130@yahoo.com, please include the word &amp;quot;respeqt&amp;quot; in the subject field.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;To contact Ray Ataergin for SIO2PC/10502PC information send email to atari8warez@gmaail.com.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;For SIO2PC/10502PC hardware please visit www.atari8warez.for-the.biz&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;Kredi&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt; text-decoration: underline;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Ray Ataergin (Atari8Warez): Türkçe tercüme, yazıcı desteği, kullanim kliavuzu ve .ATR yükleme mantığında geliştirmeler.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Krzysztof Pyrkosz:  Lehce tercüme, kullanıcı dil seçimi, .PRO dosya desteği ve ceşitli düzeltme ve eklentiler.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Matthias Reichl: AtariSIO paketi, hızlı SIO kodu ve Unix seri bağlanma arka ucu.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Sebastian Bartkowicz:  Candle'O'Sin I/O board'unu ödünç vererek, FTDI işlemcisi bazında imal edilmiş USB adaptörlerinin desteklenmesini sağlamak.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;Lisans&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* AspeQt: Copyright 2009 Fatih Aygün. Serbestce kopyalayıp, kullanabilir, değiştirebilir ve GPL2.0 lisansı altında dağıtabilirsiniz. Detay için lutfen license.txt dosyasına bakınız.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Qt libraries: Copyright 2009 Nokia Corporation ve yan kuruluşları. Bu paket içerisinde LGPL 2.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Silk Icons: Copyright Mark James (famfamfam.com). Bu pakette  Creative Commons Attribution 3.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* EXE yükleyicisindeki AtariSIO Linux kernel modülü ve yüksek hız kodu: Copyright Matthias Reichl &amp;lt;hias@horus.com&amp;gt;. Bu pakette GPL 2.0 lisansı altında kullanılmıştır.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;İletişim&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;ASPEQT ile ilgili sorularınız için Fatih Aygün'e cyco130@yahoo.com adresinden eposta ile, konu kısmına &amp;quot;respeqt&amp;quot; yazarak ulaşabilirsiniz.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;SIO2PC donanım gereksinmelerinizi www.atari8warez.for-the.biz  adresinden sağlayabilir, donanım ile ilgili sorularınızı atarı8warez@gmail.com adresine gönderebilirsiniz&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>AspeQt: Atari Serial Peripheral Emulator for Qt</source>
         <translation type="vanished">Respeqt: Qt için Atari Seri Donanım Emülatörü</translation>
     </message>
     <message>
+        <location filename="../../src/aboutdialog.cpp" line="22" />
         <source>version %1</source>
-        <translation type="vanished">versiyon %1</translation>
+        <translation>versiyon %1</translation>
     </message>
 </context>
 <context>
@@ -217,7 +230,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">[%1] Uzak kumandalı indirme isteminde belirtilen disk numarası: %2  geçersiz</translation>
     </message>
     <message>
-        <source>[%1] AspeQt can&apos;t determine the folder where the image file must be created/mounted!</source>
+        <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
         <translation type="vanished">[%1] AspeQ dosya imajının hangi klasörde yaratılacağına/yükleneceğine karar veremiyor</translation>
     </message>
     <message>
@@ -238,7 +251,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>[%1] Image %2 mounted</source>
-        <translation type="vanished">&quot;[%1] Imaj %2 yüklendi</translation>
+        <translation type="vanished">"[%1] Imaj %2 yüklendi</translation>
     </message>
     <message>
         <source>[%1] Unrecognized Client Request (%2).</source>
@@ -250,133 +263,270 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AtariFileSystem</name>
+    <name>AspeqtClientDevice</name>
     <message>
-        <source>Atari file system error</source>
-        <translation type="vanished">Atarı dosyalama sistem hatası</translation>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="34" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="291" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="441" />
+        <source>[%1] Read data frame failed</source>
+        <translation>[%1] Veri çerçevesi okunamadı</translation>
     </message>
     <message>
-        <source>Cannot create directory &apos;%1&apos;.</source>
-        <translation type="vanished">&apos;%1&apos; Klasörü oluşturulamadı.</translation>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="45" />
+        <source>[%1] List filter set: [%2]</source>
+        <translation>[%1] Filtre kümesini listele: [%2]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="74" />
+        <source>[%1] Set Path: [%2]</source>
+        <translation>[%1] Yolu Ayarla: [%2]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="100" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="495" />
+        <source>** AspeQt home folder not set - Goto Tools&gt;Options&gt;Emulation</source>
+        <translation>** AspeQt ana klasörü ayarlanmadı - Araçlar&gt;Seçenekler&gt;Emülasyon'a gidin</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="205" />
+        <source>[%1] Date/time sent to client (%2).</source>
+        <translation>[%1] İstemciye gönderilen tarih/saat (%2).</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="226" />
+        <source>[%1] Swapped disk %2 with disk %3.</source>
+        <translation>[%1] %2 diski %3 diskiyle değiştirildi.</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="230" />
+        <source>[%1] Invalid swap request for drives: (%2)-(%3).</source>
+        <translation>[%1] Sürücüler için geçersiz takas isteği: (%2)-(%3).</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="257" />
+        <source>[%1] ALL images were remotely unmounted</source>
+        <translation>[%1] TÜM görüntülerin bağlantısı uzaktan kaldırıldı</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="265" />
+        <source>[%1] Remotely unmounted disk %2</source>
+        <translation>[%1] Uzaktan bağlantısı kesilen %2 diski</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="269" />
+        <source>[%1] Invalid drive number: %2 for remote unmount</source>
+        <translation>[%1] Geçersiz sürücü numarası: Uzaktan bağlantı kesme için %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="281" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="433" />
+        <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
+        <translation>[%1] AspeQt, görüntü dosyasının oluşturulması/bağlanması gereken klasörü belirleyemiyor!</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="307" />
+        <source>[%1] Invalid image file attribute: %2</source>
+        <translation>[%1] Geçersiz resim dosyası özelliği: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="316" />
+        <source>[%1] Can not create PC File: %2</source>
+        <translation>[%1] PC Dosyası oluşturulamıyor: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="399" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="407" />
+        <source>[%1] Saved disk %2</source>
+        <translation>[%1] Kayıtlı %2 diski</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="416" />
+        <source>[%1] Invalid drive number: %2 for remote save</source>
+        <translation>[%1] Geçersiz sürücü numarası: Uzaktan kaydetme için %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="503" />
+        <source> Get Path: [%1]</source>
+        <translation>Yolu Al: [%1]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="524" />
+        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
+        <translation>[%1] komut: $%2, aux: $%3 NAKed.</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="541" />
+        <source>[%1] Image %2 mounted</source>
+        <translation>[%1] Resim %2 yerleştirildi</translation>
+    </message>
+</context>
+<context>
+    <name>AtariFileSystem</name>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="257" />
+        <source>Atari file system error</source>
+        <translation>Atarı dosyalama sistem hatası</translation>
+    </message>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="257" />
+        <source>Cannot create directory '%1'.</source>
+        <translation>'%1' Klasörü oluşturulamadı.</translation>
     </message>
 </context>
 <context>
     <name>AtariSioBackend</name>
     <message>
-        <source>Cannot open serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Seri bağlantı noktası &apos;%1&apos; açılamıyor: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="850" />
+        <source>Cannot open serial port '%1': %2</source>
+        <translation>Seri bağlantı noktası '%1' açılamıyor: %2</translation>
     </message>
     <message>
-        <source>Cannot open AtariSio driver &apos;%1&apos;: %2</source>
-        <translation type="vanished">AtarıSIO sürücüsü açılamıyor &apos;%1&apos;: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="859" />
+        <location filename="../../src/serialport-unix.cpp" line="867" />
+        <source>Cannot open AtariSio driver '%1': %2</source>
+        <translation>AtarıSIO sürücüsü açılamıyor '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="891" />
         <source>Cannot set AtariSio driver mode: %1</source>
-        <translation type="vanished">AtarıSIO sürücü yöntemi belirlenemiyor: %1</translation>
+        <translation>AtarıSIO sürücü yöntemi belirlenemiyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="898" />
         <source>Cannot set AtariSio to autobaud mode: %1</source>
-        <translation type="vanished">AtarıSIO otomatik hız ayarı yapılamıyor: %1</translation>
+        <translation>AtarıSIO otomatik hız ayarı yapılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="905" />
         <source>Cannot create the cancel pipe</source>
-        <translation type="vanished">İptal kanalı açılamıyor</translation>
+        <translation>İptal kanalı açılamıyor</translation>
     </message>
     <message>
-        <source>Emulation started through AtariSIO backend on &apos;%1&apos; with %2 handshaking.</source>
-        <translation type="vanished">Emülasyon AtarıSIO arkaucu  &apos;%1&apos; den %2 senkronlu olarak başlatıldı.</translation>
+        <location filename="../../src/serialport-unix.cpp" line="923" />
+        <source>Emulation started through AtariSIO backend on '%1' with %2 handshaking.</source>
+        <translation>Emülasyon AtarıSIO arkaucu  '%1' den %2 senkronlu olarak başlatıldı.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="939" />
         <source>Cannot close serial port: %1</source>
-        <translation type="vanished">Seri bağlantı noktası &apos;%1&apos; kapatılamıyor</translation>
+        <translation>Seri bağlantı noktası '%1' kapatılamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="950" />
         <source>Cannot stop AtariSio backend.</source>
-        <translation type="vanished">AtarıSIO arkaucu durdurulamıyor.</translation>
+        <translation>AtarıSIO arkaucu durdurulamıyor.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="957" />
         <source>Cannot set AtariSio speed to %1: %2</source>
-        <translation type="vanished">AtarıSIO hızı %1: %2 ya ayarlanamıyor</translation>
+        <translation>AtarıSIO hızı %1: %2 ya ayarlanamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="960" />
+        <location filename="../../src/serialport-unix.cpp" line="1008" />
         <source>%1 bits/sec</source>
-        <translation type="vanished">%1 bit/san</translation>
+        <translation>%1 bit/san</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="961" />
+        <location filename="../../src/serialport-unix.cpp" line="1009" />
         <source>Serial port speed set to %1.</source>
-        <translation type="vanished">Seri bağlantı noktası hızı %1 e ayarlandı.</translation>
+        <translation>Seri bağlantı noktası hızı %1 e ayarlandı.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1015" />
         <source>Illegal condition using select!</source>
-        <translation type="vanished">Seçmede usulsüz durum!</translation>
+        <translation>Seçmede usulsüz durum!</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1035" />
         <source>Cannot read data frame: %1</source>
-        <translation type="vanished">Veri yapısı okunamıyor: %1</translation>
+        <translation>Veri yapısı okunamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1055" />
         <source>Cannot write data frame: %1</source>
-        <translation type="vanished">Veri yapısı yazılamıyor: %1</translation>
+        <translation>Veri yapısı yazılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1066" />
         <source>Cannot write command ACK: %1</source>
-        <translation type="vanished">Komut ACK yazılamıyor: %1</translation>
+        <translation>Komut ACK yazılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1076" />
         <source>Cannot write command NAK: %1</source>
-        <translation type="vanished">Komut NAK yazılamıyor: %1</translation>
+        <translation>Komut NAK yazılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1085" />
         <source>Cannot write data ACK: %1</source>
-        <translation type="vanished">Veri ACK yazılamıyor: %1</translation>
+        <translation>Veri ACK yazılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1094" />
         <source>Cannot write data NAK: %1</source>
-        <translation type="vanished">Veri NAK yazılamıyor: %1</translation>
+        <translation>Veri NAK yazılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1103" />
         <source>Cannot write COMPLETE byte: %1</source>
-        <translation type="vanished">COMPLETE (tamam)  baytı yazılamıyor: %1</translation>
+        <translation>COMPLETE (tamam)  baytı yazılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1112" />
         <source>Cannot write ERROR byte: %1</source>
-        <translation type="vanished">ERROR (hata)  baytı yazılamıyor: %1</translation>
+        <translation>ERROR (hata)  baytı yazılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1126" />
         <source>Cannot write raw frame: %1</source>
-        <translation type="vanished">İşlenmemiş yapı yazılamıyor: %1</translation>
+        <translation>İşlenmemiş yapı yazılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1137" />
         <source>Block too long.</source>
-        <translation type="vanished">Blok çok uzun.</translation>
+        <translation>Blok çok uzun.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1140" />
         <source>Command not acknowledged.</source>
-        <translation type="vanished">Komut onaylanmadı.</translation>
+        <translation>Komut onaylanmadı.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1143" />
         <source>Command timeout.</source>
-        <translation type="vanished">Komut zamanaşımı.</translation>
+        <translation>Komut zamanaşımı.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1146" />
         <source>Checksum error.</source>
-        <translation type="vanished">Sağlama hatası.</translation>
+        <translation>Sağlama hatası.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1149" />
         <source>Device error.</source>
-        <translation type="vanished">Aygıt hatası.</translation>
+        <translation>Aygıt hatası.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1152" />
         <source>Data frame not acknowledged.</source>
-        <translation type="vanished">Veri yapısı onaylanmadı.</translation>
+        <translation>Veri yapısı onaylanmadı.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1155" />
         <source>Unknown AtariSio driver error.</source>
-        <translation type="vanished">Bilinmeyen AtarıSio sürücü hatası.</translation>
+        <translation>Bilinmeyen AtarıSio sürücü hatası.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1178" />
+        <source>Cannot read raw frame: %1</source>
+        <translation>Ham çerçeve okunamıyor: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="799" />
         <source>AtariSIO is only available under Linux.</source>
-        <translation type="vanished">AtariSio sadece Linux altında geçerlidir.</translation>
+        <translation>AtariSio sadece Linux altında geçerlidir.</translation>
     </message>
 </context>
 <context>
@@ -414,28 +564,28 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">[%1] Parça %2 bilgisi sorgulama (%3 bayt @ %4).</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Dosya açılamıyor: &apos;%1&apos;:%2</translation>
+        <source>Cannot open file '%1': %2</source>
+        <translation type="vanished">Dosya açılamıyor: '%1':%2</translation>
     </message>
     <message>
         <source>Unexpected end of file, needed %1 more</source>
         <translation type="vanished">Beklenmeyen dosya sonu, %1 daha gerekiyor</translation>
     </message>
     <message>
-        <source>Cannot read from file &apos;%1&apos;: %2.</source>
-        <translation type="vanished">Dosyadan okunamıyor &apos;%1&apos;:%2.</translation>
+        <source>Cannot read from file '%1': %2.</source>
+        <translation type="vanished">Dosyadan okunamıyor '%1':%2.</translation>
     </message>
     <message>
-        <source>Cannot load file &apos;%1&apos;: The file doesn&apos;t seem to be an Atari DOS executable.</source>
-        <translation type="vanished">&apos;%1&apos; yüklenemiyor, dosya çalıştırılabilir Atari DOS dosyasına benzemiyor.</translation>
+        <source>Cannot load file '%1': The file doesn't seem to be an Atari DOS executable.</source>
+        <translation type="vanished">'%1' yüklenemiyor, dosya çalıştırılabilir Atari DOS dosyasına benzemiyor.</translation>
     </message>
     <message>
-        <source>The executable &apos;%1&apos; is broken: Unexpected end of file, needed %2 more.</source>
-        <translation type="vanished">Çalıştırılabilir dosya &apos;%1&apos; bozuk: Beklenmeyen dosya sonu, %2 daha gerekiyor.</translation>
+        <source>The executable '%1' is broken: Unexpected end of file, needed %2 more.</source>
+        <translation type="vanished">Çalıştırılabilir dosya '%1' bozuk: Beklenmeyen dosya sonu, %2 daha gerekiyor.</translation>
     </message>
     <message>
-        <source>The executable &apos;%1&apos; is broken: The end address is less than the start address.</source>
-        <translation type="vanished">Çalıştırılabilir dosya &apos;%1&apos; bozuk: Dosya sonu adresi başlangıç adresinden küçük.</translation>
+        <source>The executable '%1' is broken: The end address is less than the start address.</source>
+        <translation type="vanished">Çalıştırılabilir dosya '%1' bozuk: Dosya sonu adresi başlangıç adresinden küçük.</translation>
     </message>
     <message>
         <source>Cannot open the boot loader: %1</source>
@@ -455,10 +605,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Please reboot your Atari.
 
-Don&apos;t forget to remove any cartridges and disable BASIC by holding down the Atari Option button if necessary.</source>
+Don't forget to remove any cartridges and disable BASIC by holding down the Atari Option button if necessary.</source>
         <translation type="vanished">Atari Önyükleme
 
-Kartuş(ları) çıkarmayı ve gerekiyorsa OPTION tuşunu basılı tutarak BASIC&apos;i devre dışı bırakmayı unutmayın.</translation>
+Kartuş(ları) çıkarmayı ve gerekiyorsa OPTION tuşunu basılı tutarak BASIC'i devre dışı bırakmayı unutmayın.</translation>
     </message>
     <message>
         <source>Keep this dialog Open to reboot more than once</source>
@@ -480,24 +630,59 @@ Bazı programlar bu diyaloğu elle kapamanızı gerektirebilir.</translation>
 <context>
     <name>BootOptionsDialog</name>
     <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="14" />
         <source>Folder Boot Options</source>
-        <translation type="vanished">Klasörden başlatma seçenekleri</translation>
+        <translation>Klasörden başlatma seçenekleri</translation>
     </message>
     <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="48" />
         <source>Folder Image Boot Options</source>
-        <translation type="vanished">Klasör İmajından başlatma seçenekleri</translation>
+        <translation>Klasör İmajından başlatma seçenekleri</translation>
     </message>
     <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="63" />
         <source>Select the DOS you want to boot your Atari with</source>
-        <translation type="vanished">Atariyi başlatmak istediğinğiz disk işletim sistemini seçin</translation>
+        <translation>Atariyi başlatmak istediğinğiz disk işletim sistemini seçin</translation>
     </message>
     <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="73" />
+        <source>SmartDOS 6.1D</source>
+        <translation>SmartDOS 6.1D</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="89" />
+        <source>SpartaDOS 3.2G</source>
+        <translation>SpartaDOS 3.2G</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="105" />
+        <source>MyPicoDOS 4.05 (Standard)</source>
+        <translation>MyPicoDOS 4.05 (Standart)</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="121" />
+        <source>MyDOS 4.x</source>
+        <translation>MyDOS 4.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="137" />
+        <source>AtariDOS 2.x</source>
+        <translation>AtariDOS 2.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="150" />
+        <source>DosXL 2.x</source>
+        <translation>DosXL 2.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="180" />
         <source>Disable high speed SIO</source>
-        <translation type="vanished">Hızlı SIO yu hizmet dışı bırak</translation>
+        <translation>Hızlı SIO yu hizmet dışı bırak</translation>
     </message>
     <message>
-        <source>(Check if you&apos;re already using a high-speed OS)</source>
-        <translation type="vanished">(Ataride zaten hızlı işletim sistemi kullanıyorsanız işaretleyin)</translation>
+        <location filename="../../src/bootoptionsdialog.ui" line="164" />
+        <source>(Check if you're already using a high-speed OS)</source>
+        <translation>(Ataride zaten hızlı işletim sistemi kullanıyorsanız işaretleyin)</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -507,38 +692,43 @@ Bazı programlar bu diyaloğu elle kapamanızı gerektirebilir.</translation>
 <context>
     <name>CassetteDialog</name>
     <message>
+        <location filename="../../src/cassettedialog.ui" line="23" />
         <source>Cassette image playback</source>
-        <translation type="vanished">Kaset imajı yükleme</translation>
+        <translation>Kaset imajı yükleme</translation>
     </message>
     <message>
-        <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+        <location filename="../../src/cassettedialog.ui" line="35" />
+        <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation type="vanished">Bu kaset imajını yüklemek için Ataride gerekeni yapın (önyükleme için OPTION+START veya Basic den &quot;CLOAD&quot;).
+        <translation>Bu kaset imajını yüklemek için Ataride gerekeni yapın (önyükleme için OPTION+START veya Basic den "CLOAD").
 
 Kaset uyarı biplemesini duyduğunuzda aşağıdaki OK tuşuna ve aynı anda da Atarinizde herhangi bir tuşa basın.</translation>
     </message>
     <message>
-        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
+        <location filename="../../src/cassettedialog.cpp" line="28" />
+        <source>AspeQt is ready to playback the cassette image file '%1'.
 
 The estimated playback duration is: %2:%3
 
-Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation type="vanished">AspeQt &apos;%1&apos; kaset imajını başlatmaya hazır.
+        <translation>AspeQt '%1' kaset imajını başlatmaya hazır.
 
 Tahmini yükleme süresi: %2:%3
 
-Bu kaset imajını yüklemek için Ataride gerekeni yapın (önyükleme için OPTION+START veya Basic den &quot;CLOAD&quot;).
+Bu kaset imajını yüklemek için Ataride gerekeni yapın (önyükleme için OPTION+START veya Basic den "CLOAD").
 
 Kaset uyarı biplemesini duyduğunuzda aşağıdaki OK tuşuna ve aynı anda da Atarinizde herhangi bir tuşa basın.</translation>
     </message>
     <message>
+        <location filename="../../src/cassettedialog.cpp" line="80" />
+        <location filename="../../src/cassettedialog.cpp" line="95" />
         <source>Playing back cassette image.
 
 Estimated time left: %1:%2</source>
-        <translation type="vanished">Kaset imajı okunuyor.
+        <translation>Kaset imajı okunuyor.
 
 Kalan süre: %1:%2</translation>
     </message>
@@ -546,91 +736,152 @@ Kalan süre: %1:%2</translation>
 <context>
     <name>CassetteWorker</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished"> &apos;%1&apos;: %2 açılamıyor</translation>
+        <location filename="../../src/sioworker.cpp" line="426" />
+        <source>Cannot open '%1': %2</source>
+        <translation> '%1': %2 açılamıyor</translation>
     </message>
     <message>
-        <source>Cannot read &apos;%1&apos;: %2</source>
-        <translation type="vanished"> &apos;%1&apos;: %2 okunamıyor</translation>
+        <location filename="../../src/sioworker.cpp" line="437" />
+        <location filename="../../src/sioworker.cpp" line="448" />
+        <location filename="../../src/sioworker.cpp" line="470" />
+        <location filename="../../src/sioworker.cpp" line="480" />
+        <source>Cannot read '%1': %2</source>
+        <translation> '%1': %2 okunamıyor</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: The header does not match.</source>
-        <translation type="vanished">&apos;%1&apos; okunamıyor. Başlık uyumsuz.</translation>
+        <location filename="../../src/sioworker.cpp" line="454" />
+        <source>Cannot open '%1': The header does not match.</source>
+        <translation>'%1' okunamıyor. Başlık uyumsuz.</translation>
     </message>
     <message>
-        <source>[Cassette]: File description &apos;%2&apos;.</source>
-        <translation type="vanished">[Kaset]: Dosya &apos;%2&apos;.</translation>
+        <location filename="../../src/sioworker.cpp" line="459" />
+        <source>[Cassette]: File description '%2'.</source>
+        <translation>[Kaset]: Dosya '%2'.</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: Unknown chunk header %2.</source>
-        <translation type="vanished">&apos;%1&apos; açılamıyor: Tanınmayan başlık parçası %2.</translation>
+        <location filename="../../src/sioworker.cpp" line="504" />
+        <source>[Cassette] Skipping unsupported chunk '%1' (%2 bytes)</source>
+        <translation>[Kaset] Desteklenmeyen '%1' parçası atlanıyor (%2 bayt)</translation>
     </message>
     <message>
+        <source>Cannot open '%1': Unknown chunk header %2.</source>
+        <translation type="vanished">'%1' açılamıyor: Tanınmayan başlık parçası %2.</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="553" />
         <source>[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)</source>
-        <translation type="vanished">[Kaset]: Okunan kayıt: %1 / %2 (%3 ms aralık + %4 data baytı)</translation>
+        <translation>[Kaset]: Okunan kayıt: %1 / %2 (%3 ms aralık + %4 data baytı)</translation>
+    </message>
+</context>
+<context>
+    <name>ClipboardDevice</name>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="161" />
+        <source>[Y:] Open for Write (Accumulator Reset)</source>
+        <translation>[Y:] Yazmaya Açık (Akümülatör Sıfırlama)</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="184" />
+        <source>[Y:] Open for Read (Buffered %1 bytes)</source>
+        <translation>[Y:] Okumaya Açık (Ara belleğe alınmış %1 bayt)</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="208" />
+        <source>[Y:] Sent EOF</source>
+        <translation>[Y:] EOF gönderildi</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="249" />
+        <source>[Y:] Close: Clipboard Updated (%1 chars).</source>
+        <translation>[Y:] Kapat: Pano Güncellendi (%1 karakter).</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="251" />
+        <source>[Y:] Close: Buffer empty, clipboard not touched.</source>
+        <translation>[Y:] Kapat: Arabellek boş, panoya dokunulmamış.</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="263" />
+        <source>[Y:] Unknown Command: $%1</source>
+        <translation>[Y:] Bilinmeyen Komut: $%1</translation>
     </message>
 </context>
 <context>
     <name>CreateImageDialog</name>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="23" />
         <source>Create a disk image</source>
-        <translation type="vanished">Disk İmajı yarat</translation>
+        <translation>Disk İmajı yarat</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="44" />
         <source>Standard single density</source>
-        <translation type="vanished">Standart tek yoğunluklu</translation>
+        <translation>Standart tek yoğunluklu</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="54" />
         <source>Standard enhanced (also called medium or dual) density</source>
-        <translation type="vanished">Standart geliştirilmiş (dual) yoğunluklu</translation>
+        <translation>Standart geliştirilmiş (dual) yoğunluklu</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="61" />
         <source>Standard double density</source>
-        <translation type="vanished">Standard çift yoğunluklu</translation>
+        <translation>Standard çift yoğunluklu</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="68" />
         <source>Double sided double density</source>
-        <translation type="vanished">Çift yüzlü Çift yoğunluklu</translation>
+        <translation>Çift yüzlü Çift yoğunluklu</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="75" />
         <source>Double density harddisk</source>
-        <translation type="vanished">Çift yoğunluklu sabit disk</translation>
+        <translation>Çift yoğunluklu sabit disk</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="82" />
         <source>Custom</source>
-        <translation type="vanished">Özel</translation>
+        <translation>Özel</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="100" />
         <source>Number of sectors:</source>
-        <translation type="vanished">Sektör adedi:</translation>
+        <translation>Sektör adedi:</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="124" />
         <source>Sector density:</source>
-        <translation type="vanished">Sektör yoğunluğu:</translation>
+        <translation>Sektör yoğunluğu:</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="132" />
         <source>Single (128 bytes per sector)</source>
-        <translation type="vanished">Tek (sektör=128 bayt)</translation>
+        <translation>Tek (sektör=128 bayt)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="137" />
         <source>Double (256 bytes per sector)</source>
-        <translation type="vanished">Çift (sektör=256 bayt)</translation>
+        <translation>Çift (sektör=256 bayt)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="142" />
         <source>512 bytes per sector</source>
-        <translation type="vanished">Sektör=512 bayt</translation>
+        <translation>Sektör=512 bayt</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="147" />
         <source>8192 bytes per sector</source>
-        <translation type="vanished">Sektör=8192 bayt</translation>
+        <translation>Sektör=8192 bayt</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="163" />
         <source>Total image capacity: 92160 bytes (90 K)</source>
-        <translation type="vanished">Toplam imaj kapasitesi: 92160 bayt (90 K)</translation>
+        <translation>Toplam imaj kapasitesi: 92160 bayt (90 K)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.cpp" line="75" />
         <source>Total image capacity: %1 bytes (%2 K)</source>
-        <translation type="vanished">Toplam imaj kapasitesi: %1 bayt (%2 K)</translation>
+        <translation>Toplam imaj kapasitesi: %1 bayt (%2 K)</translation>
     </message>
 </context>
 <context>
@@ -643,84 +894,150 @@ Kalan süre: %1:%2</translation>
 <context>
     <name>DiskEditDialog</name>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="23" />
         <source>MainWindow</source>
-        <translation type="vanished">AnaPencere</translation>
+        <translation>AnaPencere</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="92" />
+        <source>Stay on Top</source>
+        <translation>Zirvede Kalın</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.ui" line="111" />
         <source>toolBar</source>
-        <translation type="vanished">araç çubuğu</translation>
+        <translation>araç çubuğu</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="150" />
+        <location filename="../../src/diskeditdialog.ui" line="153" />
+        <location filename="../../src/diskeditdialog.ui" line="156" />
         <source>Go to the parent directory</source>
-        <translation type="vanished">Bir üst klasöre git</translation>
+        <translation>Bir üst klasöre git</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="165" />
         <source>Add files...</source>
-        <translation type="vanished">Dosya ekle...</translation>
+        <translation>Dosya ekle...</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="168" />
+        <location filename="../../src/diskeditdialog.ui" line="171" />
         <source>Add files to this directory</source>
-        <translation type="vanished">Bu klasöre dosya ekle</translation>
+        <translation>Bu klasöre dosya ekle</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="183" />
         <source>Extract files...</source>
-        <translation type="vanished">Dosyaları çıkar...</translation>
+        <translation>Dosyaları çıkar...</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="186" />
+        <location filename="../../src/diskeditdialog.ui" line="189" />
         <source>Extract selected files</source>
-        <translation type="vanished">Seçilmiş dosyaları ihraç et</translation>
+        <translation>Seçilmiş dosyaları ihraç et</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="201" />
         <source>Text conversion</source>
-        <translation type="vanished">Metin dönüştürme</translation>
+        <translation>Metin dönüştürme</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="204" />
+        <location filename="../../src/diskeditdialog.ui" line="207" />
+        <location filename="../../src/diskeditdialog.cpp" line="649" />
+        <location filename="../../src/diskeditdialog.cpp" line="650" />
         <source>Text conversion is off</source>
-        <translation type="vanished">Metin dönüştürme kapalı</translation>
+        <translation>Metin dönüştürme kapalı</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="219" />
         <source>Delete</source>
-        <translation type="vanished">Sil</translation>
+        <translation>Sil</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="222" />
+        <location filename="../../src/diskeditdialog.ui" line="225" />
         <source>Delete selected files</source>
-        <translation type="vanished">Seçilmiş dosyaları sil</translation>
+        <translation>Seçilmiş dosyaları sil</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="228" />
         <source>Del</source>
-        <translation type="vanished">Sil</translation>
+        <translation>Sil</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="237" />
         <source>Print</source>
-        <translation type="vanished">Yazdır</translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="240" />
         <source>Print Directory Listing</source>
-        <translation type="vanished">Klasör içeriğini yazdır</translation>
+        <translation>Klasör içeriğini yazdır</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="477" />
         <source>No file system</source>
-        <translation type="vanished">Dosya sistemi yok</translation>
+        <translation>Dosya sistemi yok</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="478" />
+        <source>Atari Dos 1.0</source>
+        <translation>Atari Dos 1.0</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="479" />
+        <source>Atari Dos 2.0</source>
+        <translation>Atari Dos 2.0</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="480" />
+        <source>Atari Dos 2.5</source>
+        <translation>Atari Dos 2.5</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="481" />
+        <source>MyDos</source>
+        <translation>MyDo'lar</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="482" />
+        <source>SpartaDos</source>
+        <translation>SpartaDos</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="574" />
+        <location filename="../../src/diskeditdialog.cpp" line="600" />
+        <location filename="../../src/diskeditdialog.cpp" line="614" />
         <source>AspeQt - Exploring %1</source>
-        <translation type="vanished">%1 içerik ve özellikleri</translation>
+        <translation>%1 içerik ve özellikleri</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="625" />
         <source>Extract files</source>
-        <translation type="vanished">Dosyaları çıkar</translation>
+        <translation>Dosyaları çıkar</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="645" />
+        <location filename="../../src/diskeditdialog.cpp" line="646" />
         <source>Text conversion is on</source>
-        <translation type="vanished">Metin dönüştürme açık</translation>
+        <translation>Metin dönüştürme açık</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="657" />
         <source>Confirmation</source>
-        <translation type="vanished">Onaylama</translation>
+        <translation>Onaylama</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="657" />
         <source>Are you sure you want to delete selected files?</source>
-        <translation type="vanished">Seçilmiş dosyaları silmek istediğinizden eminmisiniz?</translation>
+        <translation>Seçilmiş dosyaları silmek istediğinizden eminmisiniz?</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="669" />
+        <source>Add files</source>
+        <translation>Dosya ekle</translation>
     </message>
 </context>
 <context>
@@ -766,59 +1083,95 @@ Kalan süre: %1:%2</translation>
         <translation type="obsolete">Tek yüzlü</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="220" />
         <source>SD Diskette</source>
-        <translation type="vanished">SD Disket</translation>
+        <translation>SD Disket</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="222" />
         <source>ED Diskette</source>
-        <translation type="vanished">ED Disket</translation>
+        <translation>ED Disket</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="224" />
         <source>DD Diskette</source>
-        <translation type="vanished">DD Disket</translation>
+        <translation>DD Disket</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="226" />
         <source>QD Diskette</source>
-        <translation type="vanished">QD Disket</translation>
+        <translation>QD Disket</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="229" />
         <source>%1 sector SD HardDrive</source>
-        <translation type="vanished">%1 sector SD SertDisk</translation>
+        <translation>%1 sector SD SertDisk</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="231" />
         <source>%1 sector DD HardDrive</source>
-        <translation type="vanished">%1 sector DD SertDisk</translation>
+        <translation>%1 sector DD SertDisk</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="233" />
         <source>%1 sector, %2 bytes/sector HardDrive</source>
-        <translation type="vanished">%1 sector, %2 bayt/sektör SertDisk</translation>
+        <translation>%1 sector, %2 bayt/sektör SertDisk</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="236" />
         <source>%1 %2 tracks/side, %3 sectors/track, %4 bytes/sector diskette</source>
-        <translation type="vanished">%1 %2 trak/yüz, %3 sectör/trak, %4 bayt/sektör disket</translation>
+        <translation>%1 %2 trak/yüz, %3 sectör/trak, %4 bayt/sektör disket</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="237" />
+        <source>DS</source>
+        <translation>DS</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="237" />
+        <source>SS</source>
+        <translation>SS</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="243" />
+        <source>%1 (%2k)</source>
+        <translation>%1 (%2k)</translation>
     </message>
 </context>
 <context>
     <name>DiskImageAtx</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="obsolete">Açılamıyor &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimageatx.cpp" line="38" />
+        <location filename="../../src/diskimageatx.cpp" line="45" />
+        <location filename="../../src/diskimageatx.cpp" line="53" />
+        <location filename="../../src/diskimageatx.cpp" line="146" />
+        <source>Cannot open '%1': %2</source>
+        <translation>'%1' açılamıyor: %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="47" />
         <source>Cannot read the header: %1.</source>
-        <translation type="obsolete">Başlık okunamıyor: %1.</translation>
+        <translation>Başlık okunamıyor: %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="53" />
         <source>Not a valid ATX file.</source>
-        <translation type="obsolete">ATX dosyası geçerli değil.</translation>
+        <translation>Geçerli bir ATX dosyası değil.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="60" />
         <source>VAPI version %1: %2</source>
-        <translation type="obsolete">VAPI versiyon &apos;%1&apos;: %2</translation>
+        <translation>VAPI sürümü %1: %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="132" />
         <source>Tracks=%1 Sectors=%2</source>
-        <translation type="obsolete">Pist=%1 Sektör=%2</translation>
+        <translation>Parçalar=%1 Sektörler=%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimageatx.cpp" line="188" />
+        <source>[%1] Track %2 out of bounds</source>
+        <translation>[%1] %2'yi sınırların dışında takip edin</translation>
     </message>
     <message>
         <source>Track %1 (pos=%7): next=%2 type=%3 track=%4 sectors=%5 start=%6</source>
@@ -837,16 +1190,20 @@ Kalan süre: %1:%2</translation>
         <translation type="obsolete">PİST=%1 SEKTÖR=%2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="148" />
         <source>Too many sectors in the image (%1).</source>
-        <translation type="obsolete">Imajda gereğinden fazla sektör var (%1).</translation>
+        <translation>Görüntüde çok fazla sektör var (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="174" />
+        <location filename="../../src/diskimageatx.cpp" line="233" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="obsolete">[%1]Sektöre ulaşılamıyor %2: %3</translation>
+        <translation>[%1] %2: %3 sektörüne ulaşılamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="177" />
         <source>Sector number is out of bounds.</source>
-        <translation type="obsolete">Sektör numarası sınırlar dışında.</translation>
+        <translation>Sektör numarası sınırların dışındadır.</translation>
     </message>
     <message>
         <source>sector=%1 track=%2 tracksector=%3 pos=%4 trackindex=%5</source>
@@ -857,31 +1214,43 @@ Kalan süre: %1:%2</translation>
         <translation type="obsolete">Kötü sektör</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="264" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="obsolete">[%1] Sektör okunamıyor %2: %3.</translation>
+        <translation>[%1] %2: %3 sektöründen okunamıyor.</translation>
     </message>
 </context>
 <context>
     <name>DiskImagePro</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2 açılamıyor</translation>
+        <location filename="../../src/diskimagepro.cpp" line="30" />
+        <location filename="../../src/diskimagepro.cpp" line="37" />
+        <location filename="../../src/diskimagepro.cpp" line="48" />
+        <source>Cannot open '%1': %2</source>
+        <translation>'%1': %2 açılamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="39" />
         <source>Cannot read the header: %1.</source>
-        <translation type="vanished">Başlık okunamıyor: %1.</translation>
+        <translation>Başlık okunamıyor: %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="48" />
         <source>Not a valid PRO file.</source>
-        <translation type="vanished">Geçerli bir PRO dosyası değil.</translation>
+        <translation>Geçerli bir PRO dosyası değil.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimagepro.cpp" line="87" />
+        <source>[%1] Cannot seek to sector %2: out of bounds.</source>
+        <translation>[%1] %2 sektörüne ulaşılamıyor: sınırların dışında.</translation>
     </message>
     <message>
         <source>Too many sectors in the image (%1).</source>
         <translation type="vanished">(%1) İmajı içinde çok fazla sektör var.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="94" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="vanished">[%1]Sektöre ulaşılamıyor: %2: %3</translation>
+        <translation>[%1]Sektöre ulaşılamıyor: %2: %3</translation>
     </message>
     <message>
         <source>Sector number is out of bounds.</source>
@@ -892,210 +1261,488 @@ Kalan süre: %1:%2</translation>
         <translation type="vanished">Önceden varolan sektör: %1  Nosu: %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="123" />
         <source>Error in .pro image: sector: %1 dupnum: %2</source>
-        <translation type="vanished">PRO imajında hata: sektör: %1 Nosu: %2</translation>
+        <translation>PRO imajında hata: sektör: %1 Nosu: %2</translation>
     </message>
     <message>
         <source>Bad sector</source>
         <translation type="vanished">Kötü sektör</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="162" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="vanished">[%1] Sektör okunamıyor %2: %3.</translation>
+        <translation>[%1] Sektör okunamıyor %2: %3.</translation>
     </message>
 </context>
 <context>
     <name>DocDisplayWindow</name>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="17" />
         <source>AspeQt User Manual</source>
-        <translation type="vanished">AspeQt Kullanım Kılavuzu</translation>
+        <translation>AspeQt Kullanım Kılavuzu</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="35" />
+        <source>qrc:/documentation/AspeQt User Manual-English.html</source>
+        <translation>qrc:/documentation/AspeQt Kullanıcı Kılavuzu-English.html</translation>
+    </message>
+    <message>
+        <location filename="../../src/docdisplaywindow.ui" line="48" />
         <source>toolBar</source>
-        <translation type="vanished">araç çubuğu</translation>
+        <translation>araç çubuğu</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="76" />
         <source>Print</source>
-        <translation type="vanished">Yazdır</translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="79" />
+        <location filename="../../src/docdisplaywindow.ui" line="82" />
         <source>Print User Manual</source>
-        <translation type="vanished">Kullanma Kılavuzunu Yazdır</translation>
+        <translation>Kullanma Kılavuzunu Yazdır</translation>
+    </message>
+    <message>
+        <location filename="../../src/docdisplaywindow.ui" line="85" />
+        <source>Ctrl+P</source>
+        <translation>Ctrl+P</translation>
     </message>
 </context>
 <context>
     <name>Dos10FileSystem</name>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="479" />
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <location filename="../../src/atarifilesystem.cpp" line="547" />
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="582" />
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
         <source>Atari file system error</source>
-        <translation type="vanished">Atarı dosyalama sistem hatası</translation>
+        <translation>Atarı dosyalama sistem hatası</translation>
     </message>
     <message>
-        <source>Cannot create file &apos;%1&apos;.</source>
-        <translation type="vanished">&apos;%1&apos; Dosyası yaratılamıyor.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="479" />
+        <source>Cannot create file '%1'.</source>
+        <translation>'%1' Dosyası yaratılamıyor.</translation>
     </message>
     <message>
-        <source>Cannot read &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2 okunamıyor</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <source>Cannot read '%1': %2</source>
+        <translation>'%1': %2 okunamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
         <source>Sector read failed.</source>
-        <translation type="vanished">Sektör okuma başarısız.</translation>
+        <translation>Sektör okuma başarısız.</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
         <source>File number mismatch.</source>
-        <translation type="vanished">Uyumsuz dosya numarası.</translation>
+        <translation>Uyumsuz dosya numarası.</translation>
     </message>
     <message>
-        <source>Cannot write to &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2 yazılamıyor</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="547" />
+        <source>Cannot write to '%1': %2</source>
+        <translation>'%1': %2 yazılamıyor</translation>
     </message>
     <message>
-        <source>Cannot insert &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2 eklenemiyor</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <source>Cannot insert '%1': %2</source>
+        <translation>'%1': %2 eklenemiyor</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
         <source>Cannot find a suitable file name.</source>
-        <translation type="vanished">Uygun bir dosya adı bulunamadı.</translation>
+        <translation>Uygun bir dosya adı bulunamadı.</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
         <source>Directory is full.</source>
-        <translation type="vanished">Klasör dolu.</translation>
+        <translation>Klasör dolu.</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2 açılamıyor</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="582" />
+        <source>Cannot open '%1': %2</source>
+        <translation>'%1': %2 açılamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
         <source>Disk is full.</source>
-        <translation type="vanished">Disk dolu.</translation>
+        <translation>Disk dolu.</translation>
     </message>
     <message>
-        <source>Cannot read from &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2 okunamıyor</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="624" />
+        <source>File system error</source>
+        <translation>Dosya sistemi hatası</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="624" />
+        <source>Number of bytes (%1) read from '%2' is not equal to expected data size of (%3)</source>
+        <translation>'%2'den okunan bayt sayısı (%1), beklenen veri boyutuna (%3) eşit değil</translation>
+    </message>
+    <message>
+        <source>Cannot read from '%1': %2</source>
+        <translation type="vanished">'%1': %2 okunamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
         <source>Sector write failed.</source>
-        <translation type="vanished">Sektör yazma başarısız.</translation>
+        <translation>Sektör yazma başarısız.</translation>
     </message>
     <message>
-        <source>Cannot delete &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2 silinemiyor</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
+        <source>Cannot delete '%1': %2</source>
+        <translation>'%1': %2 silinemiyor</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
         <source>Bitmap write failed.</source>
-        <translation type="vanished">Bit grubu yazılamadı.</translation>
+        <translation>Bit grubu yazılamadı.</translation>
+    </message>
+</context>
+<context>
+    <name>DriveWidget</name>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="23" />
+        <source>Frame</source>
+        <translation>Çerçeve</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="55" />
+        <source>1:</source>
+        <translation>1:</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="136" />
+        <source>Mount disk image...</source>
+        <translation>Disk görüntüsünü bağla...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="145" />
+        <source>Mount folder image...</source>
+        <translation>Klasör görüntüsünü ekle...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="154" />
+        <source>Unmount</source>
+        <translation>Bağlantıyı kaldır</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="163" />
+        <source>Explore..</source>
+        <translation>Keşfetmek..</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="172" />
+        <source>Save</source>
+        <translation>Kaydetmek</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="184" />
+        <source>Auto save</source>
+        <translation>Otomatik kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="196" />
+        <source>Happy Enhancement</source>
+        <translation>Mutlu Geliştirme</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="205" />
+        <source>Folder Boot Options</source>
+        <translation>Klasör Önyükleme Seçenekleri</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="208" />
+        <source>Change Boot Options for D%1</source>
+        <translation>D%1 için Önyükleme Seçeneklerini Değiştirin</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="217" />
+        <source>Save as...</source>
+        <translation>Farklı kaydet...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="220" />
+        <source>Save image as... for D%1</source>
+        <translation>Resmi farklı kaydet... D%1 için</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="229" />
+        <source>Revert to original</source>
+        <translation>Orijinale geri dön</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="232" />
+        <source>Revert image to last saved state for D%1</source>
+        <translation>Görüntüyü D%1 için son kaydedilen durumuna döndür</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="240" />
+        <source>Write protected</source>
+        <translation>Yazma korumalı</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="249" />
+        <source>Inspect Sectors...</source>
+        <translation>Sektörleri İnceleyin...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="252" />
+        <source>Open low-level sector inspector for D%1</source>
+        <translation>D%1 için düşük seviyeli sektör denetçisini açın</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="261" />
+        <source>Drive Info</source>
+        <translation>Sürücü Bilgisi</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="264" />
+        <source>Show Drive Information</source>
+        <translation>Sürücü Bilgilerini Göster</translation>
     </message>
 </context>
 <context>
     <name>FileTypes</name>
     <message>
+        <location filename="../../src/miscutils.cpp" line="109" />
         <source>ATR disk image</source>
-        <translation type="vanished">ATR disk imajı</translation>
+        <translation>ATR disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="111" />
         <source>gzipped ATR disk image</source>
-        <translation type="vanished">gzip ATR disk imajı</translation>
+        <translation>gzip ATR disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="113" />
         <source>XFD disk image</source>
-        <translation type="vanished">XFD disk imajı</translation>
+        <translation>XFD disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="115" />
         <source>gziped XFD disk image</source>
-        <translation type="vanished">gzi XFD disk imajı</translation>
+        <translation>gzi XFD disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="117" />
         <source>DCM disk image</source>
-        <translation type="vanished">DCM disk imajı</translation>
+        <translation>DCM disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="119" />
         <source>gzipped DCM disk image</source>
-        <translation type="vanished">gzip DCM disk imajı</translation>
+        <translation>gzip DCM disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="121" />
         <source>SCP disk image</source>
-        <translation type="vanished">SCP disk imajı</translation>
+        <translation>SCP disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="123" />
         <source>gzipped SCP disk image</source>
-        <translation type="vanished">gzip SCP disk imajı</translation>
+        <translation>gzip SCP disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="125" />
         <source>DI disk image</source>
-        <translation type="vanished">DI disk imajı</translation>
+        <translation>DI disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="127" />
         <source>gzipped DI disk image</source>
-        <translation type="vanished">gzip DI disk imajı</translation>
+        <translation>gzip DI disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="129" />
         <source>PRO disk image</source>
-        <translation type="vanished">PRO disk imajı</translation>
+        <translation>PRO disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="131" />
         <source>gzipped PRO disk image</source>
-        <translation type="vanished">gzip PRO disk imajı</translation>
+        <translation>gzip PRO disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="133" />
         <source>VAPI (ATX) disk image</source>
-        <translation type="vanished">VAPI (ATX) disk imajı</translation>
+        <translation>VAPI (ATX) disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="135" />
         <source>gzipped VAPI (ATX) disk image</source>
-        <translation type="vanished">gzip VAPI (ATX) disk imajı</translation>
+        <translation>gzip VAPI (ATX) disk imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="137" />
         <source>CAS cassette image</source>
-        <translation type="vanished">CAS kaset imajı</translation>
+        <translation>CAS kaset imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="139" />
         <source>gzipped CAS cassette image</source>
-        <translation type="vanished">gzip CAS kaset imajı</translation>
+        <translation>gzip CAS kaset imajı</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="141" />
         <source>Atari executable</source>
-        <translation type="vanished">Yürütülebilir Atari dosyası</translation>
+        <translation>Yürütülebilir Atari dosyası</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="143" />
         <source>gzipped Atari executable</source>
-        <translation type="vanished">gzip Yürütülebilir Atari dosyası</translation>
+        <translation>gzip Yürütülebilir Atari dosyası</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="145" />
         <source>unknown file type</source>
-        <translation type="vanished">tanımlanmamış dosya tipi</translation>
+        <translation>tanımlanmamış dosya tipi</translation>
     </message>
 </context>
 <context>
     <name>FolderImage</name>
     <message>
-        <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
+        <location filename="../../src/folderimage.cpp" line="113" />
+        <source>Cannot mirror '%1' in '%2': No suitable Atari name can be found.</source>
         <translatorcomment>%1, %2 ye aksettirilemiyor. Uygun bir Atari adı bulunamadı.</translatorcomment>
-        <translation type="vanished">Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</translation>
+        <translation>Cannot mirror '%1' in '%2': No suitable Atari name can be found.</translation>
     </message>
     <message>
-        <source>Cannot mirror %1 of %2 files in &apos;%3&apos;: Atari directory is full.</source>
-        <translation type="vanished">%2 dosyanın %1 i &apos;%3&apos; e aksettirilemiyor. Atari dizin&apos;i dolu.</translation>
+        <location filename="../../src/folderimage.cpp" line="186" />
+        <source>Cannot mirror %1 of %2 files in '%3': Atari directory is full.</source>
+        <translation>%2 dosyanın %1 i '%3' e aksettirilemiyor. Atari dizin'i dolu.</translation>
     </message>
     <message>
+        <location filename="../../src/folderimage.h" line="52" />
         <source>Folder image</source>
-        <translation type="vanished">Klasör imajı</translation>
+        <translation>Klasör imajı</translation>
     </message>
 </context>
 <context>
     <name>GzFile</name>
     <message>
+        <location filename="../../src/miscutils.cpp" line="175" />
         <source>gzdopen() failed.</source>
-        <translation type="vanished">gzdopen() başarısız.</translation>
+        <translation>gzdopen() başarısız.</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="202" />
         <source>gzseek() failed.</source>
-        <translation type="vanished">gzseek() başarısız.</translation>
+        <translation>gzseek() başarısız.</translation>
+    </message>
+</context>
+<context>
+    <name>InfoWidget</name>
+    <message>
+        <location filename="../../src/infowidget.ui" line="20" />
+        <source>Form</source>
+        <translation>Biçim</translation>
+    </message>
+</context>
+<context>
+    <name>LogDisplayDialog</name>
+    <message>
+        <location filename="../../src/logdisplaydialog.ui" line="14" />
+        <source>AspeQt Log View</source>
+        <translation>AspeQt Günlük Görünümü</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="48" />
+        <source>Save Log</source>
+        <translation>Günlüğü Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="50" />
+        <source>Text Files (*.txt);;HTML Files (*.html);;All Files (*)</source>
+        <translation>Metin Dosyaları (*.txt);;HTML Dosyaları (*.html);;Tüm Dosyalar (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="64" />
+        <source>Success</source>
+        <translation>Başarı</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="64" />
+        <source>Log saved successfully!</source>
+        <translation>Günlük başarıyla kaydedildi!</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="66" />
+        <source>Error</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="66" />
+        <source>Could not save the log file.</source>
+        <translation>Günlük dosyası kaydedilemedi.</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="219"/>
+        <location filename="../../src/mainwindow.cpp" line="252" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>Respeqt: Qt için Atari Seri Donanım Emülatörü</translation>
     </message>
@@ -1104,24 +1751,29 @@ Kalan süre: %1:%2</translation>
         <translation type="obsolete">D9-DO diskleri sadece SpartaDOS X ile kullanılabilir</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="99" />
         <source>&amp;File</source>
-        <translation type="vanished">&amp;Dosya</translation>
+        <translation>&amp;Dosya</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="115" />
         <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Araçlar</translation>
+        <translation>&amp;Araçlar</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="125" />
         <source>&amp;Help</source>
-        <translation type="vanished">&amp;Yardım</translation>
+        <translation>&amp;Yardım</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="160" />
         <source>Unmount &amp;all</source>
-        <translation type="vanished">Hepsini &amp;indir</translation>
+        <translation>Hepsini &amp;indir</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="163" />
         <source>Unmount all</source>
-        <translation type="vanished">Hepsini indir</translation>
+        <translation>Hepsini indir</translation>
     </message>
     <message>
         <source>Mount disk image...</source>
@@ -1380,51 +2032,188 @@ Kalan süre: %1:%2</translation>
         <translation type="vanished">D15 in yazma koruması konumunu değistir</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="88" />
+        <source>&amp;Disk</source>
+        <translation>&amp;Disk</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="135" />
+        <source>Window</source>
+        <translation>Pencere</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="166" />
+        <source>Ctrl+U</source>
+        <translation>Ctrl+U</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="178" />
         <source>&amp;Options...</source>
-        <translation type="vanished">&amp;Seçenekler...</translation>
+        <translation>&amp;Seçenekler...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="181" />
+        <location filename="../../src/mainwindow.ui" line="184" />
         <source>Open options dialog</source>
-        <translation type="vanished">Seçenekler diyaloğunu aç</translation>
+        <translation>Seçenekler diyaloğunu aç</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="903"/>
+        <location filename="../../src/mainwindow.ui" line="187" />
+        <source>Ctrl+O</source>
+        <translation>Ctrl+O</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="203" />
+        <location filename="../../src/mainwindow.cpp" line="1328" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Emülasyonu başlat</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="904"/>
-        <location filename="../../src/mainwindow.cpp" line="905"/>
+        <location filename="../../src/mainwindow.ui" line="206" />
+        <location filename="../../src/mainwindow.ui" line="209" />
+        <location filename="../../src/mainwindow.cpp" line="1329" />
+        <location filename="../../src/mainwindow.cpp" line="1330" />
         <source>Start SIO peripheral emulation</source>
         <translation>SIO donanım emülaysonunu başlat</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="212" />
+        <source>Alt+E</source>
+        <translation>Alt+E</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="223" />
+        <location filename="../../src/mainwindow.ui" line="226" />
         <source>Mount to the first available slot</source>
-        <translation type="vanished">İlk kullanılabilir diske yükle</translation>
+        <translation>İlk kullanılabilir diske yükle</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="235" />
         <source>Mount &amp;disk image...</source>
-        <translation type="vanished">&amp;Disk imajı yükle...</translation>
+        <translation>&amp;Disk imajı yükle...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="238" />
+        <location filename="../../src/mainwindow.ui" line="241" />
         <source>Mount a disk image to the first available slot</source>
-        <translation type="vanished">İlk kullanılabilir disk&apos;e imaj yükle</translation>
+        <translation>İlk kullanılabilir disk'e imaj yükle</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="244" />
+        <source>Ctrl+D</source>
+        <translation>Ctrl+D</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="253" />
         <source>Mount &amp;folder image...</source>
-        <translation type="vanished">&amp;Klasör imajı yükle...</translation>
+        <translation>&amp;Klasör imajı yükle...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="256" />
+        <location filename="../../src/mainwindow.ui" line="259" />
         <source>Mount a folder image to the first available slot</source>
-        <translation type="vanished">İlk kullanılabilir disk&apos;e klasör imajı yükle</translation>
+        <translation>İlk kullanılabilir disk'e klasör imajı yükle</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="262" />
+        <source>Ctrl+F</source>
+        <translation>Ctrl+F</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="271" />
         <source>New disk image...</source>
-        <translation type="vanished">Yeni disk imajı...</translation>
+        <translation>Yeni disk imajı...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="274" />
+        <location filename="../../src/mainwindow.ui" line="277" />
         <source>Create a new disk image file and mount it to the first available slot</source>
-        <translation type="vanished">Yeni disk imajı yarat ve ilk kullanılabilir disk&apos;e yükle</translation>
+        <translation>Yeni disk imajı yarat ve ilk kullanılabilir disk'e yükle</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="280" />
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="319" />
+        <source>Alt+O</source>
+        <translation>Alt+O</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="466" />
+        <source>Ctrl+Shift+U</source>
+        <translation>Ctrl+Üst Karakter+U</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="475" />
+        <source>Save mounted image group as default</source>
+        <translation>Takılan görüntü grubunu varsayılan olarak kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="496" />
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="517" />
+        <source>Toggle mini mode</source>
+        <translation>Mini modu değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="520" />
+        <source>Ctrl+M</source>
+        <translation>Ctrl+M</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="532" />
+        <source>Toggle shade mode</source>
+        <translation>Gölge modunu değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="535" />
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="544" />
+        <location filename="../../src/mainwindow.ui" line="547" />
+        <location filename="../../src/mainwindow.ui" line="550" />
+        <source>Open log window</source>
+        <translation>Günlük penceresini aç</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="553" />
+        <source>Ctrl+L</source>
+        <translation>Ctrl+L</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="558" />
+        <source>Boot Options...</source>
+        <translation>Önyükleme Seçenekleri...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="561" />
+        <location filename="../../src/mainwindow.ui" line="564" />
+        <source>Configure firmware and boot options</source>
+        <translation>Firmware ve önyükleme seçeneklerini yapılandırma</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="573" />
+        <source>Phonebook...</source>
+        <translation>Telefon rehberi...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="576" />
+        <location filename="../../src/mainwindow.ui" line="579" />
+        <location filename="../../src/mainwindow.cpp" line="2738" />
+        <source>Open BBS Phonebook</source>
+        <translation>BBS Telefon Rehberini Aç</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="582" />
+        <source>Ctrl+B</source>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <source>Folder Boot Options</source>
@@ -1435,8 +2224,10 @@ Kalan süre: %1:%2</translation>
         <translation type="vanished">Başlatma seçeneklerinii değiştir</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="866"/>
-        <location filename="../../src/mainwindow.cpp" line="867"/>
+        <location filename="../../src/mainwindow.ui" line="490" />
+        <location filename="../../src/mainwindow.ui" line="493" />
+        <location filename="../../src/mainwindow.cpp" line="1296" />
+        <location filename="../../src/mainwindow.cpp" line="1297" />
         <source>Stop printer emulation</source>
         <translation>Yazıcı emülasyonunu durdur</translation>
     </message>
@@ -1445,48 +2236,50 @@ Kalan süre: %1:%2</translation>
         <translation type="vanished">D5-DO disk sürücülerini gizle</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="508" />
         <source>Alt+H</source>
-        <translation type="vanished">Alt+H</translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
         <source>Properties...</source>
         <translation type="obsolete">Özellikler...</translation>
     </message>
     <message>
-        <source>Show D1&apos;s properties</source>
+        <source>Show D1's properties</source>
         <translation type="vanished">D1 in özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D2&apos;s properties</source>
+        <source>Show D2's properties</source>
         <translation type="vanished">D2 nin özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D3&apos;s properties</source>
+        <source>Show D3's properties</source>
         <translation type="vanished">D3 ün özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D4&apos;s properties</source>
+        <source>Show D4's properties</source>
         <translation type="vanished">D4 ün özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D5&apos;s properties</source>
+        <source>Show D5's properties</source>
         <translation type="vanished">D5 in özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D6&apos;s properties</source>
+        <source>Show D6's properties</source>
         <translation type="vanished">D6 nın özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D7&apos;s properties</source>
+        <source>Show D7's properties</source>
         <translation type="vanished">D7 nin özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D8&apos;s properties</source>
+        <source>Show D8's properties</source>
         <translation type="vanished">D8 in özelliklerini göster</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="292" />
         <source>&amp;Save session</source>
-        <translation type="vanished">&amp;Oturumu kaydet</translation>
+        <translation>&amp;Oturumu kaydet</translation>
     </message>
     <message>
         <source>Auto Commit</source>
@@ -1494,71 +2287,92 @@ Kalan süre: %1:%2</translation>
     </message>
     <message>
         <source>&amp;Save session as...</source>
-        <translation type="obsolete">&amp;Oturum&apos;u kaydet...</translation>
+        <translation type="obsolete">&amp;Oturum'u kaydet...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="295" />
         <source>Save current session to a file</source>
-        <translation type="vanished">Bu oturumu bir dosyaya kaydet</translation>
+        <translation>Bu oturumu bir dosyaya kaydet</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="298" />
         <source>Save current session</source>
-        <translation type="vanished">Bu oturumu kaydet</translation>
+        <translation>Bu oturumu kaydet</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="301" />
+        <source>Alt+S</source>
+        <translation>Alt+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="310" />
         <source>&amp;Open session...</source>
-        <translation type="vanished">Oturum &amp;Aç...</translation>
+        <translation>Oturum &amp;Aç...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="313" />
+        <location filename="../../src/mainwindow.ui" line="316" />
         <source>Open a previously saved session</source>
-        <translation type="vanished">Daha önce kaydedilmiş oturum aç</translation>
+        <translation>Daha önce kaydedilmiş oturum aç</translation>
     </message>
     <message>
         <source>Explore..</source>
         <translation type="vanished">Keşfet..</translation>
     </message>
     <message>
-        <source>Show D9&apos;s properties</source>
+        <source>Show D9's properties</source>
         <translation type="vanished">D9 un özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D10&apos;s properties</source>
+        <source>Show D10's properties</source>
         <translation type="vanished">D10 un özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D11&apos;s properties</source>
+        <source>Show D11's properties</source>
         <translation type="vanished">D11 in özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D12&apos;s properties</source>
-        <translation type="vanished">D12 nin özelliklerini göster {12&apos;?}</translation>
+        <source>Show D12's properties</source>
+        <translation type="vanished">D12 nin özelliklerini göster {12'?}</translation>
     </message>
     <message>
-        <source>Show D13&apos;s properties</source>
+        <source>Show D13's properties</source>
         <translation type="vanished">D13 ün özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D14&apos;s properties</source>
+        <source>Show D14's properties</source>
         <translation type="vanished">D14 ün özelliklerini göster</translation>
     </message>
     <message>
-        <source>Show D15&apos;s properties</source>
+        <source>Show D15's properties</source>
         <translation type="vanished">D15 in özelliklerini göster</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="328" />
         <source>&amp;Boot Atari executable...</source>
-        <translation type="vanished">Atari çalıştırılabilir dosya &amp;önyükleme...</translation>
+        <translation>Atari çalıştırılabilir dosya &amp;önyükleme...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="331" />
+        <location filename="../../src/mainwindow.ui" line="334" />
         <source>Boot an Atari executable</source>
-        <translation type="vanished">Atari çalıştırılabilir dosyayı önyükleme yap</translation>
+        <translation>Atari çalıştırılabilir dosyayı önyükleme yap</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="337" />
+        <source>Alt+B</source>
+        <translation>Alt+B</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="355" />
         <source>Save</source>
-        <translation type="vanished">Kaydet</translation>
+        <translation>Kaydet</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="358" />
+        <location filename="../../src/mainwindow.ui" line="361" />
         <source>Save D1</source>
-        <translation type="vanished">D1 i kaydet</translation>
+        <translation>D1 i kaydet</translation>
     </message>
     <message>
         <source>Save D2</source>
@@ -1745,48 +2559,83 @@ Kalan süre: %1:%2</translation>
         <translation type="vanished">D15 i kaydet</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="373" />
+        <location filename="../../src/mainwindow.ui" line="376" />
+        <location filename="../../src/mainwindow.ui" line="379" />
         <source>Show printer text output</source>
-        <translation type="vanished">Yazıcı çıktısını göster</translation>
+        <translation>Yazıcı çıktısını göster</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="382" />
+        <source>Alt+Shift+T</source>
+        <translation>Alt+Üst Karakter+T</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="391" />
         <source>Playback cassette image...</source>
-        <translation type="vanished">Kaset imajı yükle...</translation>
+        <translation>Kaset imajı yükle...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="394" />
+        <location filename="../../src/mainwindow.ui" line="397" />
         <source>Playback a cassette image</source>
-        <translation type="vanished">Kaset imajını yükle</translation>
+        <translation>Kaset imajını yükle</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="400" />
+        <source>Alt+C</source>
+        <translation>Alt+C</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="409" />
         <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Çık</translation>
+        <translation>&amp;Çık</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="412" />
         <source>Quit AspeQt</source>
-        <translation type="vanished">AspeQt den çık</translation>
+        <translation>AspeQt den çık</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="415" />
+        <source>Alt+Q</source>
+        <translation>Alt+Q</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="424" />
         <source>&amp;About AspeQt</source>
-        <translation type="vanished">AspeQT &amp;Hakkında</translation>
+        <translation>AspeQT &amp;Hakkında</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="427" />
+        <source>Ctrl+A</source>
+        <translation>Ctrl+A</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="432" />
         <source>Help</source>
-        <translation type="vanished">Yardım</translation>
+        <translation>Yardım</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="440" />
         <source>Contents</source>
-        <translation type="vanished">Yardım</translation>
+        <translation>Yardım</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="445" />
         <source>Index</source>
-        <translation type="vanished">İndeks</translation>
+        <translation>İndeks</translation>
     </message>
     <message>
         <source>AspeQt &amp;User Manual</source>
         <translation type="vanished">AspeQt &amp;Kullanıcı Kılavuzu</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="457" />
+        <location filename="../../src/mainwindow.ui" line="460" />
+        <location filename="../../src/mainwindow.ui" line="463" />
         <source>User Manual</source>
-        <translation type="vanished">Kullanıcı Kılavuzu</translation>
+        <translation>Kullanıcı Kılavuzu</translation>
     </message>
     <message>
         <source>Commit changes to this disk automatically</source>
@@ -1797,57 +2646,61 @@ Kalan süre: %1:%2</translation>
         <translation type="vanished">Otomatik kayıt AÇ/KAPAT</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="136"/>
+        <location filename="../../src/mainwindow.cpp" line="172" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt %1 de başlatıldı.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="234"/>
+        <location filename="../../src/mainwindow.cpp" line="232" />
+        <location filename="../../src/mainwindow.cpp" line="242" />
+        <source>Requested session file not found...</source>
+        <translation>İstenen oturum dosyası bulunamadı...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="270" />
         <source>19200 bits/sec</source>
         <translation>19200 bit/san</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="241"/>
         <source>Clear messages</source>
-        <translation>İletileri sil</translation>
+        <translation type="vanished">İletileri sil</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="265"/>
         <source>No network connection</source>
-        <translation>Ağ bağlantısı yok</translation>
+        <translation type="vanished">Ağ bağlantısı yok</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="339"/>
+        <location filename="../../src/mainwindow.cpp" line="688" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt %1 de durduruldu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="364"/>
+        <location filename="../../src/mainwindow.cpp" line="722" />
         <source>Mount from TNFS Network...</source>
-        <translation type="unfinished"></translation>
+        <translation>TNFS Ağından Bağlayın...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="383"/>
+        <location filename="../../src/mainwindow.cpp" line="744" />
         <source>Mount TNFS</source>
-        <translation type="unfinished"></translation>
+        <translation>TNFS'yi bağlayın</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="506"/>
+        <location filename="../../src/mainwindow.cpp" line="860" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Disk %1, dısk %2 ile takas edildi.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="560"/>
-        <source>Cannot mount &apos;%1&apos;: No empty disk slots.</source>
-        <translation>&apos;%1&apos; yüklenemiyor: Boş disk yuvası yok.</translation>
+        <location filename="../../src/mainwindow.cpp" line="914" />
+        <source>Cannot mount '%1': No empty disk slots.</source>
+        <translation>'%1' yüklenemiyor: Boş disk yuvası yok.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="658"/>
+        <location filename="../../src/mainwindow.cpp" line="1012" />
         <source>First run</source>
         <translation>İlk koşu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="659"/>
+        <location filename="../../src/mainwindow.cpp" line="1013" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1860,166 +2713,183 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="obsolete">Emülasyon başlatıldı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="893"/>
+        <location filename="../../src/mainwindow.cpp" line="1319" />
         <source>&amp;Stop emulation</source>
         <translation>Emülasyonu &amp;durdur</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="894"/>
-        <location filename="../../src/mainwindow.cpp" line="895"/>
+        <location filename="../../src/mainwindow.cpp" line="1320" />
+        <location filename="../../src/mainwindow.cpp" line="1321" />
         <source>Stop SIO peripheral emulation</source>
         <translation>SIO donanım emülasyonunu durdur</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="912"/>
+        <location filename="../../src/mainwindow.cpp" line="1335" />
         <source>Emulation stopped.</source>
         <translation>Emülasyon durdu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="933"/>
-        <source>TNFS Network Stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="939"/>
-        <source>TNFS Stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="951"/>
-        <location filename="../../src/mainwindow.cpp" line="971"/>
+        <location filename="../../src/mainwindow.cpp" line="1427" />
+        <location filename="../../src/mainwindow.cpp" line="1448" />
         <source>Folder image</source>
         <translation>Klasör imajı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1204"/>
+        <location filename="../../src/mainwindow.cpp" line="1777" />
         <source>Unmounted disk %1</source>
         <translation>Disk %1 indirildi</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1392"/>
-        <location filename="../../src/mainwindow.cpp" line="1776"/>
-        <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
-        <translation>[%1] &apos;%2&apos;, &apos;%3&apos; olarak yüklendi.</translation>
+        <location filename="../../src/mainwindow.cpp" line="1950" />
+        <location filename="../../src/mainwindow.cpp" line="2344" />
+        <source>[%1] Mounted '%2' as '%3'.</source>
+        <translation>[%1] '%2', '%3' olarak yüklendi.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1411"/>
         <source>Open a disk image</source>
-        <translation>Disk imajını aç</translation>
+        <translation type="vanished">Disk imajını aç</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1569"/>
+        <location filename="../../src/mainwindow.cpp" line="2137" />
         <source>[Disk %1] Auto-commit ON.</source>
-        <translation type="unfinished"></translation>
+        <translation>[Disk %1] Otomatik onaylama AÇIK.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1571"/>
+        <location filename="../../src/mainwindow.cpp" line="2139" />
         <source>[Disk %1] Auto-commit OFF.</source>
-        <translation type="unfinished"></translation>
+        <translation>[Disk %1] Otomatik tamamlama KAPALI.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1608"/>
+        <location filename="../../src/mainwindow.cpp" line="2176" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
-        <translation type="unfinished">Tüm Atarı disk imajları (*.atr *.xfd *.pro);;SIO2PC ATR imajlarıXFormer XFD imajları (*.xfd);;Pro imajları (*.pro);;Tüm dosyalar (*)&quot;</translation>
+        <translation>Tüm Atari disk görüntüleri (*.atr *.xfd *.pro);;SIO2PC ATR görüntüleri (*.atr);;XFormer XFD görüntüleri (*.xfd);;Pro görüntüleri (*.pro);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1787"/>
-        <location filename="../../src/mainwindow.cpp" line="1823"/>
+        <location filename="../../src/mainwindow.cpp" line="2355" />
+        <location filename="../../src/mainwindow.cpp" line="2418" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>AspeQt oturumları (*.aspeqt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1951"/>
+        <location filename="../../src/mainwindow.cpp" line="2554" />
         <source>Drive %1 Happy Mode %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Mutlu Mod %2'yi çalıştır.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1953"/>
+        <location filename="../../src/mainwindow.cpp" line="2556" />
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinleştirilmiş</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1953"/>
+        <location filename="../../src/mainwindow.cpp" line="2556" />
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Engelli</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1983"/>
+        <location filename="../../src/mainwindow.cpp" line="2619" />
         <source>Mounted TNFS Stream: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlı TNFS Akışı: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1985"/>
+        <location filename="../../src/mainwindow.cpp" line="2637" />
         <source>Mount Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Montaj Hatası</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1985"/>
-        <source>Could not open TNFS stream from 13leader.net</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="1433"/>
+        <location filename="../../src/mainwindow.cpp" line="1998" />
         <source>Open a folder image</source>
         <translation>Klasör imajını aç</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="816"/>
-        <location filename="../../src/mainwindow.cpp" line="817"/>
+        <location filename="../../src/mainwindow.ui" line="505" />
+        <location filename="../../src/mainwindow.cpp" line="1244" />
+        <location filename="../../src/mainwindow.cpp" line="1245" />
         <source>Hide drives D9-DO</source>
-        <translation type="unfinished"></translation>
+        <translation>D9-DO sürücülerini gizle</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="821"/>
-        <location filename="../../src/mainwindow.cpp" line="822"/>
+        <location filename="../../src/mainwindow.cpp" line="1249" />
+        <location filename="../../src/mainwindow.cpp" line="1250" />
         <source>Show drives D9-DO</source>
-        <translation type="unfinished"></translation>
+        <translation>D9-DO sürücülerini göster</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1482"/>
+        <location filename="../../src/mainwindow.cpp" line="1360" />
+        <location filename="../../src/mainwindow.cpp" line="2593" />
+        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <source>Loading...</source>
+        <translation>Yükleniyor...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1360" />
+        <location filename="../../src/mainwindow.cpp" line="2593" />
+        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <source>Downloading from TNFS...</source>
+        <translation>TNFS'den indiriliyor...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1378" />
+        <location filename="../../src/mainwindow.cpp" line="1381" />
+        <source>Executable (Local)</source>
+        <translation>Yürütülebilir (Yerel)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1735" />
+        <source>Slot %1 download aborted by user.</source>
+        <translation>%1 yuvasının indirilmesi kullanıcı tarafından durduruldu.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1965" />
+        <source>Open a disk or executable image</source>
+        <translation>Bir diski veya yürütülebilir görüntüyü açın</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1967" />
+        <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
+        <translation>Desteklenen Tüm Görüntüler (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Yürütülebilir Dosyaları (*.xex *.com);;SIO2PC ATR görüntüleri (*.atr);;XFormer XFD görüntüleri (*.xfd);;ATX görüntüleri (*.atx);;Pro görüntüleri (*.pro);;Tüm dosyalar (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2045" />
         <source>Image file unsaved</source>
         <translation>Kaydedilmemiş disk imajı </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1482"/>
-        <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
-        <translation>&apos;%1&apos; değişikliklerini kaydetmek istermisiniz?</translation>
+        <location filename="../../src/mainwindow.cpp" line="2045" />
+        <source>'%1' has unsaved changes, do you want to save it?</source>
+        <translation>'%1' değişikliklerini kaydetmek istermisiniz?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="984"/>
-        <location filename="../../src/mainwindow.cpp" line="1528"/>
-        <location filename="../../src/mainwindow.cpp" line="1580"/>
-        <location filename="../../src/mainwindow.cpp" line="1625"/>
+        <location filename="../../src/mainwindow.cpp" line="1460" />
+        <location filename="../../src/mainwindow.cpp" line="2096" />
+        <location filename="../../src/mainwindow.cpp" line="2148" />
+        <location filename="../../src/mainwindow.cpp" line="2193" />
         <source>Save failed</source>
         <translation>Kayıt başarısız</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="197"/>
-        <location filename="../../src/mainwindow.cpp" line="207"/>
+        <location filename="../../src/mainwindow.cpp" line="231" />
+        <location filename="../../src/mainwindow.cpp" line="241" />
         <source>Session file error</source>
         <translation>Oturum dosya hatası</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="198"/>
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration.</source>
-        <translation>İstenilen oturum dosyası belirtilen klasörde bulunamadı, veya klasör ve dosyaya ulaşım için kullanılan dizin hatalı. AspeQt varsayılan oturum ortamında açılacak.</translation>
+        <translation type="vanished">İstenilen oturum dosyası belirtilen klasörde bulunamadı, veya klasör ve dosyaya ulaşım için kullanılan dizin hatalı. AspeQt varsayılan oturum ortamında açılacak.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="208"/>
-        <source>Requested session file not found in the application&apos;s current directory path
+        <source>Requested session file not found in the application's current directory path
  (No path was specified). AspeQt will continue with default session configuration.</source>
-        <translation>İstenilen oturum dosyası yazılım klasöründe bulunamadı (başka dizin belirtilmemis). AspeQt varsayılan oturum ortamında açılacak.</translation>
+        <translation type="vanished">İstenilen oturum dosyası yazılım klasöründe bulunamadı (başka dizin belirtilmemis). AspeQt varsayılan oturum ortamında açılacak.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="221"/>
-        <location filename="../../src/mainwindow.cpp" line="1806"/>
+        <location filename="../../src/mainwindow.cpp" line="254" />
+        <location filename="../../src/mainwindow.cpp" line="2386" />
         <source> -- Session: </source>
         <translation> -- Oturum: </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="261"/>
         <source>Connected to the network via: </source>
-        <translation>Ağ bağlantısı kuruldu: </translation>
+        <translation type="vanished">Ağ bağlantısı kuruldu: </translation>
     </message>
     <message>
         <source>Network connection cannot be opened</source>
@@ -2030,37 +2900,318 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="obsolete">Ağ bağlantı adaptörü bulunamadı!</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="985"/>
-        <location filename="../../src/mainwindow.cpp" line="1528"/>
-        <location filename="../../src/mainwindow.cpp" line="1580"/>
-        <location filename="../../src/mainwindow.cpp" line="1625"/>
-        <source>&apos;%1&apos; cannot be saved, do you want to save the image with another name?</source>
-        <translation>&apos;%1&apos; kaydedilemiyor, imajı başka bir isimle kaydetmek istermisiniz?</translation>
+        <location filename="../../src/mainwindow.cpp" line="1461" />
+        <location filename="../../src/mainwindow.cpp" line="2096" />
+        <location filename="../../src/mainwindow.cpp" line="2148" />
+        <location filename="../../src/mainwindow.cpp" line="2193" />
+        <source>'%1' cannot be saved, do you want to save the image with another name?</source>
+        <translation>'%1' kaydedilemiyor, imajı başka bir isimle kaydetmek istermisiniz?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1413"/>
         <source>All Atari disk images (*.atr *.xfd *.atx *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
-        <translation type="unfinished">Bütün Atari disk imajları (*.atr *.xfd *.atx *.pro);;SIO2PC ATR imajları (*.atr);;XFormer XFD ımajları (*.xfd);;ATX imajları (*.atx);;Pro imajları (*.pro);;Bütün dosyalar (*)</translation>
+        <translation type="obsolete">Bütün Atari disk imajları (*.atr *.xfd *.atx *.pro);;SIO2PC ATR imajları (*.atr);;XFormer XFD ımajları (*.xfd);;ATX imajları (*.atx);;Pro imajları (*.pro);;Bütün dosyalar (*)</translation>
     </message>
     <message>
         <source>Show drives D5-DO</source>
         <translation type="vanished">D5-DO disk sürücülerini göster</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="871"/>
-        <location filename="../../src/mainwindow.cpp" line="872"/>
+        <location filename="../../src/mainwindow.cpp" line="1300" />
+        <location filename="../../src/mainwindow.cpp" line="1301" />
         <source>Start printer emulation</source>
         <translation>Yazıcı emülasyonunu başlat</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="857"/>
+        <location filename="../../src/mainwindow.cpp" line="1285" />
         <source>Printer emulation stopped.</source>
         <translation>Yazıcı emülasyonu durdu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="859"/>
+        <location filename="../../src/mainwindow.cpp" line="289" />
+        <source>Adjust Shade Opacity</source>
+        <translation>Gölge Opaklığını Ayarlayın</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="297" />
+        <source>RX: Data Receiving from Internet</source>
+        <translation>RX: İnternetten Veri Alma</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="303" />
+        <source>TX: Data Sending from Atari</source>
+        <translation>Teksas: Atari'den Veri Gönderme</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="334" />
+        <source>Hangup (NO CARRIER)</source>
+        <translation>Kapatma (TAŞIYICI YOK)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="346" />
+        <location filename="../../src/mainwindow.cpp" line="2739" />
+        <source>Send Auto-User (ESC-U)</source>
+        <translation>Otomatik Kullanıcıyı Gönder (ESC-U)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="357" />
+        <location filename="../../src/mainwindow.cpp" line="2740" />
+        <source>Send Auto-Pass (ESC-P)</source>
+        <translation>Otomatik Geçiş Gönder (ESC-P)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="370" />
+        <source>Toggle SIO Hex Dump Trace</source>
+        <translation>SIO Hex Döküm İzlemeyi Değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="376" />
+        <source>Toggle 6502 Disassembler</source>
+        <translation>6502 Ayırıcıyı Değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="382" />
+        <source>Toggle SIO Packet Sniffer</source>
+        <translation>SIO Paket Dinleyiciyi Değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="393" />
+        <source>Main Tools</source>
+        <translation>Ana Araçlar</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="406" />
+        <source>Clear log messages</source>
+        <translation>Günlük mesajlarını temizle</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="413" />
+        <source>Show Log Window</source>
+        <translation>Günlük Penceresini Göster</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1287" />
         <source>Printer emulation started.</source>
         <translation>Yazıcı emülasyonu başladı</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2637" />
+        <source>Could not open TNFS stream from %1</source>
+        <translation>%1 kaynağından TNFS akışı açılamadı</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2657" />
+        <source>Downloading: %1</source>
+        <translation>İndiriliyor: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2659" />
+        <source>Downloading...</source>
+        <translation>İndiriliyor...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2734" />
+        <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
+        <translation>Telefon rehberi devre dışı. Seçenekler -&gt; Modem Köprüsü'nde XML yolunu ayarlayın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2735" />
+        <source>Macro User disabled. Set Phonebook XML path in Options.</source>
+        <translation>Makro Kullanıcısı devre dışı bırakıldı. Telefon Rehberi XML yolunu Seçenekler'de ayarlayın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2736" />
+        <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
+        <translation>Makro Geçiş devre dışı bırakıldı. Telefon Rehberi XML yolunu Seçenekler'de ayarlayın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <source>Error</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <source>Could not extract manual to: </source>
+        <translation>Kılavuz şuraya çıkarılamadı:</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3098" />
+        <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
+        <translation>[Web Kullanıcı Arayüzü] Uyarı: %1 yuvasındaki diskte kaydedilmemiş değişiklikler zorunlu montaj nedeniyle silindi.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3117" />
+        <source>[Web UI] Mounted Executable to slot %1: %2</source>
+        <translation>[Web Kullanıcı Arayüzü] %1: %2 yuvasına Yürütülebilir Dosya Monte Edildi</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3119" />
+        <source>[Web UI] Executable ready. Please cold start the Atari.</source>
+        <translation>[Web kullanıcı arayüzü] Yürütülebilir hazır. Lütfen Atari'yi soğuk başlatın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3123" />
+        <source>[Web UI] Failed to parse Executable: %1</source>
+        <translation>[Web Kullanıcı Arayüzü] Yürütülebilir dosya ayrıştırılamadı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3143" />
+        <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
+        <translation>[Web Kullanıcı Arayüzü] Uyarı: %1 yuvasındaki diskte kaydedilmemiş değişiklikler, zorla çıkarma nedeniyle silindi.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3207" />
+        <source>[Web UI] Dialing BBS: %1 (%2)</source>
+        <translation>[Web Kullanıcı Arayüzü] BBS'yi Çevirme: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3258" />
+        <source>[Web UI] Mounted TNFS Stream: %1</source>
+        <translation>[Web Kullanıcı Arayüzü] Takılı TNFS Akışı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3268" />
+        <source>[Web UI] Failed to mount TNFS Stream: %1</source>
+        <translation>[Web Kullanıcı Arayüzü] TNFS Akışı bağlanamadı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3269" />
+        <source>Download failed or aborted: %1</source>
+        <translation>İndirme başarısız oldu veya iptal edildi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3277" />
+        <source>[Web UI] Write Protect for slot %1 set to %2</source>
+        <translation>[Web Kullanıcı Arayüzü] %1 yuvası için Yazma Koruması %2 olarak ayarlandı</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3297" />
+        <source>Web UI WebSocket Server started on port %1</source>
+        <translation>Web UI WebSocket Sunucusu %1 bağlantı noktasında başlatıldı</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3299" />
+        <source>Failed to start Web UI WebSocket Server.</source>
+        <translation>Web UI WebSocket Sunucusu başlatılamadı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3328" />
+        <source>HTTP Dashboard available at http://localhost:%1</source>
+        <translation>http://localhost:%1 adresinde bulunan HTTP Kontrol Paneli</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3330" />
+        <source>Failed to start HTTP Server.</source>
+        <translation>HTTP Sunucusu başlatılamadı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3358" />
+        <source>Web Dashboard and WebSocket servers completely shut down.</source>
+        <translation>Web Dashboard ve WebSocket sunucuları tamamen kapandı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3368" />
+        <source>[Web UI] Failed to load cassette image: %1</source>
+        <translation>[Web kullanıcı arayüzü] Kaset görüntüsü yüklenemedi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3378" />
+        <source>[Web UI] Cassette Mounted: %1</source>
+        <translation>[Web Kullanıcı Arayüzü] Kaset Takılı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3391" />
+        <source>[Web UI] Cassette is already playing.</source>
+        <translation>[Web kullanıcı arayüzü] Kaset zaten oynatılıyor.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3395" />
+        <source>[Web UI] Starting Cassette Playback.</source>
+        <translation>[Web Kullanıcı Arayüzü] Kaset Oynatmayı Başlatma.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3410" />
+        <source>[Web UI] Rewinding Cassette...</source>
+        <translation>[Web Kullanıcı Arayüzü] Kaset Geri Sarılıyor...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3434" />
+        <source>[Web UI] Cassette Ejected.</source>
+        <translation>[Web Kullanıcı Arayüzü] Kaset Çıkarıldı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3450" />
+        <source>[Web UI] Cassette Playback Finished.</source>
+        <translation>[Web Kullanıcı Arayüzü] Kaset Oynatma Bitti.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3471" />
+        <source>Failed to initialize blank disk.</source>
+        <translation>Boş disk başlatılamadı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3489" />
+        <source>Failed to format blank disk.</source>
+        <translation>Boş disk biçimlendirilemedi.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3508" />
+        <source>Failed to save blank disk to host.</source>
+        <translation>Boş disk ana bilgisayara kaydedilemedi.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3516" />
+        <source>Blank disk created: %1</source>
+        <translation>Boş disk oluşturuldu: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3517" />
+        <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
+        <translation>[Web kullanıcı arayüzü] Boş disk oluşturuldu ve takıldı: %1, %2 yuvasında</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3532" />
+        <source>Empty</source>
+        <translation>Boş</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3534" />
+        <source>No file mounted.</source>
+        <translation>Hiçbir dosya bağlanmadı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3538" />
+        <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Yuva %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Dosya adı:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Biçim / Tür:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Mutlak Yol:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3549" />
+        <source>Drive Details</source>
+        <translation>Sürücü Ayrıntıları</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3574" />
+        <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
+        <translation>[Web Kullanıcı Arayüzü] Dosya doğrudan %1: %2 yuvasındaki RAM'e bağlandı</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3577" />
+        <source>Mounted to RAM: %1</source>
+        <translation>RAM'a monte edildi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3581" />
+        <source>[Web UI] Failed to parse RAM image: %1</source>
+        <translation>[Web Kullanıcı Arayüzü] RAM görüntüsü ayrıştırılamadı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3584" />
+        <source>Failed to parse: %1</source>
+        <translation>Ayrıştırılamadı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3595" />
+        <source>[Injector] Virtual Packet Step Triggered: %1 bytes</source>
+        <translation>[Enjektör] Sanal Paket Adımı Tetiklendi: %1 bayt</translation>
     </message>
     <message>
         <source>[Disk 1] Auto-commit ON.</source>
@@ -2179,22 +3330,22 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="vanished">[Disk 15] Otomatik kayıt durduruldu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1606"/>
+        <location filename="../../src/mainwindow.cpp" line="2174" />
         <source>Save image as</source>
         <translation>İmajı kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1649"/>
+        <location filename="../../src/mainwindow.cpp" line="2217" />
         <source>Revert to last saved</source>
         <translation>Son kaydedilmiş şekle dön</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1650"/>
-        <source>Do you really want to revert &apos;%1&apos; to its last saved state? You will lose the changes that has been made.</source>
-        <translation>&apos;%1&apos; son kaydedildiği şekle dönüştürülecek, son kayıtdan beri yapılmış değişiklikler kaybolacak, eminmisiniz?.</translation>
+        <location filename="../../src/mainwindow.cpp" line="2218" />
+        <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
+        <translation>'%1' son kaydedildiği şekle dönüştürülecek, son kayıtdan beri yapılmış değişiklikler kaybolacak, eminmisiniz?.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1785"/>
+        <location filename="../../src/mainwindow.cpp" line="2353" />
         <source>Open session</source>
         <translation>Oturum aç</translation>
     </message>
@@ -2203,27 +3354,27 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="vanished">AspeQt oturumları (*.respeqt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1821"/>
+        <location filename="../../src/mainwindow.cpp" line="2416" />
         <source>Save session as</source>
         <translation>Oturumu kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1844"/>
+        <location filename="../../src/mainwindow.cpp" line="2447" />
         <source>Open executable</source>
         <translation>Çalıştırılabilir dosya aç</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1846"/>
+        <location filename="../../src/mainwindow.cpp" line="2449" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Atari dosyaları (*.xex *.com *.exe);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1878"/>
+        <location filename="../../src/mainwindow.cpp" line="2481" />
         <source>Open a cassette image</source>
         <translation>Kaset imajı aç</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1880"/>
+        <location filename="../../src/mainwindow.cpp" line="2483" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Kaset imajları (*.cas);;Tüm dosyalar (*)</translation>
     </message>
@@ -2231,677 +3382,2544 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
 <context>
     <name>MyModel</name>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="226" />
+        <location filename="../../src/diskeditdialog.cpp" line="396" />
+        <source>Error</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="226" />
+        <source>Could not delete files. (Is this file system supported?)</source>
+        <translation>Dosyalar silinemedi. (Bu dosya sistemi destekleniyor mu?)</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="246" />
         <source>No</source>
-        <translation type="vanished">Hayır</translation>
+        <translation>Hayır</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="249" />
         <source>Name</source>
-        <translation type="vanished">İsim</translation>
+        <translation>İsim</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="252" />
         <source>Extension</source>
-        <translation type="vanished">Uzantı</translation>
+        <translation>Uzantı</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="255" />
         <source>Size</source>
-        <translation type="vanished">Boyut</translation>
+        <translation>Boyut</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="258" />
         <source>Time</source>
-        <translation type="vanished">Zaman</translation>
+        <translation>Zaman</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="261" />
         <source>Notes</source>
-        <translation type="vanished">Notlar</translation>
+        <translation>Notlar</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="396" />
+        <source>Could not insert files.
+
+Possible causes:
+- File system not supported (e.g. SpartaDOS)
+- Disk is full
+- File name invalid</source>
+        <translation>Dosyalar eklenemedi.
+
+Olası nedenler:
+- Dosya sistemi desteklenmiyor (örn. SpartaDOS)
+- Disk dolu
+- Dosya adı geçersiz</translation>
     </message>
 </context>
 <context>
     <name>OptionsDialog</name>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="23" />
         <source>Options</source>
-        <translation type="vanished">Seçenekler</translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="51" />
+        <source>1</source>
+        <translation>1</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="56" />
         <source>Serial I/O backends</source>
-        <translation type="vanished">SIO (Seri Girdi/Çıktı)</translation>
+        <translation>SIO (Seri Girdi/Çıktı)</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="63" />
         <source>Standard serial port</source>
-        <translation type="vanished">Standart seri bağlantı</translation>
+        <translation>Standart seri bağlantı</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="71" />
+        <source>AtariSIO</source>
+        <translation>AtariSIO</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="80" />
+        <location filename="../../src/optionsdialog.ui" line="529" />
         <source>Emulation</source>
-        <translation type="vanished">Emülasyon</translation>
+        <translation>Emülasyon</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="85" />
+        <source>Hayes Modem Emulator</source>
+        <translation>Hayes Modem Emülatörü</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="93" />
+        <location filename="../../src/optionsdialog.ui" line="991" />
         <source>User interface</source>
-        <translation type="vanished">Kullanıcı arayüzü</translation>
+        <translation>Kullanıcı arayüzü</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="98" />
+        <source>Web Interface</source>
+        <translation>Web Arayüzü</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="140" />
         <source>Standard serial port backend options</source>
-        <translation type="vanished">Standart seri bağlantı seçenekleri</translation>
+        <translation>Standart seri bağlantı seçenekleri</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="149" />
+        <location filename="../../src/optionsdialog.ui" line="429" />
         <source>Use this backend</source>
-        <translation type="vanished">Kullan</translation>
+        <translation>Kullan</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="162" />
+        <source>Direct Hardware UART (RasPi)</source>
+        <translation>Doğrudan Donanım UART (RasPi)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="175" />
         <source>Port name:</source>
-        <translation type="vanished">Bağlantı Noktası:</translation>
+        <translation>Bağlantı Noktası:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="191" />
+        <location filename="../../src/optionsdialog.ui" line="462" />
         <source>Handshake method:</source>
-        <translation type="vanished">Senkronizasyon Yöntemi:</translation>
+        <translation>Senkronizasyon Yöntemi:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="199" />
+        <location filename="../../src/optionsdialog.ui" line="470" />
+        <source>RI</source>
+        <translation>UR</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="204" />
+        <location filename="../../src/optionsdialog.ui" line="475" />
+        <source>DSR</source>
+        <translation>DSR</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="209" />
+        <location filename="../../src/optionsdialog.ui" line="480" />
+        <source>CTS</source>
+        <translation>CTS</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="214" />
+        <source>NONE</source>
+        <translation>HİÇBİRİ</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="219" />
+        <source>SOFTWARE (SIO2BT)</source>
+        <translation>YAZILIM (SIO2BT)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="236" />
+        <source>Write delay [ms]:</source>
+        <translation>Yazma gecikmesi [ms]:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="250" />
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="255" />
+        <source>10</source>
+        <translation>10</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="260" />
+        <source>20</source>
+        <translation>20</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="265" />
+        <source>30</source>
+        <translation>30</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="270" />
+        <source>40</source>
+        <translation>40</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="275" />
+        <source>50</source>
+        <translation>50</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="280" />
+        <source>60</source>
+        <translation>60</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="294" />
         <source>High speed mode baud rate:</source>
-        <translation type="vanished">Bağlantı  hızı (bps):</translation>
+        <translation>Bağlantı  hızı (bps):</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="305" />
+        <source>19200 (1x)</source>
+        <translation>19200 (1x)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="310" />
+        <source>38400 (2x)</source>
+        <translation>38400 (2x)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="315" />
+        <source>57600 (3x)</source>
+        <translation>57600 (3x)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="323" />
         <source>Use non-standard speeds</source>
-        <translation type="vanished">Standart olmayan hız kullan</translation>
+        <translation>Standart olmayan hız kullan</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="339" />
         <source>High speed mode POKEY divisor:</source>
-        <translation type="vanished">POKEY böleni:</translation>
+        <translation>POKEY böleni:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="359" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Complete/Error response delay (μs)&lt;br&gt;See manual for more information&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Tamamlandı/Hata yanıtı gecikmesi (μs)&lt;br&gt;Daha fazla bilgi için kılavuza bakın&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="366" />
+        <source>μs</source>
+        <translation>μs</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="420" />
         <source>AtariSIO backend options</source>
-        <translation type="vanished">AtarıSIO seçenekleri</translation>
+        <translation>AtarıSIO seçenekleri</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="442" />
         <source>Device name:</source>
-        <translation type="vanished">Cihaz adı:</translation>
+        <translation>Cihaz adı:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="449" />
+        <source>/dev/atarisio0</source>
+        <translation>/dev/atarisio0</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="595" />
         <source>Use high speed executable loader</source>
-        <translation type="vanished">Yüksek hızlı yükleyici kullan</translation>
+        <translation>Yüksek hızlı yükleyici kullan</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="605" />
+        <source>Enable this for text-based web services.
+Disable for binary data.</source>
+        <translation>Metin tabanlı web hizmetleri için bunu etkinleştirin.
+İkili veriler için devre dışı bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="609" />
+        <source>Convert Atari EOL (155) to LF (10) on Network Write</source>
+        <translation>Ağ Yazmada Atari EOL'yi (155) LF'ye (10) dönüştürün</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="632" />
+        <source>Enable this to read Unix text files properly on Atari.
+Disable for binary files.</source>
+        <translation>Atari'de Unix metin dosyalarını düzgün okumak için bunu etkinleştirin.
+İkili dosyalar için devre dışı bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="636" />
+        <source>Convert LF (10) to Atari EOL (155) on Network Read</source>
+        <translation>Ağ Okumasında LF'yi (10) Atari EOL'ye (155) dönüştürün</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="646" />
+        <source>CAPITAL letters in file names</source>
+        <translation>Dosya adlarındaki BÜYÜK harfler</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="653" />
+        <source>Restore last TNFS location on mount</source>
+        <translation>Bağlama sırasında son TNFS konumunu geri yükle</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="685" />
+        <source>Hayes Modem Emulator (Rs232 to TCP Bridge)</source>
+        <translation>Hayes Modem Emülatörü (Rs232'den TCP Köprüsüne)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="691" />
+        <source>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</source>
+        <translation>İkincil bir Seri Bağlantı Noktasını İnternet'e bağlar. Atari 850 veya R-Verter gerektirir.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="694" />
+        <source>Enable Modem Bridge (RS232 to TCP)</source>
+        <translation>Modem Köprüsünü Etkinleştir (RS232'den TCP'ye)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="701" />
+        <source>Bridges a secondary Serial Port to the Internet.
+Requires Atari 850 or R-Verter.</source>
+        <translation>İkincil bir Seri Bağlantı Noktasını İnternet'e bağlar.
+Atari 850 veya R-Verter gerektirir.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="705" />
+        <source>Enable 850 Device  (R: to TCP)</source>
+        <translation>850 Cihazını Etkinleştir (R: TCP'ye)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="715" />
+        <location filename="../../src/optionsdialog.ui" line="752" />
+        <source>Enable if using a standard FTDI USB adapter.
+Leave unchecked for direct Raspberry Pi GPIO.</source>
+        <translation>Standart bir FTDI USB adaptörü kullanılıyorsa etkinleştirin.
+Doğrudan Raspberry Pi GPIO için işaretlenmemiş bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="719" />
+        <source>Invert CTS Logic (Standard USB Adapters)</source>
+        <translation>CTS Mantığını Ters Çevir (Standart USB Adaptörleri)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="729" />
+        <source>FTDI/USB Latency:</source>
+        <translation>FTDI/USB Gecikmesi:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="736" />
+        <source>ms</source>
+        <translation>Bayan</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="756" />
+        <source>Enable BBS Listener (Auto-Answer):</source>
+        <translation>BBS Dinleyiciyi Etkinleştir (Otomatik Yanıt):</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="766" />
+        <source>BBS Listener TCP Port</source>
+        <translation>BBS Dinleyici TCP Bağlantı Noktası</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="790" />
+        <source>Bridge Serial Port:</source>
+        <translation>Köprü Seri Bağlantı Noktası:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="800" />
+        <source>Must be different from the SIO port.</source>
+        <translation>SIO bağlantı noktasından farklı olmalıdır.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="807" />
+        <source>Baud Rate:</source>
+        <translation>Baud Hızı:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="818" />
+        <source>300</source>
+        <translation>300</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="823" />
+        <source>600</source>
+        <translation>600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="828" />
+        <source>1200</source>
+        <translation>1200</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="833" />
+        <source>2400</source>
+        <translation>2400</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="838" />
+        <source>4800</source>
+        <translation>4800</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="843" />
+        <source>9600</source>
+        <translation>9600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="848" />
+        <source>19200</source>
+        <translation>19200</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="853" />
+        <source>38400</source>
+        <translation>38400</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="858" />
+        <source>57600</source>
+        <translation>57600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="869" />
+        <source>Highly recommended for Atari 850 Interface.</source>
+        <translation>Atari 850 Arayüzü için şiddetle tavsiye edilir.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="872" />
+        <source>Enable Hardware Flow Control (RTS/CTS)</source>
+        <translation>Donanım Akış Kontrolünü Etkinleştir (RTS/CTS)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="895" />
+        <source>Enable SSH Support (Port 22)</source>
+        <translation>SSH Desteğini Etkinleştir (Bağlantı Noktası 22)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="905" />
+        <source>Local Echo (Half Duplex)</source>
+        <translation>Yerel Yankı (Yarım Çift Yönlü)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="912" />
+        <source>Phonebook XML Path:</source>
+        <translation>Telefon Rehberi XML Yolu:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="927" />
+        <source>Click ... to select dialdirectory.xml</source>
+        <translation>Dialdirectory.xml dosyasını seçmek için ... öğesine tıklayın</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="937" />
+        <source>...</source>
+        <translation />
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="947" />
+        <source>New</source>
+        <translation>Yeni</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="550" />
         <source>Use custom baud rate for cassette emulation</source>
-        <translation type="vanished">Kaset emülasyonu için özel hız kullan (bps) </translation>
+        <translation>Kaset emülasyonu için özel hız kullan (bps) </translation>
     </message>
     <message>
         <source> Folder Images:</source>
         <translation type="vanished">Klasör İmajı:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="557" />
         <source>Filter out underscore character from file names</source>
-        <translation type="vanished">Dosya isimlerinden alt çizgi karakterini filtrele</translation>
+        <translation>Dosya isimlerinden alt çizgi karakterini filtrele</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="572" />
         <source>        (Required for AtariDOS compatibility)</source>
-        <translation type="vanished">(AtariDOS uyumluluğu için gerekli)</translation>
+        <translation>(AtariDOS uyumluluğu için gerekli)</translation>
     </message>
     <message>
         <source>User inteface</source>
         <translation type="vanished">Kullanıcı arayüzü</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="997" />
         <source>Language:</source>
-        <translation type="vanished">Dil:</translation>
+        <translation>Dil:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1007" />
         <source>Minimize to system tray</source>
-        <translation type="vanished">Sistem tablasına küçült</translation>
+        <translation>Sistem tablasına küçült</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1014" />
         <source>Save window positions and sizes</source>
-        <translation type="vanished">Pencere pozisyonlarını ve boyutlarını kaydet</translation>
+        <translation>Pencere pozisyonlarını ve boyutlarını kaydet</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1053" />
+        <source>Save D9-DO drive visibility status</source>
+        <translation>D9-DO sürücüsünün görünürlük durumunu kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1063" />
+        <source>Enable Shade in Mini Mode by default</source>
+        <translation>Varsayılan olarak Mini Modda Gölgeyi Etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1076" />
+        <source>Use larger font in drive slot descriptions</source>
+        <translation>Sürücü yuvası açıklamalarında daha büyük yazı tipi kullanın</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1108" />
+        <source>Web Dashboard Options</source>
+        <translation>Web Kontrol Paneli Seçenekleri</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1114" />
+        <source>Enable the HTTP and WebSocket servers for the remote web dashboard.</source>
+        <translation>Uzak web kontrol paneli için HTTP ve WebSocket sunucularını etkinleştirin.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1117" />
+        <source>Enable Web Interface</source>
+        <translation>Web Arayüzünü Etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1126" />
+        <source>HTTP Dashboard Port:</source>
+        <translation>HTTP Kontrol Paneli Bağlantı Noktası:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1146" />
+        <source>WebSocket Bridge Port:</source>
+        <translation>WebSocket Köprü Bağlantı Noktası:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1194" />
         <source>Save/Commit or Cancel/Ignore changes made to the settings</source>
-        <translation type="vanished">Ayarlara yapılan değişiklikleri kaydet veya gözardı et</translation>
+        <translation>Ayarlara yapılan değişiklikleri kaydet veya gözardı et</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.cpp" line="59" />
+        <location filename="../../src/optionsdialog.cpp" line="74" />
+        <source>Custom</source>
+        <translation>Gelenek</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="166" />
         <source>Automatic</source>
-        <translation type="vanished">Otomatık</translation>
+        <translation>Otomatık</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.cpp" line="169" />
+        <location filename="../../src/optionsdialog.cpp" line="178" />
         <source>English</source>
-        <translation type="vanished">Türkçe</translation>
+        <translation>Türkçe</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="381" />
+        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <source>Port Conflict</source>
+        <translation>Liman Çatışması</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="382" />
+        <source>You cannot use the same Serial Port (%1) for both
+SIO Emulation and the Modem Bridge.
+
+Please select a different port for the Modem.</source>
+        <translation>Her ikisi için de aynı Seri Bağlantı Noktasını (%1) kullanamazsınız
+SIO Emülasyonu ve Modem Köprüsü.
+
+Lütfen Modem için farklı bir bağlantı noktası seçin.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <source>The HTTP Dashboard Port and WebSocket Bridge Port cannot be the same.
+
+Please assign different ports.</source>
+        <translation>HTTP Kontrol Paneli Bağlantı Noktası ve WebSocket Köprü Bağlantı Noktası aynı olamaz.
+
+Lütfen farklı bağlantı noktaları atayın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="456" />
+        <source>Select Dial Directory</source>
+        <translation>Arama Rehberini Seçin</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="456" />
+        <location filename="../../src/optionsdialog.cpp" line="465" />
+        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <source>XML Files (*.xml);;All Files (*)</source>
+        <translation>XML Dosyaları (*.xml);;Tüm Dosyalar (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="465" />
+        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <source>Create New Dial Directory</source>
+        <translation>Yeni Arama Dizini Oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <source>Error</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <source>Could not create the phonebook file.</source>
+        <translation>Telefon rehberi dosyası oluşturulamadı.</translation>
+    </message>
+</context>
+<context>
+    <name>PCLINK</name>
+    <message>
+        <location filename="../../src/pclink.cpp" line="181" />
+        <source>PCLINK Command=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</source>
+        <translation>PCLINK Komutu=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="193" />
+        <source>[%1] P</source>
+        <translation>[%1] P</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="200" />
+        <source>[%1] R</source>
+        <translation>[%1] R</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="218" />
+        <source>[%1] Get status for [%2]</source>
+        <translation>[%1] [%2] için durumu al</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="229" />
+        <source>[%1] Speed poll</source>
+        <translation>[%1] Hız anketi</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="236" />
+        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
+        <translation>[%1] komut: $%2, aux: $%3 NAKed.</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="269" />
+        <source>PCLINK[%1] Mount %2</source>
+        <translation>PCLINK[%1] %2 Dağı</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="311" />
+        <source>PCLINK[%1] Unmount</source>
+        <translation>PCLINK[%1] Bağlantıyı Kes</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="464" />
+        <source>match: %1%2%3%4%5%6%7%8%9%10%11 with %12%13%14%15%16%17%18%19%20%21%22: </source>
+        <translation>eşleşme: %1%2%3%4%5%6%7%8%9%10%11 ile %12%13%14%15%16%17%18%19%20%21%22:</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="477" />
+        <source>no match</source>
+        <translation>eşleşme yok</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="488" />
+        <source>atr mismatch: not HIDDEN or ARCHIVED</source>
+        <translation>atr uyumsuzluğu: GİZLİ veya ARŞİVLENMİŞ değil</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="496" />
+        <source>atr mismatch: not PROTECTED</source>
+        <translation>atr uyumsuzluğu: KORUNMAMIŞ</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="505" />
+        <source>atr mismatch: not UNPROTECTED</source>
+        <translation>atr uyumsuzluğu: KORUNMAYAN değil</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="514" />
+        <source>atr mismatch: not SUBDIR</source>
+        <translation>atr uyumsuzluğu: SUBDIR değil</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="523" />
+        <source>atr mismatch: not FILE</source>
+        <translation>atr uyumsuzluğu: DOSYA değil</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="528" />
+        <source>match</source>
+        <translation>kibrit</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="593" />
+        <source>%1: got fname '%2'</source>
+        <translation>%1: '%2' fname'i aldı</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="601" />
+        <source>%1: stat '%2'</source>
+        <translation>%1: durum '%2'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="611" />
+        <source>'%1': is a symlink</source>
+        <translation>'%1': bir sembolik bağlantıdır</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="615" />
+        <source>'%1': can't be accessed</source>
+        <translation>'%1': erişilemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="616" />
+        <source>access error code %1</source>
+        <translation>erişim hatası kodu %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="713" />
+        <source>Internal error: dir_cache should be NULL!</source>
+        <translation>Dahili hata: dir_cache NULL olmalıdır!</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="844" />
+        <source>closing all files</source>
+        <translation>tüm dosyaları kapatma</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1120" />
+        <source>'P' WRONG DATA FRAME, expected size %1 got %2</source>
+        <translation>'P' YANLIŞ VERİ ÇERÇEVESİ, beklenen boyut %1, %2 aldı</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1138" />
+        <source>PARBLK retry, ignored</source>
+        <translation>PARBLK yeniden denendi, yoksayıldı</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1152" />
+        <source>%1 (fno $%02)</source>
+        <translation>%1 (fno $%02)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1166" />
+        <source>bad handle 1 %1</source>
+        <translation>kötü kullanım 1 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1173" />
+        <location filename="../../src/pclink.cpp" line="1308" />
+        <source>bad size $0000 (0)</source>
+        <translation>kötü boyut 0000$ (0)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1193" />
+        <source>size $%1 (%2), buffer $%3 (%4)</source>
+        <translation>boyut $%1 (%2), arabellek $%3 (%4)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1204" />
+        <location filename="../../src/pclink.cpp" line="1324" />
+        <location filename="../../src/pclink.cpp" line="1481" />
+        <location filename="../../src/pclink.cpp" line="1641" />
+        <source>serial communication error, abort</source>
+        <translation>seri iletişim hatası, iptal</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1210" />
+        <location filename="../../src/pclink.cpp" line="1330" />
+        <location filename="../../src/pclink.cpp" line="1498" />
+        <location filename="../../src/pclink.cpp" line="1576" />
+        <source>handle %1</source>
+        <translation>%1'i işle</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1227" />
+        <source>FREAD: cannot read %1 bytes from dir</source>
+        <translation>FREAD: dizinden %1 bayt okunamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1244" />
+        <source>FREAD: cannot seek to $%1 (%2)</source>
+        <translation>FREAD: $%1 (%2) aranamaz</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1253" />
+        <source>FREAD: cannot read %1 bytes from file</source>
+        <translation>FREAD: dosyadan %1 bayt okunamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1281" />
+        <source>FREAD: send $%1 (%2), status $%3</source>
+        <translation>FREAD: $%1 (%2) gönder, durum $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1301" />
+        <source>bad handle 2 %1</source>
+        <translation>kötü tutuş 2 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1316" />
+        <source>size $%1 (%2)</source>
+        <translation>boyut $%1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1336" />
+        <source>FWRITE: cannot seek to $%1 (%2)</source>
+        <translation>FWRITE: $%1 (%2) aranamaz</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1349" />
+        <source>FWRITE: block CRC mismatch</source>
+        <translation>FWRITE: CRC uyumsuzluğunu engelle</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1375" />
+        <source>FWRITE: cannot write %1 bytes to file</source>
+        <translation>FWRITE: dosyaya %1 bayt yazılamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1386" />
+        <source>FWRITE: received $%1 (%2), status $%3</source>
+        <translation>FWRITE: alındı ​​$%1 (%2), durum $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1398" />
+        <source>bad handle 3 %1</source>
+        <translation>kötü tutuş 3 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1406" />
+        <location filename="../../src/pclink.cpp" line="1565" />
+        <location filename="../../src/pclink.cpp" line="1603" />
+        <location filename="../../src/pclink.cpp" line="1946" />
+        <location filename="../../src/pclink.cpp" line="2055" />
+        <location filename="../../src/pclink.cpp" line="2134" />
+        <location filename="../../src/pclink.cpp" line="2224" />
+        <location filename="../../src/pclink.cpp" line="2298" />
+        <location filename="../../src/pclink.cpp" line="2382" />
+        <location filename="../../src/pclink.cpp" line="2579" />
+        <source>bad exec</source>
+        <translation>kötü yönetici</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1413" />
+        <source>handle %1, newpos $%2 (%3)</source>
+        <translation>tanıtıcı %1, yeni konumlar $%2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1437" />
+        <source>bad handle 4 %1</source>
+        <translation>kötü tutuş 4 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1444" />
+        <location filename="../../src/pclink.cpp" line="1474" />
+        <location filename="../../src/pclink.cpp" line="2509" />
+        <source>device $%1</source>
+        <translation>cihaz $%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1455" />
+        <source>handle %1, send $%2 (%3)</source>
+        <translation>%1'i işle, $%2'yi (%3) gönder</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1491" />
+        <source>bad handle 5 %1</source>
+        <translation>kötü tutuş 5 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1508" />
+        <source>eof_flg %1</source>
+        <translation>eof_flg %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1527" />
+        <source>FNEXT: EOF</source>
+        <translation>FSONRAKİ: EOF</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1537" />
+        <source>FNEXT: status %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation>FSONRAKİ: durum %1, gönder $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1571" />
+        <source>bad handle 6 %1</source>
+        <translation>kötü tutuş 6 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1619" />
+        <source>mode: $%1, atr1: $%2, atr2: $%3, path: '%4', name: '%5'</source>
+        <translation>mod: $%1, atr1: $%2, atr2: $%3, yol: '%4', ad: '%5'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1653" />
+        <source>unsupported fmode ($%1)</source>
+        <translation>desteklenmeyen fmode ($%1)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1662" />
+        <source>invalid path 1 '%1'</source>
+        <translation>geçersiz yol 1 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1667" />
+        <location filename="../../src/pclink.cpp" line="2068" />
+        <source>local path '%1'</source>
+        <translation>yerel yol '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1676" />
+        <source>FOPEN: too many channels open</source>
+        <translation>FOPEN: çok fazla kanal açık</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1683" />
+        <location filename="../../src/pclink.cpp" line="1779" />
+        <source>FOPEN: cannot stat '%1'</source>
+        <translation>FOPEN: '%1' belirtilemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1697" />
+        <source> ! fmode &amp; 0x10</source>
+        <translation>! fmodu ve 0x10</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1736" />
+        <source>FOPEN: file not found</source>
+        <translation>FOPEN: dosya bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1746" />
+        <source>FOPEN: creating file</source>
+        <translation>FOPEN: dosya oluşturuluyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1753" />
+        <source>FOPEN: bad filename '%1'</source>
+        <translation>FOPEN: hatalı dosya adı '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1773" />
+        <source>FOPEN: full local path '%1'</source>
+        <translation>FOPEN: tam yerel yol '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1790" />
+        <source>FOPEN: '%1' is read-only</source>
+        <translation>FOPEN: '%1' salt okunur</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1820" />
+        <source>FOPEN: cannot open '%1', %2 (%3)</source>
+        <translation>FOPEN: '%1', %2 (%3) açılamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1859" />
+        <source>FOPEN: bad handle 7 %1</source>
+        <translation>FOPEN: kötü kullanım 7 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1869" />
+        <source>FOPEN: %1 handle %2</source>
+        <translation>FOPEN: %1 tutamaç %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1882" />
+        <source>FOPEN: dir EOF?</source>
+        <translation>FOPEN: EOF'un yönü mü?</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1914" />
+        <source>FOPEN: send %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation>FOPEN: %1 gönder, $%2 gönder $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1954" />
+        <source>invalid path 2 '%1'</source>
+        <translation>geçersiz yol 2 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1963" />
+        <location filename="../../src/pclink.cpp" line="2074" />
+        <source>cannot open dir '%1'</source>
+        <translation>'%1' dizini açılamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1968" />
+        <source>local path '%1', fatr1 $%2</source>
+        <translation>yerel yol '%1', fatr1 $%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2021" />
+        <source>RENAME: renaming '%1' -&gt; '%2'</source>
+        <translation>YENİDEN ADLANDIRMA: '%1' -&gt; '%2' yeniden adlandırılıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2025" />
+        <source>RENAME: '%1' already exists</source>
+        <translation>YENİDEN ADLANDIRMA: '%1' zaten mevcut</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2032" />
+        <source>RENAME: %1</source>
+        <translation>YENİDEN ADLANDIR: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2063" />
+        <source>invalid path 3 '%1'</source>
+        <translation>geçersiz yol 3 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2107" />
+        <source>REMOVE: delete '%1'</source>
+        <translation>KALDIR: '%1'i sil</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2110" />
+        <source>REMOVE: cannot delete '%1'</source>
+        <translation>KALDIR: '%1' silinemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2140" />
+        <source>illegal fatr2 $%1</source>
+        <translation>yasa dışı yağ2 $%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2149" />
+        <source>invalid path 4 '%1'</source>
+        <translation>geçersiz yol 4 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2154" />
+        <source>local path '%1', fatr1 $%2 fatr2 $%3</source>
+        <translation>yerel yol '%1', fatr1 $%2 fatr2 $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2161" />
+        <source>CHMOD: cannot open dir '%1'</source>
+        <translation>CHMOD: '%1' dizini açılamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2193" />
+        <source>CHMOD: change atrs in '%1'</source>
+        <translation>CHMOD: '%1'deki atr'leri değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2202" />
+        <source>CHMOD: failed on '%1'</source>
+        <translation>CHMOD: '%1'de başarısız oldu</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2232" />
+        <source>invalid path 5 '%1'</source>
+        <translation>geçersiz yol 5 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2242" />
+        <location filename="../../src/pclink.cpp" line="2316" />
+        <source>bad dir name '%1'</source>
+        <translation>hatalı dizin adı '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2256" />
+        <source>making dir '%1', time %2-%3-%4 %5:%6:%7</source>
+        <translation>'%1' dizini yapılıyor, zaman %2-%3-%4 %5:%6:%7</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2261" />
+        <source>MKDIR: '%1' already exists</source>
+        <translation>MKDIR: '%1' zaten mevcut</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2272" />
+        <source>MKDIR: cannot make dir '%1'</source>
+        <translation>MKDIR: '%1' dizini oluşturulamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2306" />
+        <source>invalid path 6 '%1'</source>
+        <translation>geçersiz yol 6 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2330" />
+        <source>cannot stat '%1'</source>
+        <translation>'%1' belirtilemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2338" />
+        <source>'%1' can't be accessed</source>
+        <translation>'%1'e erişilemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2346" />
+        <source>'%1' is not a directory</source>
+        <translation>'%1' bir dizin değil</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2353" />
+        <source>dir '%1' is write-protected</source>
+        <translation>'%1' dizini yazmaya karşı korumalı</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2358" />
+        <source>delete dir '%1'</source>
+        <translation>'%1' dizinini sil</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2364" />
+        <source>RMDIR: cannot del '%1', %2 (%3)</source>
+        <translation>RMDIR: '%1', %2 (%3) silinemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2390" />
+        <source>invalid path 7 '%1'</source>
+        <translation>geçersiz yol 7 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2399" />
+        <source>cannot access '%1', %2</source>
+        <translation>'%1', %2'ye erişilemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2424" />
+        <source>new current dir '%1'</source>
+        <translation>yeni geçerli dizin '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2442" />
+        <source>device $1</source>
+        <translation>cihaz 1$</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2462" />
+        <source>send '%1'</source>
+        <translation>'%1' gönder</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2523" />
+        <source>reading '%1'</source>
+        <translation>'%1' okunuyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2558" />
+        <source>DFREE: send info (%1 bytes)</source>
+        <translation>DFREE: bilgi gönder (%1 bayt)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2587" />
+        <source>invalid name</source>
+        <translation>geçersiz ad</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2596" />
+        <source>writing '%1'</source>
+        <translation>'%1' yazılıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2616" />
+        <source>CHVOL: %1</source>
+        <translation>CHVOL: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2622" />
+        <source>fno $%1 not implemented</source>
+        <translation>fno $%1 uygulanmadı</translation>
+    </message>
+</context>
+<context>
+    <name>PhoneDirectory</name>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="18" />
+        <source>BBS Phonebook</source>
+        <translation>BBS Telefon Rehberi</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="26" />
+        <source>Search BBS Name...</source>
+        <translation>BBS Adını Ara...</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>BBS Name</source>
+        <translation>BBS'nin Adı</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Address</source>
+        <translation>Adres</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Port</source>
+        <translation>Liman</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Protocol</source>
+        <translation>Protokol</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>User ID</source>
+        <translation>Kullanıcı kimliği</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="46" />
+        <source>Edit Entry</source>
+        <translation>Girişi Düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="49" />
+        <source>Save to XML</source>
+        <translation>XML'e kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="52" />
+        <source>Dial Selected</source>
+        <translation>Seçileni Çevir</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="55" />
+        <source>Add</source>
+        <translation>Eklemek</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="58" />
+        <source>Delete</source>
+        <translation>Silmek</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="61" />
+        <source>Close</source>
+        <translation>Kapalı</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="140" />
+        <source>Saved</source>
+        <translation>Kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="140" />
+        <source>Phonebook saved successfully!</source>
+        <translation>Telefon rehberi başarıyla kaydedildi!</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="142" />
+        <source>Error</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="142" />
+        <source>Could not write to file.</source>
+        <translation>Dosyaya yazılamadı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="151" />
+        <source>Unsaved Changes</source>
+        <translation>Kaydedilmemiş Değişiklikler</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="152" />
+        <source>You have unsaved changes. Save before %1?</source>
+        <translation>Kaydedilmemiş değişiklikleriniz var. %1'den önce kaydedilsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="249" />
+        <source>Edit BBS Entry</source>
+        <translation>BBS Girişini Düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="259" />
+        <source>Telnet</source>
+        <translation>Telnet</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="260" />
+        <source>SSH (BBS)</source>
+        <translation>SSH (BBS)</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="261" />
+        <source>SSH (Auth)</source>
+        <translation>SSH (Kimlik Doğrulama)</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="289" />
+        <source>Show</source>
+        <translation>Göstermek</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="295" />
+        <source>Name:</source>
+        <translation>İsim:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="296" />
+        <source>Address:</source>
+        <translation>Adres:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="297" />
+        <source>Protocol:</source>
+        <translation>Protokol:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="298" />
+        <source>Port:</source>
+        <translation>Liman:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="299" />
+        <source>User ID:</source>
+        <translation>Kullanıcı kimliği:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="300" />
+        <source>Password:</source>
+        <translation>Şifre:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <source>Confirm</source>
+        <translation>Onaylamak</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <source>Delete this entry?</source>
+        <translation>Bu giriş silinsin mi?</translation>
+    </message>
+</context>
+<context>
+    <name>PipeNetwork</name>
+    <message>
+        <location filename="../../src/pipenetwork.cpp" line="324" />
+        <source>[W:] FTP Upload Complete.</source>
+        <translation>[W:] FTP Yüklemesi Tamamlandı.</translation>
     </message>
 </context>
 <context>
     <name>Printer</name>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="43" />
         <source>[%1] Get status.</source>
-        <translation type="vanished">[%1] Konum göster.</translation>
+        <translation>[%1] Konum göster.</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="84" />
+        <source>[%1] ignored</source>
+        <translation>[%1] göz ardı edildi</translation>
     </message>
     <message>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation type="vanished">[%1] komut: $%2, aux: $%3 tanınmadı (NAK).</translation>
     </message>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="59" />
         <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
-        <translation type="vanished">[%1] ATASCII ters video karakterleri ASCII ye çevriliyor</translation>
+        <translation>[%1] ATASCII ters video karakterleri ASCII ye çevriliyor</translation>
     </message>
     <message>
         <source>[%1] Print: data frame failed</source>
         <translation type="vanished">[%1] Print: veri bedeni başarısız oldu</translation>
     </message>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="70" />
         <source>[%1] Print (%2 chars)</source>
-        <translation type="vanished">[%1] Print (%2 karakter)</translation>
+        <translation>[%1] Print (%2 karakter)</translation>
+    </message>
+</context>
+<context>
+    <name>SectorEditDialog</name>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="6" />
+        <source>Edit Sector</source>
+        <translation>Sektörü Düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="19" />
+        <source>Inject Text...</source>
+        <translation>Metin Ekle...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="31" />
+        <source>Select a cell...</source>
+        <translation>Bir hücre seçin...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="88" />
+        <source>Invalid Data</source>
+        <translation>Geçersiz Veri</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="89" />
+        <source>Invalid hex value '%1' at row %2, col %3. Please use 00-FF.</source>
+        <translation>Satır %2, sütun %3'te geçersiz onaltılık değer '%1'. Lütfen 00-FF'yi kullanın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="101" />
+        <source>Error</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="101" />
+        <source>Failed to write sector to disk image! Is it write-protected?</source>
+        <translation>Sektör disk görüntüsüne yazılamadı! Yazmaya karşı korumalı mı?</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="138" />
+        <source>Inject ATASCII Text</source>
+        <translation>ATASCII Metnini Enjekte Et</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="139" />
+        <source>Enter text to write into the sector:</source>
+        <translation>Sektöre yazılacak metni girin:</translation>
+    </message>
+</context>
+<context>
+    <name>SectorInspectorDialog</name>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="14" />
+        <source>Sector Inspector</source>
+        <translation>Sektör Müfettişi</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="22" />
+        <source>Sector:</source>
+        <translation>Sektör:</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="32" />
+        <source>Reload</source>
+        <translation>Yeniden yükle</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="39" />
+        <source>Edit Sector...</source>
+        <translation>Sektörü Düzenle...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="67" />
+        <source>Find:</source>
+        <translation>Bulmak:</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="85" />
+        <source>Text</source>
+        <translation>Metin</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="90" />
+        <source>Hex</source>
+        <translation>Altıgen</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="98" />
+        <source>Find Next</source>
+        <translation>Sonrakini Bul</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.cpp" line="31" />
+        <source>Sector Inspector - %1</source>
+        <translation>Sektör Müfettişi - %1</translation>
     </message>
 </context>
 <context>
     <name>SimpleDiskImage</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2 açılamıyor</translation>
+        <location filename="../../src/diskimage.cpp" line="276" />
+        <location filename="../../src/diskimage.cpp" line="285" />
+        <location filename="../../src/diskimage.cpp" line="295" />
+        <location filename="../../src/diskimage.cpp" line="309" />
+        <location filename="../../src/diskimage.cpp" line="321" />
+        <location filename="../../src/diskimage.cpp" line="329" />
+        <location filename="../../src/diskimage.cpp" line="353" />
+        <location filename="../../src/diskimage.cpp" line="402" />
+        <location filename="../../src/diskimage.cpp" line="414" />
+        <location filename="../../src/diskimage.cpp" line="429" />
+        <location filename="../../src/diskimage.cpp" line="464" />
+        <location filename="../../src/diskimage.cpp" line="471" />
+        <location filename="../../src/diskimage.cpp" line="482" />
+        <location filename="../../src/diskimage.cpp" line="489" />
+        <location filename="../../src/diskimage.cpp" line="500" />
+        <location filename="../../src/diskimage.cpp" line="523" />
+        <location filename="../../src/diskimage.cpp" line="529" />
+        <location filename="../../src/diskimage.cpp" line="535" />
+        <location filename="../../src/diskimage.cpp" line="806" />
+        <source>Cannot open '%1': %2</source>
+        <translation>'%1': %2 açılamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="287" />
         <source>Cannot read the header: %1.</source>
-        <translation type="vanished">Başlık okunamıyor: %1.</translation>
+        <translation>Başlık okunamıyor: %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="295" />
         <source>Not a valid ATR file.</source>
-        <translation type="vanished">Geçerli bir ATR dosyası değil.</translation>
+        <translation>Geçerli bir ATR dosyası değil.</translation>
     </message>
     <message>
-        <source>Cannot create temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Geçici dosya &apos;%1&apos;: %2 açılamıyor</translation>
+        <location filename="../../src/diskimage.cpp" line="311" />
+        <location filename="../../src/diskimage.cpp" line="473" />
+        <source>Cannot create temporary file '%1': %2</source>
+        <translation>Geçici dosya '%1': %2 açılamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="323" />
+        <location filename="../../src/diskimage.cpp" line="484" />
         <source>Cannot read from file: %1.</source>
-        <translation type="vanished">%1 dosyası okunamıyor.</translation>
+        <translation>%1 dosyası okunamıyor.</translation>
     </message>
     <message>
-        <source>Cannot write to temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Geçici dosya &apos;%1&apos;: %2 e yazılamıyor</translation>
+        <location filename="../../src/diskimage.cpp" line="331" />
+        <location filename="../../src/diskimage.cpp" line="491" />
+        <source>Cannot write to temporary file '%1': %2</source>
+        <translation>Geçici dosya '%1': %2 e yazılamıyor</translation>
     </message>
     <message>
-        <source>Image size of &apos;%1&apos; is reported as %2 bytes in the header but it&apos;s actually %3.</source>
-        <translation type="vanished">&apos;%1&apos; dosyasının boyu ATR başlığında %2 olarak belirtilmiş ancak dosyanın gerçek boyu %3.</translation>
+        <location filename="../../src/diskimage.cpp" line="343" />
+        <source>Image size of '%1' is reported as %2 bytes in the header but it's actually %3.</source>
+        <translation>'%1' dosyasının boyu ATR başlığında %2 olarak belirtilmiş ancak dosyanın gerçek boyu %3.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="353" />
         <source>Unknown sector size (%1).</source>
-        <translation type="vanished">Tanımlanmamış sektör boyutu (%1).</translation>
+        <translation>Tanımlanmamış sektör boyutu (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="404" />
+        <location filename="../../src/diskimage.cpp" line="502" />
         <source>Invalid image size (%1).</source>
-        <translation type="vanished">Geçersiz imaj boyu (%1).</translation>
+        <translation>Geçersiz imaj boyu (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="416" />
         <source>Too many sectors in the image (%1).</source>
-        <translation type="vanished">İmaj sektör sayısı çok fazla (%1).</translation>
+        <translation>İmaj sektör sayısı çok fazla (%1).</translation>
     </message>
     <message>
-        <source>The file &apos;%1&apos; has some unrecognized fields in its header.</source>
-        <translation type="vanished">&apos;%1&apos; dosyasının başlık kısmında tanınmayan değerler var.</translation>
+        <location filename="../../src/diskimage.cpp" line="424" />
+        <source>The file '%1' has some unrecognized fields in its header.</source>
+        <translation>'%1' dosyasının başlık kısmında tanınmayan değerler var.</translation>
     </message>
     <message>
-        <source>Cannot resize temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Geçici dosya  &apos;%1&apos;: %2 boyutu değiştirilemiyor</translation>
+        <location filename="../../src/diskimage.cpp" line="431" />
+        <source>Cannot resize temporary file '%1': %2</source>
+        <translation>Geçici dosya  '%1': %2 boyutu değiştirilemiyor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="523" />
         <source>DCM images are not supported yet.</source>
-        <translation type="vanished">DCM imajları henüz desteklenmiyor.</translation>
+        <translation>DCM imajları henüz desteklenmiyor.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="529" />
         <source>SCP images are not supported yet.</source>
-        <translation type="vanished">SCP imajları henüz desteklenmiyor.</translation>
+        <translation>SCP imajları henüz desteklenmiyor.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="535" />
         <source>DI images are not supported yet.</source>
-        <translation type="vanished">DI imajları henüz desteklenmiyor.</translation>
+        <translation>DI imajları henüz desteklenmiyor.</translation>
     </message>
     <message>
-        <source>Cannot save &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos;: %2  kaydedilemiyor</translation>
+        <location filename="../../src/diskimage.cpp" line="570" />
+        <location filename="../../src/diskimage.cpp" line="579" />
+        <location filename="../../src/diskimage.cpp" line="595" />
+        <location filename="../../src/diskimage.cpp" line="609" />
+        <location filename="../../src/diskimage.cpp" line="616" />
+        <location filename="../../src/diskimage.cpp" line="659" />
+        <location filename="../../src/diskimage.cpp" line="667" />
+        <location filename="../../src/diskimage.cpp" line="680" />
+        <location filename="../../src/diskimage.cpp" line="686" />
+        <location filename="../../src/diskimage.cpp" line="706" />
+        <location filename="../../src/diskimage.cpp" line="712" />
+        <location filename="../../src/diskimage.cpp" line="718" />
+        <location filename="../../src/diskimage.cpp" line="746" />
+        <location filename="../../src/diskimage.cpp" line="775" />
+        <source>Cannot save '%1': %2</source>
+        <translation>'%1': %2  kaydedilemiyor</translation>
     </message>
     <message>
-        <source>Cannot rewind temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Geçici dosya  &apos;%1&apos;: %2 başa alınamıyor</translation>
+        <location filename="../../src/diskimage.cpp" line="597" />
+        <location filename="../../src/diskimage.cpp" line="669" />
+        <source>Cannot rewind temporary file '%1': %2</source>
+        <translation>Geçici dosya  '%1': %2 başa alınamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="611" />
+        <location filename="../../src/diskimage.cpp" line="682" />
         <source>Cannot read from temporay file %1: %2</source>
-        <translation type="vanished">Geçici dosya  &apos;%1&apos;: %2 okunamıyor</translation>
+        <translation>Geçici dosya  '%1': %2 okunamıyor</translation>
     </message>
     <message>
-        <source>Detailed geometry information will be lost when reopening &apos;%1&apos; due to ATR file format limitations.</source>
-        <translation type="vanished">ATR dosya sınırlamaları nedeniyle  &apos;%1&apos; yeniden açıldığında detay geometri bilgileri kaybolacak.</translation>
+        <location filename="../../src/diskimage.cpp" line="628" />
+        <source>Detailed geometry information will be lost when reopening '%1' due to ATR file format limitations.</source>
+        <translation>ATR dosya sınırlamaları nedeniyle  '%1' yeniden açıldığında detay geometri bilgileri kaybolacak.</translation>
     </message>
     <message>
-        <source>Detailed disk geometry information will be lost when reopening &apos;%1&apos; due to XFD file format limitations.</source>
-        <translation type="vanished">XFD dosya sınırlamaları nedeniyle  &apos;%1&apos; yeniden açıldığında detay geometri bilgileri kaybolacak.</translation>
+        <location filename="../../src/diskimage.cpp" line="648" />
+        <source>Detailed disk geometry information will be lost when reopening '%1' due to XFD file format limitations.</source>
+        <translation>XFD dosya sınırlamaları nedeniyle  '%1' yeniden açıldığında detay geometri bilgileri kaybolacak.</translation>
     </message>
     <message>
-        <source>XFD file format cannot handle this disk geometry. Try saving &apos;%1&apos; as ATR.</source>
-        <translation type="vanished">XFD dosya sınırlamaları nedeniyle &apos;%1&apos; yeniden açıldığında detay geometri bilgileri kaybolacak.</translation>
+        <location filename="../../src/diskimage.cpp" line="651" />
+        <source>XFD file format cannot handle this disk geometry. Try saving '%1' as ATR.</source>
+        <translation>XFD dosya sınırlamaları nedeniyle '%1' yeniden açıldığında detay geometri bilgileri kaybolacak.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="706" />
         <source>Saving DCM images is not supported yet.</source>
-        <translation type="vanished">DCM imaj kaydetme işlemi henüz desteklenmiyor.</translation>
+        <translation>DCM imaj kaydetme işlemi henüz desteklenmiyor.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="712" />
         <source>Saving SCP images is not supported yet.</source>
-        <translation type="vanished">SCP imaj kaydetme işlemi henüz desteklenmiyor.</translation>
+        <translation>SCP imaj kaydetme işlemi henüz desteklenmiyor.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="718" />
         <source>Saving DI images is not supported yet.</source>
-        <translation type="vanished">DI imaj kaydetme işlemi henüz desteklenmiyor.</translation>
+        <translation>DI imaj kaydetme işlemi henüz desteklenmiyor.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="746" />
         <source>Unknown file extension.</source>
-        <translation type="vanished">Tanımlanmamış dosya uzantısı.</translation>
+        <translation>Tanımlanmamış dosya uzantısı.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="775" />
+        <location filename="../../src/diskimage.cpp" line="806" />
         <source>Unknown file type.</source>
-        <translation type="vanished">Tanımlanmamış dosya tipi.</translation>
+        <translation>Tanımlanmamış dosya tipi.</translation>
     </message>
     <message>
-        <source>Cannot create new image: Cannot create temporary file &apos;%2&apos;: %3.</source>
-        <translation type="vanished">Geçici dosya &apos;%2&apos;: %3 yaratılamadığı için yeni imaj kaydedilemiyor.</translation>
+        <location filename="../../src/diskimage.cpp" line="815" />
+        <source>Cannot create new image: Cannot create temporary file '%2': %3.</source>
+        <translation>Geçici dosya '%2': %3 yaratılamadığı için yeni imaj kaydedilemiyor.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="825" />
         <source>Untitled image %1</source>
-        <translation type="vanished">İsimsiz imaj %1</translation>
+        <translation>İsimsiz imaj %1</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="858" />
         <source>[%1] Format ED denied.</source>
-        <translation type="vanished">[%1] Format ED rededildi.</translation>
+        <translation>[%1] Format ED rededildi.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="867" />
+        <source>[%1] Format ED.</source>
+        <translation>[%1] Biçim ED.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="870" />
         <source>[%1] Format ED failed.</source>
-        <translation type="vanished">[%1] Format ED başarısız.</translation>
+        <translation>[%1] Format ED başarısız.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="883" />
         <source>[%1] Speed poll.</source>
-        <translation type="vanished">[%1] Hız sorgulaması.</translation>
+        <translation>[%1] Hız sorgulaması.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="894" />
+        <source>[%1] Get PERCOM block (%2).</source>
+        <translation>[%1] PERCOM bloğunu (%2) alın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="911" />
+        <source>[%1] Happy ID Query - Rev 7.</source>
+        <translation>[%1] Mutlu Kimlik Sorgusu - Rev 7.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="915" />
+        <source>[%1] Happy ID Query - NAKed (Standard Mode).</source>
+        <translation>[%1] Mutlu Kimlik Sorgusu - NAKed (Standart Mod).</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="935" />
+        <source>[%1] Set PERCOM block (%2).</source>
+        <translation>[%1] PERCOM bloğunu (%2) ayarlayın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="954" />
         <source>[%1] Format with custom sector skewing failed.</source>
-        <translation type="vanished">[%1] Özel dilim asimetrili (Custom sector skew format) düzenleme başarısız.</translation>
+        <translation>[%1] Özel dilim asimetrili (Custom sector skew format) düzenleme başarısız.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="959" />
         <source>[%1] Format with custom sector skewing (%2).</source>
-        <translation type="vanished">[%1] Özel dilim asimetrili (Custom sector skew format) düzenleme (%2).</translation>
+        <translation>[%1] Özel dilim asimetrili (Custom sector skew format) düzenleme (%2).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="964" />
         <source>[%1] Format with custom sector skewing denied.</source>
-        <translation type="vanished">[%1] Özel dilim asimetrili (Custom sector skew format) düzenleme izni verilmedi.</translation>
+        <translation>[%1] Özel dilim asimetrili (Custom sector skew format) düzenleme izni verilmedi.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="981" />
         <source>[%1] Format.</source>
-        <translation type="vanished">[%1] Düzenleme.</translation>
+        <translation>[%1] Düzenleme.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="984" />
         <source>[%1] Format denied.</source>
-        <translation type="vanished">[%1] Düzenleme izni verilmedi.</translation>
+        <translation>[%1] Düzenleme izni verilmedi.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1006" />
+        <source>[%1] Happy Warp Speed Handshake Successful.</source>
+        <translation>[%1] Mutlu Warp Hızı El Sıkışma Başarılı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="1021" />
         <source>[%1] Write sector %2 denied.</source>
-        <translation type="vanished">[%1] Sektör yaz %2 komutu reddedildi.</translation>
+        <translation>[%1] Sektör yaz %2 komutu reddedildi.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1026" />
         <source>[%1] Write sector %2 (%3 bytes).</source>
-        <translation type="vanished">[%1] Sektör yaz %2 (%3 bayt).</translation>
+        <translation>[%1] Sektör yaz %2 (%3 bayt).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1029" />
         <source>[%1] Write sector %2 failed.</source>
-        <translation type="vanished">[%1]Sektör yaz %2 komutu başarısız.</translation>
+        <translation>[%1]Sektör yaz %2 komutu başarısız.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1034" />
         <source>[%1] Write sector %2 data frame failed.</source>
-        <translation type="vanished">[%1] Sektör yaz %2 komutu veri çerçevesi başarısız.</translation>
+        <translation>[%1] Sektör yaz %2 komutu veri çerçevesi başarısız.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1041" />
         <source>[%1] Write sector %2 NAKed.</source>
-        <translation type="vanished">[%1] Sektör yaz %2 komutu NAK.</translation>
+        <translation>[%1] Sektör yaz %2 komutu NAK.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1057" />
         <source>[%1] Read sector %2 (%3 bytes).</source>
-        <translation type="vanished">[%1] Sektör oku %2 (%3 bayt).</translation>
+        <translation>[%1] Sektör oku %2 (%3 bayt).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1062" />
         <source>[%1] Read sector %2 failed.</source>
-        <translation type="vanished">[%1] Sektör oku %2 komutu başarısız.</translation>
+        <translation>[%1] Sektör oku %2 komutu başarısız.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1069" />
         <source>[%1] Read sector %2 NAKed.</source>
-        <translation type="vanished">[%1] Sektör oku %2 komutu NAK.</translation>
+        <translation>[%1] Sektör oku %2 komutu NAK.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1086" />
         <source>[%1] Get status.</source>
-        <translation type="vanished">[%1] Konum göster.</translation>
+        <translation>[%1] Konum göster.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1092" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation type="vanished">[%1] komut: $%2, aux: $%3 tanınmadı (NAK).</translation>
+        <translation>[%1] komut: $%2, aux: $%3 tanınmadı (NAK).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1110" />
         <source>[%1] Cannot format: %2</source>
-        <translation type="vanished">[%1]Düzenlenemiyor:%2</translation>
+        <translation>[%1]Düzenlenemiyor:%2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1125" />
+        <location filename="../../src/diskimage.cpp" line="1149" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="vanished">[%1] Sektöre ulaşılamıyor %2: %3</translation>
+        <translation>[%1] Sektöre ulaşılamıyor %2: %3</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1128" />
         <source>Sector number is out of bounds.</source>
-        <translation type="vanished">Sektör numarası sınırlar dışında.</translation>
+        <translation>Sektör numarası sınırlar dışında.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1168" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="vanished">[%1] Sektör okunamıyor %2: %3.</translation>
+        <translation>[%1] Sektör okunamıyor %2: %3.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1189" />
         <source>[%1] Cannot write to sector %2: %3.</source>
-        <translation type="vanished">[%1] Sektör yazılamıyor %2: %3.</translation>
+        <translation>[%1] Sektör yazılamıyor %2: %3.</translation>
+    </message>
+</context>
+<context>
+    <name>SioPacketDialog</name>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="98" />
+        <source>SIO Packet Sniffer &amp; Inspector</source>
+        <translation>SIO Paket Algılayıcısı ve Denetçisi</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="128" />
+        <source>Packet Inspector Details</source>
+        <translation>Paket Denetçisi Ayrıntıları</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="160" />
+        <source>Clear</source>
+        <translation>Temizlemek</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="161" />
+        <source>Save CSV...</source>
+        <translation>CSV'yi kaydet...</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="162" />
+        <source>Inject Selected (Step)</source>
+        <translation>Seçileni Enjekte Et (Adım)</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="258" />
+        <source>No Selection</source>
+        <translation>Seçim Yok</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="258" />
+        <source>Please select a packet row to inject.</source>
+        <translation>Lütfen enjekte edilecek paket satırını seçin.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
+        <source>Invalid Direction</source>
+        <translation>Geçersiz Yön</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
+        <source>You can only inject RX packets (traffic originating from the Atari).</source>
+        <translation>Yalnızca RX paketlerini (Atari kaynaklı trafik) enjekte edebilirsiniz.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="388" />
+        <source>Empty</source>
+        <translation>Boş</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="388" />
+        <source>No packets to save.</source>
+        <translation>Kaydedilecek paket yok.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="392" />
+        <source>Save SIO Trace</source>
+        <translation>SIO İzlemesini Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="392" />
+        <source>CSV Files (*.csv);;All Files (*)</source>
+        <translation>CSV Dosyaları (*.csv);;Tüm Dosyalar (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="397" />
+        <source>Error</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="397" />
+        <source>Could not open file for writing.</source>
+        <translation>Dosya yazmak için açılamadı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="417" />
+        <source>Saved</source>
+        <translation>Kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="417" />
+        <source>SIO Trace saved successfully.</source>
+        <translation>SIO Trace başarıyla kaydedildi.</translation>
     </message>
 </context>
 <context>
     <name>SioWorker</name>
     <message>
+        <location filename="../../src/sioworker.cpp" line="214" />
         <source>Cannot read command frame.</source>
-        <translation type="vanished">Komut bedeni okunamıyor.</translation>
+        <translation>Komut bedeni okunamıyor.</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="231" />
         <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
-        <translation type="vanished">[%1] Komut: $%2, aux: $%3 gözardı edildi çünkü imaj görüntü ekranı açık..</translation>
+        <translation>[%1] Komut: $%2, aux: $%3 gözardı edildi çünkü imaj görüntü ekranı açık..</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="237" />
         <source>[%1] command: $%2, aux: $%3 ignored.</source>
-        <translation type="vanished">[%1] Komut: $%2, aux: $%3 gözardı edildi.</translation>
+        <translation>[%1] Komut: $%2, aux: $%3 gözardı edildi.</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="359" />
         <source>Disk 1 (below autoboot)</source>
-        <translation type="vanished">Disk 1 (Önyüklemenin altında)</translation>
+        <translation>Disk 1 (Önyüklemenin altında)</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="376" />
+        <source>Disk %1</source>
+        <translation>%1 diski</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="382" />
         <source>Printer %1</source>
-        <translation type="vanished">Yazıcı %1</translation>
+        <translation>Yazıcı %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="385" />
+        <source>Smart device (APE time + URL)</source>
+        <translation>Akıllı cihaz (APE zamanı + URL)</translation>
     </message>
     <message>
         <source>APE time downloader</source>
         <translation type="obsolete">APE zaman indirici</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="388" />
         <source>AspeQt Client</source>
-        <translation type="vanished">AspeQt Alıcı</translation>
+        <translation>AspeQt Alıcı</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="394" />
+        <source>RS232 %1</source>
+        <translation>RS232 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="397" />
+        <source>PCLINK</source>
+        <translation>PCLINK</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="400" />
         <source>Device $%1</source>
-        <translation type="vanished">Aygıt $%1</translation>
+        <translation>Aygıt $%1</translation>
+    </message>
+</context>
+<context>
+    <name>SmartDevice</name>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="132" />
+        <source>[%1] Read date/time (%2).</source>
+        <translation>[%1] Tarih/saati okuyun (%2).</translation>
     </message>
 </context>
 <context>
     <name>SpartaDosFileSystem</name>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="1256" />
+        <location filename="../../src/atarifilesystem.cpp" line="1285" />
         <source>Atari file system error</source>
-        <translation type="vanished">Atarı dosyalama sistem hatası</translation>
+        <translation>Atarı dosyalama sistem hatası</translation>
     </message>
     <message>
-        <source>Cannot create file &apos;%1&apos;.</source>
-        <translation type="vanished">%1 yaratılamıyor.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="1256" />
+        <source>Cannot create file '%1'.</source>
+        <translation>%1 yaratılamıyor.</translation>
     </message>
     <message>
-        <source>Cannot write to &apos;%1&apos;.</source>
-        <translation type="vanished">%1 yazılamıyor.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="1285" />
+        <source>Cannot write to '%1'.</source>
+        <translation>%1 yazılamıyor.</translation>
     </message>
 </context>
 <context>
     <name>StandardSerialPortBackend</name>
     <message>
-        <source>Cannot open serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Seri bağlantı noktası &apos;%1&apos; açılamıyor: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="82" />
+        <location filename="../../src/serialport-windows.cpp" line="70" />
+        <location filename="../../src/serialport-windows.cpp" line="86" />
+        <source>Cannot open serial port '%1': %2</source>
+        <translation>Seri bağlantı noktası '%1' açılamıyor: %2</translation>
     </message>
     <message>
-        <source>Cannot clear DTR and RTS lines in serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Seri bağlantı noktası DTR ve RTS hatları açılamıyor:  &apos;%1&apos;: %2</translation>
+        <source>Cannot clear DTR and RTS lines in serial port '%1': %2</source>
+        <translation type="vanished">Seri bağlantı noktası DTR ve RTS hatları açılamıyor:  '%1': %2</translation>
     </message>
     <message>
-        <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking.</source>
-        <translation type="vanished">Emülasyon standard seri bağlantı noktası arkaucu &apos;%1&apos; den %2 senkronlu olarak başlatıldı.</translation>
+        <location filename="../../src/serialport-unix.cpp" line="128" />
+        <source>Emulation started through standard serial port backend on '%1' with %2 handshaking.</source>
+        <translation>Emülasyon standard seri bağlantı noktası arkaucu '%1' den %2 senkronlu olarak başlatıldı.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="144" />
+        <location filename="../../src/serialport-windows.cpp" line="147" />
         <source>Cannot close serial port: %1</source>
-        <translation type="vanished">Seri bağlantı noktası &apos;%1&apos; kapatılamıyor</translation>
+        <translation>Seri bağlantı noktası '%1' kapatılamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="271" />
+        <location filename="../../src/serialport-unix.cpp" line="287" />
+        <location filename="../../src/serialport-windows.cpp" line="262" />
         <source>Cannot set serial port speed to %1: %2</source>
-        <translation type="vanished">Seri bağlantı noktası %1: %2 hızına ayarlanamıyor</translation>
+        <translation>Seri bağlantı noktası %1: %2 hızına ayarlanamıyor</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="271" />
         <source>Closest possible speed is %2.</source>
-        <translation type="vanished">En yakın olası hız: %2.</translation>
+        <translation>En yakın olası hız: %2.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="293" />
+        <location filename="../../src/serialport-unix.cpp" line="374" />
+        <location filename="../../src/serialport-windows.cpp" line="293" />
         <source>%1 bits/sec</source>
-        <translation type="vanished">%1 bit/san</translation>
+        <translation>%1 bit/san</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="294" />
+        <location filename="../../src/serialport-unix.cpp" line="375" />
+        <location filename="../../src/serialport-windows.cpp" line="294" />
         <source>Serial port speed set to %1.</source>
-        <translation type="vanished">Seri bağlantı noktası hızı %1 e ayarlandı.</translation>
+        <translation>Seri bağlantı noktası hızı %1 e ayarlandı.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="309" />
+        <source>Cannot get serial port attributes</source>
+        <translation>Seri bağlantı noktası öznitelikleri alınamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="350" />
+        <source>Cannot set standard serial port speed to %1: %2</source>
+        <translation>Standart seri bağlantı noktası hızı %1: %2 olarak ayarlanamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="361" />
+        <source>Cannot set baseline serial port speed: %1</source>
+        <translation>Temel seri bağlantı noktası hızı ayarlanamıyor: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="368" />
+        <source>Failed to set custom serial port speed to %1</source>
+        <translation>Özel seri bağlantı noktası hızı %1 olarak ayarlanamadı</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="517" />
+        <location filename="../../src/serialport-unix.cpp" line="531" />
+        <location filename="../../src/serialport-unix.cpp" line="559" />
         <source>Cannot retrieve serial port status: %1</source>
-        <translation type="vanished">Seri bağlantı noktası durum sorgulaması sonucu alınamıyor: %1</translation>
+        <translation>Seri bağlantı noktası durum sorgulaması sonucu alınamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="793" />
+        <source>Serial port write timeout. %1 of %2 written in %3 ms</source>
+        <translation>Seri port yazma zaman aşımı. %2'nin %1'i %3 ms olarak yazılır</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="424" />
+        <location filename="../../src/serialport-unix.cpp" line="541" />
+        <location filename="../../src/serialport-windows.cpp" line="313" />
+        <location filename="../../src/serialport-windows.cpp" line="442" />
         <source>Cannot clear serial port read buffer: %1</source>
-        <translation type="vanished">Seri bağlantı noktası okuma tamponu (buffer) temizlenemiyor: %1</translation>
+        <translation>Seri bağlantı noktası okuma tamponu (buffer) temizlenemiyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="91" />
+        <source>Cannot get serial port status</source>
+        <translation>Seri bağlantı noktası durumu alınamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="96" />
+        <source>Cannot set DTR and RTS lines in serial port '%1': %2</source>
+        <translation>'%1' seri bağlantı noktasında DTR ve RTS hatları ayarlanamıyor: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="608" />
+        <location filename="../../src/serialport-windows.cpp" line="584" />
         <source>Data frame checksum error, expected: %1, got: %2. (%3)</source>
-        <translation type="vanished">Veri çerçevesi kontrol bayt hatası, Umulan: %1, Verilen: %2. (%3)</translation>
+        <translation>Veri çerçevesi kontrol bayt hatası, Umulan: %1, Verilen: %2. (%3)</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="715" />
+        <location filename="../../src/serialport-unix.cpp" line="779" />
+        <location filename="../../src/serialport-windows.cpp" line="536" />
+        <location filename="../../src/serialport-windows.cpp" line="542" />
         <source>Cannot read from serial port: %1</source>
-        <translation type="vanished">Seri bağlantı noktasından okunamıyor: %1</translation>
+        <translation>Seri bağlantı noktasından okunamıyor: %1</translation>
     </message>
     <message>
         <source>Serial port read timeout.</source>
         <translation type="vanished">Seri bağlantı noktası okuma molası (timeout).</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="798" />
         <source>Cannot flush serial port write buffer: %1</source>
-        <translation type="vanished">Seri bağlantı noktası yazma tamponu (buffer) temizlenemiyor: %1</translation>
+        <translation>Seri bağlantı noktası yazma tamponu (buffer) temizlenemiyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="711" />
         <source>Serial port write timeout.</source>
-        <translation type="vanished">Seri bağlantı noktası yazma molası (timeout).</translation>
+        <translation>Seri bağlantı noktası yazma molası (timeout).</translation>
     </message>
     <message>
-        <source>Cannot clear RTS line in serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Seri bağlantı noktası RTS hattı açılamıyor:  &apos;%1&apos;: %2</translation>
+        <source>Cannot clear RTS line in serial port '%1': %2</source>
+        <translation type="vanished">Seri bağlantı noktası RTS hattı açılamıyor:  '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot clear DTR line in serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Seri bağlantı noktası DTR hattı açılamıyor:  &apos;%1&apos;: %2</translation>
+        <source>Cannot clear DTR line in serial port '%1': %2</source>
+        <translation type="vanished">Seri bağlantı noktası DTR hattı açılamıyor:  '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="90" />
+        <source>Cannot set DTR line in serial port '%1': %2</source>
+        <translation>'%1' seri bağlantı noktasında DTR hattı ayarlanamıyor: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="94" />
+        <source>Cannot set RTS line in serial port '%1': %2</source>
+        <translation>'%1' seri bağlantı noktasında RTS hattı ayarlanamıyor: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="129" />
+        <source>Emulation started through standard serial port backend on '%1' with %2 handshaking</source>
+        <translation>Öykünme '%1' üzerinde %2 el sıkışma ile standart seri bağlantı noktası arka ucu aracılığıyla başlatıldı</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="289" />
         <source>Cannot set serial port timeouts: %1</source>
-        <translation type="vanished">Seri bağlantı noktası mola (timout) değeri kurulamıyor: %1</translation>
+        <translation>Seri bağlantı noktası mola (timout) değeri kurulamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="388" />
         <source>Cannot set serial port event mask: %1</source>
-        <translation type="vanished">Seri bağlantı noktası olay maskesi (eventmask) değeri kurulamıyor: %1</translation>
+        <translation>Seri bağlantı noktası olay maskesi (eventmask) değeri kurulamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="413" />
+        <location filename="../../src/serialport-windows.cpp" line="419" />
         <source>Cannot wait for serial port event: %1</source>
-        <translation type="vanished">Seri bağlantı noktası olay beklemede sorun var: %1</translation>
+        <translation>Seri bağlantı noktası olay beklemede sorun var: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="528" />
         <source>Cannot create event: %1</source>
-        <translation type="vanished">Olay yaratılamıyor: %1</translation>
+        <translation>Olay yaratılamıyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="680" />
         <source>Cannot clear serial port write buffer: %1</source>
-        <translation type="vanished">Seri bağlantı noktası yazma tamponu (buffer) temizlenemiyor: %1</translation>
+        <translation>Seri bağlantı noktası yazma tamponu (buffer) temizlenemiyor: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="698" />
+        <location filename="../../src/serialport-windows.cpp" line="703" />
         <source>Cannot write to serial port: %1</source>
-        <translation type="vanished">Seri bağlantı noktasına yazılamıyor: %1</translation>
+        <translation>Seri bağlantı noktasına yazılamıyor: %1</translation>
     </message>
 </context>
 <context>
     <name>TextPrinterWindow</name>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="14" />
         <source>AspeQt - Printer text output</source>
-        <translation type="vanished">AspeQT yazıcı çıktısı</translation>
+        <translation>AspeQT yazıcı çıktısı</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="47" />
+        <location filename="../../src/textprinterwindow.ui" line="50" />
         <source>Atari Output (Atascii)</source>
-        <translation type="vanished">ATASCII Atari Çıktısı</translation>
+        <translation>ATASCII Atari Çıktısı</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="69" />
+        <location filename="../../src/textprinterwindow.ui" line="72" />
         <source>Atari Output (Ascii)</source>
-        <translation type="vanished">ASCII Atari Çıktısı</translation>
+        <translation>ASCII Atari Çıktısı</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="118" />
         <source>toolBar</source>
-        <translation type="vanished">araç çubuğu</translation>
+        <translation>araç çubuğu</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="154" />
         <source>Save to a file...</source>
-        <translation type="vanished">Dosyaya kaydet...</translation>
+        <translation>Dosyaya kaydet...</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="157" />
         <source>Save contents to a file (Ctrl+S)</source>
-        <translation type="vanished">İçeriği dosyaya kaydet (Ctrl+S)</translation>
+        <translation>İçeriği dosyaya kaydet (Ctrl+S)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="160" />
         <source>Save contents to a file</source>
-        <translation type="vanished">İçeriği dosyaya kaydet</translation>
+        <translation>İçeriği dosyaya kaydet</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="163" />
+        <location filename="../../src/textprinterwindow.ui" line="350" />
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="172" />
         <source>Clear</source>
-        <translation type="vanished">Temizle</translation>
+        <translation>Temizle</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="175" />
         <source>Clear contents (Ctrl+C)</source>
-        <translation type="vanished">İçeriği temizle (Ctrl+C)</translation>
+        <translation>İçeriği temizle (Ctrl+C)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="178" />
         <source>Clear contents</source>
-        <translation type="vanished">İçeriği temizle</translation>
+        <translation>İçeriği temizle</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="181" />
         <source>Ctrl+C</source>
-        <translation type="vanished">Ctrl+C</translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="196" />
         <source>Word wrap</source>
-        <translation type="vanished">Kelime kaydırma</translation>
+        <translation>Kelime kaydırma</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="199" />
         <source>Toggle word wrapping (Ctrl+W)</source>
-        <translation type="vanished">Kelime kaydırma ayarı (Ctrl+W)</translation>
+        <translation>Kelime kaydırma ayarı (Ctrl+W)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="202" />
         <source>Toggle word wrapping</source>
-        <translation type="vanished">Kelime kaydırma ayarı</translation>
+        <translation>Kelime kaydırma ayarı</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="205" />
+        <source>Ctrl+W</source>
+        <translation>Ctrl+W</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="214" />
         <source>Print</source>
-        <translation type="vanished">Yazdır</translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="217" />
         <source>Send contents to printer (Ctrl+P)</source>
-        <translation type="vanished">İçeriği yazıcıya gönder (Ctrl+P)</translation>
+        <translation>İçeriği yazıcıya gönder (Ctrl+P)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="220" />
         <source>Send contents to printer</source>
-        <translation type="vanished">İçeriği yazıcıya gönder</translation>
+        <translation>İçeriği yazıcıya gönder</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="223" />
+        <source>Ctrl+P</source>
+        <translation>Ctrl+P</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="233" />
         <source>Atascii Font</source>
-        <translation type="vanished">Atascii Yazıyüzü</translation>
+        <translation>Atascii Yazıyüzü</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="236" />
         <source>Toggle ATASCII fonts (Alt+F)</source>
-        <translation type="vanished">Atascii Yazıyüzü Değiştir (Alt+F)</translation>
+        <translation>Atascii Yazıyüzü Değiştir (Alt+F)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="239" />
         <source>Toggle ATASCII fonts</source>
-        <translation type="vanished">Atascii Yazıyüzü Değiştir</translation>
+        <translation>Atascii Yazıyüzü Değiştir</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="242" />
         <source>Alt+F</source>
-        <translation type="vanished">Alt+F</translation>
+        <translation>Alt+F</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="267" />
         <source>Alt+Shift+F</source>
-        <translation type="vanished">Alt+Shift+F</translation>
+        <translation>Alt+Shift+F</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="295" />
         <source>Alt+Shift+H</source>
-        <translation type="vanished">Alt+Shift+H</translation>
+        <translation>Alt+Shift+H</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="326" />
         <source>Alt+H</source>
-        <translation type="vanished">Alt+H</translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="341" />
         <source>Strip Line Numbers</source>
-        <translation type="vanished">Satır numaralarını kaldır</translation>
+        <translation>Satır numaralarını kaldır</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="344" />
         <source>Strip Line numbers from the text output (Ctrl-S)</source>
-        <translation type="vanished">Çıktıdan satır numaralarını kaldır (Ctrl+S)</translation>
+        <translation>Çıktıdan satır numaralarını kaldır (Ctrl+S)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="347" />
         <source>Strip Line numbers from the text output</source>
-        <translation type="vanished">Çıktıdan satır numaralarını kaldır</translation>
+        <translation>Çıktıdan satır numaralarını kaldır</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="258" />
         <source>Font Size</source>
-        <translation type="vanished">Yazıyüzü boyu</translation>
+        <translation>Yazıyüzü boyu</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="261" />
         <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
-        <translation type="vanished">Yazıyüzü boyu değiştir (6, 9, 12) (Alt+Shift+F)</translation>
+        <translation>Yazıyüzü boyu değiştir (6, 9, 12) (Alt+Shift+F)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="264" />
         <source>Toggle Font Size (6, 9, 12 pt)</source>
-        <translation type="vanished">Yazıyüzü boyu değiştir (6, 9, 12)</translation>
+        <translation>Yazıyüzü boyu değiştir (6, 9, 12)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="286" />
         <source>Hide/Show Ascii</source>
-        <translation type="vanished">Ascii sayfasını Sakla/Göster</translation>
+        <translation>Ascii sayfasını Sakla/Göster</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="289" />
         <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
-        <translation type="vanished">Ascii çıktısını Sakla/Göster (Alt+Shıft+H)</translation>
+        <translation>Ascii çıktısını Sakla/Göster (Alt+Shıft+H)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="292" />
         <source>Hide/Show Ascii Printer Output</source>
-        <translation type="vanished">Ascii çıktısını Sakla/Göster</translation>
+        <translation>Ascii çıktısını Sakla/Göster</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="317" />
         <source>HideShow_Atascii</source>
-        <translation type="vanished">Atascii sayfasını Sakla/Göster</translation>
+        <translation>Atascii sayfasını Sakla/Göster</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="320" />
         <source> Hide/Show Atascii Printer Output (Alt+H)</source>
-        <translation type="vanished">Atascii çıktısını Sakla/Göster (Alt+H)</translation>
+        <translation>Atascii çıktısını Sakla/Göster (Alt+H)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="323" />
         <source>Hide/Show Atascii Printer Output</source>
-        <translation type="vanished">Atascii çıktısını Sakla/Göster</translation>
+        <translation>Atascii çıktısını Sakla/Göster</translation>
     </message>
     <message>
         <source>Print Atari Text</source>
         <translation type="obsolete">Atari metni</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="225" />
         <source>Save printer text output</source>
-        <translation type="vanished">Çıktıyı dosyaya kaydet</translation>
+        <translation>Çıktıyı dosyaya kaydet</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="226" />
         <source>Text files (*.txt);;All files (*)</source>
-        <translation type="vanished">Metin dosyaları (*.txt);;Tüm dosyalar (*)</translation>
+        <translation>Metin dosyaları (*.txt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>Stripping Line Numbers..</source>
-        <translation type="vanished">Satır numaraları kaldırılıyor..</translation>
+        <translation>Satır numaraları kaldırılıyor..</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>The text does not seem to contain any line numbers!</source>
-        <translation type="vanished">Çıktıda satır numaraları bulunamadı!</translation>
+        <translation>Çıktıda satır numaraları bulunamadı!</translation>
+    </message>
+</context>
+<context>
+    <name>TnfsBrowser</name>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="19" />
+        <source>TNFS Network Browser</source>
+        <translation>TNFS Ağ Tarayıcısı</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="46" />
+        <source>Connect</source>
+        <translation>Bağlamak</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="48" />
+        <source>Clear</source>
+        <translation>Temizlemek</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="49" />
+        <source>Clear saved host history</source>
+        <translation>Kaydedilen ana makine geçmişini temizle</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="51" />
+        <source>TNFS Host:</source>
+        <translation>TNFS Sunucusu:</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="59" />
+        <source>.. (Up)</source>
+        <translation>.. (Yukarı)</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="64" />
+        <source>Sort A-Z / Z-A</source>
+        <translation>A'dan Z'ye / Z'den A'ya sırala</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="67" />
+        <source>Not Connected</source>
+        <translation>Bağlı Değil</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="87" />
+        <location filename="../../src/tnfsbrowser.cpp" line="283" />
+        <location filename="../../src/tnfsbrowser.cpp" line="354" />
+        <source>More...</source>
+        <translation>Daha fazla...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="89" />
+        <source>Cancel</source>
+        <translation>İptal etmek</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="99" />
+        <source>Double-click a file (.ATR/.XEX) to Mount it.</source>
+        <translation>Bağlamak için bir dosyaya (.ATR/.XEX) çift tıklayın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="201" />
+        <source>Connecting to %1...</source>
+        <translation>%1'e bağlanılıyor...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="219" />
+        <location filename="../../src/tnfsbrowser.cpp" line="256" />
+        <source>Connected: %1</source>
+        <translation>Bağlandı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="235" />
+        <location filename="../../src/tnfsbrowser.cpp" line="271" />
+        <source>Connection Failed.</source>
+        <translation>Bağlantı Başarısız.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="236" />
+        <location filename="../../src/tnfsbrowser.cpp" line="272" />
+        <source>Connection Error</source>
+        <translation>Bağlantı Hatası</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="237" />
+        <location filename="../../src/tnfsbrowser.cpp" line="273" />
+        <source>Could not reach host '%1'.
+Check internet or hostname.</source>
+        <translation>'%1' ana bilgisayarına ulaşılamadı.
+İnterneti veya ana bilgisayar adını kontrol edin.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="285" />
+        <source>Fetching %1...</source>
+        <translation>%1 getiriliyor...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="301" />
+        <source>Error opening directory.</source>
+        <translation>Dizin açılırken hata oluştu.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="350" />
+        <source>No more items</source>
+        <translation>Başka öğe yok</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="360" />
+        <location filename="../../src/tnfsbrowser.cpp" line="388" />
+        <source>Browsing: %1</source>
+        <translation>Göz atılıyor: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="403" />
+        <source>Clear History</source>
+        <translation>Geçmişi Temizle</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="404" />
+        <source>Clear all saved hosts?</source>
+        <translation>Kaydedilen tüm ana bilgisayarlar temizlensin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="409" />
+        <source>History cleared.</source>
+        <translation>Geçmiş temizlendi.</translation>
+    </message>
+</context>
+<context>
+    <name>WebBridge</name>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="60" />
+        <source>Cannot access directory: %1</source>
+        <translation>Dizine erişilemiyor: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="124" />
+        <source>Phonebook XML is corrupted or invalid!</source>
+        <translation>Telefon Rehberi XML'i bozuk veya geçersiz!</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="129" />
+        <source>No phonebook found at: %1</source>
+        <translation>Şu adreste telefon rehberi bulunamadı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="179" />
+        <source>TNFS path not found: %1</source>
+        <translation>TNFS yolu bulunamadı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="185" />
+        <source>Failed to mount TNFS host: %1</source>
+        <translation>TNFS ana bilgisayarı bağlanamadı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="192" />
+        <source>Failed to connect to TNFS host: %1</source>
+        <translation>TNFS ana bilgisayarına bağlanılamadı: %1</translation>
     </message>
 </context>
 </TS>

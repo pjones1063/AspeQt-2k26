@@ -4,16 +4,29 @@
 <context>
     <name>AboutDialog</name>
     <message>
+        <location filename="../../src/aboutdialog.ui" line="14" />
         <source>About AspeQt</source>
-        <translation type="vanished">O AspeQt</translation>
+        <translation>O AspeQt</translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutdialog.ui" line="31" />
+        <source>AspeQt 2k26: Atari Serial Peripheral Emulator for Qt</source>
+        <translation>AspeQt 2k26: Atari Serial Peripheral Emulator for Qt</translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutdialog.ui" line="64" />
+        <location filename="../../src/aboutdialog.cpp" line="23" />
+        <source>qrc:/documentation/about.html</source>
+        <translation>qrc:/documentation/about.html</translation>
     </message>
     <message>
         <source>AspeQt: Atari Serial Peripheral Emulator for Qt</source>
         <translation type="vanished">Atari Seriovy Emulator pre Qt</translation>
     </message>
     <message>
+        <location filename="../../src/aboutdialog.cpp" line="22" />
         <source>version %1</source>
-        <translation type="vanished">verzia %1</translation>
+        <translation>verzia %1</translation>
     </message>
 </context>
 <context>
@@ -76,133 +89,270 @@
     </message>
 </context>
 <context>
-    <name>AtariFileSystem</name>
+    <name>AspeqtClientDevice</name>
     <message>
-        <source>Atari file system error</source>
-        <translation type="vanished">Atari systemová chyba súboru</translation>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="34" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="291" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="441" />
+        <source>[%1] Read data frame failed</source>
+        <translation>[%1] Čítanie dátového rámca zlyhalo</translation>
     </message>
     <message>
-        <source>Cannot create directory &apos;%1&apos;.</source>
-        <translation type="vanished">Nemožno vytvoriť priečinok&apos;%1&apos;.</translation>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="45" />
+        <source>[%1] List filter set: [%2]</source>
+        <translation>[%1] Sada filtrov zoznamu: [%2]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="74" />
+        <source>[%1] Set Path: [%2]</source>
+        <translation>[%1] Nastaviť cestu: [%2]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="100" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="495" />
+        <source>** AspeQt home folder not set - Goto Tools&gt;Options&gt;Emulation</source>
+        <translation>** Domovský priečinok AspeQt nie je nastavený - Prejdite na Nástroje&gt;Možnosti&gt;Emulácia</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="205" />
+        <source>[%1] Date/time sent to client (%2).</source>
+        <translation>[%1] Dátum/čas odoslania klientovi (%2).</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="226" />
+        <source>[%1] Swapped disk %2 with disk %3.</source>
+        <translation>[%1] Vymenený disk %2 za disk %3.</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="230" />
+        <source>[%1] Invalid swap request for drives: (%2)-(%3).</source>
+        <translation>[%1] Neplatná požiadavka na výmenu jednotiek: (%2)-(%3).</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="257" />
+        <source>[%1] ALL images were remotely unmounted</source>
+        <translation>[%1] VŠETKY obrázky boli odpojené na diaľku</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="265" />
+        <source>[%1] Remotely unmounted disk %2</source>
+        <translation>[%1] Vzdialene odpojený disk %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="269" />
+        <source>[%1] Invalid drive number: %2 for remote unmount</source>
+        <translation>[%1] Neplatné číslo jednotky: %2 pre vzdialené odpojenie</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="281" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="433" />
+        <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
+        <translation>[%1] AspeQt nemôže určiť priečinok, v ktorom musí byť vytvorený/pripojený obrazový súbor!</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="307" />
+        <source>[%1] Invalid image file attribute: %2</source>
+        <translation>[%1] Neplatný atribút súboru obrázka: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="316" />
+        <source>[%1] Can not create PC File: %2</source>
+        <translation>[%1] Nie je možné vytvoriť súbor PC: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="399" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="407" />
+        <source>[%1] Saved disk %2</source>
+        <translation>[%1] Uložený disk %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="416" />
+        <source>[%1] Invalid drive number: %2 for remote save</source>
+        <translation>[%1] Neplatné číslo jednotky: %2 pre vzdialené uloženie</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="503" />
+        <source> Get Path: [%1]</source>
+        <translation>Získať cestu: [%1]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="524" />
+        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
+        <translation>[%1] príkaz: $%2, pomocný: $%3 NAKed.</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="541" />
+        <source>[%1] Image %2 mounted</source>
+        <translation>[%1] Obrázok %2 bol pripojený</translation>
+    </message>
+</context>
+<context>
+    <name>AtariFileSystem</name>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="257" />
+        <source>Atari file system error</source>
+        <translation>Atari systemová chyba súboru</translation>
+    </message>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="257" />
+        <source>Cannot create directory '%1'.</source>
+        <translation>Nemožno vytvoriť priečinok'%1'.</translation>
     </message>
 </context>
 <context>
     <name>AtariSioBackend</name>
     <message>
-        <source>Cannot open serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno otvoriť sériovy port&apos;%1&apos;:%2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="850" />
+        <source>Cannot open serial port '%1': %2</source>
+        <translation>Nemožno otvoriť sériovy port'%1':%2</translation>
     </message>
     <message>
-        <source>Cannot open AtariSio driver &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno otvoriť AtariSio ovládač&apos;%1&apos;:%2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="859" />
+        <location filename="../../src/serialport-unix.cpp" line="867" />
+        <source>Cannot open AtariSio driver '%1': %2</source>
+        <translation>Nemožno otvoriť AtariSio ovládač'%1':%2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="891" />
         <source>Cannot set AtariSio driver mode: %1</source>
-        <translation type="vanished">Nemožno nastaviť AtariSio režim ovládača: %1</translation>
+        <translation>Nemožno nastaviť AtariSio režim ovládača: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="898" />
         <source>Cannot set AtariSio to autobaud mode: %1</source>
-        <translation type="vanished">Nemožno nastaviť AtariSio na autobaud mód: %1</translation>
+        <translation>Nemožno nastaviť AtariSio na autobaud mód: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="905" />
         <source>Cannot create the cancel pipe</source>
-        <translation type="vanished">Nemožno vytvoriť zrušenie prenosu</translation>
+        <translation>Nemožno vytvoriť zrušenie prenosu</translation>
     </message>
     <message>
-        <source>Emulation started through AtariSIO backend on &apos;%1&apos; with %2 handshaking.</source>
-        <translation type="vanished">Emulácia začala pomocou AtariSIO backendu na &apos;%1&apos; s %2 handshaking.</translation>
+        <location filename="../../src/serialport-unix.cpp" line="923" />
+        <source>Emulation started through AtariSIO backend on '%1' with %2 handshaking.</source>
+        <translation>Emulácia začala pomocou AtariSIO backendu na '%1' s %2 handshaking.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="939" />
         <source>Cannot close serial port: %1</source>
-        <translation type="vanished">Nemožno zatvoriť sérivovy port: %1</translation>
+        <translation>Nemožno zatvoriť sérivovy port: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="950" />
         <source>Cannot stop AtariSio backend.</source>
-        <translation type="vanished">Nemožno zastaviť AtariSio backend.</translation>
+        <translation>Nemožno zastaviť AtariSio backend.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="957" />
         <source>Cannot set AtariSio speed to %1: %2</source>
-        <translation type="vanished">Nemožno nastaviť AtariSio rýchlosť na %1: %2</translation>
+        <translation>Nemožno nastaviť AtariSio rýchlosť na %1: %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="960" />
+        <location filename="../../src/serialport-unix.cpp" line="1008" />
         <source>%1 bits/sec</source>
-        <translation type="vanished">%1 bitov/sec</translation>
+        <translation>%1 bitov/sec</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="961" />
+        <location filename="../../src/serialport-unix.cpp" line="1009" />
         <source>Serial port speed set to %1.</source>
-        <translation type="vanished">Rýchlosť sériového portu nastavená na %1.</translation>
+        <translation>Rýchlosť sériového portu nastavená na %1.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1015" />
         <source>Illegal condition using select!</source>
-        <translation type="vanished">Nelegálne podmienky pri výbere!</translation>
+        <translation>Nelegálne podmienky pri výbere!</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1035" />
         <source>Cannot read data frame: %1</source>
-        <translation type="vanished">Nemožno čítať data frame: %1</translation>
+        <translation>Nemožno čítať data frame: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1055" />
         <source>Cannot write data frame: %1</source>
-        <translation type="vanished">Nemožno zapísať data frame: %1</translation>
+        <translation>Nemožno zapísať data frame: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1066" />
         <source>Cannot write command ACK: %1</source>
-        <translation type="vanished">Nemožno zapísať príkaz ACK: %1</translation>
+        <translation>Nemožno zapísať príkaz ACK: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1076" />
         <source>Cannot write command NAK: %1</source>
-        <translation type="vanished">Nemožno zapísať príkaz NAK: %1</translation>
+        <translation>Nemožno zapísať príkaz NAK: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1085" />
         <source>Cannot write data ACK: %1</source>
-        <translation type="vanished">Nemožno zapísať data ACK: %1</translation>
+        <translation>Nemožno zapísať data ACK: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1094" />
         <source>Cannot write data NAK: %1</source>
-        <translation type="vanished">Nemožno zapísať data NAK: %1</translation>
+        <translation>Nemožno zapísať data NAK: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1103" />
         <source>Cannot write COMPLETE byte: %1</source>
-        <translation type="vanished">Nemožno zapísať kompletný byte: %1</translation>
+        <translation>Nemožno zapísať kompletný byte: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1112" />
         <source>Cannot write ERROR byte: %1</source>
-        <translation type="vanished">Nemožno zapísať ERROR byte: %1</translation>
+        <translation>Nemožno zapísať ERROR byte: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1126" />
         <source>Cannot write raw frame: %1</source>
-        <translation type="vanished">Nemožno zapísať surový frame: %1</translation>
+        <translation>Nemožno zapísať surový frame: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1137" />
         <source>Block too long.</source>
-        <translation type="vanished">Blok príliš dlhý.</translation>
+        <translation>Blok príliš dlhý.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1140" />
         <source>Command not acknowledged.</source>
-        <translation type="vanished">Neuznávaný prikaz.</translation>
+        <translation>Neuznávaný prikaz.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1143" />
         <source>Command timeout.</source>
-        <translation type="vanished">Vypršala doba príkazu.</translation>
+        <translation>Vypršala doba príkazu.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1146" />
         <source>Checksum error.</source>
-        <translation type="vanished">Chyba kontrolného súčtu.</translation>
+        <translation>Chyba kontrolného súčtu.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1149" />
         <source>Device error.</source>
-        <translation type="vanished">Chyba zariadenia.</translation>
+        <translation>Chyba zariadenia.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1152" />
         <source>Data frame not acknowledged.</source>
-        <translation type="vanished">Nepotvrdené data frame.</translation>
+        <translation>Nepotvrdené data frame.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1155" />
         <source>Unknown AtariSio driver error.</source>
-        <translation type="vanished">Neznáma AtariSIO chyba ovládača.</translation>
+        <translation>Neznáma AtariSIO chyba ovládača.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1178" />
+        <source>Cannot read raw frame: %1</source>
+        <translation>Nedá sa prečítať nespracovaný rámec: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="799" />
         <source>AtariSIO is only available under Linux.</source>
-        <translation type="vanished">AtariSIO je dostupný len pre Linux.</translation>
+        <translation>AtariSIO je dostupný len pre Linux.</translation>
     </message>
 </context>
 <context>
@@ -240,28 +390,28 @@
         <translation type="vanished">[%1]Dostať dávku informacií %2 (%3 bytov na %4).</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno otvoriť súbor &apos;%1&apos;:%2</translation>
+        <source>Cannot open file '%1': %2</source>
+        <translation type="vanished">Nemožno otvoriť súbor '%1':%2</translation>
     </message>
     <message>
         <source>Unexpected end of file, needed %1 more</source>
-        <translation type="vanished">Neočakávaný koniec súboru, &apos;treba %1 viac</translation>
+        <translation type="vanished">Neočakávaný koniec súboru, 'treba %1 viac</translation>
     </message>
     <message>
-        <source>Cannot read from file &apos;%1&apos;: %2.</source>
-        <translation type="vanished">Nemožno čitať súbor &apos;%1&apos;:%2.</translation>
+        <source>Cannot read from file '%1': %2.</source>
+        <translation type="vanished">Nemožno čitať súbor '%1':%2.</translation>
     </message>
     <message>
-        <source>Cannot load file &apos;%1&apos;: The file doesn&apos;t seem to be an Atari DOS executable.</source>
-        <translation type="vanished">Nemožno nahrať súbor &apos;%1&apos;: Súbor nevyzera na kompatibilný Atari DOS.</translation>
+        <source>Cannot load file '%1': The file doesn't seem to be an Atari DOS executable.</source>
+        <translation type="vanished">Nemožno nahrať súbor '%1': Súbor nevyzera na kompatibilný Atari DOS.</translation>
     </message>
     <message>
-        <source>The executable &apos;%1&apos; is broken: Unexpected end of file, needed %2 more.</source>
-        <translation type="vanished">Spustitelný &apos;%1&apos; je poškodený: Neočákavaný koniec súbory, potreba %2 ešte.</translation>
+        <source>The executable '%1' is broken: Unexpected end of file, needed %2 more.</source>
+        <translation type="vanished">Spustitelný '%1' je poškodený: Neočákavaný koniec súbory, potreba %2 ešte.</translation>
     </message>
     <message>
-        <source>The executable &apos;%1&apos; is broken: The end address is less than the start address.</source>
-        <translation type="vanished">Spustitelný &apos;%1&apos; je poškodený. Koncová adresa je menšia ako štartovacia adresa.</translation>
+        <source>The executable '%1' is broken: The end address is less than the start address.</source>
+        <translation type="vanished">Spustitelný '%1' je poškodený. Koncová adresa je menšia ako štartovacia adresa.</translation>
     </message>
     <message>
         <source>Cannot open the boot loader: %1</source>
@@ -281,7 +431,7 @@
     <message>
         <source>Please reboot your Atari.
 
-Don&apos;t forget to remove any cartridges and disable BASIC by holding down the Atari Option button if necessary.</source>
+Don't forget to remove any cartridges and disable BASIC by holding down the Atari Option button if necessary.</source>
         <translation type="vanished">Prosím reštartujte svoje Atari.
 Nezabudnite vybrať všetky cartridge a vypnite BASIC držaním klávesy OPTION v prípade potreby.</translation>
     </message>
@@ -298,127 +448,251 @@ Pri niektorých programoch možno budete musieť zatvoriť tento dialóg ručne 
     </message>
 </context>
 <context>
-    <name>CassetteDialog</name>
+    <name>BootOptionsDialog</name>
     <message>
-        <source>Cassette image playback</source>
-        <translation type="vanished">Prehratie obrazu kazety</translation>
+        <location filename="../../src/bootoptionsdialog.ui" line="14" />
+        <source>Folder Boot Options</source>
+        <translation>Možnosti spustenia priečinka</translation>
     </message>
     <message>
-        <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+        <location filename="../../src/bootoptionsdialog.ui" line="48" />
+        <source>Folder Image Boot Options</source>
+        <translation>Možnosti spustenia obrazu priečinka</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="63" />
+        <source>Select the DOS you want to boot your Atari with</source>
+        <translation>Vyberte DOS, pomocou ktorého chcete spustiť Atari</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="73" />
+        <source>SmartDOS 6.1D</source>
+        <translation>SmartDOS 6.1D</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="89" />
+        <source>SpartaDOS 3.2G</source>
+        <translation>SpartaDOS 3.2G</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="105" />
+        <source>MyPicoDOS 4.05 (Standard)</source>
+        <translation>MyPicoDOS 4.05 (štandard)</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="121" />
+        <source>MyDOS 4.x</source>
+        <translation>MyDOS 4.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="137" />
+        <source>AtariDOS 2.x</source>
+        <translation>AtariDOS 2.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="150" />
+        <source>DosXL 2.x</source>
+        <translation>DosXL 2.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="164" />
+        <source>(Check if you're already using a high-speed OS)</source>
+        <translation>(Skontrolujte, či už používate vysokorýchlostný operačný systém)</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="180" />
+        <source>Disable high speed SIO</source>
+        <translation>Zakázať vysokorýchlostné SIO</translation>
+    </message>
+</context>
+<context>
+    <name>CassetteDialog</name>
+    <message>
+        <location filename="../../src/cassettedialog.ui" line="23" />
+        <source>Cassette image playback</source>
+        <translation>Prehratie obrazu kazety</translation>
+    </message>
+    <message>
+        <location filename="../../src/cassettedialog.ui" line="35" />
+        <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation type="vanished">Nahrajte tento obraz kazety ako reštart s držanim Option a Start tlačítok alebo napísaním CLOAD v Basicu.
+        <translation>Nahrajte tento obraz kazety ako reštart s držanim Option a Start tlačítok alebo napísaním CLOAD v Basicu.
 Ak budete počuť zvukové zapípanie, stlačte OK tlačítko a stlačte klávesu na svojom Atari v približne rovnakom čase.</translation>
     </message>
     <message>
-        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
+        <location filename="../../src/cassettedialog.cpp" line="28" />
+        <source>AspeQt is ready to playback the cassette image file '%1'.
 
 The estimated playback duration is: %2:%3
 
-Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation type="vanished">AspeQt je pripravený prehrať súbor obrazu kazety &apos;%1&apos;.
+        <translation>AspeQt je pripravený prehrať súbor obrazu kazety '%1'.
 Odhadovaná doba prehrávania je: %2:%3
 Nahrajte tento obraz kazety ako reštart s držanim Option a Start tlačítok alebo napísaním CLOAD v Basicu.
 Ak budete počuť zvukové zapípanie, stlačte OK tlačítko a stlačte klávesu na svojom Atari v približne rovnakom čase.</translation>
     </message>
     <message>
+        <location filename="../../src/cassettedialog.cpp" line="80" />
+        <location filename="../../src/cassettedialog.cpp" line="95" />
         <source>Playing back cassette image.
 
 Estimated time left: %1:%2</source>
-        <translation type="vanished">Prehrávam späť obraz kazety.
+        <translation>Prehrávam späť obraz kazety.
 Zostávajúci čas: %1: %2</translation>
     </message>
 </context>
 <context>
     <name>CassetteWorker</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno otvoriť&apos;%1&apos;:%2</translation>
+        <location filename="../../src/sioworker.cpp" line="426" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nemožno otvoriť'%1':%2</translation>
     </message>
     <message>
-        <source>Cannot read &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno čítať &apos;%1&apos;:%2</translation>
+        <location filename="../../src/sioworker.cpp" line="437" />
+        <location filename="../../src/sioworker.cpp" line="448" />
+        <location filename="../../src/sioworker.cpp" line="470" />
+        <location filename="../../src/sioworker.cpp" line="480" />
+        <source>Cannot read '%1': %2</source>
+        <translation>Nemožno čítať '%1':%2</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: The header does not match.</source>
-        <translation type="vanished">Nemožno otvoriť &apos;%1&apos;: Nesúhlasí hlavička.</translation>
+        <location filename="../../src/sioworker.cpp" line="454" />
+        <source>Cannot open '%1': The header does not match.</source>
+        <translation>Nemožno otvoriť '%1': Nesúhlasí hlavička.</translation>
     </message>
     <message>
-        <source>[Cassette]: File description &apos;%2&apos;.</source>
-        <translation type="vanished">[Kazeta]:Popis súboru &apos;%2&apos;.</translation>
+        <location filename="../../src/sioworker.cpp" line="459" />
+        <source>[Cassette]: File description '%2'.</source>
+        <translation>[Kazeta]:Popis súboru '%2'.</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: Unknown chunk header %2.</source>
-        <translation type="vanished">Nemožno otvoriť &apos;%1&apos;: Neznámy kus hlavičky %2.</translation>
+        <location filename="../../src/sioworker.cpp" line="504" />
+        <source>[Cassette] Skipping unsupported chunk '%1' (%2 bytes)</source>
+        <translation>[Cassete] Preskakuje sa nepodporovaný blok '%1' (%2 bajtov)</translation>
     </message>
     <message>
+        <source>Cannot open '%1': Unknown chunk header %2.</source>
+        <translation type="vanished">Nemožno otvoriť '%1': Neznámy kus hlavičky %2.</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="553" />
         <source>[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)</source>
-        <translation type="vanished">[Kazeta] Prehrávam záznam %1 z %2 (%3 ms z medzery&apos;+&apos;%4bytov dát)</translation>
+        <translation>[Kazeta] Prehrávam záznam %1 z %2 (%3 ms z medzery'+'%4bytov dát)</translation>
+    </message>
+</context>
+<context>
+    <name>ClipboardDevice</name>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="161" />
+        <source>[Y:] Open for Write (Accumulator Reset)</source>
+        <translation>[Y:] Otvoriť na zápis (resetovanie akumulátora)</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="184" />
+        <source>[Y:] Open for Read (Buffered %1 bytes)</source>
+        <translation>[Y:] Otvoriť na čítanie (uložené %1 bajtov)</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="208" />
+        <source>[Y:] Sent EOF</source>
+        <translation>[Y:] Odoslané EOF</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="249" />
+        <source>[Y:] Close: Clipboard Updated (%1 chars).</source>
+        <translation>[Y:] Zavrieť: Schránka aktualizovaná (%1 znakov).</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="251" />
+        <source>[Y:] Close: Buffer empty, clipboard not touched.</source>
+        <translation>[Y:] Close: Vyrovnávacia pamäť je prázdna, schránka nie je dotknutá.</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="263" />
+        <source>[Y:] Unknown Command: $%1</source>
+        <translation>[Y:] Neznámy príkaz: $%1</translation>
     </message>
 </context>
 <context>
     <name>CreateImageDialog</name>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="23" />
         <source>Create a disk image</source>
-        <translation type="vanished">Vytvoriť diskový obraz</translation>
+        <translation>Vytvoriť diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="44" />
         <source>Standard single density</source>
-        <translation type="vanished">Štandardná single hustota</translation>
+        <translation>Štandardná single hustota</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="54" />
         <source>Standard enhanced (also called medium or dual) density</source>
-        <translation type="vanished">Štandardná rozšírená (tiež známa ako medium, či dual) hustota</translation>
+        <translation>Štandardná rozšírená (tiež známa ako medium, či dual) hustota</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="61" />
         <source>Standard double density</source>
-        <translation type="vanished">Štandardná dvojitá hustota</translation>
+        <translation>Štandardná dvojitá hustota</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="68" />
         <source>Double sided double density</source>
-        <translation type="vanished">Obojstranná dvojitá hustota</translation>
+        <translation>Obojstranná dvojitá hustota</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="75" />
         <source>Double density harddisk</source>
-        <translation type="vanished">Harddisk s dvojitou hustotou</translation>
+        <translation>Harddisk s dvojitou hustotou</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="82" />
         <source>Custom</source>
-        <translation type="vanished">Voliteľná</translation>
+        <translation>Voliteľná</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="100" />
         <source>Number of sectors:</source>
-        <translation type="vanished">Počet sektorov:</translation>
+        <translation>Počet sektorov:</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="124" />
         <source>Sector density:</source>
-        <translation type="vanished">Hustota sektorov:</translation>
+        <translation>Hustota sektorov:</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="132" />
         <source>Single (128 bytes per sector)</source>
-        <translation type="vanished">Single (128 bytov na sektor)</translation>
+        <translation>Single (128 bytov na sektor)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="137" />
         <source>Double (256 bytes per sector)</source>
-        <translation type="vanished">Double (256 bytov na sektor)</translation>
+        <translation>Double (256 bytov na sektor)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="142" />
         <source>512 bytes per sector</source>
-        <translation type="vanished">512 bytov na sektor</translation>
+        <translation>512 bytov na sektor</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="147" />
         <source>8192 bytes per sector</source>
-        <translation type="vanished">8192 bytov na sektor</translation>
+        <translation>8192 bytov na sektor</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="163" />
         <source>Total image capacity: 92160 bytes (90 K)</source>
-        <translation type="vanished">Celková kapacita obrazu: 92160 bytov (90 K)</translation>
+        <translation>Celková kapacita obrazu: 92160 bytov (90 K)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.cpp" line="75" />
         <source>Total image capacity: %1 bytes (%2 K)</source>
-        <translation type="vanished">Celková kapacita obrazu: %1 bytov (%2 K)</translation>
+        <translation>Celková kapacita obrazu: %1 bytov (%2 K)</translation>
     </message>
 </context>
 <context>
@@ -431,100 +705,150 @@ Zostávajúci čas: %1: %2</translation>
 <context>
     <name>DiskEditDialog</name>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="23" />
         <source>MainWindow</source>
-        <translation type="vanished">MainWindow</translation>
+        <translation>MainWindow</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="92" />
+        <source>Stay on Top</source>
+        <translation>Zostaňte na vrchole</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.ui" line="111" />
         <source>toolBar</source>
-        <translation type="vanished">toolBar</translation>
+        <translation>toolBar</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="150" />
+        <location filename="../../src/diskeditdialog.ui" line="153" />
+        <location filename="../../src/diskeditdialog.ui" line="156" />
         <source>Go to the parent directory</source>
-        <translation type="vanished">Ísť do nadradeného priečinka</translation>
+        <translation>Ísť do nadradeného priečinka</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="165" />
         <source>Add files...</source>
-        <translation type="vanished">Pridať súbory...</translation>
+        <translation>Pridať súbory...</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="168" />
+        <location filename="../../src/diskeditdialog.ui" line="171" />
         <source>Add files to this directory</source>
-        <translation type="vanished">Pridať súbory do priečinka</translation>
+        <translation>Pridať súbory do priečinka</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="183" />
         <source>Extract files...</source>
-        <translation type="vanished">Extrahovať súbory...</translation>
+        <translation>Extrahovať súbory...</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="186" />
+        <location filename="../../src/diskeditdialog.ui" line="189" />
         <source>Extract selected files</source>
-        <translation type="vanished">Extrahovať vybrané súbory</translation>
+        <translation>Extrahovať vybrané súbory</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="201" />
         <source>Text conversion</source>
-        <translation type="vanished">Konverzia textu</translation>
+        <translation>Konverzia textu</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="204" />
+        <location filename="../../src/diskeditdialog.ui" line="207" />
+        <location filename="../../src/diskeditdialog.cpp" line="649" />
+        <location filename="../../src/diskeditdialog.cpp" line="650" />
         <source>Text conversion is off</source>
-        <translation type="vanished">Konverzia textu je vypnutá</translation>
+        <translation>Konverzia textu je vypnutá</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="219" />
         <source>Delete</source>
-        <translation type="vanished">Zmazať</translation>
+        <translation>Zmazať</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="222" />
+        <location filename="../../src/diskeditdialog.ui" line="225" />
         <source>Delete selected files</source>
-        <translation type="vanished">Zmazať označené súbory</translation>
+        <translation>Zmazať označené súbory</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="228" />
         <source>Del</source>
-        <translation type="vanished">Del</translation>
+        <translation>Del</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="237" />
         <source>Print</source>
-        <translation type="obsolete">Tlač</translation>
+        <translation>Tlačiť</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="240" />
+        <source>Print Directory Listing</source>
+        <translation>Vytlačiť výpis adresára</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="477" />
         <source>No file system</source>
-        <translation type="vanished">Žiadný súborový systém</translation>
+        <translation>Žiadný súborový systém</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="478" />
         <source>Atari Dos 1.0</source>
-        <translation type="vanished">Atari Dos 1.0</translation>
+        <translation>Atari Dos 1.0</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="479" />
         <source>Atari Dos 2.0</source>
-        <translation type="vanished">Atari Dos 2.0</translation>
+        <translation>Atari Dos 2.0</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="480" />
         <source>Atari Dos 2.5</source>
-        <translation type="vanished">Atari Dos 2.5</translation>
+        <translation>Atari Dos 2.5</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="481" />
         <source>MyDos</source>
-        <translation type="vanished">MyDos</translation>
+        <translation>MyDos</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="482" />
         <source>SpartaDos</source>
-        <translation type="vanished">SpartaDos</translation>
+        <translation>SpartaDos</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="574" />
+        <location filename="../../src/diskeditdialog.cpp" line="600" />
+        <location filename="../../src/diskeditdialog.cpp" line="614" />
         <source>AspeQt - Exploring %1</source>
-        <translation type="vanished">AspeQt - Skúmanie %1</translation>
+        <translation>AspeQt - Skúmanie %1</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="625" />
         <source>Extract files</source>
-        <translation type="vanished">Extrahovať súbory</translation>
+        <translation>Extrahovať súbory</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="645" />
+        <location filename="../../src/diskeditdialog.cpp" line="646" />
         <source>Text conversion is on</source>
-        <translation type="vanished">Konverzia textu je zapnutá</translation>
+        <translation>Konverzia textu je zapnutá</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="657" />
         <source>Confirmation</source>
-        <translation type="vanished">Potvrdenie</translation>
+        <translation>Potvrdenie</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="657" />
         <source>Are you sure you want to delete selected files?</source>
-        <translation type="vanished">Ste si istý, že chcete zmazať označené súbory?</translation>
+        <translation>Ste si istý, že chcete zmazať označené súbory?</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="669" />
+        <source>Add files</source>
+        <translation>Pridať súbory</translation>
     </message>
 </context>
 <context>
@@ -570,27 +894,90 @@ Zostávajúci čas: %1: %2</translation>
         <translation type="obsolete">Jednostranná</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="220" />
+        <source>SD Diskette</source>
+        <translation>SD disketa</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="222" />
+        <source>ED Diskette</source>
+        <translation>ED disketa</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="224" />
+        <source>DD Diskette</source>
+        <translation>DD disketa</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="226" />
+        <source>QD Diskette</source>
+        <translation>Disketa QD</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="229" />
+        <source>%1 sector SD HardDrive</source>
+        <translation>%1 sektorový pevný disk SD</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="231" />
+        <source>%1 sector DD HardDrive</source>
+        <translation>%1 sektorový DD pevný disk</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="233" />
+        <source>%1 sector, %2 bytes/sector HardDrive</source>
+        <translation>%1 sektor, %2 bajtov/sektor pevný disk</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="236" />
+        <source>%1 %2 tracks/side, %3 sectors/track, %4 bytes/sector diskette</source>
+        <translation>%1 %2 stôp/strana, %3 sektorov/stopa, %4 bajtov/sektor disketa</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="237" />
+        <source>DS</source>
+        <translation>DS</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="237" />
+        <source>SS</source>
+        <translation>SS</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="243" />
         <source>%1 (%2k)</source>
-        <translation type="vanished">%1 (%2k)</translation>
+        <translation>%1 (%2k)</translation>
     </message>
 </context>
 <context>
     <name>DiskImageAtx</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="obsolete">Nemožno otvoriť &apos;%1&apos;:%2</translation>
+        <location filename="../../src/diskimageatx.cpp" line="38" />
+        <location filename="../../src/diskimageatx.cpp" line="45" />
+        <location filename="../../src/diskimageatx.cpp" line="53" />
+        <location filename="../../src/diskimageatx.cpp" line="146" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nedá sa otvoriť '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="47" />
         <source>Cannot read the header: %1.</source>
-        <translation type="obsolete">Nemožno čítať hlavičku:%1.</translation>
+        <translation>Nedá sa prečítať hlavička: %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="53" />
         <source>Not a valid ATX file.</source>
-        <translation type="obsolete">Nie je platným ATX súborom.</translation>
+        <translation>Neplatný súbor ATX.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="60" />
         <source>VAPI version %1: %2</source>
-        <translation type="obsolete">VAPI verzia %1:%2</translation>
+        <translation>Verzia VAPI %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimageatx.cpp" line="188" />
+        <source>[%1] Track %2 out of bounds</source>
+        <translation>[%1] Sledovať %2 mimo hraníc</translation>
     </message>
     <message>
         <source>  sector_list_header size=%1 type=%2</source>
@@ -601,51 +988,68 @@ Zostávajúci čas: %1: %2</translation>
         <translation type="obsolete">sektor číslo=%1 status=%2 pozícia=%3 štart=%4</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="132" />
         <source>Tracks=%1 Sectors=%2</source>
-        <translation type="obsolete">Stopy=%1 Sektory=%2</translation>
+        <translation>Stopy=%1 sektory=%2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="148" />
         <source>Too many sectors in the image (%1).</source>
-        <translation type="obsolete">Priveľa sektorov v obraze (%1).</translation>
+        <translation>Príliš veľa sektorov v obraze (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="174" />
+        <location filename="../../src/diskimageatx.cpp" line="233" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="obsolete">[%1] Nemožno hľadať sektor %2: %3</translation>
+        <translation>[%1] Nedá sa vyhľadať sektor %2: %3</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="177" />
         <source>Sector number is out of bounds.</source>
-        <translation type="obsolete">Číslo sektoru je mimo medze.</translation>
+        <translation>Číslo sektora je mimo.</translation>
     </message>
     <message>
         <source>Bad sector</source>
         <translation type="obsolete">Zlý sektor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="264" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="obsolete">[%1] Nemožno čítať zo sektoru %2: %3.</translation>
+        <translation>[%1] Nedá sa čítať zo sektora %2: %3.</translation>
     </message>
 </context>
 <context>
     <name>DiskImagePro</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno otvoriť &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimagepro.cpp" line="30" />
+        <location filename="../../src/diskimagepro.cpp" line="37" />
+        <location filename="../../src/diskimagepro.cpp" line="48" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nemožno otvoriť '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="39" />
         <source>Cannot read the header: %1.</source>
-        <translation type="vanished">Nemožno čítať hlavičku: %1.</translation>
+        <translation>Nemožno čítať hlavičku: %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="48" />
         <source>Not a valid PRO file.</source>
-        <translation type="vanished">Neplatný PRO súbor.</translation>
+        <translation>Neplatný PRO súbor.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimagepro.cpp" line="87" />
+        <source>[%1] Cannot seek to sector %2: out of bounds.</source>
+        <translation>[%1] Nie je možné hľadať sektor %2: mimo hraníc.</translation>
     </message>
     <message>
         <source>Too many sectors in the image (%1).</source>
         <translation type="vanished">Priveľa sektorov v obraze (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="94" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="vanished">[%1] Nemožno hladať sektor %2: %3</translation>
+        <translation>[%1] Nemožno hladať sektor %2: %3</translation>
     </message>
     <message>
         <source>Sector number is out of bounds.</source>
@@ -656,211 +1060,485 @@ Zostávajúci čas: %1: %2</translation>
         <translation type="vanished">Duplicitný sektor: %1 dupnum: %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="123" />
         <source>Error in .pro image: sector: %1 dupnum: %2</source>
-        <translation type="vanished">Chyba v pro obraze: sektor: %1 dupnum: %2</translation>
+        <translation>Chyba v pro obraze: sektor: %1 dupnum: %2</translation>
     </message>
     <message>
         <source>Bad sector</source>
         <translation type="vanished">Zlý sektor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="162" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="vanished">[%1] Nemožno čitať zo sektoru %2: %3.</translation>
+        <translation>[%1] Nemožno čitať zo sektoru %2: %3.</translation>
     </message>
 </context>
 <context>
     <name>DocDisplayWindow</name>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="17" />
         <source>AspeQt User Manual</source>
-        <translation type="vanished">AspeQt uživateľský manuál</translation>
+        <translation>AspeQt uživateľský manuál</translation>
     </message>
     <message>
         <source>qrc:/documentation/AspeQt User Manual.html</source>
         <translation type="obsolete">qrc:/documentation/AspeQt User Manual.html</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="35" />
+        <source>qrc:/documentation/AspeQt User Manual-English.html</source>
+        <translation>qrc:/documentation/AspeQt User Manual-English.html</translation>
+    </message>
+    <message>
+        <location filename="../../src/docdisplaywindow.ui" line="48" />
         <source>toolBar</source>
-        <translation type="vanished">toolBar</translation>
+        <translation>toolBar</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="76" />
         <source>Print</source>
-        <translation type="vanished">Tlač</translation>
+        <translation>Tlač</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="79" />
+        <location filename="../../src/docdisplaywindow.ui" line="82" />
         <source>Print User Manual</source>
-        <translation type="vanished">Vytlačit uživateľský manuál</translation>
+        <translation>Vytlačit uživateľský manuál</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="85" />
         <source>Ctrl+P</source>
-        <translation type="vanished">Ctrl+p</translation>
+        <translation>Ctrl+p</translation>
     </message>
 </context>
 <context>
     <name>Dos10FileSystem</name>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="479" />
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <location filename="../../src/atarifilesystem.cpp" line="547" />
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="582" />
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
         <source>Atari file system error</source>
-        <translation type="vanished">Chyba Atari systémového súboru</translation>
+        <translation>Chyba Atari systémového súboru</translation>
     </message>
     <message>
-        <source>Cannot create file &apos;%1&apos;.</source>
-        <translation type="vanished">Nemožno vytvoriť súbor &apos;%1&apos;.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="479" />
+        <source>Cannot create file '%1'.</source>
+        <translation>Nemožno vytvoriť súbor '%1'.</translation>
     </message>
     <message>
-        <source>Cannot read &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno čítať %1: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <source>Cannot read '%1': %2</source>
+        <translation>Nemožno čítať %1: %2</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
         <source>Sector read failed.</source>
-        <translation type="vanished">Čítanie sektoru zlyhalo.</translation>
+        <translation>Čítanie sektoru zlyhalo.</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
         <source>File number mismatch.</source>
-        <translation type="vanished">Nesúhlasí čislo súboru.</translation>
+        <translation>Nesúhlasí čislo súboru.</translation>
     </message>
     <message>
-        <source>Cannot write to &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno zapisovať na &apos;%1&apos;:%2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="547" />
+        <source>Cannot write to '%1': %2</source>
+        <translation>Nemožno zapisovať na '%1':%2</translation>
     </message>
     <message>
-        <source>Cannot insert &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno vložiť &apos;%1&apos;:%2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <source>Cannot insert '%1': %2</source>
+        <translation>Nemožno vložiť '%1':%2</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
         <source>Cannot find a suitable file name.</source>
-        <translation type="vanished">Nemožno nájsť vhodný názov súboru.</translation>
+        <translation>Nemožno nájsť vhodný názov súboru.</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
         <source>Directory is full.</source>
-        <translation type="vanished">Adresár je plný.</translation>
+        <translation>Adresár je plný.</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno otvoriť &apos;%1&apos;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="582" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nemožno otvoriť '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
         <source>Disk is full.</source>
-        <translation type="vanished">Disk je plný.</translation>
+        <translation>Disk je plný.</translation>
     </message>
     <message>
-        <source>Cannot read from &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno čítať z &apos;%1&apos;:%2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="624" />
+        <source>File system error</source>
+        <translation>Chyba súborového systému</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="624" />
+        <source>Number of bytes (%1) read from '%2' is not equal to expected data size of (%3)</source>
+        <translation>Počet bajtov (%1) načítaných z „%2“ sa nerovná očakávanej veľkosti údajov (%3)</translation>
+    </message>
+    <message>
+        <source>Cannot read from '%1': %2</source>
+        <translation type="vanished">Nemožno čítať z '%1':%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
         <source>Sector write failed.</source>
-        <translation type="vanished">Chyba zápisu sektoru.</translation>
+        <translation>Chyba zápisu sektoru.</translation>
     </message>
     <message>
-        <source>Cannot delete &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno zmazať &apos;%1&apos;:%2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
+        <source>Cannot delete '%1': %2</source>
+        <translation>Nemožno zmazať '%1':%2</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
         <source>Bitmap write failed.</source>
-        <translation type="vanished">Chyba pri zápise Bitmapy.</translation>
+        <translation>Chyba pri zápise Bitmapy.</translation>
+    </message>
+</context>
+<context>
+    <name>DriveWidget</name>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="23" />
+        <source>Frame</source>
+        <translation>Rám</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="55" />
+        <source>1:</source>
+        <translation>1:</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="136" />
+        <source>Mount disk image...</source>
+        <translation>Pripojiť obraz disku...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="145" />
+        <source>Mount folder image...</source>
+        <translation>Pripojiť obrázok priečinka...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="154" />
+        <source>Unmount</source>
+        <translation>Odpojiť</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="163" />
+        <source>Explore..</source>
+        <translation>Preskúmať...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="172" />
+        <source>Save</source>
+        <translation>Uložiť</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="184" />
+        <source>Auto save</source>
+        <translation>Automatické uloženie</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="196" />
+        <source>Happy Enhancement</source>
+        <translation>Happy Enhancement</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="205" />
+        <source>Folder Boot Options</source>
+        <translation>Možnosti spustenia priečinka</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="208" />
+        <source>Change Boot Options for D%1</source>
+        <translation>Zmeňte možnosti zavádzania pre D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="217" />
+        <source>Save as...</source>
+        <translation>Uložiť ako...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="220" />
+        <source>Save image as... for D%1</source>
+        <translation>Uložiť obrázok ako... pre D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="229" />
+        <source>Revert to original</source>
+        <translation>Vrátiť sa k originálu</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="232" />
+        <source>Revert image to last saved state for D%1</source>
+        <translation>Vrátiť obrázok do posledného uloženého stavu pre D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="240" />
+        <source>Write protected</source>
+        <translation>Ochrana proti zápisu</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="249" />
+        <source>Inspect Sectors...</source>
+        <translation>Kontrola sektorov...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="252" />
+        <source>Open low-level sector inspector for D%1</source>
+        <translation>Otvorte nízkoúrovňového sektorového inšpektora pre D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="261" />
+        <source>Drive Info</source>
+        <translation>Informácie o jazde</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="264" />
+        <source>Show Drive Information</source>
+        <translation>Zobraziť informácie o disku</translation>
     </message>
 </context>
 <context>
     <name>FileTypes</name>
     <message>
+        <location filename="../../src/miscutils.cpp" line="109" />
         <source>ATR disk image</source>
-        <translation type="vanished">ATR diskový obraz</translation>
+        <translation>ATR diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="111" />
         <source>gzipped ATR disk image</source>
-        <translation type="vanished">gzippovaný ATR diskový obraz</translation>
+        <translation>gzippovaný ATR diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="113" />
         <source>XFD disk image</source>
-        <translation type="vanished">XFD diskový obraz</translation>
+        <translation>XFD diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="115" />
         <source>gziped XFD disk image</source>
-        <translation type="vanished">gzippovaný XFD diskový obraz</translation>
+        <translation>gzippovaný XFD diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="117" />
         <source>DCM disk image</source>
-        <translation type="vanished">DCM diskový obraz</translation>
+        <translation>DCM diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="119" />
         <source>gzipped DCM disk image</source>
-        <translation type="vanished">gzippovaný DCM diskový obraz</translation>
+        <translation>gzippovaný DCM diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="121" />
         <source>SCP disk image</source>
-        <translation type="vanished">SCP diskový obraz</translation>
+        <translation>SCP diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="123" />
         <source>gzipped SCP disk image</source>
-        <translation type="vanished">gzippovaný SCP diskový obraz</translation>
+        <translation>gzippovaný SCP diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="125" />
         <source>DI disk image</source>
-        <translation type="vanished">DI diskový obraz</translation>
+        <translation>DI diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="127" />
         <source>gzipped DI disk image</source>
-        <translation type="vanished">gzippovaný DI diskový obraz</translation>
+        <translation>gzippovaný DI diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="129" />
         <source>PRO disk image</source>
-        <translation type="vanished">PRO diskový obraz</translation>
+        <translation>PRO diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="131" />
         <source>gzipped PRO disk image</source>
-        <translation type="vanished">gzippovaný PRO diskový obraz</translation>
+        <translation>gzippovaný PRO diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="133" />
         <source>VAPI (ATX) disk image</source>
-        <translation type="vanished">VAPI (ATX) diskový obraz</translation>
+        <translation>VAPI (ATX) diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="135" />
         <source>gzipped VAPI (ATX) disk image</source>
-        <translation type="vanished">gzippovaný VAPI (ATX) diskový obraz</translation>
+        <translation>gzippovaný VAPI (ATX) diskový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="137" />
         <source>CAS cassette image</source>
-        <translation type="vanished">CAS kazetový obraz</translation>
+        <translation>CAS kazetový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="139" />
         <source>gzipped CAS cassette image</source>
-        <translation type="vanished">gzippovaný CAS kazetový obraz</translation>
+        <translation>gzippovaný CAS kazetový obraz</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="141" />
         <source>Atari executable</source>
-        <translation type="vanished">Atari spustiteľný</translation>
+        <translation>Atari spustiteľný</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="143" />
         <source>gzipped Atari executable</source>
-        <translation type="vanished">gzippovaný Atari spustiteľný</translation>
+        <translation>gzippovaný Atari spustiteľný</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="145" />
         <source>unknown file type</source>
-        <translation type="vanished">neznámy súbor</translation>
+        <translation>neznámy súbor</translation>
     </message>
 </context>
 <context>
     <name>FolderImage</name>
     <message>
-        <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
-        <translation type="vanished">Nemožno vidieť &apos;%1&apos; v &apos;%2&apos;: Nenájdený vhodný Atari názov.</translation>
+        <location filename="../../src/folderimage.cpp" line="113" />
+        <source>Cannot mirror '%1' in '%2': No suitable Atari name can be found.</source>
+        <translation>Nemožno vidieť '%1' v '%2': Nenájdený vhodný Atari názov.</translation>
     </message>
     <message>
-        <source>Cannot mirror %1 of %2 files in &apos;%3&apos;: Atari directory is full.</source>
-        <translation type="vanished">Nemožno vidieť %1 zo %2 súborov v &apos;%3&apos;: Atari adresár je plný.</translation>
+        <location filename="../../src/folderimage.cpp" line="186" />
+        <source>Cannot mirror %1 of %2 files in '%3': Atari directory is full.</source>
+        <translation>Nemožno vidieť %1 zo %2 súborov v '%3': Atari adresár je plný.</translation>
     </message>
     <message>
+        <location filename="../../src/folderimage.h" line="52" />
         <source>Folder image</source>
-        <translation type="vanished">Obraz priečinku</translation>
+        <translation>Obraz priečinku</translation>
     </message>
 </context>
 <context>
     <name>GzFile</name>
     <message>
+        <location filename="../../src/miscutils.cpp" line="175" />
         <source>gzdopen() failed.</source>
-        <translation type="vanished">gzdopen()failed.</translation>
+        <translation>gzdopen()failed.</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="202" />
         <source>gzseek() failed.</source>
-        <translation type="vanished">gzseek()failed.</translation>
+        <translation>gzseek()failed.</translation>
+    </message>
+</context>
+<context>
+    <name>InfoWidget</name>
+    <message>
+        <location filename="../../src/infowidget.ui" line="20" />
+        <source>Form</source>
+        <translation>Formulár</translation>
+    </message>
+</context>
+<context>
+    <name>LogDisplayDialog</name>
+    <message>
+        <location filename="../../src/logdisplaydialog.ui" line="14" />
+        <source>AspeQt Log View</source>
+        <translation>Zobrazenie denníka AspeQt</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="48" />
+        <source>Save Log</source>
+        <translation>Uložiť denník</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="50" />
+        <source>Text Files (*.txt);;HTML Files (*.html);;All Files (*)</source>
+        <translation>Textové súbory (*.txt);;Súbory HTML (*.html);;Všetky súbory (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="64" />
+        <source>Success</source>
+        <translation>Úspech</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="64" />
+        <source>Log saved successfully!</source>
+        <translation>Denník bol úspešne uložený!</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="66" />
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="66" />
+        <source>Could not save the log file.</source>
+        <translation>Súbor denníka sa nepodarilo uložiť.</translation>
     </message>
 </context>
 <context>
@@ -902,28 +1580,39 @@ Zostávajúci čas: %1: %2</translation>
         <translation type="vanished">D8:</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="88" />
         <source>&amp;Disk</source>
-        <translation type="vanished">&amp;Disk</translation>
+        <translation>&amp;Disk</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="99" />
         <source>&amp;File</source>
-        <translation type="vanished">&amp;Súbor</translation>
+        <translation>&amp;Súbor</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="115" />
         <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Nástroje</translation>
+        <translation>&amp;Nástroje</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="125" />
         <source>&amp;Help</source>
-        <translation type="vanished">&amp;Pomoc</translation>
+        <translation>&amp;Pomoc</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="135" />
+        <source>Window</source>
+        <translation>okno</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="160" />
         <source>Unmount &amp;all</source>
-        <translation type="vanished">&amp;Odpojiť všetko</translation>
+        <translation>&amp;Odpojiť všetko</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="163" />
         <source>Unmount all</source>
-        <translation type="vanished">Odpojiť všetko</translation>
+        <translation>Odpojiť všetko</translation>
     </message>
     <message>
         <source>Alt+0</source>
@@ -1258,185 +1947,323 @@ Zostávajúci čas: %1: %2</translation>
         <translation type="obsolete">Prepnúť proti zápisu pri D15</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="178" />
         <source>&amp;Options...</source>
-        <translation type="vanished">&amp;Možnosti...</translation>
+        <translation>&amp;Možnosti...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="181" />
+        <location filename="../../src/mainwindow.ui" line="184" />
         <source>Open options dialog</source>
-        <translation type="vanished">Otvoriť dialóg možnosti</translation>
+        <translation>Otvoriť dialóg možnosti</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="903"/>
+        <location filename="../../src/mainwindow.ui" line="203" />
+        <location filename="../../src/mainwindow.cpp" line="1328" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Spustiť emuláciu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="904"/>
-        <location filename="../../src/mainwindow.cpp" line="905"/>
+        <location filename="../../src/mainwindow.ui" line="206" />
+        <location filename="../../src/mainwindow.ui" line="209" />
+        <location filename="../../src/mainwindow.cpp" line="1329" />
+        <location filename="../../src/mainwindow.cpp" line="1330" />
         <source>Start SIO peripheral emulation</source>
         <translation>Spustiť SIO periférnu emuláciu</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="212" />
+        <source>Alt+E</source>
+        <translation>Alt+E</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="223" />
+        <location filename="../../src/mainwindow.ui" line="226" />
         <source>Mount to the first available slot</source>
-        <translation type="vanished">Pripojiť do prvého vóľneho slotu</translation>
+        <translation>Pripojiť do prvého vóľneho slotu</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="235" />
         <source>Mount &amp;disk image...</source>
-        <translation type="vanished">Pripojiť &amp;diskový obraz...</translation>
+        <translation>Pripojiť &amp;diskový obraz...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="238" />
+        <location filename="../../src/mainwindow.ui" line="241" />
         <source>Mount a disk image to the first available slot</source>
-        <translation type="vanished">Pripojiť diskový obraz do prvého vóľneho slotu</translation>
+        <translation>Pripojiť diskový obraz do prvého vóľneho slotu</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="244" />
         <source>Ctrl+D</source>
-        <translation type="vanished">Ctrl+D</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="253" />
         <source>Mount &amp;folder image...</source>
-        <translation type="vanished">Pripojiť &amp;obraz priečinka...</translation>
+        <translation>Pripojiť &amp;obraz priečinka...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="256" />
+        <location filename="../../src/mainwindow.ui" line="259" />
         <source>Mount a folder image to the first available slot</source>
-        <translation type="vanished">Pripojiť obraz priečinka do prvého vóľneho slotu</translation>
+        <translation>Pripojiť obraz priečinka do prvého vóľneho slotu</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="262" />
         <source>Ctrl+F</source>
-        <translation type="vanished">Ctrl+F</translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="271" />
         <source>New disk image...</source>
-        <translation type="vanished">Nový diskový obraz...</translation>
+        <translation>Nový diskový obraz...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="274" />
+        <location filename="../../src/mainwindow.ui" line="277" />
         <source>Create a new disk image file and mount it to the first available slot</source>
-        <translation type="vanished">Vytvoriť nový diskový obraz a pripojiť do prvého vóľneho slotu</translation>
+        <translation>Vytvoriť nový diskový obraz a pripojiť do prvého vóľneho slotu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="866"/>
-        <location filename="../../src/mainwindow.cpp" line="867"/>
+        <location filename="../../src/mainwindow.ui" line="301" />
+        <source>Alt+S</source>
+        <translation>Alt+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="319" />
+        <source>Alt+O</source>
+        <translation>Alt+O</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="382" />
+        <source>Alt+Shift+T</source>
+        <translation>Alt+Shift+T</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="415" />
+        <source>Alt+Q</source>
+        <translation>Alt+Q</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="427" />
+        <source>Ctrl+A</source>
+        <translation>Ctrl+A</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="466" />
+        <source>Ctrl+Shift+U</source>
+        <translation>Ctrl+Shift+U</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="490" />
+        <location filename="../../src/mainwindow.ui" line="493" />
+        <location filename="../../src/mainwindow.cpp" line="1296" />
+        <location filename="../../src/mainwindow.cpp" line="1297" />
         <source>Stop printer emulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastavte emuláciu tlačiarne</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="496" />
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="508" />
         <source>Alt+H</source>
-        <translation type="obsolete">Alt+H</translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="544" />
+        <location filename="../../src/mainwindow.ui" line="547" />
+        <location filename="../../src/mainwindow.ui" line="550" />
+        <source>Open log window</source>
+        <translation>Otvoriť okno denníka</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="553" />
+        <source>Ctrl+L</source>
+        <translation>Ctrl+L</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="558" />
+        <source>Boot Options...</source>
+        <translation>Možnosti spustenia...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="561" />
+        <location filename="../../src/mainwindow.ui" line="564" />
+        <source>Configure firmware and boot options</source>
+        <translation>Nakonfigurujte možnosti firmvéru a zavádzania</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="573" />
+        <source>Phonebook...</source>
+        <translation>Telefónny zoznam...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="576" />
+        <location filename="../../src/mainwindow.ui" line="579" />
+        <location filename="../../src/mainwindow.cpp" line="2738" />
+        <source>Open BBS Phonebook</source>
+        <translation>Otvorte telefónny zoznam BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="582" />
+        <source>Ctrl+B</source>
+        <translation>Ctrl+B</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="280" />
         <source>Ctrl+N</source>
-        <translation type="vanished">Ctrl+N</translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Properties...</source>
         <translation type="obsolete">Vlastnosti...</translation>
     </message>
     <message>
-        <source>Show D1&apos;s properties</source>
+        <source>Show D1's properties</source>
         <translation type="vanished">Zobraziť vlastnosti D1</translation>
     </message>
     <message>
-        <source>Show D2&apos;s properties</source>
+        <source>Show D2's properties</source>
         <translation type="vanished">Zobraziť vlastnosti D2</translation>
     </message>
     <message>
-        <source>Show D3&apos;s properties</source>
+        <source>Show D3's properties</source>
         <translation type="vanished">Zobraziť vlastnosti D3</translation>
     </message>
     <message>
-        <source>Show D4&apos;s properties</source>
+        <source>Show D4's properties</source>
         <translation type="vanished">Zobraziť vlastnosti D4</translation>
     </message>
     <message>
-        <source>Show D5&apos;s properties</source>
+        <source>Show D5's properties</source>
         <translation type="vanished">Zobraziť vlastnosti D5</translation>
     </message>
     <message>
-        <source>Show D6&apos;s properties</source>
+        <source>Show D6's properties</source>
         <translation type="vanished">Zobraziť vlastnosti D6</translation>
     </message>
     <message>
-        <source>Show D7&apos;s properties</source>
+        <source>Show D7's properties</source>
         <translation type="vanished">Zobraziť vlastnosti D7</translation>
     </message>
     <message>
-        <source>Show D8&apos;s properties</source>
+        <source>Show D8's properties</source>
         <translation type="vanished">Zobraziť vlastnosti D8</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="292" />
         <source>&amp;Save session</source>
-        <translation type="vanished">&amp;Uložiť reláciu</translation>
+        <translation>&amp;Uložiť reláciu</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="295" />
         <source>Save current session to a file</source>
-        <translation type="vanished">Uložiť aktuálnu reláciu do súboru</translation>
+        <translation>Uložiť aktuálnu reláciu do súboru</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="298" />
         <source>Save current session</source>
-        <translation type="vanished">Uložiť aktuálnu reláciu</translation>
+        <translation>Uložiť aktuálnu reláciu</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="517" />
+        <source>Toggle mini mode</source>
+        <translation>Prepnúť mini režim</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="520" />
+        <source>Ctrl+M</source>
+        <translation>Ctrl+M</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="532" />
+        <source>Toggle shade mode</source>
+        <translation>Prepnúť režim tieňovania</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="535" />
         <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="310" />
         <source>&amp;Open session...</source>
-        <translation type="vanished">&amp;Otvoriť reláciu...</translation>
+        <translation>&amp;Otvoriť reláciu...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="166" />
+        <source>Ctrl+U</source>
+        <translation>Ctrl+U</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="313" />
+        <location filename="../../src/mainwindow.ui" line="316" />
         <source>Open a previously saved session</source>
-        <translation type="vanished">Otvoriť neskôr uloženú reláciu</translation>
+        <translation>Otvoriť neskôr uloženú reláciu</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="187" />
         <source>Ctrl+O</source>
-        <translation type="vanished">Ctrl+O</translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
-        <source>Show D9&apos;s properties</source>
-        <translation type="obsolete">Zobraziť vlastnosti D8 {9&apos;?}</translation>
+        <source>Show D9's properties</source>
+        <translation type="obsolete">Zobraziť vlastnosti D8 {9'?}</translation>
     </message>
     <message>
-        <source>Show D10&apos;s properties</source>
-        <translation type="obsolete">Zobraziť vlastnosti D8 {10&apos;?}</translation>
+        <source>Show D10's properties</source>
+        <translation type="obsolete">Zobraziť vlastnosti D8 {10'?}</translation>
     </message>
     <message>
-        <source>Show D11&apos;s properties</source>
-        <translation type="obsolete">Zobraziť vlastnosti D8 {11&apos;?}</translation>
+        <source>Show D11's properties</source>
+        <translation type="obsolete">Zobraziť vlastnosti D8 {11'?}</translation>
     </message>
     <message>
-        <source>Show D12&apos;s properties</source>
-        <translation type="obsolete">Zobraziť vlastnosti D8 {12&apos;?}</translation>
+        <source>Show D12's properties</source>
+        <translation type="obsolete">Zobraziť vlastnosti D8 {12'?}</translation>
     </message>
     <message>
-        <source>Show D13&apos;s properties</source>
-        <translation type="obsolete">Zobraziť vlastnosti D8 {13&apos;?}</translation>
+        <source>Show D13's properties</source>
+        <translation type="obsolete">Zobraziť vlastnosti D8 {13'?}</translation>
     </message>
     <message>
-        <source>Show D14&apos;s properties</source>
-        <translation type="obsolete">Zobraziť vlastnosti D8 {14&apos;?}</translation>
+        <source>Show D14's properties</source>
+        <translation type="obsolete">Zobraziť vlastnosti D8 {14'?}</translation>
     </message>
     <message>
-        <source>Show D15&apos;s properties</source>
-        <translation type="obsolete">Zobraziť vlastnosti D8 {15&apos;?}</translation>
+        <source>Show D15's properties</source>
+        <translation type="obsolete">Zobraziť vlastnosti D8 {15'?}</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="328" />
         <source>&amp;Boot Atari executable...</source>
-        <translation type="vanished">&amp;Zaveď Atari spusitelné...</translation>
+        <translation>&amp;Zaveď Atari spusitelné...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="331" />
+        <location filename="../../src/mainwindow.ui" line="334" />
         <source>Boot an Atari executable</source>
-        <translation type="vanished">Zaveď ako Atari spustitelné</translation>
+        <translation>Zaveď ako Atari spustitelné</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="337" />
         <source>Alt+B</source>
-        <translation type="vanished">Alt+B</translation>
+        <translation>Alt+B</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="355" />
         <source>Save</source>
-        <translation type="vanished">Uložiť</translation>
+        <translation>Uložiť</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="358" />
+        <location filename="../../src/mainwindow.ui" line="361" />
         <source>Save D1</source>
-        <translation type="vanished">Uložiť D1</translation>
+        <translation>Uložiť D1</translation>
     </message>
     <message>
         <source>Save D2</source>
@@ -1623,60 +2450,76 @@ Zostávajúci čas: %1: %2</translation>
         <translation type="obsolete">Uložiť D15</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="373" />
+        <location filename="../../src/mainwindow.ui" line="376" />
+        <location filename="../../src/mainwindow.ui" line="379" />
         <source>Show printer text output</source>
-        <translation type="vanished">Zobraziť textový výstup tlačiarne</translation>
+        <translation>Zobraziť textový výstup tlačiarne</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
         <translation type="vanished">Ctrl+P</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="391" />
         <source>Playback cassette image...</source>
-        <translation type="vanished">Prehrať obraz kazety...</translation>
+        <translation>Prehrať obraz kazety...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="394" />
+        <location filename="../../src/mainwindow.ui" line="397" />
         <source>Playback a cassette image</source>
-        <translation type="vanished">Prehrať obraz kazety</translation>
+        <translation>Prehrať obraz kazety</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="400" />
         <source>Alt+C</source>
-        <translation type="vanished">Alt+C</translation>
+        <translation>Alt+C</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="409" />
         <source>&amp;Quit</source>
-        <translation type="vanished">&amp;Koniec</translation>
+        <translation>&amp;Koniec</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="412" />
         <source>Quit AspeQt</source>
-        <translation type="vanished">Skončiť AspeQt</translation>
+        <translation>Skončiť AspeQt</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
         <translation type="vanished">Ctrl+Q</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="424" />
         <source>&amp;About AspeQt</source>
-        <translation type="vanished">&amp;O AspeQt</translation>
+        <translation>&amp;O AspeQt</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="432" />
         <source>Help</source>
-        <translation type="vanished">Pomoc</translation>
+        <translation>Pomoc</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="440" />
         <source>Contents</source>
-        <translation type="vanished">Obsah</translation>
+        <translation>Obsah</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="445" />
         <source>Index</source>
-        <translation type="vanished">Index</translation>
+        <translation>Index</translation>
     </message>
     <message>
         <source>AspeQt &amp;User Manual</source>
         <translation type="vanished">AspeQt &amp;Použivateľský Manuál</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="457" />
+        <location filename="../../src/mainwindow.ui" line="460" />
+        <location filename="../../src/mainwindow.ui" line="463" />
         <source>User Manual</source>
-        <translation type="vanished">Použivateľský Manuál</translation>
+        <translation>Použivateľský Manuál</translation>
     </message>
     <message>
         <source>Auto Commit</source>
@@ -1691,90 +2534,83 @@ Zostávajúci čas: %1: %2</translation>
         <translation type="vanished">Prepnúť automatické potvrdenie ON/OFF</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="475" />
         <source>Save mounted image group as default</source>
-        <translation type="vanished">Uložiť pripojenú skupinu obrazov ako predvolenú</translation>
+        <translation>Uložiť pripojenú skupinu obrazov ako predvolenú</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="136"/>
+        <location filename="../../src/mainwindow.cpp" line="172" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt naštartoval v %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="197"/>
-        <location filename="../../src/mainwindow.cpp" line="207"/>
+        <location filename="../../src/mainwindow.cpp" line="231" />
+        <location filename="../../src/mainwindow.cpp" line="241" />
         <source>Session file error</source>
         <translation>Chyba súboru relácie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="198"/>
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration.</source>
-        <translation>Požadovaný súbor s reláciou nenájdený vo zvolenom adresári alebo cesta k nemu je zlá. AspeQt bude pokračovať s predvolenou reláciou.</translation>
+        <translation type="vanished">Požadovaný súbor s reláciou nenájdený vo zvolenom adresári alebo cesta k nemu je zlá. AspeQt bude pokračovať s predvolenou reláciou.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="208"/>
-        <source>Requested session file not found in the application&apos;s current directory path
+        <source>Requested session file not found in the application's current directory path
  (No path was specified). AspeQt will continue with default session configuration.</source>
-        <translation>Požadovný súbor relácie nenájdený v aktuálnom adresári aplikácie
+        <translation type="vanished">Požadovný súbor relácie nenájdený v aktuálnom adresári aplikácie
 (Nebola určená cesta). AspeQt bude pokračovať s predvolenou reláciou.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="219"/>
+        <location filename="../../src/mainwindow.cpp" line="252" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Atari Serial Peripheral Emulator for Qt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="221"/>
-        <location filename="../../src/mainwindow.cpp" line="1806"/>
+        <location filename="../../src/mainwindow.cpp" line="254" />
+        <location filename="../../src/mainwindow.cpp" line="2386" />
         <source> -- Session: </source>
         <translation> --Sedenie: </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="234"/>
+        <location filename="../../src/mainwindow.cpp" line="270" />
         <source>19200 bits/sec</source>
         <translation>19200 bitov/sec</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="241"/>
         <source>Clear messages</source>
-        <translation>Vymazať správy</translation>
+        <translation type="vanished">Vymazať správy</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="261"/>
-        <source>Connected to the network via: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="339"/>
+        <location filename="../../src/mainwindow.cpp" line="688" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt zastavil na %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="364"/>
+        <location filename="../../src/mainwindow.cpp" line="722" />
         <source>Mount from TNFS Network...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojiť zo siete TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="383"/>
+        <location filename="../../src/mainwindow.cpp" line="744" />
         <source>Mount TNFS</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojte TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="506"/>
+        <location filename="../../src/mainwindow.cpp" line="860" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Výmena disku %1 za disk %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="560"/>
-        <source>Cannot mount &apos;%1&apos;: No empty disk slots.</source>
-        <translation>Nemožno pripojiť &apos;%1&apos;: Nie su prázdne diskové sloty.</translation>
+        <location filename="../../src/mainwindow.cpp" line="914" />
+        <source>Cannot mount '%1': No empty disk slots.</source>
+        <translation>Nemožno pripojiť '%1': Nie su prázdne diskové sloty.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="658"/>
+        <location filename="../../src/mainwindow.cpp" line="1012" />
         <source>First run</source>
         <translation>Prvé spustenie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="659"/>
+        <location filename="../../src/mainwindow.cpp" line="1013" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1782,172 +2618,474 @@ Do you want to open the options dialog?</source>
 Prajete si otvoriť Nastavenia?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="816"/>
-        <location filename="../../src/mainwindow.cpp" line="817"/>
+        <location filename="../../src/mainwindow.ui" line="505" />
+        <location filename="../../src/mainwindow.cpp" line="1244" />
+        <location filename="../../src/mainwindow.cpp" line="1245" />
         <source>Hide drives D9-DO</source>
-        <translation type="unfinished"></translation>
+        <translation>Skryť disky D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="821"/>
-        <location filename="../../src/mainwindow.cpp" line="822"/>
+        <location filename="../../src/mainwindow.cpp" line="1249" />
+        <location filename="../../src/mainwindow.cpp" line="1250" />
         <source>Show drives D9-DO</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť disky D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="871"/>
-        <location filename="../../src/mainwindow.cpp" line="872"/>
+        <location filename="../../src/mainwindow.cpp" line="1300" />
+        <location filename="../../src/mainwindow.cpp" line="1301" />
         <source>Start printer emulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustite emuláciu tlačiarne</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1569"/>
+        <location filename="../../src/mainwindow.cpp" line="2137" />
         <source>[Disk %1] Auto-commit ON.</source>
-        <translation type="unfinished"></translation>
+        <translation>[Disk %1] Automatické potvrdenie zapnuté.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1571"/>
+        <location filename="../../src/mainwindow.cpp" line="2139" />
         <source>[Disk %1] Auto-commit OFF.</source>
-        <translation type="unfinished"></translation>
+        <translation>[Disk %1] Automatické potvrdenie VYP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1787"/>
-        <location filename="../../src/mainwindow.cpp" line="1823"/>
+        <location filename="../../src/mainwindow.cpp" line="2355" />
+        <location filename="../../src/mainwindow.cpp" line="2418" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>AspeQt sessions (*.aspeqt);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1951"/>
+        <location filename="../../src/mainwindow.cpp" line="2554" />
         <source>Drive %1 Happy Mode %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Disk %1 Šťastný režim %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1953"/>
+        <location filename="../../src/mainwindow.cpp" line="2556" />
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolené</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1953"/>
+        <location filename="../../src/mainwindow.cpp" line="2556" />
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakázané</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1983"/>
+        <location filename="../../src/mainwindow.cpp" line="2619" />
         <source>Mounted TNFS Stream: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojený tok TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1985"/>
+        <location filename="../../src/mainwindow.cpp" line="2637" />
         <source>Mount Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba pripojenia</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1985"/>
-        <source>Could not open TNFS stream from 13leader.net</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="857"/>
+        <location filename="../../src/mainwindow.cpp" line="1285" />
         <source>Printer emulation stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Emulácia tlačiarne sa zastavila.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="859"/>
+        <location filename="../../src/mainwindow.cpp" line="1287" />
         <source>Printer emulation started.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustila sa emulácia tlačiarne.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="893"/>
+        <location filename="../../src/mainwindow.cpp" line="1319" />
         <source>&amp;Stop emulation</source>
         <translation>&amp;Zastaviť emuláciu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="894"/>
-        <location filename="../../src/mainwindow.cpp" line="895"/>
+        <location filename="../../src/mainwindow.cpp" line="1320" />
+        <location filename="../../src/mainwindow.cpp" line="1321" />
         <source>Stop SIO peripheral emulation</source>
         <translation>Zastaviť SIO periférnu emuláciu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="912"/>
+        <location filename="../../src/mainwindow.cpp" line="1335" />
         <source>Emulation stopped.</source>
         <translation>Emulácia zastavená.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="933"/>
-        <source>TNFS Network Stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="939"/>
-        <source>TNFS Stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="951"/>
-        <location filename="../../src/mainwindow.cpp" line="971"/>
+        <location filename="../../src/mainwindow.cpp" line="1427" />
+        <location filename="../../src/mainwindow.cpp" line="1448" />
         <source>Folder image</source>
         <translation>Obraz priečinku</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="984"/>
-        <location filename="../../src/mainwindow.cpp" line="1528"/>
-        <location filename="../../src/mainwindow.cpp" line="1580"/>
-        <location filename="../../src/mainwindow.cpp" line="1625"/>
+        <location filename="../../src/mainwindow.cpp" line="1460" />
+        <location filename="../../src/mainwindow.cpp" line="2096" />
+        <location filename="../../src/mainwindow.cpp" line="2148" />
+        <location filename="../../src/mainwindow.cpp" line="2193" />
         <source>Save failed</source>
         <translation>Uloženie sa nepodarilo</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="985"/>
-        <location filename="../../src/mainwindow.cpp" line="1528"/>
-        <location filename="../../src/mainwindow.cpp" line="1580"/>
-        <location filename="../../src/mainwindow.cpp" line="1625"/>
-        <source>&apos;%1&apos; cannot be saved, do you want to save the image with another name?</source>
-        <translation>&apos;%1&apos; nemožno uložiť, želáte si uložiť obraz pod iným menom?</translation>
+        <location filename="../../src/mainwindow.cpp" line="1461" />
+        <location filename="../../src/mainwindow.cpp" line="2096" />
+        <location filename="../../src/mainwindow.cpp" line="2148" />
+        <location filename="../../src/mainwindow.cpp" line="2193" />
+        <source>'%1' cannot be saved, do you want to save the image with another name?</source>
+        <translation>'%1' nemožno uložiť, želáte si uložiť obraz pod iným menom?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1204"/>
+        <location filename="../../src/mainwindow.cpp" line="1777" />
         <source>Unmounted disk %1</source>
         <translation>Odpojený disk %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1392"/>
-        <location filename="../../src/mainwindow.cpp" line="1776"/>
-        <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
-        <translation>[%1] Pripojený &apos;%2&apos; ako &apos;%3&apos;.</translation>
+        <location filename="../../src/mainwindow.cpp" line="1950" />
+        <location filename="../../src/mainwindow.cpp" line="2344" />
+        <source>[%1] Mounted '%2' as '%3'.</source>
+        <translation>[%1] Pripojený '%2' ako '%3'.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1411"/>
         <source>Open a disk image</source>
-        <translation>Otvoriť diskový obraz</translation>
+        <translation type="vanished">Otvoriť diskový obraz</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1413"/>
         <source>All Atari disk images (*.atr *.xfd *.atx *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
-        <translation type="unfinished">Všetky diskové obrazy(*.atr *.xfd *.atx *.pro);;SIO2PC ATR obrazy (*.atr);;XFormer XFD obrazy (*.xfd);;ATX obrazy (*.atx);;Pro obrazy (*.pro);;Všetky súbory (*)</translation>
+        <translation type="obsolete">Všetky diskové obrazy(*.atr *.xfd *.atx *.pro);;SIO2PC ATR obrazy (*.atr);;XFormer XFD obrazy (*.xfd);;ATX obrazy (*.atx);;Pro obrazy (*.pro);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="265"/>
-        <source>No network connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="1608"/>
+        <location filename="../../src/mainwindow.cpp" line="2176" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Všetky obrázky diskov Atari (*.atr *.xfd *.pro);;Obrázky SIO2PC ATR (*.atr);;Obrázky XFormer XFD (*.xfd);;Obrázky Pro (*.pro);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1433"/>
+        <location filename="../../src/mainwindow.cpp" line="1998" />
         <source>Open a folder image</source>
         <translation>Otvoriť obraz priečinku</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1482"/>
+        <location filename="../../src/mainwindow.cpp" line="232" />
+        <location filename="../../src/mainwindow.cpp" line="242" />
+        <source>Requested session file not found...</source>
+        <translation>Požadovaný súbor relácie sa nenašiel...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="289" />
+        <source>Adjust Shade Opacity</source>
+        <translation>Upravte krytie odtieňov</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="297" />
+        <source>RX: Data Receiving from Internet</source>
+        <translation>RX: Príjem dát z internetu</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="303" />
+        <source>TX: Data Sending from Atari</source>
+        <translation>TX: Odosielanie údajov z Atari</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="334" />
+        <source>Hangup (NO CARRIER)</source>
+        <translation>Zavesenie (BEZ CARRIER)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="346" />
+        <location filename="../../src/mainwindow.cpp" line="2739" />
+        <source>Send Auto-User (ESC-U)</source>
+        <translation>Odoslať automatického používateľa (ESC-U)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="357" />
+        <location filename="../../src/mainwindow.cpp" line="2740" />
+        <source>Send Auto-Pass (ESC-P)</source>
+        <translation>Odoslať Auto-Pass (ESC-P)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="370" />
+        <source>Toggle SIO Hex Dump Trace</source>
+        <translation>Prepnúť SIO Hex Dump Trace</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="376" />
+        <source>Toggle 6502 Disassembler</source>
+        <translation>Prepnúť 6502 Disassembler</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="382" />
+        <source>Toggle SIO Packet Sniffer</source>
+        <translation>Prepnúť SIO Packet Sniffer</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="393" />
+        <source>Main Tools</source>
+        <translation>Hlavné nástroje</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="406" />
+        <source>Clear log messages</source>
+        <translation>Vymazať správy denníka</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="413" />
+        <source>Show Log Window</source>
+        <translation>Zobraziť okno denníka</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1360" />
+        <location filename="../../src/mainwindow.cpp" line="2593" />
+        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <source>Loading...</source>
+        <translation>Načítava sa...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1360" />
+        <location filename="../../src/mainwindow.cpp" line="2593" />
+        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <source>Downloading from TNFS...</source>
+        <translation>Sťahovanie z TNFS...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1378" />
+        <location filename="../../src/mainwindow.cpp" line="1381" />
+        <source>Executable (Local)</source>
+        <translation>Spustiteľný súbor (miestne)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1735" />
+        <source>Slot %1 download aborted by user.</source>
+        <translation>Sťahovanie priestoru %1 bolo prerušené používateľom.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1965" />
+        <source>Open a disk or executable image</source>
+        <translation>Otvorte disk alebo spustiteľný obraz</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1967" />
+        <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
+        <translation>Všetky podporované obrázky (*.atr *.xfd *.atx *.pro *.xex *.com);;Spustiteľné súbory Atari (*.xex *.com);;Obrázky SIO2PC ATR (*.atr);;Obrázky XFormer XFD (*.xfd);;Obrázky ATX (*.atx);;Všetky obrázky (*.pro);;Všetky obrázky (*.pro);;</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2045" />
         <source>Image file unsaved</source>
         <translation>Obraz súboru neuložený</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1482"/>
-        <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
-        <translation>&apos;%1&apos; obsahuje neuložené zmeny, želáte si uložiť ho?</translation>
+        <location filename="../../src/mainwindow.cpp" line="2045" />
+        <source>'%1' has unsaved changes, do you want to save it?</source>
+        <translation>'%1' obsahuje neuložené zmeny, želáte si uložiť ho?</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2637" />
+        <source>Could not open TNFS stream from %1</source>
+        <translation>Nepodarilo sa otvoriť stream TNFS z %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2657" />
+        <source>Downloading: %1</source>
+        <translation>Sťahovanie: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2659" />
+        <source>Downloading...</source>
+        <translation>Sťahuje sa...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2734" />
+        <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
+        <translation>Telefónny zoznam je vypnutý. Nastavte cestu XML v Možnosti -&gt; Modem Bridge.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2735" />
+        <source>Macro User disabled. Set Phonebook XML path in Options.</source>
+        <translation>Používateľ makra je vypnutý. V Možnostiach nastavte cestu XML telefónneho zoznamu.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2736" />
+        <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
+        <translation>Macro Pass je vypnutý. V Možnostiach nastavte cestu XML telefónneho zoznamu.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <source>Could not extract manual to: </source>
+        <translation>Nepodarilo sa extrahovať manuál do:</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3098" />
+        <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
+        <translation>[Webové používateľské rozhranie] Varovanie: Neuložené zmeny na disku v slote %1 boli zahodené núteným pripojením.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3117" />
+        <source>[Web UI] Mounted Executable to slot %1: %2</source>
+        <translation>[Webové používateľské rozhranie] Spustiteľný súbor pripojený k slotu %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3119" />
+        <source>[Web UI] Executable ready. Please cold start the Atari.</source>
+        <translation>[Webové používateľské rozhranie] Spustiteľný súbor je pripravený. Prosím, naštartujte Atari za studena.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3123" />
+        <source>[Web UI] Failed to parse Executable: %1</source>
+        <translation>[Webové používateľské rozhranie] Nepodarilo sa analyzovať spustiteľný súbor: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3143" />
+        <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
+        <translation>[Webové používateľské rozhranie] Varovanie: Neuložené zmeny na disku v slote %1 boli zahodené núteným vysunutím.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3207" />
+        <source>[Web UI] Dialing BBS: %1 (%2)</source>
+        <translation>[Webové používateľské rozhranie] Vytáčanie BBS: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3258" />
+        <source>[Web UI] Mounted TNFS Stream: %1</source>
+        <translation>[Webové používateľské rozhranie] Pripojený stream TNFS: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3268" />
+        <source>[Web UI] Failed to mount TNFS Stream: %1</source>
+        <translation>[Webové používateľské rozhranie] Nepodarilo sa pripojiť stream TNFS: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3269" />
+        <source>Download failed or aborted: %1</source>
+        <translation>Sťahovanie zlyhalo alebo bolo prerušené: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3277" />
+        <source>[Web UI] Write Protect for slot %1 set to %2</source>
+        <translation>[Webové používateľské rozhranie] Ochrana proti zápisu pre slot %1 nastavená na %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3297" />
+        <source>Web UI WebSocket Server started on port %1</source>
+        <translation>Webové rozhranie WebSocket Server sa spustil na porte %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3299" />
+        <source>Failed to start Web UI WebSocket Server.</source>
+        <translation>Nepodarilo sa spustiť server WebSocket Web UI.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3328" />
+        <source>HTTP Dashboard available at http://localhost:%1</source>
+        <translation>HTTP Dashboard dostupný na http://localhost:%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3330" />
+        <source>Failed to start HTTP Server.</source>
+        <translation>Spustenie servera HTTP zlyhalo.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3358" />
+        <source>Web Dashboard and WebSocket servers completely shut down.</source>
+        <translation>Web Dashboard a servery WebSocket sa úplne vypnú.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3368" />
+        <source>[Web UI] Failed to load cassette image: %1</source>
+        <translation>[Webové používateľské rozhranie] Nepodarilo sa načítať obraz kazety: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3378" />
+        <source>[Web UI] Cassette Mounted: %1</source>
+        <translation>[Webové používateľské rozhranie] Namontované na kazete: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3391" />
+        <source>[Web UI] Cassette is already playing.</source>
+        <translation>[Webové používateľské rozhranie] Kazeta sa už prehráva.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3395" />
+        <source>[Web UI] Starting Cassette Playback.</source>
+        <translation>[Web UI] Spustenie prehrávania kazety.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3410" />
+        <source>[Web UI] Rewinding Cassette...</source>
+        <translation>[Webové používateľské rozhranie] Prevíjanie kazety...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3434" />
+        <source>[Web UI] Cassette Ejected.</source>
+        <translation>[Webové používateľské rozhranie] Kazeta je vysunutá.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3450" />
+        <source>[Web UI] Cassette Playback Finished.</source>
+        <translation>[Webové používateľské rozhranie] Prehrávanie kazety je dokončené.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3471" />
+        <source>Failed to initialize blank disk.</source>
+        <translation>Nepodarilo sa inicializovať prázdny disk.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3489" />
+        <source>Failed to format blank disk.</source>
+        <translation>Nepodarilo sa naformátovať prázdny disk.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3508" />
+        <source>Failed to save blank disk to host.</source>
+        <translation>Nepodarilo sa uložiť prázdny disk na hostiteľa.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3516" />
+        <source>Blank disk created: %1</source>
+        <translation>Bol vytvorený prázdny disk: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3517" />
+        <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
+        <translation>[Webové používateľské rozhranie] Vytvorený a pripojený prázdny disk: %1 v slote %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3532" />
+        <source>Empty</source>
+        <translation>Prázdny</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3534" />
+        <source>No file mounted.</source>
+        <translation>Nie je pripojený žiadny súbor.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3538" />
+        <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Priestor %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Názov súboru:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Formát/typ:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolútna cesta:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3549" />
+        <source>Drive Details</source>
+        <translation>Podrobnosti o disku</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3574" />
+        <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
+        <translation>[Webové používateľské rozhranie] Súbor pripojený priamo do pamäte RAM v slote %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3577" />
+        <source>Mounted to RAM: %1</source>
+        <translation>Pripojené k RAM: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3581" />
+        <source>[Web UI] Failed to parse RAM image: %1</source>
+        <translation>[Webové používateľské rozhranie] Nepodarilo sa analyzovať obraz RAM: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3584" />
+        <source>Failed to parse: %1</source>
+        <translation>Nepodarilo sa analyzovať: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3595" />
+        <source>[Injector] Virtual Packet Step Triggered: %1 bytes</source>
+        <translation>[Injektor] Spustený krok virtuálneho paketu: %1 bajtov</translation>
     </message>
     <message>
         <source>[Disk 1] Auto-commit ON.</source>
@@ -2070,22 +3208,22 @@ Prajete si otvoriť Nastavenia?</translation>
         <translation type="obsolete">[Disk 8] Auto-potvrdenie OFF. {15]?}</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1606"/>
+        <location filename="../../src/mainwindow.cpp" line="2174" />
         <source>Save image as</source>
         <translation>Uložiť obraz ako</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1649"/>
+        <location filename="../../src/mainwindow.cpp" line="2217" />
         <source>Revert to last saved</source>
         <translation>Vrátiť posledné uložené zmeny</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1650"/>
-        <source>Do you really want to revert &apos;%1&apos; to its last saved state? You will lose the changes that has been made.</source>
-        <translation>Naozaj si želáte vrátiť &apos;%1&apos; do posledného uloženého stavu? Posledné vykonané zmeny budu stratené.</translation>
+        <location filename="../../src/mainwindow.cpp" line="2218" />
+        <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
+        <translation>Naozaj si želáte vrátiť '%1' do posledného uloženého stavu? Posledné vykonané zmeny budu stratené.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1785"/>
+        <location filename="../../src/mainwindow.cpp" line="2353" />
         <source>Open session</source>
         <translation>Otvoriť reláciu</translation>
     </message>
@@ -2094,27 +3232,27 @@ Prajete si otvoriť Nastavenia?</translation>
         <translation type="vanished">AspeQt relácia (*.respeqt);;Všetky súbory(*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1821"/>
+        <location filename="../../src/mainwindow.cpp" line="2416" />
         <source>Save session as</source>
         <translation>Uložiť reláciu ako</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1844"/>
+        <location filename="../../src/mainwindow.cpp" line="2447" />
         <source>Open executable</source>
         <translation>Otvoriť spustitelné</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1846"/>
+        <location filename="../../src/mainwindow.cpp" line="2449" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Atari spustitelné (*.xex *.com *.exe);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1878"/>
+        <location filename="../../src/mainwindow.cpp" line="2481" />
         <source>Open a cassette image</source>
         <translation>Otvoriť obraz kazety</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1880"/>
+        <location filename="../../src/mainwindow.cpp" line="2483" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>CAS obrazy (*.cas);;Všetky súbory(*)</translation>
     </message>
@@ -2122,733 +3260,2540 @@ Prajete si otvoriť Nastavenia?</translation>
 <context>
     <name>MyModel</name>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="226" />
+        <location filename="../../src/diskeditdialog.cpp" line="396" />
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="226" />
+        <source>Could not delete files. (Is this file system supported?)</source>
+        <translation>Nepodarilo sa odstrániť súbory. (Je tento súborový systém podporovaný?)</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="246" />
         <source>No</source>
-        <translation type="vanished">Nie</translation>
+        <translation>Nie</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="249" />
         <source>Name</source>
-        <translation type="vanished">Meno</translation>
+        <translation>Meno</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="252" />
         <source>Extension</source>
-        <translation type="vanished">Rozšírenie</translation>
+        <translation>Rozšírenie</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="255" />
         <source>Size</source>
-        <translation type="vanished">Veľkosť</translation>
+        <translation>Veľkosť</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="258" />
         <source>Time</source>
-        <translation type="vanished">Čas</translation>
+        <translation>Čas</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="261" />
         <source>Notes</source>
-        <translation type="vanished">Notes</translation>
+        <translation>Notes</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="396" />
+        <source>Could not insert files.
+
+Possible causes:
+- File system not supported (e.g. SpartaDOS)
+- Disk is full
+- File name invalid</source>
+        <translation>Nepodarilo sa vložiť súbory.
+
+Možné príčiny:
+- Systém súborov nie je podporovaný (napr. SpartaDOS)
+- Disk je plný
+- Názov súboru je neplatný</translation>
     </message>
 </context>
 <context>
     <name>OptionsDialog</name>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="23" />
         <source>Options</source>
-        <translation type="vanished">Možnosti</translation>
+        <translation>Možnosti</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="51" />
         <source>1</source>
-        <translation type="vanished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="56" />
         <source>Serial I/O backends</source>
-        <translation type="vanished">Serial I/O backends</translation>
+        <translation>Serial I/O backends</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="63" />
         <source>Standard serial port</source>
-        <translation type="vanished">Štandardný sériový port</translation>
+        <translation>Štandardný sériový port</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="71" />
         <source>AtariSIO</source>
-        <translation type="vanished">AtariSIO</translation>
+        <translation>AtariSIO</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="80" />
+        <location filename="../../src/optionsdialog.ui" line="529" />
         <source>Emulation</source>
-        <translation type="vanished">Emulácia</translation>
+        <translation>Emulácia</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="85" />
+        <source>Hayes Modem Emulator</source>
+        <translation>Emulátor modemu Hayes</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="93" />
+        <location filename="../../src/optionsdialog.ui" line="991" />
         <source>User interface</source>
-        <translation type="vanished">Uživateľské rozhranie</translation>
+        <translation>Uživateľské rozhranie</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="98" />
+        <source>Web Interface</source>
+        <translation>webové rozhranie</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="140" />
         <source>Standard serial port backend options</source>
-        <translation type="vanished">Štandardný sériový port backend možnosti</translation>
+        <translation>Štandardný sériový port backend možnosti</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="149" />
+        <location filename="../../src/optionsdialog.ui" line="429" />
         <source>Use this backend</source>
-        <translation type="vanished">Použiť tento backend</translation>
+        <translation>Použiť tento backend</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="162" />
+        <source>Direct Hardware UART (RasPi)</source>
+        <translation>Priamy hardvér UART (RasPi)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="175" />
         <source>Port name:</source>
-        <translation type="vanished">Názov portu:</translation>
+        <translation>Názov portu:</translation>
     </message>
     <message>
         <source>COM1</source>
         <translation type="vanished">COM1</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="191" />
+        <location filename="../../src/optionsdialog.ui" line="462" />
         <source>Handshake method:</source>
-        <translation type="vanished">Metóda handshake:</translation>
+        <translation>Metóda handshake:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="199" />
+        <location filename="../../src/optionsdialog.ui" line="470" />
         <source>RI</source>
-        <translation type="vanished">RI</translation>
+        <translation>RI</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="204" />
+        <location filename="../../src/optionsdialog.ui" line="475" />
         <source>DSR</source>
-        <translation type="vanished">DSR</translation>
+        <translation>DSR</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="209" />
+        <location filename="../../src/optionsdialog.ui" line="480" />
         <source>CTS</source>
-        <translation type="vanished">CTS</translation>
+        <translation>CTS</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="214" />
+        <source>NONE</source>
+        <translation>ŽIADNE</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="219" />
+        <source>SOFTWARE (SIO2BT)</source>
+        <translation>SOFTWARE (SIO2BT)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="236" />
+        <source>Write delay [ms]:</source>
+        <translation>Oneskorenie zápisu [ms]:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="250" />
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="255" />
+        <source>10</source>
+        <translation>10</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="260" />
+        <source>20</source>
+        <translation>20</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="265" />
+        <source>30</source>
+        <translation>30</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="270" />
+        <source>40</source>
+        <translation>40</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="275" />
+        <source>50</source>
+        <translation>50</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="280" />
+        <source>60</source>
+        <translation>60</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="294" />
         <source>High speed mode baud rate:</source>
-        <translation type="vanished">Vysokorýchlostná prenosová rýchlosť:</translation>
+        <translation>Vysokorýchlostná prenosová rýchlosť:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="305" />
         <source>19200 (1x)</source>
-        <translation type="vanished">19200 (1x)</translation>
+        <translation>19200 (1x)</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="310" />
         <source>38400 (2x)</source>
-        <translation type="vanished">38400 (2x)</translation>
+        <translation>38400 (2x)</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="315" />
         <source>57600 (3x)</source>
-        <translation type="vanished">57600 (3x)</translation>
+        <translation>57600 (3x)</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="323" />
         <source>Use non-standard speeds</source>
-        <translation type="vanished">Použiť neštandardnú rýchlosť</translation>
+        <translation>Použiť neštandardnú rýchlosť</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="339" />
         <source>High speed mode POKEY divisor:</source>
-        <translation type="vanished">Vysokorýchlostný mod POKEY deliteľa:</translation>
+        <translation>Vysokorýchlostný mod POKEY deliteľa:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="359" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Complete/Error response delay (μs)&lt;br&gt;See manual for more information&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Oneskorenie odozvy dokončenia/chyby (μs)&lt;br&gt;Viac informácií nájdete v príručke&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="366" />
+        <source>μs</source>
+        <translation>μs</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="420" />
         <source>AtariSIO backend options</source>
-        <translation type="vanished">AtariSIO backend možnosti</translation>
+        <translation>AtariSIO backend možnosti</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="442" />
         <source>Device name:</source>
-        <translation type="vanished">Názov zariadenia:</translation>
+        <translation>Názov zariadenia:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="449" />
         <source>/dev/atarisio0</source>
-        <translation type="vanished">/dev/atarisio0</translation>
+        <translation>/dev/atarisio0</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="557" />
+        <source>Filter out underscore character from file names</source>
+        <translation>Odfiltrujte znak podčiarknutia z názvov súborov</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="572" />
+        <source>        (Required for AtariDOS compatibility)</source>
+        <translation>(Vyžaduje sa pre kompatibilitu s AtariDOS)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="595" />
         <source>Use high speed executable loader</source>
-        <translation type="vanished">Použiť vysokorýchlostný loader</translation>
+        <translation>Použiť vysokorýchlostný loader</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="605" />
+        <source>Enable this for text-based web services.
+Disable for binary data.</source>
+        <translation>Povoľte to pre textové webové služby.
+Zakázať pre binárne údaje.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="609" />
+        <source>Convert Atari EOL (155) to LF (10) on Network Write</source>
+        <translation>Skonvertujte Atari EOL (155) na LF (10) pri Network Write</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="632" />
+        <source>Enable this to read Unix text files properly on Atari.
+Disable for binary files.</source>
+        <translation>Povoľte túto možnosť, ak chcete správne čítať textové súbory Unix na Atari.
+Zakázať pre binárne súbory.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="636" />
+        <source>Convert LF (10) to Atari EOL (155) on Network Read</source>
+        <translation>Skonvertujte LF (10) na Atari EOL (155) pri čítaní siete</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="646" />
+        <source>CAPITAL letters in file names</source>
+        <translation>VEĽKÉ písmená v názvoch súborov</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="653" />
+        <source>Restore last TNFS location on mount</source>
+        <translation>Obnovte posledné umiestnenie TNFS na pripojení</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="685" />
+        <source>Hayes Modem Emulator (Rs232 to TCP Bridge)</source>
+        <translation>Hayes Modem Emulator (Rs232 to TCP Bridge)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="691" />
+        <source>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</source>
+        <translation>Premosťuje sekundárny sériový port na internet. Vyžaduje Atari 850 alebo R-Verter.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="694" />
+        <source>Enable Modem Bridge (RS232 to TCP)</source>
+        <translation>Povoliť modemový most (RS232 na TCP)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="701" />
+        <source>Bridges a secondary Serial Port to the Internet.
+Requires Atari 850 or R-Verter.</source>
+        <translation>Premosťuje sekundárny sériový port na internet.
+Vyžaduje Atari 850 alebo R-Verter.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="705" />
+        <source>Enable 850 Device  (R: to TCP)</source>
+        <translation>Povoliť zariadenie 850 (R: na TCP)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="715" />
+        <location filename="../../src/optionsdialog.ui" line="752" />
+        <source>Enable if using a standard FTDI USB adapter.
+Leave unchecked for direct Raspberry Pi GPIO.</source>
+        <translation>Povoliť, ak používate štandardný FTDI USB adaptér.
+Ponechajte nezačiarknuté pre priame Raspberry Pi GPIO.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="719" />
+        <source>Invert CTS Logic (Standard USB Adapters)</source>
+        <translation>Invert CTS Logic (štandardné USB adaptéry)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="729" />
+        <source>FTDI/USB Latency:</source>
+        <translation>FTDI/USB latencia:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="736" />
+        <source>ms</source>
+        <translation>pani</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="756" />
+        <source>Enable BBS Listener (Auto-Answer):</source>
+        <translation>Povoliť BBS Listener (automatická odpoveď):</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="766" />
+        <source>BBS Listener TCP Port</source>
+        <translation>TCP port BBS Listener</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="790" />
+        <source>Bridge Serial Port:</source>
+        <translation>Sériový port mosta:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="800" />
+        <source>Must be different from the SIO port.</source>
+        <translation>Musí sa líšiť od portu SIO.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="807" />
+        <source>Baud Rate:</source>
+        <translation>Prenosová rýchlosť:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="818" />
+        <source>300</source>
+        <translation>300</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="823" />
+        <source>600</source>
+        <translation>600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="828" />
+        <source>1200</source>
+        <translation>1200</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="833" />
+        <source>2400</source>
+        <translation>2400</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="838" />
+        <source>4800</source>
+        <translation>4800</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="843" />
+        <source>9600</source>
+        <translation>9600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="848" />
+        <source>19200</source>
+        <translation>19200</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="853" />
+        <source>38400</source>
+        <translation>38400</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="858" />
+        <source>57600</source>
+        <translation>57600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="869" />
+        <source>Highly recommended for Atari 850 Interface.</source>
+        <translation>Dôrazne sa odporúča pre rozhranie Atari 850.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="872" />
+        <source>Enable Hardware Flow Control (RTS/CTS)</source>
+        <translation>Povoliť riadenie toku hardvéru (RTS/CTS)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="895" />
+        <source>Enable SSH Support (Port 22)</source>
+        <translation>Povoliť podporu SSH (Port 22)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="905" />
+        <source>Local Echo (Half Duplex)</source>
+        <translation>Miestna ozvena (polovičný duplex)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="912" />
+        <source>Phonebook XML Path:</source>
+        <translation>Cesta XML telefónneho zoznamu:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="927" />
+        <source>Click ... to select dialdirectory.xml</source>
+        <translation>Kliknutím na ... vyberte dialdirectory.xml</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="937" />
+        <source>...</source>
+        <translation />
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="947" />
+        <source>New</source>
+        <translation>Nové</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="550" />
         <source>Use custom baud rate for cassette emulation</source>
-        <translation type="vanished">Použiť voliteľnú rýchlosť prenosu pri emulácií kazety</translation>
+        <translation>Použiť voliteľnú rýchlosť prenosu pri emulácií kazety</translation>
     </message>
     <message>
         <source>User inteface</source>
         <translation type="vanished">Uživateľské rozhranie</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="997" />
         <source>Language:</source>
-        <translation type="vanished">Jazzk:</translation>
+        <translation>Jazzk:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1007" />
         <source>Minimize to system tray</source>
-        <translation type="vanished">Minimalizovať na lištu</translation>
+        <translation>Minimalizovať na lištu</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1014" />
         <source>Save window positions and sizes</source>
-        <translation type="vanished">Uložiť veľkosť a pozíciu okna</translation>
+        <translation>Uložiť veľkosť a pozíciu okna</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1053" />
+        <source>Save D9-DO drive visibility status</source>
+        <translation>Uložte stav viditeľnosti pohonu D9-DO</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1063" />
+        <source>Enable Shade in Mini Mode by default</source>
+        <translation>V predvolenom nastavení povoľte tieň v režime Mini</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1076" />
+        <source>Use larger font in drive slot descriptions</source>
+        <translation>V popisoch slotov jednotky použite väčšie písmo</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1108" />
+        <source>Web Dashboard Options</source>
+        <translation>Možnosti webového ovládacieho panela</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1114" />
+        <source>Enable the HTTP and WebSocket servers for the remote web dashboard.</source>
+        <translation>Povoľte servery HTTP a WebSocket pre vzdialený webový panel.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1117" />
+        <source>Enable Web Interface</source>
+        <translation>Povoliť webové rozhranie</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1126" />
+        <source>HTTP Dashboard Port:</source>
+        <translation>HTTP Dashboard Port:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1146" />
+        <source>WebSocket Bridge Port:</source>
+        <translation>Port WebSocket Bridge:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1194" />
         <source>Save/Commit or Cancel/Ignore changes made to the settings</source>
-        <translation type="vanished">Uložiť/Potvrdiť alebo Zrušit/Ignorovať zmeny urobene v nastaveniach</translation>
+        <translation>Uložiť/Potvrdiť alebo Zrušit/Ignorovať zmeny urobene v nastaveniach</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.cpp" line="59" />
+        <location filename="../../src/optionsdialog.cpp" line="74" />
+        <source>Custom</source>
+        <translation>Vlastné</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="166" />
         <source>Automatic</source>
-        <translation type="vanished">Automatický</translation>
+        <translation>Automatický</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.cpp" line="169" />
+        <location filename="../../src/optionsdialog.cpp" line="178" />
         <source>English</source>
-        <translation type="obsolete">Slovak</translation>
+        <translation>angličtina</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="381" />
+        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <source>Port Conflict</source>
+        <translation>Konflikt v prístave</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="382" />
+        <source>You cannot use the same Serial Port (%1) for both
+SIO Emulation and the Modem Bridge.
+
+Please select a different port for the Modem.</source>
+        <translation>Pre oba nemôžete použiť rovnaký sériový port (%1).
+Emulácia SIO a modemový most.
+
+Vyberte iný port pre modem.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <source>The HTTP Dashboard Port and WebSocket Bridge Port cannot be the same.
+
+Please assign different ports.</source>
+        <translation>Port HTTP Dashboard Port a WebSocket Bridge Port nemôžu byť rovnaké.
+
+Priraďte rôzne porty.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="456" />
+        <source>Select Dial Directory</source>
+        <translation>Vyberte položku Dial Directory</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="456" />
+        <location filename="../../src/optionsdialog.cpp" line="465" />
+        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <source>XML Files (*.xml);;All Files (*)</source>
+        <translation>Súbory XML (*.xml);;Všetky súbory (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="465" />
+        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <source>Create New Dial Directory</source>
+        <translation>Vytvoriť nový adresár vytáčania</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <source>Could not create the phonebook file.</source>
+        <translation>Nepodarilo sa vytvoriť súbor telefónneho zoznamu.</translation>
+    </message>
+</context>
+<context>
+    <name>PCLINK</name>
+    <message>
+        <location filename="../../src/pclink.cpp" line="181" />
+        <source>PCLINK Command=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</source>
+        <translation>PCLINK príkaz=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="193" />
+        <source>[%1] P</source>
+        <translation>[%1] P</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="200" />
+        <source>[%1] R</source>
+        <translation>[%1] R</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="218" />
+        <source>[%1] Get status for [%2]</source>
+        <translation>[%1] Získať stav pre [%2]</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="229" />
+        <source>[%1] Speed poll</source>
+        <translation>[%1] Prieskum rýchlosti</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="236" />
+        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
+        <translation>[%1] príkaz: $%2, pomocný: $%3 NAKed.</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="269" />
+        <source>PCLINK[%1] Mount %2</source>
+        <translation>PCLINK[%1] Pripojiť %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="311" />
+        <source>PCLINK[%1] Unmount</source>
+        <translation>PCLINK[%1] Odpojiť</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="464" />
+        <source>match: %1%2%3%4%5%6%7%8%9%10%11 with %12%13%14%15%16%17%18%19%20%21%22: </source>
+        <translation>zhoda: %1%2%3%4%5%6%7%8%9%10%11 s %12%13%14%15%16%17%18%19%20%21%22:</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="477" />
+        <source>no match</source>
+        <translation>žiadna zhoda</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="488" />
+        <source>atr mismatch: not HIDDEN or ARCHIVED</source>
+        <translation>atr nesúlad: nie je SKRYTÝ ani ARCHIVOVANÝ</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="496" />
+        <source>atr mismatch: not PROTECTED</source>
+        <translation>atr nesúlad: nie je chránený</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="505" />
+        <source>atr mismatch: not UNPROTECTED</source>
+        <translation>atr nesúlad: nie je NECHRÁNENÝ</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="514" />
+        <source>atr mismatch: not SUBDIR</source>
+        <translation>atr nesúlad: nie SUBDIR</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="523" />
+        <source>atr mismatch: not FILE</source>
+        <translation>atr nesúlad: nie FILE</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="528" />
+        <source>match</source>
+        <translation>zápas</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="593" />
+        <source>%1: got fname '%2'</source>
+        <translation>%1: dostal fname '%2'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="601" />
+        <source>%1: stat '%2'</source>
+        <translation>%1: stat '%2'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="611" />
+        <source>'%1': is a symlink</source>
+        <translation>'%1': je symbolický odkaz</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="615" />
+        <source>'%1': can't be accessed</source>
+        <translation>'%1': nie je prístupný</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="616" />
+        <source>access error code %1</source>
+        <translation>kód chyby prístupu %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="713" />
+        <source>Internal error: dir_cache should be NULL!</source>
+        <translation>Interná chyba: dir_cache by mala mať hodnotu NULL!</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="844" />
+        <source>closing all files</source>
+        <translation>zatvorenie všetkých súborov</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1120" />
+        <source>'P' WRONG DATA FRAME, expected size %1 got %2</source>
+        <translation>'P' NESPRÁVNY DÁTOVÝ RÁMEC, očakávaná veľkosť %1 má %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1138" />
+        <source>PARBLK retry, ignored</source>
+        <translation>PARBLK zopakovať, ignorované</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1152" />
+        <source>%1 (fno $%02)</source>
+        <translation>%1 (bez $%02)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1166" />
+        <source>bad handle 1 %1</source>
+        <translation>zlá manipulácia 1 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1173" />
+        <location filename="../../src/pclink.cpp" line="1308" />
+        <source>bad size $0000 (0)</source>
+        <translation>zlá veľkosť $0000 (0)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1193" />
+        <source>size $%1 (%2), buffer $%3 (%4)</source>
+        <translation>veľkosť $%1 (%2), vyrovnávacia pamäť $%3 (%4)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1204" />
+        <location filename="../../src/pclink.cpp" line="1324" />
+        <location filename="../../src/pclink.cpp" line="1481" />
+        <location filename="../../src/pclink.cpp" line="1641" />
+        <source>serial communication error, abort</source>
+        <translation>chyba sériovej komunikácie, prerušenie</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1210" />
+        <location filename="../../src/pclink.cpp" line="1330" />
+        <location filename="../../src/pclink.cpp" line="1498" />
+        <location filename="../../src/pclink.cpp" line="1576" />
+        <source>handle %1</source>
+        <translation>rukoväť %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1227" />
+        <source>FREAD: cannot read %1 bytes from dir</source>
+        <translation>FREAD: nedá sa prečítať %1 bajtov z adresára</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1244" />
+        <source>FREAD: cannot seek to $%1 (%2)</source>
+        <translation>FREAD: nemožno vyhľadávať na $%1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1253" />
+        <source>FREAD: cannot read %1 bytes from file</source>
+        <translation>FREAD: nedá sa prečítať %1 bajtov zo súboru</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1281" />
+        <source>FREAD: send $%1 (%2), status $%3</source>
+        <translation>FREAD: odoslať $%1 (%2), stav $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1301" />
+        <source>bad handle 2 %1</source>
+        <translation>zlá manipulácia 2 % 1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1316" />
+        <source>size $%1 (%2)</source>
+        <translation>veľkosť $%1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1336" />
+        <source>FWRITE: cannot seek to $%1 (%2)</source>
+        <translation>FWRITE: nedá sa vyhľadať $%1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1349" />
+        <source>FWRITE: block CRC mismatch</source>
+        <translation>FWRITE: nesúlad bloku CRC</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1375" />
+        <source>FWRITE: cannot write %1 bytes to file</source>
+        <translation>FWRITE: nemožno zapísať %1 bajtov do súboru</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1386" />
+        <source>FWRITE: received $%1 (%2), status $%3</source>
+        <translation>FWRITE: prijaté $%1 (%2), stav $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1398" />
+        <source>bad handle 3 %1</source>
+        <translation>zlá manipulácia 3 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1406" />
+        <location filename="../../src/pclink.cpp" line="1565" />
+        <location filename="../../src/pclink.cpp" line="1603" />
+        <location filename="../../src/pclink.cpp" line="1946" />
+        <location filename="../../src/pclink.cpp" line="2055" />
+        <location filename="../../src/pclink.cpp" line="2134" />
+        <location filename="../../src/pclink.cpp" line="2224" />
+        <location filename="../../src/pclink.cpp" line="2298" />
+        <location filename="../../src/pclink.cpp" line="2382" />
+        <location filename="../../src/pclink.cpp" line="2579" />
+        <source>bad exec</source>
+        <translation>zlý exek</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1413" />
+        <source>handle %1, newpos $%2 (%3)</source>
+        <translation>rukoväť %1, nová položka $%2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1437" />
+        <source>bad handle 4 %1</source>
+        <translation>zlá manipulácia 4 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1444" />
+        <location filename="../../src/pclink.cpp" line="1474" />
+        <location filename="../../src/pclink.cpp" line="2509" />
+        <source>device $%1</source>
+        <translation>zariadenie $%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1455" />
+        <source>handle %1, send $%2 (%3)</source>
+        <translation>zvládnuť %1, poslať $%2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1491" />
+        <source>bad handle 5 %1</source>
+        <translation>zlá manipulácia 5 % 1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1508" />
+        <source>eof_flg %1</source>
+        <translation>eof_flg %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1527" />
+        <source>FNEXT: EOF</source>
+        <translation>FNEXT: EOF</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1537" />
+        <source>FNEXT: status %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation>FNEXT: stav %1, odoslať $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1571" />
+        <source>bad handle 6 %1</source>
+        <translation>zlá manipulácia 6 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1619" />
+        <source>mode: $%1, atr1: $%2, atr2: $%3, path: '%4', name: '%5'</source>
+        <translation>režim: $%1, atr1: $%2, atr2: $%3, cesta: '%4', názov: '%5'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1653" />
+        <source>unsupported fmode ($%1)</source>
+        <translation>nepodporovaný režim fmode ($%1)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1662" />
+        <source>invalid path 1 '%1'</source>
+        <translation>neplatná cesta 1 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1667" />
+        <location filename="../../src/pclink.cpp" line="2068" />
+        <source>local path '%1'</source>
+        <translation>miestna cesta '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1676" />
+        <source>FOPEN: too many channels open</source>
+        <translation>FOPEN: otvorených je príliš veľa kanálov</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1683" />
+        <location filename="../../src/pclink.cpp" line="1779" />
+        <source>FOPEN: cannot stat '%1'</source>
+        <translation>FOPEN: nemožno uviesť '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1697" />
+        <source> ! fmode &amp; 0x10</source>
+        <translation>! fmode &amp; 0x10</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1736" />
+        <source>FOPEN: file not found</source>
+        <translation>FOPEN: súbor sa nenašiel</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1746" />
+        <source>FOPEN: creating file</source>
+        <translation>FOPEN: vytvorenie súboru</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1753" />
+        <source>FOPEN: bad filename '%1'</source>
+        <translation>FOPEN: zlý názov súboru '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1773" />
+        <source>FOPEN: full local path '%1'</source>
+        <translation>FOPEN: úplná lokálna cesta '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1790" />
+        <source>FOPEN: '%1' is read-only</source>
+        <translation>FOPEN: '%1' je len na čítanie</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1820" />
+        <source>FOPEN: cannot open '%1', %2 (%3)</source>
+        <translation>FOPEN: nemožno otvoriť '%1', %2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1859" />
+        <source>FOPEN: bad handle 7 %1</source>
+        <translation>FOPEN: zlá rukoväť 7 % 1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1869" />
+        <source>FOPEN: %1 handle %2</source>
+        <translation>FOPEN: %1 rukoväť %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1882" />
+        <source>FOPEN: dir EOF?</source>
+        <translation>FOPEN: dir EOF?</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1914" />
+        <source>FOPEN: send %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation>FOPEN: odoslať %1, odoslať $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1954" />
+        <source>invalid path 2 '%1'</source>
+        <translation>neplatná cesta 2 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1963" />
+        <location filename="../../src/pclink.cpp" line="2074" />
+        <source>cannot open dir '%1'</source>
+        <translation>nedá sa otvoriť adresár '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1968" />
+        <source>local path '%1', fatr1 $%2</source>
+        <translation>lokálna cesta '%1', fatr1 $%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2021" />
+        <source>RENAME: renaming '%1' -&gt; '%2'</source>
+        <translation>PREMENOVAŤ: premenovanie '%1' -&gt; '%2'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2025" />
+        <source>RENAME: '%1' already exists</source>
+        <translation>PREMENOVAŤ: '%1' už existuje</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2032" />
+        <source>RENAME: %1</source>
+        <translation>PREMENOVAŤ: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2063" />
+        <source>invalid path 3 '%1'</source>
+        <translation>neplatná cesta 3 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2107" />
+        <source>REMOVE: delete '%1'</source>
+        <translation>ODSTRÁNIŤ: odstrániť '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2110" />
+        <source>REMOVE: cannot delete '%1'</source>
+        <translation>ODSTRÁNIŤ: nemožno odstrániť '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2140" />
+        <source>illegal fatr2 $%1</source>
+        <translation>nelegálny fatr2 $%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2149" />
+        <source>invalid path 4 '%1'</source>
+        <translation>neplatná cesta 4 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2154" />
+        <source>local path '%1', fatr1 $%2 fatr2 $%3</source>
+        <translation>lokálna cesta '%1', fatr1 $%2 fatr2 $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2161" />
+        <source>CHMOD: cannot open dir '%1'</source>
+        <translation>CHMOD: nedá sa otvoriť adresár '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2193" />
+        <source>CHMOD: change atrs in '%1'</source>
+        <translation>CHMOD: zmena atrs v '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2202" />
+        <source>CHMOD: failed on '%1'</source>
+        <translation>CHMOD: zlyhal na '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2232" />
+        <source>invalid path 5 '%1'</source>
+        <translation>neplatná cesta 5 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2242" />
+        <location filename="../../src/pclink.cpp" line="2316" />
+        <source>bad dir name '%1'</source>
+        <translation>zlý názov adresára '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2256" />
+        <source>making dir '%1', time %2-%3-%4 %5:%6:%7</source>
+        <translation>vytvorenie adresára '%1', čas %2-%3-%4 %5:%6:%7</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2261" />
+        <source>MKDIR: '%1' already exists</source>
+        <translation>MKDIR: '%1' už existuje</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2272" />
+        <source>MKDIR: cannot make dir '%1'</source>
+        <translation>MKDIR: nemôže vytvoriť adresár '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2306" />
+        <source>invalid path 6 '%1'</source>
+        <translation>neplatná cesta 6 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2330" />
+        <source>cannot stat '%1'</source>
+        <translation>nemôžem uviesť '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2338" />
+        <source>'%1' can't be accessed</source>
+        <translation>'%1' nie je možné získať</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2346" />
+        <source>'%1' is not a directory</source>
+        <translation>'%1' nie je adresár</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2353" />
+        <source>dir '%1' is write-protected</source>
+        <translation>adresár '%1' je chránený proti zápisu</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2358" />
+        <source>delete dir '%1'</source>
+        <translation>vymazať adresár '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2364" />
+        <source>RMDIR: cannot del '%1', %2 (%3)</source>
+        <translation>RMDIR: nemožno odstrániť '%1', %2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2390" />
+        <source>invalid path 7 '%1'</source>
+        <translation>neplatná cesta 7 '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2399" />
+        <source>cannot access '%1', %2</source>
+        <translation>nemôže získať prístup k '%1', %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2424" />
+        <source>new current dir '%1'</source>
+        <translation>nový aktuálny adresár '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2442" />
+        <source>device $1</source>
+        <translation>zariadenie $ 1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2462" />
+        <source>send '%1'</source>
+        <translation>poslať '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2523" />
+        <source>reading '%1'</source>
+        <translation>čítanie '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2558" />
+        <source>DFREE: send info (%1 bytes)</source>
+        <translation>DFREE: odoslať informácie (%1 bajtov)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2587" />
+        <source>invalid name</source>
+        <translation>neplatné meno</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2596" />
+        <source>writing '%1'</source>
+        <translation>písanie '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2616" />
+        <source>CHVOL: %1</source>
+        <translation>CHVOL: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2622" />
+        <source>fno $%1 not implemented</source>
+        <translation>fno $%1 nie je implementované</translation>
+    </message>
+</context>
+<context>
+    <name>PhoneDirectory</name>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="18" />
+        <source>BBS Phonebook</source>
+        <translation>Telefónny zoznam BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="26" />
+        <source>Search BBS Name...</source>
+        <translation>Vyhľadať názov BBS...</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>BBS Name</source>
+        <translation>Názov BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Address</source>
+        <translation>Adresa</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Port</source>
+        <translation>Port</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Protocol</source>
+        <translation>Protokol</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>User ID</source>
+        <translation>ID používateľa</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="46" />
+        <source>Edit Entry</source>
+        <translation>Upraviť záznam</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="49" />
+        <source>Save to XML</source>
+        <translation>Uložiť do XML</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="52" />
+        <source>Dial Selected</source>
+        <translation>Vytočiť vybrané</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="55" />
+        <source>Add</source>
+        <translation>Pridať</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="58" />
+        <source>Delete</source>
+        <translation>Odstrániť</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="61" />
+        <source>Close</source>
+        <translation>Zavrieť</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="140" />
+        <source>Saved</source>
+        <translation>Uložené</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="140" />
+        <source>Phonebook saved successfully!</source>
+        <translation>Telefónny zoznam bol úspešne uložený!</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="142" />
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="142" />
+        <source>Could not write to file.</source>
+        <translation>Nepodarilo sa zapisovať do súboru.</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="151" />
+        <source>Unsaved Changes</source>
+        <translation>Neuložené zmeny</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="152" />
+        <source>You have unsaved changes. Save before %1?</source>
+        <translation>Máte neuložené zmeny. Uložiť pred %1?</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="249" />
+        <source>Edit BBS Entry</source>
+        <translation>Upravte položku BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="259" />
+        <source>Telnet</source>
+        <translation>Telnet</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="260" />
+        <source>SSH (BBS)</source>
+        <translation>SSH (BBS)</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="261" />
+        <source>SSH (Auth)</source>
+        <translation>SSH (Auth)</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="289" />
+        <source>Show</source>
+        <translation>Zobraziť</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="295" />
+        <source>Name:</source>
+        <translation>meno:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="296" />
+        <source>Address:</source>
+        <translation>Adresa:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="297" />
+        <source>Protocol:</source>
+        <translation>Protokol:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="298" />
+        <source>Port:</source>
+        <translation>Port:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="299" />
+        <source>User ID:</source>
+        <translation>ID používateľa:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="300" />
+        <source>Password:</source>
+        <translation>heslo:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <source>Confirm</source>
+        <translation>Potvrďte</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <source>Delete this entry?</source>
+        <translation>Odstrániť tento záznam?</translation>
+    </message>
+</context>
+<context>
+    <name>PipeNetwork</name>
+    <message>
+        <location filename="../../src/pipenetwork.cpp" line="324" />
+        <source>[W:] FTP Upload Complete.</source>
+        <translation>[W:] Odovzdávanie cez FTP je dokončené.</translation>
     </message>
 </context>
 <context>
     <name>Printer</name>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="43" />
         <source>[%1] Get status.</source>
-        <translation type="vanished">[%1] Ziskať status.</translation>
+        <translation>[%1] Ziskať status.</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="84" />
+        <source>[%1] ignored</source>
+        <translation>[%1] ignorované</translation>
     </message>
     <message>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation type="vanished">[%1] prikaz: $%2, aux: $%3 Otvorený.</translation>
     </message>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="59" />
         <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
-        <translation type="vanished">[%1] Konvertovať Inverzné Video znaky pre ASCII prezeranie</translation>
+        <translation>[%1] Konvertovať Inverzné Video znaky pre ASCII prezeranie</translation>
     </message>
     <message>
         <source>[%1] Print: data frame failed</source>
         <translation type="vanished">[%1] Tlač: data frame zlyhalo</translation>
     </message>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="70" />
         <source>[%1] Print (%2 chars)</source>
-        <translation type="vanished">[%1] Tlačiť (%2 znakov)</translation>
+        <translation>[%1] Tlačiť (%2 znakov)</translation>
+    </message>
+</context>
+<context>
+    <name>SectorEditDialog</name>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="6" />
+        <source>Edit Sector</source>
+        <translation>Upraviť sektor</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="19" />
+        <source>Inject Text...</source>
+        <translation>Vložiť text...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="31" />
+        <source>Select a cell...</source>
+        <translation>Vyberte bunku...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="88" />
+        <source>Invalid Data</source>
+        <translation>Neplatné údaje</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="89" />
+        <source>Invalid hex value '%1' at row %2, col %3. Please use 00-FF.</source>
+        <translation>Neplatná hexadecimálna hodnota '%1' v riadku %2, stĺpci %3. Použite 00-FF.</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="101" />
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="101" />
+        <source>Failed to write sector to disk image! Is it write-protected?</source>
+        <translation>Nepodarilo sa zapísať sektor do obrazu disku! Je chránený proti zápisu?</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="138" />
+        <source>Inject ATASCII Text</source>
+        <translation>Vložiť text ATASCII</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="139" />
+        <source>Enter text to write into the sector:</source>
+        <translation>Zadajte text, ktorý chcete napísať do sektora:</translation>
+    </message>
+</context>
+<context>
+    <name>SectorInspectorDialog</name>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="14" />
+        <source>Sector Inspector</source>
+        <translation>Sektorový inšpektor</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="22" />
+        <source>Sector:</source>
+        <translation>Sektor:</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="32" />
+        <source>Reload</source>
+        <translation>Znovu načítať</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="39" />
+        <source>Edit Sector...</source>
+        <translation>Upraviť sektor...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="67" />
+        <source>Find:</source>
+        <translation>Nájsť:</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="85" />
+        <source>Text</source>
+        <translation>Text</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="90" />
+        <source>Hex</source>
+        <translation>Hex</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="98" />
+        <source>Find Next</source>
+        <translation>Nájsť ďalšie</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.cpp" line="31" />
+        <source>Sector Inspector - %1</source>
+        <translation>Sektorový inšpektor – %1</translation>
     </message>
 </context>
 <context>
     <name>SimpleDiskImage</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno otvoriť &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="276" />
+        <location filename="../../src/diskimage.cpp" line="285" />
+        <location filename="../../src/diskimage.cpp" line="295" />
+        <location filename="../../src/diskimage.cpp" line="309" />
+        <location filename="../../src/diskimage.cpp" line="321" />
+        <location filename="../../src/diskimage.cpp" line="329" />
+        <location filename="../../src/diskimage.cpp" line="353" />
+        <location filename="../../src/diskimage.cpp" line="402" />
+        <location filename="../../src/diskimage.cpp" line="414" />
+        <location filename="../../src/diskimage.cpp" line="429" />
+        <location filename="../../src/diskimage.cpp" line="464" />
+        <location filename="../../src/diskimage.cpp" line="471" />
+        <location filename="../../src/diskimage.cpp" line="482" />
+        <location filename="../../src/diskimage.cpp" line="489" />
+        <location filename="../../src/diskimage.cpp" line="500" />
+        <location filename="../../src/diskimage.cpp" line="523" />
+        <location filename="../../src/diskimage.cpp" line="529" />
+        <location filename="../../src/diskimage.cpp" line="535" />
+        <location filename="../../src/diskimage.cpp" line="806" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nemožno otvoriť '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="287" />
         <source>Cannot read the header: %1.</source>
-        <translation type="vanished">Nemožno čítať z hlavičky %1.</translation>
+        <translation>Nemožno čítať z hlavičky %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="295" />
         <source>Not a valid ATR file.</source>
-        <translation type="vanished">Nie je platný ATR súbor.</translation>
+        <translation>Nie je platný ATR súbor.</translation>
     </message>
     <message>
-        <source>Cannot create temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno vytvoriť dočasný súbor &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="311" />
+        <location filename="../../src/diskimage.cpp" line="473" />
+        <source>Cannot create temporary file '%1': %2</source>
+        <translation>Nemožno vytvoriť dočasný súbor '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="323" />
+        <location filename="../../src/diskimage.cpp" line="484" />
         <source>Cannot read from file: %1.</source>
-        <translation type="vanished">Nemožno čítať zo súboru: %1.</translation>
+        <translation>Nemožno čítať zo súboru: %1.</translation>
     </message>
     <message>
-        <source>Cannot write to temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno zapisovať do dočasného súboru &apos;%1&apos;:%2</translation>
+        <location filename="../../src/diskimage.cpp" line="331" />
+        <location filename="../../src/diskimage.cpp" line="491" />
+        <source>Cannot write to temporary file '%1': %2</source>
+        <translation>Nemožno zapisovať do dočasného súboru '%1':%2</translation>
     </message>
     <message>
-        <source>Image size of &apos;%1&apos; is reported as %2 bytes in the header but it&apos;s actually %3.</source>
-        <translation type="vanished">Veľkosť obrazu &apos;%1&apos; je uvedená ako %2 bytov v hlavičke, ale aktuálna je %3.</translation>
+        <location filename="../../src/diskimage.cpp" line="343" />
+        <source>Image size of '%1' is reported as %2 bytes in the header but it's actually %3.</source>
+        <translation>Veľkosť obrazu '%1' je uvedená ako %2 bytov v hlavičke, ale aktuálna je %3.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="353" />
         <source>Unknown sector size (%1).</source>
-        <translation type="vanished">Neznáma veľkosť sektoru (%1).</translation>
+        <translation>Neznáma veľkosť sektoru (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="404" />
+        <location filename="../../src/diskimage.cpp" line="502" />
         <source>Invalid image size (%1).</source>
-        <translation type="vanished">Nesprávna veľkosť obrazu (%1).</translation>
+        <translation>Nesprávna veľkosť obrazu (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="416" />
         <source>Too many sectors in the image (%1).</source>
-        <translation type="vanished">Priveľa sektorov v obraze (%1).</translation>
+        <translation>Priveľa sektorov v obraze (%1).</translation>
     </message>
     <message>
-        <source>The file &apos;%1&apos; has some unrecognized fields in its header.</source>
-        <translation type="vanished">Súbor &apos;%1&apos; má niekoľko neznámych polí v hlavičke.</translation>
+        <location filename="../../src/diskimage.cpp" line="424" />
+        <source>The file '%1' has some unrecognized fields in its header.</source>
+        <translation>Súbor '%1' má niekoľko neznámych polí v hlavičke.</translation>
     </message>
     <message>
-        <source>Cannot resize temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno zväčšiť dočasný súbor &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="431" />
+        <source>Cannot resize temporary file '%1': %2</source>
+        <translation>Nemožno zväčšiť dočasný súbor '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="523" />
         <source>DCM images are not supported yet.</source>
-        <translation type="vanished">DCM obrazy momentálne nie su podporované.</translation>
+        <translation>DCM obrazy momentálne nie su podporované.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="529" />
         <source>SCP images are not supported yet.</source>
-        <translation type="vanished">SCP obrazy momentálne nie su podporované.</translation>
+        <translation>SCP obrazy momentálne nie su podporované.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="535" />
         <source>DI images are not supported yet.</source>
-        <translation type="vanished">DI obrazy momentálne nie su podporované.</translation>
+        <translation>DI obrazy momentálne nie su podporované.</translation>
     </message>
     <message>
-        <source>Cannot save &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno uložiť &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="570" />
+        <location filename="../../src/diskimage.cpp" line="579" />
+        <location filename="../../src/diskimage.cpp" line="595" />
+        <location filename="../../src/diskimage.cpp" line="609" />
+        <location filename="../../src/diskimage.cpp" line="616" />
+        <location filename="../../src/diskimage.cpp" line="659" />
+        <location filename="../../src/diskimage.cpp" line="667" />
+        <location filename="../../src/diskimage.cpp" line="680" />
+        <location filename="../../src/diskimage.cpp" line="686" />
+        <location filename="../../src/diskimage.cpp" line="706" />
+        <location filename="../../src/diskimage.cpp" line="712" />
+        <location filename="../../src/diskimage.cpp" line="718" />
+        <location filename="../../src/diskimage.cpp" line="746" />
+        <location filename="../../src/diskimage.cpp" line="775" />
+        <source>Cannot save '%1': %2</source>
+        <translation>Nemožno uložiť '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot rewind temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno obnoviť dočasný súbor &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="597" />
+        <location filename="../../src/diskimage.cpp" line="669" />
+        <source>Cannot rewind temporary file '%1': %2</source>
+        <translation>Nemožno obnoviť dočasný súbor '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="611" />
+        <location filename="../../src/diskimage.cpp" line="682" />
         <source>Cannot read from temporay file %1: %2</source>
-        <translation type="vanished">Nemožno čítať z dočasného súboru &apos;%1&apos;:%2</translation>
+        <translation>Nemožno čítať z dočasného súboru '%1':%2</translation>
     </message>
     <message>
-        <source>Detailed geometry information will be lost when reopening &apos;%1&apos; due to ATR file format limitations.</source>
-        <translation type="vanished">Podrobné informácie o geometrii budú stratené pri znovuotvorení &apos;%1&apos; kvôli ATR obmedzeniam formátu súboru.</translation>
+        <location filename="../../src/diskimage.cpp" line="628" />
+        <source>Detailed geometry information will be lost when reopening '%1' due to ATR file format limitations.</source>
+        <translation>Podrobné informácie o geometrii budú stratené pri znovuotvorení '%1' kvôli ATR obmedzeniam formátu súboru.</translation>
     </message>
     <message>
-        <source>Detailed disk geometry information will be lost when reopening &apos;%1&apos; due to XFD file format limitations.</source>
-        <translation type="vanished">Podrobné informácie o geometrii disku budú stratené pri znovuotvorení &apos;%1&apos; kvôli XFD obmedzeniam formátu súboru.</translation>
+        <location filename="../../src/diskimage.cpp" line="648" />
+        <source>Detailed disk geometry information will be lost when reopening '%1' due to XFD file format limitations.</source>
+        <translation>Podrobné informácie o geometrii disku budú stratené pri znovuotvorení '%1' kvôli XFD obmedzeniam formátu súboru.</translation>
     </message>
     <message>
-        <source>XFD file format cannot handle this disk geometry. Try saving &apos;%1&apos; as ATR.</source>
-        <translation type="vanished">XFD formát nemôže zvládnuť túto geometriu disku. Skúste uložiť &apos;%1&apos; ako ATR.</translation>
+        <location filename="../../src/diskimage.cpp" line="651" />
+        <source>XFD file format cannot handle this disk geometry. Try saving '%1' as ATR.</source>
+        <translation>XFD formát nemôže zvládnuť túto geometriu disku. Skúste uložiť '%1' ako ATR.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="706" />
         <source>Saving DCM images is not supported yet.</source>
-        <translation type="vanished">Ukladanie DCM obrazov nie je momentálne podporované.</translation>
+        <translation>Ukladanie DCM obrazov nie je momentálne podporované.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="712" />
         <source>Saving SCP images is not supported yet.</source>
-        <translation type="vanished">Ukladanie SCP obrazov nie je momentálne podporované.</translation>
+        <translation>Ukladanie SCP obrazov nie je momentálne podporované.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="718" />
         <source>Saving DI images is not supported yet.</source>
-        <translation type="vanished">Ukladanie DI obrazov nie je momentálne podporované.</translation>
+        <translation>Ukladanie DI obrazov nie je momentálne podporované.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="746" />
         <source>Unknown file extension.</source>
-        <translation type="vanished">Neznáma prípona súboru.</translation>
+        <translation>Neznáma prípona súboru.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="775" />
+        <location filename="../../src/diskimage.cpp" line="806" />
         <source>Unknown file type.</source>
-        <translation type="vanished">Neznámy typ súboru.</translation>
+        <translation>Neznámy typ súboru.</translation>
     </message>
     <message>
-        <source>Cannot create new image: Cannot create temporary file &apos;%2&apos;: %3.</source>
-        <translation type="vanished">Nemožno vytvoriť nový obraz. Nemožno vytvoriť dočasný súbor &apos;%2&apos;: %3.</translation>
+        <location filename="../../src/diskimage.cpp" line="815" />
+        <source>Cannot create new image: Cannot create temporary file '%2': %3.</source>
+        <translation>Nemožno vytvoriť nový obraz. Nemožno vytvoriť dočasný súbor '%2': %3.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="825" />
         <source>Untitled image %1</source>
-        <translation type="vanished">Obraz bez názvu %1</translation>
+        <translation>Obraz bez názvu %1</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="858" />
         <source>[%1] Format ED denied.</source>
-        <translation type="vanished">[%1] Formát ED odmietnutý.</translation>
+        <translation>[%1] Formát ED odmietnutý.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="867" />
         <source>[%1] Format ED.</source>
-        <translation type="vanished">[%1] Formát ED.</translation>
+        <translation>[%1] Formát ED.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="870" />
         <source>[%1] Format ED failed.</source>
-        <translation type="vanished">[%1] Formát ED neúspešný.</translation>
+        <translation>[%1] Formát ED neúspešný.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="883" />
         <source>[%1] Speed poll.</source>
-        <translation type="vanished">[%1] Rýchlosť poll.</translation>
+        <translation>[%1] Rýchlosť poll.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="894" />
         <source>[%1] Get PERCOM block (%2).</source>
-        <translation type="vanished">[%1] Získať PERCOM blok (%2).</translation>
+        <translation>[%1] Získať PERCOM blok (%2).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="911" />
+        <source>[%1] Happy ID Query - Rev 7.</source>
+        <translation>[%1] Dopyt Happy ID – Rev 7.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="915" />
+        <source>[%1] Happy ID Query - NAKed (Standard Mode).</source>
+        <translation>[%1] Happy ID Query – NAKed (štandardný režim).</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="935" />
         <source>[%1] Set PERCOM block (%2).</source>
-        <translation type="vanished">[%1] Nastaviť PERCOM blok (%2).</translation>
+        <translation>[%1] Nastaviť PERCOM blok (%2).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="954" />
         <source>[%1] Format with custom sector skewing failed.</source>
-        <translation type="vanished">[%1] Formát s voliteľnou symetriou sektoru zlyhal.</translation>
+        <translation>[%1] Formát s voliteľnou symetriou sektoru zlyhal.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="959" />
         <source>[%1] Format with custom sector skewing (%2).</source>
-        <translation type="vanished">[%1] Formát s voliteľnou symetriou sektoru (%2).</translation>
+        <translation>[%1] Formát s voliteľnou symetriou sektoru (%2).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="964" />
         <source>[%1] Format with custom sector skewing denied.</source>
-        <translation type="vanished">[%1] Formát s voliteľnou symetriou sektoru odmietnutý.</translation>
+        <translation>[%1] Formát s voliteľnou symetriou sektoru odmietnutý.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="981" />
         <source>[%1] Format.</source>
-        <translation type="vanished">[%1] Formát.</translation>
+        <translation>[%1] Formát.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="984" />
         <source>[%1] Format denied.</source>
-        <translation type="vanished">[%1] Formát zamietnutý.</translation>
+        <translation>[%1] Formát zamietnutý.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1006" />
+        <source>[%1] Happy Warp Speed Handshake Successful.</source>
+        <translation>[%1] Handshake Happy Warp Speed ​​bol úspešný.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="1021" />
         <source>[%1] Write sector %2 denied.</source>
-        <translation type="vanished">[%1] Zápis sektoru %2 zamietnutý.</translation>
+        <translation>[%1] Zápis sektoru %2 zamietnutý.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1026" />
         <source>[%1] Write sector %2 (%3 bytes).</source>
-        <translation type="vanished">[%1] Zápis sektoru %2 (%3-bytov).</translation>
+        <translation>[%1] Zápis sektoru %2 (%3-bytov).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1029" />
         <source>[%1] Write sector %2 failed.</source>
-        <translation type="vanished">[%1] Zápis sektoru %2 zlyhal.</translation>
+        <translation>[%1] Zápis sektoru %2 zlyhal.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1034" />
         <source>[%1] Write sector %2 data frame failed.</source>
-        <translation type="vanished">[%1] Zápis sektoru %2 dátových frameov zlyhal.</translation>
+        <translation>[%1] Zápis sektoru %2 dátových frameov zlyhal.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1041" />
         <source>[%1] Write sector %2 NAKed.</source>
-        <translation type="vanished">[%1] Zápis sektoru %2 otvorený.</translation>
+        <translation>[%1] Zápis sektoru %2 otvorený.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1057" />
         <source>[%1] Read sector %2 (%3 bytes).</source>
-        <translation type="vanished">[%1] Čítanie sektoru %2 (%3 bytov).</translation>
+        <translation>[%1] Čítanie sektoru %2 (%3 bytov).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1062" />
         <source>[%1] Read sector %2 failed.</source>
-        <translation type="vanished">[%1] Čítanie sektoru %2 zlyhal.</translation>
+        <translation>[%1] Čítanie sektoru %2 zlyhal.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1069" />
         <source>[%1] Read sector %2 NAKed.</source>
-        <translation type="vanished">[%1] Čítanie sektoru %2 otvorený.</translation>
+        <translation>[%1] Čítanie sektoru %2 otvorený.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1086" />
         <source>[%1] Get status.</source>
-        <translation type="vanished">[%1] Získať stav.</translation>
+        <translation>[%1] Získať stav.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1092" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation type="vanished">[%1] prikaz: $%2, aux: $%3 Otvorený.</translation>
+        <translation>[%1] prikaz: $%2, aux: $%3 Otvorený.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1110" />
         <source>[%1] Cannot format: %2</source>
-        <translation type="vanished">[%1] Nemožno formátovať: %2</translation>
+        <translation>[%1] Nemožno formátovať: %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1125" />
+        <location filename="../../src/diskimage.cpp" line="1149" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="vanished">[%1] Nemožno vidieť na sektor %2: %3</translation>
+        <translation>[%1] Nemožno vidieť na sektor %2: %3</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1128" />
         <source>Sector number is out of bounds.</source>
-        <translation type="vanished">Číslo sektoru je mimo of bounds.</translation>
+        <translation>Číslo sektoru je mimo of bounds.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1168" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="vanished">[%1] Nemožno čítať zo sektoru %2: %3.</translation>
+        <translation>[%1] Nemožno čítať zo sektoru %2: %3.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1189" />
         <source>[%1] Cannot write to sector %2: %3.</source>
-        <translation type="vanished">[%1] Nemožno zapisovať do sektoru %2: %3.</translation>
+        <translation>[%1] Nemožno zapisovať do sektoru %2: %3.</translation>
+    </message>
+</context>
+<context>
+    <name>SioPacketDialog</name>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="98" />
+        <source>SIO Packet Sniffer &amp; Inspector</source>
+        <translation>SIO Packet Sniffer &amp; Inspector</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="128" />
+        <source>Packet Inspector Details</source>
+        <translation>Podrobnosti o inšpektorovi paketov</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="160" />
+        <source>Clear</source>
+        <translation>Jasné</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="161" />
+        <source>Save CSV...</source>
+        <translation>Uložiť CSV...</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="162" />
+        <source>Inject Selected (Step)</source>
+        <translation>Vybraná injekcia (krok)</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="258" />
+        <source>No Selection</source>
+        <translation>Žiadny výber</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="258" />
+        <source>Please select a packet row to inject.</source>
+        <translation>Vyberte riadok paketu, ktorý chcete vložiť.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
+        <source>Invalid Direction</source>
+        <translation>Neplatný smer</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
+        <source>You can only inject RX packets (traffic originating from the Atari).</source>
+        <translation>Môžete vložiť iba pakety RX (prevádzka pochádzajúca z Atari).</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="388" />
+        <source>Empty</source>
+        <translation>Prázdny</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="388" />
+        <source>No packets to save.</source>
+        <translation>Žiadne pakety na uloženie.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="392" />
+        <source>Save SIO Trace</source>
+        <translation>Uložiť SIO Trace</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="392" />
+        <source>CSV Files (*.csv);;All Files (*)</source>
+        <translation>Súbory CSV (*.csv);;Všetky súbory (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="397" />
+        <source>Error</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="397" />
+        <source>Could not open file for writing.</source>
+        <translation>Nepodarilo sa otvoriť súbor na zápis.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="417" />
+        <source>Saved</source>
+        <translation>Uložené</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="417" />
+        <source>SIO Trace saved successfully.</source>
+        <translation>SIO Trace bola úspešne uložená.</translation>
     </message>
 </context>
 <context>
     <name>SioWorker</name>
     <message>
+        <location filename="../../src/sioworker.cpp" line="214" />
         <source>Cannot read command frame.</source>
-        <translation type="vanished">Nemožno čítať command frame.</translation>
+        <translation>Nemožno čítať command frame.</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="231" />
         <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
-        <translation type="vanished">[%1] príkaz: $%2, aux: $%3 ignorovaný, pretože je otvorený prehliadač obrazov.</translation>
+        <translation>[%1] príkaz: $%2, aux: $%3 ignorovaný, pretože je otvorený prehliadač obrazov.</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="237" />
         <source>[%1] command: $%2, aux: $%3 ignored.</source>
-        <translation type="vanished">[%1] príkaz: $%2, aux: $%3 ignorovaný.</translation>
+        <translation>[%1] príkaz: $%2, aux: $%3 ignorovaný.</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="359" />
         <source>Disk 1 (below autoboot)</source>
-        <translation type="vanished">Disk 1 (nižší autoboot)</translation>
+        <translation>Disk 1 (nižší autoboot)</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="376" />
         <source>Disk %1</source>
-        <translation type="vanished">Disk %1</translation>
+        <translation>Disk %1</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="382" />
         <source>Printer %1</source>
-        <translation type="vanished">Tlačiareň %1</translation>
+        <translation>Tlačiareň %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="385" />
+        <source>Smart device (APE time + URL)</source>
+        <translation>Inteligentné zariadenie (čas APE + URL)</translation>
     </message>
     <message>
         <source>APE time downloader</source>
         <translation type="obsolete">APE time downloader</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="388" />
         <source>AspeQt Client</source>
-        <translation type="vanished">AspeQt Client</translation>
+        <translation>AspeQt Client</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="394" />
         <source>RS232 %1</source>
-        <translation type="vanished">RS232 %1</translation>
+        <translation>RS232 %1</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="397" />
+        <source>PCLINK</source>
+        <translation>PCLINK</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="400" />
         <source>Device $%1</source>
-        <translation type="vanished">Zariadenie $%1</translation>
+        <translation>Zariadenie $%1</translation>
+    </message>
+</context>
+<context>
+    <name>SmartDevice</name>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="132" />
+        <source>[%1] Read date/time (%2).</source>
+        <translation>[%1] Čítanie dátumu/času (%2).</translation>
     </message>
 </context>
 <context>
     <name>SpartaDosFileSystem</name>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="1256" />
+        <location filename="../../src/atarifilesystem.cpp" line="1285" />
         <source>Atari file system error</source>
-        <translation type="vanished">Atari systemová chyba súboru</translation>
+        <translation>Atari systemová chyba súboru</translation>
     </message>
     <message>
-        <source>Cannot create file &apos;%1&apos;.</source>
-        <translation type="vanished">Nemožno vytvoriť súbor %1 .</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="1256" />
+        <source>Cannot create file '%1'.</source>
+        <translation>Nemožno vytvoriť súbor %1 .</translation>
     </message>
     <message>
-        <source>Cannot write to &apos;%1&apos;.</source>
-        <translation type="vanished">Nemožno zapisovať do %1 .</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="1285" />
+        <source>Cannot write to '%1'.</source>
+        <translation>Nemožno zapisovať do %1 .</translation>
     </message>
 </context>
 <context>
     <name>StandardSerialPortBackend</name>
     <message>
-        <source>Cannot open serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nemožno otvoriť sériový port %1 : %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="82" />
+        <location filename="../../src/serialport-windows.cpp" line="70" />
+        <location filename="../../src/serialport-windows.cpp" line="86" />
+        <source>Cannot open serial port '%1': %2</source>
+        <translation>Nemožno otvoriť sériový port %1 : %2</translation>
     </message>
     <message>
-        <source>Cannot clear DTR and RTS lines in serial port &apos;%1&apos;: %2</source>
+        <source>Cannot clear DTR and RTS lines in serial port '%1': %2</source>
         <translation type="vanished">Nemožno vyčistiť DTR a RTS v sériovom porte %1: %2</translation>
     </message>
     <message>
-        <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking.</source>
-        <translation type="vanished">Emulácia začala skrz štandardný sériový port na %1 s %2 .</translation>
+        <location filename="../../src/serialport-unix.cpp" line="128" />
+        <source>Emulation started through standard serial port backend on '%1' with %2 handshaking.</source>
+        <translation>Emulácia začala skrz štandardný sériový port na %1 s %2 .</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="144" />
+        <location filename="../../src/serialport-windows.cpp" line="147" />
         <source>Cannot close serial port: %1</source>
-        <translation type="vanished">Nemožno zatvoriť sériový port: %1</translation>
+        <translation>Nemožno zatvoriť sériový port: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="271" />
+        <location filename="../../src/serialport-unix.cpp" line="287" />
+        <location filename="../../src/serialport-windows.cpp" line="262" />
         <source>Cannot set serial port speed to %1: %2</source>
-        <translation type="vanished">Nemožno zvoliť rýchlosť sériového portu na %1: %2</translation>
+        <translation>Nemožno zvoliť rýchlosť sériového portu na %1: %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="271" />
         <source>Closest possible speed is %2.</source>
-        <translation type="vanished">Najbližšia možná rýchlosť je %2.</translation>
+        <translation>Najbližšia možná rýchlosť je %2.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="293" />
+        <location filename="../../src/serialport-unix.cpp" line="374" />
+        <location filename="../../src/serialport-windows.cpp" line="293" />
         <source>%1 bits/sec</source>
-        <translation type="vanished">%1 bitov/sec</translation>
+        <translation>%1 bitov/sec</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="294" />
+        <location filename="../../src/serialport-unix.cpp" line="375" />
+        <location filename="../../src/serialport-windows.cpp" line="294" />
         <source>Serial port speed set to %1.</source>
-        <translation type="vanished">Rýchlosť sériového portu nastavená na %1.</translation>
+        <translation>Rýchlosť sériového portu nastavená na %1.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="309" />
+        <source>Cannot get serial port attributes</source>
+        <translation>Nie je možné získať atribúty sériového portu</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="350" />
+        <source>Cannot set standard serial port speed to %1: %2</source>
+        <translation>Nie je možné nastaviť rýchlosť štandardného sériového portu na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="361" />
+        <source>Cannot set baseline serial port speed: %1</source>
+        <translation>Nie je možné nastaviť základnú rýchlosť sériového portu: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="368" />
+        <source>Failed to set custom serial port speed to %1</source>
+        <translation>Nepodarilo sa nastaviť rýchlosť vlastného sériového portu na %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="517" />
+        <location filename="../../src/serialport-unix.cpp" line="531" />
+        <location filename="../../src/serialport-unix.cpp" line="559" />
         <source>Cannot retrieve serial port status: %1</source>
-        <translation type="vanished">Nemožno získať stav sériového portu: %1</translation>
+        <translation>Nemožno získať stav sériového portu: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="793" />
+        <source>Serial port write timeout. %1 of %2 written in %3 ms</source>
+        <translation>Časový limit zápisu sériového portu vypršal. %1 z %2 zapísané za %3 ms</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="424" />
+        <location filename="../../src/serialport-unix.cpp" line="541" />
+        <location filename="../../src/serialport-windows.cpp" line="313" />
+        <location filename="../../src/serialport-windows.cpp" line="442" />
         <source>Cannot clear serial port read buffer: %1</source>
-        <translation type="vanished">Nemožno vyčistiť buffer čítania sériového portu: %1</translation>
+        <translation>Nemožno vyčistiť buffer čítania sériového portu: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="91" />
+        <source>Cannot get serial port status</source>
+        <translation>Nie je možné získať stav sériového portu</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="96" />
+        <source>Cannot set DTR and RTS lines in serial port '%1': %2</source>
+        <translation>Nie je možné nastaviť linky DTR a RTS na sériovom porte '%1': %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="608" />
+        <location filename="../../src/serialport-windows.cpp" line="584" />
         <source>Data frame checksum error, expected: %1, got: %2. (%3)</source>
-        <translation type="vanished">Chyba kontrolného súčtu dátového frameu, očakávané %1, dalo: %2. (%3)</translation>
+        <translation>Chyba kontrolného súčtu dátového frameu, očakávané %1, dalo: %2. (%3)</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="715" />
+        <location filename="../../src/serialport-unix.cpp" line="779" />
+        <location filename="../../src/serialport-windows.cpp" line="536" />
+        <location filename="../../src/serialport-windows.cpp" line="542" />
         <source>Cannot read from serial port: %1</source>
-        <translation type="vanished">Nemožno čítať zo sériového portu: %1</translation>
+        <translation>Nemožno čítať zo sériového portu: %1</translation>
     </message>
     <message>
         <source>Serial port read timeout.</source>
         <translation type="vanished">Vypršala doba sériového portu pre čítanie.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="798" />
         <source>Cannot flush serial port write buffer: %1</source>
-        <translation type="vanished">Nemožno synchronizovať buffer pre zápis sériového portu %1</translation>
+        <translation>Nemožno synchronizovať buffer pre zápis sériového portu %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="711" />
         <source>Serial port write timeout.</source>
-        <translation type="vanished">Vypršala doba sériového portu pre zápis.</translation>
+        <translation>Vypršala doba sériového portu pre zápis.</translation>
     </message>
     <message>
-        <source>Cannot clear RTS line in serial port &apos;%1&apos;: %2</source>
+        <source>Cannot clear RTS line in serial port '%1': %2</source>
         <translation type="vanished">Nemožno vyčistiť RTS v sériovom porte %1 : %2</translation>
     </message>
     <message>
-        <source>Cannot clear DTR line in serial port &apos;%1&apos;: %2</source>
+        <source>Cannot clear DTR line in serial port '%1': %2</source>
         <translation type="vanished">Nemožno vyčistiť DTR linku v sériovom porte %1 : %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="90" />
+        <source>Cannot set DTR line in serial port '%1': %2</source>
+        <translation>Nie je možné nastaviť linku DTR na sériovom porte '%1': %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="94" />
+        <source>Cannot set RTS line in serial port '%1': %2</source>
+        <translation>Nie je možné nastaviť linku RTS na sériovom porte '%1': %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="129" />
+        <source>Emulation started through standard serial port backend on '%1' with %2 handshaking</source>
+        <translation>Emulácia začala cez štandardný sériový port na '%1' s %2 handshakingom</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="289" />
         <source>Cannot set serial port timeouts: %1</source>
-        <translation type="vanished">Nemožno zvoliť časové limity pre sériový port: %1</translation>
+        <translation>Nemožno zvoliť časové limity pre sériový port: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="388" />
         <source>Cannot set serial port event mask: %1</source>
-        <translation type="vanished">Nemožno zvoliť masku pre sériový port: %1</translation>
+        <translation>Nemožno zvoliť masku pre sériový port: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="413" />
+        <location filename="../../src/serialport-windows.cpp" line="419" />
         <source>Cannot wait for serial port event: %1</source>
-        <translation type="vanished">Nemožno čakať na akciu sériového portu: %1</translation>
+        <translation>Nemožno čakať na akciu sériového portu: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="528" />
         <source>Cannot create event: %1</source>
-        <translation type="vanished">Nemožno vytvoriť akciu: %1</translation>
+        <translation>Nemožno vytvoriť akciu: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="680" />
         <source>Cannot clear serial port write buffer: %1</source>
-        <translation type="vanished">Nemožno vyčistiť buffer zápisu sériového portu: %1</translation>
+        <translation>Nemožno vyčistiť buffer zápisu sériového portu: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="698" />
+        <location filename="../../src/serialport-windows.cpp" line="703" />
         <source>Cannot write to serial port: %1</source>
-        <translation type="vanished">Nemožno zapisovať do sériového portu: %1</translation>
+        <translation>Nemožno zapisovať do sériového portu: %1</translation>
     </message>
 </context>
 <context>
     <name>TextPrinterWindow</name>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="14" />
         <source>AspeQt - Printer text output</source>
-        <translation type="vanished">AspeQt - Textový výstup tlačiarne</translation>
+        <translation>AspeQt - Textový výstup tlačiarne</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="47" />
+        <location filename="../../src/textprinterwindow.ui" line="50" />
         <source>Atari Output (Atascii)</source>
-        <translation type="vanished">Atari výstup (Atascii)</translation>
+        <translation>Atari výstup (Atascii)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="69" />
+        <location filename="../../src/textprinterwindow.ui" line="72" />
         <source>Atari Output (Ascii)</source>
-        <translation type="vanished">Atari výstup (ascii)</translation>
+        <translation>Atari výstup (ascii)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="118" />
         <source>toolBar</source>
-        <translation type="vanished">toolBar</translation>
+        <translation>toolBar</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="154" />
         <source>Save to a file...</source>
-        <translation type="vanished">Uložiť do súboru...</translation>
+        <translation>Uložiť do súboru...</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="157" />
         <source>Save contents to a file (Ctrl+S)</source>
-        <translation type="vanished">Uložiť obsah do súboru (Ctrl+S)</translation>
+        <translation>Uložiť obsah do súboru (Ctrl+S)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="160" />
         <source>Save contents to a file</source>
-        <translation type="vanished">Uložiť obsah do súboru</translation>
+        <translation>Uložiť obsah do súboru</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="163" />
+        <location filename="../../src/textprinterwindow.ui" line="350" />
         <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="172" />
         <source>Clear</source>
-        <translation type="vanished">Vyčistiť</translation>
+        <translation>Vyčistiť</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="175" />
         <source>Clear contents (Ctrl+C)</source>
-        <translation type="vanished">Vyčistiť obsah (Ctrl+C)</translation>
+        <translation>Vyčistiť obsah (Ctrl+C)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="178" />
         <source>Clear contents</source>
-        <translation type="vanished">Vyčistiť obsah</translation>
+        <translation>Vyčistiť obsah</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="181" />
         <source>Ctrl+C</source>
-        <translation type="vanished">Ctrl+C</translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="196" />
         <source>Word wrap</source>
-        <translation type="vanished">Zalamovanie riadkov</translation>
+        <translation>Zalamovanie riadkov</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="199" />
         <source>Toggle word wrapping (Ctrl+W)</source>
-        <translation type="vanished">Prepnúť zarovnávanie riadkov (Ctrl+W)</translation>
+        <translation>Prepnúť zarovnávanie riadkov (Ctrl+W)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="202" />
         <source>Toggle word wrapping</source>
-        <translation type="vanished">Prepnúť zarovnávanie riadkov</translation>
+        <translation>Prepnúť zarovnávanie riadkov</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="205" />
         <source>Ctrl+W</source>
-        <translation type="vanished">Ctrl+W</translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="214" />
         <source>Print</source>
-        <translation type="vanished">Tlač</translation>
+        <translation>Tlač</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="217" />
         <source>Send contents to printer (Ctrl+P)</source>
-        <translation type="vanished">Poslať obsah na tlačiareň (Ctrl+P)</translation>
+        <translation>Poslať obsah na tlačiareň (Ctrl+P)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="220" />
         <source>Send contents to printer</source>
-        <translation type="vanished">Poslať obsah na tlačiareň</translation>
+        <translation>Poslať obsah na tlačiareň</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="223" />
         <source>Ctrl+P</source>
-        <translation type="vanished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="233" />
         <source>Atascii Font</source>
-        <translation type="vanished">Atascii Font</translation>
+        <translation>Atascii Font</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="236" />
         <source>Toggle ATASCII fonts (Alt+F)</source>
-        <translation type="vanished">Prepnúť ATASCII fonty (Alt+F)</translation>
+        <translation>Prepnúť ATASCII fonty (Alt+F)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="239" />
         <source>Toggle ATASCII fonts</source>
-        <translation type="vanished">Prepnúť ATASCII fonty</translation>
+        <translation>Prepnúť ATASCII fonty</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="242" />
         <source>Alt+F</source>
-        <translation type="vanished">Alt+F</translation>
+        <translation>Alt+F</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="258" />
         <source>Font Size</source>
-        <translation type="vanished">Veľkosť fontu</translation>
+        <translation>Veľkosť fontu</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="261" />
         <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
-        <translation type="vanished">Prepnúť veľkosť fontu (6, 9, 12 pt) (Alt+Shift+F)</translation>
+        <translation>Prepnúť veľkosť fontu (6, 9, 12 pt) (Alt+Shift+F)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="264" />
         <source>Toggle Font Size (6, 9, 12 pt)</source>
-        <translation type="vanished">Prepnúť veľkosť fontu (6, 9, 12 pt)</translation>
+        <translation>Prepnúť veľkosť fontu (6, 9, 12 pt)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="267" />
         <source>Alt+Shift+F</source>
-        <translation type="vanished">Alt+Shift+F</translation>
+        <translation>Alt+Shift+F</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="286" />
         <source>Hide/Show Ascii</source>
-        <translation type="vanished">Schovať/Zobraziť Ascii</translation>
+        <translation>Schovať/Zobraziť Ascii</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="289" />
         <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
-        <translation type="vanished">Schovať/Zobraziť Ascii výstup tlačiarne (Alt+Shift+H)</translation>
+        <translation>Schovať/Zobraziť Ascii výstup tlačiarne (Alt+Shift+H)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="292" />
         <source>Hide/Show Ascii Printer Output</source>
-        <translation type="vanished">Schovať/Zobraziť Ascii výstup tlačiarne</translation>
+        <translation>Schovať/Zobraziť Ascii výstup tlačiarne</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="295" />
         <source>Alt+Shift+H</source>
-        <translation type="vanished">Alt+Shift+H</translation>
+        <translation>Alt+Shift+H</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="317" />
         <source>HideShow_Atascii</source>
-        <translation type="vanished">Schovať/Zobraziť Atascii </translation>
+        <translation>Schovať/Zobraziť Atascii </translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="320" />
         <source> Hide/Show Atascii Printer Output (Alt+H)</source>
-        <translation type="vanished">Schovať/Zobraziť Atascii výstup tlačiarne (Alt+H)</translation>
+        <translation>Schovať/Zobraziť Atascii výstup tlačiarne (Alt+H)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="323" />
         <source>Hide/Show Atascii Printer Output</source>
-        <translation type="vanished">Schovať/Zobraziť Atascii výstup tlačiarne</translation>
+        <translation>Schovať/Zobraziť Atascii výstup tlačiarne</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="326" />
         <source>Alt+H</source>
-        <translation type="vanished">Alt+H</translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="341" />
         <source>Strip Line Numbers</source>
-        <translation type="vanished">Odhaliť čísla čiar</translation>
+        <translation>Odhaliť čísla čiar</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="344" />
         <source>Strip Line numbers from the text output (Ctrl-S)</source>
-        <translation type="vanished">Odhaliť čísla čiar z textového výstupu (Ctrl-S)</translation>
+        <translation>Odhaliť čísla čiar z textového výstupu (Ctrl-S)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="347" />
         <source>Strip Line numbers from the text output</source>
-        <translation type="vanished">Odhaliť čísla čiar z textového výstupu</translation>
+        <translation>Odhaliť čísla čiar z textového výstupu</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="225" />
         <source>Save printer text output</source>
-        <translation type="vanished">Uložiť textový výstup tlačiarne</translation>
+        <translation>Uložiť textový výstup tlačiarne</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="226" />
         <source>Text files (*.txt);;All files (*)</source>
-        <translation type="vanished">Textové súbory (*.txt);;Všetky súbory (*)</translation>
+        <translation>Textové súbory (*.txt);;Všetky súbory (*)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>Stripping Line Numbers..</source>
-        <translation type="vanished">Odhaľujem čísla čiar..</translation>
+        <translation>Odhaľujem čísla čiar..</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>The text does not seem to contain any line numbers!</source>
-        <translation type="vanished">Text pravdepodobne neobsahuje žiadne číslované linky!</translation>
+        <translation>Text pravdepodobne neobsahuje žiadne číslované linky!</translation>
+    </message>
+</context>
+<context>
+    <name>TnfsBrowser</name>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="19" />
+        <source>TNFS Network Browser</source>
+        <translation>Sieťový prehliadač TNFS</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="46" />
+        <source>Connect</source>
+        <translation>Pripojte sa</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="48" />
+        <source>Clear</source>
+        <translation>Jasné</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="49" />
+        <source>Clear saved host history</source>
+        <translation>Vymazať uloženú históriu hostiteľa</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="51" />
+        <source>TNFS Host:</source>
+        <translation>Hostiteľ TNFS:</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="59" />
+        <source>.. (Up)</source>
+        <translation>.. (hore)</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="64" />
+        <source>Sort A-Z / Z-A</source>
+        <translation>Zoradiť A-Z / Z-A</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="67" />
+        <source>Not Connected</source>
+        <translation>Nepripojené</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="87" />
+        <location filename="../../src/tnfsbrowser.cpp" line="283" />
+        <location filename="../../src/tnfsbrowser.cpp" line="354" />
+        <source>More...</source>
+        <translation>Viac...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="89" />
+        <source>Cancel</source>
+        <translation>Zrušiť</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="99" />
+        <source>Double-click a file (.ATR/.XEX) to Mount it.</source>
+        <translation>Dvojitým kliknutím na súbor (.ATR/.XEX) ho pripojte.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="201" />
+        <source>Connecting to %1...</source>
+        <translation>Pripája sa k %1...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="219" />
+        <location filename="../../src/tnfsbrowser.cpp" line="256" />
+        <source>Connected: %1</source>
+        <translation>Pripojené: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="235" />
+        <location filename="../../src/tnfsbrowser.cpp" line="271" />
+        <source>Connection Failed.</source>
+        <translation>Pripojenie zlyhalo.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="236" />
+        <location filename="../../src/tnfsbrowser.cpp" line="272" />
+        <source>Connection Error</source>
+        <translation>Chyba pripojenia</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="237" />
+        <location filename="../../src/tnfsbrowser.cpp" line="273" />
+        <source>Could not reach host '%1'.
+Check internet or hostname.</source>
+        <translation>Nepodarilo sa spojiť s hostiteľom '% 1'.
+Skontrolujte internet alebo názov hostiteľa.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="285" />
+        <source>Fetching %1...</source>
+        <translation>Načítava sa %1...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="301" />
+        <source>Error opening directory.</source>
+        <translation>Chyba pri otváraní adresára.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="350" />
+        <source>No more items</source>
+        <translation>Žiadne ďalšie položky</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="360" />
+        <location filename="../../src/tnfsbrowser.cpp" line="388" />
+        <source>Browsing: %1</source>
+        <translation>Prehliadanie: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="403" />
+        <source>Clear History</source>
+        <translation>Vymazať históriu</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="404" />
+        <source>Clear all saved hosts?</source>
+        <translation>Vymazať všetkých uložených hostiteľov?</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="409" />
+        <source>History cleared.</source>
+        <translation>História vymazaná.</translation>
+    </message>
+</context>
+<context>
+    <name>WebBridge</name>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="60" />
+        <source>Cannot access directory: %1</source>
+        <translation>Nedá sa získať prístup k adresáru: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="124" />
+        <source>Phonebook XML is corrupted or invalid!</source>
+        <translation>XML telefónneho zoznamu je poškodený alebo neplatný!</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="129" />
+        <source>No phonebook found at: %1</source>
+        <translation>Na adrese: %1 sa nenašiel žiadny telefónny zoznam</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="179" />
+        <source>TNFS path not found: %1</source>
+        <translation>Cesta TNFS sa nenašla: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="185" />
+        <source>Failed to mount TNFS host: %1</source>
+        <translation>Nepodarilo sa pripojiť hostiteľa TNFS: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="192" />
+        <source>Failed to connect to TNFS host: %1</source>
+        <translation>Nepodarilo sa pripojiť k hostiteľovi TNFS: %1</translation>
     </message>
 </context>
 </TS>

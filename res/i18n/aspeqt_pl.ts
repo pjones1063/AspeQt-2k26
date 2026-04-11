@@ -4,77 +4,90 @@
 <context>
     <name>AboutDialog</name>
     <message>
+        <location filename="../../src/aboutdialog.cpp" line="22" />
         <source>version %1</source>
-        <translation type="vanished">wersja %1</translation>
+        <translation>wersja %1</translation>
     </message>
     <message>
+        <location filename="../../src/aboutdialog.ui" line="14" />
         <source>About AspeQt</source>
-        <translation type="vanished">O programie AspeQt</translation>
+        <translation>O programie AspeQt</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <location filename="../../src/aboutdialog.ui" line="31" />
+        <source>AspeQt 2k26: Atari Serial Peripheral Emulator for Qt</source>
+        <translation>AspeQt 2k26: Szeregowy emulator urządzeń peryferyjnych Atari dla Qt</translation>
+    </message>
+    <message>
+        <location filename="../../src/aboutdialog.ui" line="64" />
+        <location filename="../../src/aboutdialog.cpp" line="23" />
+        <source>qrc:/documentation/about.html</source>
+        <translation>qrc:/documentation/about.html</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Credits&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Ray Ataergin &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-style:italic;&quot;&gt;(Atari8Warez)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt; for adding turkish translation and printer support.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Krzysztof Pyrkosz for adding language selection, polish translation, .PRO file support and other fixes and improvements.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Matthias Reichl for creating AtariSIO package, letting me use his high speed SIO codes and even getting his hands dirty with the Unix serial port backend.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Sebastian Bartkowicz for kindly donating one of his Candle&apos;O&apos;Sin I/O boards, thus giving me the possibility to support it and other FTDI chip based USB adaptors.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;License&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* AspeQt: Copyright 2009 by Fatih Aygün. You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Qt libraries: Copyright 2009 Nokia Corporation and/or its subsidiary(-ies). Used in this package under LGPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* Silk Icons: Copyright by Mark James (famfamfam.com). Used in this package under Creative Commons Attribution 3.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;* AtariSIO Linux kernel module and high speed code used in the EXE loader: Copyright Matthias Reichl &amp;lt;hias@horus.com&amp;gt;. Used in this package under GPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;Contact&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;To contact Fatih Aygün Just drop a line at cyco130@yahoo.com, please include the word &amp;quot;respeqt&amp;quot; in the subject field.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;To contact Ray Ataergin for SIO2PC/10502PC information send email to atari8warez@gmaail.com.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;For SIO2PC/10502PC hardware please visit www.atari8warez.for-the.biz&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;Credits&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt; text-decoration: underline;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Ray Ataergin &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-style:italic;"&gt;(Atari8Warez)&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt; for adding turkish translation and printer support.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Krzysztof Pyrkosz for adding language selection, polish translation, .PRO file support and other fixes and improvements.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Matthias Reichl for creating AtariSIO package, letting me use his high speed SIO codes and even getting his hands dirty with the Unix serial port backend.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Sebastian Bartkowicz for kindly donating one of his Candle'O'Sin I/O boards, thus giving me the possibility to support it and other FTDI chip based USB adaptors.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;License&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* AspeQt: Copyright 2009 by Fatih Aygün. You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Qt libraries: Copyright 2009 Nokia Corporation and/or its subsidiary(-ies). Used in this package under LGPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* Silk Icons: Copyright by Mark James (famfamfam.com). Used in this package under Creative Commons Attribution 3.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;* AtariSIO Linux kernel module and high speed code used in the EXE loader: Copyright Matthias Reichl &amp;lt;hias@horus.com&amp;gt;. Used in this package under GPL 2.0 license.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt; font-weight:600; text-decoration: underline;"&gt;Contact&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;To contact Fatih Aygün Just drop a line at cyco130@yahoo.com, please include the word &amp;quot;respeqt&amp;quot; in the subject field.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;To contact Ray Ataergin for SIO2PC/10502PC information send email to atari8warez@gmaail.com.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:10pt;"&gt;For SIO2PC/10502PC hardware please visit www.atari8warez.for-the.biz&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:10pt;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&amp;apos;Sans Serif&amp;apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Podziękowania&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* Krzysztof Pyrkosz za dodanie obsługi języków, polskie tłumaczenie i inne poprawki i ulepszenia.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* Matthias Reichl za stworzenie pakietu AtariSIO i pozwolenie mi na używanie kodu SIO dla wysokich prędkości oraz osobiste zajęcie się obsługą linuksowego portu szeregowego.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* Sebastian Bartkowicz za przekazanie płytki Candle&amp;apos;O&amp;apos;Sin I/O board, która dała szansę wsparcia jej oraz innych adapterów USB opartych na układach FTDI.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Licencja&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* AspeQt: Copyright 2009 Fatih Aygün. Program może być kopiowany, używany, modyfikowany i dystrybuowany na licencji GPL 2.0. Szczegóły w pliku license.txt.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* Qt libraries: Copyright 2009 Nokia Corporation i/lub jej oddziały. Użyta na licencji LGPL 2.0.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* Silk Icons: Copyright Mark James (famfamfam.com). Użyta na licencji Creative Commons Attribution 3.0.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;* Moduł jądra AtariSIO Linux oraz kod szybkiego inicjalizatora EXE: Copyright Matthias Reichl &amp;amp;lt;hias@horus.com&amp;amp;gt;. Użyte na licencji GPL 2.0.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Kontakt&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Napisz na adres cyco130@yahoo.com&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Proszę zawrzeć słowo &quot;respeqt&quot; w temacie.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Tłumaczenie&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Uwagi do tłumaczenia na język polski proszę przesyłać na adres pyrkosz@o2.pl.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:&amp;apos;Sans Serif&amp;apos;; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-weight:600; text-decoration: underline;"&gt;Podziękowania&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;* Krzysztof Pyrkosz za dodanie obsługi języków, polskie tłumaczenie i inne poprawki i ulepszenia.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;* Matthias Reichl za stworzenie pakietu AtariSIO i pozwolenie mi na używanie kodu SIO dla wysokich prędkości oraz osobiste zajęcie się obsługą linuksowego portu szeregowego.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;* Sebastian Bartkowicz za przekazanie płytki Candle&amp;apos;O&amp;apos;Sin I/O board, która dała szansę wsparcia jej oraz innych adapterów USB opartych na układach FTDI.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-weight:600; text-decoration: underline;"&gt;Licencja&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;* AspeQt: Copyright 2009 Fatih Aygün. Program może być kopiowany, używany, modyfikowany i dystrybuowany na licencji GPL 2.0. Szczegóły w pliku license.txt.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;* Qt libraries: Copyright 2009 Nokia Corporation i/lub jej oddziały. Użyta na licencji LGPL 2.0.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;* Silk Icons: Copyright Mark James (famfamfam.com). Użyta na licencji Creative Commons Attribution 3.0.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;* Moduł jądra AtariSIO Linux oraz kod szybkiego inicjalizatora EXE: Copyright Matthias Reichl &amp;amp;lt;hias@horus.com&amp;amp;gt;. Użyte na licencji GPL 2.0.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-weight:600; text-decoration: underline;"&gt;Kontakt&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Napisz na adres cyco130@yahoo.com&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Proszę zawrzeć słowo "respeqt" w temacie.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-weight:600; text-decoration: underline;"&gt;Tłumaczenie&lt;/span&gt;&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Uwagi do tłumaczenia na język polski proszę przesyłać na adres pyrkosz@o2.pl.&lt;/p&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
 </translation>
     </message>
     <message>
@@ -141,7 +154,7 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">[%1] Nieprawidłowy numer dysku: %2 do zdalnego odmontowania</translation>
     </message>
     <message>
-        <source>[%1] AspeQt can&apos;t determine the folder where the image file must be created/mounted!</source>
+        <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
         <translation type="vanished">[%1] AspeQt nie może ustalić katalogu, w którym plik obrazu musi zostać utworzony/zamontowany!</translation>
     </message>
     <message>
@@ -174,133 +187,270 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>AtariFileSystem</name>
+    <name>AspeqtClientDevice</name>
     <message>
-        <source>Atari file system error</source>
-        <translation type="vanished">Błąd systemu plików Atari</translation>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="34" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="291" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="441" />
+        <source>[%1] Read data frame failed</source>
+        <translation>[%1] Odczyt ramki danych nie powiódł się</translation>
     </message>
     <message>
-        <source>Cannot create directory &apos;%1&apos;.</source>
-        <translation type="vanished">Nie można utworzyć katalogu &apos;%1&apos;.</translation>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="45" />
+        <source>[%1] List filter set: [%2]</source>
+        <translation>[%1] Zestaw filtrów listy: [%2]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="74" />
+        <source>[%1] Set Path: [%2]</source>
+        <translation>[%1] Ustaw ścieżkę: [%2]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="100" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="495" />
+        <source>** AspeQt home folder not set - Goto Tools&gt;Options&gt;Emulation</source>
+        <translation>** Nie ustawiono folderu domowego AspeQt - Przejdź do Narzędzia&gt;Opcje&gt;Emulacja</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="205" />
+        <source>[%1] Date/time sent to client (%2).</source>
+        <translation>[%1] Data/godzina wysłana do klienta (%2).</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="226" />
+        <source>[%1] Swapped disk %2 with disk %3.</source>
+        <translation>[%1] Zamieniono dysk %2 z dyskiem %3.</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="230" />
+        <source>[%1] Invalid swap request for drives: (%2)-(%3).</source>
+        <translation>[%1] Nieprawidłowe żądanie wymiany dysków: (%2)-(%3).</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="257" />
+        <source>[%1] ALL images were remotely unmounted</source>
+        <translation>[%1] WSZYSTKIE obrazy zostały zdalnie odmontowane</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="265" />
+        <source>[%1] Remotely unmounted disk %2</source>
+        <translation>[%1] Zdalnie odmontowany dysk %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="269" />
+        <source>[%1] Invalid drive number: %2 for remote unmount</source>
+        <translation>[%1] Nieprawidłowy numer dysku: %2 do zdalnego odmontowania</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="281" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="433" />
+        <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
+        <translation>[%1] AspeQt nie może określić folderu, w którym należy utworzyć/zamontować plik obrazu!</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="307" />
+        <source>[%1] Invalid image file attribute: %2</source>
+        <translation>[%1] Nieprawidłowy atrybut pliku obrazu: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="316" />
+        <source>[%1] Can not create PC File: %2</source>
+        <translation>[%1] Nie można utworzyć pliku PC: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="399" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="407" />
+        <source>[%1] Saved disk %2</source>
+        <translation>[%1] Zapisano dysk %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="416" />
+        <source>[%1] Invalid drive number: %2 for remote save</source>
+        <translation>[%1] Nieprawidłowy numer dysku: %2 dla zdalnego zapisu</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="503" />
+        <source> Get Path: [%1]</source>
+        <translation>Pobierz ścieżkę: [%1]</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="524" />
+        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
+        <translation>[%1] polecenie: $%2, aux: $%3 NAKED.</translation>
+    </message>
+    <message>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="541" />
+        <source>[%1] Image %2 mounted</source>
+        <translation>[%1] Zamontowany obraz %2</translation>
+    </message>
+</context>
+<context>
+    <name>AtariFileSystem</name>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="257" />
+        <source>Atari file system error</source>
+        <translation>Błąd systemu plików Atari</translation>
+    </message>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="257" />
+        <source>Cannot create directory '%1'.</source>
+        <translation>Nie można utworzyć katalogu '%1'.</translation>
     </message>
 </context>
 <context>
     <name>AtariSioBackend</name>
     <message>
-        <source>Cannot open serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można otworzyć portu szeregowego &apos;%1&apos;: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="850" />
+        <source>Cannot open serial port '%1': %2</source>
+        <translation>Nie można otworzyć portu szeregowego '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot open AtariSio driver &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można otworzyć sterownika AtariSio &apos;%1&apos;: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="859" />
+        <location filename="../../src/serialport-unix.cpp" line="867" />
+        <source>Cannot open AtariSio driver '%1': %2</source>
+        <translation>Nie można otworzyć sterownika AtariSio '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="891" />
         <source>Cannot set AtariSio driver mode: %1</source>
-        <translation type="vanished">Nie można ustawić trybu sterownika AtariSio: %1</translation>
+        <translation>Nie można ustawić trybu sterownika AtariSio: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="898" />
         <source>Cannot set AtariSio to autobaud mode: %1</source>
-        <translation type="vanished">Nie można ustawić trybu automatycznej prędkości sterownika AtariSio: %1</translation>
+        <translation>Nie można ustawić trybu automatycznej prędkości sterownika AtariSio: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="905" />
         <source>Cannot create the cancel pipe</source>
-        <translation type="vanished">Nie można utworzyć cancel pipe</translation>
+        <translation>Nie można utworzyć cancel pipe</translation>
     </message>
     <message>
-        <source>Emulation started through AtariSIO backend on &apos;%1&apos; with %2 handshaking.</source>
-        <translation type="vanished">Emulacja rozpoczęta przez AtariSio na &apos;%1&apos; z negocjacją %2.</translation>
+        <location filename="../../src/serialport-unix.cpp" line="923" />
+        <source>Emulation started through AtariSIO backend on '%1' with %2 handshaking.</source>
+        <translation>Emulacja rozpoczęta przez AtariSio na '%1' z negocjacją %2.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="939" />
         <source>Cannot close serial port: %1</source>
-        <translation type="vanished">Nie można zamknąć portu szeregowego: %1</translation>
+        <translation>Nie można zamknąć portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="950" />
         <source>Cannot stop AtariSio backend.</source>
-        <translation type="vanished">Nie można zatrzymać sterownika AtariSio.</translation>
+        <translation>Nie można zatrzymać sterownika AtariSio.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="957" />
         <source>Cannot set AtariSio speed to %1: %2</source>
-        <translation type="vanished">Nie można ustawić prędkości AtariSio na %1: %2</translation>
+        <translation>Nie można ustawić prędkości AtariSio na %1: %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="960" />
+        <location filename="../../src/serialport-unix.cpp" line="1008" />
         <source>%1 bits/sec</source>
-        <translation type="vanished">%1 bps</translation>
+        <translation>%1 bps</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="961" />
+        <location filename="../../src/serialport-unix.cpp" line="1009" />
         <source>Serial port speed set to %1.</source>
-        <translation type="vanished">Prędkość portu szeregowego ustawiona na %1.</translation>
+        <translation>Prędkość portu szeregowego ustawiona na %1.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1015" />
         <source>Illegal condition using select!</source>
-        <translation type="vanished">Wybrano błędne warunki!</translation>
+        <translation>Wybrano błędne warunki!</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1035" />
         <source>Cannot read data frame: %1</source>
-        <translation type="vanished">Nie można odczytać ramki danych: %1</translation>
+        <translation>Nie można odczytać ramki danych: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1055" />
         <source>Cannot write data frame: %1</source>
-        <translation type="vanished">Nie można zapisać ramki danych: %1</translation>
+        <translation>Nie można zapisać ramki danych: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1066" />
         <source>Cannot write command ACK: %1</source>
-        <translation type="vanished">Nie można zapisać ACK dla komendy: %1</translation>
+        <translation>Nie można zapisać ACK dla komendy: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1076" />
         <source>Cannot write command NAK: %1</source>
-        <translation type="vanished">Nie można zapisać NAK dla komendy: %1</translation>
+        <translation>Nie można zapisać NAK dla komendy: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1085" />
         <source>Cannot write data ACK: %1</source>
-        <translation type="vanished">Nie można zapisać ACK dla danych: %1</translation>
+        <translation>Nie można zapisać ACK dla danych: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1094" />
         <source>Cannot write data NAK: %1</source>
-        <translation type="vanished">Nie można zapisać NAK dla danych: %1</translation>
+        <translation>Nie można zapisać NAK dla danych: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1103" />
         <source>Cannot write COMPLETE byte: %1</source>
-        <translation type="vanished">Nie można zapisać bajtu COMPLETE: %1</translation>
+        <translation>Nie można zapisać bajtu COMPLETE: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1112" />
         <source>Cannot write ERROR byte: %1</source>
-        <translation type="vanished">Nie można zapisać bajtu ERROR: %1</translation>
+        <translation>Nie można zapisać bajtu ERROR: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1126" />
         <source>Cannot write raw frame: %1</source>
-        <translation type="vanished">Nie można zapisać surowej ramki: %1</translation>
+        <translation>Nie można zapisać surowej ramki: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1137" />
         <source>Block too long.</source>
-        <translation type="vanished">Blok zbyt długi.</translation>
+        <translation>Blok zbyt długi.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1140" />
         <source>Command not acknowledged.</source>
-        <translation type="vanished">Komenda nie została zatwierdzona.</translation>
+        <translation>Komenda nie została zatwierdzona.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1143" />
         <source>Command timeout.</source>
-        <translation type="vanished">Przekroczono czas komendy.</translation>
+        <translation>Przekroczono czas komendy.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1146" />
         <source>Checksum error.</source>
-        <translation type="vanished">Błąd sumy kontrolnej.</translation>
+        <translation>Błąd sumy kontrolnej.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1149" />
         <source>Device error.</source>
-        <translation type="vanished">Błąd urządzenia.</translation>
+        <translation>Błąd urządzenia.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1152" />
         <source>Data frame not acknowledged.</source>
-        <translation type="vanished">Ramka danych nie została zatwierdzona.</translation>
+        <translation>Ramka danych nie została zatwierdzona.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1155" />
         <source>Unknown AtariSio driver error.</source>
-        <translation type="vanished">Nieznany błąd sterownika AtariSio.</translation>
+        <translation>Nieznany błąd sterownika AtariSio.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="1178" />
+        <source>Cannot read raw frame: %1</source>
+        <translation>Nie można odczytać surowej ramki: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="799" />
         <source>AtariSIO is only available under Linux.</source>
-        <translation type="vanished">AtariSio jest dostępne tylko w systemie linuks.</translation>
+        <translation>AtariSio jest dostępne tylko w systemie linuks.</translation>
     </message>
 </context>
 <context>
@@ -338,28 +488,28 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">[%1] Pobranie informacji o części %2 (%3 B na %4).</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można otworzyć pliku &apos;%1&apos;: %2</translation>
+        <source>Cannot open file '%1': %2</source>
+        <translation type="vanished">Nie można otworzyć pliku '%1': %2</translation>
     </message>
     <message>
         <source>Unexpected end of file, needed %1 more</source>
         <translation type="vanished">Nieoczekiwany koniec pliku, wymagane %1 więcej</translation>
     </message>
     <message>
-        <source>Cannot read from file &apos;%1&apos;: %2.</source>
-        <translation type="vanished">Nie można czytać z pliku &apos;%1&apos;: %2.</translation>
+        <source>Cannot read from file '%1': %2.</source>
+        <translation type="vanished">Nie można czytać z pliku '%1': %2.</translation>
     </message>
     <message>
-        <source>Cannot load file &apos;%1&apos;: The file doesn&apos;t seem to be an Atari DOS executable.</source>
-        <translation type="vanished">Nie można wczytać pliku &apos;%1&apos;: To nie jest plik wykonywalny Atari DOS.</translation>
+        <source>Cannot load file '%1': The file doesn't seem to be an Atari DOS executable.</source>
+        <translation type="vanished">Nie można wczytać pliku '%1': To nie jest plik wykonywalny Atari DOS.</translation>
     </message>
     <message>
-        <source>The executable &apos;%1&apos; is broken: Unexpected end of file, needed %2 more.</source>
-        <translation type="vanished">Plik wykonywalny &apos;%1&apos; jest uszkodzony: Niespodziewany koniec pliku, potrzebne %2 więcej.</translation>
+        <source>The executable '%1' is broken: Unexpected end of file, needed %2 more.</source>
+        <translation type="vanished">Plik wykonywalny '%1' jest uszkodzony: Niespodziewany koniec pliku, potrzebne %2 więcej.</translation>
     </message>
     <message>
-        <source>The executable &apos;%1&apos; is broken: The end address is less than the start address.</source>
-        <translation type="vanished">Plik wykonywalny &apos;%1&apos; jest uszkodzony: Adres końca jest mniejszy niż adres początku.</translation>
+        <source>The executable '%1' is broken: The end address is less than the start address.</source>
+        <translation type="vanished">Plik wykonywalny '%1' jest uszkodzony: Adres końca jest mniejszy niż adres początku.</translation>
     </message>
     <message>
         <source>Cannot open the boot loader: %1</source>
@@ -379,7 +529,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Please reboot your Atari.
 
-Don&apos;t forget to remove any cartridges and disable BASIC by holding down the Atari Option button if necessary.</source>
+Don't forget to remove any cartridges and disable BASIC by holding down the Atari Option button if necessary.</source>
         <translation type="vanished">Wykonaj restart Atari.
 
 Pamiętaj o usunięciu kartridży oraz jeśli to konieczne wyłączeniu BASICa poprzez trzymanie wciśniętego klawisza Option.</translation>
@@ -400,24 +550,59 @@ W niektórych przypadkach konieczne może być ręczne zamknięcie tego okna po 
 <context>
     <name>BootOptionsDialog</name>
     <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="14" />
         <source>Folder Boot Options</source>
-        <translation type="vanished">Opcje startowe folderu</translation>
+        <translation>Opcje startowe folderu</translation>
     </message>
     <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="48" />
         <source>Folder Image Boot Options</source>
-        <translation type="vanished">Opcje startowe folderu</translation>
+        <translation>Opcje startowe folderu</translation>
     </message>
     <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="63" />
         <source>Select the DOS you want to boot your Atari with</source>
-        <translation type="vanished">Wybierz DOS, z którym chcesz startować Atari</translation>
+        <translation>Wybierz DOS, z którym chcesz startować Atari</translation>
     </message>
     <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="73" />
+        <source>SmartDOS 6.1D</source>
+        <translation>SmartDOS 6.1D</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="89" />
+        <source>SpartaDOS 3.2G</source>
+        <translation>SpartaDOS 3.2G</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="105" />
+        <source>MyPicoDOS 4.05 (Standard)</source>
+        <translation>MyPicoDOS 4.05 (standardowy)</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="121" />
+        <source>MyDOS 4.x</source>
+        <translation>MójDOS 4.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="137" />
+        <source>AtariDOS 2.x</source>
+        <translation>AtariDOS 2.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="150" />
+        <source>DosXL 2.x</source>
+        <translation>DosXL 2.x</translation>
+    </message>
+    <message>
+        <location filename="../../src/bootoptionsdialog.ui" line="180" />
         <source>Disable high speed SIO</source>
-        <translation type="vanished">Wyłącz szybkie SIO</translation>
+        <translation>Wyłącz szybkie SIO</translation>
     </message>
     <message>
-        <source>(Check if you&apos;re already using a high-speed OS)</source>
-        <translation type="vanished">(jeśli używasz OS z szybkim SIO)</translation>
+        <location filename="../../src/bootoptionsdialog.ui" line="164" />
+        <source>(Check if you're already using a high-speed OS)</source>
+        <translation>(jeśli używasz OS z szybkim SIO)</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -427,38 +612,43 @@ W niektórych przypadkach konieczne może być ręczne zamknięcie tego okna po 
 <context>
     <name>CassetteDialog</name>
     <message>
-        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
+        <location filename="../../src/cassettedialog.cpp" line="28" />
+        <source>AspeQt is ready to playback the cassette image file '%1'.
 
 The estimated playback duration is: %2:%3
 
-Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation type="vanished">AspeQt jest gotowy do odtwarzania obrazu kasety &apos;%1&apos;.
+        <translation>AspeQt jest gotowy do odtwarzania obrazu kasety '%1'.
 
 Przybliżony czas odtwarzania to: %2:%3
 
-Wykonaj wszystko co konieczne do załadowania tego obrazu kasety np. uruchom ponownie Atari trzymając Start i Option lub wpisz &quot;CLOAD&quot; w BASICu.
+Wykonaj wszystko co konieczne do załadowania tego obrazu kasety np. uruchom ponownie Atari trzymając Start i Option lub wpisz "CLOAD" w BASICu.
 
 Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśnij dowolny klawisz Atari.</translation>
     </message>
     <message>
+        <location filename="../../src/cassettedialog.cpp" line="80" />
+        <location filename="../../src/cassettedialog.cpp" line="95" />
         <source>Playing back cassette image.
 
 Estimated time left: %1:%2</source>
-        <translation type="vanished">Odtwarzanie obrazu kasety.
+        <translation>Odtwarzanie obrazu kasety.
 
 Przybliżony pozostały czas: %1 %2</translation>
     </message>
     <message>
+        <location filename="../../src/cassettedialog.ui" line="23" />
         <source>Cassette image playback</source>
-        <translation type="vanished">Odtwarzanie obrazu kasety</translation>
+        <translation>Odtwarzanie obrazu kasety</translation>
     </message>
     <message>
-        <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+        <location filename="../../src/cassettedialog.ui" line="35" />
+        <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation type="vanished">Wykonaj wszystko co konieczne do załadowania tego obrazu kasety np. uruchom ponownie Atari trzymając Start i Option lub wpisz &quot;CLOAD&quot; w BASICu.
+        <translation>Wykonaj wszystko co konieczne do załadowania tego obrazu kasety np. uruchom ponownie Atari trzymając Start i Option lub wpisz "CLOAD" w BASICu.
 
 Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśnij dowolny klawisz Atari.</translation>
     </message>
@@ -466,91 +656,152 @@ Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśn
 <context>
     <name>CassetteWorker</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można otworzyć &apos;%1&apos;: %2</translation>
+        <location filename="../../src/sioworker.cpp" line="426" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nie można otworzyć '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot read &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można odczytać &apos;%1&apos;: %2</translation>
+        <location filename="../../src/sioworker.cpp" line="437" />
+        <location filename="../../src/sioworker.cpp" line="448" />
+        <location filename="../../src/sioworker.cpp" line="470" />
+        <location filename="../../src/sioworker.cpp" line="480" />
+        <source>Cannot read '%1': %2</source>
+        <translation>Nie można odczytać '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: The header does not match.</source>
-        <translation type="vanished">Nie można otworzyć &apos;%1&apos;: Nagłówek nie jest zgodny.</translation>
+        <location filename="../../src/sioworker.cpp" line="454" />
+        <source>Cannot open '%1': The header does not match.</source>
+        <translation>Nie można otworzyć '%1': Nagłówek nie jest zgodny.</translation>
     </message>
     <message>
-        <source>[Cassette]: File description &apos;%2&apos;.</source>
-        <translation type="vanished">[Kaseta]: Opis pliku &apos;%2&apos;.</translation>
+        <location filename="../../src/sioworker.cpp" line="459" />
+        <source>[Cassette]: File description '%2'.</source>
+        <translation>[Kaseta]: Opis pliku '%2'.</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: Unknown chunk header %2.</source>
-        <translation type="vanished">Nie można otworzyć &apos;%1&apos;: Nieznany nagłówek bloku %2.</translation>
+        <location filename="../../src/sioworker.cpp" line="504" />
+        <source>[Cassette] Skipping unsupported chunk '%1' (%2 bytes)</source>
+        <translation>[Kaseta] Pomijanie nieobsługiwanego fragmentu '%1' (%2 bajtów)</translation>
     </message>
     <message>
+        <source>Cannot open '%1': Unknown chunk header %2.</source>
+        <translation type="vanished">Nie można otworzyć '%1': Nieznany nagłówek bloku %2.</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="553" />
         <source>[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)</source>
-        <translation type="vanished">[Kaseta] Odtwarzanie rekordu %1 z %2 (%3 ms przerwy + %4 B danych)</translation>
+        <translation>[Kaseta] Odtwarzanie rekordu %1 z %2 (%3 ms przerwy + %4 B danych)</translation>
+    </message>
+</context>
+<context>
+    <name>ClipboardDevice</name>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="161" />
+        <source>[Y:] Open for Write (Accumulator Reset)</source>
+        <translation>[Y:] Otwarty do zapisu (reset akumulatora)</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="184" />
+        <source>[Y:] Open for Read (Buffered %1 bytes)</source>
+        <translation>[Y:] Otwarte do odczytu (buforowane %1 bajtów)</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="208" />
+        <source>[Y:] Sent EOF</source>
+        <translation>[Y:] Wysłano EOF</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="249" />
+        <source>[Y:] Close: Clipboard Updated (%1 chars).</source>
+        <translation>[Y:] Zamknij: Zaktualizowano schowek (%1 znaków).</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="251" />
+        <source>[Y:] Close: Buffer empty, clipboard not touched.</source>
+        <translation>[Y:] Zamknij: Bufor pusty, schowek nietknięty.</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="263" />
+        <source>[Y:] Unknown Command: $%1</source>
+        <translation>[Y:] Nieznane polecenie: $%1</translation>
     </message>
 </context>
 <context>
     <name>CreateImageDialog</name>
     <message>
+        <location filename="../../src/createimagedialog.cpp" line="75" />
         <source>Total image capacity: %1 bytes (%2 K)</source>
-        <translation type="vanished">Całkowita pojemność obrazu: %1 B (%2 KB)</translation>
+        <translation>Całkowita pojemność obrazu: %1 B (%2 KB)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="23" />
         <source>Create a disk image</source>
-        <translation type="vanished">Tworzenie obrazu dysku</translation>
+        <translation>Tworzenie obrazu dysku</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="44" />
         <source>Standard single density</source>
-        <translation type="vanished">Standardowa pojedyncza gęstość</translation>
+        <translation>Standardowa pojedyncza gęstość</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="54" />
         <source>Standard enhanced (also called medium or dual) density</source>
-        <translation type="vanished">Standardowa zwiększona (średnia) gęstość</translation>
+        <translation>Standardowa zwiększona (średnia) gęstość</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="61" />
         <source>Standard double density</source>
-        <translation type="vanished">Standardowa podwójna gęstość</translation>
+        <translation>Standardowa podwójna gęstość</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="68" />
         <source>Double sided double density</source>
-        <translation type="vanished">Dwustronny, podwójna gęstość</translation>
+        <translation>Dwustronny, podwójna gęstość</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="75" />
         <source>Double density harddisk</source>
-        <translation type="vanished">Dysk twardy podwójnej gęstości</translation>
+        <translation>Dysk twardy podwójnej gęstości</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="82" />
         <source>Custom</source>
-        <translation type="vanished">Własny</translation>
+        <translation>Własny</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="100" />
         <source>Number of sectors:</source>
-        <translation type="vanished">Liczba sektorów:</translation>
+        <translation>Liczba sektorów:</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="124" />
         <source>Sector density:</source>
-        <translation type="vanished">Gęstość sektora:</translation>
+        <translation>Gęstość sektora:</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="132" />
         <source>Single (128 bytes per sector)</source>
-        <translation type="vanished">Pojedyncza (128 B / sektor)</translation>
+        <translation>Pojedyncza (128 B / sektor)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="137" />
         <source>Double (256 bytes per sector)</source>
-        <translation type="vanished">Podwójna (256 B / sektor)</translation>
+        <translation>Podwójna (256 B / sektor)</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="142" />
         <source>512 bytes per sector</source>
-        <translation type="vanished">512 B / sektor</translation>
+        <translation>512 B / sektor</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="147" />
         <source>8192 bytes per sector</source>
-        <translation type="vanished">8192 B / sektor</translation>
+        <translation>8192 B / sektor</translation>
     </message>
     <message>
+        <location filename="../../src/createimagedialog.ui" line="163" />
         <source>Total image capacity: 92160 bytes (90 K)</source>
-        <translation type="vanished">Całkowita pojemność obrazu: 92160 B (90 KB)</translation>
+        <translation>Całkowita pojemność obrazu: 92160 B (90 KB)</translation>
     </message>
 </context>
 <context>
@@ -563,76 +814,150 @@ Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśn
 <context>
     <name>DiskEditDialog</name>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="477" />
         <source>No file system</source>
-        <translation type="vanished">Brak systemu plików</translation>
+        <translation>Brak systemu plików</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="478" />
+        <source>Atari Dos 1.0</source>
+        <translation>Atari Dos 1.0</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="479" />
+        <source>Atari Dos 2.0</source>
+        <translation>Atari Dos 2.0</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="480" />
+        <source>Atari Dos 2.5</source>
+        <translation>Atari Dos 2.5</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="481" />
+        <source>MyDos</source>
+        <translation>MojeDos</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="482" />
+        <source>SpartaDos</source>
+        <translation>SpartaDos</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="574" />
+        <location filename="../../src/diskeditdialog.cpp" line="600" />
+        <location filename="../../src/diskeditdialog.cpp" line="614" />
         <source>AspeQt - Exploring %1</source>
-        <translation type="vanished">AspeQt - przeglądanie %1</translation>
+        <translation>AspeQt - przeglądanie %1</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="625" />
         <source>Extract files</source>
-        <translation type="vanished">Wyodrębnij pliki</translation>
+        <translation>Wyodrębnij pliki</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="645" />
+        <location filename="../../src/diskeditdialog.cpp" line="646" />
         <source>Text conversion is on</source>
-        <translation type="vanished">Konwersja tekstu włączona</translation>
+        <translation>Konwersja tekstu włączona</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="669" />
+        <source>Add files</source>
+        <translation>Dodaj pliki</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.ui" line="204" />
+        <location filename="../../src/diskeditdialog.ui" line="207" />
+        <location filename="../../src/diskeditdialog.cpp" line="649" />
+        <location filename="../../src/diskeditdialog.cpp" line="650" />
         <source>Text conversion is off</source>
-        <translation type="vanished">Konwersja tekstu wyłączona</translation>
+        <translation>Konwersja tekstu wyłączona</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="657" />
         <source>Confirmation</source>
-        <translation type="vanished">Potwierdzenie</translation>
+        <translation>Potwierdzenie</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="657" />
         <source>Are you sure you want to delete selected files?</source>
-        <translation type="vanished">Czy jesteś pewny, że chcesz skasować wybrane pliki?</translation>
+        <translation>Czy jesteś pewny, że chcesz skasować wybrane pliki?</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="23" />
+        <source>MainWindow</source>
+        <translation>Główne okno</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.ui" line="92" />
+        <source>Stay on Top</source>
+        <translation>Pozostań na szczycie</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.ui" line="111" />
         <source>toolBar</source>
-        <translation type="vanished">Pasek narzędzi</translation>
+        <translation>Pasek narzędzi</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="150" />
+        <location filename="../../src/diskeditdialog.ui" line="153" />
+        <location filename="../../src/diskeditdialog.ui" line="156" />
         <source>Go to the parent directory</source>
-        <translation type="vanished">Idź do katalogu nadrzędnego</translation>
+        <translation>Idź do katalogu nadrzędnego</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="165" />
         <source>Add files...</source>
-        <translation type="vanished">Dodaj pliki...</translation>
+        <translation>Dodaj pliki...</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="168" />
+        <location filename="../../src/diskeditdialog.ui" line="171" />
         <source>Add files to this directory</source>
-        <translation type="vanished">Dodaj pliki do tego katalogu</translation>
+        <translation>Dodaj pliki do tego katalogu</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="183" />
         <source>Extract files...</source>
-        <translation type="vanished">Wyodrębnij pliki...</translation>
+        <translation>Wyodrębnij pliki...</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="186" />
+        <location filename="../../src/diskeditdialog.ui" line="189" />
         <source>Extract selected files</source>
-        <translation type="vanished">Wyodrębnij wybrane pliki</translation>
+        <translation>Wyodrębnij wybrane pliki</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="201" />
         <source>Text conversion</source>
-        <translation type="vanished">Konwersja tekstu</translation>
+        <translation>Konwersja tekstu</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="219" />
         <source>Delete</source>
-        <translation type="vanished">Skasuj</translation>
+        <translation>Skasuj</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="222" />
+        <location filename="../../src/diskeditdialog.ui" line="225" />
         <source>Delete selected files</source>
-        <translation type="vanished">Skasuj wybrane pliki</translation>
+        <translation>Skasuj wybrane pliki</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="228" />
+        <source>Del</source>
+        <translation>Del</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.ui" line="237" />
         <source>Print</source>
-        <translation type="vanished">Drukuj</translation>
+        <translation>Drukuj</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.ui" line="240" />
         <source>Print Directory Listing</source>
-        <translation type="vanished">Drukuj zawartość katalogu</translation>
+        <translation>Drukuj zawartość katalogu</translation>
     </message>
 </context>
 <context>
@@ -678,114 +1003,158 @@ Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśn
         <translation type="obsolete">Jednostronny</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="220" />
         <source>SD Diskette</source>
-        <translation type="vanished">Dyskietka SD</translation>
+        <translation>Dyskietka SD</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="222" />
         <source>ED Diskette</source>
-        <translation type="vanished">Dyskietka ED</translation>
+        <translation>Dyskietka ED</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="224" />
         <source>DD Diskette</source>
-        <translation type="vanished">Dyskietka DD</translation>
+        <translation>Dyskietka DD</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="226" />
         <source>QD Diskette</source>
-        <translation type="vanished">Dyskietka QD</translation>
+        <translation>Dyskietka QD</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="229" />
         <source>%1 sector SD HardDrive</source>
-        <translation type="vanished">%1 sektor SD Twardy dysk</translation>
+        <translation>%1 sektor SD Twardy dysk</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="231" />
         <source>%1 sector DD HardDrive</source>
-        <translation type="vanished">%1 sektor DD Twardy dysk</translation>
+        <translation>%1 sektor DD Twardy dysk</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="233" />
         <source>%1 sector, %2 bytes/sector HardDrive</source>
-        <translation type="vanished">%1 sektor, %2 bajty/sektor Twardy dysk</translation>
+        <translation>%1 sektor, %2 bajty/sektor Twardy dysk</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="236" />
         <source>%1 %2 tracks/side, %3 sectors/track, %4 bytes/sector diskette</source>
-        <translation type="vanished">%1 %2 ścieżki/strona, %3 sektory/ścieżki, %4 bajty/sektor dyskietka</translation>
+        <translation>%1 %2 ścieżki/strona, %3 sektory/ścieżki, %4 bajty/sektor dyskietka</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="237" />
         <source>DS</source>
-        <translation type="vanished">DS</translation>
+        <translation>DS</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="237" />
         <source>SS</source>
-        <translation type="vanished">SS</translation>
+        <translation>SS</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="243" />
+        <source>%1 (%2k)</source>
+        <translation>%1 (%2k)</translation>
     </message>
 </context>
 <context>
     <name>DiskImageAtx</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="obsolete">Nie można otworzyć &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimageatx.cpp" line="38" />
+        <location filename="../../src/diskimageatx.cpp" line="45" />
+        <location filename="../../src/diskimageatx.cpp" line="53" />
+        <location filename="../../src/diskimageatx.cpp" line="146" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nie można otworzyć '%1':%2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="47" />
         <source>Cannot read the header: %1.</source>
-        <translation type="obsolete">Nie można odczytać nagłówka: %1.</translation>
+        <translation>Nie można odczytać nagłówka: %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="53" />
         <source>Not a valid ATX file.</source>
-        <translation type="obsolete">To nie jest prawidłowy plik ATX.</translation>
+        <translation>Nieprawidłowy plik ATX.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="60" />
         <source>VAPI version %1: %2</source>
-        <translation type="obsolete">VAPI wersja %1: %2</translation>
+        <translation>Wersja VAPI %1: %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="132" />
         <source>Tracks=%1 Sectors=%2</source>
-        <translation type="obsolete">Ścieżki=%1 Sektory=%2</translation>
+        <translation>Ścieżki=%1 Sektory=%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimageatx.cpp" line="188" />
+        <source>[%1] Track %2 out of bounds</source>
+        <translation>[%1] Ścieżka %2 poza zakresem</translation>
     </message>
     <message>
         <source>  sector number=%1 status=%2 position=%3 start=%4</source>
         <translation type="obsolete">  numer sektora=%1 status=%2 pozycja=%3 start=%4</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="148" />
         <source>Too many sectors in the image (%1).</source>
-        <translation type="obsolete">Zbyt wiele sektorów w obrazie (%1).</translation>
+        <translation>Zbyt wiele sektorów na obrazie (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="174" />
+        <location filename="../../src/diskimageatx.cpp" line="233" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="obsolete">[%1] Nie można przejść do sektora %2: %3</translation>
+        <translation>[%1] Nie można wyszukać sektora %2: %3</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="177" />
         <source>Sector number is out of bounds.</source>
-        <translation type="obsolete">Numer sektora poza granicami.</translation>
+        <translation>Numer sektora jest poza zakresem.</translation>
     </message>
     <message>
         <source>Bad sector</source>
         <translation type="obsolete">Błędny sektor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimageatx.cpp" line="264" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="obsolete">[%1] Nie można czytać z sektora %2: %3.</translation>
+        <translation>[%1] Nie można odczytać z sektora %2: %3.</translation>
     </message>
 </context>
 <context>
     <name>DiskImagePro</name>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można otworzyć &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimagepro.cpp" line="30" />
+        <location filename="../../src/diskimagepro.cpp" line="37" />
+        <location filename="../../src/diskimagepro.cpp" line="48" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nie można otworzyć '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="39" />
         <source>Cannot read the header: %1.</source>
-        <translation type="vanished">Nie można odczytać nagłówka: %1.</translation>
+        <translation>Nie można odczytać nagłówka: %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="48" />
         <source>Not a valid PRO file.</source>
-        <translation type="vanished">To nie jest prawidłowy plik PRO.</translation>
+        <translation>To nie jest prawidłowy plik PRO.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimagepro.cpp" line="87" />
+        <source>[%1] Cannot seek to sector %2: out of bounds.</source>
+        <translation>[%1] Nie można wyszukać sektora %2: poza zakresem.</translation>
     </message>
     <message>
         <source>Too many sectors in the image (%1).</source>
         <translation type="vanished">Zbyt wiele sektorów w obrazie (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="94" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="vanished">[%1] Nie można przejść do sektora %2: %3</translation>
+        <translation>[%1] Nie można przejść do sektora %2: %3</translation>
     </message>
     <message>
         <source>Sector number is out of bounds.</source>
@@ -796,239 +1165,516 @@ Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśn
         <translation type="vanished">Sektor zduplikowany: %1 nr: %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="123" />
         <source>Error in .pro image: sector: %1 dupnum: %2</source>
-        <translation type="vanished">Błąd w obrazie PRO: sektor: %1 nr: %2</translation>
+        <translation>Błąd w obrazie PRO: sektor: %1 nr: %2</translation>
     </message>
     <message>
         <source>Bad sector</source>
         <translation type="vanished">Błędny sektor</translation>
     </message>
     <message>
+        <location filename="../../src/diskimagepro.cpp" line="162" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="vanished">[%1] Nie można czytać z sektora %2: %3.</translation>
+        <translation>[%1] Nie można czytać z sektora %2: %3.</translation>
     </message>
 </context>
 <context>
     <name>DocDisplayWindow</name>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="17" />
         <source>AspeQt User Manual</source>
-        <translation type="vanished">Instrukcja Użytkownika AspeQt</translation>
+        <translation>Instrukcja Użytkownika AspeQt</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="35" />
+        <source>qrc:/documentation/AspeQt User Manual-English.html</source>
+        <translation>qrc:/documentation/Podręcznik użytkownika AspeQt-English.html</translation>
+    </message>
+    <message>
+        <location filename="../../src/docdisplaywindow.ui" line="48" />
         <source>toolBar</source>
-        <translation type="vanished">Pasek narzędzi</translation>
+        <translation>Pasek narzędzi</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="76" />
         <source>Print</source>
-        <translation type="vanished">Drukuj</translation>
+        <translation>Drukuj</translation>
     </message>
     <message>
+        <location filename="../../src/docdisplaywindow.ui" line="79" />
+        <location filename="../../src/docdisplaywindow.ui" line="82" />
         <source>Print User Manual</source>
-        <translation type="vanished">Drukuj Instrukcję Użytkownika</translation>
+        <translation>Drukuj Instrukcję Użytkownika</translation>
+    </message>
+    <message>
+        <location filename="../../src/docdisplaywindow.ui" line="85" />
+        <source>Ctrl+P</source>
+        <translation>Ctrl+P</translation>
     </message>
 </context>
 <context>
     <name>Dos10FileSystem</name>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="479" />
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <location filename="../../src/atarifilesystem.cpp" line="547" />
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="582" />
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
         <source>Atari file system error</source>
-        <translation type="vanished">Błąd systemu plików Atari</translation>
+        <translation>Błąd systemu plików Atari</translation>
     </message>
     <message>
-        <source>Cannot create file &apos;%1&apos;.</source>
-        <translation type="vanished">Nie można stworzyć pliku &apos;%1&apos;.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="479" />
+        <source>Cannot create file '%1'.</source>
+        <translation>Nie można stworzyć pliku '%1'.</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można otworzyć &apos;%1&apos;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="582" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nie można otworzyć '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
         <source>Directory is full.</source>
-        <translation type="vanished">Katalog jest pełny.</translation>
+        <translation>Katalog jest pełny.</translation>
     </message>
     <message>
-        <source>Cannot read from &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można odczytać z &apos;%1&apos;: %2</translation>
+        <source>Cannot read from '%1': %2</source>
+        <translation type="vanished">Nie można odczytać z '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot write to &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można zapisać do &apos;%1&apos;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="547" />
+        <source>Cannot write to '%1': %2</source>
+        <translation>Nie można zapisać do '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot read &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można odczytać &apos;%1&apos;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <source>Cannot read '%1': %2</source>
+        <translation>Nie można odczytać '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot insert &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można dodać &apos;%1&apos;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <source>Cannot insert '%1': %2</source>
+        <translation>Nie można dodać '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
         <source>Cannot find a suitable file name.</source>
-        <translation type="vanished">Nie można znaleźć odpowiedniej nazwy pliku.</translation>
+        <translation>Nie można znaleźć odpowiedniej nazwy pliku.</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
         <source>Disk is full.</source>
-        <translation type="vanished">Dysk jest pełny.</translation>
+        <translation>Dysk jest pełny.</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="624" />
+        <source>File system error</source>
+        <translation>Błąd systemu plików</translation>
+    </message>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="624" />
+        <source>Number of bytes (%1) read from '%2' is not equal to expected data size of (%3)</source>
+        <translation>Liczba bajtów (%1) odczytanych z „%2” nie jest równa oczekiwanemu rozmiarowi danych (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
         <source>Sector write failed.</source>
-        <translation type="vanished">Nieudany zapis sektora.</translation>
+        <translation>Nieudany zapis sektora.</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
         <source>Sector read failed.</source>
-        <translation type="vanished">Nieudany odczyt sektora.</translation>
+        <translation>Nieudany odczyt sektora.</translation>
     </message>
     <message>
-        <source>Cannot delete &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można usunąć &apos;%1&apos;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
+        <source>Cannot delete '%1': %2</source>
+        <translation>Nie można usunąć '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
         <source>File number mismatch.</source>
-        <translation type="vanished">Niezgodny numer pliku.</translation>
+        <translation>Niezgodny numer pliku.</translation>
     </message>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
         <source>Bitmap write failed.</source>
-        <translation type="vanished">Nieudany zapis bitmapy.</translation>
+        <translation>Nieudany zapis bitmapy.</translation>
+    </message>
+</context>
+<context>
+    <name>DriveWidget</name>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="23" />
+        <source>Frame</source>
+        <translation>Rama</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="55" />
+        <source>1:</source>
+        <translation>1:</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="136" />
+        <source>Mount disk image...</source>
+        <translation>Zamontuj obraz dysku...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="145" />
+        <source>Mount folder image...</source>
+        <translation>Zamontuj obraz folderu...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="154" />
+        <source>Unmount</source>
+        <translation>Odmontuj</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="163" />
+        <source>Explore..</source>
+        <translation>Badać..</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="172" />
+        <source>Save</source>
+        <translation>Ratować</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="184" />
+        <source>Auto save</source>
+        <translation>Automatyczne zapisywanie</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="196" />
+        <source>Happy Enhancement</source>
+        <translation>Szczęśliwego ulepszenia</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="205" />
+        <source>Folder Boot Options</source>
+        <translation>Opcje uruchamiania folderów</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="208" />
+        <source>Change Boot Options for D%1</source>
+        <translation>Zmień opcje rozruchu dla D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="217" />
+        <source>Save as...</source>
+        <translation>Zapisz jako...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="220" />
+        <source>Save image as... for D%1</source>
+        <translation>Zapisz obraz jako... dla D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="229" />
+        <source>Revert to original</source>
+        <translation>Przywróć oryginał</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="232" />
+        <source>Revert image to last saved state for D%1</source>
+        <translation>Przywróć obraz do ostatnio zapisanego stanu dla D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="240" />
+        <source>Write protected</source>
+        <translation>Zapis chroniony</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="249" />
+        <source>Inspect Sectors...</source>
+        <translation>Sprawdź sektory...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="252" />
+        <source>Open low-level sector inspector for D%1</source>
+        <translation>Otwórz inspektora sektorowego niskiego poziomu dla D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="261" />
+        <source>Drive Info</source>
+        <translation>Informacje o napędzie</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="264" />
+        <source>Show Drive Information</source>
+        <translation>Pokaż informacje o dysku</translation>
     </message>
 </context>
 <context>
     <name>FileTypes</name>
     <message>
+        <location filename="../../src/miscutils.cpp" line="109" />
         <source>ATR disk image</source>
-        <translation type="vanished">Obraz dysku ATR</translation>
+        <translation>Obraz dysku ATR</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="111" />
         <source>gzipped ATR disk image</source>
-        <translation type="vanished">Obraz dysku ATR (gzip)</translation>
+        <translation>Obraz dysku ATR (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="113" />
         <source>XFD disk image</source>
-        <translation type="vanished">Obraz dysku XFD</translation>
+        <translation>Obraz dysku XFD</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="115" />
         <source>gziped XFD disk image</source>
-        <translation type="vanished">Obraz dysku XFD (gzip)</translation>
+        <translation>Obraz dysku XFD (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="117" />
         <source>DCM disk image</source>
-        <translation type="vanished">Obraz dysku DCM</translation>
+        <translation>Obraz dysku DCM</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="119" />
         <source>gzipped DCM disk image</source>
-        <translation type="vanished">Obraz dysku DCM (gzip)</translation>
+        <translation>Obraz dysku DCM (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="121" />
         <source>SCP disk image</source>
-        <translation type="vanished">Obraz dysku SCP</translation>
+        <translation>Obraz dysku SCP</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="123" />
         <source>gzipped SCP disk image</source>
-        <translation type="vanished">Obraz dysku SCP (gzip)</translation>
+        <translation>Obraz dysku SCP (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="125" />
         <source>DI disk image</source>
-        <translation type="vanished">Obraz dysku DI</translation>
+        <translation>Obraz dysku DI</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="127" />
         <source>gzipped DI disk image</source>
-        <translation type="vanished">Obraz dysku DI (gzip)</translation>
+        <translation>Obraz dysku DI (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="129" />
         <source>PRO disk image</source>
-        <translation type="vanished">Obraz dysku PRO</translation>
+        <translation>Obraz dysku PRO</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="131" />
         <source>gzipped PRO disk image</source>
-        <translation type="vanished">Obraz dysku PRO (gzip)</translation>
+        <translation>Obraz dysku PRO (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="133" />
         <source>VAPI (ATX) disk image</source>
-        <translation type="vanished">Obraz dysku VAPI (ATX)</translation>
+        <translation>Obraz dysku VAPI (ATX)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="135" />
         <source>gzipped VAPI (ATX) disk image</source>
-        <translation type="vanished">Obraz dysku VAPI (ATX) (gzip)</translation>
+        <translation>Obraz dysku VAPI (ATX) (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="137" />
         <source>CAS cassette image</source>
-        <translation type="vanished">Obraz kasety CAS</translation>
+        <translation>Obraz kasety CAS</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="139" />
         <source>gzipped CAS cassette image</source>
-        <translation type="vanished">Obraz kasety CAS (gzip)</translation>
+        <translation>Obraz kasety CAS (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="141" />
         <source>Atari executable</source>
-        <translation type="vanished">Plik wykonywalny Atari</translation>
+        <translation>Plik wykonywalny Atari</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="143" />
         <source>gzipped Atari executable</source>
-        <translation type="vanished">Plik wykonywalny Atari (gzip)</translation>
+        <translation>Plik wykonywalny Atari (gzip)</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="145" />
         <source>unknown file type</source>
-        <translation type="vanished">nieznany typ pliku</translation>
+        <translation>nieznany typ pliku</translation>
     </message>
 </context>
 <context>
     <name>FolderImage</name>
     <message>
-        <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
-        <translation type="vanished">Nie można odwzorować &apos;%1&apos; w &apos;%2&apos;: Nie można znaleźć odpowiedniej nazwy Atari.</translation>
+        <location filename="../../src/folderimage.cpp" line="113" />
+        <source>Cannot mirror '%1' in '%2': No suitable Atari name can be found.</source>
+        <translation>Nie można odwzorować '%1' w '%2': Nie można znaleźć odpowiedniej nazwy Atari.</translation>
     </message>
     <message>
-        <source>Cannot mirror %1 of %2 files in &apos;%3&apos;: Atari directory is full.</source>
-        <translation type="vanished">Nie można odwzorować %1 z %2 plików w &apos;%3&apos;: Katalog Atari jest pełny.</translation>
+        <location filename="../../src/folderimage.cpp" line="186" />
+        <source>Cannot mirror %1 of %2 files in '%3': Atari directory is full.</source>
+        <translation>Nie można odwzorować %1 z %2 plików w '%3': Katalog Atari jest pełny.</translation>
     </message>
     <message>
+        <location filename="../../src/folderimage.h" line="52" />
         <source>Folder image</source>
-        <translation type="vanished">Folder</translation>
+        <translation>Folder</translation>
     </message>
 </context>
 <context>
     <name>GzFile</name>
     <message>
+        <location filename="../../src/miscutils.cpp" line="175" />
         <source>gzdopen() failed.</source>
-        <translation type="vanished">Nieudane gzdopen().</translation>
+        <translation>Nieudane gzdopen().</translation>
     </message>
     <message>
+        <location filename="../../src/miscutils.cpp" line="202" />
         <source>gzseek() failed.</source>
-        <translation type="vanished">Nieudane gzseek().</translation>
+        <translation>Nieudane gzseek().</translation>
+    </message>
+</context>
+<context>
+    <name>InfoWidget</name>
+    <message>
+        <location filename="../../src/infowidget.ui" line="20" />
+        <source>Form</source>
+        <translation>Formularz</translation>
+    </message>
+</context>
+<context>
+    <name>LogDisplayDialog</name>
+    <message>
+        <location filename="../../src/logdisplaydialog.ui" line="14" />
+        <source>AspeQt Log View</source>
+        <translation>Widok dziennika AspeQt</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="48" />
+        <source>Save Log</source>
+        <translation>Zapisz dziennik</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="50" />
+        <source>Text Files (*.txt);;HTML Files (*.html);;All Files (*)</source>
+        <translation>Pliki tekstowe (*.txt);;Pliki HTML (*.html);;Wszystkie pliki (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="64" />
+        <source>Success</source>
+        <translation>Sukces</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="64" />
+        <source>Log saved successfully!</source>
+        <translation>Dziennik został zapisany pomyślnie!</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="66" />
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="../../src/logdisplaydialog.cpp" line="66" />
+        <source>Could not save the log file.</source>
+        <translation>Nie można zapisać pliku dziennika.</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="241"/>
         <source>Clear messages</source>
-        <translation>Usuń wiadomości</translation>
+        <translation type="vanished">Usuń wiadomości</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="364"/>
+        <location filename="../../src/mainwindow.cpp" line="722" />
         <source>Mount from TNFS Network...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamontuj z sieci TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="383"/>
+        <location filename="../../src/mainwindow.cpp" line="744" />
         <source>Mount TNFS</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamontuj TFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="506"/>
+        <location filename="../../src/mainwindow.cpp" line="860" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="560"/>
-        <source>Cannot mount &apos;%1&apos;: No empty disk slots.</source>
-        <translation>Nie można zamontować &apos;%1&apos;: Brak wolnych slotów.</translation>
+        <location filename="../../src/mainwindow.cpp" line="914" />
+        <source>Cannot mount '%1': No empty disk slots.</source>
+        <translation>Nie można zamontować '%1': Brak wolnych slotów.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="658"/>
+        <location filename="../../src/mainwindow.cpp" line="1012" />
         <source>First run</source>
         <translation>Pierwsze uruchomienie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="659"/>
+        <location filename="../../src/mainwindow.cpp" line="1013" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1037,218 +1683,520 @@ Do you want to open the options dialog?</source>
 Czy chcesz otworzyć opcje?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="816"/>
-        <location filename="../../src/mainwindow.cpp" line="817"/>
+        <location filename="../../src/mainwindow.ui" line="505" />
+        <location filename="../../src/mainwindow.cpp" line="1244" />
+        <location filename="../../src/mainwindow.cpp" line="1245" />
         <source>Hide drives D9-DO</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj dyski D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="821"/>
-        <location filename="../../src/mainwindow.cpp" line="822"/>
+        <location filename="../../src/mainwindow.cpp" line="1249" />
+        <location filename="../../src/mainwindow.cpp" line="1250" />
         <source>Show drives D9-DO</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż dyski D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="857"/>
+        <location filename="../../src/mainwindow.cpp" line="1285" />
         <source>Printer emulation stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatrzymano emulację drukarki.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="859"/>
+        <location filename="../../src/mainwindow.cpp" line="1287" />
         <source>Printer emulation started.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpoczęto emulację drukarki.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="893"/>
+        <location filename="../../src/mainwindow.cpp" line="1319" />
         <source>&amp;Stop emulation</source>
         <translation>&amp;Zatrzymaj emulację</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="894"/>
-        <location filename="../../src/mainwindow.cpp" line="895"/>
+        <location filename="../../src/mainwindow.cpp" line="1320" />
+        <location filename="../../src/mainwindow.cpp" line="1321" />
         <source>Stop SIO peripheral emulation</source>
         <translation>Zatrzymaj emulację peryferiów SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="903"/>
+        <location filename="../../src/mainwindow.ui" line="203" />
+        <location filename="../../src/mainwindow.cpp" line="1328" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Rozpocznij emulację</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="904"/>
-        <location filename="../../src/mainwindow.cpp" line="905"/>
+        <location filename="../../src/mainwindow.ui" line="206" />
+        <location filename="../../src/mainwindow.ui" line="209" />
+        <location filename="../../src/mainwindow.cpp" line="1329" />
+        <location filename="../../src/mainwindow.cpp" line="1330" />
         <source>Start SIO peripheral emulation</source>
         <translation>Uruchom emulację peryferiów SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="912"/>
+        <location filename="../../src/mainwindow.cpp" line="232" />
+        <location filename="../../src/mainwindow.cpp" line="242" />
+        <source>Requested session file not found...</source>
+        <translation>Nie znaleziono żądanego pliku sesji...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="289" />
+        <source>Adjust Shade Opacity</source>
+        <translation>Dostosuj krycie cienia</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="297" />
+        <source>RX: Data Receiving from Internet</source>
+        <translation>RX: Odbieranie danych z Internetu</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="303" />
+        <source>TX: Data Sending from Atari</source>
+        <translation>TX: Przesyłanie danych z Atari</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="334" />
+        <source>Hangup (NO CARRIER)</source>
+        <translation>Rozłączenie (BEZ PRZEWOŹNIKA)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="346" />
+        <location filename="../../src/mainwindow.cpp" line="2739" />
+        <source>Send Auto-User (ESC-U)</source>
+        <translation>Wyślij automatycznego użytkownika (ESC-U)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="357" />
+        <location filename="../../src/mainwindow.cpp" line="2740" />
+        <source>Send Auto-Pass (ESC-P)</source>
+        <translation>Wyślij auto-pass (ESC-P)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="370" />
+        <source>Toggle SIO Hex Dump Trace</source>
+        <translation>Przełącz śledzenie zrzutu szesnastkowego SIO</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="376" />
+        <source>Toggle 6502 Disassembler</source>
+        <translation>Przełącz dezasembler 6502</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="382" />
+        <source>Toggle SIO Packet Sniffer</source>
+        <translation>Przełącz sniffer pakietów SIO</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="393" />
+        <source>Main Tools</source>
+        <translation>Główne narzędzia</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="406" />
+        <source>Clear log messages</source>
+        <translation>Wyczyść komunikaty dziennika</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="413" />
+        <source>Show Log Window</source>
+        <translation>Pokaż okno dziennika</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1335" />
         <source>Emulation stopped.</source>
         <translation>Emulacja zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1787"/>
-        <location filename="../../src/mainwindow.cpp" line="1823"/>
+        <location filename="../../src/mainwindow.cpp" line="1360" />
+        <location filename="../../src/mainwindow.cpp" line="2593" />
+        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <source>Loading...</source>
+        <translation>Załadunek...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1360" />
+        <location filename="../../src/mainwindow.cpp" line="2593" />
+        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <source>Downloading from TNFS...</source>
+        <translation>Pobieranie z TNFS...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1378" />
+        <location filename="../../src/mainwindow.cpp" line="1381" />
+        <source>Executable (Local)</source>
+        <translation>Plik wykonywalny (lokalny)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1735" />
+        <source>Slot %1 download aborted by user.</source>
+        <translation>Pobieranie slotu %1 zostało przerwane przez użytkownika.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1965" />
+        <source>Open a disk or executable image</source>
+        <translation>Otwórz dysk lub obraz wykonywalny</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="1967" />
+        <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
+        <translation>Wszystkie obsługiwane obrazy (*.atr *.xfd *.atx *.pro *.xex *.com);;Pliki wykonywalne Atari (*.xex *.com);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy ATX (*.atx);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2355" />
+        <location filename="../../src/mainwindow.cpp" line="2418" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sesje AspeQt (*.aspeqt);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1951"/>
+        <location filename="../../src/mainwindow.cpp" line="2554" />
         <source>Drive %1 Happy Mode %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Napęd %1 Tryb szczęśliwy %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1953"/>
+        <location filename="../../src/mainwindow.cpp" line="2556" />
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Włączony</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1953"/>
+        <location filename="../../src/mainwindow.cpp" line="2556" />
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyłączony</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1983"/>
+        <location filename="../../src/mainwindow.cpp" line="2619" />
         <source>Mounted TNFS Stream: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamontowany strumień TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1985"/>
+        <location filename="../../src/mainwindow.cpp" line="2637" />
         <source>Mount Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd montowania</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1985"/>
-        <source>Could not open TNFS stream from 13leader.net</source>
-        <translation type="unfinished"></translation>
+        <location filename="../../src/mainwindow.cpp" line="2637" />
+        <source>Could not open TNFS stream from %1</source>
+        <translation>Nie można otworzyć strumienia TNFS z %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="136"/>
+        <location filename="../../src/mainwindow.cpp" line="2657" />
+        <source>Downloading: %1</source>
+        <translation>Pobieranie: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2659" />
+        <source>Downloading...</source>
+        <translation>Ściąganie...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2734" />
+        <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
+        <translation>Książka telefoniczna wyłączona. Ustaw ścieżkę XML w Opcjach -&gt; Most modemowy.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2735" />
+        <source>Macro User disabled. Set Phonebook XML path in Options.</source>
+        <translation>Użytkownik makra wyłączony. Ustaw ścieżkę XML książki telefonicznej w Opcjach.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2736" />
+        <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
+        <translation>Przepustka makro wyłączona. Ustaw ścieżkę XML książki telefonicznej w Opcjach.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <source>Could not extract manual to: </source>
+        <translation>Nie można wyodrębnić instrukcji do:</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3098" />
+        <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
+        <translation>[Interfejs WWW] Ostrzeżenie: Niezapisane zmiany na dysku w gnieździe %1 zostały odrzucone przez wymuszone podłączenie.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3117" />
+        <source>[Web UI] Mounted Executable to slot %1: %2</source>
+        <translation>[Interfejs WWW] Zamontowano plik wykonywalny w slocie %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3119" />
+        <source>[Web UI] Executable ready. Please cold start the Atari.</source>
+        <translation>[Web interfejs użytkownika] Plik wykonywalny gotowy. Proszę o zimny start Atari.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3123" />
+        <source>[Web UI] Failed to parse Executable: %1</source>
+        <translation>[Interfejs WWW] Nie udało się przeanalizować pliku wykonywalnego: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3143" />
+        <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
+        <translation>[Interfejs WWW] Ostrzeżenie: Niezapisane zmiany na dysku w gnieździe %1 zostały odrzucone przez wymuszone wysunięcie.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3207" />
+        <source>[Web UI] Dialing BBS: %1 (%2)</source>
+        <translation>[Interfejs WWW] Wybieranie BBS: %1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3258" />
+        <source>[Web UI] Mounted TNFS Stream: %1</source>
+        <translation>[Interfejs internetowy] Zamontowany strumień TNFS: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3268" />
+        <source>[Web UI] Failed to mount TNFS Stream: %1</source>
+        <translation>[Interfejs WWW] Nie udało się zamontować strumienia TNFS: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3269" />
+        <source>Download failed or aborted: %1</source>
+        <translation>Pobieranie nie powiodło się lub zostało przerwane: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3277" />
+        <source>[Web UI] Write Protect for slot %1 set to %2</source>
+        <translation>[Interfejs WWW] Ochrona przed zapisem dla gniazda %1 ustawiona na %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3297" />
+        <source>Web UI WebSocket Server started on port %1</source>
+        <translation>Serwer WebSocket interfejsu użytkownika sieci Web został uruchomiony na porcie %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3299" />
+        <source>Failed to start Web UI WebSocket Server.</source>
+        <translation>Nie udało się uruchomić serwera WebSocket interfejsu użytkownika.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3328" />
+        <source>HTTP Dashboard available at http://localhost:%1</source>
+        <translation>Panel HTTP dostępny pod adresem http://localhost:%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3330" />
+        <source>Failed to start HTTP Server.</source>
+        <translation>Nie udało się uruchomić serwera HTTP.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3358" />
+        <source>Web Dashboard and WebSocket servers completely shut down.</source>
+        <translation>Serwery Web Dashboard i WebSocket zostały całkowicie wyłączone.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3368" />
+        <source>[Web UI] Failed to load cassette image: %1</source>
+        <translation>[Interfejs WWW] Nie udało się załadować obrazu z kasety: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3378" />
+        <source>[Web UI] Cassette Mounted: %1</source>
+        <translation>[Interfejs WWW] Zamontowana na kasecie: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3391" />
+        <source>[Web UI] Cassette is already playing.</source>
+        <translation>[Interfejs internetowy] Kaseta już odtwarza.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3395" />
+        <source>[Web UI] Starting Cassette Playback.</source>
+        <translation>[Interfejs WWW] Rozpoczęcie odtwarzania kasety.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3410" />
+        <source>[Web UI] Rewinding Cassette...</source>
+        <translation>[Interfejs WWW] Przewijanie kasety...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3434" />
+        <source>[Web UI] Cassette Ejected.</source>
+        <translation>[Interfejs WWW] Wyrzucono kasetę.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3450" />
+        <source>[Web UI] Cassette Playback Finished.</source>
+        <translation>[Interfejs WWW] Zakończono odtwarzanie kasety.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3471" />
+        <source>Failed to initialize blank disk.</source>
+        <translation>Nie udało się zainicjować pustego dysku.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3489" />
+        <source>Failed to format blank disk.</source>
+        <translation>Nie udało się sformatować pustego dysku.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3508" />
+        <source>Failed to save blank disk to host.</source>
+        <translation>Nie udało się zapisać pustego dysku na hoście.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3516" />
+        <source>Blank disk created: %1</source>
+        <translation>Utworzono pusty dysk: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3517" />
+        <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
+        <translation>[Web interfejs użytkownika] Utworzono i zamontowano pusty dysk: %1 w gnieździe %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3532" />
+        <source>Empty</source>
+        <translation>Pusty</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3534" />
+        <source>No file mounted.</source>
+        <translation>Nie zamontowano żadnego pliku.</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3538" />
+        <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;table szerokość='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Gniazdo %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nazwa pliku:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format/typ:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Ścieżka bezwzględna:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3549" />
+        <source>Drive Details</source>
+        <translation>Szczegóły napędu</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3574" />
+        <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
+        <translation>[Web interfejs użytkownika] Zamontowano plik bezpośrednio w pamięci RAM w gnieździe %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3577" />
+        <source>Mounted to RAM: %1</source>
+        <translation>Zamontowany w pamięci RAM: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3581" />
+        <source>[Web UI] Failed to parse RAM image: %1</source>
+        <translation>[Interfejs WWW] Nie udało się przeanalizować obrazu pamięci RAM: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3584" />
+        <source>Failed to parse: %1</source>
+        <translation>Nie udało się przeanalizować: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3595" />
+        <source>[Injector] Virtual Packet Step Triggered: %1 bytes</source>
+        <translation>[Injector] Wyzwolony krok pakietu wirtualnego: %1 bajtów</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="172" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt uruchomiono %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="197"/>
-        <location filename="../../src/mainwindow.cpp" line="207"/>
+        <location filename="../../src/mainwindow.cpp" line="231" />
+        <location filename="../../src/mainwindow.cpp" line="241" />
         <source>Session file error</source>
         <translation>Błąd pliku sesji</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="198"/>
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration.</source>
-        <translation>Plik sesji nie znaleziony w podanej ścieżce dostępu, bądź ścieżka dostępu jest błędna. AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
+        <translation type="vanished">Plik sesji nie znaleziony w podanej ścieżce dostępu, bądź ścieżka dostępu jest błędna. AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="208"/>
-        <source>Requested session file not found in the application&apos;s current directory path
+        <source>Requested session file not found in the application's current directory path
  (No path was specified). AspeQt will continue with default session configuration.</source>
-        <translation>Plik sesji nie znaleziony w aktualnym katalogu aplikacji (ścieżka dostępu nie została podana). AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
+        <translation type="vanished">Plik sesji nie znaleziony w aktualnym katalogu aplikacji (ścieżka dostępu nie została podana). AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="221"/>
-        <location filename="../../src/mainwindow.cpp" line="1806"/>
+        <location filename="../../src/mainwindow.cpp" line="254" />
+        <location filename="../../src/mainwindow.cpp" line="2386" />
         <source> -- Session: </source>
         <translation> -- Sesja:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="234"/>
+        <location filename="../../src/mainwindow.cpp" line="270" />
         <source>19200 bits/sec</source>
         <translation>19200 bps</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="265"/>
-        <source>No network connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="339"/>
+        <location filename="../../src/mainwindow.cpp" line="688" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt zatrzymano %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="871"/>
-        <location filename="../../src/mainwindow.cpp" line="872"/>
+        <location filename="../../src/mainwindow.cpp" line="1300" />
+        <location filename="../../src/mainwindow.cpp" line="1301" />
         <source>Start printer emulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozpocznij emulację drukarki</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="933"/>
-        <source>TNFS Network Stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="939"/>
-        <source>TNFS Stream</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="951"/>
-        <location filename="../../src/mainwindow.cpp" line="971"/>
+        <location filename="../../src/mainwindow.cpp" line="1427" />
+        <location filename="../../src/mainwindow.cpp" line="1448" />
         <source>Folder image</source>
         <translation>Folder</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1204"/>
+        <location filename="../../src/mainwindow.cpp" line="1777" />
         <source>Unmounted disk %1</source>
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1392"/>
-        <location filename="../../src/mainwindow.cpp" line="1776"/>
-        <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
-        <translation>[%1] Zamontowe &apos;%2&apos; jako &apos;%3&apos;.</translation>
+        <location filename="../../src/mainwindow.cpp" line="1950" />
+        <location filename="../../src/mainwindow.cpp" line="2344" />
+        <source>[%1] Mounted '%2' as '%3'.</source>
+        <translation>[%1] Zamontowe '%2' jako '%3'.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1411"/>
         <source>Open a disk image</source>
-        <translation>Otwórz obraz dysku</translation>
+        <translation type="vanished">Otwórz obraz dysku</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1569"/>
+        <location filename="../../src/mainwindow.cpp" line="2137" />
         <source>[Disk %1] Auto-commit ON.</source>
-        <translation type="unfinished"></translation>
+        <translation>[Dysk %1] Automatyczne zatwierdzanie WŁ.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1571"/>
+        <location filename="../../src/mainwindow.cpp" line="2139" />
         <source>[Disk %1] Auto-commit OFF.</source>
-        <translation type="unfinished"></translation>
+        <translation>[Dysk %1] Automatyczne zatwierdzanie WYŁĄCZONE.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1608"/>
+        <location filename="../../src/mainwindow.cpp" line="2176" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
-        <translation type="unfinished">Wszystkie obrazy dysku (*.atr *.xfd *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
+        <translation>Wszystkie obrazy dysków Atari (*.atr *.xfd *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1413"/>
         <source>All Atari disk images (*.atr *.xfd *.atx *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
-        <translation type="unfinished">Wszystkie obrazy dysku (*.atr *.xfd *.atx *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy ATX (*.atx);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
+        <translation type="obsolete">Wszystkie obrazy dysku (*.atr *.xfd *.atx *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy ATX (*.atx);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1433"/>
+        <location filename="../../src/mainwindow.cpp" line="1998" />
         <source>Open a folder image</source>
         <translation>Otwórz folder</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1482"/>
+        <location filename="../../src/mainwindow.cpp" line="2045" />
         <source>Image file unsaved</source>
         <translation>Plik obrazu zawiera niezapisane zmiany</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1482"/>
-        <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
-        <translation>&apos;%1&apos; zawiera niezapisane zmiany. Czy chcesz go zapisać?</translation>
+        <location filename="../../src/mainwindow.cpp" line="2045" />
+        <source>'%1' has unsaved changes, do you want to save it?</source>
+        <translation>'%1' zawiera niezapisane zmiany. Czy chcesz go zapisać?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="984"/>
-        <location filename="../../src/mainwindow.cpp" line="1528"/>
-        <location filename="../../src/mainwindow.cpp" line="1580"/>
-        <location filename="../../src/mainwindow.cpp" line="1625"/>
+        <location filename="../../src/mainwindow.cpp" line="1460" />
+        <location filename="../../src/mainwindow.cpp" line="2096" />
+        <location filename="../../src/mainwindow.cpp" line="2148" />
+        <location filename="../../src/mainwindow.cpp" line="2193" />
         <source>Save failed</source>
         <translation>Zapis nie powiódł się</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="261"/>
         <source>Connected to the network via: </source>
-        <translation>Połączono z siecią przez:</translation>
+        <translation type="vanished">Połączono z siecią przez:</translation>
     </message>
     <message>
         <source>Network connection cannot be opened</source>
@@ -1259,12 +2207,12 @@ Czy chcesz otworzyć opcje?</translation>
         <translation type="obsolete">Nie znaleziono karty sieciowej!</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="985"/>
-        <location filename="../../src/mainwindow.cpp" line="1528"/>
-        <location filename="../../src/mainwindow.cpp" line="1580"/>
-        <location filename="../../src/mainwindow.cpp" line="1625"/>
-        <source>&apos;%1&apos; cannot be saved, do you want to save the image with another name?</source>
-        <translation>&apos;%1&apos; nie może zostać zapisany. Czy chcesz zapisać obraz pod inną nazwą?</translation>
+        <location filename="../../src/mainwindow.cpp" line="1461" />
+        <location filename="../../src/mainwindow.cpp" line="2096" />
+        <location filename="../../src/mainwindow.cpp" line="2148" />
+        <location filename="../../src/mainwindow.cpp" line="2193" />
+        <source>'%1' cannot be saved, do you want to save the image with another name?</source>
+        <translation>'%1' nie może zostać zapisany. Czy chcesz zapisać obraz pod inną nazwą?</translation>
     </message>
     <message>
         <source>[Disk 1] Auto-commit ON.</source>
@@ -1387,22 +2335,22 @@ Czy chcesz otworzyć opcje?</translation>
         <translation type="vanished">[Disk 15] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1606"/>
+        <location filename="../../src/mainwindow.cpp" line="2174" />
         <source>Save image as</source>
         <translation>Zapisz obraz jako</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1649"/>
+        <location filename="../../src/mainwindow.cpp" line="2217" />
         <source>Revert to last saved</source>
         <translation>Przywracanie do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1650"/>
-        <source>Do you really want to revert &apos;%1&apos; to its last saved state? You will lose the changes that has been made.</source>
-        <translation>Czy na pewno chcesz przywrócić &apos;%1&apos; do ostatnio zapisanego stanu? Stracisz wszystkie wprowadzone zmiany.</translation>
+        <location filename="../../src/mainwindow.cpp" line="2218" />
+        <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
+        <translation>Czy na pewno chcesz przywrócić '%1' do ostatnio zapisanego stanu? Stracisz wszystkie wprowadzone zmiany.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1785"/>
+        <location filename="../../src/mainwindow.cpp" line="2353" />
         <source>Open session</source>
         <translation>Otwórz sesję</translation>
     </message>
@@ -1411,32 +2359,32 @@ Czy chcesz otworzyć opcje?</translation>
         <translation type="vanished">Sesje AspeQt (*.respeqt);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1821"/>
+        <location filename="../../src/mainwindow.cpp" line="2416" />
         <source>Save session as</source>
         <translation>Zapisz sesję jako</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1844"/>
+        <location filename="../../src/mainwindow.cpp" line="2447" />
         <source>Open executable</source>
         <translation>Otwórz plik wykonywalny</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1846"/>
+        <location filename="../../src/mainwindow.cpp" line="2449" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Pliki wykonywalne Atari (*.xex *.com *.exe);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1878"/>
+        <location filename="../../src/mainwindow.cpp" line="2481" />
         <source>Open a cassette image</source>
         <translation>Otwórz obraz kasety</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1880"/>
+        <location filename="../../src/mainwindow.cpp" line="2483" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Obrazy CAS (*.cas);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="219"/>
+        <location filename="../../src/mainwindow.cpp" line="252" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Emulator Szeregowych Peryferiów Atari dla Qt</translation>
     </message>
@@ -1445,29 +2393,40 @@ Czy chcesz otworzyć opcje?</translation>
         <translation type="obsolete">Stacje dyskietek D9-DO dostępne są tylko z poziomu SDX i innych kompatybilnych systemów DOS</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="88" />
         <source>&amp;Disk</source>
-        <translation type="vanished">&amp;Dysk</translation>
+        <translation>&amp;Dysk</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="99" />
         <source>&amp;File</source>
-        <translation type="vanished">&amp;Plik</translation>
+        <translation>&amp;Plik</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="115" />
         <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Narzędzia</translation>
+        <translation>&amp;Narzędzia</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="125" />
         <source>&amp;Help</source>
         <oldsource>Help</oldsource>
-        <translation type="vanished">P&amp;omoc</translation>
+        <translation>P&amp;omoc</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="135" />
+        <source>Window</source>
+        <translation>Okno</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="160" />
         <source>Unmount &amp;all</source>
-        <translation type="vanished">Odmontuj &amp;wszystko</translation>
+        <translation>Odmontuj &amp;wszystko</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="163" />
         <source>Unmount all</source>
-        <translation type="vanished">Odmontuj wszystko</translation>
+        <translation>Odmontuj wszystko</translation>
     </message>
     <message>
         <source>Mount disk image...</source>
@@ -1726,40 +2685,164 @@ Czy chcesz otworzyć opcje?</translation>
         <translation type="vanished">Przełącz ochronę przed zapisem dla D15</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="166" />
+        <source>Ctrl+U</source>
+        <translation>Ctrl+U</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="178" />
         <source>&amp;Options...</source>
-        <translation type="vanished">&amp;Opcje...</translation>
+        <translation>&amp;Opcje...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="181" />
+        <location filename="../../src/mainwindow.ui" line="184" />
         <source>Open options dialog</source>
-        <translation type="vanished">Otwórz opcje</translation>
+        <translation>Otwórz opcje</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="187" />
+        <source>Ctrl+O</source>
+        <translation>Ctrl+O</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="212" />
+        <source>Alt+E</source>
+        <translation>Alt+E</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="223" />
+        <location filename="../../src/mainwindow.ui" line="226" />
         <source>Mount to the first available slot</source>
-        <translation type="vanished">Zamontuj w pierwszym wolnym slocie</translation>
+        <translation>Zamontuj w pierwszym wolnym slocie</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="235" />
         <source>Mount &amp;disk image...</source>
-        <translation type="vanished">Montowanie obrazu &amp;dysku...</translation>
+        <translation>Montowanie obrazu &amp;dysku...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="238" />
+        <location filename="../../src/mainwindow.ui" line="241" />
         <source>Mount a disk image to the first available slot</source>
-        <translation type="vanished">Zamontuj obraz dysku w pierwszym wolnym slocie</translation>
+        <translation>Zamontuj obraz dysku w pierwszym wolnym slocie</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="244" />
+        <source>Ctrl+D</source>
+        <translation>Ctrl+D</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="253" />
         <source>Mount &amp;folder image...</source>
-        <translation type="vanished">Montowanie &amp;katalogu...</translation>
+        <translation>Montowanie &amp;katalogu...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="256" />
+        <location filename="../../src/mainwindow.ui" line="259" />
         <source>Mount a folder image to the first available slot</source>
-        <translation type="vanished">Zamontuj folder w pierwszym wolnym slocie</translation>
+        <translation>Zamontuj folder w pierwszym wolnym slocie</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="262" />
+        <source>Ctrl+F</source>
+        <translation>Ctrl+F</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="271" />
         <source>New disk image...</source>
-        <translation type="vanished">Nowy obraz dysku...</translation>
+        <translation>Nowy obraz dysku...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="274" />
+        <location filename="../../src/mainwindow.ui" line="277" />
         <source>Create a new disk image file and mount it to the first available slot</source>
-        <translation type="vanished">Utwórz nowy obraz dysku i zamontuj w pierwszym wolnym slocie</translation>
+        <translation>Utwórz nowy obraz dysku i zamontuj w pierwszym wolnym slocie</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="280" />
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="319" />
+        <source>Alt+O</source>
+        <translation>Alt+O</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="466" />
+        <source>Ctrl+Shift+U</source>
+        <translation>Ctrl+Shift+U</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="496" />
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="508" />
+        <source>Alt+H</source>
+        <translation>Alt+H</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="517" />
+        <source>Toggle mini mode</source>
+        <translation>Przełącz tryb mini</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="520" />
+        <source>Ctrl+M</source>
+        <translation>Ctrl+M</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="532" />
+        <source>Toggle shade mode</source>
+        <translation>Przełącz tryb cienia</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="535" />
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="544" />
+        <location filename="../../src/mainwindow.ui" line="547" />
+        <location filename="../../src/mainwindow.ui" line="550" />
+        <source>Open log window</source>
+        <translation>Otwórz okno dziennika</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="553" />
+        <source>Ctrl+L</source>
+        <translation>Ctrl+L</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="558" />
+        <source>Boot Options...</source>
+        <translation>Opcje rozruchu...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="561" />
+        <location filename="../../src/mainwindow.ui" line="564" />
+        <source>Configure firmware and boot options</source>
+        <translation>Skonfiguruj opcje oprogramowania sprzętowego i rozruchu</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="573" />
+        <source>Phonebook...</source>
+        <translation>Książka telefoniczna...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="576" />
+        <location filename="../../src/mainwindow.ui" line="579" />
+        <location filename="../../src/mainwindow.cpp" line="2738" />
+        <source>Open BBS Phonebook</source>
+        <translation>Otwórz książkę telefoniczną BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="582" />
+        <source>Ctrl+B</source>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <source>Folder Boot Options</source>
@@ -1770,128 +2853,153 @@ Czy chcesz otworzyć opcje?</translation>
         <translation type="vanished">Zmień opcje startowe</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="866"/>
-        <location filename="../../src/mainwindow.cpp" line="867"/>
+        <location filename="../../src/mainwindow.ui" line="490" />
+        <location filename="../../src/mainwindow.ui" line="493" />
+        <location filename="../../src/mainwindow.cpp" line="1296" />
+        <location filename="../../src/mainwindow.cpp" line="1297" />
         <source>Stop printer emulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatrzymaj emulację drukarki</translation>
     </message>
     <message>
         <source>Properties...</source>
         <translation type="obsolete">Właściwości...</translation>
     </message>
     <message>
-        <source>Show D1&apos;s properties</source>
+        <source>Show D1's properties</source>
         <translation type="vanished">Pokaż właściwości D1</translation>
     </message>
     <message>
-        <source>Show D2&apos;s properties</source>
+        <source>Show D2's properties</source>
         <translation type="vanished">Pokaż właściwości D2</translation>
     </message>
     <message>
-        <source>Show D3&apos;s properties</source>
+        <source>Show D3's properties</source>
         <translation type="vanished">Pokaż właściwości D3</translation>
     </message>
     <message>
-        <source>Show D4&apos;s properties</source>
+        <source>Show D4's properties</source>
         <translation type="vanished">Pokaż właściwości D4</translation>
     </message>
     <message>
-        <source>Show D5&apos;s properties</source>
+        <source>Show D5's properties</source>
         <translation type="vanished">Pokaż właściwości D5</translation>
     </message>
     <message>
-        <source>Show D6&apos;s properties</source>
+        <source>Show D6's properties</source>
         <translation type="vanished">Pokaż właściwości D6</translation>
     </message>
     <message>
-        <source>Show D7&apos;s properties</source>
+        <source>Show D7's properties</source>
         <translation type="vanished">Pokaż właściwości D7</translation>
     </message>
     <message>
-        <source>Show D8&apos;s properties</source>
+        <source>Show D8's properties</source>
         <translation type="vanished">Pokaż właściwości D8</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="292" />
         <source>&amp;Save session</source>
-        <translation type="vanished">&amp;Zapisz sesję</translation>
+        <translation>&amp;Zapisz sesję</translation>
     </message>
     <message>
         <source>Auto Commit</source>
         <translation type="vanished">Automatyczny zapis</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="475" />
         <source>Save mounted image group as default</source>
-        <translation type="vanished">Zapisz grupę zamontowanych obrazów jako domyślną</translation>
+        <translation>Zapisz grupę zamontowanych obrazów jako domyślną</translation>
     </message>
     <message>
         <source>&amp;Save session as...</source>
         <translation type="obsolete">&amp;Zapisz sesję jako...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="295" />
         <source>Save current session to a file</source>
         <oldsource>Save current sesison to a file</oldsource>
-        <translation type="vanished">Zapisz aktualną sesję do pliku</translation>
+        <translation>Zapisz aktualną sesję do pliku</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="298" />
         <source>Save current session</source>
         <oldsource>Save current sesison</oldsource>
-        <translation type="vanished">Zapisz aktualną sesję</translation>
+        <translation>Zapisz aktualną sesję</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="301" />
+        <source>Alt+S</source>
+        <translation>Alt+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="310" />
         <source>&amp;Open session...</source>
-        <translation type="vanished">&amp;Otwórz sesję...</translation>
+        <translation>&amp;Otwórz sesję...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="313" />
+        <location filename="../../src/mainwindow.ui" line="316" />
         <source>Open a previously saved session</source>
-        <translation type="vanished">Otwórz zapisaną sesję</translation>
+        <translation>Otwórz zapisaną sesję</translation>
     </message>
     <message>
         <source>Explore..</source>
         <translation type="vanished">Eksploruj.</translation>
     </message>
     <message>
-        <source>Show D9&apos;s properties</source>
+        <source>Show D9's properties</source>
         <translation type="vanished">Pokaż właściwości D9</translation>
     </message>
     <message>
-        <source>Show D10&apos;s properties</source>
+        <source>Show D10's properties</source>
         <translation type="vanished">Pokaż właściwości D10</translation>
     </message>
     <message>
-        <source>Show D11&apos;s properties</source>
+        <source>Show D11's properties</source>
         <translation type="vanished">Pokaż właściwości D11</translation>
     </message>
     <message>
-        <source>Show D12&apos;s properties</source>
+        <source>Show D12's properties</source>
         <translation type="vanished">Pokaż właściwości D12</translation>
     </message>
     <message>
-        <source>Show D13&apos;s properties</source>
+        <source>Show D13's properties</source>
         <translation type="vanished">Pokaż właściwości D13</translation>
     </message>
     <message>
-        <source>Show D14&apos;s properties</source>
+        <source>Show D14's properties</source>
         <translation type="vanished">Pokaż właściwości D14</translation>
     </message>
     <message>
-        <source>Show D15&apos;s properties</source>
+        <source>Show D15's properties</source>
         <translation type="vanished">Pokaż właściwości D15</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="328" />
         <source>&amp;Boot Atari executable...</source>
-        <translation type="vanished">&amp;Inicjuj plik wykonywalny Atari...</translation>
+        <translation>&amp;Inicjuj plik wykonywalny Atari...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="331" />
+        <location filename="../../src/mainwindow.ui" line="334" />
         <source>Boot an Atari executable</source>
-        <translation type="vanished">Inicjuj plik wykonywalny Atari</translation>
+        <translation>Inicjuj plik wykonywalny Atari</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="337" />
+        <source>Alt+B</source>
+        <translation>Alt+B</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="355" />
         <source>Save</source>
-        <translation type="vanished">Zapisz</translation>
+        <translation>Zapisz</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="358" />
+        <location filename="../../src/mainwindow.ui" line="361" />
         <source>Save D1</source>
-        <translation type="vanished">Zapisz D1</translation>
+        <translation>Zapisz D1</translation>
     </message>
     <message>
         <source>Save D2</source>
@@ -2078,48 +3186,83 @@ Czy chcesz otworzyć opcje?</translation>
         <translation type="vanished">Zapisz D15</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="373" />
+        <location filename="../../src/mainwindow.ui" line="376" />
+        <location filename="../../src/mainwindow.ui" line="379" />
         <source>Show printer text output</source>
-        <translation type="vanished">Pokaż znakowe wyjście drukarki</translation>
+        <translation>Pokaż znakowe wyjście drukarki</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="382" />
+        <source>Alt+Shift+T</source>
+        <translation>Alt+Shift+T</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="391" />
         <source>Playback cassette image...</source>
-        <translation type="vanished">Odtwórz obraz kasety...</translation>
+        <translation>Odtwórz obraz kasety...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="394" />
+        <location filename="../../src/mainwindow.ui" line="397" />
         <source>Playback a cassette image</source>
-        <translation type="vanished">Odtwórz obraz kasety</translation>
+        <translation>Odtwórz obraz kasety</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="400" />
+        <source>Alt+C</source>
+        <translation>Alt+C</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="409" />
         <source>&amp;Quit</source>
-        <translation type="vanished">Za&amp;kończ</translation>
+        <translation>Za&amp;kończ</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="412" />
         <source>Quit AspeQt</source>
-        <translation type="vanished">Opuść AspeQt</translation>
+        <translation>Opuść AspeQt</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="415" />
+        <source>Alt+Q</source>
+        <translation>Alt+Q</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="424" />
         <source>&amp;About AspeQt</source>
-        <translation type="vanished">&amp;O programie AspeQt</translation>
+        <translation>&amp;O programie AspeQt</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="427" />
+        <source>Ctrl+A</source>
+        <translation>Ctrl+A</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.ui" line="432" />
         <source>Help</source>
-        <translation type="vanished">Pomoc</translation>
+        <translation>Pomoc</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="440" />
         <source>Contents</source>
-        <translation type="vanished">Zawartość</translation>
+        <translation>Zawartość</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="445" />
         <source>Index</source>
-        <translation type="vanished">Indeks</translation>
+        <translation>Indeks</translation>
     </message>
     <message>
         <source>AspeQt &amp;User Manual</source>
         <translation type="vanished">Instrukcja &amp;Użytkownika AspeQt</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.ui" line="457" />
+        <location filename="../../src/mainwindow.ui" line="460" />
+        <location filename="../../src/mainwindow.ui" line="463" />
         <source>User Manual</source>
-        <translation type="vanished">Instrukcja Użytkownika</translation>
+        <translation>Instrukcja Użytkownika</translation>
     </message>
     <message>
         <source>Commit changes to this disk automatically</source>
@@ -2133,651 +3276,2538 @@ Czy chcesz otworzyć opcje?</translation>
 <context>
     <name>MyModel</name>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="226" />
+        <location filename="../../src/diskeditdialog.cpp" line="396" />
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="226" />
+        <source>Could not delete files. (Is this file system supported?)</source>
+        <translation>Nie można usunąć plików. (Czy ten system plików jest obsługiwany?)</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="246" />
         <source>No</source>
-        <translation type="vanished">Nr</translation>
+        <translation>Nr</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="249" />
         <source>Name</source>
-        <translation type="vanished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="252" />
         <source>Extension</source>
-        <translation type="vanished">Rozszerzenie</translation>
+        <translation>Rozszerzenie</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="255" />
         <source>Size</source>
-        <translation type="vanished">Rozmiar</translation>
+        <translation>Rozmiar</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="258" />
         <source>Time</source>
-        <translation type="vanished">Czas</translation>
+        <translation>Czas</translation>
     </message>
     <message>
+        <location filename="../../src/diskeditdialog.cpp" line="261" />
         <source>Notes</source>
-        <translation type="vanished">Uwagi</translation>
+        <translation>Uwagi</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskeditdialog.cpp" line="396" />
+        <source>Could not insert files.
+
+Possible causes:
+- File system not supported (e.g. SpartaDOS)
+- Disk is full
+- File name invalid</source>
+        <translation>Nie można wstawić plików.
+
+Możliwe przyczyny:
+- Nieobsługiwany system plików (np. SpartaDOS)
+- Dysk jest pełny
+- Nieprawidłowa nazwa pliku</translation>
     </message>
 </context>
 <context>
     <name>OptionsDialog</name>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="23" />
         <source>Options</source>
-        <translation type="vanished">Opcje</translation>
+        <translation>Opcje</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="63" />
         <source>Standard serial port</source>
         <oldsource>Standard serial port I/O</oldsource>
-        <translation type="vanished">Standardowy port szeregowy</translation>
+        <translation>Standardowy port szeregowy</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="56" />
         <source>Serial I/O backends</source>
-        <translation type="vanished">Rodzaj łącza szeregowego</translation>
+        <translation>Rodzaj łącza szeregowego</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="51" />
+        <source>1</source>
+        <translation>1</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="71" />
+        <source>AtariSIO</source>
+        <translation>AtariSIO</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="80" />
+        <location filename="../../src/optionsdialog.ui" line="529" />
         <source>Emulation</source>
-        <translation type="vanished">Emulacja</translation>
+        <translation>Emulacja</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="85" />
+        <source>Hayes Modem Emulator</source>
+        <translation>Emulator modemu Hayes</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="93" />
+        <location filename="../../src/optionsdialog.ui" line="991" />
         <source>User interface</source>
-        <translation type="vanished">Interfejs użytkownika</translation>
+        <translation>Interfejs użytkownika</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="98" />
+        <source>Web Interface</source>
+        <translation>Interfejs sieciowy</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="140" />
         <source>Standard serial port backend options</source>
-        <translation type="vanished">Standardowy port szeregowy</translation>
+        <translation>Standardowy port szeregowy</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="149" />
+        <location filename="../../src/optionsdialog.ui" line="429" />
         <source>Use this backend</source>
-        <translation type="vanished">Użyj tego interfejsu</translation>
+        <translation>Użyj tego interfejsu</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="162" />
+        <source>Direct Hardware UART (RasPi)</source>
+        <translation>Bezpośredni sprzętowy UART (RasPi)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="175" />
         <source>Port name:</source>
-        <translation type="vanished">Nazwa portu:</translation>
+        <translation>Nazwa portu:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="191" />
+        <location filename="../../src/optionsdialog.ui" line="462" />
         <source>Handshake method:</source>
-        <translation type="vanished">Metoda synchronizacji:</translation>
+        <translation>Metoda synchronizacji:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="199" />
+        <location filename="../../src/optionsdialog.ui" line="470" />
+        <source>RI</source>
+        <translation>RI</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="204" />
+        <location filename="../../src/optionsdialog.ui" line="475" />
+        <source>DSR</source>
+        <translation>DSR</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="209" />
+        <location filename="../../src/optionsdialog.ui" line="480" />
+        <source>CTS</source>
+        <translation>CTS</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="214" />
+        <source>NONE</source>
+        <translation>NIC</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="219" />
+        <source>SOFTWARE (SIO2BT)</source>
+        <translation>OPROGRAMOWANIE (SIO2BT)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="236" />
+        <source>Write delay [ms]:</source>
+        <translation>Opóźnienie zapisu [ms]:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="250" />
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="255" />
+        <source>10</source>
+        <translation>10</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="260" />
+        <source>20</source>
+        <translation>20</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="265" />
+        <source>30</source>
+        <translation>30</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="270" />
+        <source>40</source>
+        <translation>40</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="275" />
+        <source>50</source>
+        <translation>50</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="280" />
+        <source>60</source>
+        <translation>60</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="294" />
         <source>High speed mode baud rate:</source>
-        <translation type="vanished">Prędkość trybu przyspieszonego (bps):</translation>
+        <translation>Prędkość trybu przyspieszonego (bps):</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="305" />
+        <source>19200 (1x)</source>
+        <translation>19200 (1x)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="310" />
+        <source>38400 (2x)</source>
+        <translation>38400 (2x)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="315" />
+        <source>57600 (3x)</source>
+        <translation>57600 (3x)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="323" />
         <source>Use non-standard speeds</source>
-        <translation type="vanished">Użyj niestandardowych prędkości</translation>
+        <translation>Użyj niestandardowych prędkości</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="339" />
         <source>High speed mode POKEY divisor:</source>
-        <translation type="vanished">Dzielnik POKEYa dla trybu przyspieszonego:</translation>
+        <translation>Dzielnik POKEYa dla trybu przyspieszonego:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="359" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Complete/Error response delay (μs)&lt;br&gt;See manual for more information&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Opóźnienie reakcji na błąd (μs) ukończone/błąd&lt;br&gt;Więcej informacji znajdziesz w instrukcji&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="366" />
+        <source>μs</source>
+        <translation>μs</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="420" />
         <source>AtariSIO backend options</source>
-        <translation type="vanished">Opcje AtariSIO</translation>
+        <translation>Opcje AtariSIO</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="442" />
         <source>Device name:</source>
-        <translation type="vanished">Nazwa urządzenia:</translation>
+        <translation>Nazwa urządzenia:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="449" />
+        <source>/dev/atarisio0</source>
+        <translation>/dev/atarisio0</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="557" />
+        <source>Filter out underscore character from file names</source>
+        <translation>Odfiltruj znak podkreślenia z nazw plików</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="572" />
+        <source>        (Required for AtariDOS compatibility)</source>
+        <translation>(Wymagane dla kompatybilności z AtariDOS)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="595" />
         <source>Use high speed executable loader</source>
-        <translation type="vanished">Szybkiego ładowanie plików wykonywalnych</translation>
+        <translation>Szybkiego ładowanie plików wykonywalnych</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="605" />
+        <source>Enable this for text-based web services.
+Disable for binary data.</source>
+        <translation>Włącz tę opcję dla tekstowych usług internetowych.
+Wyłącz dla danych binarnych.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="609" />
+        <source>Convert Atari EOL (155) to LF (10) on Network Write</source>
+        <translation>Konwertuj Atari EOL (155) na LF (10) podczas zapisu sieciowego</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="632" />
+        <source>Enable this to read Unix text files properly on Atari.
+Disable for binary files.</source>
+        <translation>Włącz tę opcję, aby poprawnie czytać pliki tekstowe Uniksa na Atari.
+Wyłącz dla plików binarnych.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="636" />
+        <source>Convert LF (10) to Atari EOL (155) on Network Read</source>
+        <translation>Konwertuj LF (10) na Atari EOL (155) w trybie odczytu sieciowego</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="646" />
+        <source>CAPITAL letters in file names</source>
+        <translation>WIELKIE litery w nazwach plików</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="653" />
+        <source>Restore last TNFS location on mount</source>
+        <translation>Przywróć ostatnią lokalizację TNFS na górze</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="685" />
+        <source>Hayes Modem Emulator (Rs232 to TCP Bridge)</source>
+        <translation>Emulator modemu Hayes (mostek Rs232 do TCP)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="691" />
+        <source>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</source>
+        <translation>Łączy dodatkowy port szeregowy z Internetem. Wymaga Atari 850 lub R-Vertera.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="694" />
+        <source>Enable Modem Bridge (RS232 to TCP)</source>
+        <translation>Włącz mostek modemowy (RS232 do TCP)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="701" />
+        <source>Bridges a secondary Serial Port to the Internet.
+Requires Atari 850 or R-Verter.</source>
+        <translation>Łączy dodatkowy port szeregowy z Internetem.
+Wymaga Atari 850 lub R-Vertera.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="705" />
+        <source>Enable 850 Device  (R: to TCP)</source>
+        <translation>Włącz urządzenie 850 (R: do TCP)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="715" />
+        <location filename="../../src/optionsdialog.ui" line="752" />
+        <source>Enable if using a standard FTDI USB adapter.
+Leave unchecked for direct Raspberry Pi GPIO.</source>
+        <translation>Włącz, jeśli używasz standardowego adaptera USB FTDI.
+Pozostaw niezaznaczone dla bezpośredniego GPIO Raspberry Pi.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="719" />
+        <source>Invert CTS Logic (Standard USB Adapters)</source>
+        <translation>Odwróć logikę CTS (standardowe adaptery USB)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="729" />
+        <source>FTDI/USB Latency:</source>
+        <translation>Opóźnienie FTDI/USB:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="736" />
+        <source>ms</source>
+        <translation>SM</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="756" />
+        <source>Enable BBS Listener (Auto-Answer):</source>
+        <translation>Włącz odbiornik BBS (automatyczna odpowiedź):</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="766" />
+        <source>BBS Listener TCP Port</source>
+        <translation>Port TCP odbiornika BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="790" />
+        <source>Bridge Serial Port:</source>
+        <translation>Port szeregowy mostka:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="800" />
+        <source>Must be different from the SIO port.</source>
+        <translation>Musi różnić się od portu SIO.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="807" />
+        <source>Baud Rate:</source>
+        <translation>Szybkość transmisji:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="818" />
+        <source>300</source>
+        <translation>300</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="823" />
+        <source>600</source>
+        <translation>600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="828" />
+        <source>1200</source>
+        <translation>1200</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="833" />
+        <source>2400</source>
+        <translation>2400</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="838" />
+        <source>4800</source>
+        <translation>4800</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="843" />
+        <source>9600</source>
+        <translation>9600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="848" />
+        <source>19200</source>
+        <translation>19200</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="853" />
+        <source>38400</source>
+        <translation>38400</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="858" />
+        <source>57600</source>
+        <translation>57600</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="869" />
+        <source>Highly recommended for Atari 850 Interface.</source>
+        <translation>Wysoce zalecane dla interfejsu Atari 850.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="872" />
+        <source>Enable Hardware Flow Control (RTS/CTS)</source>
+        <translation>Włącz sprzętową kontrolę przepływu (RTS/CTS)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="895" />
+        <source>Enable SSH Support (Port 22)</source>
+        <translation>Włącz obsługę SSH (port 22)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="905" />
+        <source>Local Echo (Half Duplex)</source>
+        <translation>Lokalne echo (półdupleks)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="912" />
+        <source>Phonebook XML Path:</source>
+        <translation>Ścieżka XML książki telefonicznej:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="927" />
+        <source>Click ... to select dialdirectory.xml</source>
+        <translation>Kliknij..., aby wybrać plik dialdirectory.xml</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="937" />
+        <source>...</source>
+        <translation />
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="947" />
+        <source>New</source>
+        <translation>Nowy</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="550" />
         <source>Use custom baud rate for cassette emulation</source>
         <oldsource>Use cutom baud rate for cassette emulation</oldsource>
-        <translation type="vanished">Własna prędkość dla emulacji kaset (bps)</translation>
+        <translation>Własna prędkość dla emulacji kaset (bps)</translation>
     </message>
     <message>
         <source>User inteface</source>
         <translation type="vanished">Interfejs użytkownika</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="997" />
         <source>Language:</source>
-        <translation type="vanished">Język:</translation>
+        <translation>Język:</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1007" />
         <source>Minimize to system tray</source>
-        <translation type="vanished">Minimalizuj do tacki systemowej</translation>
+        <translation>Minimalizuj do tacki systemowej</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1014" />
         <source>Save window positions and sizes</source>
-        <translation type="vanished">Zapisz pozycje i rozmiar okien</translation>
+        <translation>Zapisz pozycje i rozmiar okien</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="1053" />
+        <source>Save D9-DO drive visibility status</source>
+        <translation>Zapisz stan widoczności dysku D9-DO</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1063" />
+        <source>Enable Shade in Mini Mode by default</source>
+        <translation>Domyślnie włącz Cień w trybie Mini</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1076" />
+        <source>Use larger font in drive slot descriptions</source>
+        <translation>Używaj większej czcionki w opisach gniazd dysków</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1108" />
+        <source>Web Dashboard Options</source>
+        <translation>Opcje panelu internetowego</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1114" />
+        <source>Enable the HTTP and WebSocket servers for the remote web dashboard.</source>
+        <translation>Włącz serwery HTTP i WebSocket dla zdalnego panelu WWW.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1117" />
+        <source>Enable Web Interface</source>
+        <translation>Włącz interfejs sieciowy</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1126" />
+        <source>HTTP Dashboard Port:</source>
+        <translation>Port panelu HTTP:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1146" />
+        <source>WebSocket Bridge Port:</source>
+        <translation>Port mostka WebSocket:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1194" />
         <source>Save/Commit or Cancel/Ignore changes made to the settings</source>
-        <translation type="vanished">Zapisz lub odwołaj zmiany wprowadzone do ustawień</translation>
+        <translation>Zapisz lub odwołaj zmiany wprowadzone do ustawień</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.cpp" line="59" />
+        <location filename="../../src/optionsdialog.cpp" line="74" />
+        <source>Custom</source>
+        <translation>Zwyczaj</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="166" />
         <source>Automatic</source>
-        <translation type="vanished">Automatycznie</translation>
+        <translation>Automatycznie</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.cpp" line="169" />
+        <location filename="../../src/optionsdialog.cpp" line="178" />
         <source>English</source>
-        <translation type="vanished">Polski</translation>
+        <translation>Polski</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="381" />
+        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <source>Port Conflict</source>
+        <translation>Konflikt portowy</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="382" />
+        <source>You cannot use the same Serial Port (%1) for both
+SIO Emulation and the Modem Bridge.
+
+Please select a different port for the Modem.</source>
+        <translation>Nie można użyć tego samego portu szeregowego (%1) dla obu
+Emulacja SIO i mostek modemowy.
+
+Wybierz inny port dla modemu.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <source>The HTTP Dashboard Port and WebSocket Bridge Port cannot be the same.
+
+Please assign different ports.</source>
+        <translation>Port pulpitu HTTP i port mostka WebSocket nie mogą być takie same.
+
+Proszę przypisać różne porty.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="456" />
+        <source>Select Dial Directory</source>
+        <translation>Wybierz opcję Książka telefoniczna</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="456" />
+        <location filename="../../src/optionsdialog.cpp" line="465" />
+        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <source>XML Files (*.xml);;All Files (*)</source>
+        <translation>Pliki XML (*.xml);;Wszystkie pliki (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="465" />
+        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <source>Create New Dial Directory</source>
+        <translation>Utwórz nowy katalog wybierania</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <source>Could not create the phonebook file.</source>
+        <translation>Nie można utworzyć pliku książki telefonicznej.</translation>
+    </message>
+</context>
+<context>
+    <name>PCLINK</name>
+    <message>
+        <location filename="../../src/pclink.cpp" line="181" />
+        <source>PCLINK Command=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</source>
+        <translation>Polecenie PCLINK=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="193" />
+        <source>[%1] P</source>
+        <translation>[%1] s</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="200" />
+        <source>[%1] R</source>
+        <translation>[%1] R</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="218" />
+        <source>[%1] Get status for [%2]</source>
+        <translation>[%1] Uzyskaj status dla [%2]</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="229" />
+        <source>[%1] Speed poll</source>
+        <translation>[%1] Sonda szybkości</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="236" />
+        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
+        <translation>[%1] polecenie: $%2, aux: $%3 NAKED.</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="269" />
+        <source>PCLINK[%1] Mount %2</source>
+        <translation>PCLINK[%1] Podłącz %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="311" />
+        <source>PCLINK[%1] Unmount</source>
+        <translation>PCLINK[%1] Odmontuj</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="464" />
+        <source>match: %1%2%3%4%5%6%7%8%9%10%11 with %12%13%14%15%16%17%18%19%20%21%22: </source>
+        <translation>dopasowanie: %1%2%3%4%5%6%7%8%9%10%11 z %12%13%14%15%16%17%18%19%20%21%22:</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="477" />
+        <source>no match</source>
+        <translation>brak dopasowania</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="488" />
+        <source>atr mismatch: not HIDDEN or ARCHIVED</source>
+        <translation>niedopasowanie atr: nie jest ukryte ani archiwizowane</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="496" />
+        <source>atr mismatch: not PROTECTED</source>
+        <translation>niedopasowanie atr: niechronione</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="505" />
+        <source>atr mismatch: not UNPROTECTED</source>
+        <translation>niedopasowanie atr: nie jest BEZ OCHRONY</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="514" />
+        <source>atr mismatch: not SUBDIR</source>
+        <translation>niedopasowanie atr: nie SUBDIR</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="523" />
+        <source>atr mismatch: not FILE</source>
+        <translation>Niezgodność atr: nie PLIK</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="528" />
+        <source>match</source>
+        <translation>mecz</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="593" />
+        <source>%1: got fname '%2'</source>
+        <translation>%1: mam nazwę użytkownika „%2”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="601" />
+        <source>%1: stat '%2'</source>
+        <translation>%1: statystyka „%2”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="611" />
+        <source>'%1': is a symlink</source>
+        <translation>„%1”: jest dowiązaniem symbolicznym</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="615" />
+        <source>'%1': can't be accessed</source>
+        <translation>'%1': brak dostępu</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="616" />
+        <source>access error code %1</source>
+        <translation>kod błędu dostępu %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="713" />
+        <source>Internal error: dir_cache should be NULL!</source>
+        <translation>Błąd wewnętrzny: dir_cache powinien mieć wartość NULL!</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="844" />
+        <source>closing all files</source>
+        <translation>zamknięcie wszystkich plików</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1120" />
+        <source>'P' WRONG DATA FRAME, expected size %1 got %2</source>
+        <translation>„P” ZŁA RAMKA DANYCH, oczekiwany rozmiar %1 otrzymał %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1138" />
+        <source>PARBLK retry, ignored</source>
+        <translation>Ponowna próba PARBLK, zignorowana</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1152" />
+        <source>%1 (fno $%02)</source>
+        <translation>%1 (fno $%02)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1166" />
+        <source>bad handle 1 %1</source>
+        <translation>zły uchwyt 1%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1173" />
+        <location filename="../../src/pclink.cpp" line="1308" />
+        <source>bad size $0000 (0)</source>
+        <translation>zły rozmiar $0000 (0)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1193" />
+        <source>size $%1 (%2), buffer $%3 (%4)</source>
+        <translation>rozmiar $%1 (%2), bufor $%3 (%4)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1204" />
+        <location filename="../../src/pclink.cpp" line="1324" />
+        <location filename="../../src/pclink.cpp" line="1481" />
+        <location filename="../../src/pclink.cpp" line="1641" />
+        <source>serial communication error, abort</source>
+        <translation>błąd komunikacji szeregowej, przerwanie</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1210" />
+        <location filename="../../src/pclink.cpp" line="1330" />
+        <location filename="../../src/pclink.cpp" line="1498" />
+        <location filename="../../src/pclink.cpp" line="1576" />
+        <source>handle %1</source>
+        <translation>uchwyt %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1227" />
+        <source>FREAD: cannot read %1 bytes from dir</source>
+        <translation>FREAD: nie można odczytać %1 bajtów z katalogu</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1244" />
+        <source>FREAD: cannot seek to $%1 (%2)</source>
+        <translation>FREAD: nie można wyszukać $%1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1253" />
+        <source>FREAD: cannot read %1 bytes from file</source>
+        <translation>FREAD: nie można odczytać %1 bajtów z pliku</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1281" />
+        <source>FREAD: send $%1 (%2), status $%3</source>
+        <translation>FREAD: wyślij $%1 (%2), status $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1301" />
+        <source>bad handle 2 %1</source>
+        <translation>zły uchwyt 2%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1316" />
+        <source>size $%1 (%2)</source>
+        <translation>rozmiar $% 1 (% 2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1336" />
+        <source>FWRITE: cannot seek to $%1 (%2)</source>
+        <translation>FWRITE: nie można wyszukać $%1 (%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1349" />
+        <source>FWRITE: block CRC mismatch</source>
+        <translation>FWRITE: blokuje niezgodność CRC</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1375" />
+        <source>FWRITE: cannot write %1 bytes to file</source>
+        <translation>FWRITE: nie można zapisać %1 bajtów do pliku</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1386" />
+        <source>FWRITE: received $%1 (%2), status $%3</source>
+        <translation>FWRITE: otrzymano $%1 (%2), status $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1398" />
+        <source>bad handle 3 %1</source>
+        <translation>zły uchwyt 3%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1406" />
+        <location filename="../../src/pclink.cpp" line="1565" />
+        <location filename="../../src/pclink.cpp" line="1603" />
+        <location filename="../../src/pclink.cpp" line="1946" />
+        <location filename="../../src/pclink.cpp" line="2055" />
+        <location filename="../../src/pclink.cpp" line="2134" />
+        <location filename="../../src/pclink.cpp" line="2224" />
+        <location filename="../../src/pclink.cpp" line="2298" />
+        <location filename="../../src/pclink.cpp" line="2382" />
+        <location filename="../../src/pclink.cpp" line="2579" />
+        <source>bad exec</source>
+        <translation>zły wykonawca</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1413" />
+        <source>handle %1, newpos $%2 (%3)</source>
+        <translation>uchwyt %1, nowa pozycja $%2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1437" />
+        <source>bad handle 4 %1</source>
+        <translation>zły uchwyt 4%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1444" />
+        <location filename="../../src/pclink.cpp" line="1474" />
+        <location filename="../../src/pclink.cpp" line="2509" />
+        <source>device $%1</source>
+        <translation>urządzenie $%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1455" />
+        <source>handle %1, send $%2 (%3)</source>
+        <translation>uchwyt %1, wyślij $%2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1491" />
+        <source>bad handle 5 %1</source>
+        <translation>zły uchwyt 5%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1508" />
+        <source>eof_flg %1</source>
+        <translation>eof_flg %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1527" />
+        <source>FNEXT: EOF</source>
+        <translation>NASTĘPNY: EOF</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1537" />
+        <source>FNEXT: status %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation>FNEXT: status %1, wyślij $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18%19-%20-%21%22:%23:%24</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1571" />
+        <source>bad handle 6 %1</source>
+        <translation>zły uchwyt 6%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1619" />
+        <source>mode: $%1, atr1: $%2, atr2: $%3, path: '%4', name: '%5'</source>
+        <translation>tryb: $%1, atr1: $%2, atr2: $%3, ścieżka: „%4”, nazwa: „%5”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1653" />
+        <source>unsupported fmode ($%1)</source>
+        <translation>nieobsługiwany tryb f ($%1)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1662" />
+        <source>invalid path 1 '%1'</source>
+        <translation>nieprawidłowa ścieżka 1 „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1667" />
+        <location filename="../../src/pclink.cpp" line="2068" />
+        <source>local path '%1'</source>
+        <translation>ścieżka lokalna „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1676" />
+        <source>FOPEN: too many channels open</source>
+        <translation>FOPEN: zbyt wiele kanałów jest otwartych</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1683" />
+        <location filename="../../src/pclink.cpp" line="1779" />
+        <source>FOPEN: cannot stat '%1'</source>
+        <translation>FOPEN: nie można ustawić statystyki „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1697" />
+        <source> ! fmode &amp; 0x10</source>
+        <translation>! tryb f i 0x10</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1736" />
+        <source>FOPEN: file not found</source>
+        <translation>FOPEN: nie znaleziono pliku</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1746" />
+        <source>FOPEN: creating file</source>
+        <translation>FOPEN: tworzenie pliku</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1753" />
+        <source>FOPEN: bad filename '%1'</source>
+        <translation>FOPEN: zła nazwa pliku „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1773" />
+        <source>FOPEN: full local path '%1'</source>
+        <translation>FOPEN: pełna ścieżka lokalna „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1790" />
+        <source>FOPEN: '%1' is read-only</source>
+        <translation>FOPEN: '%1' jest tylko do odczytu</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1820" />
+        <source>FOPEN: cannot open '%1', %2 (%3)</source>
+        <translation>FOPEN: nie można otworzyć '%1',%2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1859" />
+        <source>FOPEN: bad handle 7 %1</source>
+        <translation>FOPEN: zły uchwyt 7 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1869" />
+        <source>FOPEN: %1 handle %2</source>
+        <translation>OTWARTY: %1 uchwyt %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1882" />
+        <source>FOPEN: dir EOF?</source>
+        <translation>FOPEN: reż. EOF?</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1914" />
+        <source>FOPEN: send %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation>FOPEN: wyślij %1, wyślij $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1954" />
+        <source>invalid path 2 '%1'</source>
+        <translation>nieprawidłowa ścieżka 2 „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1963" />
+        <location filename="../../src/pclink.cpp" line="2074" />
+        <source>cannot open dir '%1'</source>
+        <translation>nie można otworzyć katalogu „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="1968" />
+        <source>local path '%1', fatr1 $%2</source>
+        <translation>ścieżka lokalna '%1', fatr1 $%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2021" />
+        <source>RENAME: renaming '%1' -&gt; '%2'</source>
+        <translation>ZMIEŃ NAZWĘ: zmiana nazwy „%1” -&gt; „%2”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2025" />
+        <source>RENAME: '%1' already exists</source>
+        <translation>ZMIEŃ NAZWĘ: „%1” już istnieje</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2032" />
+        <source>RENAME: %1</source>
+        <translation>ZMIEŃ NAZWĘ: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2063" />
+        <source>invalid path 3 '%1'</source>
+        <translation>nieprawidłowa ścieżka 3 „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2107" />
+        <source>REMOVE: delete '%1'</source>
+        <translation>USUŃ: usuń '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2110" />
+        <source>REMOVE: cannot delete '%1'</source>
+        <translation>USUŃ: nie można usunąć '% 1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2140" />
+        <source>illegal fatr2 $%1</source>
+        <translation>nielegalne fatr2 $%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2149" />
+        <source>invalid path 4 '%1'</source>
+        <translation>nieprawidłowa ścieżka 4 „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2154" />
+        <source>local path '%1', fatr1 $%2 fatr2 $%3</source>
+        <translation>ścieżka lokalna '%1', fatr1 $%2 fatr2 $%3</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2161" />
+        <source>CHMOD: cannot open dir '%1'</source>
+        <translation>CHMOD: nie można otworzyć katalogu „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2193" />
+        <source>CHMOD: change atrs in '%1'</source>
+        <translation>CHMOD: zmień atry w '% 1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2202" />
+        <source>CHMOD: failed on '%1'</source>
+        <translation>CHMOD: błąd na '% 1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2232" />
+        <source>invalid path 5 '%1'</source>
+        <translation>niepoprawna ścieżka 5 „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2242" />
+        <location filename="../../src/pclink.cpp" line="2316" />
+        <source>bad dir name '%1'</source>
+        <translation>zła nazwa katalogu „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2256" />
+        <source>making dir '%1', time %2-%3-%4 %5:%6:%7</source>
+        <translation>tworzenie katalogu „%1”, czas %2-%3-%4 %5:%6:%7</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2261" />
+        <source>MKDIR: '%1' already exists</source>
+        <translation>MKDIR: '%1' już istnieje</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2272" />
+        <source>MKDIR: cannot make dir '%1'</source>
+        <translation>MKDIR: nie można utworzyć katalogu „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2306" />
+        <source>invalid path 6 '%1'</source>
+        <translation>nieprawidłowa ścieżka 6 „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2330" />
+        <source>cannot stat '%1'</source>
+        <translation>nie można stwierdzić '% 1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2338" />
+        <source>'%1' can't be accessed</source>
+        <translation>Nie można uzyskać dostępu do '%1'</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2346" />
+        <source>'%1' is not a directory</source>
+        <translation>„%1” nie jest katalogiem</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2353" />
+        <source>dir '%1' is write-protected</source>
+        <translation>katalog '%1' jest chroniony przed zapisem</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2358" />
+        <source>delete dir '%1'</source>
+        <translation>usuń katalog „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2364" />
+        <source>RMDIR: cannot del '%1', %2 (%3)</source>
+        <translation>RMDIR: nie można usunąć „%1”, %2 (%3)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2390" />
+        <source>invalid path 7 '%1'</source>
+        <translation>nieprawidłowa ścieżka 7 „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2399" />
+        <source>cannot access '%1', %2</source>
+        <translation>nie można uzyskać dostępu do '%1',%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2424" />
+        <source>new current dir '%1'</source>
+        <translation>nowy bieżący katalog „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2442" />
+        <source>device $1</source>
+        <translation>urządzenie 1 USD</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2462" />
+        <source>send '%1'</source>
+        <translation>wyślij „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2523" />
+        <source>reading '%1'</source>
+        <translation>czytanie „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2558" />
+        <source>DFREE: send info (%1 bytes)</source>
+        <translation>DFREE: wyślij informację (%1 bajtów)</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2587" />
+        <source>invalid name</source>
+        <translation>nieprawidłowa nazwa</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2596" />
+        <source>writing '%1'</source>
+        <translation>pisanie „% 1”</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2616" />
+        <source>CHVOL: %1</source>
+        <translation>CHVOL: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/pclink.cpp" line="2622" />
+        <source>fno $%1 not implemented</source>
+        <translation>fno $%1 nie zostało zaimplementowane</translation>
+    </message>
+</context>
+<context>
+    <name>PhoneDirectory</name>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="18" />
+        <source>BBS Phonebook</source>
+        <translation>Książka telefoniczna BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="26" />
+        <source>Search BBS Name...</source>
+        <translation>Wyszukaj nazwę BBS...</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>BBS Name</source>
+        <translation>Nazwa BBS-u</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Address</source>
+        <translation>Adres</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Port</source>
+        <translation>Port</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>Protocol</source>
+        <translation>Protokół</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <source>User ID</source>
+        <translation>Identyfikator użytkownika</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="46" />
+        <source>Edit Entry</source>
+        <translation>Edytuj wpis</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="49" />
+        <source>Save to XML</source>
+        <translation>Zapisz w formacie XML</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="52" />
+        <source>Dial Selected</source>
+        <translation>Wybierz numer</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="55" />
+        <source>Add</source>
+        <translation>Dodać</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="58" />
+        <source>Delete</source>
+        <translation>Usuwać</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="61" />
+        <source>Close</source>
+        <translation>Zamknąć</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="140" />
+        <source>Saved</source>
+        <translation>Zapisano</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="140" />
+        <source>Phonebook saved successfully!</source>
+        <translation>Książka telefoniczna została zapisana pomyślnie!</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="142" />
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="142" />
+        <source>Could not write to file.</source>
+        <translation>Nie można zapisać do pliku.</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="151" />
+        <source>Unsaved Changes</source>
+        <translation>Niezapisane zmiany</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="152" />
+        <source>You have unsaved changes. Save before %1?</source>
+        <translation>Masz niezapisane zmiany. Zapisać przed %1?</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="249" />
+        <source>Edit BBS Entry</source>
+        <translation>Edytuj wpis BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="259" />
+        <source>Telnet</source>
+        <translation>Telnet</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="260" />
+        <source>SSH (BBS)</source>
+        <translation>SSH (BBS)</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="261" />
+        <source>SSH (Auth)</source>
+        <translation>SSH (uwierzytelnianie)</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="289" />
+        <source>Show</source>
+        <translation>Pokazywać</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="295" />
+        <source>Name:</source>
+        <translation>Nazwa:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="296" />
+        <source>Address:</source>
+        <translation>Adres:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="297" />
+        <source>Protocol:</source>
+        <translation>Protokół:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="298" />
+        <source>Port:</source>
+        <translation>Port:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="299" />
+        <source>User ID:</source>
+        <translation>Identyfikator użytkownika:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="300" />
+        <source>Password:</source>
+        <translation>Hasło:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <source>Confirm</source>
+        <translation>Potwierdzać</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <source>Delete this entry?</source>
+        <translation>Usunąć ten wpis?</translation>
+    </message>
+</context>
+<context>
+    <name>PipeNetwork</name>
+    <message>
+        <location filename="../../src/pipenetwork.cpp" line="324" />
+        <source>[W:] FTP Upload Complete.</source>
+        <translation>[W:] Przesyłanie FTP zakończone.</translation>
     </message>
 </context>
 <context>
     <name>Printer</name>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="43" />
         <source>[%1] Get status.</source>
-        <translation type="vanished">[%1] Pobierz stan.</translation>
+        <translation>[%1] Pobierz stan.</translation>
+    </message>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="84" />
+        <source>[%1] ignored</source>
+        <translation>[%1] zignorowane</translation>
     </message>
     <message>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation type="vanished">[%1] komenda: $%2, aux: $%3 NAK.</translation>
     </message>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="59" />
         <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
-        <translation type="vanished">[%1] Konwersja znaków z inwersją do ASCII</translation>
+        <translation>[%1] Konwersja znaków z inwersją do ASCII</translation>
     </message>
     <message>
         <source>[%1] Print: data frame failed</source>
         <translation type="vanished">[%1] Drukowanie: błąd ramki danych</translation>
     </message>
     <message>
+        <location filename="../../src/miscdevices.cpp" line="70" />
         <source>[%1] Print (%2 chars)</source>
-        <translation type="vanished">[%1] Drukowanie (%2 znaków)</translation>
+        <translation>[%1] Drukowanie (%2 znaków)</translation>
+    </message>
+</context>
+<context>
+    <name>SectorEditDialog</name>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="6" />
+        <source>Edit Sector</source>
+        <translation>Edytuj sektor</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="19" />
+        <source>Inject Text...</source>
+        <translation>Wstrzyknij tekst...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.ui" line="31" />
+        <source>Select a cell...</source>
+        <translation>Wybierz komórkę...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="88" />
+        <source>Invalid Data</source>
+        <translation>Nieprawidłowe dane</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="89" />
+        <source>Invalid hex value '%1' at row %2, col %3. Please use 00-FF.</source>
+        <translation>Nieprawidłowa wartość szesnastkowa „%1” w wierszu %2, kolumnie %3. Proszę użyć 00-FF.</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="101" />
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="101" />
+        <source>Failed to write sector to disk image! Is it write-protected?</source>
+        <translation>Nie udało się zapisać sektora na obraz dysku! Czy jest chroniony przed zapisem?</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="138" />
+        <source>Inject ATASCII Text</source>
+        <translation>Wstrzyknij tekst ATASCII</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectoreditdialog.cpp" line="139" />
+        <source>Enter text to write into the sector:</source>
+        <translation>Wpisz tekst, który chcesz wpisać w sektorze:</translation>
+    </message>
+</context>
+<context>
+    <name>SectorInspectorDialog</name>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="14" />
+        <source>Sector Inspector</source>
+        <translation>Inspektor Sektorowy</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="22" />
+        <source>Sector:</source>
+        <translation>Sektor:</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="32" />
+        <source>Reload</source>
+        <translation>Przeładować</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="39" />
+        <source>Edit Sector...</source>
+        <translation>Edytuj sektor...</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="67" />
+        <source>Find:</source>
+        <translation>Znajdować:</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="85" />
+        <source>Text</source>
+        <translation>Tekst</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="90" />
+        <source>Hex</source>
+        <translation>Klątwa</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.ui" line="98" />
+        <source>Find Next</source>
+        <translation>Znajdź następny</translation>
+    </message>
+    <message>
+        <location filename="../../src/sectorinspectordialog.cpp" line="31" />
+        <source>Sector Inspector - %1</source>
+        <translation>Inspektor sektorowy - %1</translation>
     </message>
 </context>
 <context>
     <name>SimpleDiskImage</name>
     <message>
-        <source>Image size of &apos;%1&apos; is reported as %2 bytes in the header but it&apos;s actually %3.</source>
-        <translation type="vanished">Rozmiar obrazu &apos;%1&apos; jest zgłaszany jako %2 B w nagłówku, ale rzeczywiście ma %3 B.</translation>
+        <location filename="../../src/diskimage.cpp" line="343" />
+        <source>Image size of '%1' is reported as %2 bytes in the header but it's actually %3.</source>
+        <translation>Rozmiar obrazu '%1' jest zgłaszany jako %2 B w nagłówku, ale rzeczywiście ma %3 B.</translation>
     </message>
     <message>
-        <source>The file &apos;%1&apos; has some unrecognized fields in its header.</source>
-        <translation type="vanished">Plik &apos;%1&apos; posiada nierozpoznawalne pola w nagłówku.</translation>
+        <location filename="../../src/diskimage.cpp" line="424" />
+        <source>The file '%1' has some unrecognized fields in its header.</source>
+        <translation>Plik '%1' posiada nierozpoznawalne pola w nagłówku.</translation>
     </message>
     <message>
-        <source>Cannot create temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie mozna stworzyć tymczasowego pliku &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="311" />
+        <location filename="../../src/diskimage.cpp" line="473" />
+        <source>Cannot create temporary file '%1': %2</source>
+        <translation>Nie mozna stworzyć tymczasowego pliku '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot write to temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można pisać do tymczasowego pliku &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="331" />
+        <location filename="../../src/diskimage.cpp" line="491" />
+        <source>Cannot write to temporary file '%1': %2</source>
+        <translation>Nie można pisać do tymczasowego pliku '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot resize temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można zmienić rozmiaru tymczasowego pliku &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="431" />
+        <source>Cannot resize temporary file '%1': %2</source>
+        <translation>Nie można zmienić rozmiaru tymczasowego pliku '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="523" />
         <source>DCM images are not supported yet.</source>
-        <translation type="vanished">Obrazy DCM nie są jeszcze wspierane.</translation>
+        <translation>Obrazy DCM nie są jeszcze wspierane.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="529" />
         <source>SCP images are not supported yet.</source>
-        <translation type="vanished">Obrazy SCP nie są jeszcze wspierane.</translation>
+        <translation>Obrazy SCP nie są jeszcze wspierane.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="535" />
         <source>DI images are not supported yet.</source>
-        <translation type="vanished">Obrazy DI nie są jeszcze wspierane.</translation>
+        <translation>Obrazy DI nie są jeszcze wspierane.</translation>
     </message>
     <message>
-        <source>Cannot rewind temporary file &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można przewniąć tymczasowego pliku &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="597" />
+        <location filename="../../src/diskimage.cpp" line="669" />
+        <source>Cannot rewind temporary file '%1': %2</source>
+        <translation>Nie można przewniąć tymczasowego pliku '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="611" />
+        <location filename="../../src/diskimage.cpp" line="682" />
         <source>Cannot read from temporay file %1: %2</source>
-        <translation type="vanished">Nie można czytać z pliku tymczasowego %1: %2</translation>
+        <translation>Nie można czytać z pliku tymczasowego %1: %2</translation>
     </message>
     <message>
-        <source>Detailed geometry information will be lost when reopening &apos;%1&apos; due to ATR file format limitations.</source>
-        <translation type="vanished">Dokładne dane geometrii dysku będą stracone po ponownym otwarciu &apos;%1&apos; z powodu ograniczeń formatu ATR.</translation>
+        <location filename="../../src/diskimage.cpp" line="628" />
+        <source>Detailed geometry information will be lost when reopening '%1' due to ATR file format limitations.</source>
+        <translation>Dokładne dane geometrii dysku będą stracone po ponownym otwarciu '%1' z powodu ograniczeń formatu ATR.</translation>
     </message>
     <message>
-        <source>Detailed disk geometry information will be lost when reopening &apos;%1&apos; due to XFD file format limitations.</source>
-        <translation type="vanished">Dokładne dane geometrii dysku będą stracone po ponownym otwarciu &apos;%1&apos; z powodu ograniczeń formatu XFD.</translation>
+        <location filename="../../src/diskimage.cpp" line="648" />
+        <source>Detailed disk geometry information will be lost when reopening '%1' due to XFD file format limitations.</source>
+        <translation>Dokładne dane geometrii dysku będą stracone po ponownym otwarciu '%1' z powodu ograniczeń formatu XFD.</translation>
     </message>
     <message>
-        <source>XFD file format cannot handle this disk geometry. Try saving &apos;%1&apos; as ATR.</source>
-        <translation type="vanished">Format XFD nie obsługuje takiej geometrii dysku. Spróbuj zapisać &apos;%1&apos; jako ATR.</translation>
+        <location filename="../../src/diskimage.cpp" line="651" />
+        <source>XFD file format cannot handle this disk geometry. Try saving '%1' as ATR.</source>
+        <translation>Format XFD nie obsługuje takiej geometrii dysku. Spróbuj zapisać '%1' jako ATR.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="706" />
         <source>Saving DCM images is not supported yet.</source>
-        <translation type="vanished">Zapis obrazów DCM nie jest jeszcze wspierany.</translation>
+        <translation>Zapis obrazów DCM nie jest jeszcze wspierany.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="712" />
         <source>Saving SCP images is not supported yet.</source>
-        <translation type="vanished">Zapis obrazów SCP nie jest jeszcze wspierany.</translation>
+        <translation>Zapis obrazów SCP nie jest jeszcze wspierany.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="718" />
         <source>Saving DI images is not supported yet.</source>
-        <translation type="vanished">Zapis obrazów DI nie jest jeszcze wspierany.</translation>
+        <translation>Zapis obrazów DI nie jest jeszcze wspierany.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="746" />
         <source>Unknown file extension.</source>
-        <translation type="vanished">Nieznane rozszerzenie pliku.</translation>
+        <translation>Nieznane rozszerzenie pliku.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="775" />
+        <location filename="../../src/diskimage.cpp" line="806" />
         <source>Unknown file type.</source>
-        <translation type="vanished">Nieznany typ pliku.</translation>
+        <translation>Nieznany typ pliku.</translation>
     </message>
     <message>
-        <source>Cannot create new image: Cannot create temporary file &apos;%2&apos;: %3.</source>
-        <translation type="vanished">Nie można stowrzyć nowego obrazu: Nie można stworzyć tymczasowego pliku &apos;%2&apos;: %3.</translation>
+        <location filename="../../src/diskimage.cpp" line="815" />
+        <source>Cannot create new image: Cannot create temporary file '%2': %3.</source>
+        <translation>Nie można stowrzyć nowego obrazu: Nie można stworzyć tymczasowego pliku '%2': %3.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="825" />
         <source>Untitled image %1</source>
-        <translation type="vanished">Obraz bez nazwy %1</translation>
+        <translation>Obraz bez nazwy %1</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="858" />
         <source>[%1] Format ED denied.</source>
-        <translation type="vanished">[%1] Format ED zabroniony.</translation>
+        <translation>[%1] Format ED zabroniony.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="867" />
+        <source>[%1] Format ED.</source>
+        <translation>[%1] Sformatuj ED.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="870" />
         <source>[%1] Format ED failed.</source>
-        <translation type="vanished">[%1] Format ED nieudany.</translation>
+        <translation>[%1] Format ED nieudany.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="883" />
         <source>[%1] Speed poll.</source>
-        <translation type="vanished">[%1] Badanie prędkości.</translation>
+        <translation>[%1] Badanie prędkości.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="894" />
         <source>[%1] Get PERCOM block (%2).</source>
-        <translation type="vanished">[%1] Pobranie bloku PERCOM (%2).</translation>
+        <translation>[%1] Pobranie bloku PERCOM (%2).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="911" />
+        <source>[%1] Happy ID Query - Rev 7.</source>
+        <translation>[%1] Szczęśliwe zapytanie o identyfikator - wersja 7.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="915" />
+        <source>[%1] Happy ID Query - NAKed (Standard Mode).</source>
+        <translation>[%1] Szczęśliwe zapytanie o identyfikator - NAKed (tryb standardowy).</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="935" />
         <source>[%1] Set PERCOM block (%2).</source>
-        <translation type="vanished">[%1] Ustawienie bloku PERCOM (%2).</translation>
+        <translation>[%1] Ustawienie bloku PERCOM (%2).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="954" />
         <source>[%1] Format with custom sector skewing failed.</source>
-        <translation type="vanished">[%1] Formatowanie z własnym skosem sektora nieudane.</translation>
+        <translation>[%1] Formatowanie z własnym skosem sektora nieudane.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="959" />
         <source>[%1] Format with custom sector skewing (%2).</source>
-        <translation type="vanished">[%1] Formatowanie z własnym skosem sektora (%2).</translation>
+        <translation>[%1] Formatowanie z własnym skosem sektora (%2).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="964" />
         <source>[%1] Format with custom sector skewing denied.</source>
-        <translation type="vanished">[%1] Formatowanie z własnym skosem sektora zabronione.</translation>
+        <translation>[%1] Formatowanie z własnym skosem sektora zabronione.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="981" />
         <source>[%1] Format.</source>
-        <translation type="vanished">[%1] Formatowanie.</translation>
+        <translation>[%1] Formatowanie.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="984" />
         <source>[%1] Format denied.</source>
-        <translation type="vanished">[%1] Formatowanie zabronione.</translation>
+        <translation>[%1] Formatowanie zabronione.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1006" />
+        <source>[%1] Happy Warp Speed Handshake Successful.</source>
+        <translation>[%1] Szczęśliwe uzgodnienie prędkości warp powiodło się.</translation>
+    </message>
+    <message>
+        <location filename="../../src/diskimage.cpp" line="1021" />
         <source>[%1] Write sector %2 denied.</source>
-        <translation type="vanished">[%1] Zapis sektora %2 zabroniony.</translation>
+        <translation>[%1] Zapis sektora %2 zabroniony.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1026" />
         <source>[%1] Write sector %2 (%3 bytes).</source>
-        <translation type="vanished">[%1] Zapis sektora %2 (%3 B).</translation>
+        <translation>[%1] Zapis sektora %2 (%3 B).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1029" />
         <source>[%1] Write sector %2 failed.</source>
-        <translation type="vanished">[%1] Zapis sektora %2 nieudany.</translation>
+        <translation>[%1] Zapis sektora %2 nieudany.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1034" />
         <source>[%1] Write sector %2 data frame failed.</source>
-        <translation type="vanished">[%1] Zapis ramki danych sektora %2 nieudany.</translation>
+        <translation>[%1] Zapis ramki danych sektora %2 nieudany.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1041" />
         <source>[%1] Write sector %2 NAKed.</source>
-        <translation type="vanished">[%1] Zapis sektora %2 NAK.</translation>
+        <translation>[%1] Zapis sektora %2 NAK.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1057" />
         <source>[%1] Read sector %2 (%3 bytes).</source>
-        <translation type="vanished">[%1] Odczyt sektora %2 (%3 B).</translation>
+        <translation>[%1] Odczyt sektora %2 (%3 B).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1062" />
         <source>[%1] Read sector %2 failed.</source>
-        <translation type="vanished">[%1] Odczyt sektora %2 nieudany.</translation>
+        <translation>[%1] Odczyt sektora %2 nieudany.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1069" />
         <source>[%1] Read sector %2 NAKed.</source>
-        <translation type="vanished">[%1] Odczyt sektora %2 NAK.</translation>
+        <translation>[%1] Odczyt sektora %2 NAK.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1086" />
         <source>[%1] Get status.</source>
-        <translation type="vanished">[%1] Pobierz stan.</translation>
+        <translation>[%1] Pobierz stan.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1092" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation type="vanished">[%1] komenda: $%2, aux: $%3 NAK.</translation>
+        <translation>[%1] komenda: $%2, aux: $%3 NAK.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1110" />
         <source>[%1] Cannot format: %2</source>
-        <translation type="vanished">[%1] Nie można sformatować: %2</translation>
+        <translation>[%1] Nie można sformatować: %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1125" />
+        <location filename="../../src/diskimage.cpp" line="1149" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation type="vanished">[%1] Nie można przejść do sektora %2: %3</translation>
+        <translation>[%1] Nie można przejść do sektora %2: %3</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1128" />
         <source>Sector number is out of bounds.</source>
-        <translation type="vanished">Numer sektora poza granicami.</translation>
+        <translation>Numer sektora poza granicami.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1168" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation type="vanished">[%1] Nie można czytać z sektora %2: %3.</translation>
+        <translation>[%1] Nie można czytać z sektora %2: %3.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="1189" />
         <source>[%1] Cannot write to sector %2: %3.</source>
-        <translation type="vanished">[%1] Nie można pisać do sektora %2: %3.</translation>
+        <translation>[%1] Nie można pisać do sektora %2: %3.</translation>
     </message>
     <message>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można otworzyć &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="276" />
+        <location filename="../../src/diskimage.cpp" line="285" />
+        <location filename="../../src/diskimage.cpp" line="295" />
+        <location filename="../../src/diskimage.cpp" line="309" />
+        <location filename="../../src/diskimage.cpp" line="321" />
+        <location filename="../../src/diskimage.cpp" line="329" />
+        <location filename="../../src/diskimage.cpp" line="353" />
+        <location filename="../../src/diskimage.cpp" line="402" />
+        <location filename="../../src/diskimage.cpp" line="414" />
+        <location filename="../../src/diskimage.cpp" line="429" />
+        <location filename="../../src/diskimage.cpp" line="464" />
+        <location filename="../../src/diskimage.cpp" line="471" />
+        <location filename="../../src/diskimage.cpp" line="482" />
+        <location filename="../../src/diskimage.cpp" line="489" />
+        <location filename="../../src/diskimage.cpp" line="500" />
+        <location filename="../../src/diskimage.cpp" line="523" />
+        <location filename="../../src/diskimage.cpp" line="529" />
+        <location filename="../../src/diskimage.cpp" line="535" />
+        <location filename="../../src/diskimage.cpp" line="806" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Nie można otworzyć '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="287" />
         <source>Cannot read the header: %1.</source>
-        <translation type="vanished">Nie można odczytać nagłówka: %1.</translation>
+        <translation>Nie można odczytać nagłówka: %1.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="295" />
         <source>Not a valid ATR file.</source>
-        <translation type="vanished">To nie jest prawidłowy plik ATR.</translation>
+        <translation>To nie jest prawidłowy plik ATR.</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="353" />
         <source>Unknown sector size (%1).</source>
-        <translation type="vanished">Nieznany rozmiar sektora (%1).</translation>
+        <translation>Nieznany rozmiar sektora (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="404" />
+        <location filename="../../src/diskimage.cpp" line="502" />
         <source>Invalid image size (%1).</source>
-        <translation type="vanished">Nieprawidłowy rozmiar obrazu (%1).</translation>
+        <translation>Nieprawidłowy rozmiar obrazu (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="416" />
         <source>Too many sectors in the image (%1).</source>
-        <translation type="vanished">Zbyt wiele sektorów w obrazie (%1).</translation>
+        <translation>Zbyt wiele sektorów w obrazie (%1).</translation>
     </message>
     <message>
+        <location filename="../../src/diskimage.cpp" line="323" />
+        <location filename="../../src/diskimage.cpp" line="484" />
         <source>Cannot read from file: %1.</source>
-        <translation type="vanished">Nie można czytać z pliku: %1.</translation>
+        <translation>Nie można czytać z pliku: %1.</translation>
     </message>
     <message>
-        <source>Cannot save &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można zapisać &apos;%1&apos;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="570" />
+        <location filename="../../src/diskimage.cpp" line="579" />
+        <location filename="../../src/diskimage.cpp" line="595" />
+        <location filename="../../src/diskimage.cpp" line="609" />
+        <location filename="../../src/diskimage.cpp" line="616" />
+        <location filename="../../src/diskimage.cpp" line="659" />
+        <location filename="../../src/diskimage.cpp" line="667" />
+        <location filename="../../src/diskimage.cpp" line="680" />
+        <location filename="../../src/diskimage.cpp" line="686" />
+        <location filename="../../src/diskimage.cpp" line="706" />
+        <location filename="../../src/diskimage.cpp" line="712" />
+        <location filename="../../src/diskimage.cpp" line="718" />
+        <location filename="../../src/diskimage.cpp" line="746" />
+        <location filename="../../src/diskimage.cpp" line="775" />
+        <source>Cannot save '%1': %2</source>
+        <translation>Nie można zapisać '%1': %2</translation>
+    </message>
+</context>
+<context>
+    <name>SioPacketDialog</name>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="98" />
+        <source>SIO Packet Sniffer &amp; Inspector</source>
+        <translation>Sniffer i inspektor pakietów SIO</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="128" />
+        <source>Packet Inspector Details</source>
+        <translation>Szczegóły inspektora pakietów</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="160" />
+        <source>Clear</source>
+        <translation>Jasne</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="161" />
+        <source>Save CSV...</source>
+        <translation>Zapisz plik CSV...</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="162" />
+        <source>Inject Selected (Step)</source>
+        <translation>Wybrany wtrysk (krok)</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="258" />
+        <source>No Selection</source>
+        <translation>Brak wyboru</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="258" />
+        <source>Please select a packet row to inject.</source>
+        <translation>Wybierz wiersz pakietu do wstrzyknięcia.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
+        <source>Invalid Direction</source>
+        <translation>Nieprawidłowy kierunek</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
+        <source>You can only inject RX packets (traffic originating from the Atari).</source>
+        <translation>Można wstrzykiwać tylko pakiety RX (ruch pochodzący z Atari).</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="388" />
+        <source>Empty</source>
+        <translation>Pusty</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="388" />
+        <source>No packets to save.</source>
+        <translation>Brak pakietów do zapisania.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="392" />
+        <source>Save SIO Trace</source>
+        <translation>Zapisz ślad SIO</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="392" />
+        <source>CSV Files (*.csv);;All Files (*)</source>
+        <translation>Pliki CSV (*.csv);;Wszystkie pliki (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="397" />
+        <source>Error</source>
+        <translation>Błąd</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="397" />
+        <source>Could not open file for writing.</source>
+        <translation>Nie można otworzyć pliku do zapisu.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="417" />
+        <source>Saved</source>
+        <translation>Zapisano</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="417" />
+        <source>SIO Trace saved successfully.</source>
+        <translation>Pomyślnie zapisano ślad SIO.</translation>
     </message>
 </context>
 <context>
     <name>SioWorker</name>
     <message>
+        <location filename="../../src/sioworker.cpp" line="382" />
         <source>Printer %1</source>
-        <translation type="vanished">Drukarka %1</translation>
+        <translation>Drukarka %1</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="385" />
+        <source>Smart device (APE time + URL)</source>
+        <translation>Urządzenie inteligentne (czas APE + adres URL)</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="388" />
         <source>AspeQt Client</source>
-        <translation type="vanished">Klient AspeQt</translation>
+        <translation>Klient AspeQt</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="214" />
         <source>Cannot read command frame.</source>
-        <translation type="vanished">Nie można odczytać ramki komendy.</translation>
+        <translation>Nie można odczytać ramki komendy.</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="231" />
         <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
-        <translation type="vanished">[%1] komenda: $%2, aux: $%3 zignorowana, ponieważ otwarto przeglądarkę obrazów.</translation>
+        <translation>[%1] komenda: $%2, aux: $%3 zignorowana, ponieważ otwarto przeglądarkę obrazów.</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="237" />
         <source>[%1] command: $%2, aux: $%3 ignored.</source>
-        <translation type="vanished">[%1] komenda: $%2, aux: $%3 zignorowana.</translation>
+        <translation>[%1] komenda: $%2, aux: $%3 zignorowana.</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="359" />
         <source>Disk 1 (below autoboot)</source>
-        <translation type="vanished">Dysk 1 (autoboot)</translation>
+        <translation>Dysk 1 (autoboot)</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="376" />
         <source>Disk %1</source>
-        <translation type="vanished">Dysk %1</translation>
+        <translation>Dysk %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="394" />
+        <source>RS232 %1</source>
+        <translation>RS232%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/sioworker.cpp" line="397" />
+        <source>PCLINK</source>
+        <translation>PCLINK</translation>
     </message>
     <message>
         <source>APE time downloader</source>
         <translation type="obsolete">Zegar APE</translation>
     </message>
     <message>
+        <location filename="../../src/sioworker.cpp" line="400" />
         <source>Device $%1</source>
-        <translation type="vanished">Urządzenie $%1</translation>
+        <translation>Urządzenie $%1</translation>
+    </message>
+</context>
+<context>
+    <name>SmartDevice</name>
+    <message>
+        <location filename="../../src/miscdevices.cpp" line="132" />
+        <source>[%1] Read date/time (%2).</source>
+        <translation>[%1] Odczytaj datę/godzinę (%2).</translation>
     </message>
 </context>
 <context>
     <name>SpartaDosFileSystem</name>
     <message>
+        <location filename="../../src/atarifilesystem.cpp" line="1256" />
+        <location filename="../../src/atarifilesystem.cpp" line="1285" />
         <source>Atari file system error</source>
-        <translation type="vanished">Błąd systemu plików Atari</translation>
+        <translation>Błąd systemu plików Atari</translation>
     </message>
     <message>
-        <source>Cannot create file &apos;%1&apos;.</source>
-        <translation type="vanished">Nie można stworzyć pliku &apos;%1&apos;.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="1256" />
+        <source>Cannot create file '%1'.</source>
+        <translation>Nie można stworzyć pliku '%1'.</translation>
     </message>
     <message>
-        <source>Cannot write to &apos;%1&apos;.</source>
-        <translation type="vanished">Nie można zapisać do pliku &apos;%1&apos;.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="1285" />
+        <source>Cannot write to '%1'.</source>
+        <translation>Nie można zapisać do pliku '%1'.</translation>
     </message>
 </context>
 <context>
     <name>StandardSerialPortBackend</name>
     <message>
-        <source>Cannot open serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można otworzyć portu szeregowego &apos;%1&apos;: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="82" />
+        <location filename="../../src/serialport-windows.cpp" line="70" />
+        <location filename="../../src/serialport-windows.cpp" line="86" />
+        <source>Cannot open serial port '%1': %2</source>
+        <translation>Nie można otworzyć portu szeregowego '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot clear DTR and RTS lines in serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można skasować linii DTR i RTS w porcie szeregowym &apos;%1&apos;: %2</translation>
+        <source>Cannot clear DTR and RTS lines in serial port '%1': %2</source>
+        <translation type="vanished">Nie można skasować linii DTR i RTS w porcie szeregowym '%1': %2</translation>
     </message>
     <message>
-        <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking.</source>
-        <translation type="vanished">Emulacja rozpoczęta przez standardowy port szeregowy na &apos;%1&apos; z synchronizacją %2.</translation>
+        <location filename="../../src/serialport-unix.cpp" line="128" />
+        <source>Emulation started through standard serial port backend on '%1' with %2 handshaking.</source>
+        <translation>Emulacja rozpoczęta przez standardowy port szeregowy na '%1' z synchronizacją %2.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="144" />
+        <location filename="../../src/serialport-windows.cpp" line="147" />
         <source>Cannot close serial port: %1</source>
-        <translation type="vanished">Nie można zamknąć portu szeregowego: %1</translation>
+        <translation>Nie można zamknąć portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="271" />
+        <location filename="../../src/serialport-unix.cpp" line="287" />
+        <location filename="../../src/serialport-windows.cpp" line="262" />
         <source>Cannot set serial port speed to %1: %2</source>
-        <translation type="vanished">Nie można ustawić prędkości portu szeregowego na %1: %2</translation>
+        <translation>Nie można ustawić prędkości portu szeregowego na %1: %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="271" />
         <source>Closest possible speed is %2.</source>
-        <translation type="vanished">Najbliższa dostępna prędkość to %2.</translation>
+        <translation>Najbliższa dostępna prędkość to %2.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="293" />
+        <location filename="../../src/serialport-unix.cpp" line="374" />
+        <location filename="../../src/serialport-windows.cpp" line="293" />
         <source>%1 bits/sec</source>
-        <translation type="vanished">%1 bps</translation>
+        <translation>%1 bps</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="294" />
+        <location filename="../../src/serialport-unix.cpp" line="375" />
+        <location filename="../../src/serialport-windows.cpp" line="294" />
         <source>Serial port speed set to %1.</source>
-        <translation type="vanished">Prędkość portu szeregowego ustawiona na %1.</translation>
+        <translation>Prędkość portu szeregowego ustawiona na %1.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="309" />
+        <source>Cannot get serial port attributes</source>
+        <translation>Nie można uzyskać atrybutów portu szeregowego</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="350" />
+        <source>Cannot set standard serial port speed to %1: %2</source>
+        <translation>Nie można ustawić standardowej szybkości portu szeregowego na %1: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="361" />
+        <source>Cannot set baseline serial port speed: %1</source>
+        <translation>Nie można ustawić bazowej szybkości portu szeregowego: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="368" />
+        <source>Failed to set custom serial port speed to %1</source>
+        <translation>Nie udało się ustawić niestandardowej szybkości portu szeregowego na %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="517" />
+        <location filename="../../src/serialport-unix.cpp" line="531" />
+        <location filename="../../src/serialport-unix.cpp" line="559" />
         <source>Cannot retrieve serial port status: %1</source>
-        <translation type="vanished">Nie można pobrać stanu portu szeregowego: %1</translation>
+        <translation>Nie można pobrać stanu portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="793" />
+        <source>Serial port write timeout. %1 of %2 written in %3 ms</source>
+        <translation>Limit czasu zapisu portu szeregowego. %1 z %2 zapisane w %3 ms</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="424" />
+        <location filename="../../src/serialport-unix.cpp" line="541" />
+        <location filename="../../src/serialport-windows.cpp" line="313" />
+        <location filename="../../src/serialport-windows.cpp" line="442" />
         <source>Cannot clear serial port read buffer: %1</source>
-        <translation type="vanished">Nie można opróżnic buforu odczytu portu szeregowego: %1</translation>
+        <translation>Nie można opróżnic buforu odczytu portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="91" />
+        <source>Cannot get serial port status</source>
+        <translation>Nie można uzyskać statusu portu szeregowego</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="96" />
+        <source>Cannot set DTR and RTS lines in serial port '%1': %2</source>
+        <translation>Nie można ustawić linii DTR i RTS na porcie szeregowym „%1”: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-unix.cpp" line="608" />
+        <location filename="../../src/serialport-windows.cpp" line="584" />
         <source>Data frame checksum error, expected: %1, got: %2. (%3)</source>
-        <translation type="vanished">Błąd sumy kontrolnej ramki danych, spodziewana: %1, otrzymana: %2. (%3)</translation>
+        <translation>Błąd sumy kontrolnej ramki danych, spodziewana: %1, otrzymana: %2. (%3)</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="715" />
+        <location filename="../../src/serialport-unix.cpp" line="779" />
+        <location filename="../../src/serialport-windows.cpp" line="536" />
+        <location filename="../../src/serialport-windows.cpp" line="542" />
         <source>Cannot read from serial port: %1</source>
-        <translation type="vanished">Nie można czytać z portu szeregowego: %1</translation>
+        <translation>Nie można czytać z portu szeregowego: %1</translation>
     </message>
     <message>
         <source>Serial port read timeout.</source>
         <translation type="vanished">Dopuszczalny czas odczytu portu szeregowego przekroczony.</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-unix.cpp" line="798" />
         <source>Cannot flush serial port write buffer: %1</source>
-        <translation type="vanished">Nie można opróżnic buforu zapisu portu szeregowego: %1</translation>
+        <translation>Nie można opróżnic buforu zapisu portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="711" />
         <source>Serial port write timeout.</source>
-        <translation type="vanished">Dopuszczalny czas zapisu portu szeregowego przekroczony.</translation>
+        <translation>Dopuszczalny czas zapisu portu szeregowego przekroczony.</translation>
     </message>
     <message>
-        <source>Cannot clear RTS line in serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można skasować linii RTS w porcie szeregowym &apos;%1&apos;: %2</translation>
+        <source>Cannot clear RTS line in serial port '%1': %2</source>
+        <translation type="vanished">Nie można skasować linii RTS w porcie szeregowym '%1': %2</translation>
     </message>
     <message>
-        <source>Cannot clear DTR line in serial port &apos;%1&apos;: %2</source>
-        <translation type="vanished">Nie można skasować linii DTR w porcie szeregowym &apos;%1&apos;: %2</translation>
+        <source>Cannot clear DTR line in serial port '%1': %2</source>
+        <translation type="vanished">Nie można skasować linii DTR w porcie szeregowym '%1': %2</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="90" />
+        <source>Cannot set DTR line in serial port '%1': %2</source>
+        <translation>Nie można ustawić linii DTR na porcie szeregowym „%1”: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="94" />
+        <source>Cannot set RTS line in serial port '%1': %2</source>
+        <translation>Nie można ustawić linii RTS na porcie szeregowym „%1”: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="129" />
+        <source>Emulation started through standard serial port backend on '%1' with %2 handshaking</source>
+        <translation>Emulacja została rozpoczęta poprzez standardowy port szeregowy na '%1' z uzgadnianiem%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/serialport-windows.cpp" line="289" />
         <source>Cannot set serial port timeouts: %1</source>
-        <translation type="vanished">Nie można ustawić dopuszczalnego czasu dla portu szeregowego: %1</translation>
+        <translation>Nie można ustawić dopuszczalnego czasu dla portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="388" />
         <source>Cannot set serial port event mask: %1</source>
-        <translation type="vanished">Nie można ustawić maski zdarzeń dla portu szeregowego: %1</translation>
+        <translation>Nie można ustawić maski zdarzeń dla portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="413" />
+        <location filename="../../src/serialport-windows.cpp" line="419" />
         <source>Cannot wait for serial port event: %1</source>
-        <translation type="vanished">Nie można czekać na zdarzenie portu szeregowego: %1</translation>
+        <translation>Nie można czekać na zdarzenie portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="528" />
         <source>Cannot create event: %1</source>
-        <translation type="vanished">Nie można stworzyć zdarzenia: %1</translation>
+        <translation>Nie można stworzyć zdarzenia: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="680" />
         <source>Cannot clear serial port write buffer: %1</source>
-        <translation type="vanished">Nie można wyczyścić buforu zapisu portu szeregowego: %1</translation>
+        <translation>Nie można wyczyścić buforu zapisu portu szeregowego: %1</translation>
     </message>
     <message>
+        <location filename="../../src/serialport-windows.cpp" line="698" />
+        <location filename="../../src/serialport-windows.cpp" line="703" />
         <source>Cannot write to serial port: %1</source>
-        <translation type="vanished">Nie pisać do portu szeregowego: %1</translation>
+        <translation>Nie pisać do portu szeregowego: %1</translation>
     </message>
 </context>
 <context>
     <name>TextPrinterWindow</name>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="225" />
         <source>Save printer text output</source>
-        <translation type="vanished">Zapisz znakowe wyjście drukarki</translation>
+        <translation>Zapisz znakowe wyjście drukarki</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="226" />
         <source>Text files (*.txt);;All files (*)</source>
-        <translation type="vanished">Pliki tekstowe (*.txt);;Wszystkie pliki (*)</translation>
+        <translation>Pliki tekstowe (*.txt);;Wszystkie pliki (*)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>Stripping Line Numbers..</source>
-        <translation type="vanished">Usuwam numery linii.</translation>
+        <translation>Usuwam numery linii.</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>The text does not seem to contain any line numbers!</source>
-        <translation type="vanished">Tekst nie zawiera numerów linii!</translation>
+        <translation>Tekst nie zawiera numerów linii!</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="14" />
         <source>AspeQt - Printer text output</source>
-        <translation type="vanished">AspeQt - Znakowe wyjście drukarki</translation>
+        <translation>AspeQt - Znakowe wyjście drukarki</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="47" />
+        <location filename="../../src/textprinterwindow.ui" line="50" />
         <source>Atari Output (Atascii)</source>
-        <translation type="vanished">Wyjście Atari (ATASCII)</translation>
+        <translation>Wyjście Atari (ATASCII)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="69" />
+        <location filename="../../src/textprinterwindow.ui" line="72" />
         <source>Atari Output (Ascii)</source>
-        <translation type="vanished">Wyjście Atari (ASCII)</translation>
+        <translation>Wyjście Atari (ASCII)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="118" />
+        <source>toolBar</source>
+        <translation>pasek narzędzi</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="154" />
         <source>Save to a file...</source>
-        <translation type="vanished">Zapisz do pliku...</translation>
+        <translation>Zapisz do pliku...</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="157" />
         <source>Save contents to a file (Ctrl+S)</source>
-        <translation type="vanished">Zapisz zawartość do pliku (Ctrl+S)</translation>
+        <translation>Zapisz zawartość do pliku (Ctrl+S)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="160" />
         <source>Save contents to a file</source>
-        <translation type="vanished">Zapisz zawartość do pliku</translation>
+        <translation>Zapisz zawartość do pliku</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="163" />
+        <location filename="../../src/textprinterwindow.ui" line="350" />
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="172" />
         <source>Clear</source>
-        <translation type="vanished">Usuń</translation>
+        <translation>Usuń</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="175" />
         <source>Clear contents (Ctrl+C)</source>
-        <translation type="vanished">Usuń treść (Ctrl+C)</translation>
+        <translation>Usuń treść (Ctrl+C)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="178" />
         <source>Clear contents</source>
-        <translation type="vanished">Usuń zawartość</translation>
+        <translation>Usuń zawartość</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="181" />
+        <source>Ctrl+C</source>
+        <translation>Ctrl+C</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="196" />
         <source>Word wrap</source>
-        <translation type="vanished">Zawijanie wierszy</translation>
+        <translation>Zawijanie wierszy</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="199" />
         <source>Toggle word wrapping (Ctrl+W)</source>
-        <translation type="vanished">Włącz/wyłącz dzielenie wyrazów (Ctrl+W)</translation>
+        <translation>Włącz/wyłącz dzielenie wyrazów (Ctrl+W)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="202" />
         <source>Toggle word wrapping</source>
-        <translation type="vanished">Przełącz zawijanie wierszy</translation>
+        <translation>Przełącz zawijanie wierszy</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="205" />
+        <source>Ctrl+W</source>
+        <translation>Ctrl+W</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="214" />
         <source>Print</source>
-        <translation type="vanished">Drukuj</translation>
+        <translation>Drukuj</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="217" />
         <source>Send contents to printer (Ctrl+P)</source>
-        <translation type="vanished">Wyślij zawartość na drukarkę (Ctrl+P)</translation>
+        <translation>Wyślij zawartość na drukarkę (Ctrl+P)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="220" />
         <source>Send contents to printer</source>
-        <translation type="vanished">Wyślij zawartość na drukarkę</translation>
+        <translation>Wyślij zawartość na drukarkę</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="223" />
+        <source>Ctrl+P</source>
+        <translation>Ctrl+P</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="233" />
         <source>Atascii Font</source>
-        <translation type="vanished">Czcionka ATASCII</translation>
+        <translation>Czcionka ATASCII</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="236" />
         <source>Toggle ATASCII fonts (Alt+F)</source>
-        <translation type="vanished">Przełącz czcionkę ATASCII (Alt+F)</translation>
+        <translation>Przełącz czcionkę ATASCII (Alt+F)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="239" />
         <source>Toggle ATASCII fonts</source>
-        <translation type="vanished">Przełącz czcionkę ATASCII</translation>
+        <translation>Przełącz czcionkę ATASCII</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="242" />
+        <source>Alt+F</source>
+        <translation>Alt+F</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="267" />
+        <source>Alt+Shift+F</source>
+        <translation>Alt+Shift+F</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="295" />
+        <source>Alt+Shift+H</source>
+        <translation>Alt+Shift+H</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="326" />
+        <source>Alt+H</source>
+        <translation>Alt+H</translation>
+    </message>
+    <message>
+        <location filename="../../src/textprinterwindow.ui" line="341" />
         <source>Strip Line Numbers</source>
-        <translation type="vanished">Usuń numery linii</translation>
+        <translation>Usuń numery linii</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="344" />
         <source>Strip Line numbers from the text output (Ctrl-S)</source>
-        <translation type="vanished">Usuń numery linii z wyjścia tekstowego (Ctrl+S)</translation>
+        <translation>Usuń numery linii z wyjścia tekstowego (Ctrl+S)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="347" />
         <source>Strip Line numbers from the text output</source>
-        <translation type="vanished">Usuń numery linii z wyjścia tekstowego</translation>
+        <translation>Usuń numery linii z wyjścia tekstowego</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="258" />
         <source>Font Size</source>
-        <translation type="vanished">Rozmiar czcionki</translation>
+        <translation>Rozmiar czcionki</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="261" />
         <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
-        <translation type="vanished">Przełącz rozmiar czcionki (6, 9, 12 pkt.) (Atl+Shift+F)</translation>
+        <translation>Przełącz rozmiar czcionki (6, 9, 12 pkt.) (Atl+Shift+F)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="264" />
         <source>Toggle Font Size (6, 9, 12 pt)</source>
-        <translation type="vanished">Przełącz rozmiar czcionki (6, 9, 12 pkt.)</translation>
+        <translation>Przełącz rozmiar czcionki (6, 9, 12 pkt.)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="286" />
         <source>Hide/Show Ascii</source>
-        <translation type="vanished">Ukryj/pokaż ASCII</translation>
+        <translation>Ukryj/pokaż ASCII</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="289" />
         <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
-        <translation type="vanished">Ukryj/pokaż wyjście drukarki ASCII (Alt+Shift+H)</translation>
+        <translation>Ukryj/pokaż wyjście drukarki ASCII (Alt+Shift+H)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="292" />
         <source>Hide/Show Ascii Printer Output</source>
-        <translation type="vanished">Ukryj/pokaż wyjście drukarki ASCII</translation>
+        <translation>Ukryj/pokaż wyjście drukarki ASCII</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="317" />
         <source>HideShow_Atascii</source>
-        <translation type="vanished">Ukryj/pokaż Atascii</translation>
+        <translation>Ukryj/pokaż Atascii</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="320" />
         <source> Hide/Show Atascii Printer Output (Alt+H)</source>
-        <translation type="vanished">Ukryj/pokaż wyjście drukarki ATASCII (Alt+H)</translation>
+        <translation>Ukryj/pokaż wyjście drukarki ATASCII (Alt+H)</translation>
     </message>
     <message>
+        <location filename="../../src/textprinterwindow.ui" line="323" />
         <source>Hide/Show Atascii Printer Output</source>
-        <translation type="vanished">Ukryj/pokaż wyjście drukarki ATASCII</translation>
+        <translation>Ukryj/pokaż wyjście drukarki ATASCII</translation>
+    </message>
+</context>
+<context>
+    <name>TnfsBrowser</name>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="19" />
+        <source>TNFS Network Browser</source>
+        <translation>Przeglądarka sieciowa TFS</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="46" />
+        <source>Connect</source>
+        <translation>Łączyć</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="48" />
+        <source>Clear</source>
+        <translation>Jasne</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="49" />
+        <source>Clear saved host history</source>
+        <translation>Wyczyść zapisaną historię hostów</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="51" />
+        <source>TNFS Host:</source>
+        <translation>Host TFS:</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="59" />
+        <source>.. (Up)</source>
+        <translation>.. (W górę)</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="64" />
+        <source>Sort A-Z / Z-A</source>
+        <translation>Sortuj A-Z / Z-A</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="67" />
+        <source>Not Connected</source>
+        <translation>Brak połączenia</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="87" />
+        <location filename="../../src/tnfsbrowser.cpp" line="283" />
+        <location filename="../../src/tnfsbrowser.cpp" line="354" />
+        <source>More...</source>
+        <translation>Więcej...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="89" />
+        <source>Cancel</source>
+        <translation>Anulować</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="99" />
+        <source>Double-click a file (.ATR/.XEX) to Mount it.</source>
+        <translation>Kliknij dwukrotnie plik (.ATR/.XEX), aby go zamontować.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="201" />
+        <source>Connecting to %1...</source>
+        <translation>Łączę z % 1...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="219" />
+        <location filename="../../src/tnfsbrowser.cpp" line="256" />
+        <source>Connected: %1</source>
+        <translation>Połączono: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="235" />
+        <location filename="../../src/tnfsbrowser.cpp" line="271" />
+        <source>Connection Failed.</source>
+        <translation>Połączenie nie powiodło się.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="236" />
+        <location filename="../../src/tnfsbrowser.cpp" line="272" />
+        <source>Connection Error</source>
+        <translation>Błąd połączenia</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="237" />
+        <location filename="../../src/tnfsbrowser.cpp" line="273" />
+        <source>Could not reach host '%1'.
+Check internet or hostname.</source>
+        <translation>Nie można połączyć się z hostem '%1'.
+Sprawdź internet lub nazwę hosta.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="285" />
+        <source>Fetching %1...</source>
+        <translation>Pobieranie% 1...</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="301" />
+        <source>Error opening directory.</source>
+        <translation>Błąd podczas otwierania katalogu.</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="350" />
+        <source>No more items</source>
+        <translation>Nie ma więcej przedmiotów</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="360" />
+        <location filename="../../src/tnfsbrowser.cpp" line="388" />
+        <source>Browsing: %1</source>
+        <translation>Przeglądanie: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="403" />
+        <source>Clear History</source>
+        <translation>Wyczyść historię</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="404" />
+        <source>Clear all saved hosts?</source>
+        <translation>Wyczyścić wszystkie zapisane hosty?</translation>
+    </message>
+    <message>
+        <location filename="../../src/tnfsbrowser.cpp" line="409" />
+        <source>History cleared.</source>
+        <translation>Historia wyczyszczona.</translation>
+    </message>
+</context>
+<context>
+    <name>WebBridge</name>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="60" />
+        <source>Cannot access directory: %1</source>
+        <translation>Nie można uzyskać dostępu do katalogu: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="124" />
+        <source>Phonebook XML is corrupted or invalid!</source>
+        <translation>XML książki telefonicznej jest uszkodzony lub nieprawidłowy!</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="129" />
+        <source>No phonebook found at: %1</source>
+        <translation>Nie znaleziono książki telefonicznej pod adresem: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="179" />
+        <source>TNFS path not found: %1</source>
+        <translation>Nie znaleziono ścieżki TNFS: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="185" />
+        <source>Failed to mount TNFS host: %1</source>
+        <translation>Nie udało się zamontować hosta TNFS: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="192" />
+        <source>Failed to connect to TNFS host: %1</source>
+        <translation>Nie udało się połączyć z hostem TNFS: %1</translation>
     </message>
 </context>
 </TS>
