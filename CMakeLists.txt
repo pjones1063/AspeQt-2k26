@@ -67,6 +67,7 @@ qt_add_executable(AspeQt
 )
 
 # --- 5.5 Compile and Embed Translations ---
+# --- 5.5 Compile and Embed Translations ---
 set(TS_FILES
     "res/i18n/aspeqt_de.ts"
     "res/i18n/aspeqt_es.ts"
@@ -75,6 +76,8 @@ set(TS_FILES
     "res/i18n/aspeqt_sk.ts"
     "res/i18n/aspeqt_tr.ts"
     "res/i18n/aspeqt_fr.ts"
+    "res/i18n/aspeqt_it.ts"
+    "res/i18n/aspeqt_cs.ts"
     "res/i18n/qt_de.ts"
     "res/i18n/qt_es.ts"
     "res/i18n/qt_pl.ts"
@@ -82,6 +85,8 @@ set(TS_FILES
     "res/i18n/qt_sk.ts"
     "res/i18n/qt_tr.ts"
     "res/i18n/qt_fr.ts"
+    "res/i18n/qt_it.ts"
+    "res/i18n/qt_cs.ts"
 )
 
 qt_add_translations(AspeQt
