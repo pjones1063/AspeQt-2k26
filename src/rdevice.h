@@ -90,6 +90,7 @@ private:
     QByteArray m_networkToSioBuffer;
     QMutex m_bufferMutex;
     QTimer *m_ringTimer;
+    QByteArray m_escapeBuffer;
     QTimer *m_escapeActionTimer;
 
     QTcpSocket *tcpSocket;
@@ -117,10 +118,7 @@ private:
     void sendResultCode(int code);
     void sendAtResponse(const QString &text);
     void parseTelnet(const QByteArray &data);
-    void checkEscapeSequence(const QByteArray &data);
-
     void sendDataToAtari(const QByteArray &data);
-
     void handlePollType1();
     void handlePollType3(quint8 aux1, quint8 aux2);
     void handleConfigure(quint8 aux1, quint8 aux2);

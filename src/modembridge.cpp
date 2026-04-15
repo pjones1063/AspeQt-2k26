@@ -137,18 +137,31 @@ void ModemBridge::onSerialDataReceived() {
                 m_escPressed = true;
             }
             else {
-                filteredData.append(c);
+                // --- THE BUFFER TRAP LOGIC ---
+                if (c == '+') {
+                    m_escapeBuffer.append(c);
+                    filteredData.append(c); // Pass straight to BBS for instant echo!
+
+                    if (m_escapeBuffer.length() > 3) {
+                        m_escapeBuffer.clear(); // Too many pluses
+                    } else if (m_escapeBuffer.length() == 3) {
+                        m_escapeActionTimer->start(1000);
+                    }
+                } else {
+                    m_escapeBuffer.clear(); // Broken sequence
+                    if (m_escapeActionTimer->isActive()) m_escapeActionTimer->stop();
+                    filteredData.append(c);
+                }
             }
         }
 
         if (!filteredData.isEmpty()) {
             emit traceData(m_isSshMode ? "TX (SSH)" : "TX (TCP)", filteredData);
-            checkEscapeSequence(filteredData);
-
             if (m_isSshMode) m_ssh->write(filteredData);
             else             m_socket->write(filteredData);
         }
     }
+
     // --- MODE 2: COMMAND MODE ---
     else {
         // --- Trace AT Commands so you can see what you type ---
@@ -187,34 +200,13 @@ void ModemBridge::onSerialDataReceived() {
 }
 
 
-
-void ModemBridge::checkEscapeSequence(const QByteArray &data) {
-    for (char c : data) {
-        if (c == '+') {
-            if (m_plusCount == 0) {
-                if (m_escapeTimer.elapsed() >= 1000) m_plusCount = 1;
-            } else if (m_plusCount < 3) {
-                m_plusCount++;
-            }
-
-            if (m_plusCount == 3) {
-                m_escapeActionTimer->start(1000); // Wait for trailing pause
-            }
-        } else {
-            m_plusCount = 0;
-            m_escapeTimer.restart();
-            if (m_escapeActionTimer->isActive()) {
-                m_escapeActionTimer->stop();
-            }
-        }
-    }
-}
-
 void ModemBridge::onEscapeTriggered() {
-    m_plusCount = 0;
-    emit statusMessage("Modem Bridge: +++ Escape Sequence detected. Dropping to Command Mode.");
-    m_isConnected = false;
-    sendResultCode(0); // OK
+    if (m_escapeBuffer == "+++") {
+        m_isConnected = false;
+        emit statusMessage("Modem Bridge: +++ Escape Sequence triggered. Dropping to Command Mode.");
+        sendResultCode(0); // Send OK
+    }
+    m_escapeBuffer.clear();
 }
 
 
@@ -317,20 +309,26 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
     }
 
     // --- RETURN TO ONLINE (ATO) ---
-    else if (upperCmd == "O" || upperCmd.startsWith("O ")) {
-        if (m_socket->state() == QAbstractSocket::ConnectedState || m_ssh->isConnected()) {
+    else if (upperCmd == "O" || upperCmd.startsWith("O0") || upperCmd.startsWith("O ")) {
+
+        // BULLETPROOF CHECK
+        bool hasActiveConnection = (m_socket->state() == QAbstractSocket::ConnectedState) ||
+                                   m_ssh->isConnected();
+
+        if (hasActiveConnection) {
             m_isConnected = true;
 
             m_plusCount = 0;
             m_escapeTimer.restart();
             if (m_escapeActionTimer->isActive()) m_escapeActionTimer->stop();
 
-            sendToSerial("\r\nCONNECT 19200\r\n"); // Left untouched
+            sendToSerial("\r\nCONNECT 19200\r\n");
             emit statusMessage("Modem Bridge: Returned to Online Data Mode.");
         } else {
             sendResultCode(3); // NO CARRIER
         }
     }
+
 
     // --- S0 REGISTER (Auto-Answer) ---
     else if (upperCmd.startsWith("S0=")) {
@@ -382,12 +380,12 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
         m_suppressCarrierMessage = false;
     }
 
-    else if (upperCmd.isEmpty()) {
+    else if (upperCmd.trimmed().isEmpty()) {
             sendResultCode(0); // OK
     }
 
     else {
-            qDebug() << "!w Unrecognized AT command swallowed:" << upperCmd;
+            qDebug() << "!w Unrecognized AT command:" << upperCmd;
     }
 }
 

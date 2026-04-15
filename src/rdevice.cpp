@@ -51,49 +51,13 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
 
     connect(this, &RDevice::dispatchToNetwork, this, [this](const QByteArray &data){
         if (m_isNetworkConnected) {
-            QByteArray filteredData;
-
-            for (char c : data) {
-                if (m_escPending) {
-                    m_escPending = false;
-                    if (c == 'U' || c == 'u') {
-                        QString inject = m_currentConnection.login + "\r";
-                        filteredData.append(inject.toUtf8());
-                        continue;
-                    }
-                    if (c == 'P' || c == 'p') {
-                        QString inject = m_currentConnection.password + "\r";
-                        filteredData.append(inject.toUtf8());
-                        continue;
-                    }
-                    if (c == 'H' || c == 'h') {
-                        hangup();
-                        continue;
-                    }
-                    filteredData.append(0x1B);
-                    filteredData.append(c);
-                } else if (c == 0x1B) {
-                    m_escPending = true;
-                } else {
-                    if (c == 126 || c == 127) {
-                        filteredData.append(char(8));
-                    } else {
-                        filteredData.append(c);
-                    }
-                }
-            }
-
-            checkEscapeSequence(filteredData);
-
-            if (!filteredData.isEmpty()) {
-                if (m_isSshMode) m_ssh->write(filteredData);
-                else tcpSocket->write(filteredData);
-            }
+            // [FIX] Removed the duplicate parsing of macros and escape sequences!
+            // We just pass the clean, pre-filtered data straight to the socket.
+            if (m_isSshMode) m_ssh->write(data);
+            else tcpSocket->write(data);
         }
         else {
             for (char c : data) {
-                // [FIX] The stray unconditional echo block has been deleted from here!
-
                 if (c == 0x0D || (quint8)c == 0x9B) { // Carriage Return
                     if (echoEnabled) {
                         QMutexLocker locker(&m_bufferMutex);
@@ -122,6 +86,7 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
             }
         }
     }, Qt::QueuedConnection);
+
 
     connect(this, &RDevice::executeAtCommand, this, &RDevice::processAtCommand, Qt::QueuedConnection);
 }
@@ -210,7 +175,7 @@ void RDevice::handleConfigure(quint8 aux1, quint8 aux2) {
     default:   m_currentBaudRate = 19200; break;
     }
 
-    qDebug() << "!d" << "[RDevice] Configure: Ice-T requested Baud Rate set to:" << m_currentBaudRate;
+    qDebug() << "!d" << "[RDevice] Configure: Requested Baud Rate set to:" << m_currentBaudRate;
     sio->port()->writeComplete();
 }
 
@@ -336,7 +301,7 @@ void RDevice::handleStream() {
         sio->port()->readRawFrame(256, false);
     }
 
-    qDebug() << "!d" << "[RDevice] Stream active - Handing over to Pi 5 Hardware UART at" << m_currentBaudRate;
+    qDebug() << "!d" << "[RDevice] Stream active" << m_currentBaudRate;
 }
 
 void RDevice::handleWrite(quint16 aux) {
@@ -404,10 +369,13 @@ void RDevice::processSerialData(const QByteArray &data) {
     if (state != ModemState::StreamMode) return;
 
     static bool escPending = false;
-    QByteArray filteredData;
+    QByteArray finalDataToNetwork;
 
     for (int i = 0; i < data.size(); ++i) {
         char c = data[i];
+
+        // Convert Atari Backspace to Standard Backspace here
+        if (c == 126 || c == 127) c = 8;
 
         if (escPending) {
             escPending = false;
@@ -423,61 +391,55 @@ void RDevice::processSerialData(const QByteArray &data) {
                 continue;
             }
             if (c == 'H' || c == 'h') {
-                // [FIX] Use Thread-Safe invokeMethod to call the hangup slot
                 QMetaObject::invokeMethod(this, "hangup", Qt::QueuedConnection);
                 continue;
             }
 
-            filteredData.append(0x1B);
-            filteredData.append(c);
+            finalDataToNetwork.append(0x1B);
+            finalDataToNetwork.append(c);
         } else if (c == 0x1B) {
             escPending = true;
+
         } else {
-            filteredData.append(c);
-        }
-    }
 
-    if (!filteredData.isEmpty()) {
-        checkEscapeSequence(filteredData);
-        emit dispatchToNetwork(filteredData);
-    }
-}
-
-void RDevice::checkEscapeSequence(const QByteArray &data) {
-    for (char c : data) {
-        if (c == '+') {
-            // Check the Leading Pause for the first plus
-            if (m_plusCount == 0) {
-                if (m_escapeTimer.elapsed() >= ESCAPE_GUARD_TIME) {
-                    m_plusCount = 1;
+            // --- TIES: Pass-Through Logic ---
+            if (m_isNetworkConnected) {
+                if (c == '+') {
+                    m_escapeBuffer.append(c);
+                    finalDataToNetwork.append(c);
+                    if (m_escapeBuffer.length() > 3) {
+                        m_escapeBuffer.clear();
+                    } else if (m_escapeBuffer.length() == 3) {
+                        QMetaObject::invokeMethod(m_escapeActionTimer, "start", Qt::QueuedConnection, Q_ARG(int, 1000));
+                    }
+                } else {
+                    m_escapeBuffer.clear();
+                    QMetaObject::invokeMethod(m_escapeActionTimer, "stop", Qt::QueuedConnection);
+                    finalDataToNetwork.append(c);
                 }
-            } else if (m_plusCount < 3) {
-                m_plusCount++;
-            }
-
-            // If we hit 3 pluses, start the Trailing Pause timer
-            if (m_plusCount == 3) {
-                m_escapeActionTimer->start(ESCAPE_GUARD_TIME);
-            }
-        } else {
-            // Any non-'+' character breaks the sequence and cancels the timer
-            m_plusCount = 0;
-            m_escapeTimer.restart();
-            if (m_escapeActionTimer->isActive()) {
-                m_escapeActionTimer->stop();
+            } else {
+                finalDataToNetwork.append(c);
             }
         }
+      }
+
+    // Only dispatch to the network lambda if there is actually data left!
+    if (!finalDataToNetwork.isEmpty()) {
+        emit dispatchToNetwork(finalDataToNetwork);
     }
 }
+
 
 void RDevice::onEscapeTriggered() {
-    m_plusCount = 0;
-    qDebug() << "!i [RDevice] +++ Escape Sequence detected. Dropping to Command Mode.";
-
-    // Return to AT command mode without severing the TCP connection
-    forceCommandMode(false);
-    sendResultCode(RESULT_OK); // Send 'OK' to the Atari terminal
+    if (m_escapeBuffer == "+++") {
+        m_isNetworkConnected = false;
+        qDebug() << "!i [RDevice] +++ Escape Sequence triggered. Dropping to AT Mode.";
+        sendResultCode(RESULT_OK);
+    }
+    // No flushing needed, just clear the tracker
+    m_escapeBuffer.clear();
 }
+
 
 
 void RDevice::onSocketReadyRead() {
@@ -646,27 +608,36 @@ void RDevice::processAtCommand(const QString &rawCmd) {
 
         sendResultCode(RESULT_OK);
     }
+
     // --- RETURN TO ONLINE (ATO) ---
-    else if (cmd == "O" || cmd.startsWith("O ")) {
-        if (m_isNetworkConnected) {
+    else if (cmd == "O" || cmd.startsWith("O0") || cmd.startsWith("O ")) {
+
+        // BULLETPROOF CHECK: Interrogate the actual physical sockets
+        bool hasActiveConnection = (tcpSocket->state() == QAbstractSocket::ConnectedState) ||
+                                   (m_isSshMode && m_ssh->isConnected());
+
+        if (hasActiveConnection) {
+            m_isNetworkConnected = true; // Restore routing to the network
+
             // Reset the escape sequence timers
             m_plusCount = 0;
             m_escapeTimer.restart();
             if (m_escapeActionTimer->isActive()) m_escapeActionTimer->stop();
 
-            // The Atari terminal software sees this and resumes SIO Concurrent/Stream mode
+            // SIO StreamMode was never interrupted, so we just say CONNECT
             sendResultCode(RESULT_CONNECT);
         } else {
+            m_isNetworkConnected = false;
             sendResultCode(RESULT_NO_CARRIER); // Authentic Hayes failure response
         }
     }
 
-    else if (cmd.isEmpty()) {
-            sendResultCode(0); // OK
-    }
 
+    else if(cmd.isEmpty()) {
+        sendResultCode(RESULT_OK);
+    }
     else {
-            qDebug() << "!w Unrecognized AT command swallowed:" << cmd;
+            qDebug() << "!w Unrecognized AT command:" << cmd;
     }
 }
 

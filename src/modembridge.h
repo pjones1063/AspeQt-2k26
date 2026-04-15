@@ -82,10 +82,10 @@ private:
     void parseTelnet(const QByteArray &data);
 
     QByteArray m_serialBuffer;
+    QByteArray m_escapeBuffer;
     QElapsedTimer m_escapeTimer;
     QTimer *m_escapeActionTimer;
     int m_plusCount = 0;
-    void checkEscapeSequence(const QByteArray &data);
 
     QTimer *m_ringTimer;
     bool m_flowControl = true;
