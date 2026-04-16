@@ -32,12 +32,18 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     itemAtariSio = m_ui->treeWidget->topLevelItem(0)->child(1);
     itemEmulation = m_ui->treeWidget->topLevelItem(1);
     itemModemBridge = m_ui->treeWidget->topLevelItem(2);
-    itemI18n = m_ui->treeWidget->topLevelItem(3);
-    itemWebUi = m_ui->treeWidget->topLevelItem(4);
+    itemPrinter = m_ui->treeWidget->topLevelItem(3);
+    itemI18n = m_ui->treeWidget->topLevelItem(4);
+    itemWebUi = m_ui->treeWidget->topLevelItem(5);
 
 #ifndef Q_OS_LINUX
     m_ui->treeWidget->topLevelItem(0)->removeChild(itemAtariSio);
 #endif
+
+    // --- VIRTUAL PRINTER SETTINGS ---
+    m_ui->printerAutoPopBox->setChecked(aspeqtSettings->printerAutoPop());
+    m_ui->printerFeedCombo->setCurrentIndex(aspeqtSettings->printerFeedMode());
+    m_ui->printerStyleCombo->setCurrentIndex(aspeqtSettings->printerStyle());
 
     // MUTE SIGNALS: Prevent the UI from crashing while we load data
     m_ui->serialPortComboBox->blockSignals(true);
@@ -289,12 +295,15 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
         m_ui->stackedWidget->setCurrentIndex(2);
     } else if (current == itemModemBridge) {
         m_ui->stackedWidget->setCurrentIndex(3);
+    } else if (current == itemPrinter) {          // <--- NEW
+        m_ui->stackedWidget->setCurrentIndex(4);  // <--- NEW (Assuming it is the 5th page you created)
     } else if (current == itemI18n) {
-        m_ui->stackedWidget->setCurrentIndex(4);
+        m_ui->stackedWidget->setCurrentIndex(5);  // Shifted
     } else if (current == itemWebUi) {
-        m_ui->stackedWidget->setCurrentIndex(5);
+        m_ui->stackedWidget->setCurrentIndex(6);  // Shifted
     }
 }
+
 
 void OptionsDialog::on_modemEnableBox_toggled(bool checked)
 {
@@ -430,6 +439,11 @@ void OptionsDialog::OptionsDialog_accepted()
     // [NEW] BBS Listener Settings
     aspeqtSettings->setBbsListenerEnabled(m_ui->enableBbsPort->isChecked());
     aspeqtSettings->setModemListenPort(m_ui->bbsPortBox->value());
+
+    // --- NEW: SAVE VIRTUAL PRINTER SETTINGS ---
+    aspeqtSettings->setPrinterAutoPop(m_ui->printerAutoPopBox->isChecked());
+    aspeqtSettings->setPrinterFeedMode(m_ui->printerFeedCombo->currentIndex());
+    aspeqtSettings->setPrinterStyle(m_ui->printerStyleCombo->currentIndex());
 
     // Web UI
     aspeqtSettings->setWebUiEnabled(m_ui->cbEnableWebUi->isChecked());

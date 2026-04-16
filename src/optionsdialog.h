@@ -27,7 +27,7 @@ protected:
 
 private:
     Ui::OptionsDialog *m_ui;
-    QTreeWidgetItem *itemStandard, *itemAtariSio, *itemEmulation, *itemModemBridge, *itemI18n, *itemWebUi;
+    QTreeWidgetItem *itemStandard, *itemAtariSio, *itemEmulation, *itemModemBridge, *itemPrinter, *itemI18n, *itemWebUi;
 
 private slots:
     void on_serialPortComboBox_currentIndexChanged(int index);

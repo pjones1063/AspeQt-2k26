@@ -30,7 +30,7 @@
 #include "diskeditdialog.h"
 #include "serialport.h"
 #include "sioworker.h"
-#include "textprinterwindow.h"
+#include "epsonprinterwindow.h"
 #include "docdisplaywindow.h"
 #include "drivewidget.h"
 #include "infowidget.h"
@@ -123,7 +123,7 @@ private:
     int m_downloadCounter;
     InfoWidget* infoWidget;
     QLabel *speedLabel;
-    TextPrinterWindow *textPrinterWindow;
+    EpsonPrinterWindow *textPrinterWindow;
     DocDisplayWindow *docDisplayWindow;
     QTranslator aspeqt_translator, aspeqt_qt_translator;
     QSystemTrayIcon trayIcon;

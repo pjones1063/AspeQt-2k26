@@ -37,10 +37,11 @@
 #include "infowidget.h"
 #include "opcodes6502.h"
 #include "xeximage.h"
+#include "epsonprinter.h"
 
 #include "websocketclientwrapper.h"
 #include "webbridge.h"
-
+//#include "atarifilesystem.h"
 
 #include <QEvent>
 #include <QDragEnterEvent>
@@ -62,8 +63,8 @@
 #include <qtoolbar.h>
 #include "sectorinspectordialog.h"
 
-#include "atarifilesystem.h"
-// #include "miscutils.h"
+
+
 
 
 
@@ -629,7 +630,7 @@ MainWindow::MainWindow(QWidget *parent)
     sio->installDevice(SMART_CDEVIC, smart);
     sio->installDevice(0x70, smart);
 
-    textPrinterWindow = new TextPrinterWindow();
+    textPrinterWindow = new EpsonPrinterWindow();
     docDisplayWindow = new DocDisplayWindow();
 
     connect(textPrinterWindow, SIGNAL(closed()), this, SLOT(textPrinterWindowClosed()));
@@ -639,20 +640,20 @@ MainWindow::MainWindow(QWidget *parent)
     // -------------------------------------------------------
     // DEVICE: Printer (P:)
     // -------------------------------------------------------
-    Printer *printer = new Printer(sio);
+    EpsonPrinter *printer = new EpsonPrinter(sio);
     printer->setParent(nullptr);
     printer->moveToThread(sio);
 
-    connect(printer, SIGNAL(print(QString)), textPrinterWindow, SLOT(print(QString)));
+    // Connect using modern Qt 6 Syntax for absolute thread safety
+    connect(printer, &EpsonPrinter::paperUpdated, textPrinterWindow, &EpsonPrinterWindow::updatePaper, Qt::QueuedConnection);
+
     sio->installDevice(PRINTER_BASE_CDEVIC, printer);
     setUpPrinterEmulationWidgets(aspeqtSettings->printerEmulation());
 
     ui->menuBar->installEventFilter(this);
     untitledName = 0;
-
     connect(&trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
     trayIcon.setIcon(windowIcon());
-
 
     // -------------------------------------------------------
     // SETUP WEB UI SERVERS (Do not start them yet)

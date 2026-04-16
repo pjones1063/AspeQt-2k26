@@ -157,6 +157,17 @@ public:
     bool isURLSubmitEnabled();
     void setURLSubmit(bool enabled);
 
+    // -- Printer
+    bool printerAutoPop() const;
+    void setPrinterAutoPop(bool autoPop);
+    int printerFeedMode() const;
+    void setPrinterFeedMode(int mode);
+    int printerStyle() const;
+    void setPrinterStyle(int style);
+    bool isPrinterClearRequested() const;
+    void setPrinterClearRequested(bool req);
+
+
     // --- 6. Image & File Management ---
     const ImageSettings* getImageSettingsFromName(const QString &fileName);
     const ImageSettings& mountedImageSetting(int no);
@@ -266,6 +277,12 @@ private:
     QString mLastExtractDir;
     QString mLastPrinterTextDir;
     QString mLastCasDir;
+
+    // Printer options
+    bool mPrinterAutoPop;
+    int mPrinterFeedMode;
+    int mPrinterStyle;
+    bool mPrinterClearRequested;
 
     // 7. Session Data
     QString mSessionFileName;

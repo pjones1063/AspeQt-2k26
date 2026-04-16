@@ -10,17 +10,6 @@
 #include <QSerialPort>
 #include <QTcpSocket>
 
-class Printer: public SioDevice
-{
-    Q_OBJECT
-private:
-    int m_lastOperation;
-public:
-    Printer(SioWorker *worker): SioDevice(worker) {}
-    void handleCommand(quint8 command, quint16 aux);
-signals:
-    void print(const QString &text);
-};
 
 class SmartDevice: public SioDevice
 {
@@ -31,7 +20,7 @@ public:
 };
 
 
-// --- NEW: Y Device (Clipboard) ---
+
 class ClipboardDevice : public SioDevice
 {
     Q_OBJECT

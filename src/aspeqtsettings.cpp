@@ -129,6 +129,12 @@ AspeQtSettings::AspeQtSettings()
     mLastExtractDir = mSettings->value("LastExtractDir", "").toString();
     mLastPrinterTextDir = mSettings->value("LastPrinterTextDir", "").toString();
     mLastCasDir = mSettings->value("LastCasDir", "").toString();
+
+    // 7 - printer
+    mPrinterAutoPop = mSettings->value("Printer/AutoPop", false).toBool();
+    mPrinterFeedMode = mSettings->value("Printer/FeedMode", 0).toInt();
+    mPrinterStyle = mSettings->value("Printer/Style", 0).toInt();
+
 }
 
 AspeQtSettings::~AspeQtSettings()
@@ -739,6 +745,10 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("WebUI/HttpPort", mWebUiPort);
     s.setValue("WebUI/WsPort", mWebUiWsPort);
     s.setValue("StreamGuardDelay", mStreamGuardDelay);
+    s.setValue("PrinterEmulation", mPrinterEmulation);
+    s.setValue("Printer/AutoPop", mPrinterAutoPop);
+    s.setValue("Printer/FeedMode", mPrinterFeedMode);
+    s.setValue("Printer/Style", mPrinterStyle);
 
     s.endGroup();
 
@@ -815,6 +825,10 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mWebUiEnabled = s.value("WebUI/Enabled", false).toBool();
     mWebUiPort = s.value("WebUI/HttpPort", 8080).toInt();
     mWebUiWsPort = s.value("WebUI/WsPort", 12345).toInt();
+    mPrinterEmulation = s.value("PrinterEmulation", true).toBool();
+    mPrinterAutoPop = s.value("Printer/AutoPop", false).toBool();
+    mPrinterFeedMode = s.value("Printer/FeedMode", 0).toInt();
+    mPrinterStyle = s.value("Printer/Style", 0).toInt();
 
     s.endGroup();
 
@@ -828,3 +842,27 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     }
     s.endArray();
 }
+
+//printer options
+
+bool AspeQtSettings::printerAutoPop() const { return mPrinterAutoPop; }
+void AspeQtSettings::setPrinterAutoPop(bool autoPop) {
+    mPrinterAutoPop = autoPop;
+    if(mSessionFileName == "") mSettings->setValue("Printer/AutoPop", autoPop);
+}
+
+int AspeQtSettings::printerFeedMode() const { return mPrinterFeedMode; }
+void AspeQtSettings::setPrinterFeedMode(int mode) {
+    mPrinterFeedMode = mode;
+    if(mSessionFileName == "") mSettings->setValue("Printer/FeedMode", mode);
+}
+
+int AspeQtSettings::printerStyle() const { return mPrinterStyle; }
+void AspeQtSettings::setPrinterStyle(int style) {
+    mPrinterStyle = style;
+    if(mSessionFileName == "") mSettings->setValue("Printer/Style", style);
+}
+
+bool AspeQtSettings::isPrinterClearRequested() const { return mPrinterClearRequested; }
+void AspeQtSettings::setPrinterClearRequested(bool req) { mPrinterClearRequested = req; }
+
