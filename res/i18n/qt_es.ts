@@ -1249,28 +1249,32 @@ Tiempo restante estimado: %1:%2</translation>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>Empty</source>
         <translation>Vacío</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
         <source>There is no printout to save!</source>
         <translation>¡No hay ninguna impresión para guardar!</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="161" />
         <source>Save Printout</source>
         <translation>Guardar impresión</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
-        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
-        <translation>Imagen PNG (*.png);;Documento PDF (*.pdf)</translation>
+        <location filename="../../src/epsonprinterwindow.cpp" line="162" />
+        <source>PDF Document (*.pdf);;PNG Image (*.png)</source>
+        <translation>Documento PDF (*.pdf);;Imagen PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation type="vanished">Imagen PNG (*.png);;Documento PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>There is no printout to print!</source>
         <translation>¡No hay ninguna copia impresa para imprimir!</translation>
     </message>
@@ -2693,9 +2697,8 @@ Desactivar para archivos binarios.</translation>
         <translation>Conecta un puerto serie secundario a Internet. Requiere Atari 850 o R-Verter.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="697" />
         <source>Enable Modem Bridge (RS232 to TCP)</source>
-        <translation>Habilitar puente de módem (RS232 a TCP)</translation>
+        <translation type="vanished">Habilitar puente de módem (RS232 a TCP)</translation>
     </message>
     <message>
         <source>Bridges a secondary Serial Port to the Internet.
@@ -2704,9 +2707,8 @@ Requires Atari 850 or R-Verter.</source>
 Requiere Atari 850 o R-Verter.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="707" />
         <source>Enable 850 Device  (R: to TCP)</source>
-        <translation>Habilitar dispositivo 850 (R: a TCP)</translation>
+        <translation type="vanished">Habilitar dispositivo 850 (R: a TCP)</translation>
     </message>
     <message>
         <source>Enable if using a standard FTDI USB adapter.
@@ -2967,6 +2969,16 @@ Déjelo sin marcar para GPIO directo de Raspberry Pi.</translation>
         <location filename="../../src/optionsdialog.ui" line="636" />
         <source>Enable this to read Unix text files properly on Atari. Disable for binary files.</source>
         <translation>Habilite esto para leer archivos de texto Unix correctamente en Atari. Desactivar para archivos binarios.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="697" />
+        <source>Enable 850 Bridge (Hardware RS232 to TCP)</source>
+        <translation>Habilitar puente 850 (hardware RS232 a TCP)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="707" />
+        <source>Enable 850 Emulator  (R: to TCP)</source>
+        <translation>Habilitar el emulador 850 (R: a TCP)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="717" />

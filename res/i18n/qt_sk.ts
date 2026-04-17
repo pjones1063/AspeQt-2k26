@@ -1245,28 +1245,32 @@ Odhadovaný zostávajúci čas: %1:%2</translation>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>Empty</source>
         <translation>Prázdny</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
         <source>There is no printout to save!</source>
         <translation>Neexistuje žiadny výtlačok na uloženie!</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="161" />
         <source>Save Printout</source>
         <translation>Uložiť výtlačok</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
-        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
-        <translation>Obrázok PNG (*.png);; Dokument PDF (*.pdf)</translation>
+        <location filename="../../src/epsonprinterwindow.cpp" line="162" />
+        <source>PDF Document (*.pdf);;PNG Image (*.png)</source>
+        <translation>Dokument PDF (*.pdf);;Obrázok PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation type="vanished">Obrázok PNG (*.png);; Dokument PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>There is no printout to print!</source>
         <translation>Neexistuje žiadny výtlačok na tlač!</translation>
     </message>
@@ -2689,9 +2693,8 @@ Zakázať pre binárne súbory.</translation>
         <translation>Premosťuje sekundárny sériový port na internet. Vyžaduje Atari 850 alebo R-Verter.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="697" />
         <source>Enable Modem Bridge (RS232 to TCP)</source>
-        <translation>Povoliť modemový most (RS232 na TCP)</translation>
+        <translation type="vanished">Povoliť modemový most (RS232 na TCP)</translation>
     </message>
     <message>
         <source>Bridges a secondary Serial Port to the Internet.
@@ -2700,9 +2703,8 @@ Requires Atari 850 or R-Verter.</source>
 Vyžaduje Atari 850 alebo R-Verter.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="707" />
         <source>Enable 850 Device  (R: to TCP)</source>
-        <translation>Povoliť zariadenie 850 (R: na TCP)</translation>
+        <translation type="vanished">Povoliť zariadenie 850 (R: na TCP)</translation>
     </message>
     <message>
         <source>Enable if using a standard FTDI USB adapter.
@@ -2963,6 +2965,16 @@ Ponechajte nezačiarknuté pre priame Raspberry Pi GPIO.</translation>
         <location filename="../../src/optionsdialog.ui" line="636" />
         <source>Enable this to read Unix text files properly on Atari. Disable for binary files.</source>
         <translation>Povoľte túto možnosť, ak chcete správne čítať textové súbory Unix na Atari. Zakázať pre binárne súbory.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="697" />
+        <source>Enable 850 Bridge (Hardware RS232 to TCP)</source>
+        <translation>Povoliť 850 Bridge (hardvér RS232 to TCP)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="707" />
+        <source>Enable 850 Emulator  (R: to TCP)</source>
+        <translation>Povoliť emulátor 850 (R: na TCP)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="717" />

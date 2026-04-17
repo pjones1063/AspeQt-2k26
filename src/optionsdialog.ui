@@ -120,7 +120,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_serialPort">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -694,7 +694,7 @@
            <string>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</string>
           </property>
           <property name="text">
-           <string>Enable Modem Bridge (RS232 to TCP)</string>
+           <string>Enable 850 Bridge (Hardware RS232 to TCP)</string>
           </property>
          </widget>
         </item>
@@ -704,7 +704,7 @@
            <string>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</string>
           </property>
           <property name="text">
-           <string>Enable 850 Device  (R: to TCP)</string>
+           <string>Enable 850 Emulator  (R: to TCP)</string>
           </property>
          </widget>
         </item>

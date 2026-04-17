@@ -1252,28 +1252,32 @@ Tempo stimato rimasto: %1:%2</translation>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>Empty</source>
         <translation>Vuoto</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
         <source>There is no printout to save!</source>
         <translation>Non c'è nessuna stampa da salvare!</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="161" />
         <source>Save Printout</source>
         <translation>Salva stampa</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
-        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
-        <translation>Immagine PNG (*.png);;Documento PDF (*.pdf)</translation>
+        <location filename="../../src/epsonprinterwindow.cpp" line="162" />
+        <source>PDF Document (*.pdf);;PNG Image (*.png)</source>
+        <translation>Documento PDF (*.pdf);;Immagine PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation type="vanished">Immagine PNG (*.png);;Documento PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>There is no printout to print!</source>
         <translation>Non c'è nessuna stampa da stampare!</translation>
     </message>
@@ -2741,13 +2745,21 @@ Possibili cause:
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="697" />
-        <source>Enable Modem Bridge (RS232 to TCP)</source>
-        <translation>Abilita modem bridge (da RS232 a TCP)</translation>
+        <source>Enable 850 Bridge (Hardware RS232 to TCP)</source>
+        <translation>Abilita Bridge 850 (da hardware RS232 a TCP)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="707" />
+        <source>Enable 850 Emulator  (R: to TCP)</source>
+        <translation>Abilita emulatore 850 (R: a TCP)</translation>
+    </message>
+    <message>
+        <source>Enable Modem Bridge (RS232 to TCP)</source>
+        <translation type="vanished">Abilita modem bridge (da RS232 a TCP)</translation>
+    </message>
+    <message>
         <source>Enable 850 Device  (R: to TCP)</source>
-        <translation>Abilita dispositivo 850 (R: a TCP)</translation>
+        <translation type="vanished">Abilita dispositivo 850 (R: a TCP)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="717" />

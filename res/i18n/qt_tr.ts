@@ -1249,28 +1249,32 @@ Tahmini kalan süre: %1:%2</translation>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>Empty</source>
         <translation>Boş</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
         <source>There is no printout to save!</source>
         <translation>Kaydedilecek çıktı yok!</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="161" />
         <source>Save Printout</source>
         <translation>Çıktıyı Kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
-        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
-        <translation>PNG Görüntüsü (*.png);;PDF Belgesi (*.pdf)</translation>
+        <location filename="../../src/epsonprinterwindow.cpp" line="162" />
+        <source>PDF Document (*.pdf);;PNG Image (*.png)</source>
+        <translation>PDF Belgesi (*.pdf);;PNG Resmi (*.png)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation type="vanished">PNG Görüntüsü (*.png);;PDF Belgesi (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>There is no printout to print!</source>
         <translation>Yazdırılacak çıktı yok!</translation>
     </message>
@@ -2693,9 +2697,8 @@ Disable for binary files.</source>
         <translation>İkincil bir Seri Bağlantı Noktasını İnternet'e bağlar. Atari 850 veya R-Verter gerektirir.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="697" />
         <source>Enable Modem Bridge (RS232 to TCP)</source>
-        <translation>Modem Köprüsünü Etkinleştir (RS232'den TCP'ye)</translation>
+        <translation type="vanished">Modem Köprüsünü Etkinleştir (RS232'den TCP'ye)</translation>
     </message>
     <message>
         <source>Bridges a secondary Serial Port to the Internet.
@@ -2704,9 +2707,8 @@ Requires Atari 850 or R-Verter.</source>
 Atari 850 veya R-Verter gerektirir.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="707" />
         <source>Enable 850 Device  (R: to TCP)</source>
-        <translation>850 Cihazını Etkinleştir (R: TCP'ye)</translation>
+        <translation type="vanished">850 Cihazını Etkinleştir (R: TCP'ye)</translation>
     </message>
     <message>
         <source>Enable if using a standard FTDI USB adapter.
@@ -2967,6 +2969,16 @@ Doğrudan Raspberry Pi GPIO için işaretlenmemiş bırakın.</translation>
         <location filename="../../src/optionsdialog.ui" line="636" />
         <source>Enable this to read Unix text files properly on Atari. Disable for binary files.</source>
         <translation>Atari'de Unix metin dosyalarını düzgün okumak için bunu etkinleştirin. İkili dosyalar için devre dışı bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="697" />
+        <source>Enable 850 Bridge (Hardware RS232 to TCP)</source>
+        <translation>850 Köprüsünü Etkinleştir (Donanım RS232'den TCP'ye)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="707" />
+        <source>Enable 850 Emulator  (R: to TCP)</source>
+        <translation>850 Emülatörünü Etkinleştir (R: TCP'ye)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="717" />

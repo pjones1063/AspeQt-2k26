@@ -70,13 +70,39 @@ void EpsonPrinterWindow::applyZoom()
 {
     if (m_baseImage.isNull()) return;
 
-    // Calculate the new scaled size
-    QSize newSize = m_baseImage.size() * m_zoomFactor;
+    // 1. Create a temporary copy so we don't permanently scar the saved PNG!
+    QImage displayImage = m_baseImage.copy();
 
-    // Scale the image smoothly and apply it to the label
-    m_paperLabel->setPixmap(QPixmap::fromImage(m_baseImage).scaled(newSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    // 2. If the user is in "Single Sheet" mode, draw the page breaks
+    if (aspeqtSettings->printerFeedMode() == 1) {
+        int pageLength = aspeqtSettings->printerMarginLength();
+
+        if (pageLength > 0) {
+            QPainter painter(&displayImage);
+
+            // Set up a nice, visible red dashed line
+            QPen breakPen(QColor(255, 0, 0, 180)); // Soft red with slight transparency
+            breakPen.setStyle(Qt::DashLine);
+            breakPen.setWidth(4); // Make it thick enough to see easily
+            painter.setPen(breakPen);
+
+            // Draw a horizontal line at every page break interval
+            for (int y = pageLength; y < displayImage.height(); y += pageLength) {
+                painter.drawLine(0, y, displayImage.width(), y);
+            }
+            painter.end();
+        }
+    }
+
+    // 3. Calculate the new scaled size
+    QSize newSize = displayImage.size() * m_zoomFactor;
+
+    // 4. Scale the decorated image smoothly and apply it to the label
+    m_paperLabel->setPixmap(QPixmap::fromImage(displayImage).scaled(newSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     m_paperLabel->resize(newSize);
 }
+
+
 
 // --- ZOOM SLOTS ---
 void EpsonPrinterWindow::on_actionZoom_In_triggered()
@@ -133,7 +159,7 @@ void EpsonPrinterWindow::on_actionSave_triggered()
 
     QString selectedFilter;
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Printout"), defaultPath,
-                                                    tr("PNG Image (*.png);;PDF Document (*.pdf)"),
+                                                    tr("PDF Document (*.pdf);;PNG Image (*.png)"),
                                                     &selectedFilter);
 
     if (fileName.isEmpty()) return;

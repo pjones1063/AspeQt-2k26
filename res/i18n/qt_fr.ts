@@ -1259,28 +1259,32 @@ Temps restant estimé : %1:%2</translation>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>Empty</source>
         <translation>Vide</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
         <source>There is no printout to save!</source>
         <translation>Il n’y a aucune impression à sauvegarder !</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="161" />
         <source>Save Printout</source>
         <translation>Enregistrer l'impression</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
-        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
-        <translation>Image PNG (*.png);;Document PDF (*.pdf)</translation>
+        <location filename="../../src/epsonprinterwindow.cpp" line="162" />
+        <source>PDF Document (*.pdf);;PNG Image (*.png)</source>
+        <translation>Document PDF (*.pdf);;Image PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation type="vanished">Image PNG (*.png);;Document PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>There is no printout to print!</source>
         <translation>Il n’y a pas d’impression à imprimer !</translation>
     </message>
@@ -2748,13 +2752,21 @@ Causes possibles :
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="697" />
-        <source>Enable Modem Bridge (RS232 to TCP)</source>
-        <translation>Activer le pont modem (RS232 vers TCP)</translation>
+        <source>Enable 850 Bridge (Hardware RS232 to TCP)</source>
+        <translation>Activer le pont 850 (matériel RS232 vers TCP)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="707" />
+        <source>Enable 850 Emulator  (R: to TCP)</source>
+        <translation>Activer l'émulateur 850 (R : vers TCP)</translation>
+    </message>
+    <message>
+        <source>Enable Modem Bridge (RS232 to TCP)</source>
+        <translation type="vanished">Activer le pont modem (RS232 vers TCP)</translation>
+    </message>
+    <message>
         <source>Enable 850 Device  (R: to TCP)</source>
-        <translation>Activer le périphérique 850 (R : vers TCP)</translation>
+        <translation type="vanished">Activer le périphérique 850 (R : vers TCP)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="717" />

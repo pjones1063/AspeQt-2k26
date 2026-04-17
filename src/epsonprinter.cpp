@@ -405,7 +405,8 @@ void EpsonPrinter::fillPaperBackground(QImage &img)
             p.setBrush(QColor(225, 255, 225));
 
             for (int y = 0; y < img.height(); y += 216) {
-                p.drawRect(0, y, img.width(), 60);
+                // CHANGED: 60 to 108 (Exactly 1/2 inch)
+                p.drawRect(0, y, img.width(), 108);
             }
         }
     }

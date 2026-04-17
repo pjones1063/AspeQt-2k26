@@ -1252,28 +1252,32 @@ Odhadovaný zbývající čas: %1:%2</translation>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>Empty</source>
         <translation>Prázdný</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
         <source>There is no printout to save!</source>
         <translation>Neexistuje žádný výtisk k uložení!</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="161" />
         <source>Save Printout</source>
         <translation>Uložit výtisk</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
-        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
-        <translation>Obrázek PNG (*.png);;Dokument PDF (*.pdf)</translation>
+        <location filename="../../src/epsonprinterwindow.cpp" line="162" />
+        <source>PDF Document (*.pdf);;PNG Image (*.png)</source>
+        <translation>Dokument PDF (*.pdf);;Obrázek PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation type="vanished">Obrázek PNG (*.png);;Dokument PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>There is no printout to print!</source>
         <translation>Neexistuje žádný výtisk k vytištění!</translation>
     </message>
@@ -2741,13 +2745,21 @@ Možné příčiny:
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="697" />
-        <source>Enable Modem Bridge (RS232 to TCP)</source>
-        <translation>Povolit modemový most (RS232 na TCP)</translation>
+        <source>Enable 850 Bridge (Hardware RS232 to TCP)</source>
+        <translation>Povolit 850 Bridge (hardwarové RS232 to TCP)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="707" />
+        <source>Enable 850 Emulator  (R: to TCP)</source>
+        <translation>Povolit emulátor 850 (R: na TCP)</translation>
+    </message>
+    <message>
+        <source>Enable Modem Bridge (RS232 to TCP)</source>
+        <translation type="vanished">Povolit modemový most (RS232 na TCP)</translation>
+    </message>
+    <message>
         <source>Enable 850 Device  (R: to TCP)</source>
-        <translation>Povolit zařízení 850 (R: na TCP)</translation>
+        <translation type="vanished">Povolit zařízení 850 (R: na TCP)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="717" />

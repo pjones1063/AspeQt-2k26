@@ -1433,28 +1433,32 @@ Estimated time left: %1:%2</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>Empty</source>
         <translation>Пустой</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
         <source>There is no printout to save!</source>
         <translation>Нет распечатки для сохранения!</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="161" />
         <source>Save Printout</source>
         <translation>Сохранить распечатку</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
-        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
-        <translation>Изображение PNG (*.png);;Документ PDF (*.pdf)</translation>
+        <location filename="../../src/epsonprinterwindow.cpp" line="162" />
+        <source>PDF Document (*.pdf);;PNG Image (*.png)</source>
+        <translation>PDF-документ (*.pdf);;изображение PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation type="vanished">Изображение PNG (*.png);;Документ PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>There is no printout to print!</source>
         <translation>Нет распечатки для печати!</translation>
     </message>
@@ -3374,6 +3378,16 @@ Possible causes:
         <translation>Включите этот параметр, чтобы правильно читать текстовые файлы Unix на Atari. Отключите для двоичных файлов.</translation>
     </message>
     <message>
+        <location filename="../../src/optionsdialog.ui" line="697" />
+        <source>Enable 850 Bridge (Hardware RS232 to TCP)</source>
+        <translation>Включить мост 850 (аппаратный RS232 к TCP)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="707" />
+        <source>Enable 850 Emulator  (R: to TCP)</source>
+        <translation>Включить эмулятор 850 (R: к TCP)</translation>
+    </message>
+    <message>
         <location filename="../../src/optionsdialog.ui" line="717" />
         <location filename="../../src/optionsdialog.ui" line="753" />
         <source>Enable if using a standard FTDI USB adapter. Leave unchecked for direct Raspberry Pi GPIO.</source>
@@ -3460,9 +3474,8 @@ Disable for binary files.</source>
         <translation>Соединяет дополнительный последовательный порт с Интернетом. Требуется Atari 850 или R-Verter.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="697" />
         <source>Enable Modem Bridge (RS232 to TCP)</source>
-        <translation>Включить модемный мост (RS232-TCP)</translation>
+        <translation type="vanished">Включить модемный мост (RS232-TCP)</translation>
     </message>
     <message>
         <source>Bridges a secondary Serial Port to the Internet.
@@ -3471,9 +3484,8 @@ Requires Atari 850 or R-Verter.</source>
 Требуется Atari 850 или R-Verter.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="707" />
         <source>Enable 850 Device  (R: to TCP)</source>
-        <translation>Включить устройство 850 (R: к TCP)</translation>
+        <translation type="vanished">Включить устройство 850 (R: к TCP)</translation>
     </message>
     <message>
         <source>Enable if using a standard FTDI USB adapter.
