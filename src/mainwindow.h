@@ -83,7 +83,7 @@ public:
     QWebChannel *webChannel = nullptr;
     WebBridge *webBridge = nullptr;
     QTcpServer *httpTcpServer = nullptr;
-    QString getPrinterText();
+    QString getPrinterImageBase64();
 
 public slots:
     void show();

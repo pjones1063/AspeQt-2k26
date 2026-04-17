@@ -44,6 +44,9 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->printerAutoPopBox->setChecked(aspeqtSettings->printerAutoPop());
     m_ui->printerFeedCombo->setCurrentIndex(aspeqtSettings->printerFeedMode());
     m_ui->printerStyleCombo->setCurrentIndex(aspeqtSettings->printerStyle());
+    m_ui->marginTop->setValue(aspeqtSettings->printerMarginTop());
+    m_ui->marginLeft->setValue(aspeqtSettings->printerMarginLeft());
+    m_ui->marginLength->setValue(aspeqtSettings->printerMarginLength());
 
     // MUTE SIGNALS: Prevent the UI from crashing while we load data
     m_ui->serialPortComboBox->blockSignals(true);
@@ -436,14 +439,17 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setEnableRDevice(m_ui->modemRBox->isChecked());
     aspeqtSettings->setInvertCtsLogic(m_ui->modemInvertCtsBox->isChecked());
 
-    // [NEW] BBS Listener Settings
+    // BBS Listener Settings
     aspeqtSettings->setBbsListenerEnabled(m_ui->enableBbsPort->isChecked());
     aspeqtSettings->setModemListenPort(m_ui->bbsPortBox->value());
 
-    // --- NEW: SAVE VIRTUAL PRINTER SETTINGS ---
+    // Printer  Settings
     aspeqtSettings->setPrinterAutoPop(m_ui->printerAutoPopBox->isChecked());
     aspeqtSettings->setPrinterFeedMode(m_ui->printerFeedCombo->currentIndex());
     aspeqtSettings->setPrinterStyle(m_ui->printerStyleCombo->currentIndex());
+    aspeqtSettings->setPrinterMarginTop(m_ui->marginTop->value());
+    aspeqtSettings->setPrinterMarginLeft(m_ui->marginLeft->value());
+    aspeqtSettings->setPrinterMarginLength(m_ui->marginLength->value());
 
     // Web UI
     aspeqtSettings->setWebUiEnabled(m_ui->cbEnableWebUi->isChecked());

@@ -134,6 +134,9 @@ AspeQtSettings::AspeQtSettings()
     mPrinterAutoPop = mSettings->value("Printer/AutoPop", false).toBool();
     mPrinterFeedMode = mSettings->value("Printer/FeedMode", 0).toInt();
     mPrinterStyle = mSettings->value("Printer/Style", 0).toInt();
+    mPrinterMarginTop = mSettings->value("Printer/MarginTop", 108).toInt();
+    mPrinterMarginLeft = mSettings->value("Printer/MarginLeft", 60).toInt();
+    mPrinterMarginLength = mSettings->value("Printer/MarginLength", 2376).toInt();
 
 }
 
@@ -749,6 +752,9 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("Printer/AutoPop", mPrinterAutoPop);
     s.setValue("Printer/FeedMode", mPrinterFeedMode);
     s.setValue("Printer/Style", mPrinterStyle);
+    s.setValue("Printer/MarginTop", mPrinterMarginTop);
+    s.setValue("Printer/MarginLeft", mPrinterMarginLeft);
+    s.setValue("Printer/MarginLength", mPrinterMarginLength);
 
     s.endGroup();
 
@@ -829,6 +835,9 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mPrinterAutoPop = s.value("Printer/AutoPop", false).toBool();
     mPrinterFeedMode = s.value("Printer/FeedMode", 0).toInt();
     mPrinterStyle = s.value("Printer/Style", 0).toInt();
+    mPrinterMarginTop = s.value("Printer/MarginTop", 108).toInt();
+    mPrinterMarginLeft = s.value("Printer/MarginLeft", 60).toInt();
+    mPrinterMarginLength = s.value("Printer/MarginLength", 2376).toInt();
 
     s.endGroup();
 
@@ -866,3 +875,20 @@ void AspeQtSettings::setPrinterStyle(int style) {
 bool AspeQtSettings::isPrinterClearRequested() const { return mPrinterClearRequested; }
 void AspeQtSettings::setPrinterClearRequested(bool req) { mPrinterClearRequested = req; }
 
+int AspeQtSettings::printerMarginTop() const { return mPrinterMarginTop; }
+void AspeQtSettings::setPrinterMarginTop(int margin) {
+    mPrinterMarginTop = margin;
+    if(mSessionFileName == "") mSettings->setValue("Printer/MarginTop", margin);
+}
+
+int AspeQtSettings::printerMarginLeft() const { return mPrinterMarginLeft; }
+void AspeQtSettings::setPrinterMarginLeft(int margin) {
+    mPrinterMarginLeft = margin;
+    if(mSessionFileName == "") mSettings->setValue("Printer/MarginLeft", margin);
+}
+
+int AspeQtSettings::printerMarginLength() const { return mPrinterMarginLength; }
+void AspeQtSettings::setPrinterMarginLength(int length) {
+    mPrinterMarginLength = length;
+    if(mSessionFileName == "") mSettings->setValue("Printer/MarginLength", length);
+}

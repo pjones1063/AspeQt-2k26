@@ -23,7 +23,6 @@ EpsonPrinterWindow::EpsonPrinterWindow(QWidget *parent) :
 
     ui->setupUi(this);
     m_zoomFactor = 0.5;
-    // --- OVERWRITE THE OLD TEXT UI WITH AN IMAGE VIEWER ---
     m_scrollArea = new QScrollArea(this);
     m_paperLabel = new QLabel(m_scrollArea);
 
@@ -39,7 +38,6 @@ EpsonPrinterWindow::EpsonPrinterWindow(QWidget *parent) :
     m_renderTimer = new QTimer(this);
     connect(m_renderTimer, &QTimer::timeout, this, &EpsonPrinterWindow::renderPaper);
     m_renderTimer->start(250);
-
 }
 
 EpsonPrinterWindow::~EpsonPrinterWindow()
@@ -109,10 +107,6 @@ void EpsonPrinterWindow::closeEvent(QCloseEvent *e)
     QMainWindow::closeEvent(e);
 }
 
-// --- Kept to prevent compilation errors in mainwindow.cpp ---
-QString EpsonPrinterWindow::getAsciiText() const {
-    return QString();
-}
 
 // =================================================================
 // ACTIVE UI TOOLBAR SLOTS
@@ -135,37 +129,56 @@ void EpsonPrinterWindow::on_actionSave_triggered()
         return;
     }
 
-    QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/Atari_Printout.png";
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Printout"), defaultPath, tr("PNG Image (*.png);;PDF Document (*.pdf)"));
+    QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/Atari_Printout";
+
+    QString selectedFilter;
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Printout"), defaultPath,
+                                                    tr("PNG Image (*.png);;PDF Document (*.pdf)"),
+                                                    &selectedFilter);
+
     if (fileName.isEmpty()) return;
+
+    if (selectedFilter.contains(".pdf")) {
+        if (fileName.endsWith(".png", Qt::CaseInsensitive)) fileName.chop(4);
+        if (!fileName.endsWith(".pdf", Qt::CaseInsensitive)) fileName += ".pdf";
+    } else {
+        if (fileName.endsWith(".pdf", Qt::CaseInsensitive)) fileName.chop(4);
+        if (!fileName.endsWith(".png", Qt::CaseInsensitive)) fileName += ".png";
+    }
 
     if (fileName.endsWith(".pdf", Qt::CaseInsensitive)) {
         QPdfWriter pdfWriter(fileName);
 
         if (aspeqtSettings->printerFeedMode() == 0) {
-            // --- TRACTOR FEED (One Massive Banner Page) ---
+            // --- TRACTOR FEED ---
             QSizeF sizeInMm = QSizeF((m_baseImage.width() / 240.0) * 25.4, (m_baseImage.height() / 216.0) * 25.4);
             pdfWriter.setPageSize(QPageSize(sizeInMm, QPageSize::Millimeter));
             pdfWriter.setPageMargins(QMarginsF(0, 0, 0, 0));
-            pdfWriter.setResolution(300);
+            pdfWriter.setResolution(300); // Standardize PDF to 300 DPI
 
             QPainter painter(&pdfWriter);
-            painter.drawImage(painter.viewport(), m_baseImage);
+
+            // Explicitly correct the non-square aspect ratio
+            painter.scale(300.0 / 240.0, 300.0 / 216.0);
+
+            painter.drawImage(0, 0, m_baseImage);
             painter.end();
         } else {
-            // --- SINGLE SHEET (Multi-Page PDF Slicer) ---
+            // --- SINGLE SHEET ---
             pdfWriter.setPageSize(QPageSize(QPageSize::Letter));
             pdfWriter.setPageMargins(QMarginsF(0, 0, 0, 0));
-            pdfWriter.setResolution(216); // Match our exact hardware Y-DPI
+            pdfWriter.setResolution(300); // Standardize PDF to 300 DPI
 
             QPainter painter(&pdfWriter);
-            int pageHeightPx = 2376; // 11 inches at 216 DPI
+
+            // Explicitly correct the non-square aspect ratio
+            painter.scale(300.0 / 240.0, 300.0 / 216.0);
+
+            int pageHeightPx = aspeqtSettings->printerMarginLength();
             int totalPages = std::ceil((double)m_baseImage.height() / pageHeightPx);
 
             for (int i = 0; i < totalPages; i++) {
-                if (i > 0) pdfWriter.newPage(); // Trigger standard PDF page break
-
-                // Cut exactly 11 inches of graphics out of the master canvas
+                if (i > 0) pdfWriter.newPage();
                 QRect sourceRect(0, i * pageHeightPx, m_baseImage.width(), pageHeightPx);
                 QImage pageImg = m_baseImage.copy(sourceRect);
                 painter.drawImage(0, 0, pageImg);
@@ -173,9 +186,10 @@ void EpsonPrinterWindow::on_actionSave_triggered()
             painter.end();
         }
     } else {
-        m_baseImage.save(fileName); // Standard PNG
+        m_baseImage.save(fileName);
     }
 }
+
 
 void EpsonPrinterWindow::on_actionPrint_triggered()
 {
@@ -190,34 +204,26 @@ void EpsonPrinterWindow::on_actionPrint_triggered()
     if (printDialog.exec() == QDialog::Accepted) {
         QPainter painter(&printer);
 
+        // Dynamically correct the non-square aspect ratio based on the OS Printer DPI
+        painter.scale(printer.logicalDpiX() / 240.0, printer.logicalDpiY() / 216.0);
+
         if (aspeqtSettings->printerFeedMode() == 0) {
             // Tractor Feed Print
-            QRect rect = painter.viewport();
-            QSize size = m_baseImage.size();
-            size.scale(rect.size(), Qt::KeepAspectRatio);
-            painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-            painter.setWindow(m_baseImage.rect());
             painter.drawImage(0, 0, m_baseImage);
         } else {
-            // Single Sheet Print (Slice and send to physical printer tray)
-            int pageHeightPx = 2376;
+            // Single Sheet Print
+            int pageHeightPx = aspeqtSettings->printerMarginLength();
             int totalPages = std::ceil((double)m_baseImage.height() / pageHeightPx);
 
             for (int i = 0; i < totalPages; i++) {
-                if (i > 0) printer.newPage(); // Tell physical printer to pull new paper
+                if (i > 0) printer.newPage();
 
                 QRect sourceRect(0, i * pageHeightPx, m_baseImage.width(), pageHeightPx);
                 QImage pageImg = m_baseImage.copy(sourceRect);
-
-                QRect rect = painter.viewport();
-                QSize size = pageImg.size();
-                size.scale(rect.width(), rect.height(), Qt::KeepAspectRatio);
-
-                painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-                painter.setWindow(pageImg.rect());
                 painter.drawImage(0, 0, pageImg);
             }
         }
         painter.end();
     }
 }
+

@@ -33,7 +33,12 @@ private:
         State_Graphic_Data,
         State_Spacing_A,
         State_Spacing_3,
-        State_Feed_J
+        State_Feed_J,
+        State_Underline,
+        State_Expanded_W,
+        State_MasterPrint,
+        State_Proportional_p,
+        State_SuperSub_S
     };
 
     ParserState m_state;
@@ -48,8 +53,20 @@ private:
     int m_cursorY;
     int m_lineHeight;
 
+    // --- Hardware Font Flags ---
+    bool m_isBold;
+    bool m_isUnderlined;
+    bool m_isItalic;
+    bool m_isCondensed;
+    bool m_isExpanded;
+
+    // --- ENHANCED FONT FLAGS ---
+    bool m_isElite;
+    bool m_isProportional;
+    int m_scriptMode; // 0 = Normal, 1 = Superscript, 2 = Subscript
+
     void initializePaper();
-   void drawTextString(const QString &text);
+    void drawTextString(const QString &text);
     void drawGraphics(const QByteArray &payload);
     void lineFeed();
     void parsePrintJob(const QByteArray &data);
@@ -59,5 +76,3 @@ private:
 };
 
 #endif // EPSONPRINTER_H
-
-

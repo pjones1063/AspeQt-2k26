@@ -26,7 +26,7 @@ public slots:
     void toggleWriteProtectUi(int slot, bool enabled);
     void requestFullStatus();
     void toggleAutoSaveUi(int slot);
-    void requestPrinterTextUi();
+    void requestPrinterImageUi();
 
     void requestDirectoryList(int slot, const QString &path);
     void mountFileSilentUi(int slot, const QString &filePath);
@@ -73,7 +73,7 @@ signals:
     void tnfsHostHistoryReceived(const QStringList &history);
     void casStatusChanged(QString filename, bool isPlaying);
     void notificationReceived(QString message, bool isError);
-    void printerTextReceived(const QString &text);
+    void printerImageReceived(const QString &base64Data);
     void currentSavePathReceived(const QString &path); // NEW
 
 private:

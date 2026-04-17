@@ -973,7 +973,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_printer">
        <property name="title">
-        <string>Epson Printer Emulator</string>
+        <string>Epson FX-80 Printer Emulator</string>
        </property>
        <layout class="QFormLayout" name="formLayout_printer">
         <item row="0" column="0" colspan="2">
@@ -1028,6 +1028,75 @@
             <string>Aged Yellow</string>
            </property>
           </item>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSpinBox" name="marginTop">
+          <property name="suffix">
+           <string>px</string>
+          </property>
+          <property name="prefix">
+           <string/>
+          </property>
+          <property name="minimum">
+           <number>5</number>
+          </property>
+          <property name="maximum">
+           <number>300</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_printerTopMargin">
+          <property name="text">
+           <string>Top Margin:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="marginLeft">
+          <property name="suffix">
+           <string>px</string>
+          </property>
+          <property name="prefix">
+           <string/>
+          </property>
+          <property name="minimum">
+           <number>5</number>
+          </property>
+          <property name="maximum">
+           <number>300</number>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSpinBox" name="marginLength">
+          <property name="suffix">
+           <string>px</string>
+          </property>
+          <property name="prefix">
+           <string/>
+          </property>
+          <property name="minimum">
+           <number>1000</number>
+          </property>
+          <property name="maximum">
+           <number>3000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_printerLeftMargin">
+          <property name="text">
+           <string>Left Margin:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_printerLen">
+          <property name="text">
+           <string>Page Length:</string>
+          </property>
          </widget>
         </item>
        </layout>

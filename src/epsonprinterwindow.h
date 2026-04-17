@@ -22,7 +22,7 @@ class EpsonPrinterWindow : public QMainWindow {
 public:
     EpsonPrinterWindow(QWidget *parent = 0);
     ~EpsonPrinterWindow();
-    QString getAsciiText() const;
+    QImage getPaperImage() const { return m_baseImage; }
 
 protected:
     void changeEvent(QEvent *e);

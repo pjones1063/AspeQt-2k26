@@ -157,7 +157,7 @@ public:
     bool isURLSubmitEnabled();
     void setURLSubmit(bool enabled);
 
-    // -- Printer
+    // -- 6. Printer
     bool printerAutoPop() const;
     void setPrinterAutoPop(bool autoPop);
     int printerFeedMode() const;
@@ -166,9 +166,15 @@ public:
     void setPrinterStyle(int style);
     bool isPrinterClearRequested() const;
     void setPrinterClearRequested(bool req);
+    int printerMarginTop() const;
+    void setPrinterMarginTop(int margin);
+    int printerMarginLeft() const;
+    void setPrinterMarginLeft(int margin);
+    int printerMarginLength() const;
+    void setPrinterMarginLength(int length);
 
 
-    // --- 6. Image & File Management ---
+    // --- 7. Image & File Management ---
     const ImageSettings* getImageSettingsFromName(const QString &fileName);
     const ImageSettings& mountedImageSetting(int no);
     void setMountedImageSetting(int no, const QString &fileName, bool prot, bool happy = false);
@@ -195,7 +201,7 @@ public:
     QString lastRclDir();
     void setLastRclDir(const QString &dir);
 
-    // --- 7. Session Management ---
+    // --- 8. Session Management ---
     void setSessionFile(const QString &g_sessionFile, const QString &g_sessionFilePath);
     void saveSessionToFile(const QString &fileName);
     void loadSessionFromFile(const QString &fileName);
@@ -267,7 +273,16 @@ private:
     bool mTranslateEolOnGet;
     bool mUseURLSubmit;
 
-    // 6. Image / File Data
+    // 6 - Printer options
+    bool mPrinterAutoPop;
+    int mPrinterFeedMode;
+    int mPrinterStyle;
+    bool mPrinterClearRequested;
+    int mPrinterMarginTop;
+    int mPrinterMarginLeft;
+    int mPrinterMarginLength;
+
+    // 7. Image / File Data
     ImageSettings mMountedImageSettings[16];
     ImageSettings mRecentImageSettings[NUM_RECENT_FILES];
     QString mLastDiskImageDir;
@@ -278,13 +293,7 @@ private:
     QString mLastPrinterTextDir;
     QString mLastCasDir;
 
-    // Printer options
-    bool mPrinterAutoPop;
-    int mPrinterFeedMode;
-    int mPrinterStyle;
-    bool mPrinterClearRequested;
-
-    // 7. Session Data
+    // 8. Session Data
     QString mSessionFileName;
     QString mSessionFilePath;
     QString mMainWindowTitle;

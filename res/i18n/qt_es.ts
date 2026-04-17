@@ -437,32 +437,32 @@ Tiempo restante estimado: %1:%2</translation>
 <context>
     <name>ClipboardDevice</name>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="161" />
+        <location filename="../../src/miscdevices.cpp" line="99" />
         <source>[Y:] Open for Write (Accumulator Reset)</source>
         <translation>[Y:] Abierto para escritura (reinicio del acumulador)</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="184" />
+        <location filename="../../src/miscdevices.cpp" line="122" />
         <source>[Y:] Open for Read (Buffered %1 bytes)</source>
         <translation>[Y:] Abierto para lectura (%1 bytes almacenados en búfer)</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="208" />
+        <location filename="../../src/miscdevices.cpp" line="146" />
         <source>[Y:] Sent EOF</source>
         <translation>[Y:] Enviado EOF</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="249" />
+        <location filename="../../src/miscdevices.cpp" line="187" />
         <source>[Y:] Close: Clipboard Updated (%1 chars).</source>
         <translation>[Y:] Cerrar: Portapapeles actualizado (%1 caracteres).</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="251" />
+        <location filename="../../src/miscdevices.cpp" line="189" />
         <source>[Y:] Close: Buffer empty, clipboard not touched.</source>
         <translation>[Y:] Cerrar: Búfer vacío, portapapeles no tocado.</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="263" />
+        <location filename="../../src/miscdevices.cpp" line="201" />
         <source>[Y:] Unknown Command: $%1</source>
         <translation>[Y:] Comando desconocido: $%1</translation>
     </message>
@@ -1134,6 +1134,148 @@ Tiempo restante estimado: %1:%2</translation>
     </message>
 </context>
 <context>
+    <name>EpsonPrinter</name>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="22" />
+        <source>[%1] ignored</source>
+        <translation>[%1] ignorado</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="43" />
+        <source>[%1] Get status.</source>
+        <translation>[%1] Obtener estado.</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="65" />
+        <source>[%1] Received %2 bytes. Parsing instantly.</source>
+        <translation>[%1] Se recibieron %2 bytes. Analizando al instante.</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="76" />
+        <source>[%1] Print Job Closed by Atari.</source>
+        <translation>[%1] Trabajo de impresión cerrado por Atari.</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="91" />
+        <source>[%1] Unknown Command: $%2</source>
+        <translation>[%1] Comando desconocido: $%2</translation>
+    </message>
+</context>
+<context>
+    <name>EpsonPrinterWindow</name>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="14" />
+        <source>AspeQt - Printer output preview</source>
+        <translation>AspeQt - Vista previa de la salida de la impresora</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="30" />
+        <source>toolBar</source>
+        <translation>barra de herramientas</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="62" />
+        <source>Save to a file...</source>
+        <translation>Guardar en un archivo...</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="65" />
+        <source>Save contents to a file (Ctrl+S)</source>
+        <translation>Guardar contenido en un archivo (Ctrl+S)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="68" />
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="77" />
+        <source>Clear</source>
+        <translation>Claro</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="80" />
+        <source>Clear contents (Ctrl+C)</source>
+        <translation>Borrar contenidos (Ctrl+C)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="83" />
+        <source>Ctrl+C</source>
+        <translation>Ctrl+C</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="92" />
+        <source>Print</source>
+        <translation>Imprimir</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="95" />
+        <source>Send contents to physical printer (Ctrl+P)</source>
+        <translation>Enviar contenidos a la impresora física (Ctrl+P)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="98" />
+        <source>Ctrl+P</source>
+        <translation>Ctrl+P</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="107" />
+        <source>Zoom In</source>
+        <translation>Dar un golpe de zoom</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="110" />
+        <source>Zoom In (Ctrl++)</source>
+        <translation>Acercar (Ctrl++)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="113" />
+        <source>Ctrl++</source>
+        <translation>Ctrl++</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="122" />
+        <source>Zoom Out</source>
+        <translation>Alejar</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="125" />
+        <source>Zoom Out (Ctrl+-)</source>
+        <translation>Alejar (Ctrl+-)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="128" />
+        <source>Ctrl+-</source>
+        <translation>Ctrl+-</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>Empty</source>
+        <translation>Vacío</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <source>There is no printout to save!</source>
+        <translation>¡No hay ninguna impresión para guardar!</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <source>Save Printout</source>
+        <translation>Guardar impresión</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation>Imagen PNG (*.png);;Documento PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>There is no printout to print!</source>
+        <translation>¡No hay ninguna copia impresa para imprimir!</translation>
+    </message>
+</context>
+<context>
     <name>FileTypes</name>
     <message>
         <location filename="../../src/miscutils.cpp" line="109" />
@@ -1378,15 +1520,15 @@ Tiempo restante estimado: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="203" />
-        <location filename="../../src/mainwindow.cpp" line="1328" />
+        <location filename="../../src/mainwindow.cpp" line="1330" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Iniciar emulación</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="206" />
         <location filename="../../src/mainwindow.ui" line="209" />
-        <location filename="../../src/mainwindow.cpp" line="1329" />
-        <location filename="../../src/mainwindow.cpp" line="1330" />
+        <location filename="../../src/mainwindow.cpp" line="1331" />
+        <location filename="../../src/mainwindow.cpp" line="1332" />
         <source>Start SIO peripheral emulation</source>
         <translation>Iniciar la emulación de periféricos SIO</translation>
     </message>
@@ -1485,7 +1627,7 @@ Tiempo restante estimado: %1:%2</translation>
     <message>
         <location filename="../../src/mainwindow.ui" line="576" />
         <location filename="../../src/mainwindow.ui" line="579" />
-        <location filename="../../src/mainwindow.cpp" line="2738" />
+        <location filename="../../src/mainwindow.cpp" line="2740" />
         <source>Open BBS Phonebook</source>
         <translation>Abrir la agenda telefónica de BBS</translation>
     </message>
@@ -1531,8 +1673,8 @@ Tiempo restante estimado: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="505" />
-        <location filename="../../src/mainwindow.cpp" line="1244" />
-        <location filename="../../src/mainwindow.cpp" line="1245" />
+        <location filename="../../src/mainwindow.cpp" line="1246" />
+        <location filename="../../src/mainwindow.cpp" line="1247" />
         <source>Hide drives D9-DO</source>
         <translation>Ocultar unidades D9-DO</translation>
     </message>
@@ -1657,8 +1799,8 @@ Tiempo restante estimado: %1:%2</translation>
     <message>
         <location filename="../../src/mainwindow.ui" line="490" />
         <location filename="../../src/mainwindow.ui" line="493" />
-        <location filename="../../src/mainwindow.cpp" line="1296" />
-        <location filename="../../src/mainwindow.cpp" line="1297" />
+        <location filename="../../src/mainwindow.cpp" line="1298" />
+        <location filename="../../src/mainwindow.cpp" line="1299" />
         <source>Stop printer emulation</source>
         <translation>Detener la emulación de la impresora</translation>
     </message>
@@ -1673,54 +1815,54 @@ Tiempo restante estimado: %1:%2</translation>
         <translation>Alt+H</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="172" />
+        <location filename="../../src/mainwindow.cpp" line="174" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt comenzó en %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="231" />
-        <location filename="../../src/mainwindow.cpp" line="241" />
+        <location filename="../../src/mainwindow.cpp" line="233" />
+        <location filename="../../src/mainwindow.cpp" line="243" />
         <source>Session file error</source>
         <translation>Error de archivo de sesión</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="252" />
+        <location filename="../../src/mainwindow.cpp" line="254" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Emulador de periféricos serie Atari para Qt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="254" />
-        <location filename="../../src/mainwindow.cpp" line="2386" />
+        <location filename="../../src/mainwindow.cpp" line="256" />
+        <location filename="../../src/mainwindow.cpp" line="2388" />
         <source> -- Session: </source>
         <translation>-- Sesión:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="270" />
+        <location filename="../../src/mainwindow.cpp" line="272" />
         <source>19200 bits/sec</source>
         <translation>19200 bits/seg</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="688" />
+        <location filename="../../src/mainwindow.cpp" line="690" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt se detuvo en %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="860" />
+        <location filename="../../src/mainwindow.cpp" line="862" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Se intercambió el disco %1 con el disco %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="914" />
+        <location filename="../../src/mainwindow.cpp" line="916" />
         <source>Cannot mount '%1': No empty disk slots.</source>
         <translation>No se puede montar '%1': no ​​hay ranuras de disco vacías.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1012" />
+        <location filename="../../src/mainwindow.cpp" line="1014" />
         <source>First run</source>
         <translation>Primera carrera</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1013" />
+        <location filename="../../src/mainwindow.cpp" line="1015" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1729,512 +1871,512 @@ Do you want to open the options dialog?</source>
 ¿Quieres abrir el cuadro de diálogo de opciones?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1319" />
+        <location filename="../../src/mainwindow.cpp" line="1321" />
         <source>&amp;Stop emulation</source>
         <translation>&amp;Detener la emulación</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1320" />
-        <location filename="../../src/mainwindow.cpp" line="1321" />
+        <location filename="../../src/mainwindow.cpp" line="1322" />
+        <location filename="../../src/mainwindow.cpp" line="1323" />
         <source>Stop SIO peripheral emulation</source>
         <translation>Detener la emulación de periféricos SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1335" />
+        <location filename="../../src/mainwindow.cpp" line="1337" />
         <source>Emulation stopped.</source>
         <translation>La emulación se detuvo.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1427" />
-        <location filename="../../src/mainwindow.cpp" line="1448" />
+        <location filename="../../src/mainwindow.cpp" line="1429" />
+        <location filename="../../src/mainwindow.cpp" line="1450" />
         <source>Folder image</source>
         <translation>Imagen de carpeta</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1460" />
-        <location filename="../../src/mainwindow.cpp" line="2096" />
-        <location filename="../../src/mainwindow.cpp" line="2148" />
-        <location filename="../../src/mainwindow.cpp" line="2193" />
+        <location filename="../../src/mainwindow.cpp" line="1462" />
+        <location filename="../../src/mainwindow.cpp" line="2098" />
+        <location filename="../../src/mainwindow.cpp" line="2150" />
+        <location filename="../../src/mainwindow.cpp" line="2195" />
         <source>Save failed</source>
         <translation>Error al guardar</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1461" />
-        <location filename="../../src/mainwindow.cpp" line="2096" />
-        <location filename="../../src/mainwindow.cpp" line="2148" />
-        <location filename="../../src/mainwindow.cpp" line="2193" />
+        <location filename="../../src/mainwindow.cpp" line="1463" />
+        <location filename="../../src/mainwindow.cpp" line="2098" />
+        <location filename="../../src/mainwindow.cpp" line="2150" />
+        <location filename="../../src/mainwindow.cpp" line="2195" />
         <source>'%1' cannot be saved, do you want to save the image with another name?</source>
         <translation>'%1' no se puede guardar. ¿Quieres guardar la imagen con otro nombre?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1777" />
+        <location filename="../../src/mainwindow.cpp" line="1779" />
         <source>Unmounted disk %1</source>
         <translation>Disco desmontado %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1950" />
-        <location filename="../../src/mainwindow.cpp" line="2344" />
+        <location filename="../../src/mainwindow.cpp" line="1952" />
+        <location filename="../../src/mainwindow.cpp" line="2346" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Se montó '%2' como '%3'.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2176" />
+        <location filename="../../src/mainwindow.cpp" line="2178" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation>Todas las imágenes de disco Atari (*.atr *.xfd *.pro);;Imágenes SIO2PC ATR (*.atr);;Imágenes XFormer XFD (*.xfd);;Imágenes Pro (*.pro);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1998" />
+        <location filename="../../src/mainwindow.cpp" line="2000" />
         <source>Open a folder image</source>
         <translation>Abrir una imagen de carpeta</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="232" />
-        <location filename="../../src/mainwindow.cpp" line="242" />
+        <location filename="../../src/mainwindow.cpp" line="234" />
+        <location filename="../../src/mainwindow.cpp" line="244" />
         <source>Requested session file not found...</source>
         <translation>Archivo de sesión solicitado no encontrado...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="289" />
+        <location filename="../../src/mainwindow.cpp" line="291" />
         <source>Adjust Shade Opacity</source>
         <translation>Ajustar la opacidad de la sombra</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="297" />
+        <location filename="../../src/mainwindow.cpp" line="299" />
         <source>RX: Data Receiving from Internet</source>
         <translation>RX: Recepción de datos desde Internet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="303" />
+        <location filename="../../src/mainwindow.cpp" line="305" />
         <source>TX: Data Sending from Atari</source>
         <translation>TX: Envío de datos desde Atari</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="334" />
+        <location filename="../../src/mainwindow.cpp" line="336" />
         <source>Hangup (NO CARRIER)</source>
         <translation>Colgar (SIN TRANSPORTADOR)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="346" />
-        <location filename="../../src/mainwindow.cpp" line="2739" />
+        <location filename="../../src/mainwindow.cpp" line="348" />
+        <location filename="../../src/mainwindow.cpp" line="2741" />
         <source>Send Auto-User (ESC-U)</source>
         <translation>Enviar usuario automático (ESC-U)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="357" />
-        <location filename="../../src/mainwindow.cpp" line="2740" />
+        <location filename="../../src/mainwindow.cpp" line="359" />
+        <location filename="../../src/mainwindow.cpp" line="2742" />
         <source>Send Auto-Pass (ESC-P)</source>
         <translation>Enviar Auto-Pass (ESC-P)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="370" />
+        <location filename="../../src/mainwindow.cpp" line="372" />
         <source>Toggle SIO Hex Dump Trace</source>
         <translation>Alternar seguimiento de volcado hexadecimal de SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="376" />
+        <location filename="../../src/mainwindow.cpp" line="378" />
         <source>Toggle 6502 Disassembler</source>
         <translation>Alternar desensamblador 6502</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="382" />
+        <location filename="../../src/mainwindow.cpp" line="384" />
         <source>Toggle SIO Packet Sniffer</source>
         <translation>Alternar rastreador de paquetes SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="393" />
+        <location filename="../../src/mainwindow.cpp" line="395" />
         <source>Main Tools</source>
         <translation>Herramientas principales</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="406" />
+        <location filename="../../src/mainwindow.cpp" line="408" />
         <source>Clear log messages</source>
         <translation>Borrar mensajes de registro</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="413" />
+        <location filename="../../src/mainwindow.cpp" line="415" />
         <source>Show Log Window</source>
         <translation>Mostrar ventana de registro</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="722" />
+        <location filename="../../src/mainwindow.cpp" line="724" />
         <source>Mount from TNFS Network...</source>
         <translation>Montar desde la red TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="744" />
+        <location filename="../../src/mainwindow.cpp" line="746" />
         <source>Mount TNFS</source>
         <translation>Montar TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1249" />
-        <location filename="../../src/mainwindow.cpp" line="1250" />
+        <location filename="../../src/mainwindow.cpp" line="1251" />
+        <location filename="../../src/mainwindow.cpp" line="1252" />
         <source>Show drives D9-DO</source>
         <translation>Mostrar unidades D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1360" />
-        <location filename="../../src/mainwindow.cpp" line="2593" />
-        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <location filename="../../src/mainwindow.cpp" line="1362" />
+        <location filename="../../src/mainwindow.cpp" line="2595" />
+        <location filename="../../src/mainwindow.cpp" line="3240" />
         <source>Loading...</source>
         <translation>Cargando...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1360" />
-        <location filename="../../src/mainwindow.cpp" line="2593" />
-        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <location filename="../../src/mainwindow.cpp" line="1362" />
+        <location filename="../../src/mainwindow.cpp" line="2595" />
+        <location filename="../../src/mainwindow.cpp" line="3240" />
         <source>Downloading from TNFS...</source>
         <translation>Descargando desde TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1378" />
-        <location filename="../../src/mainwindow.cpp" line="1381" />
+        <location filename="../../src/mainwindow.cpp" line="1380" />
+        <location filename="../../src/mainwindow.cpp" line="1383" />
         <source>Executable (Local)</source>
         <translation>Ejecutable (local)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1735" />
+        <location filename="../../src/mainwindow.cpp" line="1737" />
         <source>Slot %1 download aborted by user.</source>
         <translation>Descarga de la ranura %1 cancelada por el usuario.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1965" />
+        <location filename="../../src/mainwindow.cpp" line="1967" />
         <source>Open a disk or executable image</source>
         <translation>Abrir un disco o imagen ejecutable</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1967" />
+        <location filename="../../src/mainwindow.cpp" line="1969" />
         <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
         <translation>Todas las imágenes compatibles (*.atr *.xfd *.atx *.pro *.xex *.com);;Ejecutables Atari (*.xex *.com);;Imágenes SIO2PC ATR (*.atr);;Imágenes XFormer XFD (*.xfd);;Imágenes ATX (*.atx);;Imágenes Pro (*.pro);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2045" />
+        <location filename="../../src/mainwindow.cpp" line="2047" />
         <source>Image file unsaved</source>
         <translation>Archivo de imagen no guardado</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2045" />
+        <location filename="../../src/mainwindow.cpp" line="2047" />
         <source>'%1' has unsaved changes, do you want to save it?</source>
         <translation>'%1' tiene cambios sin guardar, ¿quieres guardarlos?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2137" />
+        <location filename="../../src/mainwindow.cpp" line="2139" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disco %1] Confirmación automática activada.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2139" />
+        <location filename="../../src/mainwindow.cpp" line="2141" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disco %1] Confirmación automática desactivada.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2355" />
-        <location filename="../../src/mainwindow.cpp" line="2418" />
+        <location filename="../../src/mainwindow.cpp" line="2357" />
+        <location filename="../../src/mainwindow.cpp" line="2420" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>Sesiones AspeQt (*.aspeqt);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2554" />
+        <location filename="../../src/mainwindow.cpp" line="2556" />
         <source>Drive %1 Happy Mode %2.</source>
         <translation>Conduce %1 Modo feliz %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2556" />
+        <location filename="../../src/mainwindow.cpp" line="2558" />
         <source>Enabled</source>
         <translation>Activado</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2556" />
+        <location filename="../../src/mainwindow.cpp" line="2558" />
         <source>Disabled</source>
         <translation>Desactivado</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2619" />
+        <location filename="../../src/mainwindow.cpp" line="2621" />
         <source>Mounted TNFS Stream: %1</source>
         <translation>Flujo TNFS montado: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2637" />
+        <location filename="../../src/mainwindow.cpp" line="2639" />
         <source>Mount Error</source>
         <translation>Error de montaje</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2637" />
+        <location filename="../../src/mainwindow.cpp" line="2639" />
         <source>Could not open TNFS stream from %1</source>
         <translation>No se pudo abrir la transmisión TNFS desde %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2657" />
+        <location filename="../../src/mainwindow.cpp" line="2659" />
         <source>Downloading: %1</source>
         <translation>Descargando: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2659" />
+        <location filename="../../src/mainwindow.cpp" line="2661" />
         <source>Downloading...</source>
         <translation>Descargando...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2734" />
+        <location filename="../../src/mainwindow.cpp" line="2736" />
         <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
         <translation>Agenda deshabilitada. Establezca la ruta XML en Opciones -&gt; Puente de módem.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2735" />
+        <location filename="../../src/mainwindow.cpp" line="2737" />
         <source>Macro User disabled. Set Phonebook XML path in Options.</source>
         <translation>Usuario de macros deshabilitado. Establezca la ruta XML de la agenda telefónica en Opciones.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2736" />
+        <location filename="../../src/mainwindow.cpp" line="2738" />
         <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
         <translation>Macro Pass desactivado. Establezca la ruta XML de la agenda telefónica en Opciones.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <location filename="../../src/mainwindow.cpp" line="2788" />
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <location filename="../../src/mainwindow.cpp" line="2788" />
         <source>Could not extract manual to: </source>
         <translation>No se pudo extraer el manual para:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3098" />
+        <location filename="../../src/mainwindow.cpp" line="3100" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
         <translation>[UI web] Advertencia: Los cambios no guardados en el disco en la ranura %1 se descartaron mediante montaje forzado.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3117" />
+        <location filename="../../src/mainwindow.cpp" line="3119" />
         <source>[Web UI] Mounted Executable to slot %1: %2</source>
         <translation>[UI web] Ejecutable montado en la ranura %1: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3119" />
+        <location filename="../../src/mainwindow.cpp" line="3121" />
         <source>[Web UI] Executable ready. Please cold start the Atari.</source>
         <translation>[UI web] Ejecutable listo. Por favor, inicie el Atari en frío.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3123" />
+        <location filename="../../src/mainwindow.cpp" line="3125" />
         <source>[Web UI] Failed to parse Executable: %1</source>
         <translation>[UI web] Error al analizar el ejecutable: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3143" />
+        <location filename="../../src/mainwindow.cpp" line="3145" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
         <translation>[UI web] Advertencia: Los cambios no guardados en el disco en la ranura %1 se descartaron mediante expulsión forzada.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3207" />
+        <location filename="../../src/mainwindow.cpp" line="3209" />
         <source>[Web UI] Dialing BBS: %1 (%2)</source>
         <translation>[UI web] Marcando BBS: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3258" />
+        <location filename="../../src/mainwindow.cpp" line="3260" />
         <source>[Web UI] Mounted TNFS Stream: %1</source>
         <translation>[UI web] Transmisión TNFS montada: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3268" />
+        <location filename="../../src/mainwindow.cpp" line="3270" />
         <source>[Web UI] Failed to mount TNFS Stream: %1</source>
         <translation>[UI web] No se pudo montar la transmisión TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3269" />
+        <location filename="../../src/mainwindow.cpp" line="3271" />
         <source>Download failed or aborted: %1</source>
         <translation>Descarga fallida o cancelada: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3277" />
+        <location filename="../../src/mainwindow.cpp" line="3279" />
         <source>[Web UI] Write Protect for slot %1 set to %2</source>
         <translation>[UI web] Protección contra escritura para la ranura %1 establecida en %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3297" />
+        <location filename="../../src/mainwindow.cpp" line="3308" />
         <source>Web UI WebSocket Server started on port %1</source>
         <translation>Web UI WebSocket Server iniciado en el puerto %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3299" />
+        <location filename="../../src/mainwindow.cpp" line="3310" />
         <source>Failed to start Web UI WebSocket Server.</source>
         <translation>No se pudo iniciar Web UI WebSocket Server.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3328" />
+        <location filename="../../src/mainwindow.cpp" line="3339" />
         <source>HTTP Dashboard available at http://localhost:%1</source>
         <translation>Panel HTTP disponible en http://localhost:%1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3330" />
+        <location filename="../../src/mainwindow.cpp" line="3341" />
         <source>Failed to start HTTP Server.</source>
         <translation>No se pudo iniciar el servidor HTTP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3358" />
+        <location filename="../../src/mainwindow.cpp" line="3369" />
         <source>Web Dashboard and WebSocket servers completely shut down.</source>
         <translation>Los servidores Web Dashboard y WebSocket se apagaron por completo.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3368" />
+        <location filename="../../src/mainwindow.cpp" line="3379" />
         <source>[Web UI] Failed to load cassette image: %1</source>
         <translation>[UI web] No se pudo cargar la imagen del casete: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3378" />
+        <location filename="../../src/mainwindow.cpp" line="3389" />
         <source>[Web UI] Cassette Mounted: %1</source>
         <translation>[UI web] Cassette montado: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3391" />
+        <location filename="../../src/mainwindow.cpp" line="3402" />
         <source>[Web UI] Cassette is already playing.</source>
         <translation>[UI web] El casete ya se está reproduciendo.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3395" />
+        <location filename="../../src/mainwindow.cpp" line="3406" />
         <source>[Web UI] Starting Cassette Playback.</source>
         <translation>[UI web] Iniciando la reproducción del casete.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3410" />
+        <location filename="../../src/mainwindow.cpp" line="3421" />
         <source>[Web UI] Rewinding Cassette...</source>
         <translation>[UI web] Rebobinando casete...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3434" />
+        <location filename="../../src/mainwindow.cpp" line="3445" />
         <source>[Web UI] Cassette Ejected.</source>
         <translation>[UI web] Casete expulsado.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3450" />
+        <location filename="../../src/mainwindow.cpp" line="3461" />
         <source>[Web UI] Cassette Playback Finished.</source>
         <translation>[UI web] Reproducción del casete finalizada.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3471" />
+        <location filename="../../src/mainwindow.cpp" line="3482" />
         <source>Failed to initialize blank disk.</source>
         <translation>No se pudo inicializar el disco en blanco.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3489" />
+        <location filename="../../src/mainwindow.cpp" line="3500" />
         <source>Failed to format blank disk.</source>
         <translation>No se pudo formatear el disco en blanco.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3508" />
+        <location filename="../../src/mainwindow.cpp" line="3519" />
         <source>Failed to save blank disk to host.</source>
         <translation>No se pudo guardar el disco en blanco en el host.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3516" />
+        <location filename="../../src/mainwindow.cpp" line="3527" />
         <source>Blank disk created: %1</source>
         <translation>Disco en blanco creado: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3517" />
+        <location filename="../../src/mainwindow.cpp" line="3528" />
         <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
         <translation>[UI web] Disco en blanco creado y montado: %1 en la ranura %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3532" />
+        <location filename="../../src/mainwindow.cpp" line="3543" />
         <source>Empty</source>
         <translation>Vacío</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3534" />
+        <location filename="../../src/mainwindow.cpp" line="3545" />
         <source>No file mounted.</source>
         <translation>Ningún archivo montado.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3538" />
+        <location filename="../../src/mainwindow.cpp" line="3549" />
         <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Ranura %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nombre de archivo:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Formato/tipo:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Ruta absoluta:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3549" />
+        <location filename="../../src/mainwindow.cpp" line="3560" />
         <source>Drive Details</source>
         <translation>Detalles de la unidad</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3574" />
+        <location filename="../../src/mainwindow.cpp" line="3585" />
         <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
         <translation>[UI web] Archivo montado directamente en la RAM en la ranura %1: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3577" />
+        <location filename="../../src/mainwindow.cpp" line="3588" />
         <source>Mounted to RAM: %1</source>
         <translation>Montado en RAM: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3581" />
+        <location filename="../../src/mainwindow.cpp" line="3592" />
         <source>[Web UI] Failed to parse RAM image: %1</source>
         <translation>[UI web] Error al analizar la imagen RAM: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3584" />
+        <location filename="../../src/mainwindow.cpp" line="3595" />
         <source>Failed to parse: %1</source>
         <translation>Error al analizar: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3595" />
+        <location filename="../../src/mainwindow.cpp" line="3606" />
         <source>[Injector] Virtual Packet Step Triggered: %1 bytes</source>
         <translation>[Inyector] Paso de paquete virtual activado: %1 bytes</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2174" />
+        <location filename="../../src/mainwindow.cpp" line="2176" />
         <source>Save image as</source>
         <translation>Guardar imagen como</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2217" />
+        <location filename="../../src/mainwindow.cpp" line="2219" />
         <source>Revert to last saved</source>
         <translation>Volver al último guardado</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2218" />
+        <location filename="../../src/mainwindow.cpp" line="2220" />
         <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
         <translation>¿Realmente deseas revertir '%1' a su último estado guardado? Perderá los cambios que se hayan realizado.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2353" />
+        <location filename="../../src/mainwindow.cpp" line="2355" />
         <source>Open session</source>
         <translation>Sesión abierta</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2416" />
+        <location filename="../../src/mainwindow.cpp" line="2418" />
         <source>Save session as</source>
         <translation>Guardar sesión como</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2447" />
+        <location filename="../../src/mainwindow.cpp" line="2449" />
         <source>Open executable</source>
         <translation>Abrir ejecutable</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2449" />
+        <location filename="../../src/mainwindow.cpp" line="2451" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Ejecutables de Atari (*.xex *.com *.exe);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2481" />
+        <location filename="../../src/mainwindow.cpp" line="2483" />
         <source>Open a cassette image</source>
         <translation>Abrir una imagen de casete</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2483" />
+        <location filename="../../src/mainwindow.cpp" line="2485" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Imágenes CAS (*.cas);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1300" />
-        <location filename="../../src/mainwindow.cpp" line="1301" />
+        <location filename="../../src/mainwindow.cpp" line="1302" />
+        <location filename="../../src/mainwindow.cpp" line="1303" />
         <source>Start printer emulation</source>
         <translation>Iniciar la emulación de la impresora</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1285" />
+        <location filename="../../src/mainwindow.cpp" line="1287" />
         <source>Printer emulation stopped.</source>
         <translation>La emulación de la impresora se detuvo.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1287" />
+        <location filename="../../src/mainwindow.cpp" line="1289" />
         <source>Printer emulation started.</source>
         <translation>Se inició la emulación de la impresora.</translation>
     </message>
@@ -2327,7 +2469,7 @@ Posibles causas:
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="80" />
-        <location filename="../../src/optionsdialog.ui" line="529" />
+        <location filename="../../src/optionsdialog.ui" line="534" />
         <source>Emulation</source>
         <translation>Emulación</translation>
     </message>
@@ -2338,251 +2480,252 @@ Posibles causas:
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="93" />
-        <location filename="../../src/optionsdialog.ui" line="991" />
+        <source>Epson Printer Emulator</source>
+        <translation>Emulador de impresora Epson</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="98" />
+        <location filename="../../src/optionsdialog.ui" line="1140" />
         <source>User interface</source>
         <translation>Interfaz de usuario</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="98" />
+        <location filename="../../src/optionsdialog.ui" line="103" />
         <source>Web Interface</source>
         <translation>Interfaz Web</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="140" />
+        <location filename="../../src/optionsdialog.ui" line="145" />
         <source>Standard serial port backend options</source>
         <translation>Opciones de backend de puerto serie estándar</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="149" />
-        <location filename="../../src/optionsdialog.ui" line="429" />
+        <location filename="../../src/optionsdialog.ui" line="154" />
+        <location filename="../../src/optionsdialog.ui" line="434" />
         <source>Use this backend</source>
         <translation>Usa este backend</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="162" />
+        <location filename="../../src/optionsdialog.ui" line="167" />
         <source>Direct Hardware UART (RasPi)</source>
         <translation>Hardware directo UART (RasPi)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="175" />
+        <location filename="../../src/optionsdialog.ui" line="180" />
         <source>Port name:</source>
         <translation>Nombre del puerto:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="191" />
-        <location filename="../../src/optionsdialog.ui" line="462" />
+        <location filename="../../src/optionsdialog.ui" line="196" />
+        <location filename="../../src/optionsdialog.ui" line="467" />
         <source>Handshake method:</source>
         <translation>Método de apretón de manos:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="199" />
-        <location filename="../../src/optionsdialog.ui" line="470" />
+        <location filename="../../src/optionsdialog.ui" line="204" />
+        <location filename="../../src/optionsdialog.ui" line="475" />
         <source>RI</source>
         <translation>Rhode Island</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="204" />
-        <location filename="../../src/optionsdialog.ui" line="475" />
+        <location filename="../../src/optionsdialog.ui" line="209" />
+        <location filename="../../src/optionsdialog.ui" line="480" />
         <source>DSR</source>
         <translation>DSR</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="209" />
-        <location filename="../../src/optionsdialog.ui" line="480" />
+        <location filename="../../src/optionsdialog.ui" line="214" />
+        <location filename="../../src/optionsdialog.ui" line="485" />
         <source>CTS</source>
         <translation>cts</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="214" />
+        <location filename="../../src/optionsdialog.ui" line="219" />
         <source>NONE</source>
         <translation>NINGUNO</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="219" />
+        <location filename="../../src/optionsdialog.ui" line="224" />
         <source>SOFTWARE (SIO2BT)</source>
         <translation>SOFTWARE (SIO2BT)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="236" />
+        <location filename="../../src/optionsdialog.ui" line="241" />
         <source>Write delay [ms]:</source>
         <translation>Retraso de escritura [ms]:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="250" />
+        <location filename="../../src/optionsdialog.ui" line="255" />
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="255" />
+        <location filename="../../src/optionsdialog.ui" line="260" />
         <source>10</source>
         <translation>10</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="260" />
+        <location filename="../../src/optionsdialog.ui" line="265" />
         <source>20</source>
         <translation>20</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="265" />
+        <location filename="../../src/optionsdialog.ui" line="270" />
         <source>30</source>
         <translation>30</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="270" />
+        <location filename="../../src/optionsdialog.ui" line="275" />
         <source>40</source>
         <translation>40</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="275" />
+        <location filename="../../src/optionsdialog.ui" line="280" />
         <source>50</source>
         <translation>50</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="280" />
+        <location filename="../../src/optionsdialog.ui" line="285" />
         <source>60</source>
         <translation>60</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="294" />
+        <location filename="../../src/optionsdialog.ui" line="299" />
         <source>High speed mode baud rate:</source>
         <translation>Velocidad de transmisión en modo de alta velocidad:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="305" />
+        <location filename="../../src/optionsdialog.ui" line="310" />
         <source>19200 (1x)</source>
         <translation>19200 (1x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="310" />
+        <location filename="../../src/optionsdialog.ui" line="315" />
         <source>38400 (2x)</source>
         <translation>38400 (2x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="315" />
+        <location filename="../../src/optionsdialog.ui" line="320" />
         <source>57600 (3x)</source>
         <translation>57600 (3x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="323" />
+        <location filename="../../src/optionsdialog.ui" line="328" />
         <source>Use non-standard speeds</source>
         <translation>Utilice velocidades no estándar</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="339" />
+        <location filename="../../src/optionsdialog.ui" line="344" />
         <source>High speed mode POKEY divisor:</source>
         <translation>Divisor POKEY en modo de alta velocidad:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="359" />
+        <location filename="../../src/optionsdialog.ui" line="364" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Complete/Error response delay (μs)&lt;br&gt;See manual for more information&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Retraso de respuesta completa/error (μs)&lt;br&gt;Consulta el manual para obtener más información&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="366" />
+        <location filename="../../src/optionsdialog.ui" line="371" />
         <source>μs</source>
         <translation>μs</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="420" />
+        <location filename="../../src/optionsdialog.ui" line="425" />
         <source>AtariSIO backend options</source>
         <translation>Opciones de backend de AtariSIO</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="442" />
+        <location filename="../../src/optionsdialog.ui" line="447" />
         <source>Device name:</source>
         <translation>Nombre del dispositivo:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="449" />
+        <location filename="../../src/optionsdialog.ui" line="454" />
         <source>/dev/atarisio0</source>
         <translation>/dev/atarisio0</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="595" />
+        <location filename="../../src/optionsdialog.ui" line="600" />
         <source>Use high speed executable loader</source>
         <translation>Utilice un cargador ejecutable de alta velocidad</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="605" />
         <source>Enable this for text-based web services.
 Disable for binary data.</source>
-        <translation>Habilite esto para servicios web basados ​​en texto.
+        <translation type="vanished">Habilite esto para servicios web basados ​​en texto.
 Desactivar para datos binarios.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="609" />
+        <location filename="../../src/optionsdialog.ui" line="613" />
         <source>Convert Atari EOL (155) to LF (10) on Network Write</source>
         <translation>Convierta Atari EOL (155) a LF (10) en escritura en red</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="632" />
         <source>Enable this to read Unix text files properly on Atari.
 Disable for binary files.</source>
-        <translation>Habilite esto para leer archivos de texto Unix correctamente en Atari.
+        <translation type="vanished">Habilite esto para leer archivos de texto Unix correctamente en Atari.
 Desactivar para archivos binarios.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="636" />
+        <location filename="../../src/optionsdialog.ui" line="639" />
         <source>Convert LF (10) to Atari EOL (155) on Network Read</source>
         <translation>Convierta LF (10) a Atari EOL (155) en lectura de red</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="646" />
+        <location filename="../../src/optionsdialog.ui" line="649" />
         <source>CAPITAL letters in file names</source>
         <translation>Letras MAYÚSCULAS en nombres de archivos</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="653" />
+        <location filename="../../src/optionsdialog.ui" line="656" />
         <source>Restore last TNFS location on mount</source>
         <translation>Restaurar la última ubicación de TNFS en el montaje</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="685" />
+        <location filename="../../src/optionsdialog.ui" line="688" />
         <source>Hayes Modem Emulator (Rs232 to TCP Bridge)</source>
         <translation>Emulador de módem Hayes (puente Rs232 a TCP)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="691" />
+        <location filename="../../src/optionsdialog.ui" line="694" />
+        <location filename="../../src/optionsdialog.ui" line="704" />
         <source>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</source>
         <translation>Conecta un puerto serie secundario a Internet. Requiere Atari 850 o R-Verter.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="694" />
+        <location filename="../../src/optionsdialog.ui" line="697" />
         <source>Enable Modem Bridge (RS232 to TCP)</source>
         <translation>Habilitar puente de módem (RS232 a TCP)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="701" />
         <source>Bridges a secondary Serial Port to the Internet.
 Requires Atari 850 or R-Verter.</source>
-        <translation>Conecta un puerto serie secundario a Internet.
+        <translation type="vanished">Conecta un puerto serie secundario a Internet.
 Requiere Atari 850 o R-Verter.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="705" />
+        <location filename="../../src/optionsdialog.ui" line="707" />
         <source>Enable 850 Device  (R: to TCP)</source>
         <translation>Habilitar dispositivo 850 (R: a TCP)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="715" />
-        <location filename="../../src/optionsdialog.ui" line="752" />
         <source>Enable if using a standard FTDI USB adapter.
 Leave unchecked for direct Raspberry Pi GPIO.</source>
-        <translation>Habilítelo si utiliza un adaptador USB FTDI estándar.
+        <translation type="vanished">Habilítelo si utiliza un adaptador USB FTDI estándar.
 Déjelo sin marcar para GPIO directo de Raspberry Pi.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="719" />
+        <location filename="../../src/optionsdialog.ui" line="720" />
         <source>Invert CTS Logic (Standard USB Adapters)</source>
         <translation>Invertir lógica CTS (adaptadores USB estándar)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="729" />
+        <location filename="../../src/optionsdialog.ui" line="730" />
         <source>FTDI/USB Latency:</source>
         <translation>Latencia FTDI/USB:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="736" />
+        <location filename="../../src/optionsdialog.ui" line="737" />
         <source>ms</source>
         <translation>EM</translation>
     </message>
@@ -2697,105 +2840,195 @@ Déjelo sin marcar para GPIO directo de Raspberry Pi.</translation>
         <translation>Nuevo</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1053" />
+        <location filename="../../src/optionsdialog.ui" line="976" />
+        <source>Epson FX-80 Printer Emulator</source>
+        <translation>Emulador de impresora Epson FX-80</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="982" />
+        <source>Automatically open Preview Window when printing starts</source>
+        <translation>Abrir automáticamente la ventana de vista previa cuando comienza la impresión</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="989" />
+        <source>Paper Mode:</source>
+        <translation>Modo de papel:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="997" />
+        <source>Continuous Tractor Feed (Banners)</source>
+        <translation>Alimentación continua del tractor (banners)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1002" />
+        <source>Single Sheet (Cut-Sheet Feeder)</source>
+        <translation>Hoja única (alimentador de hojas sueltas)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1010" />
+        <source>Paper Style:</source>
+        <translation>Estilo de papel:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1018" />
+        <source>Pure White</source>
+        <translation>Blanco puro</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1023" />
+        <source>Vintage Green-Bar</source>
+        <translation>Barra verde vintage</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1028" />
+        <source>Aged Yellow</source>
+        <translation>Amarillo envejecido</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1036" />
+        <location filename="../../src/optionsdialog.ui" line="1059" />
+        <location filename="../../src/optionsdialog.ui" line="1075" />
+        <source>px</source>
+        <translation>píxeles</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1052" />
+        <source>Top Margin:</source>
+        <translation>Margen superior:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1091" />
+        <source>Left Margin:</source>
+        <translation>Margen izquierdo:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1098" />
+        <source>Page Length:</source>
+        <translation>Longitud de página:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1202" />
         <source>Save D9-DO drive visibility status</source>
         <translation>Guardar el estado de visibilidad de la unidad D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1063" />
+        <location filename="../../src/optionsdialog.ui" line="1212" />
         <source>Enable Shade in Mini Mode by default</source>
         <translation>Habilite la sombra en modo mini de forma predeterminada</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1076" />
+        <location filename="../../src/optionsdialog.ui" line="1225" />
         <source>Use larger font in drive slot descriptions</source>
         <translation>Utilice fuentes más grandes en las descripciones de las ranuras de las unidades</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1108" />
         <source>Web Dashboard Options</source>
-        <translation>Opciones del panel web</translation>
+        <translation type="vanished">Opciones del panel web</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1114" />
         <source>Enable the HTTP and WebSocket servers for the remote web dashboard.</source>
-        <translation>Habilite los servidores HTTP y WebSocket para el panel web remoto.</translation>
+        <translation type="vanished">Habilite los servidores HTTP y WebSocket para el panel web remoto.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1117" />
         <source>Enable Web Interface</source>
-        <translation>Habilitar interfaz web</translation>
+        <translation type="vanished">Habilitar interfaz web</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1126" />
+        <location filename="../../src/optionsdialog.ui" line="1255" />
         <source>HTTP Dashboard Port:</source>
         <translation>Puerto del panel HTTP:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1146" />
+        <location filename="../../src/optionsdialog.ui" line="1272" />
         <source>WebSocket Bridge Port:</source>
         <translation>Puerto del puente WebSocket:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="550" />
+        <location filename="../../src/optionsdialog.ui" line="555" />
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Utilice una velocidad de baudios personalizada para la emulación de casetes</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="557" />
+        <location filename="../../src/optionsdialog.ui" line="562" />
         <source>Filter out underscore character from file names</source>
         <translation>Filtrar el carácter de subrayado de los nombres de archivos</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="572" />
+        <location filename="../../src/optionsdialog.ui" line="577" />
         <source>        (Required for AtariDOS compatibility)</source>
         <translation>(Requerido para la compatibilidad con AtariDOS)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="997" />
+        <location filename="../../src/optionsdialog.ui" line="610" />
+        <source>Enable this for text-based web services. Disable for binary data.</source>
+        <translation>Habilite esto para servicios web basados ​​en texto. Desactivar para datos binarios.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="636" />
+        <source>Enable this to read Unix text files properly on Atari. Disable for binary files.</source>
+        <translation>Habilite esto para leer archivos de texto Unix correctamente en Atari. Desactivar para archivos binarios.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="717" />
+        <location filename="../../src/optionsdialog.ui" line="753" />
+        <source>Enable if using a standard FTDI USB adapter. Leave unchecked for direct Raspberry Pi GPIO.</source>
+        <translation>Habilítelo si utiliza un adaptador USB FTDI estándar. Déjelo sin marcar para GPIO directo de Raspberry Pi.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1146" />
         <source>Language:</source>
         <translation>Idioma:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1007" />
+        <location filename="../../src/optionsdialog.ui" line="1156" />
         <source>Minimize to system tray</source>
         <translation>Minimizar a la bandeja del sistema</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1014" />
+        <location filename="../../src/optionsdialog.ui" line="1163" />
         <source>Save window positions and sizes</source>
         <translation>Guardar posiciones y tamaños de ventanas</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1194" />
+        <location filename="../../src/optionsdialog.ui" line="1242" />
+        <source>Web Dashboard Settings</source>
+        <translation>Configuración del panel web</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1248" />
+        <source>Enable Web Interface Dashboard</source>
+        <translation>Habilitar el panel de interfaz web</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1315" />
         <source>Save/Commit or Cancel/Ignore changes made to the settings</source>
         <translation>Guardar/Confirmar o Cancelar/Ignorar los cambios realizados en la configuración</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="59" />
-        <location filename="../../src/optionsdialog.cpp" line="74" />
+        <location filename="../../src/optionsdialog.cpp" line="68" />
+        <location filename="../../src/optionsdialog.cpp" line="83" />
         <source>Custom</source>
         <translation>Costumbre</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="166" />
+        <location filename="../../src/optionsdialog.cpp" line="175" />
         <source>Automatic</source>
         <translation>Automático</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="169" />
         <location filename="../../src/optionsdialog.cpp" line="178" />
+        <location filename="../../src/optionsdialog.cpp" line="187" />
         <source>English</source>
         <translation>Inglés</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="381" />
-        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <location filename="../../src/optionsdialog.cpp" line="393" />
+        <location filename="../../src/optionsdialog.cpp" line="400" />
         <source>Port Conflict</source>
         <translation>Conflicto portuario</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="382" />
+        <location filename="../../src/optionsdialog.cpp" line="394" />
         <source>You cannot use the same Serial Port (%1) for both
 SIO Emulation and the Modem Bridge.
 
@@ -2806,7 +3039,7 @@ Emulación SIO y Puente Módem.
 Seleccione un puerto diferente para el módem.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <location filename="../../src/optionsdialog.cpp" line="400" />
         <source>The HTTP Dashboard Port and WebSocket Bridge Port cannot be the same.
 
 Please assign different ports.</source>
@@ -2815,30 +3048,30 @@ Please assign different ports.</source>
 Asigne puertos diferentes.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="456" />
+        <location filename="../../src/optionsdialog.cpp" line="476" />
         <source>Select Dial Directory</source>
         <translation>Seleccionar directorio de marcación</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="456" />
-        <location filename="../../src/optionsdialog.cpp" line="465" />
-        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <location filename="../../src/optionsdialog.cpp" line="476" />
+        <location filename="../../src/optionsdialog.cpp" line="485" />
+        <location filename="../../src/optionsdialog.cpp" line="487" />
         <source>XML Files (*.xml);;All Files (*)</source>
         <translation>Archivos XML (*.xml);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="465" />
-        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <location filename="../../src/optionsdialog.cpp" line="485" />
+        <location filename="../../src/optionsdialog.cpp" line="487" />
         <source>Create New Dial Directory</source>
         <translation>Crear nuevo directorio de marcado</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <location filename="../../src/optionsdialog.cpp" line="501" />
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <location filename="../../src/optionsdialog.cpp" line="501" />
         <source>Could not create the phonebook file.</source>
         <translation>No se pudo crear el archivo de la agenda telefónica.</translation>
     </message>
@@ -3577,24 +3810,20 @@ Asigne puertos diferentes.</translation>
 <context>
     <name>Printer</name>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="43" />
         <source>[%1] Get status.</source>
-        <translation>[%1] Obtener estado.</translation>
+        <translation type="vanished">[%1] Obtener estado.</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="59" />
         <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
-        <translation>[%1] Conversión de caracteres de vídeo inversos para visualización ASCII</translation>
+        <translation type="vanished">[%1] Conversión de caracteres de vídeo inversos para visualización ASCII</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="70" />
         <source>[%1] Print (%2 chars)</source>
-        <translation>[%1] Imprimir (%2 caracteres)</translation>
+        <translation type="vanished">[%1] Imprimir (%2 caracteres)</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="84" />
         <source>[%1] ignored</source>
-        <translation>[%1] ignorado</translation>
+        <translation type="vanished">[%1] ignorado</translation>
     </message>
 </context>
 <context>
@@ -4188,7 +4417,7 @@ Asigne puertos diferentes.</translation>
 <context>
     <name>SmartDevice</name>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="132" />
+        <location filename="../../src/miscdevices.cpp" line="70" />
         <source>[%1] Read date/time (%2).</source>
         <translation>[%1] Leer fecha/hora (%2).</translation>
     </message>
@@ -4383,222 +4612,176 @@ Asigne puertos diferentes.</translation>
 <context>
     <name>TextPrinterWindow</name>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="14" />
         <source>AspeQt - Printer text output</source>
-        <translation>AspeQt - Salida de texto de impresora</translation>
+        <translation type="vanished">AspeQt - Salida de texto de impresora</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="47" />
-        <location filename="../../src/textprinterwindow.ui" line="50" />
         <source>Atari Output (Atascii)</source>
-        <translation>Salida de Atari (Atascii)</translation>
+        <translation type="vanished">Salida de Atari (Atascii)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="69" />
-        <location filename="../../src/textprinterwindow.ui" line="72" />
         <source>Atari Output (Ascii)</source>
-        <translation>Salida Atari (Ascii)</translation>
+        <translation type="vanished">Salida Atari (Ascii)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="118" />
         <source>toolBar</source>
-        <translation>barra de herramientas</translation>
+        <translation type="vanished">barra de herramientas</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="154" />
         <source>Save to a file...</source>
-        <translation>Guardar en un archivo...</translation>
+        <translation type="vanished">Guardar en un archivo...</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="157" />
         <source>Save contents to a file (Ctrl+S)</source>
-        <translation>Guardar contenido en un archivo (Ctrl+S)</translation>
+        <translation type="vanished">Guardar contenido en un archivo (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="160" />
         <source>Save contents to a file</source>
-        <translation>Guardar contenido en un archivo</translation>
+        <translation type="vanished">Guardar contenido en un archivo</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="163" />
-        <location filename="../../src/textprinterwindow.ui" line="350" />
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="vanished">Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="172" />
         <source>Clear</source>
-        <translation>Claro</translation>
+        <translation type="vanished">Claro</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="175" />
         <source>Clear contents (Ctrl+C)</source>
-        <translation>Borrar contenidos (Ctrl+C)</translation>
+        <translation type="vanished">Borrar contenidos (Ctrl+C)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="178" />
         <source>Clear contents</source>
-        <translation>Borrar contenidos</translation>
+        <translation type="vanished">Borrar contenidos</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="181" />
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="vanished">Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="196" />
         <source>Word wrap</source>
-        <translation>ajuste de palabras</translation>
+        <translation type="vanished">ajuste de palabras</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="199" />
         <source>Toggle word wrapping (Ctrl+W)</source>
-        <translation>Alternar ajuste de palabras (Ctrl+W)</translation>
+        <translation type="vanished">Alternar ajuste de palabras (Ctrl+W)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="202" />
         <source>Toggle word wrapping</source>
-        <translation>Alternar ajuste de palabras</translation>
+        <translation type="vanished">Alternar ajuste de palabras</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="205" />
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation type="vanished">Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="214" />
         <source>Print</source>
-        <translation>Imprimir</translation>
+        <translation type="vanished">Imprimir</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="217" />
         <source>Send contents to printer (Ctrl+P)</source>
-        <translation>Enviar contenido a la impresora (Ctrl+P)</translation>
+        <translation type="vanished">Enviar contenido a la impresora (Ctrl+P)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="220" />
         <source>Send contents to printer</source>
-        <translation>Enviar contenido a la impresora</translation>
+        <translation type="vanished">Enviar contenido a la impresora</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="223" />
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation type="vanished">Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="233" />
         <source>Atascii Font</source>
-        <translation>Fuente Atascii</translation>
+        <translation type="vanished">Fuente Atascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="236" />
         <source>Toggle ATASCII fonts (Alt+F)</source>
-        <translation>Alternar fuentes ATASCII (Alt+F)</translation>
+        <translation type="vanished">Alternar fuentes ATASCII (Alt+F)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="239" />
         <source>Toggle ATASCII fonts</source>
-        <translation>Alternar fuentes ATASCII</translation>
+        <translation type="vanished">Alternar fuentes ATASCII</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="242" />
         <source>Alt+F</source>
-        <translation>Alt+F</translation>
+        <translation type="vanished">Alt+F</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="258" />
         <source>Font Size</source>
-        <translation>Tamaño de fuente</translation>
+        <translation type="vanished">Tamaño de fuente</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="261" />
         <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
-        <translation>Alternar tamaño de fuente (6, 9, 12 pt) (Alt+Mayús+F)</translation>
+        <translation type="vanished">Alternar tamaño de fuente (6, 9, 12 pt) (Alt+Mayús+F)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="264" />
         <source>Toggle Font Size (6, 9, 12 pt)</source>
-        <translation>Alternar tamaño de fuente (6, 9, 12 pt)</translation>
+        <translation type="vanished">Alternar tamaño de fuente (6, 9, 12 pt)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="267" />
         <source>Alt+Shift+F</source>
-        <translation>Alt+Mayús+F</translation>
+        <translation type="vanished">Alt+Mayús+F</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="286" />
         <source>Hide/Show Ascii</source>
-        <translation>Ocultar/Mostrar Ascii</translation>
+        <translation type="vanished">Ocultar/Mostrar Ascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="289" />
         <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
-        <translation>Ocultar/Mostrar salida de impresora Ascii (Alt+Shift+H)</translation>
+        <translation type="vanished">Ocultar/Mostrar salida de impresora Ascii (Alt+Shift+H)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="292" />
         <source>Hide/Show Ascii Printer Output</source>
-        <translation>Ocultar/Mostrar salida de impresora Ascii</translation>
+        <translation type="vanished">Ocultar/Mostrar salida de impresora Ascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="295" />
         <source>Alt+Shift+H</source>
-        <translation>Alt+Mayús+H</translation>
+        <translation type="vanished">Alt+Mayús+H</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="317" />
         <source>HideShow_Atascii</source>
-        <translation>OcultarShow_Atascii</translation>
+        <translation type="vanished">OcultarShow_Atascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="320" />
         <source> Hide/Show Atascii Printer Output (Alt+H)</source>
-        <translation>Ocultar/Mostrar salida de impresora Atascii (Alt+H)</translation>
+        <translation type="vanished">Ocultar/Mostrar salida de impresora Atascii (Alt+H)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="323" />
         <source>Hide/Show Atascii Printer Output</source>
-        <translation>Ocultar/Mostrar salida de impresora Atascii</translation>
+        <translation type="vanished">Ocultar/Mostrar salida de impresora Atascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="326" />
         <source>Alt+H</source>
-        <translation>Alt+H</translation>
+        <translation type="vanished">Alt+H</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="341" />
         <source>Strip Line Numbers</source>
-        <translation>Números de línea de tira</translation>
+        <translation type="vanished">Números de línea de tira</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="344" />
         <source>Strip Line numbers from the text output (Ctrl-S)</source>
-        <translation>Eliminar números de línea de la salida de texto (Ctrl-S)</translation>
+        <translation type="vanished">Eliminar números de línea de la salida de texto (Ctrl-S)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="347" />
         <source>Strip Line numbers from the text output</source>
-        <translation>Eliminar números de línea de la salida de texto</translation>
+        <translation type="vanished">Eliminar números de línea de la salida de texto</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="225" />
         <source>Save printer text output</source>
-        <translation>Guardar la salida de texto de la impresora</translation>
+        <translation type="vanished">Guardar la salida de texto de la impresora</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="226" />
         <source>Text files (*.txt);;All files (*)</source>
-        <translation>Archivos de texto (*.txt);;Todos los archivos (*)</translation>
+        <translation type="vanished">Archivos de texto (*.txt);;Todos los archivos (*)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>Stripping Line Numbers..</source>
-        <translation>Eliminación de números de línea.</translation>
+        <translation type="vanished">Eliminación de números de línea.</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>The text does not seem to contain any line numbers!</source>
-        <translation>¡El texto no parece contener ningún número de línea!</translation>
+        <translation type="vanished">¡El texto no parece contener ningún número de línea!</translation>
     </message>
 </context>
 <context>

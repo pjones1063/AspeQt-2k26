@@ -776,32 +776,32 @@ Kalan süre: %1:%2</translation>
 <context>
     <name>ClipboardDevice</name>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="161" />
+        <location filename="../../src/miscdevices.cpp" line="99" />
         <source>[Y:] Open for Write (Accumulator Reset)</source>
         <translation>[Y:] Yazmaya Açık (Akümülatör Sıfırlama)</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="184" />
+        <location filename="../../src/miscdevices.cpp" line="122" />
         <source>[Y:] Open for Read (Buffered %1 bytes)</source>
         <translation>[Y:] Okumaya Açık (Ara belleğe alınmış %1 bayt)</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="208" />
+        <location filename="../../src/miscdevices.cpp" line="146" />
         <source>[Y:] Sent EOF</source>
         <translation>[Y:] EOF gönderildi</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="249" />
+        <location filename="../../src/miscdevices.cpp" line="187" />
         <source>[Y:] Close: Clipboard Updated (%1 chars).</source>
         <translation>[Y:] Kapat: Pano Güncellendi (%1 karakter).</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="251" />
+        <location filename="../../src/miscdevices.cpp" line="189" />
         <source>[Y:] Close: Buffer empty, clipboard not touched.</source>
         <translation>[Y:] Kapat: Arabellek boş, panoya dokunulmamış.</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="263" />
+        <location filename="../../src/miscdevices.cpp" line="201" />
         <source>[Y:] Unknown Command: $%1</source>
         <translation>[Y:] Bilinmeyen Komut: $%1</translation>
     </message>
@@ -1564,6 +1564,148 @@ Kalan süre: %1:%2</translation>
     </message>
 </context>
 <context>
+    <name>EpsonPrinter</name>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="22" />
+        <source>[%1] ignored</source>
+        <translation>[%1] göz ardı edildi</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="43" />
+        <source>[%1] Get status.</source>
+        <translation>[%1] Durumu alın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="65" />
+        <source>[%1] Received %2 bytes. Parsing instantly.</source>
+        <translation>[%1] %2 bayt alındı. Anında ayrıştırma.</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="76" />
+        <source>[%1] Print Job Closed by Atari.</source>
+        <translation>[%1] Yazdırma İşi Atari Tarafından Kapatıldı.</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinter.cpp" line="91" />
+        <source>[%1] Unknown Command: $%2</source>
+        <translation>[%1] Bilinmeyen Komut: $%2</translation>
+    </message>
+</context>
+<context>
+    <name>EpsonPrinterWindow</name>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="14" />
+        <source>AspeQt - Printer output preview</source>
+        <translation>AspeQt - Yazıcı çıkışı önizlemesi</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="30" />
+        <source>toolBar</source>
+        <translation>araç çubuğu</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="62" />
+        <source>Save to a file...</source>
+        <translation>Bir dosyaya kaydet...</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="65" />
+        <source>Save contents to a file (Ctrl+S)</source>
+        <translation>İçeriği bir dosyaya kaydetme (Ctrl+S)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="68" />
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="77" />
+        <source>Clear</source>
+        <translation>Temizlemek</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="80" />
+        <source>Clear contents (Ctrl+C)</source>
+        <translation>İçeriği temizle (Ctrl+C)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="83" />
+        <source>Ctrl+C</source>
+        <translation>Ctrl+C</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="92" />
+        <source>Print</source>
+        <translation>Yazdır</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="95" />
+        <source>Send contents to physical printer (Ctrl+P)</source>
+        <translation>İçeriği fiziksel yazıcıya gönder (Ctrl+P)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="98" />
+        <source>Ctrl+P</source>
+        <translation>Ctrl+P</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="107" />
+        <source>Zoom In</source>
+        <translation>Yakınlaştır</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="110" />
+        <source>Zoom In (Ctrl++)</source>
+        <translation>Yakınlaştır (Ctrl++)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="113" />
+        <source>Ctrl++</source>
+        <translation>Ctrl++</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="122" />
+        <source>Zoom Out</source>
+        <translation>Uzaklaştır</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="125" />
+        <source>Zoom Out (Ctrl+-)</source>
+        <translation>Uzaklaştır (Ctrl+-)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.ui" line="128" />
+        <source>Ctrl+-</source>
+        <translation>Ctrl+-</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>Empty</source>
+        <translation>Boş</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="128" />
+        <source>There is no printout to save!</source>
+        <translation>Kaydedilecek çıktı yok!</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="137" />
+        <source>Save Printout</source>
+        <translation>Çıktıyı Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="138" />
+        <source>PNG Image (*.png);;PDF Document (*.pdf)</source>
+        <translation>PNG Görüntüsü (*.png);;PDF Belgesi (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../../src/epsonprinterwindow.cpp" line="196" />
+        <source>There is no printout to print!</source>
+        <translation>Yazdırılacak çıktı yok!</translation>
+    </message>
+</context>
+<context>
     <name>FileTypes</name>
     <message>
         <location filename="../../src/miscutils.cpp" line="109" />
@@ -1742,7 +1884,7 @@ Kalan süre: %1:%2</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="252" />
+        <location filename="../../src/mainwindow.cpp" line="254" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>Respeqt: Qt için Atari Seri Donanım Emülatörü</translation>
     </message>
@@ -2064,15 +2206,15 @@ Kalan süre: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="203" />
-        <location filename="../../src/mainwindow.cpp" line="1328" />
+        <location filename="../../src/mainwindow.cpp" line="1330" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Emülasyonu başlat</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="206" />
         <location filename="../../src/mainwindow.ui" line="209" />
-        <location filename="../../src/mainwindow.cpp" line="1329" />
-        <location filename="../../src/mainwindow.cpp" line="1330" />
+        <location filename="../../src/mainwindow.cpp" line="1331" />
+        <location filename="../../src/mainwindow.cpp" line="1332" />
         <source>Start SIO peripheral emulation</source>
         <translation>SIO donanım emülaysonunu başlat</translation>
     </message>
@@ -2206,7 +2348,7 @@ Kalan süre: %1:%2</translation>
     <message>
         <location filename="../../src/mainwindow.ui" line="576" />
         <location filename="../../src/mainwindow.ui" line="579" />
-        <location filename="../../src/mainwindow.cpp" line="2738" />
+        <location filename="../../src/mainwindow.cpp" line="2740" />
         <source>Open BBS Phonebook</source>
         <translation>BBS Telefon Rehberini Aç</translation>
     </message>
@@ -2226,8 +2368,8 @@ Kalan süre: %1:%2</translation>
     <message>
         <location filename="../../src/mainwindow.ui" line="490" />
         <location filename="../../src/mainwindow.ui" line="493" />
-        <location filename="../../src/mainwindow.cpp" line="1296" />
-        <location filename="../../src/mainwindow.cpp" line="1297" />
+        <location filename="../../src/mainwindow.cpp" line="1298" />
+        <location filename="../../src/mainwindow.cpp" line="1299" />
         <source>Stop printer emulation</source>
         <translation>Yazıcı emülasyonunu durdur</translation>
     </message>
@@ -2646,18 +2788,18 @@ Kalan süre: %1:%2</translation>
         <translation type="vanished">Otomatik kayıt AÇ/KAPAT</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="172" />
+        <location filename="../../src/mainwindow.cpp" line="174" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt %1 de başlatıldı.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="232" />
-        <location filename="../../src/mainwindow.cpp" line="242" />
+        <location filename="../../src/mainwindow.cpp" line="234" />
+        <location filename="../../src/mainwindow.cpp" line="244" />
         <source>Requested session file not found...</source>
         <translation>İstenen oturum dosyası bulunamadı...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="270" />
+        <location filename="../../src/mainwindow.cpp" line="272" />
         <source>19200 bits/sec</source>
         <translation>19200 bit/san</translation>
     </message>
@@ -2670,37 +2812,37 @@ Kalan süre: %1:%2</translation>
         <translation type="vanished">Ağ bağlantısı yok</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="688" />
+        <location filename="../../src/mainwindow.cpp" line="690" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt %1 de durduruldu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="722" />
+        <location filename="../../src/mainwindow.cpp" line="724" />
         <source>Mount from TNFS Network...</source>
         <translation>TNFS Ağından Bağlayın...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="744" />
+        <location filename="../../src/mainwindow.cpp" line="746" />
         <source>Mount TNFS</source>
         <translation>TNFS'yi bağlayın</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="860" />
+        <location filename="../../src/mainwindow.cpp" line="862" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Disk %1, dısk %2 ile takas edildi.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="914" />
+        <location filename="../../src/mainwindow.cpp" line="916" />
         <source>Cannot mount '%1': No empty disk slots.</source>
         <translation>'%1' yüklenemiyor: Boş disk yuvası yok.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1012" />
+        <location filename="../../src/mainwindow.cpp" line="1014" />
         <source>First run</source>
         <translation>İlk koşu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1013" />
+        <location filename="../../src/mainwindow.cpp" line="1015" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -2713,35 +2855,35 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="obsolete">Emülasyon başlatıldı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1319" />
+        <location filename="../../src/mainwindow.cpp" line="1321" />
         <source>&amp;Stop emulation</source>
         <translation>Emülasyonu &amp;durdur</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1320" />
-        <location filename="../../src/mainwindow.cpp" line="1321" />
+        <location filename="../../src/mainwindow.cpp" line="1322" />
+        <location filename="../../src/mainwindow.cpp" line="1323" />
         <source>Stop SIO peripheral emulation</source>
         <translation>SIO donanım emülasyonunu durdur</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1335" />
+        <location filename="../../src/mainwindow.cpp" line="1337" />
         <source>Emulation stopped.</source>
         <translation>Emülasyon durdu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1427" />
-        <location filename="../../src/mainwindow.cpp" line="1448" />
+        <location filename="../../src/mainwindow.cpp" line="1429" />
+        <location filename="../../src/mainwindow.cpp" line="1450" />
         <source>Folder image</source>
         <translation>Klasör imajı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1777" />
+        <location filename="../../src/mainwindow.cpp" line="1779" />
         <source>Unmounted disk %1</source>
         <translation>Disk %1 indirildi</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1950" />
-        <location filename="../../src/mainwindow.cpp" line="2344" />
+        <location filename="../../src/mainwindow.cpp" line="1952" />
+        <location filename="../../src/mainwindow.cpp" line="2346" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] '%2', '%3' olarak yüklendi.</translation>
     </message>
@@ -2750,125 +2892,125 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="vanished">Disk imajını aç</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2137" />
+        <location filename="../../src/mainwindow.cpp" line="2139" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Otomatik onaylama AÇIK.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2139" />
+        <location filename="../../src/mainwindow.cpp" line="2141" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disk %1] Otomatik tamamlama KAPALI.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2176" />
+        <location filename="../../src/mainwindow.cpp" line="2178" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation>Tüm Atari disk görüntüleri (*.atr *.xfd *.pro);;SIO2PC ATR görüntüleri (*.atr);;XFormer XFD görüntüleri (*.xfd);;Pro görüntüleri (*.pro);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2355" />
-        <location filename="../../src/mainwindow.cpp" line="2418" />
+        <location filename="../../src/mainwindow.cpp" line="2357" />
+        <location filename="../../src/mainwindow.cpp" line="2420" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>AspeQt oturumları (*.aspeqt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2554" />
+        <location filename="../../src/mainwindow.cpp" line="2556" />
         <source>Drive %1 Happy Mode %2.</source>
         <translation>%1 Mutlu Mod %2'yi çalıştır.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2556" />
+        <location filename="../../src/mainwindow.cpp" line="2558" />
         <source>Enabled</source>
         <translation>Etkinleştirilmiş</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2556" />
+        <location filename="../../src/mainwindow.cpp" line="2558" />
         <source>Disabled</source>
         <translation>Engelli</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2619" />
+        <location filename="../../src/mainwindow.cpp" line="2621" />
         <source>Mounted TNFS Stream: %1</source>
         <translation>Bağlı TNFS Akışı: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2637" />
+        <location filename="../../src/mainwindow.cpp" line="2639" />
         <source>Mount Error</source>
         <translation>Montaj Hatası</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1998" />
+        <location filename="../../src/mainwindow.cpp" line="2000" />
         <source>Open a folder image</source>
         <translation>Klasör imajını aç</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="505" />
-        <location filename="../../src/mainwindow.cpp" line="1244" />
-        <location filename="../../src/mainwindow.cpp" line="1245" />
+        <location filename="../../src/mainwindow.cpp" line="1246" />
+        <location filename="../../src/mainwindow.cpp" line="1247" />
         <source>Hide drives D9-DO</source>
         <translation>D9-DO sürücülerini gizle</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1249" />
-        <location filename="../../src/mainwindow.cpp" line="1250" />
+        <location filename="../../src/mainwindow.cpp" line="1251" />
+        <location filename="../../src/mainwindow.cpp" line="1252" />
         <source>Show drives D9-DO</source>
         <translation>D9-DO sürücülerini göster</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1360" />
-        <location filename="../../src/mainwindow.cpp" line="2593" />
-        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <location filename="../../src/mainwindow.cpp" line="1362" />
+        <location filename="../../src/mainwindow.cpp" line="2595" />
+        <location filename="../../src/mainwindow.cpp" line="3240" />
         <source>Loading...</source>
         <translation>Yükleniyor...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1360" />
-        <location filename="../../src/mainwindow.cpp" line="2593" />
-        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <location filename="../../src/mainwindow.cpp" line="1362" />
+        <location filename="../../src/mainwindow.cpp" line="2595" />
+        <location filename="../../src/mainwindow.cpp" line="3240" />
         <source>Downloading from TNFS...</source>
         <translation>TNFS'den indiriliyor...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1378" />
-        <location filename="../../src/mainwindow.cpp" line="1381" />
+        <location filename="../../src/mainwindow.cpp" line="1380" />
+        <location filename="../../src/mainwindow.cpp" line="1383" />
         <source>Executable (Local)</source>
         <translation>Yürütülebilir (Yerel)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1735" />
+        <location filename="../../src/mainwindow.cpp" line="1737" />
         <source>Slot %1 download aborted by user.</source>
         <translation>%1 yuvasının indirilmesi kullanıcı tarafından durduruldu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1965" />
+        <location filename="../../src/mainwindow.cpp" line="1967" />
         <source>Open a disk or executable image</source>
         <translation>Bir diski veya yürütülebilir görüntüyü açın</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1967" />
+        <location filename="../../src/mainwindow.cpp" line="1969" />
         <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
         <translation>Desteklenen Tüm Görüntüler (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Yürütülebilir Dosyaları (*.xex *.com);;SIO2PC ATR görüntüleri (*.atr);;XFormer XFD görüntüleri (*.xfd);;ATX görüntüleri (*.atx);;Pro görüntüleri (*.pro);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2045" />
+        <location filename="../../src/mainwindow.cpp" line="2047" />
         <source>Image file unsaved</source>
         <translation>Kaydedilmemiş disk imajı </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2045" />
+        <location filename="../../src/mainwindow.cpp" line="2047" />
         <source>'%1' has unsaved changes, do you want to save it?</source>
         <translation>'%1' değişikliklerini kaydetmek istermisiniz?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1460" />
-        <location filename="../../src/mainwindow.cpp" line="2096" />
-        <location filename="../../src/mainwindow.cpp" line="2148" />
-        <location filename="../../src/mainwindow.cpp" line="2193" />
+        <location filename="../../src/mainwindow.cpp" line="1462" />
+        <location filename="../../src/mainwindow.cpp" line="2098" />
+        <location filename="../../src/mainwindow.cpp" line="2150" />
+        <location filename="../../src/mainwindow.cpp" line="2195" />
         <source>Save failed</source>
         <translation>Kayıt başarısız</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="231" />
-        <location filename="../../src/mainwindow.cpp" line="241" />
+        <location filename="../../src/mainwindow.cpp" line="233" />
+        <location filename="../../src/mainwindow.cpp" line="243" />
         <source>Session file error</source>
         <translation>Oturum dosya hatası</translation>
     </message>
@@ -2882,8 +3024,8 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="vanished">İstenilen oturum dosyası yazılım klasöründe bulunamadı (başka dizin belirtilmemis). AspeQt varsayılan oturum ortamında açılacak.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="254" />
-        <location filename="../../src/mainwindow.cpp" line="2386" />
+        <location filename="../../src/mainwindow.cpp" line="256" />
+        <location filename="../../src/mainwindow.cpp" line="2388" />
         <source> -- Session: </source>
         <translation> -- Oturum: </translation>
     </message>
@@ -2900,10 +3042,10 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="obsolete">Ağ bağlantı adaptörü bulunamadı!</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1461" />
-        <location filename="../../src/mainwindow.cpp" line="2096" />
-        <location filename="../../src/mainwindow.cpp" line="2148" />
-        <location filename="../../src/mainwindow.cpp" line="2193" />
+        <location filename="../../src/mainwindow.cpp" line="1463" />
+        <location filename="../../src/mainwindow.cpp" line="2098" />
+        <location filename="../../src/mainwindow.cpp" line="2150" />
+        <location filename="../../src/mainwindow.cpp" line="2195" />
         <source>'%1' cannot be saved, do you want to save the image with another name?</source>
         <translation>'%1' kaydedilemiyor, imajı başka bir isimle kaydetmek istermisiniz?</translation>
     </message>
@@ -2916,300 +3058,300 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="vanished">D5-DO disk sürücülerini göster</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1300" />
-        <location filename="../../src/mainwindow.cpp" line="1301" />
+        <location filename="../../src/mainwindow.cpp" line="1302" />
+        <location filename="../../src/mainwindow.cpp" line="1303" />
         <source>Start printer emulation</source>
         <translation>Yazıcı emülasyonunu başlat</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1285" />
+        <location filename="../../src/mainwindow.cpp" line="1287" />
         <source>Printer emulation stopped.</source>
         <translation>Yazıcı emülasyonu durdu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="289" />
+        <location filename="../../src/mainwindow.cpp" line="291" />
         <source>Adjust Shade Opacity</source>
         <translation>Gölge Opaklığını Ayarlayın</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="297" />
+        <location filename="../../src/mainwindow.cpp" line="299" />
         <source>RX: Data Receiving from Internet</source>
         <translation>RX: İnternetten Veri Alma</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="303" />
+        <location filename="../../src/mainwindow.cpp" line="305" />
         <source>TX: Data Sending from Atari</source>
         <translation>Teksas: Atari'den Veri Gönderme</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="334" />
+        <location filename="../../src/mainwindow.cpp" line="336" />
         <source>Hangup (NO CARRIER)</source>
         <translation>Kapatma (TAŞIYICI YOK)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="346" />
-        <location filename="../../src/mainwindow.cpp" line="2739" />
+        <location filename="../../src/mainwindow.cpp" line="348" />
+        <location filename="../../src/mainwindow.cpp" line="2741" />
         <source>Send Auto-User (ESC-U)</source>
         <translation>Otomatik Kullanıcıyı Gönder (ESC-U)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="357" />
-        <location filename="../../src/mainwindow.cpp" line="2740" />
+        <location filename="../../src/mainwindow.cpp" line="359" />
+        <location filename="../../src/mainwindow.cpp" line="2742" />
         <source>Send Auto-Pass (ESC-P)</source>
         <translation>Otomatik Geçiş Gönder (ESC-P)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="370" />
+        <location filename="../../src/mainwindow.cpp" line="372" />
         <source>Toggle SIO Hex Dump Trace</source>
         <translation>SIO Hex Döküm İzlemeyi Değiştir</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="376" />
+        <location filename="../../src/mainwindow.cpp" line="378" />
         <source>Toggle 6502 Disassembler</source>
         <translation>6502 Ayırıcıyı Değiştir</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="382" />
+        <location filename="../../src/mainwindow.cpp" line="384" />
         <source>Toggle SIO Packet Sniffer</source>
         <translation>SIO Paket Dinleyiciyi Değiştir</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="393" />
+        <location filename="../../src/mainwindow.cpp" line="395" />
         <source>Main Tools</source>
         <translation>Ana Araçlar</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="406" />
+        <location filename="../../src/mainwindow.cpp" line="408" />
         <source>Clear log messages</source>
         <translation>Günlük mesajlarını temizle</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="413" />
+        <location filename="../../src/mainwindow.cpp" line="415" />
         <source>Show Log Window</source>
         <translation>Günlük Penceresini Göster</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1287" />
+        <location filename="../../src/mainwindow.cpp" line="1289" />
         <source>Printer emulation started.</source>
         <translation>Yazıcı emülasyonu başladı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2637" />
+        <location filename="../../src/mainwindow.cpp" line="2639" />
         <source>Could not open TNFS stream from %1</source>
         <translation>%1 kaynağından TNFS akışı açılamadı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2657" />
+        <location filename="../../src/mainwindow.cpp" line="2659" />
         <source>Downloading: %1</source>
         <translation>İndiriliyor: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2659" />
+        <location filename="../../src/mainwindow.cpp" line="2661" />
         <source>Downloading...</source>
         <translation>İndiriliyor...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2734" />
+        <location filename="../../src/mainwindow.cpp" line="2736" />
         <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
         <translation>Telefon rehberi devre dışı. Seçenekler -&gt; Modem Köprüsü'nde XML yolunu ayarlayın.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2735" />
+        <location filename="../../src/mainwindow.cpp" line="2737" />
         <source>Macro User disabled. Set Phonebook XML path in Options.</source>
         <translation>Makro Kullanıcısı devre dışı bırakıldı. Telefon Rehberi XML yolunu Seçenekler'de ayarlayın.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2736" />
+        <location filename="../../src/mainwindow.cpp" line="2738" />
         <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
         <translation>Makro Geçiş devre dışı bırakıldı. Telefon Rehberi XML yolunu Seçenekler'de ayarlayın.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <location filename="../../src/mainwindow.cpp" line="2788" />
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2786" />
+        <location filename="../../src/mainwindow.cpp" line="2788" />
         <source>Could not extract manual to: </source>
         <translation>Kılavuz şuraya çıkarılamadı:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3098" />
+        <location filename="../../src/mainwindow.cpp" line="3100" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
         <translation>[Web Kullanıcı Arayüzü] Uyarı: %1 yuvasındaki diskte kaydedilmemiş değişiklikler zorunlu montaj nedeniyle silindi.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3117" />
+        <location filename="../../src/mainwindow.cpp" line="3119" />
         <source>[Web UI] Mounted Executable to slot %1: %2</source>
         <translation>[Web Kullanıcı Arayüzü] %1: %2 yuvasına Yürütülebilir Dosya Monte Edildi</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3119" />
+        <location filename="../../src/mainwindow.cpp" line="3121" />
         <source>[Web UI] Executable ready. Please cold start the Atari.</source>
         <translation>[Web kullanıcı arayüzü] Yürütülebilir hazır. Lütfen Atari'yi soğuk başlatın.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3123" />
+        <location filename="../../src/mainwindow.cpp" line="3125" />
         <source>[Web UI] Failed to parse Executable: %1</source>
         <translation>[Web Kullanıcı Arayüzü] Yürütülebilir dosya ayrıştırılamadı: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3143" />
+        <location filename="../../src/mainwindow.cpp" line="3145" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
         <translation>[Web Kullanıcı Arayüzü] Uyarı: %1 yuvasındaki diskte kaydedilmemiş değişiklikler, zorla çıkarma nedeniyle silindi.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3207" />
+        <location filename="../../src/mainwindow.cpp" line="3209" />
         <source>[Web UI] Dialing BBS: %1 (%2)</source>
         <translation>[Web Kullanıcı Arayüzü] BBS'yi Çevirme: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3258" />
+        <location filename="../../src/mainwindow.cpp" line="3260" />
         <source>[Web UI] Mounted TNFS Stream: %1</source>
         <translation>[Web Kullanıcı Arayüzü] Takılı TNFS Akışı: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3268" />
+        <location filename="../../src/mainwindow.cpp" line="3270" />
         <source>[Web UI] Failed to mount TNFS Stream: %1</source>
         <translation>[Web Kullanıcı Arayüzü] TNFS Akışı bağlanamadı: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3269" />
+        <location filename="../../src/mainwindow.cpp" line="3271" />
         <source>Download failed or aborted: %1</source>
         <translation>İndirme başarısız oldu veya iptal edildi: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3277" />
+        <location filename="../../src/mainwindow.cpp" line="3279" />
         <source>[Web UI] Write Protect for slot %1 set to %2</source>
         <translation>[Web Kullanıcı Arayüzü] %1 yuvası için Yazma Koruması %2 olarak ayarlandı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3297" />
+        <location filename="../../src/mainwindow.cpp" line="3308" />
         <source>Web UI WebSocket Server started on port %1</source>
         <translation>Web UI WebSocket Sunucusu %1 bağlantı noktasında başlatıldı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3299" />
+        <location filename="../../src/mainwindow.cpp" line="3310" />
         <source>Failed to start Web UI WebSocket Server.</source>
         <translation>Web UI WebSocket Sunucusu başlatılamadı.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3328" />
+        <location filename="../../src/mainwindow.cpp" line="3339" />
         <source>HTTP Dashboard available at http://localhost:%1</source>
         <translation>http://localhost:%1 adresinde bulunan HTTP Kontrol Paneli</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3330" />
+        <location filename="../../src/mainwindow.cpp" line="3341" />
         <source>Failed to start HTTP Server.</source>
         <translation>HTTP Sunucusu başlatılamadı.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3358" />
+        <location filename="../../src/mainwindow.cpp" line="3369" />
         <source>Web Dashboard and WebSocket servers completely shut down.</source>
         <translation>Web Dashboard ve WebSocket sunucuları tamamen kapandı.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3368" />
+        <location filename="../../src/mainwindow.cpp" line="3379" />
         <source>[Web UI] Failed to load cassette image: %1</source>
         <translation>[Web kullanıcı arayüzü] Kaset görüntüsü yüklenemedi: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3378" />
+        <location filename="../../src/mainwindow.cpp" line="3389" />
         <source>[Web UI] Cassette Mounted: %1</source>
         <translation>[Web Kullanıcı Arayüzü] Kaset Takılı: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3391" />
+        <location filename="../../src/mainwindow.cpp" line="3402" />
         <source>[Web UI] Cassette is already playing.</source>
         <translation>[Web kullanıcı arayüzü] Kaset zaten oynatılıyor.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3395" />
+        <location filename="../../src/mainwindow.cpp" line="3406" />
         <source>[Web UI] Starting Cassette Playback.</source>
         <translation>[Web Kullanıcı Arayüzü] Kaset Oynatmayı Başlatma.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3410" />
+        <location filename="../../src/mainwindow.cpp" line="3421" />
         <source>[Web UI] Rewinding Cassette...</source>
         <translation>[Web Kullanıcı Arayüzü] Kaset Geri Sarılıyor...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3434" />
+        <location filename="../../src/mainwindow.cpp" line="3445" />
         <source>[Web UI] Cassette Ejected.</source>
         <translation>[Web Kullanıcı Arayüzü] Kaset Çıkarıldı.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3450" />
+        <location filename="../../src/mainwindow.cpp" line="3461" />
         <source>[Web UI] Cassette Playback Finished.</source>
         <translation>[Web Kullanıcı Arayüzü] Kaset Oynatma Bitti.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3471" />
+        <location filename="../../src/mainwindow.cpp" line="3482" />
         <source>Failed to initialize blank disk.</source>
         <translation>Boş disk başlatılamadı.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3489" />
+        <location filename="../../src/mainwindow.cpp" line="3500" />
         <source>Failed to format blank disk.</source>
         <translation>Boş disk biçimlendirilemedi.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3508" />
+        <location filename="../../src/mainwindow.cpp" line="3519" />
         <source>Failed to save blank disk to host.</source>
         <translation>Boş disk ana bilgisayara kaydedilemedi.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3516" />
+        <location filename="../../src/mainwindow.cpp" line="3527" />
         <source>Blank disk created: %1</source>
         <translation>Boş disk oluşturuldu: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3517" />
+        <location filename="../../src/mainwindow.cpp" line="3528" />
         <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
         <translation>[Web kullanıcı arayüzü] Boş disk oluşturuldu ve takıldı: %1, %2 yuvasında</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3532" />
+        <location filename="../../src/mainwindow.cpp" line="3543" />
         <source>Empty</source>
         <translation>Boş</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3534" />
+        <location filename="../../src/mainwindow.cpp" line="3545" />
         <source>No file mounted.</source>
         <translation>Hiçbir dosya bağlanmadı.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3538" />
+        <location filename="../../src/mainwindow.cpp" line="3549" />
         <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Yuva %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Dosya adı:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Biçim / Tür:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Mutlak Yol:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3549" />
+        <location filename="../../src/mainwindow.cpp" line="3560" />
         <source>Drive Details</source>
         <translation>Sürücü Ayrıntıları</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3574" />
+        <location filename="../../src/mainwindow.cpp" line="3585" />
         <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
         <translation>[Web Kullanıcı Arayüzü] Dosya doğrudan %1: %2 yuvasındaki RAM'e bağlandı</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3577" />
+        <location filename="../../src/mainwindow.cpp" line="3588" />
         <source>Mounted to RAM: %1</source>
         <translation>RAM'a monte edildi: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3581" />
+        <location filename="../../src/mainwindow.cpp" line="3592" />
         <source>[Web UI] Failed to parse RAM image: %1</source>
         <translation>[Web Kullanıcı Arayüzü] RAM görüntüsü ayrıştırılamadı: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3584" />
+        <location filename="../../src/mainwindow.cpp" line="3595" />
         <source>Failed to parse: %1</source>
         <translation>Ayrıştırılamadı: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3595" />
+        <location filename="../../src/mainwindow.cpp" line="3606" />
         <source>[Injector] Virtual Packet Step Triggered: %1 bytes</source>
         <translation>[Enjektör] Sanal Paket Adımı Tetiklendi: %1 bayt</translation>
     </message>
@@ -3330,22 +3472,22 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="vanished">[Disk 15] Otomatik kayıt durduruldu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2174" />
+        <location filename="../../src/mainwindow.cpp" line="2176" />
         <source>Save image as</source>
         <translation>İmajı kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2217" />
+        <location filename="../../src/mainwindow.cpp" line="2219" />
         <source>Revert to last saved</source>
         <translation>Son kaydedilmiş şekle dön</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2218" />
+        <location filename="../../src/mainwindow.cpp" line="2220" />
         <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
         <translation>'%1' son kaydedildiği şekle dönüştürülecek, son kayıtdan beri yapılmış değişiklikler kaybolacak, eminmisiniz?.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2353" />
+        <location filename="../../src/mainwindow.cpp" line="2355" />
         <source>Open session</source>
         <translation>Oturum aç</translation>
     </message>
@@ -3354,27 +3496,27 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation type="vanished">AspeQt oturumları (*.respeqt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2416" />
+        <location filename="../../src/mainwindow.cpp" line="2418" />
         <source>Save session as</source>
         <translation>Oturumu kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2447" />
+        <location filename="../../src/mainwindow.cpp" line="2449" />
         <source>Open executable</source>
         <translation>Çalıştırılabilir dosya aç</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2449" />
+        <location filename="../../src/mainwindow.cpp" line="2451" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Atari dosyaları (*.xex *.com *.exe);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2481" />
+        <location filename="../../src/mainwindow.cpp" line="2483" />
         <source>Open a cassette image</source>
         <translation>Kaset imajı aç</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2483" />
+        <location filename="../../src/mainwindow.cpp" line="2485" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Kaset imajları (*.cas);;Tüm dosyalar (*)</translation>
     </message>
@@ -3467,7 +3609,7 @@ Olası nedenler:
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="80" />
-        <location filename="../../src/optionsdialog.ui" line="529" />
+        <location filename="../../src/optionsdialog.ui" line="534" />
         <source>Emulation</source>
         <translation>Emülasyon</translation>
     </message>
@@ -3478,251 +3620,345 @@ Olası nedenler:
     </message>
     <message>
         <location filename="../../src/optionsdialog.ui" line="93" />
-        <location filename="../../src/optionsdialog.ui" line="991" />
+        <source>Epson Printer Emulator</source>
+        <translation>Epson Yazıcı Emülatörü</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="98" />
+        <location filename="../../src/optionsdialog.ui" line="1140" />
         <source>User interface</source>
         <translation>Kullanıcı arayüzü</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="98" />
+        <location filename="../../src/optionsdialog.ui" line="103" />
         <source>Web Interface</source>
         <translation>Web Arayüzü</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="140" />
+        <location filename="../../src/optionsdialog.ui" line="145" />
         <source>Standard serial port backend options</source>
         <translation>Standart seri bağlantı seçenekleri</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="149" />
-        <location filename="../../src/optionsdialog.ui" line="429" />
+        <location filename="../../src/optionsdialog.ui" line="154" />
+        <location filename="../../src/optionsdialog.ui" line="434" />
         <source>Use this backend</source>
         <translation>Kullan</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="162" />
+        <location filename="../../src/optionsdialog.ui" line="167" />
         <source>Direct Hardware UART (RasPi)</source>
         <translation>Doğrudan Donanım UART (RasPi)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="175" />
+        <location filename="../../src/optionsdialog.ui" line="180" />
         <source>Port name:</source>
         <translation>Bağlantı Noktası:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="191" />
-        <location filename="../../src/optionsdialog.ui" line="462" />
+        <location filename="../../src/optionsdialog.ui" line="196" />
+        <location filename="../../src/optionsdialog.ui" line="467" />
         <source>Handshake method:</source>
         <translation>Senkronizasyon Yöntemi:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="199" />
-        <location filename="../../src/optionsdialog.ui" line="470" />
+        <location filename="../../src/optionsdialog.ui" line="204" />
+        <location filename="../../src/optionsdialog.ui" line="475" />
         <source>RI</source>
         <translation>UR</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="204" />
-        <location filename="../../src/optionsdialog.ui" line="475" />
+        <location filename="../../src/optionsdialog.ui" line="209" />
+        <location filename="../../src/optionsdialog.ui" line="480" />
         <source>DSR</source>
         <translation>DSR</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="209" />
-        <location filename="../../src/optionsdialog.ui" line="480" />
+        <location filename="../../src/optionsdialog.ui" line="214" />
+        <location filename="../../src/optionsdialog.ui" line="485" />
         <source>CTS</source>
         <translation>CTS</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="214" />
+        <location filename="../../src/optionsdialog.ui" line="219" />
         <source>NONE</source>
         <translation>HİÇBİRİ</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="219" />
+        <location filename="../../src/optionsdialog.ui" line="224" />
         <source>SOFTWARE (SIO2BT)</source>
         <translation>YAZILIM (SIO2BT)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="236" />
+        <location filename="../../src/optionsdialog.ui" line="241" />
         <source>Write delay [ms]:</source>
         <translation>Yazma gecikmesi [ms]:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="250" />
+        <location filename="../../src/optionsdialog.ui" line="255" />
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="255" />
+        <location filename="../../src/optionsdialog.ui" line="260" />
         <source>10</source>
         <translation>10</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="260" />
+        <location filename="../../src/optionsdialog.ui" line="265" />
         <source>20</source>
         <translation>20</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="265" />
+        <location filename="../../src/optionsdialog.ui" line="270" />
         <source>30</source>
         <translation>30</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="270" />
+        <location filename="../../src/optionsdialog.ui" line="275" />
         <source>40</source>
         <translation>40</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="275" />
+        <location filename="../../src/optionsdialog.ui" line="280" />
         <source>50</source>
         <translation>50</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="280" />
+        <location filename="../../src/optionsdialog.ui" line="285" />
         <source>60</source>
         <translation>60</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="294" />
+        <location filename="../../src/optionsdialog.ui" line="299" />
         <source>High speed mode baud rate:</source>
         <translation>Bağlantı  hızı (bps):</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="305" />
+        <location filename="../../src/optionsdialog.ui" line="310" />
         <source>19200 (1x)</source>
         <translation>19200 (1x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="310" />
+        <location filename="../../src/optionsdialog.ui" line="315" />
         <source>38400 (2x)</source>
         <translation>38400 (2x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="315" />
+        <location filename="../../src/optionsdialog.ui" line="320" />
         <source>57600 (3x)</source>
         <translation>57600 (3x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="323" />
+        <location filename="../../src/optionsdialog.ui" line="328" />
         <source>Use non-standard speeds</source>
         <translation>Standart olmayan hız kullan</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="339" />
+        <location filename="../../src/optionsdialog.ui" line="344" />
         <source>High speed mode POKEY divisor:</source>
         <translation>POKEY böleni:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="359" />
+        <location filename="../../src/optionsdialog.ui" line="364" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Complete/Error response delay (μs)&lt;br&gt;See manual for more information&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Tamamlandı/Hata yanıtı gecikmesi (μs)&lt;br&gt;Daha fazla bilgi için kılavuza bakın&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="366" />
+        <location filename="../../src/optionsdialog.ui" line="371" />
         <source>μs</source>
         <translation>μs</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="420" />
+        <location filename="../../src/optionsdialog.ui" line="425" />
         <source>AtariSIO backend options</source>
         <translation>AtarıSIO seçenekleri</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="442" />
+        <location filename="../../src/optionsdialog.ui" line="447" />
         <source>Device name:</source>
         <translation>Cihaz adı:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="449" />
+        <location filename="../../src/optionsdialog.ui" line="454" />
         <source>/dev/atarisio0</source>
         <translation>/dev/atarisio0</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="595" />
+        <location filename="../../src/optionsdialog.ui" line="600" />
         <source>Use high speed executable loader</source>
         <translation>Yüksek hızlı yükleyici kullan</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="605" />
+        <location filename="../../src/optionsdialog.ui" line="610" />
+        <source>Enable this for text-based web services. Disable for binary data.</source>
+        <translation>Metin tabanlı web hizmetleri için bunu etkinleştirin. İkili veriler için devre dışı bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="636" />
+        <source>Enable this to read Unix text files properly on Atari. Disable for binary files.</source>
+        <translation>Atari'de Unix metin dosyalarını düzgün okumak için bunu etkinleştirin. İkili dosyalar için devre dışı bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="717" />
+        <location filename="../../src/optionsdialog.ui" line="753" />
+        <source>Enable if using a standard FTDI USB adapter. Leave unchecked for direct Raspberry Pi GPIO.</source>
+        <translation>Standart bir FTDI USB adaptörü kullanılıyorsa etkinleştirin. Doğrudan Raspberry Pi GPIO için işaretlenmemiş bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="976" />
+        <source>Epson FX-80 Printer Emulator</source>
+        <translation>Epson FX-80 Yazıcı Emülatörü</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="982" />
+        <source>Automatically open Preview Window when printing starts</source>
+        <translation>Yazdırma başladığında Önizleme Penceresini otomatik olarak aç</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="989" />
+        <source>Paper Mode:</source>
+        <translation>Kağıt Modu:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="997" />
+        <source>Continuous Tractor Feed (Banners)</source>
+        <translation>Sürekli Traktör Beslemesi (Afişler)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1002" />
+        <source>Single Sheet (Cut-Sheet Feeder)</source>
+        <translation>Tek Sayfa (Kesik Sayfa Besleyici)</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1010" />
+        <source>Paper Style:</source>
+        <translation>Kağıt Stili:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1018" />
+        <source>Pure White</source>
+        <translation>Saf Beyaz</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1023" />
+        <source>Vintage Green-Bar</source>
+        <translation>Vintage Yeşil Çubuk</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1028" />
+        <source>Aged Yellow</source>
+        <translation>Yaşlı Sarı</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1036" />
+        <location filename="../../src/optionsdialog.ui" line="1059" />
+        <location filename="../../src/optionsdialog.ui" line="1075" />
+        <source>px</source>
+        <translation>piksel</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1052" />
+        <source>Top Margin:</source>
+        <translation>Üst Marj:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1091" />
+        <source>Left Margin:</source>
+        <translation>Sol Kenar Boşluğu:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1098" />
+        <source>Page Length:</source>
+        <translation>Sayfa Uzunluğu:</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1242" />
+        <source>Web Dashboard Settings</source>
+        <translation>Web Kontrol Paneli Ayarları</translation>
+    </message>
+    <message>
+        <location filename="../../src/optionsdialog.ui" line="1248" />
+        <source>Enable Web Interface Dashboard</source>
+        <translation>Web Arayüzü Kontrol Panelini Etkinleştir</translation>
+    </message>
+    <message>
         <source>Enable this for text-based web services.
 Disable for binary data.</source>
-        <translation>Metin tabanlı web hizmetleri için bunu etkinleştirin.
+        <translation type="vanished">Metin tabanlı web hizmetleri için bunu etkinleştirin.
 İkili veriler için devre dışı bırakın.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="609" />
+        <location filename="../../src/optionsdialog.ui" line="613" />
         <source>Convert Atari EOL (155) to LF (10) on Network Write</source>
         <translation>Ağ Yazmada Atari EOL'yi (155) LF'ye (10) dönüştürün</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="632" />
         <source>Enable this to read Unix text files properly on Atari.
 Disable for binary files.</source>
-        <translation>Atari'de Unix metin dosyalarını düzgün okumak için bunu etkinleştirin.
+        <translation type="vanished">Atari'de Unix metin dosyalarını düzgün okumak için bunu etkinleştirin.
 İkili dosyalar için devre dışı bırakın.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="636" />
+        <location filename="../../src/optionsdialog.ui" line="639" />
         <source>Convert LF (10) to Atari EOL (155) on Network Read</source>
         <translation>Ağ Okumasında LF'yi (10) Atari EOL'ye (155) dönüştürün</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="646" />
+        <location filename="../../src/optionsdialog.ui" line="649" />
         <source>CAPITAL letters in file names</source>
         <translation>Dosya adlarındaki BÜYÜK harfler</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="653" />
+        <location filename="../../src/optionsdialog.ui" line="656" />
         <source>Restore last TNFS location on mount</source>
         <translation>Bağlama sırasında son TNFS konumunu geri yükle</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="685" />
+        <location filename="../../src/optionsdialog.ui" line="688" />
         <source>Hayes Modem Emulator (Rs232 to TCP Bridge)</source>
         <translation>Hayes Modem Emülatörü (Rs232'den TCP Köprüsüne)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="691" />
+        <location filename="../../src/optionsdialog.ui" line="694" />
+        <location filename="../../src/optionsdialog.ui" line="704" />
         <source>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</source>
         <translation>İkincil bir Seri Bağlantı Noktasını İnternet'e bağlar. Atari 850 veya R-Verter gerektirir.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="694" />
+        <location filename="../../src/optionsdialog.ui" line="697" />
         <source>Enable Modem Bridge (RS232 to TCP)</source>
         <translation>Modem Köprüsünü Etkinleştir (RS232'den TCP'ye)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="701" />
         <source>Bridges a secondary Serial Port to the Internet.
 Requires Atari 850 or R-Verter.</source>
-        <translation>İkincil bir Seri Bağlantı Noktasını İnternet'e bağlar.
+        <translation type="vanished">İkincil bir Seri Bağlantı Noktasını İnternet'e bağlar.
 Atari 850 veya R-Verter gerektirir.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="705" />
+        <location filename="../../src/optionsdialog.ui" line="707" />
         <source>Enable 850 Device  (R: to TCP)</source>
         <translation>850 Cihazını Etkinleştir (R: TCP'ye)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="715" />
-        <location filename="../../src/optionsdialog.ui" line="752" />
         <source>Enable if using a standard FTDI USB adapter.
 Leave unchecked for direct Raspberry Pi GPIO.</source>
-        <translation>Standart bir FTDI USB adaptörü kullanılıyorsa etkinleştirin.
+        <translation type="vanished">Standart bir FTDI USB adaptörü kullanılıyorsa etkinleştirin.
 Doğrudan Raspberry Pi GPIO için işaretlenmemiş bırakın.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="719" />
+        <location filename="../../src/optionsdialog.ui" line="720" />
         <source>Invert CTS Logic (Standard USB Adapters)</source>
         <translation>CTS Mantığını Ters Çevir (Standart USB Adaptörleri)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="729" />
+        <location filename="../../src/optionsdialog.ui" line="730" />
         <source>FTDI/USB Latency:</source>
         <translation>FTDI/USB Gecikmesi:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="736" />
+        <location filename="../../src/optionsdialog.ui" line="737" />
         <source>ms</source>
         <translation>Bayan</translation>
     </message>
@@ -3837,7 +4073,7 @@ Doğrudan Raspberry Pi GPIO için işaretlenmemiş bırakın.</translation>
         <translation>Yeni</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="550" />
+        <location filename="../../src/optionsdialog.ui" line="555" />
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Kaset emülasyonu için özel hız kullan (bps) </translation>
     </message>
@@ -3846,12 +4082,12 @@ Doğrudan Raspberry Pi GPIO için işaretlenmemiş bırakın.</translation>
         <translation type="vanished">Klasör İmajı:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="557" />
+        <location filename="../../src/optionsdialog.ui" line="562" />
         <source>Filter out underscore character from file names</source>
         <translation>Dosya isimlerinden alt çizgi karakterini filtrele</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="572" />
+        <location filename="../../src/optionsdialog.ui" line="577" />
         <source>        (Required for AtariDOS compatibility)</source>
         <translation>(AtariDOS uyumluluğu için gerekli)</translation>
     </message>
@@ -3860,90 +4096,87 @@ Doğrudan Raspberry Pi GPIO için işaretlenmemiş bırakın.</translation>
         <translation type="vanished">Kullanıcı arayüzü</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="997" />
+        <location filename="../../src/optionsdialog.ui" line="1146" />
         <source>Language:</source>
         <translation>Dil:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1007" />
+        <location filename="../../src/optionsdialog.ui" line="1156" />
         <source>Minimize to system tray</source>
         <translation>Sistem tablasına küçült</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1014" />
+        <location filename="../../src/optionsdialog.ui" line="1163" />
         <source>Save window positions and sizes</source>
         <translation>Pencere pozisyonlarını ve boyutlarını kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1053" />
+        <location filename="../../src/optionsdialog.ui" line="1202" />
         <source>Save D9-DO drive visibility status</source>
         <translation>D9-DO sürücüsünün görünürlük durumunu kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1063" />
+        <location filename="../../src/optionsdialog.ui" line="1212" />
         <source>Enable Shade in Mini Mode by default</source>
         <translation>Varsayılan olarak Mini Modda Gölgeyi Etkinleştir</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1076" />
+        <location filename="../../src/optionsdialog.ui" line="1225" />
         <source>Use larger font in drive slot descriptions</source>
         <translation>Sürücü yuvası açıklamalarında daha büyük yazı tipi kullanın</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1108" />
         <source>Web Dashboard Options</source>
-        <translation>Web Kontrol Paneli Seçenekleri</translation>
+        <translation type="vanished">Web Kontrol Paneli Seçenekleri</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1114" />
         <source>Enable the HTTP and WebSocket servers for the remote web dashboard.</source>
-        <translation>Uzak web kontrol paneli için HTTP ve WebSocket sunucularını etkinleştirin.</translation>
+        <translation type="vanished">Uzak web kontrol paneli için HTTP ve WebSocket sunucularını etkinleştirin.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1117" />
         <source>Enable Web Interface</source>
-        <translation>Web Arayüzünü Etkinleştir</translation>
+        <translation type="vanished">Web Arayüzünü Etkinleştir</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1126" />
+        <location filename="../../src/optionsdialog.ui" line="1255" />
         <source>HTTP Dashboard Port:</source>
         <translation>HTTP Kontrol Paneli Bağlantı Noktası:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1146" />
+        <location filename="../../src/optionsdialog.ui" line="1272" />
         <source>WebSocket Bridge Port:</source>
         <translation>WebSocket Köprü Bağlantı Noktası:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1194" />
+        <location filename="../../src/optionsdialog.ui" line="1315" />
         <source>Save/Commit or Cancel/Ignore changes made to the settings</source>
         <translation>Ayarlara yapılan değişiklikleri kaydet veya gözardı et</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="59" />
-        <location filename="../../src/optionsdialog.cpp" line="74" />
+        <location filename="../../src/optionsdialog.cpp" line="68" />
+        <location filename="../../src/optionsdialog.cpp" line="83" />
         <source>Custom</source>
         <translation>Gelenek</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="166" />
+        <location filename="../../src/optionsdialog.cpp" line="175" />
         <source>Automatic</source>
         <translation>Otomatık</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="169" />
         <location filename="../../src/optionsdialog.cpp" line="178" />
+        <location filename="../../src/optionsdialog.cpp" line="187" />
         <source>English</source>
         <translation>Türkçe</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="381" />
-        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <location filename="../../src/optionsdialog.cpp" line="393" />
+        <location filename="../../src/optionsdialog.cpp" line="400" />
         <source>Port Conflict</source>
         <translation>Liman Çatışması</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="382" />
+        <location filename="../../src/optionsdialog.cpp" line="394" />
         <source>You cannot use the same Serial Port (%1) for both
 SIO Emulation and the Modem Bridge.
 
@@ -3954,7 +4187,7 @@ SIO Emülasyonu ve Modem Köprüsü.
 Lütfen Modem için farklı bir bağlantı noktası seçin.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="388" />
+        <location filename="../../src/optionsdialog.cpp" line="400" />
         <source>The HTTP Dashboard Port and WebSocket Bridge Port cannot be the same.
 
 Please assign different ports.</source>
@@ -3963,30 +4196,30 @@ Please assign different ports.</source>
 Lütfen farklı bağlantı noktaları atayın.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="456" />
+        <location filename="../../src/optionsdialog.cpp" line="476" />
         <source>Select Dial Directory</source>
         <translation>Arama Rehberini Seçin</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="456" />
-        <location filename="../../src/optionsdialog.cpp" line="465" />
-        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <location filename="../../src/optionsdialog.cpp" line="476" />
+        <location filename="../../src/optionsdialog.cpp" line="485" />
+        <location filename="../../src/optionsdialog.cpp" line="487" />
         <source>XML Files (*.xml);;All Files (*)</source>
         <translation>XML Dosyaları (*.xml);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="465" />
-        <location filename="../../src/optionsdialog.cpp" line="467" />
+        <location filename="../../src/optionsdialog.cpp" line="485" />
+        <location filename="../../src/optionsdialog.cpp" line="487" />
         <source>Create New Dial Directory</source>
         <translation>Yeni Arama Dizini Oluştur</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <location filename="../../src/optionsdialog.cpp" line="501" />
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="481" />
+        <location filename="../../src/optionsdialog.cpp" line="501" />
         <source>Could not create the phonebook file.</source>
         <translation>Telefon rehberi dosyası oluşturulamadı.</translation>
     </message>
@@ -4725,32 +4958,28 @@ Lütfen farklı bağlantı noktaları atayın.</translation>
 <context>
     <name>Printer</name>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="43" />
         <source>[%1] Get status.</source>
-        <translation>[%1] Konum göster.</translation>
+        <translation type="vanished">[%1] Konum göster.</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="84" />
         <source>[%1] ignored</source>
-        <translation>[%1] göz ardı edildi</translation>
+        <translation type="vanished">[%1] göz ardı edildi</translation>
     </message>
     <message>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation type="vanished">[%1] komut: $%2, aux: $%3 tanınmadı (NAK).</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="59" />
         <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
-        <translation>[%1] ATASCII ters video karakterleri ASCII ye çevriliyor</translation>
+        <translation type="vanished">[%1] ATASCII ters video karakterleri ASCII ye çevriliyor</translation>
     </message>
     <message>
         <source>[%1] Print: data frame failed</source>
         <translation type="vanished">[%1] Print: veri bedeni başarısız oldu</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="70" />
         <source>[%1] Print (%2 chars)</source>
-        <translation>[%1] Print (%2 karakter)</translation>
+        <translation type="vanished">[%1] Print (%2 karakter)</translation>
     </message>
 </context>
 <context>
@@ -5329,7 +5558,7 @@ Lütfen farklı bağlantı noktaları atayın.</translation>
 <context>
     <name>SmartDevice</name>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="132" />
+        <location filename="../../src/miscdevices.cpp" line="70" />
         <source>[%1] Read date/time (%2).</source>
         <translation>[%1] Tarih/saati okuyun (%2).</translation>
     </message>
@@ -5540,226 +5769,180 @@ Lütfen farklı bağlantı noktaları atayın.</translation>
 <context>
     <name>TextPrinterWindow</name>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="14" />
         <source>AspeQt - Printer text output</source>
-        <translation>AspeQT yazıcı çıktısı</translation>
+        <translation type="vanished">AspeQT yazıcı çıktısı</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="47" />
-        <location filename="../../src/textprinterwindow.ui" line="50" />
         <source>Atari Output (Atascii)</source>
-        <translation>ATASCII Atari Çıktısı</translation>
+        <translation type="vanished">ATASCII Atari Çıktısı</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="69" />
-        <location filename="../../src/textprinterwindow.ui" line="72" />
         <source>Atari Output (Ascii)</source>
-        <translation>ASCII Atari Çıktısı</translation>
+        <translation type="vanished">ASCII Atari Çıktısı</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="118" />
         <source>toolBar</source>
-        <translation>araç çubuğu</translation>
+        <translation type="vanished">araç çubuğu</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="154" />
         <source>Save to a file...</source>
-        <translation>Dosyaya kaydet...</translation>
+        <translation type="vanished">Dosyaya kaydet...</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="157" />
         <source>Save contents to a file (Ctrl+S)</source>
-        <translation>İçeriği dosyaya kaydet (Ctrl+S)</translation>
+        <translation type="vanished">İçeriği dosyaya kaydet (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="160" />
         <source>Save contents to a file</source>
-        <translation>İçeriği dosyaya kaydet</translation>
+        <translation type="vanished">İçeriği dosyaya kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="163" />
-        <location filename="../../src/textprinterwindow.ui" line="350" />
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="vanished">Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="172" />
         <source>Clear</source>
-        <translation>Temizle</translation>
+        <translation type="vanished">Temizle</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="175" />
         <source>Clear contents (Ctrl+C)</source>
-        <translation>İçeriği temizle (Ctrl+C)</translation>
+        <translation type="vanished">İçeriği temizle (Ctrl+C)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="178" />
         <source>Clear contents</source>
-        <translation>İçeriği temizle</translation>
+        <translation type="vanished">İçeriği temizle</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="181" />
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="vanished">Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="196" />
         <source>Word wrap</source>
-        <translation>Kelime kaydırma</translation>
+        <translation type="vanished">Kelime kaydırma</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="199" />
         <source>Toggle word wrapping (Ctrl+W)</source>
-        <translation>Kelime kaydırma ayarı (Ctrl+W)</translation>
+        <translation type="vanished">Kelime kaydırma ayarı (Ctrl+W)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="202" />
         <source>Toggle word wrapping</source>
-        <translation>Kelime kaydırma ayarı</translation>
+        <translation type="vanished">Kelime kaydırma ayarı</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="205" />
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation type="vanished">Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="214" />
         <source>Print</source>
-        <translation>Yazdır</translation>
+        <translation type="vanished">Yazdır</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="217" />
         <source>Send contents to printer (Ctrl+P)</source>
-        <translation>İçeriği yazıcıya gönder (Ctrl+P)</translation>
+        <translation type="vanished">İçeriği yazıcıya gönder (Ctrl+P)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="220" />
         <source>Send contents to printer</source>
-        <translation>İçeriği yazıcıya gönder</translation>
+        <translation type="vanished">İçeriği yazıcıya gönder</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="223" />
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation type="vanished">Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="233" />
         <source>Atascii Font</source>
-        <translation>Atascii Yazıyüzü</translation>
+        <translation type="vanished">Atascii Yazıyüzü</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="236" />
         <source>Toggle ATASCII fonts (Alt+F)</source>
-        <translation>Atascii Yazıyüzü Değiştir (Alt+F)</translation>
+        <translation type="vanished">Atascii Yazıyüzü Değiştir (Alt+F)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="239" />
         <source>Toggle ATASCII fonts</source>
-        <translation>Atascii Yazıyüzü Değiştir</translation>
+        <translation type="vanished">Atascii Yazıyüzü Değiştir</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="242" />
         <source>Alt+F</source>
-        <translation>Alt+F</translation>
+        <translation type="vanished">Alt+F</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="267" />
         <source>Alt+Shift+F</source>
-        <translation>Alt+Shift+F</translation>
+        <translation type="vanished">Alt+Shift+F</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="295" />
         <source>Alt+Shift+H</source>
-        <translation>Alt+Shift+H</translation>
+        <translation type="vanished">Alt+Shift+H</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="326" />
         <source>Alt+H</source>
-        <translation>Alt+H</translation>
+        <translation type="vanished">Alt+H</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="341" />
         <source>Strip Line Numbers</source>
-        <translation>Satır numaralarını kaldır</translation>
+        <translation type="vanished">Satır numaralarını kaldır</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="344" />
         <source>Strip Line numbers from the text output (Ctrl-S)</source>
-        <translation>Çıktıdan satır numaralarını kaldır (Ctrl+S)</translation>
+        <translation type="vanished">Çıktıdan satır numaralarını kaldır (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="347" />
         <source>Strip Line numbers from the text output</source>
-        <translation>Çıktıdan satır numaralarını kaldır</translation>
+        <translation type="vanished">Çıktıdan satır numaralarını kaldır</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="258" />
         <source>Font Size</source>
-        <translation>Yazıyüzü boyu</translation>
+        <translation type="vanished">Yazıyüzü boyu</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="261" />
         <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
-        <translation>Yazıyüzü boyu değiştir (6, 9, 12) (Alt+Shift+F)</translation>
+        <translation type="vanished">Yazıyüzü boyu değiştir (6, 9, 12) (Alt+Shift+F)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="264" />
         <source>Toggle Font Size (6, 9, 12 pt)</source>
-        <translation>Yazıyüzü boyu değiştir (6, 9, 12)</translation>
+        <translation type="vanished">Yazıyüzü boyu değiştir (6, 9, 12)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="286" />
         <source>Hide/Show Ascii</source>
-        <translation>Ascii sayfasını Sakla/Göster</translation>
+        <translation type="vanished">Ascii sayfasını Sakla/Göster</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="289" />
         <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
-        <translation>Ascii çıktısını Sakla/Göster (Alt+Shıft+H)</translation>
+        <translation type="vanished">Ascii çıktısını Sakla/Göster (Alt+Shıft+H)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="292" />
         <source>Hide/Show Ascii Printer Output</source>
-        <translation>Ascii çıktısını Sakla/Göster</translation>
+        <translation type="vanished">Ascii çıktısını Sakla/Göster</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="317" />
         <source>HideShow_Atascii</source>
-        <translation>Atascii sayfasını Sakla/Göster</translation>
+        <translation type="vanished">Atascii sayfasını Sakla/Göster</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="320" />
         <source> Hide/Show Atascii Printer Output (Alt+H)</source>
-        <translation>Atascii çıktısını Sakla/Göster (Alt+H)</translation>
+        <translation type="vanished">Atascii çıktısını Sakla/Göster (Alt+H)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="323" />
         <source>Hide/Show Atascii Printer Output</source>
-        <translation>Atascii çıktısını Sakla/Göster</translation>
+        <translation type="vanished">Atascii çıktısını Sakla/Göster</translation>
     </message>
     <message>
         <source>Print Atari Text</source>
         <translation type="obsolete">Atari metni</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="225" />
         <source>Save printer text output</source>
-        <translation>Çıktıyı dosyaya kaydet</translation>
+        <translation type="vanished">Çıktıyı dosyaya kaydet</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="226" />
         <source>Text files (*.txt);;All files (*)</source>
-        <translation>Metin dosyaları (*.txt);;Tüm dosyalar (*)</translation>
+        <translation type="vanished">Metin dosyaları (*.txt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>Stripping Line Numbers..</source>
-        <translation>Satır numaraları kaldırılıyor..</translation>
+        <translation type="vanished">Satır numaraları kaldırılıyor..</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>The text does not seem to contain any line numbers!</source>
-        <translation>Çıktıda satır numaraları bulunamadı!</translation>
+        <translation type="vanished">Çıktıda satır numaraları bulunamadı!</translation>
     </message>
 </context>
 <context>

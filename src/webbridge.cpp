@@ -242,10 +242,11 @@ void WebBridge::toggleWriteProtectUi(int slot, bool enabled) {
 
 }
 
-void WebBridge::requestPrinterTextUi() {
+
+void WebBridge::requestPrinterImageUi() {
     if (mainWindow) {
-        QString text = mainWindow->getPrinterText();
-        emit printerTextReceived(text);
+        QString base64 = mainWindow->getPrinterImageBase64();
+        emit printerImageReceived(base64);
     }
 }
 

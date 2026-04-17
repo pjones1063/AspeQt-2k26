@@ -33,10 +33,7 @@ void EpsonPrinter::handleCommand(quint8 command, quint16 aux)
     }
 
     switch(command) {
-    // =============================================================
-    // COMMAND: GET STATUS (0x53)
-    // =============================================================
-    case 0x53:
+    case 0x53: // GET STATUS
     {
         if (!sio->port()->writeCommandAck()) return;
         QByteArray status(4, 0);
@@ -47,10 +44,7 @@ void EpsonPrinter::handleCommand(quint8 command, quint16 aux)
         break;
     }
 
-        // =============================================================
-        // COMMAND: WRITE DATA (0x57)
-        // =============================================================
-    case 0x57:
+    case 0x57: // WRITE DATA
     {
         int aux2 = aux % 256;
         int len = 256;
@@ -70,22 +64,17 @@ void EpsonPrinter::handleCommand(quint8 command, quint16 aux)
 
         qDebug() << "!n" << tr("[%1] Received %2 bytes. Parsing instantly.").arg(deviceName()).arg(len);
 
-        // Feed the data to the parser instantly!
         parsePrintJob(data);
 
         sio->port()->writeComplete();
         break;
     }
 
-        // =============================================================
-        // COMMAND: CLOSE CONNECTION (0x43)
-        // =============================================================
-    case 0x43:
+    case 0x43: // CLOSE CONNECTION
     {
         if (!sio->port()->writeCommandAck()) return;
         qDebug() << "!n" << tr("[%1] Print Job Closed by Atari.").arg(deviceName());
 
-        // Print any leftover text that didn't have an EOL character
         if (!m_currentTextLine.isEmpty()) {
             drawTextString(m_currentTextLine);
             m_currentTextLine.clear();
@@ -97,10 +86,7 @@ void EpsonPrinter::handleCommand(quint8 command, quint16 aux)
         break;
     }
 
-        // =============================================================
-        // UNKNOWN COMMAND
-        // =============================================================
-    default:
+    default: // UNKNOWN COMMAND
         sio->port()->writeCommandNak();
         qWarning() << "!w" << tr("[%1] Unknown Command: $%2").arg(deviceName()).arg(command, 2, 16, QChar('0'));
         break;
@@ -110,57 +96,66 @@ void EpsonPrinter::handleCommand(quint8 command, quint16 aux)
 
 void EpsonPrinter::parsePrintJob(const QByteArray &data)
 {
-    if(m_paper.isNull()) initializePaper(); // Ensure we have a canvas
+    if(m_paper.isNull()) initializePaper();
+
+    int marginLeft = aspeqtSettings->printerMarginLeft();
+    int marginTop = aspeqtSettings->printerMarginTop();
+    int pageLen = aspeqtSettings->printerMarginLength();
 
     for (int i = 0; i < data.size(); i++) {
         unsigned char b = static_cast<unsigned char>(data[i]);
 
         switch (m_state) {
         case State_Text:
-            if (b == 27) {
+            if (b == 27) { // ESC
+                if (!m_currentTextLine.isEmpty()) { drawTextString(m_currentTextLine); m_currentTextLine.clear(); }
                 m_state = State_Escape;
+            } else if (b == 15) { // SI (Condensed Mode ON)
+                if (!m_currentTextLine.isEmpty()) { drawTextString(m_currentTextLine); m_currentTextLine.clear(); }
+                m_isCondensed = true;
+            } else if (b == 18) { // DC2 (Condensed Mode OFF)
+                if (!m_currentTextLine.isEmpty()) { drawTextString(m_currentTextLine); m_currentTextLine.clear(); }
+                m_isCondensed = false;
             } else if (b == 12) { // Form Feed (Page Break)
-                if (!m_currentTextLine.isEmpty()) {
-                    drawTextString(m_currentTextLine);
-                    m_currentTextLine.clear();
-                }
+                if (!m_currentTextLine.isEmpty()) { drawTextString(m_currentTextLine); m_currentTextLine.clear(); }
 
-                m_cursorX = 60; // Return to 0.5" left margin
-                m_cursorY = ((m_cursorY / 2376) + 1) * 2376 + 108; // Jump to next page boundary
+                m_cursorX = marginLeft;
+                m_cursorY = ((m_cursorY / pageLen) + 1) * pageLen + marginTop;
 
-                // ALWAYS grow the canvas in memory so pages aren't lost
-                if (m_cursorY > m_paper.height() - 108) {
-                    QImage longerPaper(m_paper.width(), m_paper.height() + 2376, QImage::Format_RGB32);
+                if (m_cursorY > m_paper.height() - marginTop) {
+                    QImage longerPaper(m_paper.width(), m_paper.height() + pageLen, QImage::Format_RGB32);
                     fillPaperBackground(longerPaper);
                     QPainter p(&longerPaper);
                     p.drawImage(0, 0, m_paper);
                     m_paper = longerPaper;
                 }
-            } else if (b == 13) { // Standard CR (Carriage Return)
-                if (!m_currentTextLine.isEmpty()) {
-                    drawTextString(m_currentTextLine);
-                    m_currentTextLine.clear();
-                }
-                m_cursorX = 60;
-            } else if (b == 10) { // Standard LF (Line Feed)
-                if (!m_currentTextLine.isEmpty()) {
-                    drawTextString(m_currentTextLine);
-                    m_currentTextLine.clear();
-                }
+            } else if (b == 13) { // CR
+                if (!m_currentTextLine.isEmpty()) { drawTextString(m_currentTextLine); m_currentTextLine.clear(); }
+                m_cursorX = marginLeft;
+            } else if (b == 10) { // LF
+                if (!m_currentTextLine.isEmpty()) { drawTextString(m_currentTextLine); m_currentTextLine.clear(); }
                 lineFeed();
             } else if (b == 155) { // Atari EOL
-                if (!m_currentTextLine.isEmpty()) {
-                    drawTextString(m_currentTextLine);
-                    m_currentTextLine.clear();
-                }
-                m_cursorX = 60;
+                if (!m_currentTextLine.isEmpty()) { drawTextString(m_currentTextLine); m_currentTextLine.clear(); }
+                m_cursorX = marginLeft;
                 lineFeed();
-                i = data.size(); // Drop Atari padding!
+                i = data.size();
                 break;
             } else {
+
+                if (b > 127) {
+                    // Epson used the high-bit to trigger Italics in some modes!
+                    // If we aren't handling high-bit international sets, just strip it
+                    // and force Italics so it looks right.
+                    m_isItalic = true;
+                    b = b & 0x7F;
+                }
+
                 char c = translateAtascii(b);
                 if (c != 0) m_currentTextLine.append(c);
-                if (m_currentTextLine.length() >= 80) {
+
+                int maxCols = m_isCondensed ? 132 : (m_isElite ? 96 : 80);
+                if (m_currentTextLine.length() >= maxCols) {
                     drawTextString(m_currentTextLine);
                     m_currentTextLine.clear();
                     lineFeed();
@@ -172,33 +167,74 @@ void EpsonPrinter::parsePrintJob(const QByteArray &data)
             if (b == 'K' || b == 'L' || b == 'Y' || b == 'Z') {
                 m_currentGraphicMode = b;
                 m_state = State_Graphic_N1;
-            } else if (b == 'A') {
-                m_state = State_Spacing_A;
-            } else if (b == '3') {
-                m_state = State_Spacing_3;
-            } else if (b == 'J') {              // <--- CATCH ESC J
-                m_state = State_Feed_J;
-            } else if (b == '0') {
-                m_lineHeight = 27;
-                m_state = State_Text;
-            } else if (b == '1') {
-                m_lineHeight = 21;
-                m_state = State_Text;
-            } else if (b == '2') {
-                m_lineHeight = 36;
-                m_state = State_Text;
-            } else {
-                m_state = State_Text;
-            }
+            } else if (b == 'A') { m_state = State_Spacing_A;
+            } else if (b == '3') { m_state = State_Spacing_3;
+            } else if (b == 'J') { m_state = State_Feed_J;
+
+                // --- FONT STYLE TOGGLES ---
+            } else if (b == 'E') { m_isBold = true; m_state = State_Text;
+            } else if (b == 'F') { m_isBold = false; m_state = State_Text;
+            } else if (b == '4') { m_isItalic = true; m_state = State_Text;
+            } else if (b == '5') { m_isItalic = false; m_state = State_Text;
+            } else if (b == '-') { m_state = State_Underline;
+            } else if (b == 'W') { m_state = State_Expanded_W;
+
+                // --- NEW ENHANCED TOGGLES ---
+            } else if (b == 'M') { m_isElite = true; m_state = State_Text;
+            } else if (b == 'P') { m_isElite = false; m_state = State_Text;
+            } else if (b == 'p') { m_state = State_Proportional_p;
+            } else if (b == 'S') { m_state = State_SuperSub_S;
+            } else if (b == 'T') { m_scriptMode = 0; m_state = State_Text;
+
+                // --- ALIASES ---
+            } else if (b == 'G') { m_isBold = true; m_state = State_Text; // Double-Strike (Alias to Bold)
+            } else if (b == 'H') { m_isBold = false; m_state = State_Text;
+            } else if (b == '!') { m_state = State_MasterPrint;
+
+            } else if (b == '0') { m_lineHeight = 27; m_state = State_Text;
+            } else if (b == '1') { m_lineHeight = 21; m_state = State_Text;
+            } else if (b == '2') { m_lineHeight = 36; m_state = State_Text;
+            } else { m_state = State_Text; }
             break;
 
-        case State_Feed_J:                      // <--- EXECUTE ESC J
-            // Epson units: 1/216 inch immediate feed. At 216 DPI, 1 unit = 1 pixel.
-            m_cursorY += b;
+        case State_Underline:
+            m_isUnderlined = (b == '1' || b == 1);
+            m_state = State_Text;
+            break;
 
-            // ALWAYS grow the canvas in memory so pages aren't lost
-            if (m_cursorY > m_paper.height() - 108) {
-                QImage longerPaper(m_paper.width(), m_paper.height() + 2376, QImage::Format_RGB32);
+        case State_Expanded_W:
+            m_isExpanded = (b == '1' || b == 1);
+            m_state = State_Text;
+            break;
+
+            // --- NEW ENHANCED STATES ---
+        case State_Proportional_p:
+            m_isProportional = (b == '1' || b == 1);
+            m_state = State_Text;
+            break;
+
+        case State_SuperSub_S:
+            if (b == '0' || b == 0) m_scriptMode = 1; // 0 = Superscript
+            else m_scriptMode = 2;                    // 1 = Subscript
+            m_state = State_Text;
+            break;
+
+        case State_MasterPrint:
+            // The Master Print byte is a bitmask mapping multiple toggles at once
+            m_isElite        = (b & 1);
+            m_isProportional = (b & 2);
+            m_isCondensed    = (b & 4);
+            m_isBold         = (b & 8) || (b & 16);
+            m_isExpanded     = (b & 32);
+            m_isItalic       = (b & 64);
+            m_isUnderlined   = (b & 128);
+            m_state = State_Text;
+            break;
+
+        case State_Feed_J:
+            m_cursorY += b;
+            if (m_cursorY > m_paper.height() - marginTop) {
+                QImage longerPaper(m_paper.width(), m_paper.height() + pageLen, QImage::Format_RGB32);
                 fillPaperBackground(longerPaper);
                 QPainter p(&longerPaper);
                 p.drawImage(0, 0, m_paper);
@@ -207,15 +243,8 @@ void EpsonPrinter::parsePrintJob(const QByteArray &data)
             m_state = State_Text;
             break;
 
-        case State_Spacing_A:
-            m_lineHeight = b * 3;
-            m_state = State_Text;
-            break;
-
-        case State_Spacing_3:
-            m_lineHeight = b;
-            m_state = State_Text;
-            break;
+        case State_Spacing_A: m_lineHeight = b * 3; m_state = State_Text; break;
+        case State_Spacing_3: m_lineHeight = b; m_state = State_Text; break;
 
         case State_Graphic_N1:
             m_graphicBytesExpected = b;
@@ -225,14 +254,12 @@ void EpsonPrinter::parsePrintJob(const QByteArray &data)
         case State_Graphic_N2:
             m_graphicBytesExpected += (b * 256);
             m_currentGraphicPayload.clear();
-
             if (m_graphicBytesExpected > 0) m_state = State_Graphic_Data;
             else m_state = State_Text;
             break;
 
         case State_Graphic_Data:
             m_currentGraphicPayload.append(b);
-
             if (m_currentGraphicPayload.size() >= m_graphicBytesExpected) {
                 drawGraphics(m_currentGraphicPayload);
                 m_state = State_Text;
@@ -240,28 +267,41 @@ void EpsonPrinter::parsePrintJob(const QByteArray &data)
             break;
         }
     }
-
     emit paperUpdated(m_paper);
 }
 
 
 char EpsonPrinter::translateAtascii(unsigned char b)
 {
-    b = b & 0x7F; // Strip inverse video bit
-    if (b == 0) return 0; // Drop null padding completely
-    if (b < 32 || b > 126) return ' '; // Turn weird control characters into blank spaces
+    b = b & 0x7F;
+    if (b == 0) return 0;
+    if (b < 32 || b > 126) return ' ';
     return b;
 }
 
 void EpsonPrinter::initializePaper()
 {
-    // TRUE HARDWARE MATRIX: 8.5" x 11" at 240 DPI (X) and 216 DPI (Y)
-    m_paper = QImage(2040, 2376, QImage::Format_RGB32);
+    int marginLeft = aspeqtSettings->printerMarginLeft();
+    int marginTop = aspeqtSettings->printerMarginTop();
+    int pageLen = aspeqtSettings->printerMarginLength();
+
+    m_paper = QImage(2040, pageLen, QImage::Format_RGB32);
     fillPaperBackground(m_paper);
 
-    m_cursorX = 60; // 0.5 inch left margin
-    m_cursorY = 108; // 0.5 inch top margin
+    m_cursorX = marginLeft;
+    m_cursorY = marginTop;
     m_lineHeight = 36;
+
+    // --- RESET HARDWARE SWITCHES ---
+    m_isBold = false;
+    m_isUnderlined = false;
+    m_isItalic = false;
+    m_isCondensed = false;
+    m_isExpanded = false;
+
+    m_isElite = false;
+    m_isProportional = false;
+    m_scriptMode = 0;
 }
 
 
@@ -273,17 +313,14 @@ void EpsonPrinter::drawGraphics(const QByteArray &payload)
     painter.setPen(Qt::NoPen);
     painter.setBrush(Qt::black);
 
-    // Horizontal DPI is 240.
-    int dotWidth = 1; // Quad (Z - 240 DPI) is 1 pixel wide
-    if (m_currentGraphicMode == 'K') dotWidth = 4;      // Single (K - 60 DPI) is 4 pixels wide
-    else if (m_currentGraphicMode == 'L' || m_currentGraphicMode == 'Y') dotWidth = 2; // Double (L/Y - 120 DPI) is 2 pixels wide
+    int dotWidth = 1;
+    if (m_currentGraphicMode == 'K') dotWidth = 4;
+    else if (m_currentGraphicMode == 'L' || m_currentGraphicMode == 'Y') dotWidth = 2;
 
     for(int i = 0; i < payload.size(); i++) {
         unsigned char col = static_cast<unsigned char>(payload[i]);
-
         for(int pin = 0; pin < 8; pin++) {
             if(col & (128 >> pin)) {
-                // Vertical pins are 1/72 inch apart. At 216 DPI, each dot is 3 pixels tall!
                 painter.drawRect(m_cursorX, m_cursorY + (pin * 3), dotWidth, 3);
             }
         }
@@ -298,32 +335,52 @@ void EpsonPrinter::drawTextString(const QString &text)
     QPainter painter(&m_paper);
     painter.setPen(Qt::black);
 
-    // --- UPGRADED FONT ---
-    QFont font("Courier New"); // A slightly crisper monospaced font
-    font.setPixelSize(30);     // Force exactly 30 pixels tall so it perfectly fills our 36-pixel line height!
-    //font.setWeight(QFont::Bold); // Give it that heavy dot-matrix ink look
+    // Swap to a proportional font if requested, otherwise stick to monospace
+    QString fontFamily = m_isProportional ? "Helvetica" : "Courier New";
+    QFont font(fontFamily);
+
+    int yOffset = 0;
+
+    // Handle Super/Subscript sizing and Y-axis offsets
+    if (m_scriptMode != 0) {
+        font.setPixelSize(18); // Squish the font
+        if (m_scriptMode == 1) yOffset = -8; // Superscript moves up
+        else if (m_scriptMode == 2) yOffset = 8; // Subscript moves down
+    } else {
+        font.setPixelSize(30);
+    }
+
+    font.setWeight(m_isBold ? QFont::Black : QFont::Medium);
+    font.setUnderline(m_isUnderlined);
+    font.setItalic(m_isItalic);
+
+    // Calculate Pitch Stretching
+    int stretch = 100;
+    if (m_isCondensed) stretch = 60;         // ~17 CPI
+    else if (m_isElite) stretch = 83;        // 12 CPI vs standard 10 CPI
+
+    if (m_isExpanded) stretch *= 2;          // Double the calculated width
+
+    font.setStretch(stretch);
     painter.setFont(font);
 
     QFontMetrics metrics(font);
 
-    // Instead of hardcoding "27", we ask Qt exactly where the baseline should sit
-    // based on whatever font and size we chose above!
-    painter.drawText(m_cursorX, m_cursorY + metrics.ascent(), text);
-
+    painter.drawText(m_cursorX, m_cursorY + metrics.ascent() + yOffset, text);
     m_cursorX += metrics.horizontalAdvance(text);
 }
 
-
-
 void EpsonPrinter::lineFeed()
 {
-    m_cursorX = 60; // Return to left margin
+    int marginLeft = aspeqtSettings->printerMarginLeft();
+    int marginTop = aspeqtSettings->printerMarginTop();
+    int pageLen = aspeqtSettings->printerMarginLength();
+
+    m_cursorX = marginLeft;
     m_cursorY += m_lineHeight;
 
-    // Tractor Feed at 216 DPI (11 inches = 2376 pixels)
-    // ALWAYS grow the canvas in memory so pages aren't lost
-    if (m_cursorY > m_paper.height() - 108) {
-        QImage longerPaper(m_paper.width(), m_paper.height() + 2376, QImage::Format_RGB32);
+    if (m_cursorY > m_paper.height() - marginTop) {
+        QImage longerPaper(m_paper.width(), m_paper.height() + pageLen, QImage::Format_RGB32);
         fillPaperBackground(longerPaper);
 
         QPainter p(&longerPaper);
@@ -339,22 +396,16 @@ void EpsonPrinter::fillPaperBackground(QImage &img)
     int style = aspeqtSettings->printerStyle();
 
     if (style == 2) {
-        // Style 2: Aged Yellow Paper
-        img.fill(QColor(255, 248, 220)); // Vintage Cornsilk
+        img.fill(QColor(255, 248, 220));
     } else {
-        // Base white for both Pure White and Green-Bar
         img.fill(Qt::white);
-
         if (style == 1) {
-            // Style 1: Vintage Green-Bar
             QPainter p(&img);
             p.setPen(Qt::NoPen);
-            p.setBrush(QColor(225, 255, 225)); // Light printer green
+            p.setBrush(QColor(225, 255, 225));
 
-            // Standard green-bar paper has alternating 1/2 inch horizontal bars.
-            // At our 216 DPI vertical matrix, 1/2 inch is exactly 108 pixels.
             for (int y = 0; y < img.height(); y += 216) {
-                p.drawRect(0, y, img.width(), 108);
+                p.drawRect(0, y, img.width(), 60);
             }
         }
     }

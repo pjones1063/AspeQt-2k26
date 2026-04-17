@@ -118,7 +118,7 @@
         <div class="toolbar-group">
             <button id="btn-emulation" class="tool-btn" onclick="if(backend) backend.toggleEmulationUi()" title="Start/Stop Emulation"><i class="bi bi-play-fill"></i></button>
             <button id="btn-printer" class="tool-btn" onclick="if(backend) backend.togglePrinterUi()" title="Toggle Printer"><i class="bi bi-printer"></i></button>
-            <button class="tool-btn" onclick="if(backend) backend.requestPrinterTextUi()" title="View Printed Text"><i class="bi bi-receipt"></i></button>
+            <button class="tool-btn" onclick="if(backend) backend.requestPrinterImageUi()" title="View Printed Page"><i class="bi bi-receipt"></i></button>
             <button class="tool-btn" onclick="if(backend) backend.requestLogTextUi()" title="Show System Log"><i class="bi bi-card-text"></i></button>
         </div>
 
@@ -245,11 +245,12 @@
     <div id="printer-modal" class="modal">
         <div class="modal-content" style="max-width: 800px;">
             <div class="modal-header">
-                <h3>Printer Spool (ASCII)</h3>
+                <h3>Live Printout</h3>
                 <button class="close-btn" onclick="closePrinterModal()"><i class="bi bi-x-lg"></i></button>
             </div>
-            <div class="modal-body">
-                <pre class="log-content" id="printer-text-area" style="color: #55ff55;">Loading...</pre>
+            <div class="modal-body" style="text-align: center; background: #e0e0e0; padding: 20px; overflow-y: auto;">
+                <img id="printer-image" src="" style="max-width: 100%; height: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.5); display: none;">
+                <div id="printer-empty-msg" style="color: var(--text-main); font-weight: bold;">Printer spool is currently empty.</div>
             </div>
         </div>
     </div>
@@ -541,12 +542,21 @@
                         textArea.scrollTop = textArea.scrollHeight;
                     });
                     
-                    backend.printerTextReceived.connect(function(text) {
-                        const textArea = document.getElementById('printer-text-area');
-                        textArea.innerText = text || "Printer spool is currently empty.";
+                    backend.printerImageReceived.connect(function(base64Data) {
+                        const img = document.getElementById('printer-image');
+                        const msg = document.getElementById('printer-empty-msg');
+
+                        if (base64Data) {
+                            img.src = "data:image/png;base64," + base64Data;
+                            img.style.display = "inline-block";
+                            msg.style.display = "none";
+                        } else {
+                            img.style.display = "none";
+                            msg.style.display = "block";
+                        }
                         document.getElementById('printer-modal').style.display = 'block';
-                        textArea.scrollTop = textArea.scrollHeight;
                     });
+
                     
                     backend.notificationReceived.connect(function(message, isError) {
                         showToast(message, isError);

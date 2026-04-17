@@ -77,7 +77,7 @@
             font-size: 18px;
             font-weight: 600;
         }
-        
+
         h4 {
             color: #444;
             margin-top: 20px;
@@ -145,7 +145,7 @@
             margin: 20px 0;
             font-size: 14px;
         }
-        
+
         .warning {
             background-color: #fff4e5;
             border-left: 4px solid #ff9900;
@@ -179,7 +179,7 @@
             text-align: center;
             font-size: 12px;
         }
-        
+
         .footer a { color: #fff; }
     </style>
 </head>
@@ -188,7 +188,7 @@
     <div class="header-container">
         <h1>AspeQt-2k26</h1>
         <p class="subtitle">High-Performance Peripheral Emulator for Atari 8-Bit Computers</p>
-        
+
         <div class="nav-bar">
             <a href="#intro">Introduction</a>
             <a href="#sio">High-Speed SIO</a>
@@ -237,7 +237,7 @@
 
         <a name="tnfs"></a>
         <h2>TNFS Client</h2>
-        <p>AspeQt-2k26 includes native support for TNFS (The Network File System), allowing you to mount and stream disk images directly from the internet using the FujiNet protocol. Access this via the <b>Tools</b> menu.</p>
+        <p>AspeQt-2k26 includes native support for TNFS (The Network File System), allowing you to mount and stream disk images directly from the internet using the FujiNet protocol. Access this by clicking the <b>Network / World icon</b> directly on any disk drive slot, or by right-clicking a slot to access the context menu.</p>
 
         <a name="modem"></a>
         <h2>Modem Bridge (Internet Adapter via PC)</h2>
@@ -249,7 +249,7 @@
             <li><b>Disk I/O Path:</b> Atari SIO -> SIO2PC -> PC USB (COM A). Handles D1: through D8:.</li>
             <li><b>Modem Path:</b> Atari 850 (Port 1) -> Null Modem -> PC USB (COM B). Handles R: (The Modem Bridge).</li>
         </ul>
-        
+
         <div class="diagram-block">
    [ ATARI COMPUTER ]                                      [ PC / ASPEQT ]
    +----------------+                                   +---------------------+
@@ -272,7 +272,7 @@
 
         <h3>2. Configuration Reference</h3>
         <p>Configure the bridge settings via Tools > Options > Modem Bridge. Correct settings are vital for stable communication.</p>
-        
+
         <table>
             <tr>
                 <th style="width: 180px;">Setting</th>
@@ -437,7 +437,7 @@
 
         <h3>Method 1: USB FTDI Adapters (Windows/macOS/Linux)</h3>
         <p>You can use a standard USB-to-TTL adapter (like the FT232RL) for R: Device emulation, provided it has the <b>CTS pin</b> wired to the Atari's Command line (SIO Pin 7). Set Handshake to "CTS" in AspeQt's options.</p>
-        
+
         <div class="warning">
             <b>Important Note on CTS Inversion:</b> Legacy Atari software was built around physical RS-232 adapters that inverted logic signals. Most modern, generic FT232 breakout boards use standard TTL logic (non-inverted). If your R: Device emulation instantly drops or exits stream mode, the software is expecting an inverted signal. To fix this, simply toggle the <b>"Invert CTS Logic"</b> setting in the AspeQt-2k26 options, or use the free FT_PROG utility to flash the hardware EEPROM on your FTDI chip to invert the CTS pin permanently.
         </div>
@@ -449,7 +449,7 @@
         <p>To use the advanced hardware features (like the R: Device), you must install the Qt6 and libgpiod v2 libraries on your Raspberry Pi:</p>
         <div class="code-block">sudo apt update
 sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 libqt6network6 libgpiod-dev libgpiodcxx-dev</div>
-        
+
         <h4>2. Hardware Interfacing (GPIO to SIO)</h4>
         <p>To use the pure-software R: Device emulation, you must wire the Atari SIO bus directly to the Raspberry Pi's UART and GPIO pins.</p>
 
@@ -495,7 +495,7 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
                 <td>Pi Pin 6 (GND)</td>
             </tr>
         </table>
-        
+
         <div class="note">
             <b>The Bus Contention Diode:</b> Because the Atari SIO bus is a shared daisy-chain, modern push-pull logic shifters will forcefully hold the SIO data line at 5V, overpowering vintage hardware (like the 1050 disk drive). You <b>must</b> install a switching diode (1N4148 or 1N914) inline on the Pi's Transmit TX line (between Shifter HV1 and SIO Pin 3). The diode's black stripe (Cathode) must point towards the Raspberry Pi.
         </div>
@@ -535,7 +535,30 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
 
         <a name="printer"></a>
         <h2>Printer Emulation (P:)</h2>
-        <p>Output sent to <span class="code-snippet">P:</span> is captured by AspeQt. View the output via <b>Tools &gt; View Printer Output</b>.</p>
+        <p>AspeQt-2k26 features a fully graphical, high-fidelity <b>Epson FX-80</b> 9-pin printer emulator. Output sent to the <span class="code-snippet">P:</span> device is captured and rendered in real-time onto a virtual 240x216 DPI canvas. View the live printout by clicking the <b>Show printer text output</b> button on the main toolbar (the page icon), or via <b>File &gt; Show printer text output</b>.</p>
+
+        <h3>Supported Features</h3>
+        <ul>
+            <li><b>Standard Text &amp; Styling:</b> Full support for standard ATASCII text, plus Epson hardware styles including Bold, Italics, Underline, Condensed, Expanded, Elite, and Proportional spacing.</li>
+            <li><b>High-Resolution Graphics:</b> Fully supports 8-bit graphical printing from software like <i>The Print Shop</i>, <i>AtariWriter</i>, and custom BASIC graphics routines.</li>
+        </ul>
+
+        <h3>Paper Styles &amp; Margins</h3>
+        <p>You can customize the appearance and dimensions of your virtual paper by navigating to <b>Tools &gt; Options &gt; Printer</b>.</p>
+        <ul>
+            <li><b>Paper Styles:</b> Choose between Standard White, Vintage Green-Bar, or Yellowed paper aesthetics.</li>
+            <li><b>Custom Margins:</b> Adjust the Top Margin, Left Margin, and Page Length (measured in pixels, where 216 pixels = 1 inch vertically). For standard 11-inch paper, the Page Length is 2376.</li>
+        </ul>
+
+        <h3>Exporting and Feed Modes</h3>
+        <p>From the Printer Output window, you can Save or Print your documents. How the document is exported depends on your <b>Feed Mode</b> setting:</p>
+        <ul>
+            <li><b>Tractor Feed (Continuous):</b> The paper acts as an infinite scrolling banner. Saving to PDF or PNG will generate one massive, continuous page. Ideal for printing banners from <i>The Print Shop</i>.</li>
+            <li><b>Single Sheet (Paginated):</b> The emulator slices the continuous graphics canvas into individual pages based on your configured Page Length. Saving to PDF will generate a standard, multi-page document perfect for modern desktop printing.</li>
+        </ul>
+
+        <h3>Mobile Viewing</h3>
+        <p>You can also view a live, auto-updating snapshot of your printout directly from your smartphone by tapping the <b>Receipt Icon</b> in the Web Dashboard.</p>
 
         <a name="clipboard"></a>
         <h2>The Y: Device (Clipboard Bridge)</h2>
@@ -641,7 +664,7 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
         <a name="webui"></a>
         <h2>Interactive Web Dashboard (Remote UI)</h2>
         <p>AspeQt-2k26 features a fully responsive HTML5 web interface that allows you to control the emulator remotely from your smartphone, tablet, or another PC on your local network.</p>
-        
+
         <h3>Accessing the Web UI</h3>
         <p>Ensure that the Web UI is enabled in <b>Options &gt; General</b>. Once enabled, open a web browser on any device connected to your local network and navigate to:</p>
         <div class="code-block">http://&lt;Your-PC-IP-Address&gt;:8080</div>

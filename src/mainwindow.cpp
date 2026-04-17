@@ -17,6 +17,7 @@
 #include <QFile>
 #include <QTcpServer>
 #include <QDateTime>
+#include <QBuffer>
 
 #include "tnfsbrowser.h"
 #include "tnfsimage.h"
@@ -3280,12 +3281,21 @@ void MainWindow::toggleWriteProtectHeadless(int no, bool enabled)
     }
 }
 
-QString MainWindow::getPrinterText() {
+
+QString MainWindow::getPrinterImageBase64() {
     if (textPrinterWindow) {
-        return textPrinterWindow->getAsciiText();
+        QImage img = textPrinterWindow->getPaperImage();
+        if (!img.isNull()) {
+            QByteArray ba;
+            QBuffer buffer(&ba);
+            buffer.open(QIODevice::WriteOnly);
+            img.save(&buffer, "PNG"); // Compress the canvas to a PNG
+            return QString(ba.toBase64()); // Encode for WebSockets
+        }
     }
     return "";
 }
+
 
 void MainWindow::startWebUi() {
     // 1. Create and start WebSocket Server
