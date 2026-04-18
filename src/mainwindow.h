@@ -104,6 +104,7 @@ public slots:
     void toggleAutoSaveHeadless(int no);
     void toggleEmulationHeadless();
     void togglePrinterHeadless();
+    void handle_actionSwap_triggered(int deviceId);
     void mountTnfsHeadless(int no, const QString &url);
     void createBlankDiskHeadless(int slot, const QString &folder, const QString &fileName, int type);
     void uploadAndMountHeadless(int slot, const QString &fileName, const QString &base64Data);

@@ -47,6 +47,7 @@ void DriveWidget::setup()
     FormatStatusTip(ui->actionMountDisk, driveTxt);
     FormatStatusTip(ui->actionMountFolder, driveTxt);
     FormatStatusTip(ui->actionEject, driveTxt);
+    FormatStatusTip(ui->actionSwap, driveTxt); // <-- SWAP
     FormatStatusTip(ui->actionWriteProtect, driveTxt);
     FormatStatusTip(ui->actionEditDisk, driveTxt);
 
@@ -58,6 +59,7 @@ void DriveWidget::setup()
     insertAction(0, ui->actionMountDisk);
     insertAction(0, ui->actionMountFolder);
     insertAction(0, ui->actionEject);
+    insertAction(0, ui->actionSwap); // <-- SWAP
     insertAction(0, ui->actionWriteProtect);
     insertAction(0, ui->actionEditDisk);
     insertAction(0, ui->actionInfo);
@@ -69,6 +71,7 @@ void DriveWidget::setup()
     ui->buttonMountDisk->setDefaultAction(ui->actionMountDisk);
     ui->buttonMountFolder->setDefaultAction(ui->actionMountFolder);
     ui->buttonEject->setDefaultAction(ui->actionEject);
+    ui->buttonSwap->setDefaultAction(ui->actionSwap); // <-- SWAP
     ui->buttonInfo->setDefaultAction(ui->actionInfo);
     ui->buttonSave->setDefaultAction(ui->actionSave);
     ui->autoSave->setDefaultAction(ui->actionAutoSave);
@@ -241,6 +244,7 @@ void DriveWidget::setIconSize(const QSize &size)
     ui->buttonEditDisk->setIconSize(size);
     ui->buttonInspectSectors->setIconSize(size);
     ui->buttonHappyMode->setIconSize(size);
+    ui->buttonSwap->setIconSize(size); // <-- SWAP
     ui->buttonEject->setIconSize(size);
     ui->buttonInfo->setIconSize(size);
 }
@@ -275,3 +279,5 @@ QString DriveWidget::getFileProps() const { return ui->labelImageProperties->tex
 QString DriveWidget::getFullPath() const { return m_fullPath; } // Return internal path
 
 void DriveWidget::on_actionInfo_triggered() { emit actionInfo(driveNo_); }
+void DriveWidget::on_actionSwap_triggered() { emit actionSwap(driveNo_); }
+

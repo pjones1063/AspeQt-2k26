@@ -772,8 +772,8 @@ void MainWindow::createDeviceWidgets()
         connect(this, SIGNAL(setFont(const QFont&)), deviceWidget, SLOT(setFont(const QFont&)));
         connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(handle_actionHappyMode_triggered(int,bool)));
         connect(deviceWidget, SIGNAL(actionInspectSectors(int)), this, SLOT(handle_actionInspectSectors_triggered(int)));
+        connect(deviceWidget, SIGNAL(actionSwap(int)), this, SLOT(handle_actionSwap_triggered(int)));
         connect(diskWidgets[i], SIGNAL(actionInfo(int)), this, SLOT(handle_actionInfo_triggered(int)));
-
     }
 
     ui->leftColumn->setAlignment(Qt::AlignTop);
@@ -3607,4 +3607,44 @@ void MainWindow::onPacketInjectionRequested(const QByteArray &data) {
 
     // We pass the raw bytes down to the SioWorker thread
     sio->injectVirtualPacket(data);
+}
+
+
+void MainWindow::handle_actionSwap_triggered(int deviceId)
+{
+    int slot1 = deviceId;
+
+    // Calculate the next slot down. If it's the last slot (14), wrap around to slot 0!
+    int slot2 = (deviceId + 1) % DISK_COUNT;
+
+    // 1. Tell the SIO Worker to swap the active handlers in memory
+    sio->swapDevices(slot1 + DISK_BASE_CDEVIC, slot2 + DISK_BASE_CDEVIC);
+
+    // 2. Update the persistent settings so the session saves correctly
+    aspeqtSettings->swapImages(slot1, slot2);
+
+    // 3. Handle PCLINK links (Crucial if they are swapping Mounted Folders)
+    PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(PCLINK_CDEVIC));
+    if (pclink && (pclink->hasLink(slot1 + 1) || pclink->hasLink(slot2 + 1))) {
+        sio->uninstallDevice(PCLINK_CDEVIC);
+        pclink->swapLinks(slot1 + 1, slot2 + 1);
+        sio->installDevice(PCLINK_CDEVIC, pclink);
+    }
+
+    // 4. Force a complete UI refresh for both affected DriveWidgets
+    deviceStatusChanged(slot1 + DISK_BASE_CDEVIC);
+    deviceStatusChanged(slot2 + DISK_BASE_CDEVIC);
+
+    // 5. Retrieve the updated filenames for the log message
+    QString name1 = diskWidgets[slot1]->getFileName();
+    QString name2 = diskWidgets[slot2]->getFileName();
+
+    // Make sure empty slots print nicely instead of leaving a blank space
+    if (name1.isEmpty()) name1 = tr("Empty");
+    if (name2.isEmpty()) name2 = tr("Empty");
+
+    // 6. Print the detailed swap log
+    qDebug() << "!i" << tr("Swapped - Slot %1 -> %2  |  Slot %3 -> %4")
+                            .arg(slot1 + 1).arg(name1)
+                            .arg(slot2 + 1).arg(name2);
 }

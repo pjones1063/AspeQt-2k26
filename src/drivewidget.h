@@ -61,6 +61,7 @@ signals:
     void actionHappyMode(int deviceId, bool enabled);
     void actionInspectSectors(int deviceId);
     void actionInfo(int deviceId);
+    void actionSwap(int deviceId);
 
 private slots:
     void setFont(const QFont& font);
@@ -76,6 +77,7 @@ private slots:
     void on_actionBootOption_triggered();
     void on_actionHappyMode_toggled(bool state);
     void on_actionInfo_triggered();
+    void on_actionSwap_triggered();
 
 private:
     Ui::DriveWidget *ui;

@@ -124,6 +124,9 @@
     <widget class="QToolButton" name="buttonInfo" />
    </item>
    <item>
+    <widget class="QToolButton" name="buttonSwap" />
+   </item>
+   <item>
     <widget class="QToolButton" name="buttonEject" />
    </item>
   </layout>
@@ -250,6 +253,21 @@
    </property>
    <property name="statusTip">
     <string>Open low-level sector inspector for D%1</string>
+   </property>
+  </action>
+  <action name="actionSwap">
+   <property name="icon">
+    <iconset resource="../res/icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_up_down.png</normaloff>:/icons/silk-icons/icons/arrow_up_down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Swap Down</string>
+   </property>
+   <property name="toolTip">
+    <string>Swap this disk with the slot below it</string>
+   </property>
+   <property name="statusTip">
+    <string>Swap D%1 with the slot below it</string>
    </property>
   </action>
   <action name="actionInfo">
