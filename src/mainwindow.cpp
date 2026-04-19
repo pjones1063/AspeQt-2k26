@@ -770,6 +770,7 @@ void MainWindow::createDeviceWidgets()
         connect(deviceWidget, SIGNAL(actionSaveAs(int)), this, SLOT(handle_actionSaveAs_triggered(int)));
         connect(deviceWidget, SIGNAL(actionBootOptions(int)), this, SLOT(on_actionBootOption_triggered()));
         connect(this, SIGNAL(setFont(const QFont&)), deviceWidget, SLOT(setFont(const QFont&)));
+        connect(deviceWidget, SIGNAL(actionNewDisk(int)), this, SLOT(handle_actionNewDisk_triggered(int)));
         connect(deviceWidget, SIGNAL(actionHappyMode(int,bool)), this, SLOT(handle_actionHappyMode_triggered(int,bool)));
         connect(deviceWidget, SIGNAL(actionInspectSectors(int)), this, SLOT(handle_actionInspectSectors_triggered(int)));
         connect(deviceWidget, SIGNAL(actionSwap(int)), this, SLOT(handle_actionSwap_triggered(int)));
@@ -3647,4 +3648,53 @@ void MainWindow::handle_actionSwap_triggered(int deviceId)
     qDebug() << "!i" << tr("Swapped - Slot %1 -> %2  |  Slot %3 -> %4")
                             .arg(slot1 + 1).arg(name1)
                             .arg(slot2 + 1).arg(name2);
+}
+
+
+void MainWindow::handle_actionNewDisk_triggered(int deviceId)
+{
+    // Open the standard formatting dialog
+    CreateImageDialog dlg(this);
+    if (!dlg.exec()) {
+        return;
+    };
+
+    SimpleDiskImage *disk = new SimpleDiskImage(sio);
+    connect(disk, SIGNAL(statusChanged(int)), this, SLOT(deviceStatusChanged(int)), Qt::QueuedConnection);
+
+    // Initialize an empty in-memory image
+    if (!disk->create(++untitledName)) {
+        delete disk;
+        return;
+    }
+
+    // Calculate Sector Math based on the user's dialog choices
+    DiskGeometry g;
+    uint size = dlg.sectorCount() * dlg.sectorSize();
+    if (dlg.sectorSize() == 256) {
+        if (dlg.sectorCount() >= 3) size -= 384;
+        else size -= dlg.sectorCount() * 128;
+    }
+    g.initialize(size, dlg.sectorSize());
+
+    // Format the disk
+    if (!disk->format(g)) {
+        delete disk;
+        return;
+    }
+
+    // Safety: Forcibly eject whatever is currently in this specific slot
+    if (!ejectImage(deviceId)) {
+        delete disk;
+        return;
+    }
+
+    // Install it into the SIO bus!
+    sio->installDevice(DISK_BASE_CDEVIC + deviceId, disk);
+    deviceStatusChanged(DISK_BASE_CDEVIC + deviceId);
+
+    qDebug() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
+                            .arg(disk->deviceName())
+                            .arg(disk->originalFileName())
+                            .arg(disk->description());
 }

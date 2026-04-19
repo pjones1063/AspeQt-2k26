@@ -55,7 +55,8 @@ public slots:
     void rewindCasUi();
     void ejectCasUi();
 
-    void requestCurrentSavePathUi(); // NEW
+    void requestCurrentSavePathUi();
+    void swapDiskUi(int slot);
 
 private slots:
     void fetchNextTnfsBatch(); // Fired by the QTimer

@@ -310,6 +310,7 @@
                     <button class="drive-btn" onclick="uiActionMountDisk(${index})" title="Mount Disk"><i class="bi bi-floppy"></i></button>
                     <button class="drive-btn" style="color: var(--primary);" onclick="uiActionPromptNewDisk(${index})" title="Create Blank Disk"><i class="bi bi-file-earmark-plus"></i></button>
                     <button class="drive-btn" onclick="uiActionMountFolder(${index})" title="Mount Folder"><i class="bi bi-folder"></i></button>
+                    <button class="drive-btn" onclick="uiActionSwap(${index})" title="Exchange with next drive"><i class="bi bi-arrow-down-up"></i></button>
                     <button id="btn-save-${index}" class="drive-btn" onclick="uiActionSave(${index})" title="Save"><i class="bi bi-device-hdd"></i></button>
                     <button id="btn-autosave-${index}" class="drive-btn" onclick="uiActionAutoSave(${index})" title="Auto Save"><i class="bi bi-arrow-repeat"></i></button>
                     <button id="btn-happy-${index}" class="drive-btn" onclick="uiActionHappy(${index})" title="Happy Mode"><i class="bi bi-emoji-smile"></i></button>
@@ -777,6 +778,7 @@
         function uiActionAutoSave(slot) { if(backend) backend.toggleAutoSaveUi(slot); }
         function uiActionHappy(slot) { if(backend) backend.setHappyModeUi(slot, !driveStates[slot].happyMode); }
         function uiActionToggleLock(slot) { if(backend) backend.toggleWriteProtectUi(slot, !driveStates[slot].writeProtected); }
+        function uiActionSwap(slot) { if(backend) backend.swapDiskUi(slot); }
         function uiActionEject(slot) { if(backend) backend.ejectDiskUi(slot); }
         function uiActionSave(slot) { if(backend) backend.saveDiskUi(slot); flashButtonFeedback(`btn-save-${slot}`); }
         function uiActionHangup() { if(backend) backend.hangupUi(); flashButtonFeedback('btn-hangup'); }

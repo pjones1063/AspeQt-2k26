@@ -46,6 +46,10 @@ public:
     QString getFileProps() const;
     QString getFullPath() const;
 
+protected:
+    void resizeEvent(QResizeEvent *event) override; //
+
+
 signals:
     void actionMountDisk(int deviceId);
     void actionMountFolder(int deviceId);
@@ -62,6 +66,7 @@ signals:
     void actionInspectSectors(int deviceId);
     void actionInfo(int deviceId);
     void actionSwap(int deviceId);
+    void actionNewDisk(int deviceId);
 
 private slots:
     void setFont(const QFont& font);
@@ -78,11 +83,15 @@ private slots:
     void on_actionHappyMode_toggled(bool state);
     void on_actionInfo_triggered();
     void on_actionSwap_triggered();
+    void on_actionNewDisk_triggered();
 
 private:
     Ui::DriveWidget *ui;
+    void updateElidedText();
+    QString m_displayFileName;
     int driveNo_;
-    QString m_fullPath; // <-- Stores the path invisibly
+    QString m_fullPath;
+
 };
 
 #endif // DRIVEWIDGET_H

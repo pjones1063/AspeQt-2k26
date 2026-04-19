@@ -29,6 +29,7 @@ void WebBridge::ejectDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMetho
 void WebBridge::saveDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionSave_triggered", Q_ARG(int, slot)); }
 void WebBridge::setHappyModeUi(int slot, bool enabled) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionHappyMode_triggered", Q_ARG(int, slot), Q_ARG(bool, enabled)); }
 void WebBridge::toggleAutoSaveUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "toggleAutoSaveHeadless", Q_ARG(int, slot)); }
+void WebBridge::swapDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "handle_actionSwap_triggered", Q_ARG(int, slot)); }
 
 void WebBridge::hangupUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "hangupModem"); }
 void WebBridge::macroUserUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "sendMacroUser"); }

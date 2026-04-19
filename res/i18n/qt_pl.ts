@@ -1039,92 +1039,122 @@ Szacowany pozostały czas: %1:%2</translation>
         <translation>1:</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="136" />
+        <location filename="../../src/drivewidget.ui" line="129" />
         <source>Mount disk image...</source>
         <translation>Zamontuj obraz dysku...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="145" />
+        <location filename="../../src/drivewidget.ui" line="138" />
+        <source>Create blank disk...</source>
+        <translation>Utwórz pusty dysk...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="141" />
+        <source>Create a blank disk and mount it to this slot</source>
+        <translation>Utwórz pusty dysk i zamontuj go w tym gnieździe</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="144" />
+        <source>Create a blank disk and mount it to D%1</source>
+        <translation>Utwórz pusty dysk i zamontuj go w D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="153" />
         <source>Mount folder image...</source>
         <translation>Zamontuj obraz folderu...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="154" />
+        <location filename="../../src/drivewidget.ui" line="162" />
         <source>Unmount</source>
         <translation>Odmontuj</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="163" />
+        <location filename="../../src/drivewidget.ui" line="171" />
         <source>Explore..</source>
         <translation>Badać..</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="172" />
+        <location filename="../../src/drivewidget.ui" line="180" />
         <source>Save</source>
         <translation>Ratować</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="184" />
+        <location filename="../../src/drivewidget.ui" line="192" />
         <source>Auto save</source>
         <translation>Automatyczne zapisywanie</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="196" />
+        <location filename="../../src/drivewidget.ui" line="204" />
         <source>Happy Enhancement</source>
         <translation>Szczęśliwego ulepszenia</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="205" />
+        <location filename="../../src/drivewidget.ui" line="213" />
         <source>Folder Boot Options</source>
         <translation>Opcje uruchamiania folderów</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="208" />
+        <location filename="../../src/drivewidget.ui" line="216" />
         <source>Change Boot Options for D%1</source>
         <translation>Zmień opcje rozruchu dla D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="217" />
+        <location filename="../../src/drivewidget.ui" line="225" />
         <source>Save as...</source>
         <translation>Zapisz jako...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="220" />
+        <location filename="../../src/drivewidget.ui" line="228" />
         <source>Save image as... for D%1</source>
         <translation>Zapisz obraz jako... dla D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="229" />
+        <location filename="../../src/drivewidget.ui" line="237" />
         <source>Revert to original</source>
         <translation>Przywróć oryginał</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="232" />
+        <location filename="../../src/drivewidget.ui" line="240" />
         <source>Revert image to last saved state for D%1</source>
         <translation>Przywróć obraz do ostatnio zapisanego stanu dla D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="240" />
+        <location filename="../../src/drivewidget.ui" line="248" />
         <source>Write protected</source>
         <translation>Zapis chroniony</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="249" />
+        <location filename="../../src/drivewidget.ui" line="257" />
         <source>Inspect Sectors...</source>
         <translation>Sprawdź sektory...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="252" />
+        <location filename="../../src/drivewidget.ui" line="260" />
         <source>Open low-level sector inspector for D%1</source>
         <translation>Otwórz inspektora sektorowego niskiego poziomu dla D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="261" />
+        <location filename="../../src/drivewidget.ui" line="269" />
+        <source>Exchange Drives</source>
+        <translation>Wymiana dysków</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="272" />
+        <source>Exchange this disk with the slot below it (Click twice to toggle)</source>
+        <translation>Wymień ten dysk z gniazdem znajdującym się pod nim (kliknij dwukrotnie, aby przełączyć)</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="275" />
+        <source>Exchange D%1 with the slot below it</source>
+        <translation>Wymień D%1 z gniazdem poniżej</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="284" />
         <source>Drive Info</source>
         <translation>Informacje o napędzie</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="264" />
+        <location filename="../../src/drivewidget.ui" line="287" />
         <source>Show Drive Information</source>
         <translation>Pokaż informacje o dysku</translation>
     </message>
@@ -1520,15 +1550,15 @@ Szacowany pozostały czas: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="203" />
-        <location filename="../../src/mainwindow.cpp" line="1330" />
+        <location filename="../../src/mainwindow.cpp" line="1331" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Rozpocznij emulację</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="206" />
         <location filename="../../src/mainwindow.ui" line="209" />
-        <location filename="../../src/mainwindow.cpp" line="1331" />
         <location filename="../../src/mainwindow.cpp" line="1332" />
+        <location filename="../../src/mainwindow.cpp" line="1333" />
         <source>Start SIO peripheral emulation</source>
         <translation>Rozpocznij emulację urządzeń peryferyjnych SIO</translation>
     </message>
@@ -1627,7 +1657,7 @@ Szacowany pozostały czas: %1:%2</translation>
     <message>
         <location filename="../../src/mainwindow.ui" line="576" />
         <location filename="../../src/mainwindow.ui" line="579" />
-        <location filename="../../src/mainwindow.cpp" line="2740" />
+        <location filename="../../src/mainwindow.cpp" line="2741" />
         <source>Open BBS Phonebook</source>
         <translation>Otwórz książkę telefoniczną BBS</translation>
     </message>
@@ -1673,8 +1703,8 @@ Szacowany pozostały czas: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="505" />
-        <location filename="../../src/mainwindow.cpp" line="1246" />
         <location filename="../../src/mainwindow.cpp" line="1247" />
+        <location filename="../../src/mainwindow.cpp" line="1248" />
         <source>Hide drives D9-DO</source>
         <translation>Ukryj dyski D9-DO</translation>
     </message>
@@ -1799,8 +1829,8 @@ Szacowany pozostały czas: %1:%2</translation>
     <message>
         <location filename="../../src/mainwindow.ui" line="490" />
         <location filename="../../src/mainwindow.ui" line="493" />
-        <location filename="../../src/mainwindow.cpp" line="1298" />
         <location filename="../../src/mainwindow.cpp" line="1299" />
+        <location filename="../../src/mainwindow.cpp" line="1300" />
         <source>Stop printer emulation</source>
         <translation>Zatrzymaj emulację drukarki</translation>
     </message>
@@ -1832,7 +1862,7 @@ Szacowany pozostały czas: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="256" />
-        <location filename="../../src/mainwindow.cpp" line="2388" />
+        <location filename="../../src/mainwindow.cpp" line="2389" />
         <source> -- Session: </source>
         <translation>-- Sesja:</translation>
     </message>
@@ -1847,22 +1877,22 @@ Szacowany pozostały czas: %1:%2</translation>
         <translation>AspeQt zatrzymał się na %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="862" />
+        <location filename="../../src/mainwindow.cpp" line="863" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="916" />
+        <location filename="../../src/mainwindow.cpp" line="917" />
         <source>Cannot mount '%1': No empty disk slots.</source>
         <translation>Nie można zamontować '%1': Brak wolnych miejsc na dysku.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1014" />
+        <location filename="../../src/mainwindow.cpp" line="1015" />
         <source>First run</source>
         <translation>Premiera</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1015" />
+        <location filename="../../src/mainwindow.cpp" line="1016" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1871,61 +1901,62 @@ Do you want to open the options dialog?</source>
 Czy chcesz otworzyć okno dialogowe opcji?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1321" />
+        <location filename="../../src/mainwindow.cpp" line="1322" />
         <source>&amp;Stop emulation</source>
         <translation>&amp;Zatrzymaj emulację</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1322" />
         <location filename="../../src/mainwindow.cpp" line="1323" />
+        <location filename="../../src/mainwindow.cpp" line="1324" />
         <source>Stop SIO peripheral emulation</source>
         <translation>Zatrzymaj emulację urządzeń peryferyjnych SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1337" />
+        <location filename="../../src/mainwindow.cpp" line="1338" />
         <source>Emulation stopped.</source>
         <translation>Emulacja została zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1429" />
-        <location filename="../../src/mainwindow.cpp" line="1450" />
+        <location filename="../../src/mainwindow.cpp" line="1430" />
+        <location filename="../../src/mainwindow.cpp" line="1451" />
         <source>Folder image</source>
         <translation>Obraz folderu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1462" />
-        <location filename="../../src/mainwindow.cpp" line="2098" />
-        <location filename="../../src/mainwindow.cpp" line="2150" />
-        <location filename="../../src/mainwindow.cpp" line="2195" />
+        <location filename="../../src/mainwindow.cpp" line="1463" />
+        <location filename="../../src/mainwindow.cpp" line="2099" />
+        <location filename="../../src/mainwindow.cpp" line="2151" />
+        <location filename="../../src/mainwindow.cpp" line="2196" />
         <source>Save failed</source>
         <translation>Zapisywanie nie powiodło się</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1463" />
-        <location filename="../../src/mainwindow.cpp" line="2098" />
-        <location filename="../../src/mainwindow.cpp" line="2150" />
-        <location filename="../../src/mainwindow.cpp" line="2195" />
+        <location filename="../../src/mainwindow.cpp" line="1464" />
+        <location filename="../../src/mainwindow.cpp" line="2099" />
+        <location filename="../../src/mainwindow.cpp" line="2151" />
+        <location filename="../../src/mainwindow.cpp" line="2196" />
         <source>'%1' cannot be saved, do you want to save the image with another name?</source>
         <translation>Nie można zapisać '% 1'. Czy chcesz zapisać obraz pod inną nazwą?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1779" />
+        <location filename="../../src/mainwindow.cpp" line="1780" />
         <source>Unmounted disk %1</source>
         <translation>Odmontowano dysk %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1952" />
-        <location filename="../../src/mainwindow.cpp" line="2346" />
+        <location filename="../../src/mainwindow.cpp" line="1953" />
+        <location filename="../../src/mainwindow.cpp" line="2347" />
+        <location filename="../../src/mainwindow.cpp" line="3696" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Zamontowano „%2” jako „%3”.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2178" />
+        <location filename="../../src/mainwindow.cpp" line="2179" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation>Wszystkie obrazy dysków Atari (*.atr *.xfd *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2000" />
+        <location filename="../../src/mainwindow.cpp" line="2001" />
         <source>Open a folder image</source>
         <translation>Otwórz obraz folderu</translation>
     </message>
@@ -1957,13 +1988,13 @@ Czy chcesz otworzyć okno dialogowe opcji?</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="348" />
-        <location filename="../../src/mainwindow.cpp" line="2741" />
+        <location filename="../../src/mainwindow.cpp" line="2742" />
         <source>Send Auto-User (ESC-U)</source>
         <translation>Wyślij automatycznego użytkownika (ESC-U)</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="359" />
-        <location filename="../../src/mainwindow.cpp" line="2742" />
+        <location filename="../../src/mainwindow.cpp" line="2743" />
         <source>Send Auto-Pass (ESC-P)</source>
         <translation>Wyślij auto-pass (ESC-P)</translation>
     </message>
@@ -2008,375 +2039,382 @@ Czy chcesz otworzyć okno dialogowe opcji?</translation>
         <translation>Zamontuj TFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1251" />
         <location filename="../../src/mainwindow.cpp" line="1252" />
+        <location filename="../../src/mainwindow.cpp" line="1253" />
         <source>Show drives D9-DO</source>
         <translation>Pokaż dyski D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1362" />
-        <location filename="../../src/mainwindow.cpp" line="2595" />
-        <location filename="../../src/mainwindow.cpp" line="3240" />
+        <location filename="../../src/mainwindow.cpp" line="1363" />
+        <location filename="../../src/mainwindow.cpp" line="2596" />
+        <location filename="../../src/mainwindow.cpp" line="3241" />
         <source>Loading...</source>
         <translation>Załadunek...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1362" />
-        <location filename="../../src/mainwindow.cpp" line="2595" />
-        <location filename="../../src/mainwindow.cpp" line="3240" />
+        <location filename="../../src/mainwindow.cpp" line="1363" />
+        <location filename="../../src/mainwindow.cpp" line="2596" />
+        <location filename="../../src/mainwindow.cpp" line="3241" />
         <source>Downloading from TNFS...</source>
         <translation>Pobieranie z TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1380" />
-        <location filename="../../src/mainwindow.cpp" line="1383" />
+        <location filename="../../src/mainwindow.cpp" line="1381" />
+        <location filename="../../src/mainwindow.cpp" line="1384" />
         <source>Executable (Local)</source>
         <translation>Plik wykonywalny (lokalny)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1737" />
+        <location filename="../../src/mainwindow.cpp" line="1738" />
         <source>Slot %1 download aborted by user.</source>
         <translation>Pobieranie slotu %1 zostało przerwane przez użytkownika.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1967" />
+        <location filename="../../src/mainwindow.cpp" line="1968" />
         <source>Open a disk or executable image</source>
         <translation>Otwórz dysk lub obraz wykonywalny</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1969" />
+        <location filename="../../src/mainwindow.cpp" line="1970" />
         <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
         <translation>Wszystkie obsługiwane obrazy (*.atr *.xfd *.atx *.pro *.xex *.com);;Pliki wykonywalne Atari (*.xex *.com);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy ATX (*.atx);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2047" />
+        <location filename="../../src/mainwindow.cpp" line="2048" />
         <source>Image file unsaved</source>
         <translation>Plik obrazu niezapisany</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2047" />
+        <location filename="../../src/mainwindow.cpp" line="2048" />
         <source>'%1' has unsaved changes, do you want to save it?</source>
         <translation>'% 1' zawiera niezapisane zmiany. Czy chcesz je zapisać?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2139" />
+        <location filename="../../src/mainwindow.cpp" line="2140" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Dysk %1] Automatyczne zatwierdzanie WŁ.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2141" />
+        <location filename="../../src/mainwindow.cpp" line="2142" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Dysk %1] Automatyczne zatwierdzanie WYŁĄCZONE.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2357" />
-        <location filename="../../src/mainwindow.cpp" line="2420" />
+        <location filename="../../src/mainwindow.cpp" line="2358" />
+        <location filename="../../src/mainwindow.cpp" line="2421" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>Sesje AspeQt (*.aspeqt);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2556" />
+        <location filename="../../src/mainwindow.cpp" line="2557" />
         <source>Drive %1 Happy Mode %2.</source>
         <translation>Napęd %1 Tryb szczęśliwy %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2558" />
+        <location filename="../../src/mainwindow.cpp" line="2559" />
         <source>Enabled</source>
         <translation>Włączony</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2558" />
+        <location filename="../../src/mainwindow.cpp" line="2559" />
         <source>Disabled</source>
         <translation>Wyłączony</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2621" />
+        <location filename="../../src/mainwindow.cpp" line="2622" />
         <source>Mounted TNFS Stream: %1</source>
         <translation>Zamontowany strumień TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2639" />
+        <location filename="../../src/mainwindow.cpp" line="2640" />
         <source>Mount Error</source>
         <translation>Błąd montowania</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2639" />
+        <location filename="../../src/mainwindow.cpp" line="2640" />
         <source>Could not open TNFS stream from %1</source>
         <translation>Nie można otworzyć strumienia TNFS z %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2659" />
+        <location filename="../../src/mainwindow.cpp" line="2660" />
         <source>Downloading: %1</source>
         <translation>Pobieranie: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2661" />
+        <location filename="../../src/mainwindow.cpp" line="2662" />
         <source>Downloading...</source>
         <translation>Ściąganie...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2736" />
+        <location filename="../../src/mainwindow.cpp" line="2737" />
         <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
         <translation>Książka telefoniczna wyłączona. Ustaw ścieżkę XML w Opcjach -&gt; Most modemowy.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2737" />
+        <location filename="../../src/mainwindow.cpp" line="2738" />
         <source>Macro User disabled. Set Phonebook XML path in Options.</source>
         <translation>Użytkownik makra wyłączony. Ustaw ścieżkę XML książki telefonicznej w Opcjach.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2738" />
+        <location filename="../../src/mainwindow.cpp" line="2739" />
         <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
         <translation>Przepustka makro wyłączona. Ustaw ścieżkę XML książki telefonicznej w Opcjach.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2788" />
+        <location filename="../../src/mainwindow.cpp" line="2789" />
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2788" />
+        <location filename="../../src/mainwindow.cpp" line="2789" />
         <source>Could not extract manual to: </source>
         <translation>Nie można wyodrębnić instrukcji do:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3100" />
+        <location filename="../../src/mainwindow.cpp" line="3101" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
         <translation>[Interfejs WWW] Ostrzeżenie: Niezapisane zmiany na dysku w gnieździe %1 zostały odrzucone przez wymuszone podłączenie.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3119" />
+        <location filename="../../src/mainwindow.cpp" line="3120" />
         <source>[Web UI] Mounted Executable to slot %1: %2</source>
         <translation>[Interfejs WWW] Zamontowano plik wykonywalny w slocie %1: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3121" />
+        <location filename="../../src/mainwindow.cpp" line="3122" />
         <source>[Web UI] Executable ready. Please cold start the Atari.</source>
         <translation>[Web interfejs użytkownika] Plik wykonywalny gotowy. Proszę o zimny start Atari.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3125" />
+        <location filename="../../src/mainwindow.cpp" line="3126" />
         <source>[Web UI] Failed to parse Executable: %1</source>
         <translation>[Interfejs WWW] Nie udało się przeanalizować pliku wykonywalnego: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3145" />
+        <location filename="../../src/mainwindow.cpp" line="3146" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
         <translation>[Interfejs WWW] Ostrzeżenie: Niezapisane zmiany na dysku w gnieździe %1 zostały odrzucone przez wymuszone wysunięcie.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3209" />
+        <location filename="../../src/mainwindow.cpp" line="3210" />
         <source>[Web UI] Dialing BBS: %1 (%2)</source>
         <translation>[Interfejs WWW] Wybieranie BBS: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3260" />
+        <location filename="../../src/mainwindow.cpp" line="3261" />
         <source>[Web UI] Mounted TNFS Stream: %1</source>
         <translation>[Interfejs internetowy] Zamontowany strumień TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3270" />
+        <location filename="../../src/mainwindow.cpp" line="3271" />
         <source>[Web UI] Failed to mount TNFS Stream: %1</source>
         <translation>[Interfejs WWW] Nie udało się zamontować strumienia TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3271" />
+        <location filename="../../src/mainwindow.cpp" line="3272" />
         <source>Download failed or aborted: %1</source>
         <translation>Pobieranie nie powiodło się lub zostało przerwane: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3279" />
+        <location filename="../../src/mainwindow.cpp" line="3280" />
         <source>[Web UI] Write Protect for slot %1 set to %2</source>
         <translation>[Interfejs WWW] Ochrona przed zapisem dla gniazda %1 ustawiona na %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3308" />
+        <location filename="../../src/mainwindow.cpp" line="3309" />
         <source>Web UI WebSocket Server started on port %1</source>
         <translation>Serwer WebSocket interfejsu użytkownika sieci Web został uruchomiony na porcie %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3310" />
+        <location filename="../../src/mainwindow.cpp" line="3311" />
         <source>Failed to start Web UI WebSocket Server.</source>
         <translation>Nie udało się uruchomić serwera WebSocket interfejsu użytkownika.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3339" />
+        <location filename="../../src/mainwindow.cpp" line="3340" />
         <source>HTTP Dashboard available at http://localhost:%1</source>
         <translation>Panel HTTP dostępny pod adresem http://localhost:%1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3341" />
+        <location filename="../../src/mainwindow.cpp" line="3342" />
         <source>Failed to start HTTP Server.</source>
         <translation>Nie udało się uruchomić serwera HTTP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3369" />
+        <location filename="../../src/mainwindow.cpp" line="3370" />
         <source>Web Dashboard and WebSocket servers completely shut down.</source>
         <translation>Serwery Web Dashboard i WebSocket zostały całkowicie wyłączone.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3379" />
+        <location filename="../../src/mainwindow.cpp" line="3380" />
         <source>[Web UI] Failed to load cassette image: %1</source>
         <translation>[Interfejs WWW] Nie udało się załadować obrazu z kasety: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3389" />
+        <location filename="../../src/mainwindow.cpp" line="3390" />
         <source>[Web UI] Cassette Mounted: %1</source>
         <translation>[Interfejs WWW] Zamontowana na kasecie: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3402" />
+        <location filename="../../src/mainwindow.cpp" line="3403" />
         <source>[Web UI] Cassette is already playing.</source>
         <translation>[Interfejs internetowy] Kaseta już odtwarza.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3406" />
+        <location filename="../../src/mainwindow.cpp" line="3407" />
         <source>[Web UI] Starting Cassette Playback.</source>
         <translation>[Interfejs WWW] Rozpoczęcie odtwarzania kasety.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3421" />
+        <location filename="../../src/mainwindow.cpp" line="3422" />
         <source>[Web UI] Rewinding Cassette...</source>
         <translation>[Interfejs WWW] Przewijanie kasety...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3445" />
+        <location filename="../../src/mainwindow.cpp" line="3446" />
         <source>[Web UI] Cassette Ejected.</source>
         <translation>[Interfejs WWW] Wyrzucono kasetę.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3461" />
+        <location filename="../../src/mainwindow.cpp" line="3462" />
         <source>[Web UI] Cassette Playback Finished.</source>
         <translation>[Interfejs WWW] Zakończono odtwarzanie kasety.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3482" />
+        <location filename="../../src/mainwindow.cpp" line="3483" />
         <source>Failed to initialize blank disk.</source>
         <translation>Nie udało się zainicjować pustego dysku.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3500" />
+        <location filename="../../src/mainwindow.cpp" line="3501" />
         <source>Failed to format blank disk.</source>
         <translation>Nie udało się sformatować pustego dysku.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3519" />
+        <location filename="../../src/mainwindow.cpp" line="3520" />
         <source>Failed to save blank disk to host.</source>
         <translation>Nie udało się zapisać pustego dysku na hoście.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3527" />
+        <location filename="../../src/mainwindow.cpp" line="3528" />
         <source>Blank disk created: %1</source>
         <translation>Utworzono pusty dysk: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3528" />
+        <location filename="../../src/mainwindow.cpp" line="3529" />
         <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
         <translation>[Web interfejs użytkownika] Utworzono i zamontowano pusty dysk: %1 w gnieździe %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3543" />
+        <location filename="../../src/mainwindow.cpp" line="3544" />
+        <location filename="../../src/mainwindow.cpp" line="3644" />
+        <location filename="../../src/mainwindow.cpp" line="3645" />
         <source>Empty</source>
         <translation>Pusty</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3545" />
+        <location filename="../../src/mainwindow.cpp" line="3546" />
         <source>No file mounted.</source>
         <translation>Nie zamontowano żadnego pliku.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3549" />
+        <location filename="../../src/mainwindow.cpp" line="3550" />
         <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;table szerokość='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Gniazdo %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nazwa pliku:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format/typ:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Ścieżka bezwzględna:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3560" />
+        <location filename="../../src/mainwindow.cpp" line="3561" />
         <source>Drive Details</source>
         <translation>Szczegóły napędu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3585" />
+        <location filename="../../src/mainwindow.cpp" line="3586" />
         <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
         <translation>[Web interfejs użytkownika] Zamontowano plik bezpośrednio w pamięci RAM w gnieździe %1: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3588" />
+        <location filename="../../src/mainwindow.cpp" line="3589" />
         <source>Mounted to RAM: %1</source>
         <translation>Zamontowany w pamięci RAM: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3592" />
+        <location filename="../../src/mainwindow.cpp" line="3593" />
         <source>[Web UI] Failed to parse RAM image: %1</source>
         <translation>[Interfejs WWW] Nie udało się przeanalizować obrazu pamięci RAM: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3595" />
+        <location filename="../../src/mainwindow.cpp" line="3596" />
         <source>Failed to parse: %1</source>
         <translation>Nie udało się przeanalizować: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3606" />
+        <location filename="../../src/mainwindow.cpp" line="3607" />
         <source>[Injector] Virtual Packet Step Triggered: %1 bytes</source>
         <translation>[Injector] Wyzwolony krok pakietu wirtualnego: %1 bajtów</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2176" />
+        <location filename="../../src/mainwindow.cpp" line="3648" />
+        <source>Swapped - Slot %1 -&gt; %2  |  Slot %3 -&gt; %4</source>
+        <translation>Zamieniono — miejsce %1 -&gt; %2 |  Miejsce %3 -&gt; %4</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="2177" />
         <source>Save image as</source>
         <translation>Zapisz obraz jako</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2219" />
+        <location filename="../../src/mainwindow.cpp" line="2220" />
         <source>Revert to last saved</source>
         <translation>Przywróć ostatnio zapisane</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2220" />
+        <location filename="../../src/mainwindow.cpp" line="2221" />
         <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
         <translation>Czy na pewno chcesz przywrócić ostatni zapisany stan '%1'? Utracisz wprowadzone zmiany.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2355" />
+        <location filename="../../src/mainwindow.cpp" line="2356" />
         <source>Open session</source>
         <translation>Otwarta sesja</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2418" />
+        <location filename="../../src/mainwindow.cpp" line="2419" />
         <source>Save session as</source>
         <translation>Zapisz sesję jako</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2449" />
+        <location filename="../../src/mainwindow.cpp" line="2450" />
         <source>Open executable</source>
         <translation>Otwórz plik wykonywalny</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2451" />
+        <location filename="../../src/mainwindow.cpp" line="2452" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Pliki wykonywalne Atari (*.xex *.com *.exe);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2483" />
+        <location filename="../../src/mainwindow.cpp" line="2484" />
         <source>Open a cassette image</source>
         <translation>Otwórz obraz kasety</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2485" />
+        <location filename="../../src/mainwindow.cpp" line="2486" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Obrazy CAS (*.cas);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1302" />
         <location filename="../../src/mainwindow.cpp" line="1303" />
+        <location filename="../../src/mainwindow.cpp" line="1304" />
         <source>Start printer emulation</source>
         <translation>Rozpocznij emulację drukarki</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1287" />
+        <location filename="../../src/mainwindow.cpp" line="1288" />
         <source>Printer emulation stopped.</source>
         <translation>Zatrzymano emulację drukarki.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1289" />
+        <location filename="../../src/mainwindow.cpp" line="1290" />
         <source>Printer emulation started.</source>
         <translation>Rozpoczęto emulację drukarki.</translation>
     </message>
@@ -4914,32 +4952,32 @@ Sprawdź internet lub nazwę hosta.</translation>
 <context>
     <name>WebBridge</name>
     <message>
-        <location filename="../../src/webbridge.cpp" line="60" />
+        <location filename="../../src/webbridge.cpp" line="61" />
         <source>Cannot access directory: %1</source>
         <translation>Nie można uzyskać dostępu do katalogu: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="124" />
+        <location filename="../../src/webbridge.cpp" line="125" />
         <source>Phonebook XML is corrupted or invalid!</source>
         <translation>XML książki telefonicznej jest uszkodzony lub nieprawidłowy!</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="129" />
+        <location filename="../../src/webbridge.cpp" line="130" />
         <source>No phonebook found at: %1</source>
         <translation>Nie znaleziono książki telefonicznej pod adresem: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="179" />
+        <location filename="../../src/webbridge.cpp" line="180" />
         <source>TNFS path not found: %1</source>
         <translation>Nie znaleziono ścieżki TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="185" />
+        <location filename="../../src/webbridge.cpp" line="186" />
         <source>Failed to mount TNFS host: %1</source>
         <translation>Nie udało się zamontować hosta TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="192" />
+        <location filename="../../src/webbridge.cpp" line="193" />
         <source>Failed to connect to TNFS host: %1</source>
         <translation>Nie udało się połączyć z hostem TNFS: %1</translation>
     </message>

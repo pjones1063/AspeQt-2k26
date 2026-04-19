@@ -46,6 +46,7 @@ void DriveWidget::setup()
     FormatStatusTip(ui->actionRevert, driveTxt);
     FormatStatusTip(ui->actionMountDisk, driveTxt);
     FormatStatusTip(ui->actionMountFolder, driveTxt);
+    FormatStatusTip(ui->actionNewDisk, driveTxt);
     FormatStatusTip(ui->actionEject, driveTxt);
     FormatStatusTip(ui->actionSwap, driveTxt); // <-- SWAP
     FormatStatusTip(ui->actionWriteProtect, driveTxt);
@@ -59,6 +60,7 @@ void DriveWidget::setup()
     insertAction(0, ui->actionMountDisk);
     insertAction(0, ui->actionMountFolder);
     insertAction(0, ui->actionEject);
+    insertAction(0, ui->actionNewDisk);
     insertAction(0, ui->actionSwap); // <-- SWAP
     insertAction(0, ui->actionWriteProtect);
     insertAction(0, ui->actionEditDisk);
@@ -71,6 +73,7 @@ void DriveWidget::setup()
     ui->buttonMountDisk->setDefaultAction(ui->actionMountDisk);
     ui->buttonMountFolder->setDefaultAction(ui->actionMountFolder);
     ui->buttonEject->setDefaultAction(ui->actionEject);
+    ui->buttonNewDisk->setDefaultAction(ui->actionNewDisk);
     ui->buttonSwap->setDefaultAction(ui->actionSwap); // <-- SWAP
     ui->buttonInfo->setDefaultAction(ui->actionInfo);
     ui->buttonSave->setDefaultAction(ui->actionSave);
@@ -100,7 +103,8 @@ void DriveWidget::updateFromImage(SimpleDiskImage *diskImage)
     }
 
     const QString &fileName = diskImage->originalFileName();
-    ui->labelFileName->setText(fileName);
+    m_displayFileName = diskImage->originalFileName();
+    updateElidedText();
     ui->labelImageProperties->setText(diskImage->description());
 
     m_fullPath = fileName;
@@ -124,7 +128,8 @@ void DriveWidget::triggerAutoSaveClickIfEnabled()
 void DriveWidget::showAsEmpty()
 {
     ui->actionSave->setEnabled(false);
-    ui->labelFileName->clear();
+    m_displayFileName.clear();
+    updateElidedText();
     ui->labelImageProperties->clear();
 
     m_fullPath.clear(); // Clear internal path
@@ -147,7 +152,8 @@ void DriveWidget::showAsEmpty()
 
 void DriveWidget::showAsFolderMounted(const QString &fileName, const QString &description, bool editEnabled)
 {
-    ui->labelFileName->setText(fileName);
+    m_displayFileName = fileName;
+    updateElidedText();
     ui->labelImageProperties->setText(description);
 
     ui->actionEject->setEnabled(true);
@@ -167,7 +173,8 @@ void DriveWidget::showAsFolderMounted(const QString &fileName, const QString &de
 
 void DriveWidget::showAsImageMounted(const QString &fileName, const QString &description, bool editEnabled, bool enableSave)
 {
-    ui->labelFileName->setText(fileName);
+    m_displayFileName = fileName;
+    updateElidedText();
     ui->labelImageProperties->setText(description);
 
     ui->actionEject->setEnabled(true);
@@ -193,7 +200,8 @@ void DriveWidget::showAsImageMounted(const QString &fileName, const QString &des
 
 void DriveWidget::showAsTNFSMounted(const QString &fileName, const QString &description)
 {
-    ui->labelFileName->setText(fileName);
+    m_displayFileName = fileName;
+    updateElidedText();
     ui->labelImageProperties->setText(description);
 
     ui->labelFileName->setStyleSheet("color: rgb(0, 0, 150); font-weight: normal");
@@ -226,7 +234,8 @@ bool DriveWidget::isAutoSaveEnabled()
 
 void DriveWidget::setLabelToolTips(const QString &one, const QString &two, const QString &three)
 {
-    ui->labelFileName->setToolTip(one);
+    m_displayFileName = one;
+    updateElidedText();
     ui->labelFileName->setStatusTip(two);
     ui->labelImageProperties->setToolTip(three);
 }
@@ -244,7 +253,8 @@ void DriveWidget::setIconSize(const QSize &size)
     ui->buttonEditDisk->setIconSize(size);
     ui->buttonInspectSectors->setIconSize(size);
     ui->buttonHappyMode->setIconSize(size);
-    ui->buttonSwap->setIconSize(size); // <-- SWAP
+    ui->buttonNewDisk->setIconSize(size);
+    ui->buttonSwap->setIconSize(size);
     ui->buttonEject->setIconSize(size);
     ui->buttonInfo->setIconSize(size);
 }
@@ -262,6 +272,30 @@ void DriveWidget::setWriteProtect(bool enabled) {
     ui->actionWriteProtect->blockSignals(false);
 }
 
+void DriveWidget::updateElidedText()
+{
+    if (m_displayFileName.isEmpty()) {
+        ui->labelFileName->clear();
+        return;
+    }
+
+    // Use Qt's built-in font metrics to dynamically calculate the perfect middle elision
+    int w = ui->labelFileName->width();
+    if (w > 0) {
+        QFontMetrics fm(ui->labelFileName->font());
+
+        ui->labelFileName->setText(fm.elidedText(m_displayFileName, Qt::ElideMiddle, w));
+    } else {
+        ui->labelFileName->setText(m_displayFileName);
+    }
+}
+
+void DriveWidget::resizeEvent(QResizeEvent *event)
+{
+    QFrame::resizeEvent(event);
+    updateElidedText(); // Instantly re-calculate the elision if the window is stretched!
+}
+
 void DriveWidget::on_actionMountFolder_triggered()  { emit actionMountFolder(driveNo_); }
 void DriveWidget::on_actionMountDisk_triggered()    { emit actionMountDisk(driveNo_); }
 void DriveWidget::on_actionEject_triggered()        { emit actionEject(driveNo_); }
@@ -274,10 +308,12 @@ void DriveWidget::on_actionBootOption_triggered()   { emit actionBootOptions(dri
 void DriveWidget::on_actionHappyMode_toggled(bool state) {  emit actionHappyMode(driveNo_, state); }
 void DriveWidget::setHappyMode(bool enabled) { ui->buttonHappyMode->setChecked(enabled); }
 
-QString DriveWidget::getFileName() const { return ui->labelFileName->text(); }
+QString DriveWidget::getFileName() const { return m_displayFileName; }
 QString DriveWidget::getFileProps() const { return ui->labelImageProperties->text(); }
 QString DriveWidget::getFullPath() const { return m_fullPath; } // Return internal path
 
 void DriveWidget::on_actionInfo_triggered() { emit actionInfo(driveNo_); }
 void DriveWidget::on_actionSwap_triggered() { emit actionSwap(driveNo_); }
+void DriveWidget::on_actionNewDisk_triggered()      { emit actionNewDisk(driveNo_); }
+
 

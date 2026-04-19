@@ -1046,92 +1046,122 @@ Odhadovaný zbývající čas: %1:%2</translation>
         <translation>1:</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="136" />
+        <location filename="../../src/drivewidget.ui" line="129" />
         <source>Mount disk image...</source>
         <translation>Připojit obraz disku...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="145" />
+        <location filename="../../src/drivewidget.ui" line="138" />
+        <source>Create blank disk...</source>
+        <translation>Vytvořit prázdný disk...</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="141" />
+        <source>Create a blank disk and mount it to this slot</source>
+        <translation>Vytvořte prázdný disk a připojte jej do tohoto slotu</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="144" />
+        <source>Create a blank disk and mount it to D%1</source>
+        <translation>Vytvořte prázdný disk a připojte jej k D%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="153" />
         <source>Mount folder image...</source>
         <translation>Připojit obrázek složky...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="154" />
+        <location filename="../../src/drivewidget.ui" line="162" />
         <source>Unmount</source>
         <translation>Odpojit</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="163" />
+        <location filename="../../src/drivewidget.ui" line="171" />
         <source>Explore..</source>
         <translation>Prozkoumat..</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="172" />
+        <location filename="../../src/drivewidget.ui" line="180" />
         <source>Save</source>
         <translation>Uložit</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="184" />
+        <location filename="../../src/drivewidget.ui" line="192" />
         <source>Auto save</source>
         <translation>Automatické ukládání</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="196" />
+        <location filename="../../src/drivewidget.ui" line="204" />
         <source>Happy Enhancement</source>
         <translation>Happy Enhancement</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="205" />
+        <location filename="../../src/drivewidget.ui" line="213" />
         <source>Folder Boot Options</source>
         <translation>Možnosti spouštění složky</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="208" />
+        <location filename="../../src/drivewidget.ui" line="216" />
         <source>Change Boot Options for D%1</source>
         <translation>Změňte možnosti spouštění pro D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="217" />
+        <location filename="../../src/drivewidget.ui" line="225" />
         <source>Save as...</source>
         <translation>Uložit jako...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="220" />
+        <location filename="../../src/drivewidget.ui" line="228" />
         <source>Save image as... for D%1</source>
         <translation>Uložit obrázek jako... pro D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="229" />
+        <location filename="../../src/drivewidget.ui" line="237" />
         <source>Revert to original</source>
         <translation>Vrátit se k originálu</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="232" />
+        <location filename="../../src/drivewidget.ui" line="240" />
         <source>Revert image to last saved state for D%1</source>
         <translation>Vrátit obraz do posledního uloženého stavu pro D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="240" />
+        <location filename="../../src/drivewidget.ui" line="248" />
         <source>Write protected</source>
         <translation>Zápis chráněn</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="249" />
+        <location filename="../../src/drivewidget.ui" line="257" />
         <source>Inspect Sectors...</source>
         <translation>Kontrola sektorů...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="252" />
+        <location filename="../../src/drivewidget.ui" line="260" />
         <source>Open low-level sector inspector for D%1</source>
         <translation>Otevřete nízkoúrovňový sektorový inspektor pro D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="261" />
+        <location filename="../../src/drivewidget.ui" line="269" />
+        <source>Exchange Drives</source>
+        <translation>Výměna disků</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="272" />
+        <source>Exchange this disk with the slot below it (Click twice to toggle)</source>
+        <translation>Vyměňte tento disk se slotem pod ním (dvojitým kliknutím přepnete)</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="275" />
+        <source>Exchange D%1 with the slot below it</source>
+        <translation>Vyměňte D%1 se slotem pod ním</translation>
+    </message>
+    <message>
+        <location filename="../../src/drivewidget.ui" line="284" />
         <source>Drive Info</source>
         <translation>Informace o jízdě</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="264" />
+        <location filename="../../src/drivewidget.ui" line="287" />
         <source>Show Drive Information</source>
         <translation>Zobrazit informace o disku</translation>
     </message>
@@ -1548,15 +1578,15 @@ Odhadovaný zbývající čas: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="203" />
-        <location filename="../../src/mainwindow.cpp" line="1330" />
+        <location filename="../../src/mainwindow.cpp" line="1331" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Spustit emulaci</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="206" />
         <location filename="../../src/mainwindow.ui" line="209" />
-        <location filename="../../src/mainwindow.cpp" line="1331" />
         <location filename="../../src/mainwindow.cpp" line="1332" />
+        <location filename="../../src/mainwindow.cpp" line="1333" />
         <source>Start SIO peripheral emulation</source>
         <translation>Spusťte emulaci periferií SIO</translation>
     </message>
@@ -1770,8 +1800,8 @@ Odhadovaný zbývající čas: %1:%2</translation>
     <message>
         <location filename="../../src/mainwindow.ui" line="490" />
         <location filename="../../src/mainwindow.ui" line="493" />
-        <location filename="../../src/mainwindow.cpp" line="1298" />
         <location filename="../../src/mainwindow.cpp" line="1299" />
+        <location filename="../../src/mainwindow.cpp" line="1300" />
         <source>Stop printer emulation</source>
         <translation>Zastavte emulaci tiskárny</translation>
     </message>
@@ -1782,8 +1812,8 @@ Odhadovaný zbývající čas: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="505" />
-        <location filename="../../src/mainwindow.cpp" line="1246" />
         <location filename="../../src/mainwindow.cpp" line="1247" />
+        <location filename="../../src/mainwindow.cpp" line="1248" />
         <source>Hide drives D9-DO</source>
         <translation>Skrýt disky D9-DO</translation>
     </message>
@@ -1843,7 +1873,7 @@ Odhadovaný zbývající čas: %1:%2</translation>
     <message>
         <location filename="../../src/mainwindow.ui" line="576" />
         <location filename="../../src/mainwindow.ui" line="579" />
-        <location filename="../../src/mainwindow.cpp" line="2740" />
+        <location filename="../../src/mainwindow.cpp" line="2741" />
         <source>Open BBS Phonebook</source>
         <translation>Otevřete telefonní seznam BBS</translation>
     </message>
@@ -1876,7 +1906,7 @@ Odhadovaný zbývající čas: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="256" />
-        <location filename="../../src/mainwindow.cpp" line="2388" />
+        <location filename="../../src/mainwindow.cpp" line="2389" />
         <source> -- Session: </source>
         <translation>-- Relace:</translation>
     </message>
@@ -1907,13 +1937,13 @@ Odhadovaný zbývající čas: %1:%2</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="348" />
-        <location filename="../../src/mainwindow.cpp" line="2741" />
+        <location filename="../../src/mainwindow.cpp" line="2742" />
         <source>Send Auto-User (ESC-U)</source>
         <translation>Odeslat automatického uživatele (ESC-U)</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="359" />
-        <location filename="../../src/mainwindow.cpp" line="2742" />
+        <location filename="../../src/mainwindow.cpp" line="2743" />
         <source>Send Auto-Pass (ESC-P)</source>
         <translation>Odeslat Auto-Pass (ESC-P)</translation>
     </message>
@@ -1963,22 +1993,22 @@ Odhadovaný zbývající čas: %1:%2</translation>
         <translation>Připojte TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="862" />
+        <location filename="../../src/mainwindow.cpp" line="863" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Vyměněn disk %1 za disk %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="916" />
+        <location filename="../../src/mainwindow.cpp" line="917" />
         <source>Cannot mount '%1': No empty disk slots.</source>
         <translation>Nelze připojit '%1': Žádné prázdné diskové sloty.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1014" />
+        <location filename="../../src/mainwindow.cpp" line="1015" />
         <source>First run</source>
         <translation>První běh</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1015" />
+        <location filename="../../src/mainwindow.cpp" line="1016" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1987,436 +2017,444 @@ Do you want to open the options dialog?</source>
 Chcete otevřít dialogové okno možností?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1251" />
         <location filename="../../src/mainwindow.cpp" line="1252" />
+        <location filename="../../src/mainwindow.cpp" line="1253" />
         <source>Show drives D9-DO</source>
         <translation>Zobrazit jednotky D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1287" />
+        <location filename="../../src/mainwindow.cpp" line="1288" />
         <source>Printer emulation stopped.</source>
         <translation>Emulace tiskárny byla zastavena.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1289" />
+        <location filename="../../src/mainwindow.cpp" line="1290" />
         <source>Printer emulation started.</source>
         <translation>Spustila se emulace tiskárny.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1302" />
         <location filename="../../src/mainwindow.cpp" line="1303" />
+        <location filename="../../src/mainwindow.cpp" line="1304" />
         <source>Start printer emulation</source>
         <translation>Spusťte emulaci tiskárny</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1321" />
+        <location filename="../../src/mainwindow.cpp" line="1322" />
         <source>&amp;Stop emulation</source>
         <translation>&amp;Zastavit emulaci</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1322" />
         <location filename="../../src/mainwindow.cpp" line="1323" />
+        <location filename="../../src/mainwindow.cpp" line="1324" />
         <source>Stop SIO peripheral emulation</source>
         <translation>Zastavte emulaci periferií SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1337" />
+        <location filename="../../src/mainwindow.cpp" line="1338" />
         <source>Emulation stopped.</source>
         <translation>Emulace se zastavila.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1362" />
-        <location filename="../../src/mainwindow.cpp" line="2595" />
-        <location filename="../../src/mainwindow.cpp" line="3240" />
+        <location filename="../../src/mainwindow.cpp" line="1363" />
+        <location filename="../../src/mainwindow.cpp" line="2596" />
+        <location filename="../../src/mainwindow.cpp" line="3241" />
         <source>Loading...</source>
         <translation>Načítání...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1362" />
-        <location filename="../../src/mainwindow.cpp" line="2595" />
-        <location filename="../../src/mainwindow.cpp" line="3240" />
+        <location filename="../../src/mainwindow.cpp" line="1363" />
+        <location filename="../../src/mainwindow.cpp" line="2596" />
+        <location filename="../../src/mainwindow.cpp" line="3241" />
         <source>Downloading from TNFS...</source>
         <translation>Stahování z TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1380" />
-        <location filename="../../src/mainwindow.cpp" line="1383" />
+        <location filename="../../src/mainwindow.cpp" line="1381" />
+        <location filename="../../src/mainwindow.cpp" line="1384" />
         <source>Executable (Local)</source>
         <translation>Spustitelný soubor (místní)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1429" />
-        <location filename="../../src/mainwindow.cpp" line="1450" />
+        <location filename="../../src/mainwindow.cpp" line="1430" />
+        <location filename="../../src/mainwindow.cpp" line="1451" />
         <source>Folder image</source>
         <translation>Obrázek složky</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1462" />
-        <location filename="../../src/mainwindow.cpp" line="2098" />
-        <location filename="../../src/mainwindow.cpp" line="2150" />
-        <location filename="../../src/mainwindow.cpp" line="2195" />
+        <location filename="../../src/mainwindow.cpp" line="1463" />
+        <location filename="../../src/mainwindow.cpp" line="2099" />
+        <location filename="../../src/mainwindow.cpp" line="2151" />
+        <location filename="../../src/mainwindow.cpp" line="2196" />
         <source>Save failed</source>
         <translation>Uložení se nezdařilo</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1463" />
-        <location filename="../../src/mainwindow.cpp" line="2098" />
-        <location filename="../../src/mainwindow.cpp" line="2150" />
-        <location filename="../../src/mainwindow.cpp" line="2195" />
+        <location filename="../../src/mainwindow.cpp" line="1464" />
+        <location filename="../../src/mainwindow.cpp" line="2099" />
+        <location filename="../../src/mainwindow.cpp" line="2151" />
+        <location filename="../../src/mainwindow.cpp" line="2196" />
         <source>'%1' cannot be saved, do you want to save the image with another name?</source>
         <translation>'%1' nelze uložit, chcete uložit obrázek pod jiným názvem?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1737" />
+        <location filename="../../src/mainwindow.cpp" line="1738" />
         <source>Slot %1 download aborted by user.</source>
         <translation>Stahování bloku %1 bylo uživatelem přerušeno.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1779" />
+        <location filename="../../src/mainwindow.cpp" line="1780" />
         <source>Unmounted disk %1</source>
         <translation>Odpojený disk %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1952" />
-        <location filename="../../src/mainwindow.cpp" line="2346" />
+        <location filename="../../src/mainwindow.cpp" line="1953" />
+        <location filename="../../src/mainwindow.cpp" line="2347" />
+        <location filename="../../src/mainwindow.cpp" line="3696" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Připojeno '%2' jako '%3'.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1967" />
+        <location filename="../../src/mainwindow.cpp" line="1968" />
         <source>Open a disk or executable image</source>
         <translation>Otevřete disk nebo spustitelný obraz</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1969" />
+        <location filename="../../src/mainwindow.cpp" line="1970" />
         <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
         <translation>Všechny podporované obrázky (*.atr *.xfd *.atx *.pro *.xex *.com);;Spustitelné soubory Atari (*.xex *.com);;Obrázky SIO2PC ATR (*.atr);;Obrázky XFormer XFD (*.xfd);;Obrázky ATX (*.atx);;Všechny obrázky (*.pro);;Všechny obrázky (*.pro);;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2000" />
+        <location filename="../../src/mainwindow.cpp" line="2001" />
         <source>Open a folder image</source>
         <translation>Otevřete obrázek složky</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2047" />
+        <location filename="../../src/mainwindow.cpp" line="2048" />
         <source>Image file unsaved</source>
         <translation>Soubor obrázku nebyl uložen</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2047" />
+        <location filename="../../src/mainwindow.cpp" line="2048" />
         <source>'%1' has unsaved changes, do you want to save it?</source>
         <translation>'%1' má neuložené změny, chcete je uložit?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2139" />
+        <location filename="../../src/mainwindow.cpp" line="2140" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Automatické potvrzení zapnuto.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2141" />
+        <location filename="../../src/mainwindow.cpp" line="2142" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disk %1] Automatické potvrzení VYPNUTO.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2176" />
+        <location filename="../../src/mainwindow.cpp" line="2177" />
         <source>Save image as</source>
         <translation>Uložit obrázek jako</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2178" />
+        <location filename="../../src/mainwindow.cpp" line="2179" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation>Všechny obrazy disků Atari (*.atr *.xfd *.pro);;Obrázky SIO2PC ATR (*.atr);;Obrázky XFormer XFD (*.xfd);;Obrázky Pro (*.pro);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2219" />
+        <location filename="../../src/mainwindow.cpp" line="2220" />
         <source>Revert to last saved</source>
         <translation>Vrátit se k naposledy uloženému</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2220" />
+        <location filename="../../src/mainwindow.cpp" line="2221" />
         <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
         <translation>Opravdu chcete vrátit '%1' do posledního uloženého stavu? Ztratíte provedené změny.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2355" />
+        <location filename="../../src/mainwindow.cpp" line="2356" />
         <source>Open session</source>
         <translation>Otevřená relace</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2357" />
-        <location filename="../../src/mainwindow.cpp" line="2420" />
+        <location filename="../../src/mainwindow.cpp" line="2358" />
+        <location filename="../../src/mainwindow.cpp" line="2421" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>AspeQt sessions (*.aspeqt);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2418" />
+        <location filename="../../src/mainwindow.cpp" line="2419" />
         <source>Save session as</source>
         <translation>Uložit relaci jako</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2449" />
+        <location filename="../../src/mainwindow.cpp" line="2450" />
         <source>Open executable</source>
         <translation>Otevřít spustitelný soubor</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2451" />
+        <location filename="../../src/mainwindow.cpp" line="2452" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Spustitelné soubory Atari (*.xex *.com *.exe);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2483" />
+        <location filename="../../src/mainwindow.cpp" line="2484" />
         <source>Open a cassette image</source>
         <translation>Otevřete obraz kazety</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2485" />
+        <location filename="../../src/mainwindow.cpp" line="2486" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Obrázky CAS (*.cas);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2556" />
+        <location filename="../../src/mainwindow.cpp" line="2557" />
         <source>Drive %1 Happy Mode %2.</source>
         <translation>Disk %1 Šťastný režim %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2558" />
+        <location filename="../../src/mainwindow.cpp" line="2559" />
         <source>Enabled</source>
         <translation>Povoleno</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2558" />
+        <location filename="../../src/mainwindow.cpp" line="2559" />
         <source>Disabled</source>
         <translation>Zakázáno</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2621" />
+        <location filename="../../src/mainwindow.cpp" line="2622" />
         <source>Mounted TNFS Stream: %1</source>
         <translation>Připojený tok TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2639" />
+        <location filename="../../src/mainwindow.cpp" line="2640" />
         <source>Mount Error</source>
         <translation>Mount Error</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2639" />
+        <location filename="../../src/mainwindow.cpp" line="2640" />
         <source>Could not open TNFS stream from %1</source>
         <translation>Nelze otevřít datový proud TNFS z %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2659" />
+        <location filename="../../src/mainwindow.cpp" line="2660" />
         <source>Downloading: %1</source>
         <translation>Stahování: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2661" />
+        <location filename="../../src/mainwindow.cpp" line="2662" />
         <source>Downloading...</source>
         <translation>Stahování...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2736" />
+        <location filename="../../src/mainwindow.cpp" line="2737" />
         <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
         <translation>Telefonní seznam zakázán. Nastavte cestu XML v Options -&gt; Modem Bridge.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2737" />
+        <location filename="../../src/mainwindow.cpp" line="2738" />
         <source>Macro User disabled. Set Phonebook XML path in Options.</source>
         <translation>Uživatel makra zakázán. V Možnostech nastavte cestu XML telefonního seznamu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2738" />
+        <location filename="../../src/mainwindow.cpp" line="2739" />
         <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
         <translation>Makro Pass zakázáno. V Možnostech nastavte cestu XML telefonního seznamu.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2788" />
+        <location filename="../../src/mainwindow.cpp" line="2789" />
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2788" />
+        <location filename="../../src/mainwindow.cpp" line="2789" />
         <source>Could not extract manual to: </source>
         <translation>Nelze extrahovat manuál do:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3100" />
+        <location filename="../../src/mainwindow.cpp" line="3101" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
         <translation>[Webové uživatelské rozhraní] Varování: Neuložené změny na disku ve slotu %1 byly zahozeny nuceným připojením.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3119" />
+        <location filename="../../src/mainwindow.cpp" line="3120" />
         <source>[Web UI] Mounted Executable to slot %1: %2</source>
         <translation>[Webové uživatelské rozhraní] Připojený spustitelný soubor do slotu %1: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3121" />
+        <location filename="../../src/mainwindow.cpp" line="3122" />
         <source>[Web UI] Executable ready. Please cold start the Atari.</source>
         <translation>[Webové uživatelské rozhraní] Spustitelný soubor je připraven. Spusťte Atari za studena.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3125" />
+        <location filename="../../src/mainwindow.cpp" line="3126" />
         <source>[Web UI] Failed to parse Executable: %1</source>
         <translation>[Webové uživatelské rozhraní] Nepodařilo se analyzovat spustitelný soubor: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3145" />
+        <location filename="../../src/mainwindow.cpp" line="3146" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
         <translation>[Webové uživatelské rozhraní] Varování: Neuložené změny na disku ve slotu %1 byly zahozeny nuceným vysunutím.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3209" />
+        <location filename="../../src/mainwindow.cpp" line="3210" />
         <source>[Web UI] Dialing BBS: %1 (%2)</source>
         <translation>[Webové uživatelské rozhraní] Vytáčení BBS: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3260" />
+        <location filename="../../src/mainwindow.cpp" line="3261" />
         <source>[Web UI] Mounted TNFS Stream: %1</source>
         <translation>[Webové uživatelské rozhraní] Připojený stream TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3270" />
+        <location filename="../../src/mainwindow.cpp" line="3271" />
         <source>[Web UI] Failed to mount TNFS Stream: %1</source>
         <translation>[Webové uživatelské rozhraní] Nepodařilo se připojit stream TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3271" />
+        <location filename="../../src/mainwindow.cpp" line="3272" />
         <source>Download failed or aborted: %1</source>
         <translation>Stahování se nezdařilo nebo bylo přerušeno: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3279" />
+        <location filename="../../src/mainwindow.cpp" line="3280" />
         <source>[Web UI] Write Protect for slot %1 set to %2</source>
         <translation>[Webové uživatelské rozhraní] Ochrana proti zápisu pro slot %1 nastavena na %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3308" />
+        <location filename="../../src/mainwindow.cpp" line="3309" />
         <source>Web UI WebSocket Server started on port %1</source>
         <translation>Webové uživatelské rozhraní WebSocket Server byl spuštěn na portu %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3310" />
+        <location filename="../../src/mainwindow.cpp" line="3311" />
         <source>Failed to start Web UI WebSocket Server.</source>
         <translation>Spuštění serveru WebSocket Web UI se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3339" />
+        <location filename="../../src/mainwindow.cpp" line="3340" />
         <source>HTTP Dashboard available at http://localhost:%1</source>
         <translation>HTTP Dashboard dostupný na http://localhost:%1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3341" />
+        <location filename="../../src/mainwindow.cpp" line="3342" />
         <source>Failed to start HTTP Server.</source>
         <translation>Spuštění serveru HTTP se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3369" />
+        <location filename="../../src/mainwindow.cpp" line="3370" />
         <source>Web Dashboard and WebSocket servers completely shut down.</source>
         <translation>Web Dashboard a servery WebSocket se zcela vypnou.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3379" />
+        <location filename="../../src/mainwindow.cpp" line="3380" />
         <source>[Web UI] Failed to load cassette image: %1</source>
         <translation>[Webové uživatelské rozhraní] Nepodařilo se načíst obraz kazety: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3389" />
+        <location filename="../../src/mainwindow.cpp" line="3390" />
         <source>[Web UI] Cassette Mounted: %1</source>
         <translation>[Webové uživatelské rozhraní] Nasazeno na kazetě: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3402" />
+        <location filename="../../src/mainwindow.cpp" line="3403" />
         <source>[Web UI] Cassette is already playing.</source>
         <translation>[Webové uživatelské rozhraní] Kazeta se již přehrává.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3406" />
+        <location filename="../../src/mainwindow.cpp" line="3407" />
         <source>[Web UI] Starting Cassette Playback.</source>
         <translation>[Webové uživatelské rozhraní] Spuštění přehrávání kazety.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3421" />
+        <location filename="../../src/mainwindow.cpp" line="3422" />
         <source>[Web UI] Rewinding Cassette...</source>
         <translation>[Webové uživatelské rozhraní] Převíjení kazety...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3445" />
+        <location filename="../../src/mainwindow.cpp" line="3446" />
         <source>[Web UI] Cassette Ejected.</source>
         <translation>[Webové uživatelské rozhraní] Kazeta je vysunuta.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3461" />
+        <location filename="../../src/mainwindow.cpp" line="3462" />
         <source>[Web UI] Cassette Playback Finished.</source>
         <translation>[Webové uživatelské rozhraní] Přehrávání kazet dokončeno.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3482" />
+        <location filename="../../src/mainwindow.cpp" line="3483" />
         <source>Failed to initialize blank disk.</source>
         <translation>Nepodařilo se inicializovat prázdný disk.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3500" />
+        <location filename="../../src/mainwindow.cpp" line="3501" />
         <source>Failed to format blank disk.</source>
         <translation>Formátování prázdného disku se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3519" />
+        <location filename="../../src/mainwindow.cpp" line="3520" />
         <source>Failed to save blank disk to host.</source>
         <translation>Nepodařilo se uložit prázdný disk na hostitele.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3527" />
+        <location filename="../../src/mainwindow.cpp" line="3528" />
         <source>Blank disk created: %1</source>
         <translation>Vytvořen prázdný disk: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3528" />
+        <location filename="../../src/mainwindow.cpp" line="3529" />
         <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
         <translation>[Webové uživatelské rozhraní] Vytvořen a připojen prázdný disk: %1 ve slotu %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3543" />
+        <location filename="../../src/mainwindow.cpp" line="3544" />
+        <location filename="../../src/mainwindow.cpp" line="3644" />
+        <location filename="../../src/mainwindow.cpp" line="3645" />
         <source>Empty</source>
         <translation>Prázdný</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3545" />
+        <location filename="../../src/mainwindow.cpp" line="3546" />
         <source>No file mounted.</source>
         <translation>Není připojen žádný soubor.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3549" />
+        <location filename="../../src/mainwindow.cpp" line="3550" />
         <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Název souboru:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Formát/typ:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolutní cesta:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3560" />
+        <location filename="../../src/mainwindow.cpp" line="3561" />
         <source>Drive Details</source>
         <translation>Podrobnosti o disku</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3585" />
+        <location filename="../../src/mainwindow.cpp" line="3586" />
         <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
         <translation>[Webové uživatelské rozhraní] Soubor připojený přímo do RAM ve slotu %1: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3588" />
+        <location filename="../../src/mainwindow.cpp" line="3589" />
         <source>Mounted to RAM: %1</source>
         <translation>Připojeno k RAM: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3592" />
+        <location filename="../../src/mainwindow.cpp" line="3593" />
         <source>[Web UI] Failed to parse RAM image: %1</source>
         <translation>[Webové uživatelské rozhraní] Nepodařilo se analyzovat obraz RAM: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3595" />
+        <location filename="../../src/mainwindow.cpp" line="3596" />
         <source>Failed to parse: %1</source>
         <translation>Analýza se nezdařila: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3606" />
+        <location filename="../../src/mainwindow.cpp" line="3607" />
         <source>[Injector] Virtual Packet Step Triggered: %1 bytes</source>
         <translation>[Injektor] Spuštěn krok virtuálního paketu: %1 bajtů</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="3648" />
+        <source>Swapped - Slot %1 -&gt; %2  |  Slot %3 -&gt; %4</source>
+        <translation>Vyměněno - Slot %1 -&gt; %2 |  Slot %3 -&gt; %4</translation>
     </message>
 </context>
 <context>
@@ -11816,32 +11854,32 @@ Zkontrolujte internet nebo název hostitele.</translation>
 <context>
     <name>WebBridge</name>
     <message>
-        <location filename="../../src/webbridge.cpp" line="60" />
+        <location filename="../../src/webbridge.cpp" line="61" />
         <source>Cannot access directory: %1</source>
         <translation>Nelze získat přístup k adresáři: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="124" />
+        <location filename="../../src/webbridge.cpp" line="125" />
         <source>Phonebook XML is corrupted or invalid!</source>
         <translation>XML telefonního seznamu je poškozený nebo neplatný!</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="129" />
+        <location filename="../../src/webbridge.cpp" line="130" />
         <source>No phonebook found at: %1</source>
         <translation>Na adrese: %1 nebyl nalezen žádný telefonní seznam</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="179" />
+        <location filename="../../src/webbridge.cpp" line="180" />
         <source>TNFS path not found: %1</source>
         <translation>Cesta TNFS nenalezena: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="185" />
+        <location filename="../../src/webbridge.cpp" line="186" />
         <source>Failed to mount TNFS host: %1</source>
         <translation>Nepodařilo se připojit hostitele TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="192" />
+        <location filename="../../src/webbridge.cpp" line="193" />
         <source>Failed to connect to TNFS host: %1</source>
         <translation>Nepodařilo se připojit k hostiteli TNFS: %1</translation>
     </message>

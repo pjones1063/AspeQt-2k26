@@ -102,6 +102,7 @@ public slots:
     void mountFileHeadless(int no, const QString &fileName);
     void ejectHeadless(int no);
     void toggleAutoSaveHeadless(int no);
+    void handle_actionNewDisk_triggered(int deviceId);
     void toggleEmulationHeadless();
     void togglePrinterHeadless();
     void handle_actionSwap_triggered(int deviceId);
