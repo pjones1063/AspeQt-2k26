@@ -463,6 +463,8 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setBackend(backend);
     aspeqtSettings->setI18nLanguage(m_ui->i18nLanguageCombo->itemData(m_ui->i18nLanguageCombo->currentIndex()).toString());
 
+    aspeqtSettings->setPrinterClearRequested(true);
+
     accept();
 }
 

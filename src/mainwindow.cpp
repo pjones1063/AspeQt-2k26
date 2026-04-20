@@ -1547,6 +1547,7 @@ void MainWindow::uiMessage(int t, QString message)
     logChanged(message);
 }
 
+
 void MainWindow::on_actionOptions_triggered()
 {
     bool restart;
@@ -1556,22 +1557,35 @@ void MainWindow::on_actionOptions_triggered()
         sio->wait();
         qApp->processEvents();
     }
+
     OptionsDialog optionsDialog(this);
     optionsDialog.exec() ;
 
-// Change drive slot description fonts
+    // ---> NEW PRINTER CLEAR LOGIC (FIXED) <---
+    if (aspeqtSettings->isPrinterClearRequested()) {
+        // Because the SIO thread is currently halted (sio->wait() above),
+        // it is completely safe to cast and call this directly without QueuedConnections!
+        EpsonPrinter *printerObj = qobject_cast<EpsonPrinter*>(sio->getDevice(PRINTER_BASE_CDEVIC));
+        if (printerObj) {
+            printerObj->forceClear();
+        }
+        aspeqtSettings->setPrinterClearRequested(false);
+    }
+    // ---------------------------------
+
+    // Change drive slot description fonts
     changeFonts();
 
-// load translators and retranslate
+    // load translators and retranslate
     loadTranslators();
 
-// retranslate Designer Form
+    // retranslate Designer Form
     ui->retranslateUi(this);
 
-// update phonebook state
+    // update phonebook state
     updatePhonebookMenuState();
 
-// Cycle the Web UI to apply any port or toggle changes
+    // Cycle the Web UI to apply any port or toggle changes
     stopWebUi();
     if (aspeqtSettings->isWebUiEnabled()) {
         startWebUi();
@@ -1580,8 +1594,6 @@ void MainWindow::on_actionOptions_triggered()
     for (int i = DISK_BASE_CDEVIC; i < (DISK_BASE_CDEVIC+DISK_COUNT); i++) {    // 0x31 - 0x3E
         deviceStatusChanged(i);
     }
-
-
 
     RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
     if (rDev) {
@@ -1595,13 +1607,11 @@ void MainWindow::on_actionOptions_triggered()
         rDev->updateListenerConfig();
     }
 
-
     if (aspeqtSettings->isModemBridgeEnabled()) {
         // 1. Create if missing
         if (!modemBridge) {
             modemBridge = new ModemBridge(this);
 
-            // Connect Status Messages (Info)
             // Connect Status Messages (Info)
             connect(modemBridge, &ModemBridge::statusMessage, this, [](const QString &msg) {
                 // Use qDebug so the message handler catches it and colors it Blue (!i)
@@ -1616,9 +1626,6 @@ void MainWindow::on_actionOptions_triggered()
         }
 
         // 2. Update Configuration (in case Port/Baud changed)
-        // Note: setSerialPort calls stop() internally if it's already running, so this is safe.
-
-
         modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
                                    aspeqtSettings->modemBridgeBaudRate());
         modemBridge->setFlowControl(aspeqtSettings->modemBridgeFlowControl());
@@ -1642,6 +1649,7 @@ void MainWindow::on_actionOptions_triggered()
 
     ui->actionStartEmulation->trigger();
 }
+
 
 
 void MainWindow::changeFonts()

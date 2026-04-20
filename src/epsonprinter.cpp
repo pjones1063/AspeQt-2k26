@@ -411,3 +411,14 @@ void EpsonPrinter::fillPaperBackground(QImage &img)
         }
     }
 }
+
+void EpsonPrinter::forceClear()
+{
+    m_currentTextLine.clear();
+    m_currentGraphicPayload.clear();
+    m_state = State_Text;
+
+    initializePaper(); // Re-draws the green bars or solid background
+
+    emit paperUpdated(m_paper); // Instantly pushes the blank page to the UI!
+}

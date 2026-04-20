@@ -21,6 +21,9 @@ public:
 signals:
     void paperUpdated(const QImage &image);
 
+public slots:
+    void forceClear();
+
 private:
     int m_lastOperation;
 
