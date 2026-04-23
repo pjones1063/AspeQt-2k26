@@ -672,17 +672,19 @@ MainWindow::~MainWindow()
     delete aspeqtSettings;
     delete sio;
     delete ui;
-    for(int i = 0; i < 4; i++) delete modemBridge[i];
 
     qDebug() << "!d" << tr("AspeQt stopped at %1.").arg(QDateTime::currentDateTime().toString());
     qInstallMessageHandler(0);
     delete logMutex;
     delete logFile;
 
+    // Delete bridges safely once, and clear the pointers
     for(int i = 0; i < 4; i++) {
-        if (modemBridge[i]) delete modemBridge[i];
+        if (modemBridge[i]) {
+            delete modemBridge[i];
+            modemBridge[i] = nullptr;
+        }
     }
-
 }
 
 void MainWindow::createDeviceWidgets()
