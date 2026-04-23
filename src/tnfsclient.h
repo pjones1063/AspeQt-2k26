@@ -45,18 +45,19 @@ public:
     bool connectToHost(const QString &host, quint16 port = 16384);
     bool mount(const QString &remotePath);
 
-    // --- OLD METHOD (Can remove if you fully replaced it, or keep for compatibility) ---
     QList<DirectoryEntry> listDirectory(const QString &path);
 
-    // --- NEW PAGINATION API ---
     bool beginListing(const QString &path);
     QList<DirectoryEntry> fetchNextBatch(int count);
     void endListing();
     bool isListingFinished() const { return m_listingFinished; }
+
     quint32 getFileSize(const QString &path);
     quint32 getFileSize(quint8 handle);
     quint8 openFile(const QString &path);
-    Q_INVOKABLE QByteArray readFile(quint8 handle, quint32 offset, quint16 size);
+
+    // [UPDATED] size changed to quint32 to support large pipelined reads
+    Q_INVOKABLE QByteArray readFile(quint8 handle, quint32 offset, quint32 size);
     Q_INVOKABLE void closeFile(quint8 handle);
 
 private:
@@ -68,11 +69,10 @@ private:
     quint16 m_sessionId = 0;
     quint8 m_sequence = 0;
 
-    // --- PAGINATION STATE ---
     quint8 m_dirHandle = 0xFF;
-    bool m_listingFinished = false; // *** THIS WAS MISSING ***
+    bool m_listingFinished = false;
 
     QByteArray sendCommand(quint8 cmd, const QByteArray &data);
 };
 
-#endif
+#endif // TNFSCLIENT_H

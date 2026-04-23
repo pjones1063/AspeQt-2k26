@@ -8,6 +8,10 @@
 #include <QThread>
 #include <cmath>
 #include <QRandomGenerator>
+#include <QtConcurrent>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QEventLoop>
 
 TnfsImage::TnfsImage(SioWorker *worker) : SioDevice(worker)
 {
@@ -55,19 +59,11 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     cleanupAtx();
 
     qDebug() << "!n" << m_driveIdentity + ":" << "Connecting to" << host << "...";
+
+    // Give the UI one last chance to paint the status before we lock the scope
     QCoreApplication::processEvents();
 
-    if (activeIdPtr && *activeIdPtr != myId) { QApplication::restoreOverrideCursor(); return false; }
-
-    TnfsClient client;
-    if (!client.connectToHost(host)) {
-        qWarning() << "!e" << m_driveIdentity + ":" << "Host Connection Failed:" << host;
-        QApplication::restoreOverrideCursor();
-        return false;
-    }
-
-    if (!client.mount("/")) {
-        qWarning() << "!e" << m_driveIdentity + ":" << "Mount Session Failed";
+    if (activeIdPtr && *activeIdPtr != myId) {
         QApplication::restoreOverrideCursor();
         return false;
     }
@@ -75,77 +71,88 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     QString pathNoSlash = fullPath.startsWith("/") ? fullPath.mid(1) : fullPath;
     QString pathWithSlash = fullPath.startsWith("/") ? fullPath : "/" + fullPath;
 
-    quint32 totalSize = client.getFileSize(pathNoSlash);
-    if (totalSize == 0) totalSize = client.getFileSize(pathWithSlash);
+    // ========================================================================
+    // BACKGROUND DOWNLOAD ENGINE (Bypasses UI freezing and processEvents delay)
+    // ========================================================================
+    QFuture<QByteArray> future = QtConcurrent::run([=]() -> QByteArray {
+        TnfsClient client;
+        if (!client.connectToHost(host)) return QByteArray();
+        if (!client.mount("/")) return QByteArray();
 
-    quint8 handle = client.openFile(pathNoSlash);
-    if (handle == 0xFF) handle = client.openFile(pathWithSlash);
+        quint32 totalSize = client.getFileSize(pathNoSlash);
+        if (totalSize == 0) totalSize = client.getFileSize(pathWithSlash);
 
-    if (handle == 0xFF) {
-        qWarning() << "!e" << m_driveIdentity + ":" << "Failed to open:" << fullPath;
-        QApplication::restoreOverrideCursor();
-        return false;
-    }
+        quint8 handle = client.openFile(pathNoSlash);
+        if (handle == 0xFF) handle = client.openFile(pathWithSlash);
 
-    if (totalSize == 0) totalSize = client.getFileSize(handle);
+        if (handle == 0xFF) {
+            return QByteArray();
+        }
 
-    if (totalSize > 0) qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(" << totalSize << "bytes)...";
-    else qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(Stream mode)...";
+        if (totalSize == 0) totalSize = client.getFileSize(handle);
 
-    QCoreApplication::sendPostedEvents();
-    QCoreApplication::processEvents();
+        if (totalSize > 0) qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(" << totalSize << "bytes)...";
+        else qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(Stream mode)...";
 
-    if (activeIdPtr && *activeIdPtr != myId) {
-        if (totalSize > 0) client.closeFile(handle);
+        QByteArray data;
+        if (totalSize > 0) data.reserve(totalSize);
+        quint32 offset = 0;
+
+        emit this->downloadProgress(0, totalSize);
+
+        while (true) {
+            // Check for user cancel
+            if (activeIdPtr && *activeIdPtr != myId) {
+                qDebug() << "!w" << m_driveIdentity + ":" << "Download aborted by user.";
+                client.closeFile(handle);
+                return QByteArray();
+            }
+
+            // [PIPELINE ACTIVATION] Ask for 32KB. The TnfsClient will automatically
+            // slice this into 16 concurrent UDP requests using the sliding window.
+            QByteArray chunk = client.readFile(handle, offset, 32768);
+            if (chunk.isEmpty()) break;
+
+            data.append(chunk);
+            offset += chunk.size();
+
+            // Emit safely across the thread boundary to update the UI
+            emit this->downloadProgress(offset, totalSize);
+
+            // Hard limit to prevent memory exhaustion
+            if (data.size() > 16 * 1024 * 1024) {
+                qWarning() << "!e" << m_driveIdentity + ":" << "File too large (>16MB). Aborting.";
+                client.closeFile(handle);
+                return QByteArray();
+            }
+        }
+
+        if (totalSize > 0) emit this->downloadProgress(totalSize, totalSize);
+        else emit this->downloadProgress(data.size(), data.size());
+
+        client.closeFile(handle);
+        return data;
+    });
+
+    // --- EVENT LOOP BRIDGE ---
+    // This blocks openUrl from returning while the background thread runs,
+    // BUT allows the Qt UI to continue processing paints and progress bar updates cleanly.
+    QFutureWatcher<QByteArray> watcher;
+    QEventLoop loop;
+    connect(&watcher, &QFutureWatcherBase::finished, &loop, &QEventLoop::quit);
+    watcher.setFuture(future);
+    loop.exec();
+
+    // Retrieve the downloaded data from the background thread
+    m_imgData = watcher.result();
+
+    if (m_imgData.isEmpty()) {
+        qWarning() << "!e" << m_driveIdentity + ":" << "Failed to open or download:" << fullPath;
         QApplication::restoreOverrideCursor();
         return false;
     }
 
     this->m_originalFileName = url;
-    m_imgData.clear();
-    if (totalSize > 0) m_imgData.reserve(totalSize);
-
-    quint32 offset = 0;
-    QElapsedTimer progressTimer;
-    progressTimer.start();
-
-    emit downloadProgress(0, totalSize);
-    QCoreApplication::processEvents();
-
-    while (true) {
-        if (activeIdPtr && *activeIdPtr != myId) {
-            qDebug() << "!w" << m_driveIdentity + ":" << "Download aborted by user.";
-            client.closeFile(handle);
-            QApplication::restoreOverrideCursor();
-            return false;
-        }
-
-        QByteArray chunk = client.readFile(handle, offset, 1024);
-        if (chunk.isEmpty()) break;
-
-        m_imgData.append(chunk);
-        offset += chunk.size();
-
-        emit downloadProgress(offset, totalSize);
-
-        if (progressTimer.elapsed() > 50) {
-            QCoreApplication::processEvents();
-            progressTimer.restart();
-        }
-
-        if (m_imgData.size() > 16 * 1024 * 1024) {
-            qWarning() << "!e" << m_driveIdentity + ":" << "File too large (>16MB). Aborting.";
-            client.closeFile(handle);
-            QApplication::restoreOverrideCursor();
-            return false;
-        }
-    }
-
-    if (totalSize > 0) emit downloadProgress(totalSize, totalSize);
-    else emit downloadProgress(m_imgData.size(), m_imgData.size());
-
-    QCoreApplication::processEvents();
-    client.closeFile(handle);
     qDebug() << "!n" << m_driveIdentity + ":" << "Download Complete. Size:" << m_imgData.size();
 
     // 1. ATX Format
@@ -641,3 +648,4 @@ bool TnfsImage::readSectorAtx(quint16 sector, QByteArray &data)
 
     return true;
 }
+

@@ -4,18 +4,19 @@
 #include <algorithm>
 #include <QElapsedTimer>
 #include <QVariant>
+#include <QVector>
+#include <QNetworkDatagram>
 
 TnfsClient::TnfsClient(QObject *parent) : QObject(parent) {
     socket = new QUdpSocket(this);
 
-    // [FIX] Explicitly wrap the integer in a QVariant
-    socket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, QVariant(1024 * 1024)); // 1MB Buffer
+    // 1MB OS Buffer to prevent dropping pipelined responses
+    socket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, QVariant(1024 * 1024));
 
     socket->bind(QHostAddress::AnyIPv4);
     m_sessionId = 0;
     m_sequence = 0;
 }
-
 
 TnfsClient::~TnfsClient() {
     socket->close();
@@ -34,29 +35,22 @@ bool TnfsClient::connectToHost(const QString &host, quint16 port) {
     return true;
 }
 
-
+// ====================================================================================
+// SYNCHRONOUS COMMAND ENGINE (Mount, Open, Stat)
+// ====================================================================================
 QByteArray TnfsClient::sendCommand(quint8 cmd, const QByteArray &data) {
     QMutexLocker locker(&netMutex);
 
-    // --- FLUSH THE BUFFER ---
-    // Drain any "Ghost Packets" left over from previous timeouts.
     while (socket->hasPendingDatagrams()) {
-        socket->readDatagram(nullptr, socket->pendingDatagramSize());
+        socket->receiveDatagram();
     }
 
     const int MAX_RETRIES = 4;
-
-    // [OPTIMIZATION] Progressive timeouts instead of a flat 250ms.
-    // 1st Try: 50ms (Fast recovery for dropped packets on broadband)
-    // 2nd Try: 150ms
-    // 3rd/4th Try: 500ms (Network is severely congested, give it time)
     int timeouts[] = {50, 150, 500, 500};
-
     quint8 currentSeq = m_sequence;
 
-    // --- Reserve Memory ---
     QByteArray packet;
-    packet.reserve(4 + data.size()); // Header (4) + Data
+    packet.reserve(4 + data.size());
     packet.append(static_cast<char>(m_sessionId & 0xFF));
     packet.append(static_cast<char>((m_sessionId >> 8) & 0xFF));
     packet.append(static_cast<char>(currentSeq));
@@ -66,59 +60,37 @@ QByteArray TnfsClient::sendCommand(quint8 cmd, const QByteArray &data) {
     for (int retry = 0; retry < MAX_RETRIES; ++retry) {
         socket->writeDatagram(packet, serverAddr, serverPort);
 
-        // --- Smart Receive Loop ---
         QElapsedTimer timer;
         timer.start();
         qint64 remainingTime = timeouts[retry];
 
         while (remainingTime > 0) {
-            // Check for data immediately (Fast Path) or Wait (Slow Path)
             if (socket->hasPendingDatagrams() || socket->waitForReadyRead(remainingTime)) {
 
                 while (socket->hasPendingDatagrams()) {
-                    // Peek size to avoid extra allocation if possible, or just read.
-                    qint64 pendingSize = socket->pendingDatagramSize();
-                    QByteArray response;
-                    response.resize(pendingSize);
-                    socket->readDatagram(response.data(), pendingSize);
+                    QNetworkDatagram datagram = socket->receiveDatagram();
+                    QByteArray response = datagram.data();
 
-                    // Validate Header (4 bytes min)
                     if (response.size() >= 4) {
                         quint8 respSeq = (quint8)response.at(2);
-
-                        // Match sequence
                         if (respSeq == currentSeq) {
                             m_sequence++;
-                            return response; // SUCCESS
-                        } else {
-                            // Stale packet found. Log it, but DO NOT return.
-                            // We loop back to keep waiting for the *correct* packet.
-                            // qWarning() << "!w" << "TNFS: Stale packet ignored. Seq:" << respSeq << "Expected:" << currentSeq;
+                            return response;
                         }
                     }
                 }
             } else {
-                // Real Timeout occurred for this specific retry bracket
                 break;
             }
-
-            // Update remaining time so we don't wait full duration again if we just read a stale packet
             remainingTime = timeouts[retry] - timer.elapsed();
         }
-
-        // Log retries so we know if the network is struggling
-        if (retry > 0) {
-            qWarning() << "!w" << "TNFS: Retry" << retry << "for CMD" << Qt::hex << cmd << "Timeout:" << timeouts[retry] << "ms";
-        }
+        if (retry > 0) qWarning() << "!w" << "TNFS: Retry" << retry << "for CMD" << Qt::hex << cmd;
     }
 
-    // If we failed after all retries, increment sequence anyway to avoid getting stuck
     m_sequence++;
     qCritical() << "!e" << "TNFS: IO Error/Timeout. CMD:" << Qt::hex << cmd;
     return QByteArray();
 }
-
-
 
 bool TnfsClient::mount(const QString &remotePath)
 {
@@ -153,66 +125,181 @@ quint8 TnfsClient::openFile(const QString &path) {
     return 0xFF;
 }
 
-QByteArray TnfsClient::readFile(quint8 handle, quint32 offset, quint16 size) {
-    QByteArray req;
-    req.append((char)handle);
-    req.append((char)(size & 0xFF));       req.append((char)((size >> 8) & 0xFF));
-    req.append((char)(offset & 0xFF));     req.append((char)((offset >> 8) & 0xFF));
-    req.append((char)((offset >> 16) & 0xFF)); req.append((char)((offset >> 24) & 0xFF));
-
-    QByteArray res = sendCommand(CMD_READ, req);
-
-    if (res.size() >= 7 && (quint8)res.at(4) == 0x00) {
-        return res.mid(7);
-    }
-    return QByteArray();
-}
-
 void TnfsClient::closeFile(quint8 handle) {
     if (handle != 0xFF) {
         sendCommand(CMD_CLOSE, QByteArray().append((char)handle));
     }
 }
 
-QList<TnfsClient::DirectoryEntry> TnfsClient::listDirectory(const QString &path) {
-    QList<DirectoryEntry> entries;
-    QByteArray req = path.toUtf8(); req.append((char)0x00);
-    QByteArray response = sendCommand(CMD_OPENDIR, req);
+// ====================================================================================
+// FILE DOWNLOAD PIPELINE
+// ====================================================================================
+QByteArray TnfsClient::readFile(quint8 handle, quint32 offset, quint32 size) {
+    QMutexLocker locker(&netMutex);
 
-    if (response.size() < 6 || (quint8)response.at(4) != 0) return entries;
+    // [FIX 1] Hard limit to 512 bytes for universal older TNFS server compatibility
+    const quint32 MAX_PAYLOAD = 512;
 
-    quint8 handle = (quint8)response.at(5);
-    int safety = 0;
-    while (safety++ < 2048) {
-        QByteArray entryData = sendCommand(CMD_READDIR, QByteArray().append((char)handle));
-        if (entryData.size() < 6 || (quint8)entryData.at(4) != 0) break;
+    if (size <= MAX_PAYLOAD) {
+        QByteArray req;
+        req.append((char)handle);
+        req.append((char)(size & 0xFF));       req.append((char)((size >> 8) & 0xFF));
+        req.append((char)(offset & 0xFF));     req.append((char)((offset >> 8) & 0xFF));
+        req.append((char)((offset >> 16) & 0xFF)); req.append((char)((offset >> 24) & 0xFF));
 
-        QByteArray rawName = entryData.mid(5);
-        if (rawName.isEmpty() || rawName.at(0) == '\0') break;
+        QByteArray res = sendCommand(CMD_READ, req);
+        if (res.size() >= 7 && (quint8)res.at(4) == 0x00) return res.mid(7);
+        return QByteArray();
+    }
 
-        QString name = QString::fromUtf8(rawName).trimmed();
-        int nullPos = name.indexOf(QChar('\0'));
-        if (nullPos != -1) name = name.left(nullPos);
+    while (socket->hasPendingDatagrams()) {
+        socket->receiveDatagram();
+    }
 
-        if (!name.isEmpty() && name != "." && name != "..") {
-            DirectoryEntry entry;
-            entry.name = name;
-            entry.isDirectory = (name.endsWith("/"));
-            if (entry.isDirectory) entry.name.chop(1);
-            entries.append(entry);
+    QByteArray resultBuffer;
+    resultBuffer.resize(size);
+    quint32 actualTotalSize = size;
+
+    struct Chunk {
+        quint32 offset;
+        quint32 length;
+        quint8 seq;
+        qint64 lastSent;
+        int retries;
+        bool done;
+    };
+
+    QVector<Chunk> chunks;
+    quint32 currentOffset = offset;
+    quint32 remaining = size;
+
+    while (remaining > 0) {
+        Chunk c;
+        c.offset = currentOffset;
+        c.length = qMin(remaining, MAX_PAYLOAD);
+        c.seq = m_sequence++;
+        c.lastSent = 0;
+        c.retries = 0;
+        c.done = false;
+        chunks.append(c);
+
+        currentOffset += c.length;
+        remaining -= c.length;
+    }
+
+    int windowSize = 16;
+    int chunksCompleted = 0;
+    int totalChunks = chunks.size();
+
+    QElapsedTimer timer;
+    timer.start();
+
+    while (chunksCompleted < totalChunks) {
+        int inFlight = 0;
+        int packetsSentThisLoop = 0;
+        qint64 now = timer.elapsed();
+
+        for (int i = 0; i < totalChunks; ++i) {
+            if (chunks[i].done) continue;
+
+            if (inFlight < windowSize) {
+                int timeout = (chunks[i].retries == 0) ? 0 :
+                                  (chunks[i].retries == 1 ? 50 :
+                                       (chunks[i].retries == 2 ? 150 : 500));
+
+                if (now - chunks[i].lastSent >= timeout) {
+                    if (chunks[i].retries > 4) {
+                        qCritical() << "!e" << "TNFS Pipeline Failure on chunk" << i << "(Offset:" << chunks[i].offset << ")";
+                        resultBuffer.resize(chunksCompleted * MAX_PAYLOAD);
+                        return resultBuffer;
+                    }
+
+                    QByteArray req;
+                    req.reserve(13);
+                    req.append(static_cast<char>(m_sessionId & 0xFF));
+                    req.append(static_cast<char>((m_sessionId >> 8) & 0xFF));
+                    req.append(static_cast<char>(chunks[i].seq));
+                    req.append(static_cast<char>(CMD_READ));
+                    req.append((char)handle);
+                    req.append((char)(chunks[i].length & 0xFF));
+                    req.append((char)((chunks[i].length >> 8) & 0xFF));
+                    req.append((char)(chunks[i].offset & 0xFF));
+                    req.append((char)((chunks[i].offset >> 8) & 0xFF));
+                    req.append((char)((chunks[i].offset >> 16) & 0xFF));
+                    req.append((char)((chunks[i].offset >> 24) & 0xFF));
+
+                    socket->writeDatagram(req, serverAddr, serverPort);
+                    chunks[i].lastSent = now;
+                    chunks[i].retries++;
+                    packetsSentThisLoop++;
+                }
+                inFlight++;
+                if (packetsSentThisLoop >= 4) break;
+            }
+        }
+
+        if (socket->waitForReadyRead(10) || socket->hasPendingDatagrams()) {
+            while (socket->hasPendingDatagrams()) {
+                QNetworkDatagram datagram = socket->receiveDatagram();
+                QByteArray response = datagram.data();
+
+                if (response.size() >= 5 && (quint8)response.at(3) == CMD_READ) {
+                    quint8 respSeq = (quint8)response.at(2);
+                    quint8 status = (quint8)response.at(4);
+
+                    for (int i = 0; i < totalChunks; ++i) {
+                        if (!chunks[i].done && chunks[i].seq == respSeq) {
+
+                            // 0x00 = Success. Copy data into buffer.
+                            if (status == 0x00 && response.size() >= 7) {
+                                QByteArray payload = response.mid(7);
+                                int localOffset = chunks[i].offset - offset;
+
+                                memcpy(resultBuffer.data() + localOffset, payload.constData(), payload.size());
+
+                                // Premature EOF Check
+                                if ((quint32)payload.size() < chunks[i].length) {
+                                    actualTotalSize = qMin(actualTotalSize, (quint32)(localOffset + payload.size()));
+                                    for (int j = i + 1; j < totalChunks; ++j) {
+                                        if (!chunks[j].done) {
+                                            chunks[j].done = true;
+                                            chunksCompleted++;
+                                        }
+                                    }
+                                }
+                            } else {
+                                // Server explicitly rejected the packet (e.g. read past EOF).
+                                // Gracefully abort this chunk and any trailing chunks.
+                                actualTotalSize = qMin(actualTotalSize, chunks[i].offset - offset);
+                                for (int j = i; j < totalChunks; ++j) {
+                                    if (!chunks[j].done) {
+                                        chunks[j].done = true;
+                                        chunksCompleted++;
+                                    }
+                                }
+                            }
+
+                            chunks[i].done = true;
+                            chunksCompleted++;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
-    sendCommand(CMD_CLOSEDIR, QByteArray().append((char)handle));
-    std::sort(entries.begin(), entries.end(), [](const DirectoryEntry &a, const DirectoryEntry &b) {
-        return a.name.toLower() < b.name.toLower();
-    });
-    return entries;
+
+    if (actualTotalSize != size) {
+        resultBuffer.resize(actualTotalSize);
+    }
+    return resultBuffer;
 }
 
-
+// ====================================================================================
+// DIRECTORY BROWSING
+// ====================================================================================
 bool TnfsClient::beginListing(const QString &path)
 {
-    // Close previous if exists
     if (m_dirHandle != 0xFF) endListing();
 
     QByteArray req = path.toUtf8(); req.append((char)0x00);
@@ -221,8 +308,6 @@ bool TnfsClient::beginListing(const QString &path)
     if (response.size() < 6 || (quint8)response.at(4) != 0) return false;
 
     m_dirHandle = (quint8)response.at(5);
-
-    // *** RESET THE FLAG ***
     m_listingFinished = false;
 
     return true;
@@ -236,7 +321,6 @@ QList<TnfsClient::DirectoryEntry> TnfsClient::fetchNextBatch(int count)
     for (int i = 0; i < count; i++) {
         QByteArray entryData = sendCommand(CMD_READDIR, QByteArray().append((char)m_dirHandle));
 
-        // Check for EOF (Status != 0) or Empty Packet
         if (entryData.size() < 6 || (quint8)entryData.at(4) != 0) {
             endListing();
             m_listingFinished = true;
@@ -257,18 +341,10 @@ QList<TnfsClient::DirectoryEntry> TnfsClient::fetchNextBatch(int count)
         if (!name.isEmpty() && name != "." && name != "..") {
             DirectoryEntry entry;
             entry.name = name;
-
-            // Logic: It is a directory if it ends with '/' OR has no extension
             bool hasSlash = name.endsWith("/");
             bool hasDot   = name.contains(".");
-
             entry.isDirectory = (hasSlash || !hasDot);
-
-            // Cleanup: Remove trailing slash for display
-            if (hasSlash) {
-                entry.name.chop(1);
-            }
-
+            if (hasSlash) entry.name.chop(1);
             entries.append(entry);
         }
     }
@@ -283,46 +359,50 @@ void TnfsClient::endListing()
     }
 }
 
+QList<TnfsClient::DirectoryEntry> TnfsClient::listDirectory(const QString &path) {
+    QList<DirectoryEntry> entries;
+    if (beginListing(path)) {
+        while (!m_listingFinished) {
+            entries.append(fetchNextBatch(100));
+        }
+    }
+    return entries;
+}
 
-
+// ====================================================================================
+// UTILITY ENGINE
+// ====================================================================================
 quint32 TnfsClient::getFileSize(const QString &path)
 {
-    // Use CMD_STAT (0x20) instead of LSEEK.
-    // Packet: [Cmd] [Path] [0x00]
     QByteArray req = path.toUtf8();
     req.append((char)0x00);
 
     QByteArray res = sendCommand(CMD_STAT, req);
 
-    // Response Structure (Indices include 4-byte header):
-    // 0-3: Header
-    // 4: Status (0x00 = OK)
-    // 5-6: Mode
-    // 7-8: UID
-    // 9-10: GID
-    // 11-14: Size (Little Endian)
-
-    if (res.size() < 15 || (quint8)res.at(4) != 0x00) {
-        return 0; // Error or File Not Found
+    if (res.size() < 13 || (quint8)res.at(4) != 0x00) {
+        return 0;
     }
 
-    // Extract 32-bit Size from offset 11
-    quint32 size = (quint8)res.at(11) |
-                   ((quint8)res.at(12) << 8) |
-                   ((quint8)res.at(13) << 16) |
-                   ((quint8)res.at(14) << 24);
+    // [FIX 2] Corrected the CMD_STAT offsets.
+    // 0-3: Header
+    // 4: Status
+    // 5-6: Mode
+    // 7: UID
+    // 8: GID
+    // 9-12: Size (32-bit LE)
+    quint32 size = (quint8)res.at(9) |
+                   ((quint8)res.at(10) << 8) |
+                   ((quint8)res.at(11) << 16) |
+                   ((quint8)res.at(12) << 24);
 
     return size;
 }
 
-
-
 quint32 TnfsClient::getFileSize(quint8 handle)
 {
-    // 1. Seek to END
     QByteArray reqEnd;
     reqEnd.append((char)handle);
-    reqEnd.append((char)TnfsSeekEnd); // <--- Usage
+    reqEnd.append((char)TnfsSeekEnd);
     reqEnd.append((char)0x00); reqEnd.append((char)0x00); reqEnd.append((char)0x00); reqEnd.append((char)0x00);
 
     QByteArray resEnd = sendCommand(CMD_LSEEK, reqEnd);
@@ -330,10 +410,9 @@ quint32 TnfsClient::getFileSize(quint8 handle)
 
     quint32 size = (quint8)resEnd.at(5) | ((quint8)resEnd.at(6) << 8) | ((quint8)resEnd.at(7) << 16) | ((quint8)resEnd.at(8) << 24);
 
-    // 2. Rewind to START
     QByteArray reqSet;
     reqSet.append((char)handle);
-    reqSet.append((char)TnfsSeekSet); // <--- Usage
+    reqSet.append((char)TnfsSeekSet);
     reqSet.append((char)0x00); reqSet.append((char)0x00); reqSet.append((char)0x00); reqSet.append((char)0x00);
 
     sendCommand(CMD_LSEEK, reqSet);
