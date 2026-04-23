@@ -70,15 +70,11 @@ AspeQtSettings::AspeQtSettings()
     mCustomCasBaud = mSettings->value("CustomCasBaud", 875).toInt();
     mLastBootDos = mSettings->value("LastBootDos", ":/boot_templates/$bootmyd").toString();
 
+
     // --- 4. Modem Bridge, RDevice & BBS Listener ---
-    mModemBridgeEnabled = mSettings->value("ModemBridge/Enabled", false).toBool();
-    mModemBridgePortName = mSettings->value("ModemBridge/PortName", "").toString();
-    mModemBridgeBaudRate = mSettings->value("ModemBridge/BaudRate", 9600).toInt();
-    mModemBridgeFlowControl = mSettings->value("ModemBridge/FlowControl", true).toBool();
-    mModemBridgeSshEnabled = mSettings->value("ModemBridge/SshEnabled", false).toBool();
-    mModemBridgeLocalEcho = mSettings->value("ModemBridge/LocalEcho", false).toBool();
+    mModemTransportMode = mSettings->value("ModemBridge/TransportMode", 0).toInt();
     mModemBridgePhonebookPath = mSettings->value("ModemBridge/PhonebookPath", "").toString();
-    mInvertCtsLogic = mSettings->value("ModemBridge/InvertCts", true).toBool();
+    mShowRDeviceWarning = mSettings->value("ShowRDeviceWarning", true).toBool();
 
 #if defined(Q_OS_WIN)
     int defaultGuard = 50;
@@ -87,13 +83,18 @@ AspeQtSettings::AspeQtSettings()
 #else
     int defaultGuard = 10;
 #endif
-    mStreamGuardDelay = mSettings->value("StreamGuardDelay", defaultGuard).toInt();
 
-    mEnableRDevice = mSettings->value("EnableRDevice", false).toBool();
-    mShowRDeviceWarning = mSettings->value("ShowRDeviceWarning", true).toBool();
-
-    mBbsListenerEnabled = mSettings->value("ModemBridge/BbsListenerEnabled", false).toBool(); // [NEW]
-    mModemListenPort = mSettings->value("ModemBridge/ListenPort", 9000).toInt();
+    for (int i = 0; i < 4; i++) {
+        QString pfx = QString("ModemBridge/R%1/").arg(i + 1);
+        mModemBridgeLocalEcho[i] = mSettings->value(pfx + "LocalEcho", false).toBool();
+        mBbsListenerEnabled[i] = mSettings->value(pfx + "BbsListenerEnabled", false).toBool();
+        mModemListenPort[i] = mSettings->value(pfx + "ListenPort", 2301 + i).toInt(); // 2301, 2302...
+        mModemBridgePortName[i] = mSettings->value(pfx + "PortName", "").toString();
+        mModemBridgeBaudRate[i] = mSettings->value(pfx + "BaudRate", 9600).toInt();
+        mModemBridgeFlowControl[i] = mSettings->value(pfx + "FlowControl", true).toBool();
+        mInvertCtsLogic[i] = mSettings->value(pfx + "InvertCts", true).toBool();
+        mStreamGuardDelay[i] = mSettings->value(pfx + "StreamGuardDelay", defaultGuard).toInt();
+    }
 
     // --- 5. TNFS & Web UI ---
     mWebUiEnabled = mSettings->value("WebUI/Enabled", false).toBool();
@@ -385,40 +386,14 @@ void AspeQtSettings::setLastBootDos(const QString &dos) {
 // ==========================================
 // 4. Modem Bridge, RDevice & BBS Listener
 // ==========================================
-bool AspeQtSettings::isModemBridgeEnabled() { return mModemBridgeEnabled; }
-void AspeQtSettings::setModemBridgeEnabled(bool enabled) {
-    mModemBridgeEnabled = enabled;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/Enabled", mModemBridgeEnabled);
-}
 
-QString AspeQtSettings::modemBridgePortName() { return mModemBridgePortName; }
-void AspeQtSettings::setModemBridgePortName(const QString &name) {
-    mModemBridgePortName = name;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/PortName", mModemBridgePortName);
-}
-
-int AspeQtSettings::modemBridgeBaudRate() { return mModemBridgeBaudRate; }
-void AspeQtSettings::setModemBridgeBaudRate(int baud) {
-    mModemBridgeBaudRate = baud;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/BaudRate", mModemBridgeBaudRate);
-}
-
-bool AspeQtSettings::modemBridgeFlowControl() { return mModemBridgeFlowControl; }
-void AspeQtSettings::setModemBridgeFlowControl(bool enabled) {
-    mModemBridgeFlowControl = enabled;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/FlowControl", mModemBridgeFlowControl);
-}
-
-bool AspeQtSettings::modemBridgeSshEnabled() { return mModemBridgeSshEnabled; }
-void AspeQtSettings::setModemBridgeSshEnabled(bool enabled) {
-    mModemBridgeSshEnabled = enabled;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/SshEnabled", mModemBridgeSshEnabled);
-}
-
-bool AspeQtSettings::modemBridgeLocalEcho() { return mModemBridgeLocalEcho; }
-void AspeQtSettings::setModemBridgeLocalEcho(bool enabled) {
-    mModemBridgeLocalEcho = enabled;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/LocalEcho", mModemBridgeLocalEcho);
+// ==========================================
+// 4. Modem Bridge, RDevice & BBS Listener
+// ==========================================
+int AspeQtSettings::modemTransportMode() { return mModemTransportMode; }
+void AspeQtSettings::setModemTransportMode(int mode) {
+    mModemTransportMode = mode;
+    if(mSessionFileName == "") mSettings->setValue("ModemBridge/TransportMode", mModemTransportMode);
 }
 
 QString AspeQtSettings::modemBridgePhonebookPath() { return mModemBridgePhonebookPath; }
@@ -427,41 +402,60 @@ void AspeQtSettings::setModemBridgePhonebookPath(const QString &path) {
     if(mSessionFileName == "") mSettings->setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
 }
 
-bool AspeQtSettings::invertCtsLogic() { return mInvertCtsLogic; }
-void AspeQtSettings::setInvertCtsLogic(bool invert) {
-    mInvertCtsLogic = invert;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/InvertCts", mInvertCtsLogic);
-}
-
-int AspeQtSettings::streamGuardDelay() { return mStreamGuardDelay; }
-void AspeQtSettings::setStreamGuardDelay(int delay) {
-    mStreamGuardDelay = delay;
-    if(mSessionFileName == "") mSettings->setValue("StreamGuardDelay", mStreamGuardDelay);
-}
-
-bool AspeQtSettings::isRDeviceEnabled() { return mEnableRDevice; }
-void AspeQtSettings::setEnableRDevice(bool enabled) {
-    mEnableRDevice = enabled;
-    if(mSessionFileName == "") mSettings->setValue("EnableRDevice", mEnableRDevice);
-}
-
 bool AspeQtSettings::showRDeviceWarning() { return mShowRDeviceWarning; }
 void AspeQtSettings::setShowRDeviceWarning(bool show) {
     mShowRDeviceWarning = show;
     if(mSessionFileName == "") mSettings->setValue("ShowRDeviceWarning", mShowRDeviceWarning);
 }
 
-bool AspeQtSettings::bbsListenerEnabled() { return mBbsListenerEnabled; }
-void AspeQtSettings::setBbsListenerEnabled(bool enable) {
-    mBbsListenerEnabled = enable;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/BbsListenerEnabled", mBbsListenerEnabled);
+bool AspeQtSettings::modemBridgeLocalEcho(int port) { return mModemBridgeLocalEcho[port]; }
+void AspeQtSettings::setModemBridgeLocalEcho(int port, bool enabled) {
+    mModemBridgeLocalEcho[port] = enabled;
+    if(mSessionFileName == "") mSettings->setValue(QString("ModemBridge/R%1/LocalEcho").arg(port+1), enabled);
 }
 
-int AspeQtSettings::modemListenPort() { return mModemListenPort; }
-void AspeQtSettings::setModemListenPort(int port) {
-    mModemListenPort = port;
-    if(mSessionFileName == "") mSettings->setValue("ModemBridge/ListenPort", mModemListenPort);
+bool AspeQtSettings::bbsListenerEnabled(int port) { return mBbsListenerEnabled[port]; }
+void AspeQtSettings::setBbsListenerEnabled(int port, bool enable) {
+    mBbsListenerEnabled[port] = enable;
+    if(mSessionFileName == "") mSettings->setValue(QString("ModemBridge/R%1/BbsListenerEnabled").arg(port+1), enable);
 }
+
+int AspeQtSettings::modemListenPort(int port) { return mModemListenPort[port]; }
+void AspeQtSettings::setModemListenPort(int port, int listenPort) {
+    mModemListenPort[port] = listenPort;
+    if(mSessionFileName == "") mSettings->setValue(QString("ModemBridge/R%1/ListenPort").arg(port+1), listenPort);
+}
+
+QString AspeQtSettings::modemBridgePortName(int port) { return mModemBridgePortName[port]; }
+void AspeQtSettings::setModemBridgePortName(int port, const QString &name) {
+    mModemBridgePortName[port] = name;
+    if(mSessionFileName == "") mSettings->setValue(QString("ModemBridge/R%1/PortName").arg(port+1), name);
+}
+
+int AspeQtSettings::modemBridgeBaudRate(int port) { return mModemBridgeBaudRate[port]; }
+void AspeQtSettings::setModemBridgeBaudRate(int port, int baud) {
+    mModemBridgeBaudRate[port] = baud;
+    if(mSessionFileName == "") mSettings->setValue(QString("ModemBridge/R%1/BaudRate").arg(port+1), baud);
+}
+
+bool AspeQtSettings::modemBridgeFlowControl(int port) { return mModemBridgeFlowControl[port]; }
+void AspeQtSettings::setModemBridgeFlowControl(int port, bool enabled) {
+    mModemBridgeFlowControl[port] = enabled;
+    if(mSessionFileName == "") mSettings->setValue(QString("ModemBridge/R%1/FlowControl").arg(port+1), enabled);
+}
+
+bool AspeQtSettings::invertCtsLogic(int port) { return mInvertCtsLogic[port]; }
+void AspeQtSettings::setInvertCtsLogic(int port, bool invert) {
+    mInvertCtsLogic[port] = invert;
+    if(mSessionFileName == "") mSettings->setValue(QString("ModemBridge/R%1/InvertCts").arg(port+1), invert);
+}
+
+int AspeQtSettings::streamGuardDelay(int port) { return mStreamGuardDelay[port]; }
+void AspeQtSettings::setStreamGuardDelay(int port, int delay) {
+    mStreamGuardDelay[port] = delay;
+    if(mSessionFileName == "") mSettings->setValue(QString("ModemBridge/R%1/StreamGuardDelay").arg(port+1), delay);
+}
+
 
 
 // ==========================================
@@ -733,21 +727,29 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("DisablePicoHiSpeed", mDisablePicoHiSpeed);
     s.setValue("TranslateEolOnPost", mTranslateEolOnPost);
     s.setValue("TranslateEolOnGet", mTranslateEolOnGet);
-    s.setValue("ModemBridge/Enabled", mModemBridgeEnabled);
-    s.setValue("ModemBridge/PortName", mModemBridgePortName);
-    s.setValue("ModemBridge/BaudRate", mModemBridgeBaudRate);
-    s.setValue("ModemBridge/FlowControl", mModemBridgeFlowControl);
-    s.setValue("ModemBridge/SshEnabled", mModemBridgeSshEnabled);
-    s.setValue("ModemBridge/LocalEcho", mModemBridgeLocalEcho);
+
+    // --- Modem Bridge Matrix Saving ---
+    s.setValue("ModemBridge/TransportMode", mModemTransportMode);
     s.setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
-    s.setValue("ModemBridge/InvertCts", mInvertCtsLogic);
-    s.setValue("ModemBridge/BbsListenerEnabled", mBbsListenerEnabled); // [NEW]
-    s.setValue("ModemBridge/ListenPort", mModemListenPort);
-    s.setValue("EnableRDevice", mEnableRDevice);
+    s.setValue("ShowRDeviceWarning", mShowRDeviceWarning);
+
+    for (int i = 0; i < 4; i++) {
+        QString pfx = QString("ModemBridge/R%1/").arg(i + 1);
+        s.setValue(pfx + "LocalEcho", mModemBridgeLocalEcho[i]);
+        s.setValue(pfx + "BbsListenerEnabled", mBbsListenerEnabled[i]);
+        s.setValue(pfx + "ListenPort", mModemListenPort[i]);
+        s.setValue(pfx + "PortName", mModemBridgePortName[i]);
+        s.setValue(pfx + "BaudRate", mModemBridgeBaudRate[i]);
+        s.setValue(pfx + "FlowControl", mModemBridgeFlowControl[i]);
+        s.setValue(pfx + "InvertCts", mInvertCtsLogic[i]);
+        s.setValue(pfx + "StreamGuardDelay", mStreamGuardDelay[i]);
+    }
+
+
     s.setValue("WebUI/Enabled", mWebUiEnabled);
     s.setValue("WebUI/HttpPort", mWebUiPort);
-    s.setValue("WebUI/WsPort", mWebUiWsPort);
-    s.setValue("StreamGuardDelay", mStreamGuardDelay);
+    s.setValue("WebUI/WsPort", mWebUiWsPort); 
+
     s.setValue("PrinterEmulation", mPrinterEmulation);
     s.setValue("Printer/AutoPop", mPrinterAutoPop);
     s.setValue("Printer/FeedMode", mPrinterFeedMode);
@@ -816,18 +818,33 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mDisablePicoHiSpeed = s.value("DisablePicoHiSpeed", false).toBool();
     mTranslateEolOnPost = s.value("TranslateEolOnPost", true).toBool();
     mTranslateEolOnGet = s.value("TranslateEolOnGet", false).toBool();
-    mModemBridgeEnabled = s.value("ModemBridge/Enabled", false).toBool();
-    mModemBridgePortName = s.value("ModemBridge/PortName", "").toString();
-    mModemBridgeBaudRate = s.value("ModemBridge/BaudRate", 9600).toInt();
-    mModemBridgeFlowControl = s.value("ModemBridge/FlowControl", true).toBool();
-    mModemBridgeSshEnabled = s.value("ModemBridge/SshEnabled", false).toBool();
-    mModemBridgeLocalEcho = s.value("ModemBridge/LocalEcho", false).toBool();
+
+    // --- Modem Bridge Matrix Loading ---
+    mModemTransportMode = s.value("ModemBridge/TransportMode", 0).toInt();
     mModemBridgePhonebookPath = s.value("ModemBridge/PhonebookPath", "").toString();
-    mInvertCtsLogic = s.value("ModemBridge/InvertCts", true).toBool();
-    mBbsListenerEnabled = s.value("ModemBridge/BbsListenerEnabled", false).toBool(); // [NEW]
-    mModemListenPort = s.value("ModemBridge/ListenPort", 9000).toInt();
-    mStreamGuardDelay = s.value("StreamGuardDelay", 10).toInt();
-    mEnableRDevice = s.value("EnableRDevice", false).toBool();
+    mShowRDeviceWarning = s.value("ShowRDeviceWarning", true).toBool();
+
+#if defined(Q_OS_WIN)
+    int defaultGuard = 50;
+#elif defined(Q_OS_MAC)
+    int defaultGuard = 20;
+#else
+    int defaultGuard = 10;
+#endif
+
+    for (int i = 0; i < 4; i++) {
+        QString pfx = QString("ModemBridge/R%1/").arg(i + 1);
+        mEnableRDevice[i] = s.value(pfx + "Enabled", (i == 0)).toBool();
+        mModemBridgeLocalEcho[i] = s.value(pfx + "LocalEcho", false).toBool();
+        mBbsListenerEnabled[i] = s.value(pfx + "BbsListenerEnabled", false).toBool();
+        mModemListenPort[i] = s.value(pfx + "ListenPort", 2301 + i).toInt();
+        mModemBridgePortName[i] = s.value(pfx + "PortName", "").toString();
+        mModemBridgeBaudRate[i] = s.value(pfx + "BaudRate", 9600).toInt();
+        mModemBridgeFlowControl[i] = s.value(pfx + "FlowControl", true).toBool();
+        mInvertCtsLogic[i] = s.value(pfx + "InvertCts", true).toBool();
+        mStreamGuardDelay[i] = s.value(pfx + "StreamGuardDelay", defaultGuard).toInt();
+    }
+
     mWebUiEnabled = s.value("WebUI/Enabled", false).toBool();
     mWebUiPort = s.value("WebUI/HttpPort", 8080).toInt();
     mWebUiWsPort = s.value("WebUI/WsPort", 12345).toInt();

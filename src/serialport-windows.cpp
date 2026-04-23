@@ -153,8 +153,13 @@ void StandardSerialPortBackend::close()
 void StandardSerialPortBackend::cancel()
 {
     mCanceled = true;
+    if (mHandle != INVALID_HANDLE_VALUE) {
+        // Force the Windows OS to instantly abort any stuck Read/Write operations
+        CancelIo(mHandle);
+    }
     SetEvent(mCancelHandle);
 }
+
 
 int StandardSerialPortBackend::speedByte()
 {
@@ -488,82 +493,87 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
 {
     QByteArray data;
     DWORD result = 0;
+    uint total = 0;
+    uint rest = size;
 
-    // --- NEW: Non-Blocking Stream Mode Peek ---
-    // In Stream Mode, we only want to read bytes that have already arrived.
-    // If we ask Windows for 256 bytes, it will block the thread until it gets them.
+    data.resize(size);
+
+    // Calculate timeout exactly like Unix
+    QTime startTime = QTime::currentTime();
+    int timeOut = size * 12000 / mSpeed + 400;
+
+    if (mMethod == HANDSHAKE_SOFTWARE) {
+        timeOut += 100;
+    }
+
+    // Stream mode overrides timeout for instant response
     if (m_isStreamMode) {
+        timeOut = 0;
+    }
+
+    int elapsed = 0;
+    do {
         DWORD errors;
         COMSTAT stat;
+        // Peek at the hardware buffer without blocking the thread
         ClearCommError(mHandle, &errors, &stat);
 
-        if (stat.cbInQue == 0) {
-            return data; // Buffer is empty, return instantly!
-        }
-        // Only ask for what is available, up to our max requested size
-        size = qMin(size, (uint)stat.cbInQue);
-    }
-    // ------------------------------------------
+        if (stat.cbInQue > 0) {
+            // Only ask Windows for what is physically available right now
+            DWORD bytesToRead = qMin((DWORD)rest, stat.cbInQue);
 
-    if(mMethod==HANDSHAKE_SOFTWARE)
-    {
-        data.resize(size);
-        if (!ReadFile(mHandle, data.data(), size, &result, NULL) || (result != (DWORD)size))
-        {
-            // Allow partial reads during Stream Mode
-            if (m_isStreamMode && result > 0) {
-                data.resize(result);
-                return data;
-            }
-            data.clear();
-        }
-    }
-    else
-    {
-        OVERLAPPED ov;
-        memset(&ov, 0, sizeof(ov));
-        ov.hEvent = CreateEvent(0, true, false, 0);
-
-        if (ov.hEvent == INVALID_HANDLE_VALUE) {
-            qCritical() << "!e" << tr("Cannot create event: %1").arg(lastErrorMessage());
-            return data;
-        }
-
-        data.resize(size);
-        if (!ReadFile(mHandle, data.data(), size, &result, &ov)) {
-            if (GetLastError() == ERROR_IO_PENDING) {
-                if (!GetOverlappedResult(mHandle, &ov, &result, true)) {
-                    qCritical() << "!e" << tr("Cannot read from serial port: %1").arg(lastErrorMessage());
-                    data.clear();
-                    CloseHandle(ov.hEvent);
-                    return data;
+            if (mMethod == HANDSHAKE_SOFTWARE) {
+                if (ReadFile(mHandle, data.data() + total, bytesToRead, &result, NULL)) {
+                    total += result;
+                    rest -= result;
                 }
             } else {
-                qCritical() << "!e" << tr("Cannot read from serial port: %1").arg(lastErrorMessage());
-                data.clear();
-                CloseHandle(ov.hEvent);
-                return data;
-            }
-        }
-        CloseHandle(ov.hEvent);
+                OVERLAPPED ov;
+                memset(&ov, 0, sizeof(ov));
+                ov.hEvent = CreateEvent(0, true, false, 0);
 
-        if (result != (DWORD)size)
-        {
-            // Allow partial reads during Stream Mode
-            if (m_isStreamMode && result > 0) {
-                data.resize(result);
-                return data;
+                if (!ReadFile(mHandle, data.data() + total, bytesToRead, &result, &ov)) {
+                    if (GetLastError() == ERROR_IO_PENDING) {
+                        GetOverlappedResult(mHandle, &ov, &result, true);
+                    }
+                }
+                total += result;
+                rest -= result;
+                CloseHandle(ov.hEvent);
             }
-            if(verbose)
-            {
-                //    qCritical() << "!e" << tr("Serial port read timeout.");
+
+            // [STREAM FIX] Break instantly the moment we get ANY data
+            if (m_isStreamMode && total > 0) {
+                break;
             }
-            data.clear();
+        } else {
+            // Buffer is empty: Yield CPU to prevent 100% core lockup (Matches Unix)
+            QThread::usleep(200);
+        }
+
+        elapsed = startTime.msecsTo(QTime::currentTime());
+
+    } while (total < size && elapsed < timeOut);
+
+    if (total != size) {
+        // In Stream Mode, returning a partially filled buffer is expected and correct!
+        if (m_isStreamMode && total > 0) {
+            data.resize(total);
             return data;
         }
+
+        if (verbose && !m_isStreamMode) {
+            qCritical() << "!e" << tr("Serial port read timeout. %1 of %2 read in %3 ms")
+            .arg(total).arg(size).arg(elapsed);
+        }
+
+        data.clear();
+        return data;
     }
+
     return data;
 }
+
 
 QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
 {
@@ -672,23 +682,22 @@ quint8 StandardSerialPortBackend::sioChecksum(const QByteArray &data, uint size)
 
 bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
 {
-//    qDebug() << "!d" << tr("DBG -- Serial Port writeRawFrame...");
-
     DWORD result;
 
-    if (!PurgeComm(mHandle, PURGE_TXCLEAR)) {
-        qCritical() << "!e" << tr("Cannot clear serial port write buffer: %1").arg(lastErrorMessage());
-        return false;
-    }
+    // [REMOVED] PurgeComm(mHandle, PURGE_TXCLEAR) from here.
+    // You never want to wipe the TX buffer right before writing in case
+    // a previous back-to-back write is still draining!
 
-    if(mMethod==HANDSHAKE_SOFTWARE)
+    if (mMethod == HANDSHAKE_SOFTWARE)
     {
-        return WriteFile(mHandle, data.constData(), data.size(), &result, NULL);
+        if (!WriteFile(mHandle, data.constData(), data.size(), &result, NULL)) {
+            qCritical() << "!e" << tr("Cannot write to serial port: %1").arg(lastErrorMessage());
+            return false;
+        }
     }
     else
     {
         OVERLAPPED ov;
-
         memset(&ov, 0, sizeof(ov));
         ov.hEvent = CreateEvent(0, true, false, 0);
 
@@ -712,10 +721,16 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
         return false;
     }
 
-
+    // [NEW] Emulate Unix tcdrain() to ensure strict half-duplex SIO turnaround
+    // This blocks until the data has actually left the physical FTDI chip.
+    if (!FlushFileBuffers(mHandle)) {
+        qCritical() << "!e" << tr("Cannot flush serial port write buffer: %1").arg(lastErrorMessage());
+        return false;
+    }
 
     return true;
 }
+
 
 QString StandardSerialPortBackend::lastErrorMessage()
 {
@@ -764,7 +779,7 @@ bool StandardSerialPortBackend::isCommandLineAsserted()
 
         // This method is exclusively used by the Virtual Modem Stream Mode.
         // We only care about our specific FTDI inversion toggle.
-        if (aspeqtSettings->invertCtsLogic()) {
+        if (aspeqtSettings->invertCtsLogic(0)) {
             return isLineHigh;
         } else {
             return !isLineHigh; // Legacy RS-232 expected line to go LOW

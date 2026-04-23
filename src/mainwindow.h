@@ -142,7 +142,7 @@ private:
     QPoint m_dragPosition;
     QProgressBar *dlProgressBar;
 
-    ModemBridge *modemBridge;
+    ModemBridge *modemBridge[4];
 
     QToolButton *btnMacroUser;   // Auto-User (ESC-U)
     QToolButton *btnMacroPass;   // Auto-Pass (ESC-P)

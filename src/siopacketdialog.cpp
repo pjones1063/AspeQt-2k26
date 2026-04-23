@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QColor>
 #include <QItemSelectionModel>
+#include <QRegularExpression>
 
 // --- Authentic Atari Checksum Algorithm ---
 quint8 calculateAtariChecksum(const QByteArray &data, int length) {
@@ -48,16 +49,18 @@ QVariant SioPacketModel::data(const QModelIndex &index, int role) const {
         }
     }
 
-    // --- SMART COLOR CODING ---
+    // --- SMART COLOR CODING (Light UI / Wireshark Style) ---
     if (role == Qt::BackgroundRole) {
-        if (pkt.checksumStatus.startsWith("FAIL")) return QColor("#5A1515"); // Bright Red for Checksum Failures
-        if (pkt.payloadHex.startsWith("ACK") || pkt.payloadHex.startsWith("CMP")) return QColor("#153A5A"); // Blue for good control bytes
-        if (pkt.payloadHex.startsWith("NAK") || pkt.payloadHex.startsWith("ERR")) return QColor("#5A3A15"); // Orange/Yellow for NAKs
-        if (pkt.direction.startsWith("TX")) return QColor("#2A1B14"); // Dark red tint
-        if (pkt.direction.startsWith("RX")) return QColor("#142A1B"); // Dark green tint
+        if (pkt.checksumStatus.startsWith("FAIL")) return QColor("#FFCCCC"); // Light Red
+        if (pkt.payloadHex.startsWith("ACK") || pkt.payloadHex.startsWith("CMP")) return QColor("#CCE5FF"); // Light Blue
+        if (pkt.payloadHex.startsWith("NAK") || pkt.payloadHex.startsWith("ERR")) return QColor("#FFF2CC"); // Light Yellow
+        if (pkt.direction.startsWith("TX")) return QColor("#F8F9FA"); // Light gray for TX
+        if (pkt.direction.startsWith("RX")) return QColor("#E8F5E9"); // Pale green for RX
     }
+
     if (role == Qt::ForegroundRole) {
-        return QColor(Qt::white);
+        if (pkt.checksumStatus.startsWith("FAIL")) return QColor("#990000"); // Dark red text
+        return QVariant();
     }
 
     return QVariant();
@@ -81,6 +84,13 @@ QVariant SioPacketModel::headerData(int section, Qt::Orientation orientation, in
 }
 
 void SioPacketModel::addPacket(const SioPacket &packet) {
+    // --- [NEW] FEATURE 4: THE RING BUFFER ---
+    if (m_packets.size() >= MAX_PACKETS) {
+        beginRemoveRows(QModelIndex(), 0, 0);
+        m_packets.removeFirst();
+        endRemoveRows();
+    }
+
     beginInsertRows(QModelIndex(), m_packets.size(), m_packets.size());
     m_packets.append(packet);
     endInsertRows();
@@ -96,14 +106,20 @@ void SioPacketModel::clear() {
 // --- Dialog Implementation ---
 SioPacketDialog::SioPacketDialog(QWidget *parent) : QDialog(parent) {
     setWindowTitle(tr("SIO Packet Sniffer & Inspector"));
-    resize(900, 600);
+    resize(950, 650);
 
     model = new SioPacketModel(this);
+
+    // --- [NEW] FEATURE 1: WIRESHARK FILTER PROXY ---
+    proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);
+    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxyModel->setFilterKeyColumn(-1); // Search all columns by default
+
     tableView = new QTableView(this);
-    tableView->setModel(model);
+    tableView->setModel(proxyModel); // Bind table to the proxy, not the raw model!
     tableView->verticalHeader()->setVisible(false);
     tableView->setAlternatingRowColors(true);
-    tableView->setStyleSheet("QTableView { background-color: #1E1E1E; gridline-color: #333333; }");
 
     tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     tableView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -115,33 +131,49 @@ SioPacketDialog::SioPacketDialog(QWidget *parent) : QDialog(parent) {
     tableView->setColumnWidth(3, 60);   // Aux1
     tableView->setColumnWidth(4, 60);   // Aux2
     tableView->setColumnWidth(5, 50);   // Len
-    tableView->setColumnWidth(7, 130);  // Chk (Wide enough for "FAIL")
+    tableView->setColumnWidth(7, 130);  // Chk
     tableView->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Stretch); // Payload stretches
+
+    // --- Filter UI ---
+    cmbFilterColumn = new QComboBox(this);
+    cmbFilterColumn->addItems({"All Columns", "Direction", "Command (Device)", "Payload"});
+    txtFilter = new QLineEdit(this);
+    txtFilter->setPlaceholderText(tr("e.g. R1: or NAK..."));
+    txtFilter->setClearButtonEnabled(true);
+
+    connect(cmbFilterColumn, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &SioPacketDialog::onFilterChanged);
+    connect(txtFilter, &QLineEdit::textChanged, this, &SioPacketDialog::onFilterChanged);
+
+    QHBoxLayout *filterLayout = new QHBoxLayout();
+    filterLayout->addWidget(new QLabel(tr("🔍 Filter:"), this));
+    filterLayout->addWidget(cmbFilterColumn);
+    filterLayout->addWidget(txtFilter);
 
     // --- Collapsible Packet Inspector Pane ---
     inspectorContainer = new QWidget(this);
     QVBoxLayout *inspectorLayout = new QVBoxLayout(inspectorContainer);
     inspectorLayout->setContentsMargins(0, 0, 0, 0);
 
-    // Header Bar (Native OS styling)
     QHBoxLayout *headerLayout = new QHBoxLayout();
     QLabel *lblInspector = new QLabel(tr("Packet Inspector Details"), this);
     lblInspector->setStyleSheet("font-weight: bold; font-size: 11px; text-transform: uppercase;");
 
-    btnToggleInspector = new QToolButton(this);
-    btnToggleInspector->setText("▲"); // Points UP indicating it will maximize over the table
-    btnToggleInspector->setStyleSheet("border: none; background: transparent; font-weight: bold; font-size: 14px;");
+    btnToggleInspector = new QPushButton(tr("Collapse Details ▼"), this);
     btnToggleInspector->setCursor(Qt::PointingHandCursor);
-    connect(btnToggleInspector, &QToolButton::clicked, this, &SioPacketDialog::toggleInspector);
+    connect(btnToggleInspector, &QPushButton::clicked, this, &SioPacketDialog::toggleInspector);
 
     headerLayout->addWidget(lblInspector);
     headerLayout->addStretch();
     headerLayout->addWidget(btnToggleInspector);
 
-    // Text Area
     txtDetails = new QTextEdit(this);
     txtDetails->setReadOnly(true);
-    txtDetails->setStyleSheet("background-color: #121212; color: #d4d4d4; font-family: 'Courier New', monospace;");
+    QFont monoFont("Courier New");
+    monoFont.setStyleHint(QFont::Monospace);
+    monoFont.setFixedPitch(true);
+    monoFont.setPointSize(10);
+    txtDetails->setFont(monoFont);
+    txtDetails->setLineWrapMode(QTextEdit::NoWrap);
     txtDetails->setHtml("<span style='color:#888;'>Click a packet row to view details...</span>");
 
     inspectorLayout->addLayout(headerLayout);
@@ -156,67 +188,172 @@ SioPacketDialog::SioPacketDialog(QWidget *parent) : QDialog(parent) {
 
     connect(tableView->selectionModel(), &QItemSelectionModel::currentChanged, this, &SioPacketDialog::onRowSelected);
 
-    // Buttons
+    // --- Auto-Play / Record Deck ---
+    m_playbackTimer = new QTimer(this);
+    connect(m_playbackTimer, &QTimer::timeout, this, &SioPacketDialog::onPlaybackStep);
+
+    btnRecord = new QPushButton(tr("🔴 Recording"), this);
+    btnRecord->setCheckable(true);
+    btnRecord->setChecked(true);
+    btnRecord->setStyleSheet("QPushButton:checked { background-color: #CC0000; color: white; font-weight: bold; border-radius: 4px; padding: 4px; }");
+    connect(btnRecord, &QPushButton::toggled, this, &SioPacketDialog::onRecordToggled);
+
+    btnPlay = new QPushButton(tr("▶ Auto-Play"), this);
+    btnPlay->setCheckable(true);
+    connect(btnPlay, &QPushButton::toggled, this, &SioPacketDialog::onPlayToggled);
+
+    spinPlayDelay = new QSpinBox(this);
+    spinPlayDelay->setRange(10, 5000);
+    spinPlayDelay->setValue(500);
+    spinPlayDelay->setSuffix(" ms");
+
+    // Standard Buttons
     btnClear = new QPushButton(tr("Clear"), this);
     btnSave = new QPushButton(tr("Save CSV..."), this);
     btnInject = new QPushButton(tr("Inject Selected (Step)"), this);
-    btnInject->setStyleSheet("background-color: #2D5A2D; color: white; font-weight: bold;");
+    btnInject->setStyleSheet("background-color: #2D5A2D; color: white; font-weight: bold; border-radius: 4px; padding: 4px;");
 
     connect(btnClear, &QPushButton::clicked, model, &SioPacketModel::clear);
     connect(btnSave, &QPushButton::clicked, this, &SioPacketDialog::onSaveClicked);
     connect(btnInject, &QPushButton::clicked, this, &SioPacketDialog::onInjectClicked);
 
-    // Layouts
     QHBoxLayout *btnLayout = new QHBoxLayout();
-    btnLayout->addWidget(btnInject);
-    btnLayout->addStretch();
-    btnLayout->addWidget(btnSave);
+    btnLayout->addWidget(btnRecord);
     btnLayout->addWidget(btnClear);
+    btnLayout->addStretch();
+    btnLayout->addWidget(new QLabel(tr("Delay:"), this));
+    btnLayout->addWidget(spinPlayDelay);
+    btnLayout->addWidget(btnPlay);
+    btnLayout->addWidget(btnInject);
+    btnLayout->addWidget(btnSave);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->addLayout(filterLayout); // Add filter to top
     mainLayout->addWidget(splitter);
     mainLayout->addLayout(btnLayout);
 }
 
+// --- Filter Logic ---
+void SioPacketDialog::onFilterChanged() {
+    int col = cmbFilterColumn->currentIndex();
+    if (col == 0) proxyModel->setFilterKeyColumn(-1); // All
+    else if (col == 1) proxyModel->setFilterKeyColumn(1); // Dir
+    else if (col == 2) proxyModel->setFilterKeyColumn(2); // Cmd
+    else if (col == 3) proxyModel->setFilterKeyColumn(6); // Payload
 
-// --- Inspector Toggle Logic ---
-void SioPacketDialog::toggleInspector() {
-    if (tableView->isVisible()) {
-        // Hide the table so the text area takes up 100% of the screen
-        savedSplitterSizes = splitter->sizes();
-        tableView->hide();
-        btnToggleInspector->setText("▼"); // Point down to say "Shrink me back"
+    proxyModel->setFilterRegularExpression(QRegularExpression(txtFilter->text(), QRegularExpression::CaseInsensitiveOption));
+}
+
+// --- Playback Logic ---
+void SioPacketDialog::onRecordToggled(bool checked) {
+    m_isRecording = checked;
+    btnRecord->setText(checked ? tr("🔴 Recording") : tr("⏸ Paused"));
+}
+
+void SioPacketDialog::onPlayToggled(bool checked) {
+    m_isPlaying = checked;
+    if (checked) {
+        btnPlay->setText(tr("⏹ Stop Playback"));
+        btnInject->setEnabled(false);
+        m_playbackTimer->start(spinPlayDelay->value());
     } else {
-        // Show the table again
-        tableView->show();
-        btnToggleInspector->setText("▲"); // Point up to say "Maximize me"
-
-        if (!savedSplitterSizes.isEmpty()) {
-            splitter->setSizes(savedSplitterSizes); // Snap back to how it was dragged
-        }
+        btnPlay->setText(tr("▶ Auto-Play"));
+        m_playbackTimer->stop();
+        btnInject->setEnabled(true);
     }
 }
 
+void SioPacketDialog::onPlaybackStep() {
+    QModelIndexList selection = tableView->selectionModel()->selectedRows();
+    if (selection.isEmpty()) {
+        btnPlay->setChecked(false);
+        return;
+    }
 
+    // Proxy Translation!
+    QModelIndex proxyIndex = selection.first();
+    QModelIndex sourceIndex = proxyModel->mapToSource(proxyIndex);
+    const SioPacket &pkt = model->getPackets().at(sourceIndex.row());
+    emit injectPacketRequested(pkt.rawData);
+
+    // Advance to next row in the PROXY view
+    int nextProxyRow = proxyIndex.row() + 1;
+    if (nextProxyRow < proxyModel->rowCount()) {
+        tableView->selectRow(nextProxyRow);
+        tableView->scrollTo(proxyModel->index(nextProxyRow, 0));
+        m_playbackTimer->setInterval(spinPlayDelay->value());
+    } else {
+        btnPlay->setChecked(false);
+    }
+}
+
+void SioPacketDialog::toggleInspector() {
+    if (tableView->isVisible()) {
+        savedSplitterSizes = splitter->sizes();
+        tableView->hide();
+        btnToggleInspector->setText(tr("Expand Details ▲"));
+    } else {
+        tableView->show();
+        btnToggleInspector->setText(tr("Collapse Details ▼"));
+        if (!savedSplitterSizes.isEmpty()) splitter->setSizes(savedSplitterSizes);
+    }
+}
 
 void SioPacketDialog::onRowSelected(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(previous);
     if (!current.isValid()) return;
-    int row = current.row();
-    const SioPacket &pkt = model->getPackets().at(row);
+
+    // Proxy Translation!
+    QModelIndex sourceIndex = proxyModel->mapToSource(current);
+    if (!sourceIndex.isValid()) return;
+    const SioPacket &pkt = model->getPackets().at(sourceIndex.row());
 
     QString html = QString("<div style='margin-bottom: 10px;'>"
-                           "<b style='color:#8be9fd;'>Direction:</b> %1 &nbsp;&nbsp;|&nbsp;&nbsp; "
-                           "<b style='color:#8be9fd;'>Command:</b> %2<br>"
-                           "<b style='color:#8be9fd;'>Aux1:</b> %3 &nbsp;&nbsp;|&nbsp;&nbsp; "
-                           "<b style='color:#8be9fd;'>Aux2:</b> %4 &nbsp;&nbsp;|&nbsp;&nbsp; "
-                           "<b style='color:#8be9fd;'>Checksum:</b> %5"
+                           "<b style='color:#003366;'>Direction:</b> %1 &nbsp;&nbsp;|&nbsp;&nbsp; "
+                           "<b style='color:#003366;'>Command:</b> %2<br>"
+                           "<b style='color:#003366;'>Aux1:</b> %3 &nbsp;&nbsp;|&nbsp;&nbsp; "
+                           "<b style='color:#003366;'>Aux2:</b> %4 &nbsp;&nbsp;|&nbsp;&nbsp; "
+                           "<b style='color:#003366;'>Checksum:</b> %5"
                            "</div>")
                        .arg(pkt.direction).arg(pkt.command)
                        .arg(pkt.aux1).arg(pkt.aux2).arg(pkt.checksumStatus);
 
+    // --- [NEW] FEATURE 2: DEEP PAYLOAD PARSING ---
+    if (!pkt.command.contains("--")) {
+        html += "<div style='background-color:#E8F0FE; padding: 5px; border-left: 3px solid #1A73E8; margin-bottom: 10px;'>";
+        html += "<b style='color:#1A73E8;'>Protocol Decoder:</b><br>";
+
+        if (pkt.command.contains("D") && pkt.command.contains("READ")) {
+            html += "Standard Disk Sector Read. ";
+            if (pkt.dataLength == 133) html += "(128 Byte Payload + SIO Header/Chk)";
+            else if (pkt.dataLength == 261) html += "(256 Byte Payload + SIO Header/Chk)";
+        }
+        else if (pkt.command.contains("D") && pkt.command.contains("WRITE")) {
+            html += "Standard Disk Sector Write. ";
+            if (pkt.dataLength == 133) html += "(128 Byte Payload + SIO Header/Chk)";
+            else if (pkt.dataLength == 261) html += "(256 Byte Payload + SIO Header/Chk)";
+        }
+        else if (pkt.command.contains("P1:") && pkt.dataLength > 1) {
+            html += "<b>Epson/Atari Printer Text Stream:</b><br><span style='color:#000000;'>";
+            // Strip SIO frame and decode plain text
+            int start = (pkt.direction.contains("CMD")) ? 4 : 0;
+            int end = pkt.dataLength - 1; // Drop checksum
+            for (int i = start; i < end; i++) {
+                quint8 b = static_cast<quint8>(pkt.rawData[i]);
+                if (b >= 32 && b <= 126) html += QString(QChar(b)).toHtmlEscaped();
+                else if (b == 0x9B || b == 0x0A || b == 0x0D) html += "<br>"; // Handle EOL
+                else if (b == 0x1B) html += "<b>[ESC]</b>"; // Highlight Escapes
+            }
+            html += "</span>";
+        }
+        else {
+            html += "No deep decoder available for this device type.";
+        }
+        html += "</div>";
+    }
+
     if (!pkt.rawData.isEmpty()) {
-        html += "<b style='color:#ff79c6;'>Payload Hex & ATASCII:</b><br><pre style='margin-top: 5px; color: #d4d4d4;'>";
+        html += "<b style='color:#660000;'>Payload Hex & ATASCII:</b><br><pre style='margin-top: 5px;'>";
 
         for (int i = 0; i < pkt.rawData.size(); i += 16) {
             QByteArray chunk = pkt.rawData.mid(i, 16);
@@ -229,21 +366,20 @@ void SioPacketDialog::onRowSelected(const QModelIndex &current, const QModelInde
                     quint8 byte = static_cast<quint8>(chunk[j]);
                     hex += QString("%1 ").arg(byte, 2, 16, QChar('0')).toUpper();
 
-                    // Unified ATASCII & Inverse Video Mappings
                     if (byte >= 32 && byte <= 126) {
                         ascii += QString(QChar(byte)).toHtmlEscaped();
                     } else if (byte >= 160 && byte <= 254) {
                         ascii += QString(QChar(byte - 128)).toHtmlEscaped();
                     } else if (byte == 155) {
-                        ascii += "<font color='#ffb86c'>&para;</font>";
+                        ascii += "<font color='#CC6600'>&para;</font>";
                     } else {
-                        ascii += "<font color='#6272a4'>.</font>";
+                        ascii += "<font color='#888888'>.</font>";
                     }
                 } else {
                     hex += "   ";
                 }
             }
-            html += QString("<font color='#6272a4'>%1:</font>  %2  <font color='#6272a4'>|</font>  %3\n").arg(offset).arg(hex).arg(ascii);
+            html += QString("<font color='#888888'>%1:</font>  %2  <font color='#888888'>|</font>  %3\n").arg(offset).arg(hex).arg(ascii);
         }
         html += "</pre>";
     }
@@ -253,34 +389,27 @@ void SioPacketDialog::onRowSelected(const QModelIndex &current, const QModelInde
 
 void SioPacketDialog::onInjectClicked() {
     QModelIndexList selection = tableView->selectionModel()->selectedRows();
-
     if (selection.isEmpty()) {
         QMessageBox::warning(this, tr("No Selection"), tr("Please select a packet row to inject."));
         return;
     }
-
-    int row = selection.first().row();
-    const SioPacket &pkt = model->getPackets().at(row);
-
-    if (!pkt.direction.startsWith("RX")) {
-        QMessageBox::warning(this, tr("Invalid Direction"), tr("You can only inject RX packets (traffic originating from the Atari)."));
-        return;
-    }
-
+    // Proxy Translation!
+    QModelIndex sourceIndex = proxyModel->mapToSource(selection.first());
+    const SioPacket &pkt = model->getPackets().at(sourceIndex.row());
     emit injectPacketRequested(pkt.rawData);
 }
 
 void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, qint64 elapsedMs) {
+    if (!m_isRecording) return;
+
     SioPacket pkt;
     pkt.timestamp = elapsedMs;
     pkt.direction = dir;
     pkt.dataLength = data.size();
     pkt.rawData = data;
 
-    // Allow both 4-byte (header only) and 5-byte (header + checksum) command frames
     bool isCmdFrame = dir.contains("CMD") || (dir.contains("RX") && (data.size() == 4 || data.size() == 5));
 
-    // 1. Intercept 1-Byte Protocol Control Characters
     if (data.size() == 1) {
         quint8 byte = static_cast<quint8>(data[0]);
         pkt.command = "--";
@@ -295,7 +424,11 @@ void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, q
         else pkt.payloadHex = QString("UNK: %1").arg(byte, 2, 16, QChar('0')).toUpper();
 
         model->addPacket(pkt);
-        tableView->scrollToBottom();
+
+        // Auto-scroll logic via Proxy
+        if (txtFilter->text().isEmpty()) {
+            tableView->scrollToBottom();
+        }
         return;
     }
 
@@ -305,8 +438,6 @@ void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, q
         quint8 devByte = static_cast<quint8>(data[0]);
         quint8 cmdByte = static_cast<quint8>(data[1]);
 
-
-        // 1. Decode Device ID
         QString devStr;
         if (devByte >= 0x31 && devByte <= 0x3F) devStr = QString("D%1:").arg(devByte - 0x30);
         else if (devByte == 0x40) devStr = "P1: (Printer)";
@@ -322,7 +453,6 @@ void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, q
         else if (devByte == 0x70) devStr = "T1: (APE/Smart)";
         else devStr = QString("DEV($%1)").arg(devByte, 2, 16, QChar('0')).toUpper();
 
-        // 2. Decode Command Opcode
         QString cmdStr;
         if (cmdByte == 0x52 || cmdByte == 'R') cmdStr = "READ";
         else if (cmdByte == 0x57 || cmdByte == 'W') cmdStr = "WRITE";
@@ -333,15 +463,13 @@ void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, q
         else if (cmdByte == 0x21) cmdStr = "FORMAT";
         else if (cmdByte == 0x22) cmdStr = "FMT_DUAL";
         else if (cmdByte == 0x3F) {
-            // $3F is CAPACITY for Disk Drives, but SMART POLL for the T1: Device
             if (devByte == 0x70) cmdStr = "SMART_POLL";
             else cmdStr = "CAPACITY";
         }
-        else if (cmdByte == 0x93 && devByte == 0x70) cmdStr = "APE_TIME"; // NEW: Smart Device Date/Time
+        else if (cmdByte == 0x93 && devByte == 0x70) cmdStr = "APE_TIME";
         else if (cmdByte == 0xFE) cmdStr = "MOUNT";
         else if (cmdByte == 0x40 && devByte == 0x4F) cmdStr = "PING";
         else cmdStr = "UNK";
-
 
         pkt.command = QString("%1 %2 ($%3)").arg(devStr).arg(cmdStr).arg(cmdByte, 2, 16, QChar('0')).toUpper();
         pkt.aux1 = QString("$%1").arg(static_cast<quint8>(data[2]), 2, 16, QChar('0')).toUpper();
@@ -380,7 +508,11 @@ void SioPacketDialog::appendPacket(const QString &dir, const QByteArray &data, q
     }
 
     model->addPacket(pkt);
-    tableView->scrollToBottom();
+
+    // Only auto-scroll to bottom if the user isn't actively filtering
+    if (txtFilter->text().isEmpty()) {
+        tableView->scrollToBottom();
+    }
 }
 
 void SioPacketDialog::onSaveClicked() {

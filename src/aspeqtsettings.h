@@ -109,37 +109,32 @@ public:
     QString lastBootDos();
     void setLastBootDos(const QString &dos);
 
+
     // --- 4. Modem Bridge, RDevice & BBS Listener ---
-    bool isModemBridgeEnabled();
-    void setModemBridgeEnabled(bool enabled);
-    QString modemBridgePortName();
-    void setModemBridgePortName(const QString &name);
-    int modemBridgeBaudRate();
-    void setModemBridgeBaudRate(int baud);
-    bool modemBridgeFlowControl();
-    void setModemBridgeFlowControl(bool enabled);
-    bool modemBridgeSshEnabled();
-    void setModemBridgeSshEnabled(bool enabled);
-    bool modemBridgeLocalEcho();
-    void setModemBridgeLocalEcho(bool enabled);
+    int modemTransportMode(); // 0 = Emulation, 1 = Bridge
+    void setModemTransportMode(int mode);
     QString modemBridgePhonebookPath();
     void setModemBridgePhonebookPath(const QString &path);
-    bool invertCtsLogic();
-    void setInvertCtsLogic(bool invert);
-    int streamGuardDelay();
-    void setStreamGuardDelay(int delay);
-
-    // RDevice
-    bool isRDeviceEnabled();
-    void setEnableRDevice(bool enabled);
+    void setEnableRDevice(int port, bool enabled);
+    bool modemBridgeLocalEcho(int port);
+    void setModemBridgeLocalEcho(int port, bool enabled);
+    bool bbsListenerEnabled(int port);
+    void setBbsListenerEnabled(int port, bool enable);
+    int modemListenPort(int port);
+    void setModemListenPort(int port, int listenPort);
+    QString modemBridgePortName(int port);
+    void setModemBridgePortName(int port, const QString &name);
+    int modemBridgeBaudRate(int port);
+    void setModemBridgeBaudRate(int port, int baud);
+    bool modemBridgeFlowControl(int port);
+    void setModemBridgeFlowControl(int port, bool enabled);
+    bool invertCtsLogic(int port);
+    void setInvertCtsLogic(int port, bool invert);
+    int streamGuardDelay(int port);
+    void setStreamGuardDelay(int port, int delay);
     bool showRDeviceWarning();
     void setShowRDeviceWarning(bool show);
 
-    // BBS Listener Settings
-    bool bbsListenerEnabled();
-    void setBbsListenerEnabled(bool enable);
-    int modemListenPort();
-    void setModemListenPort(int port);
 
     // --- 5. TNFS & Web UI ---
     bool isWebUiEnabled();
@@ -250,19 +245,20 @@ private:
     QString mLastBootDos;
 
     // 4. Modem Bridge, RDevice & BBS Listener Data
-    bool mModemBridgeEnabled;
-    QString mModemBridgePortName;
-    int mModemBridgeBaudRate;
-    bool mModemBridgeFlowControl;
-    bool mModemBridgeSshEnabled;
-    bool mModemBridgeLocalEcho;
+    int mModemTransportMode;
     QString mModemBridgePhonebookPath;
-    bool mInvertCtsLogic;
-    int mStreamGuardDelay;
-    bool mEnableRDevice;
     bool mShowRDeviceWarning;
-    bool mBbsListenerEnabled; // [NEW] Added for Auto-Answer UI
-    int mModemListenPort;
+
+    bool mEnableRDevice[4];
+    bool mModemBridgeLocalEcho[4];
+    bool mBbsListenerEnabled[4];
+    int mModemListenPort[4];
+    QString mModemBridgePortName[4];
+    int mModemBridgeBaudRate[4];
+    bool mModemBridgeFlowControl[4];
+    bool mInvertCtsLogic[4];
+    int mStreamGuardDelay[4];
+
 
     // 5. TNFS & Web UI Data
     bool mWebUiEnabled;

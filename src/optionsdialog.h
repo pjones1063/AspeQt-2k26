@@ -8,6 +8,9 @@
 #include <QtWidgets/QDialog>
 #include <QTreeWidget>
 #include <QtDebug>
+#include <QCheckBox>
+#include <QSpinBox>
+#include <QComboBox>
 
 #include "serialport.h"
 
@@ -29,6 +32,17 @@ private:
     Ui::OptionsDialog *m_ui;
     QTreeWidgetItem *itemStandard, *itemAtariSio, *itemEmulation, *itemModemBridge, *itemPrinter, *itemI18n, *itemWebUi;
 
+    // 4-Port Matrix UI Arrays
+    QCheckBox* m_modemLocalEchoBox[4];
+    QCheckBox* m_enableBbsPort[4];
+    QSpinBox* m_bbsPortBox[4];
+    QComboBox* m_modemPortComboBox[4];
+    QComboBox* m_modemBaudComboBox[4];
+    QCheckBox* m_modemFlowControlBox[4];
+    QCheckBox* m_modemInvertCtsBox[4];
+    QSpinBox* m_sbStreamGuardDelay[4];
+
+
 private slots:
     void on_serialPortComboBox_currentIndexChanged(int index);
     void on_serialPortHandshakeCombo_currentIndexChanged(int index);
@@ -37,12 +51,11 @@ private slots:
     void on_treeWidget_currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* previous);
     void OptionsDialog_accepted();
     void on_useEmulationCustomCasBaudBox_toggled(bool checked);
-    void on_modemEnableBox_toggled(bool checked);
-    void on_modemRBox_toggled(bool checked);
     void on_modemPhonebookBrowseBtn_clicked();
     void on_mDirectUart_toggled(bool checked);
     void on_modemPhonebookNewBtn_clicked();
-    void on_modemPortComboBox_currentIndexChanged(int index);
+    void on_transportModeChanged();
+
 };
 
 #endif // OPTIONSDIALOG_H

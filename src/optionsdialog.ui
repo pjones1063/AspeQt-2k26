@@ -668,7 +668,7 @@
    <widget class="QWidget" name="page_modemBridge">
     <layout class="QVBoxLayout" name="verticalLayout_modem">
      <property name="spacing">
-      <number>0</number>
+      <number>6</number>
      </property>
      <property name="leftMargin">
       <number>0</number>
@@ -683,41 +683,18 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QGroupBox" name="modemBridgeGroup">
+      <widget class="QGroupBox" name="globalTransportGroup">
        <property name="title">
-        <string>Hayes Modem Emulator (Rs232 to TCP Bridge)</string>
+        <string>Global Transport Mode (Select One)</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_modemGroup">
+       <layout class="QVBoxLayout" name="verticalLayout_transport">
         <item>
-         <widget class="QCheckBox" name="modemEnableBox">
+         <widget class="QRadioButton" name="radioVirtual850">
           <property name="toolTip">
-           <string>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</string>
+           <string>Use this if you DO NOT have a physical Atari 850 connected.</string>
           </property>
           <property name="text">
-           <string>Enable 850 Bridge (Hardware RS232 to TCP)</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="modemRBox">
-          <property name="toolTip">
-           <string>Bridges a secondary Serial Port to the Internet. Requires Atari 850 or R-Verter.</string>
-          </property>
-          <property name="text">
-           <string>Enable 850 Emulator  (R: to TCP)</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="modemInvertCtsBox">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="toolTip">
-           <string>Enable if using a standard FTDI USB adapter. Leave unchecked for direct Raspberry Pi GPIO.</string>
-          </property>
-          <property name="text">
-           <string>Invert CTS Logic (Standard USB Adapters)</string>
+           <string>Virtual 850 Emulation (SIO R: to TCP)</string>
           </property>
           <property name="checked">
            <bool>true</bool>
@@ -725,245 +702,499 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_streamGuardDelay">
-          <property name="text">
-           <string>FTDI/USB Latency:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="sbStreamGuardDelay">
-          <property name="suffix">
-           <string>ms</string>
-          </property>
-          <property name="minimum">
-           <number>5</number>
-          </property>
-          <property name="maximum">
-           <number>250</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="enableBbsPort">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
+         <widget class="QRadioButton" name="radioHardwareBridge">
           <property name="toolTip">
-           <string>Enable if using a standard FTDI USB adapter. Leave unchecked for direct Raspberry Pi GPIO.</string>
+           <string>Use this if a REAL Atari 850 is connected to the PC via serial cables.</string>
           </property>
           <property name="text">
-           <string>Enable BBS Listener (Auto-Answer):</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
+           <string>Hardware Bridge Mode (Physical RS232 to TCP)</string>
           </property>
          </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="bbsPort">
-          <property name="text">
-           <string>BBS Listener TCP Port</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="bbsPortBox">
-          <property name="minimum">
-           <number>1025</number>
-          </property>
-          <property name="maximum">
-           <number>65000</number>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="Line" name="line_modem_2">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="modemPortLabel">
-          <property name="text">
-           <string>Bridge Serial Port:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="modemPortComboBox">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="toolTip">
-           <string>Must be different from the SIO port.</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="modemBaudLabel">
-          <property name="text">
-           <string>Baud Rate:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="modemBaudComboBox">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <item>
-           <property name="text">
-            <string>300</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>600</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>1200</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>2400</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>4800</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>9600</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>19200</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>38400</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>57600</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="modemFlowControlBox">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="toolTip">
-           <string>Highly recommended for Atari 850 Interface.</string>
-          </property>
-          <property name="text">
-           <string>Enable Hardware Flow Control (RTS/CTS)</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="Line" name="line_modem">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="modemSshBox">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="visible">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Enable SSH Support (Port 22)</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="modemLocalEchoBox">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Local Echo (Half Duplex)</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="modemPhonebookLabel">
-          <property name="text">
-           <string>Phonebook XML Path:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_phonebook">
-          <item>
-           <widget class="QLineEdit" name="modemPhonebookPathEdit">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="readOnly">
-             <bool>false</bool>
-            </property>
-            <property name="placeholderText">
-             <string>Click ... to select dialdirectory.xml</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="modemPhonebookBrowseBtn">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="modemPhonebookNewBtn">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>New</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <spacer name="modemSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTabWidget" name="nodeTabWidget">
+       <property name="currentIndex">
+        <number>3</number>
+       </property>
+       <widget class="QWidget" name="tab_R1">
+        <attribute name="title">
+         <string>R1: (Primary)</string>
+        </attribute>
+        <layout class="QFormLayout" name="formLayout_R1">
+         <item row="0" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemLocalEchoBox_R1">
+           <property name="text">
+            <string>Local Echo (Half Duplex)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="modemPhonebookLabel">
+           <property name="text">
+            <string>Phonebook XML:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <layout class="QHBoxLayout" name="horizontalLayout_phonebook">
+           <item>
+            <widget class="QLineEdit" name="modemPhonebookPathEdit">
+             <property name="placeholderText">
+              <string>Click ... to select dialdirectory.xml</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="modemPhonebookBrowseBtn">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="modemPhonebookNewBtn">
+             <property name="text">
+              <string>New</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="enableBbsPort_R1">
+           <property name="text">
+            <string>Enable BBS Listener:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="bbsPortBox_R1">
+           <property name="minimum">
+            <number>1025</number>
+           </property>
+           <property name="maximum">
+            <number>65000</number>
+           </property>
+           <property name="value">
+            <number>2301</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <widget class="Line" name="line_R1">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="modemPortLabel_R1">
+           <property name="text">
+            <string>Bridge Serial Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="modemPortComboBox_R1"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="modemBaudLabel_R1">
+           <property name="text">
+            <string>Baud Rate:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QComboBox" name="modemBaudComboBox_R1">
+           <item>
+            <property name="text">
+             <string>9600</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>19200</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>38400</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemFlowControlBox_R1">
+           <property name="text">
+            <string>Enable Hardware Flow Control (RTS/CTS)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemInvertCtsBox_R1">
+           <property name="text">
+            <string>Invert CTS Logic (Standard USB Adapters)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="label_streamGuardDelay_R1">
+           <property name="text">
+            <string>FTDI/USB Latency:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1">
+          <widget class="QSpinBox" name="sbStreamGuardDelay_R1">
+           <property name="suffix">
+            <string> ms</string>
+           </property>
+           <property name="minimum">
+            <number>5</number>
+           </property>
+           <property name="maximum">
+            <number>250</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_R2">
+        <attribute name="title">
+         <string>R2: (Serial)</string>
+        </attribute>
+        <layout class="QFormLayout" name="formLayout_R2">
+         <item row="0" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemLocalEchoBox_R2">
+           <property name="text">
+            <string>Local Echo (Half Duplex)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="enableBbsPort_R2">
+           <property name="text">
+            <string>Enable BBS Listener:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="bbsPortBox_R2">
+           <property name="minimum">
+            <number>1025</number>
+           </property>
+           <property name="maximum">
+            <number>65000</number>
+           </property>
+           <property name="value">
+            <number>2302</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="Line" name="line_R2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="modemPortLabel_R2">
+           <property name="text">
+            <string>Bridge Serial Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="modemPortComboBox_R2"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="modemBaudLabel_R2">
+           <property name="text">
+            <string>Baud Rate:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="modemBaudComboBox_R2">
+           <item>
+            <property name="text">
+             <string>9600</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>19200</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>38400</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="5" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemFlowControlBox_R2">
+           <property name="text">
+            <string>Enable Hardware Flow Control (RTS/CTS)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemInvertCtsBox_R2">
+           <property name="text">
+            <string>Invert CTS Logic (Standard USB Adapters)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_streamGuardDelay_R2">
+           <property name="text">
+            <string>FTDI/USB Latency:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QSpinBox" name="sbStreamGuardDelay_R2">
+           <property name="suffix">
+            <string> ms</string>
+           </property>
+           <property name="minimum">
+            <number>5</number>
+           </property>
+           <property name="maximum">
+            <number>250</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_R3">
+        <attribute name="title">
+         <string>R3: (Serial)</string>
+        </attribute>
+        <layout class="QFormLayout" name="formLayout_R3">
+         <item row="0" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemLocalEchoBox_R3">
+           <property name="text">
+            <string>Local Echo (Half Duplex)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="enableBbsPort_R3">
+           <property name="text">
+            <string>Enable BBS Listener:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="bbsPortBox_R3">
+           <property name="minimum">
+            <number>1025</number>
+           </property>
+           <property name="maximum">
+            <number>65000</number>
+           </property>
+           <property name="value">
+            <number>2302</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="Line" name="line_R3">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="modemPortLabel_R3">
+           <property name="text">
+            <string>Bridge Serial Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="modemPortComboBox_R3"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="modemBaudLabel_R3">
+           <property name="text">
+            <string>Baud Rate:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="modemBaudComboBox_R3">
+           <item>
+            <property name="text">
+             <string>9600</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>19200</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>38400</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="5" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemFlowControlBox_R3">
+           <property name="text">
+            <string>Enable Hardware Flow Control (RTS/CTS)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemInvertCtsBox_R3">
+           <property name="text">
+            <string>Invert CTS Logic (Standard USB Adapters)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_streamGuardDelay_R3">
+           <property name="text">
+            <string>FTDI/USB Latency:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QSpinBox" name="sbStreamGuardDelay_R3">
+           <property name="suffix">
+            <string> ms</string>
+           </property>
+           <property name="minimum">
+            <number>5</number>
+           </property>
+           <property name="maximum">
+            <number>250</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_R4">
+        <attribute name="title">
+         <string>R4: (Serial) </string>
+        </attribute>
+        <layout class="QFormLayout" name="formLayout_R4">
+         <item row="0" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemLocalEchoBox_R4">
+           <property name="text">
+            <string>Local Echo (Half Duplex)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="enableBbsPort_R4">
+           <property name="text">
+            <string>Enable BBS Listener:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="bbsPortBox_R4">
+           <property name="minimum">
+            <number>1025</number>
+           </property>
+           <property name="maximum">
+            <number>65000</number>
+           </property>
+           <property name="value">
+            <number>2302</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="Line" name="line_R4">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="modemPortLabel_R4">
+           <property name="text">
+            <string>Bridge Serial Port:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="modemPortComboBox_R4"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="modemBaudLabel_R4">
+           <property name="text">
+            <string>Baud Rate:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QComboBox" name="modemBaudComboBox_R4">
+           <item>
+            <property name="text">
+             <string>9600</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>19200</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>38400</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="5" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemFlowControlBox_R4">
+           <property name="text">
+            <string>Enable Hardware Flow Control (RTS/CTS)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QCheckBox" name="modemInvertCtsBox_R4">
+           <property name="text">
+            <string>Invert CTS Logic (Standard USB Adapters)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_streamGuardDelay_R4">
+           <property name="text">
+            <string>FTDI/USB Latency:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1">
+          <widget class="QSpinBox" name="sbStreamGuardDelay_R4">
+           <property name="suffix">
+            <string> ms</string>
+           </property>
+           <property name="minimum">
+            <number>5</number>
+           </property>
+           <property name="maximum">
+            <number>250</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </item>
     </layout>

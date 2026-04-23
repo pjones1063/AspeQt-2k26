@@ -227,6 +227,10 @@
             <b>Note:</b> Reliable high-speed operation depends on your SIO2PC hardware. FTDI-based USB cables generally offer the best performance.
         </div>
 
+        <div class="warning">
+            <b>CRITICAL WINDOWS SETTINGS (Windows ONLY):</b> If you are using Windows with an FTDI-based USB-to-Serial adapter, you must adjust the advanced COM port settings in the Windows Device Manager to ensure stable SIO timing and prevent checksum errors. You must set the <b>Latency Timer to 1 msec</b> (the Windows FTDI default of 16ms will cause severe SIO timeouts) and reduce the <b>USB Transfer Sizes (both Receive and Transmit) to 256 bytes</b>. Do not skip this step on Windows!
+        </div>
+
         <a name="usage"></a>
         <h2>Disk & Folder Usage</h2>
         <h3>Mounting Disk Images</h3>

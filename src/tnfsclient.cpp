@@ -2,14 +2,20 @@
 #include <QHostInfo>
 #include <QDebug>
 #include <algorithm>
-#include <QElapsedTimer> // Added for accurate timeout handling
+#include <QElapsedTimer>
+#include <QVariant>
 
 TnfsClient::TnfsClient(QObject *parent) : QObject(parent) {
     socket = new QUdpSocket(this);
+
+    // [FIX] Explicitly wrap the integer in a QVariant
+    socket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, QVariant(1024 * 1024)); // 1MB Buffer
+
     socket->bind(QHostAddress::AnyIPv4);
     m_sessionId = 0;
     m_sequence = 0;
 }
+
 
 TnfsClient::~TnfsClient() {
     socket->close();
@@ -28,21 +34,27 @@ bool TnfsClient::connectToHost(const QString &host, quint16 port) {
     return true;
 }
 
+
 QByteArray TnfsClient::sendCommand(quint8 cmd, const QByteArray &data) {
     QMutexLocker locker(&netMutex);
 
-    // --- FIX 1: FLUSH THE BUFFER ---
+    // --- FLUSH THE BUFFER ---
     // Drain any "Ghost Packets" left over from previous timeouts.
     while (socket->hasPendingDatagrams()) {
         socket->readDatagram(nullptr, socket->pendingDatagramSize());
     }
 
     const int MAX_RETRIES = 4;
-    const int TIMEOUT_MS = 250;
+
+    // [OPTIMIZATION] Progressive timeouts instead of a flat 250ms.
+    // 1st Try: 50ms (Fast recovery for dropped packets on broadband)
+    // 2nd Try: 150ms
+    // 3rd/4th Try: 500ms (Network is severely congested, give it time)
+    int timeouts[] = {50, 150, 500, 500};
 
     quint8 currentSeq = m_sequence;
 
-    // --- OPTIMIZATION 1: Reserve Memory ---
+    // --- Reserve Memory ---
     QByteArray packet;
     packet.reserve(4 + data.size()); // Header (4) + Data
     packet.append(static_cast<char>(m_sessionId & 0xFF));
@@ -54,13 +66,10 @@ QByteArray TnfsClient::sendCommand(quint8 cmd, const QByteArray &data) {
     for (int retry = 0; retry < MAX_RETRIES; ++retry) {
         socket->writeDatagram(packet, serverAddr, serverPort);
 
-        // --- OPTIMIZATION 2: Smart Receive Loop ---
-        // Don't retransmit immediately if we get a stale packet.
-        // Keep listening until the specific timeout for this attempt expires.
-
+        // --- Smart Receive Loop ---
         QElapsedTimer timer;
         timer.start();
-        qint64 remainingTime = TIMEOUT_MS;
+        qint64 remainingTime = timeouts[retry];
 
         while (remainingTime > 0) {
             // Check for data immediately (Fast Path) or Wait (Slow Path)
@@ -89,17 +98,17 @@ QByteArray TnfsClient::sendCommand(quint8 cmd, const QByteArray &data) {
                     }
                 }
             } else {
-                // Real Timeout occurred (waitForReadyRead returned false)
+                // Real Timeout occurred for this specific retry bracket
                 break;
             }
 
-            // Update remaining time so we don't wait full 250ms again if we just read a stale packet
-            remainingTime = TIMEOUT_MS - timer.elapsed();
+            // Update remaining time so we don't wait full duration again if we just read a stale packet
+            remainingTime = timeouts[retry] - timer.elapsed();
         }
 
         // Log retries so we know if the network is struggling
         if (retry > 0) {
-            qWarning() << "!w" << "TNFS: Retry" << retry << "for CMD" << Qt::hex << cmd;
+            qWarning() << "!w" << "TNFS: Retry" << retry << "for CMD" << Qt::hex << cmd << "Timeout:" << timeouts[retry] << "ms";
         }
     }
 
@@ -108,6 +117,8 @@ QByteArray TnfsClient::sendCommand(quint8 cmd, const QByteArray &data) {
     qCritical() << "!e" << "TNFS: IO Error/Timeout. CMD:" << Qt::hex << cmd;
     return QByteArray();
 }
+
+
 
 bool TnfsClient::mount(const QString &remotePath)
 {

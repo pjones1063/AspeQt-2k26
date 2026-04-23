@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QAbstractTableModel>
+#include <QSortFilterProxyModel>
 #include <QTableView>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -13,8 +14,11 @@
 #include <QByteArray>
 #include <QTextEdit>
 #include <QSplitter>
-#include <QToolButton>
 #include <QLabel>
+#include <QTimer>
+#include <QSpinBox>
+#include <QLineEdit>
+#include <QComboBox>
 
 // The Core Data Structure
 struct SioPacket {
@@ -46,6 +50,7 @@ public:
 
 private:
     QList<SioPacket> m_packets;
+    const int MAX_PACKETS = 10000; // Ring Buffer Limit
 };
 
 // The UI Dialog
@@ -67,10 +72,29 @@ private slots:
     void onInjectClicked();
     void onRowSelected(const QModelIndex &current, const QModelIndex &previous);
     void toggleInspector();
+    void onRecordToggled(bool checked);
+    void onPlayToggled(bool checked);
+    void onPlaybackStep();
+    void onFilterChanged(); // New Filter Slot
 
 private:
     QTableView *tableView;
     SioPacketModel *model;
+    QSortFilterProxyModel *proxyModel; // Wireshark Filter Engine
+
+    // Filter UI
+    QLineEdit *txtFilter;
+    QComboBox *cmbFilterColumn;
+
+    // Playback & Record Deck
+    QPushButton *btnRecord;
+    QPushButton *btnPlay;
+    QSpinBox *spinPlayDelay;
+    bool m_isRecording = true;
+    bool m_isPlaying = false;
+    QTimer *m_playbackTimer;
+
+    // UI Controls
     QPushButton *btnClear;
     QPushButton *btnSave;
     QPushButton *btnInject;
@@ -79,7 +103,7 @@ private:
     // Collapsible Pane Variables
     QSplitter *splitter;
     QWidget *inspectorContainer;
-    QToolButton *btnToggleInspector;
+    QPushButton *btnToggleInspector;
     QList<int> savedSplitterSizes;
 };
 

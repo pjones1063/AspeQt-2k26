@@ -16,8 +16,10 @@
 
 #define ESCAPE_GUARD_TIME   1000
 
-RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
+RDevice::RDevice(SioWorker *worker, int portIndex) : SioDevice(worker), m_portIndex(portIndex) // <-- Add to initializer
 {
+
+    m_portIndex = portIndex;
     tcpSocket = new QTcpSocket(this);
     tcpSocket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     m_ringPhase = false;
@@ -44,7 +46,11 @@ RDevice::RDevice(SioWorker *worker) : SioDevice(worker)
     m_escapeActionTimer->setSingleShot(true);
     connect(m_escapeActionTimer, &QTimer::timeout, this, &RDevice::onEscapeTriggered);
 
-    m_isEnabled = (aspeqtSettings && aspeqtSettings->isRDeviceEnabled());
+    m_isEnabled = (aspeqtSettings && aspeqtSettings->modemTransportMode() == 0);
+
+    bool shouldListen = aspeqtSettings->bbsListenerEnabled(m_portIndex) && m_isEnabled;
+    int port = aspeqtSettings->modemListenPort(m_portIndex);
+
     if (m_isEnabled) loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
 
     updateListenerConfig();
@@ -146,7 +152,9 @@ void RDevice::handleCommand(quint8 command, quint16 aux)
     case CMD_STREAM:
         handleStream();
         break;
-    case CMD_LISTEN:     handleListen(aux); break;
+    case CMD_LISTEN:
+        handleListen(aux);
+        break;
     case CMD_UNLISTEN:
         sio->port()->writeCommandAck();
         tcpServer->close();
@@ -977,8 +985,8 @@ void RDevice::updateListenerConfig() {
     if (!aspeqtSettings) return;
 
     // Only listen if both the R: Device AND the BBS Listener are enabled
-    bool shouldListen = aspeqtSettings->bbsListenerEnabled() && m_isEnabled;
-    int port = aspeqtSettings->modemListenPort();
+    bool shouldListen = aspeqtSettings->bbsListenerEnabled(m_portIndex) && m_isEnabled;
+    int port = aspeqtSettings->modemListenPort(m_portIndex);
 
     if (shouldListen) {
         if (tcpServer->isListening()) {

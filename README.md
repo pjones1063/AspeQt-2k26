@@ -12,7 +12,9 @@ AspeQt-2K26 is a modernized fork of the classic AspeQT/RespeQt emulator. It emul
 
 This version migrates the codebase to **Qt 6**, fixing critical stability issues and introducing high-performance networking and hardware-level emulation for modern operating systems.
 
-### 🚀 What's New in AspeQt-2K26
+> **⚠️ CRITICAL WINDOWS SETTINGS (Windows ONLY):** If you are using Windows with an FTDI-based USB-to-Serial adapter, you must adjust the advanced COM port settings in the Windows Device Manager to ensure stable SIO timing and prevent checksum errors. You must set the **Latency Timer to 1 msec** (the Windows FTDI default of 16ms will cause severe SIO timeouts) and reduce the **USB Transfer Sizes (both Receive and Transmit) to 256 bytes**. Do not skip this step on Windows!
+
+### ✨ What's New in AspeQt-2K26
 
 #### 1. Full Qt 6 Native Port
 * **Modern Framework:** Fully ported to the Qt 6 framework for enhanced stability and long-term support.
@@ -35,7 +37,7 @@ This version migrates the codebase to **Qt 6**, fixing critical stability issues
 * **Hardware-Free Telecommunications:** A kernel-bypass, SIO-level emulation of the **Atari 850 Interface Module**. It intercepts SIO Poll (`$40`) and Stream (`$58`) commands, allowing the Atari to connect directly to Telnet and SSH hosts without physical RS-232 hardware.
 * **Smart Protocols:** Features native SSH authentication (Linux boxes) and raw Telnet parsing (Retro BBSes), mapping standard AT commands directly to TCP/IP sockets.
 * **Dynamic Baud Rates:** Automatically handles the Atari's 19200 baud SIO initialization and dynamically down-shifts to 9600 baud for concurrent stream mode (highly recommended for Ice-T and BobTerm).
-* **💻 HARDWARE COMPATIBILITY:** This feature fully supports both **standard USB SIO2PC adapters** (FTDI) and direct **Raspberry Pi raw UART** connections.
+* **🔌 HARDWARE COMPATIBILITY:** This feature fully supports both **standard USB SIO2PC adapters** (FTDI) and direct **Raspberry Pi raw UART** connections.
 * **FT-232 / USB Adapter Note:** If using a USB adapter, ensure it has the `CTS` pin connected to the Atari's `COMMAND` line. Depending on how your specific FTDI chip was configured at the factory, you may need to toggle the "Invert CTS Logic" setting in AspeQt's options for it to communicate properly.
 * **Documentation:** Please refer to the [Hardware Documentation](doc/) for USB SIO2PC wiring, CTS configuration, and Raspberry Pi SIO-to-GPIO setup.
 
@@ -55,7 +57,7 @@ The required Atari-side drivers to utilize the `R:`, `Y:`, and `W:` devices are 
 
 ---
 
-### 🕒 Time Synchronization (Real-Time Clock)
+### ⌚ Time Synchronization (Real-Time Clock)
 AspeQt-2k26 features built-in support for the **ApeTime** protocol, allowing your Atari to synchronize its clock with your PC automatically.
 
 * **Recommended Method:** Use a standard ApeTime-compatible driver like `ATIME.SYS` on SpartaDOS X.

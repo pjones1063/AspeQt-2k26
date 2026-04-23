@@ -14,7 +14,7 @@ class ModemBridge : public QObject
 {
     Q_OBJECT
 public:
-    explicit ModemBridge(QObject *parent = nullptr);
+    explicit ModemBridge(QObject *parent = nullptr, int portIndex = 0);
     ~ModemBridge();
 
     // Configuration
@@ -68,6 +68,7 @@ private slots:
 
 
 private:
+    int m_portIndex;
     QSerialPort *m_serial;
     QTcpSocket *m_socket;
     SshClient *m_ssh;

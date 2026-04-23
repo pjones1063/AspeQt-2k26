@@ -404,7 +404,7 @@ bool StandardSerialPortBackend::isCommandLineAsserted()
 
     // In the Unix backend's readCommandFrame, it waits for the line to go
     // from HIGH to LOW (active). So if it's NOT high, it's asserted.
-    if (aspeqtSettings->invertCtsLogic()) {
+   if (aspeqtSettings->invertCtsLogic(0)) {
         return isLineHigh;
     } else {
         // Legacy AspeQt behavior (expects line to go LOW to be active)

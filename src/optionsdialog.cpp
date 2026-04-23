@@ -50,7 +50,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     // MUTE SIGNALS: Prevent the UI from crashing while we load data
     m_ui->serialPortComboBox->blockSignals(true);
-    m_ui->modemPortComboBox->blockSignals(true);
 
     // --- Standard Serial Port Combo Setup ---
     m_ui->serialPortComboBox->clear();
@@ -67,25 +66,8 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     } else {
         m_ui->serialPortComboBox->addItem(tr("Custom"));
     }
-
-    // --- Modem Bridge Port Combo Setup ---
-    m_ui->modemPortComboBox->clear();
-    for (const QSerialPortInfo &info : infos) {
-        m_ui->modemPortComboBox->addItem(info.portName(), info.systemLocation());
-    }
-
-    m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
-    if(0 != m_ui->modemPortComboBox->currentText().compare(aspeqtSettings->modemBridgePortName(), Qt::CaseInsensitive)) {
-        m_ui->modemPortComboBox->setEditable(true);
-        m_ui->modemPortComboBox->addItem(aspeqtSettings->modemBridgePortName());
-        m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
-    } else {
-        m_ui->modemPortComboBox->addItem(tr("Custom"));
-    }
-
-    // UNMUTE SIGNALS
     m_ui->serialPortComboBox->blockSignals(false);
-    m_ui->modemPortComboBox->blockSignals(false);
+
 
     // ==========================================
     // 1. General & UI Settings
@@ -103,7 +85,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     // ==========================================
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
     m_ui->mDirectUart->setChecked(aspeqtSettings->serialPortHardwareUart());
-    on_mDirectUart_toggled(aspeqtSettings->serialPortHardwareUart()); // Trigger gray-outs
     m_ui->serialPortWriteDelayCombo->setCurrentIndex(aspeqtSettings->serialPortWriteDelay());
     m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
     m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
@@ -120,28 +101,92 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->emulationCustomCasBaudSpin->setValue(aspeqtSettings->customCasBaud());
 
     // ==========================================
-    // 4. Modem Bridge, RDevice & BBS Listener
+    // 4. Modem Bridge & 4-Port Matrix
     // ==========================================
-    m_ui->modemEnableBox->setChecked(aspeqtSettings->isModemBridgeEnabled());
-    m_ui->modemPortComboBox->setCurrentText(aspeqtSettings->modemBridgePortName());
-    m_ui->modemBaudComboBox->setCurrentText(QString::number(aspeqtSettings->modemBridgeBaudRate()));
-    m_ui->modemFlowControlBox->setChecked(aspeqtSettings->modemBridgeFlowControl());
-    m_ui->modemSshBox->setChecked(aspeqtSettings->modemBridgeSshEnabled());
-    m_ui->modemLocalEchoBox->setChecked(aspeqtSettings->modemBridgeLocalEcho());
+
+    // Map UI Elements to Arrays
+    m_modemLocalEchoBox[0] = m_ui->modemLocalEchoBox_R1; m_modemLocalEchoBox[1] = m_ui->modemLocalEchoBox_R2;
+    m_modemLocalEchoBox[2] = m_ui->modemLocalEchoBox_R3; m_modemLocalEchoBox[3] = m_ui->modemLocalEchoBox_R4;
+
+    m_enableBbsPort[0] = m_ui->enableBbsPort_R1; m_enableBbsPort[1] = m_ui->enableBbsPort_R2;
+    m_enableBbsPort[2] = m_ui->enableBbsPort_R3; m_enableBbsPort[3] = m_ui->enableBbsPort_R4;
+
+    m_bbsPortBox[0] = m_ui->bbsPortBox_R1; m_bbsPortBox[1] = m_ui->bbsPortBox_R2;
+    m_bbsPortBox[2] = m_ui->bbsPortBox_R3; m_bbsPortBox[3] = m_ui->bbsPortBox_R4;
+
+    m_modemPortComboBox[0] = m_ui->modemPortComboBox_R1; m_modemPortComboBox[1] = m_ui->modemPortComboBox_R2;
+    m_modemPortComboBox[2] = m_ui->modemPortComboBox_R3; m_modemPortComboBox[3] = m_ui->modemPortComboBox_R4;
+
+    m_modemBaudComboBox[0] = m_ui->modemBaudComboBox_R1; m_modemBaudComboBox[1] = m_ui->modemBaudComboBox_R2;
+    m_modemBaudComboBox[2] = m_ui->modemBaudComboBox_R3; m_modemBaudComboBox[3] = m_ui->modemBaudComboBox_R4;
+
+    m_modemFlowControlBox[0] = m_ui->modemFlowControlBox_R1; m_modemFlowControlBox[1] = m_ui->modemFlowControlBox_R2;
+    m_modemFlowControlBox[2] = m_ui->modemFlowControlBox_R3; m_modemFlowControlBox[3] = m_ui->modemFlowControlBox_R4;
+
+    m_modemInvertCtsBox[0] = m_ui->modemInvertCtsBox_R1; m_modemInvertCtsBox[1] = m_ui->modemInvertCtsBox_R2;
+    m_modemInvertCtsBox[2] = m_ui->modemInvertCtsBox_R3; m_modemInvertCtsBox[3] = m_ui->modemInvertCtsBox_R4;
+
+    m_sbStreamGuardDelay[0] = m_ui->sbStreamGuardDelay_R1; m_sbStreamGuardDelay[1] = m_ui->sbStreamGuardDelay_R2;
+    m_sbStreamGuardDelay[2] = m_ui->sbStreamGuardDelay_R3; m_sbStreamGuardDelay[3] = m_ui->sbStreamGuardDelay_R4;
+
+    // Load Global Settings
+    m_ui->radioVirtual850->setChecked(aspeqtSettings->modemTransportMode() == 0);
+    m_ui->radioHardwareBridge->setChecked(aspeqtSettings->modemTransportMode() == 1);
     m_ui->modemPhonebookPathEdit->setText(aspeqtSettings->modemBridgePhonebookPath());
-    m_ui->modemInvertCtsBox->setChecked(aspeqtSettings->invertCtsLogic());
-    m_ui->sbStreamGuardDelay->setValue(aspeqtSettings->streamGuardDelay());
 
-    m_ui->modemRBox->setChecked(aspeqtSettings->isRDeviceEnabled());
-    on_modemEnableBox_toggled(aspeqtSettings->isModemBridgeEnabled()); // Trigger initial states
+    for(int i = 0; i < 4; i++) {
+        m_modemLocalEchoBox[i]->setChecked(aspeqtSettings->modemBridgeLocalEcho(i));
+        m_enableBbsPort[i]->setChecked(aspeqtSettings->bbsListenerEnabled(i));
 
-    // [NEW] BBS Listener Setup
-    m_ui->enableBbsPort->setChecked(aspeqtSettings->bbsListenerEnabled());
-    m_ui->bbsPortBox->setMinimum(1024);
-    m_ui->bbsPortBox->setMaximum(65535);
-    m_ui->bbsPortBox->setValue(aspeqtSettings->modemListenPort());
-    m_ui->bbsPortBox->setEnabled(aspeqtSettings->bbsListenerEnabled());
-    connect(m_ui->enableBbsPort, &QCheckBox::toggled, m_ui->bbsPortBox, &QSpinBox::setEnabled);
+        m_bbsPortBox[i]->setMinimum(1024);
+        m_bbsPortBox[i]->setMaximum(65535);
+        m_bbsPortBox[i]->setValue(aspeqtSettings->modemListenPort(i));
+        m_bbsPortBox[i]->setEnabled(aspeqtSettings->bbsListenerEnabled(i));
+
+        m_modemPortComboBox[i]->blockSignals(true);
+        m_modemPortComboBox[i]->clear();
+        m_modemPortComboBox[i]->addItem(tr("None")); // <-- [FIX] Allow users to leave extra ports disconnected
+        for (const QSerialPortInfo &info : infos) {
+            m_modemPortComboBox[i]->addItem(info.portName(), info.systemLocation());
+        }
+        m_modemPortComboBox[i]->setCurrentText(aspeqtSettings->modemBridgePortName(i));
+
+        // Custom COM port logic for the matrix
+        if(0 != m_modemPortComboBox[i]->currentText().compare(aspeqtSettings->modemBridgePortName(i), Qt::CaseInsensitive)) {
+            m_modemPortComboBox[i]->setEditable(true);
+            m_modemPortComboBox[i]->addItem(aspeqtSettings->modemBridgePortName(i));
+            m_modemPortComboBox[i]->setCurrentText(aspeqtSettings->modemBridgePortName(i));
+        } else {
+            m_modemPortComboBox[i]->addItem(tr("Custom"));
+        }
+        m_modemPortComboBox[i]->blockSignals(false);
+
+        // Lambda to handle custom typing in any of the 4 combo boxes
+        connect(m_modemPortComboBox[i], QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index){
+            bool isCustomPath = !m_modemPortComboBox[i]->itemData(index).isValid();
+            m_modemPortComboBox[i]->setEditable(isCustomPath);
+        });
+
+        m_modemBaudComboBox[i]->setCurrentText(QString::number(aspeqtSettings->modemBridgeBaudRate(i)));
+        m_modemFlowControlBox[i]->setChecked(aspeqtSettings->modemBridgeFlowControl(i));
+        m_modemInvertCtsBox[i]->setChecked(aspeqtSettings->invertCtsLogic(i));
+        m_sbStreamGuardDelay[i]->setValue(aspeqtSettings->streamGuardDelay(i));
+
+        // Wiring up local UI rules
+        connect(m_enableBbsPort[i], &QCheckBox::toggled, m_bbsPortBox[i], &QSpinBox::setEnabled);
+
+        if (i > 0) {   // hiding for now.
+            m_modemInvertCtsBox[i]->hide();
+            m_sbStreamGuardDelay[i]->hide();
+            m_ui->label_streamGuardDelay_R2->hide();
+            m_ui->label_streamGuardDelay_R3->hide();
+            m_ui->label_streamGuardDelay_R4->hide();
+        }
+    }
+
+    // Wiring up global UI rules
+    connect(m_ui->radioVirtual850, &QRadioButton::toggled, this, &OptionsDialog::on_transportModeChanged);
+    connect(m_ui->radioHardwareBridge, &QRadioButton::toggled, this, &OptionsDialog::on_transportModeChanged);
 
     // ==========================================
     // 5. TNFS & Web UI
@@ -207,9 +252,11 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(true);
     }
 
-    if (aspeqtSettings->isRDeviceEnabled()) {
-        on_modemRBox_toggled(true);
-    }
+    // Initialize state
+    on_transportModeChanged();
+    on_mDirectUart_toggled(aspeqtSettings->serialPortHardwareUart());
+
+    m_ui->nodeTabWidget->setCurrentIndex(0);
 }
 
 OptionsDialog::~OptionsDialog()
@@ -298,71 +345,13 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
         m_ui->stackedWidget->setCurrentIndex(2);
     } else if (current == itemModemBridge) {
         m_ui->stackedWidget->setCurrentIndex(3);
-    } else if (current == itemPrinter) {          // <--- NEW
-        m_ui->stackedWidget->setCurrentIndex(4);  // <--- NEW (Assuming it is the 5th page you created)
+    } else if (current == itemPrinter) {
+        m_ui->stackedWidget->setCurrentIndex(4);
     } else if (current == itemI18n) {
-        m_ui->stackedWidget->setCurrentIndex(5);  // Shifted
+        m_ui->stackedWidget->setCurrentIndex(5);
     } else if (current == itemWebUi) {
-        m_ui->stackedWidget->setCurrentIndex(6);  // Shifted
+        m_ui->stackedWidget->setCurrentIndex(6);
     }
-}
-
-
-void OptionsDialog::on_modemEnableBox_toggled(bool checked)
-{
-    if (checked) {
-        m_ui->modemRBox->setChecked(false);
-    }
-    m_ui->modemPortComboBox->setEnabled(checked);
-    m_ui->modemBaudComboBox->setEnabled(checked);
-    m_ui->modemFlowControlBox->setEnabled(checked);
-    m_ui->modemSshBox->setEnabled(checked);
-    m_ui->modemLocalEchoBox->setEnabled(checked);
-
-    bool rDeviceEnabled = m_ui->modemRBox->isChecked();
-    bool phonebookEnabled = checked || rDeviceEnabled;
-
-    m_ui->modemPhonebookPathEdit->setEnabled(phonebookEnabled);
-    m_ui->modemPhonebookBrowseBtn->setEnabled(phonebookEnabled);
-    m_ui->modemPhonebookNewBtn->setEnabled(phonebookEnabled);
-}
-
-void OptionsDialog::on_modemRBox_toggled(bool checked)
-{
-    if (checked) {
-        if (m_ui->modemEnableBox->isChecked()) {
-            m_ui->modemEnableBox->blockSignals(true);
-            m_ui->modemInvertCtsBox->setEnabled(true);
-            m_ui->modemEnableBox->setChecked(false);
-            m_ui->modemEnableBox->blockSignals(false);
-            on_modemEnableBox_toggled(false);
-        }
-        m_ui->modemPortComboBox->setEnabled(false);
-        m_ui->modemBaudComboBox->setEnabled(false);
-        m_ui->modemFlowControlBox->setEnabled(false);
-        m_ui->modemSshBox->setEnabled(false);
-        m_ui->modemLocalEchoBox->setEnabled(false);
-        m_ui->modemPhonebookPathEdit->setEnabled(true);
-        m_ui->modemPhonebookBrowseBtn->setEnabled(true);
-        m_ui->modemPhonebookNewBtn->setEnabled(true);
-        m_ui->modemInvertCtsBox->setEnabled(true);
-    } else {
-        bool bridgeEnabled = m_ui->modemEnableBox->isChecked();
-        m_ui->modemPhonebookPathEdit->setEnabled(bridgeEnabled);
-        m_ui->modemPhonebookBrowseBtn->setEnabled(bridgeEnabled);
-        m_ui->modemPhonebookNewBtn->setEnabled(bridgeEnabled);
-        m_ui->modemInvertCtsBox->setEnabled(false);
-    }
-
-    bool hwUart = m_ui->mDirectUart->isChecked();
-    m_ui->sbStreamGuardDelay->setEnabled(checked && !hwUart);
-    m_ui->label_streamGuardDelay->setEnabled(checked && !hwUart);
-}
-
-void OptionsDialog::on_modemPortComboBox_currentIndexChanged(int index)
-{
-    bool isCustomPath = !m_ui->modemPortComboBox->itemData(index).isValid();
-    m_ui->modemPortComboBox->setEditable(isCustomPath);
 }
 
 void OptionsDialog::on_mDirectUart_toggled(bool checked)
@@ -372,28 +361,60 @@ void OptionsDialog::on_mDirectUart_toggled(bool checked)
     m_ui->serialPortWriteDelayCombo->setEnabled(!checked);
     m_ui->serialPortWriteDelayLabel->setEnabled(!checked);
 
-    bool rDevice = m_ui->modemRBox->isChecked();
-    m_ui->sbStreamGuardDelay->setEnabled(rDevice && !checked);
-    m_ui->label_streamGuardDelay->setEnabled(rDevice && !checked);
-
     if (checked && m_ui->serialPortHandshakeCombo->currentIndex() == HANDSHAKE_SOFTWARE) {
         m_ui->serialPortHandshakeCombo->setCurrentIndex(HANDSHAKE_CTS);
+    }
+
+    // Update the matrix stream guard delays
+    on_transportModeChanged();
+}
+
+void OptionsDialog::on_transportModeChanged()
+{
+    bool isBridge = m_ui->radioHardwareBridge->isChecked();
+    bool hwUart = m_ui->mDirectUart->isChecked();
+
+    for(int i = 0; i < 4; i++) {
+        m_modemLocalEchoBox[i]->setEnabled(true);
+        m_enableBbsPort[i]->setEnabled(true);
+        m_modemPortComboBox[i]->setEnabled(isBridge );
+        m_modemBaudComboBox[i]->setEnabled(isBridge );
+        m_modemFlowControlBox[i]->setEnabled(isBridge );
+        m_modemInvertCtsBox[i]->setEnabled(isBridge );
+        m_sbStreamGuardDelay[i]->setEnabled(!hwUart );
     }
 }
 
 void OptionsDialog::OptionsDialog_accepted()
 {
     // --- VALIDATION ---
-    bool modemEnabled = m_ui->modemEnableBox->isChecked();
+    bool isBridge = m_ui->radioHardwareBridge->isChecked();
     QString sioPort = m_ui->serialPortComboBox->currentText();
-    QString modemPort = m_ui->modemPortComboBox->currentText();
     bool standardBackend = (itemStandard->checkState(0) == Qt::Checked);
 
-    if (modemEnabled && standardBackend && (sioPort == modemPort)) {
-        QMessageBox::critical(this, tr("Port Conflict"),
-                              tr("You cannot use the same Serial Port (%1) for both\nSIO Emulation and the Modem Bridge.\n\nPlease select a different port for the Modem.").arg(sioPort));
-        return;
+    if (isBridge) {
+        for (int i = 0; i < 4; i++) {
+            QString port1 = m_modemPortComboBox[i]->currentText();
+            if (port1 == tr("None") || port1.isEmpty()) continue;
+
+            // 1. Check for SIO collision (Don't let ModemBridge steal the SIO port)
+            if (standardBackend && (sioPort == port1)) {
+                QMessageBox::critical(this, tr("Port Conflict"),
+                                      tr("You cannot use the same Serial Port (%1) for both\nSIO Emulation and Modem Bridge R%2.\n\nPlease select a different port.").arg(sioPort).arg(i+1));
+                return;
+            }
+
+            // 2. Check for Matrix COM Port collisions (Don't let R1 clash with R2, etc.)
+            for (int j = i + 1; j < 4; j++) {
+                if (port1 == m_modemPortComboBox[j]->currentText()) {
+                    QMessageBox::critical(this, tr("Matrix Port Conflict"),
+                                          tr("You cannot assign the same physical Serial Port (%1) to both R%2 and R%3.\n\nPlease select different ports, or set unused ports to 'None'.").arg(port1).arg(i+1).arg(j+1));
+                    return;
+                }
+            }
+        }
     }
+
 
     if (m_ui->cbEnableWebUi->isChecked()) {
         if (m_ui->sbHttpPort->value() == m_ui->sbWsPort->value()) {
@@ -402,13 +423,41 @@ void OptionsDialog::OptionsDialog_accepted()
         }
     }
 
-    // --- SAVING ---
+
+
+    // 3. Check for BBS Listener TCP Port collisions
+    for (int i = 0; i < 4; i++) {
+        if (!m_enableBbsPort[i]->isChecked()) continue; // Only care if listener is ON
+
+        int tcpPort1 = m_bbsPortBox[i]->value();
+
+        // Compare against the other R: ports
+        for (int j = i + 1; j < 4; j++) {
+            if (!m_enableBbsPort[j]->isChecked()) continue;
+
+            if (tcpPort1 == m_bbsPortBox[j]->value()) {
+                QMessageBox::critical(this, tr("TCP Port Conflict"),
+                                      tr("You cannot assign the same BBS Listener Port (%1) to both R%2 and R%3.\n\nPlease assign different ports.").arg(tcpPort1).arg(i+1).arg(j+1));
+                return;
+            }
+        }
+
+        // Compare against the Web UI ports
+        if (m_ui->cbEnableWebUi->isChecked()) {
+            if (tcpPort1 == m_ui->sbHttpPort->value() || tcpPort1 == m_ui->sbWsPort->value()) {
+                QMessageBox::critical(this, tr("TCP Port Conflict"),
+                                      tr("BBS Listener Port %1 on R%2 conflicts with the Web UI ports.\n\nPlease assign different ports.").arg(tcpPort1).arg(i+1));
+                return;
+            }
+        }
+    }
+
+    // --- SAVING CORE SETTINGS ---
     aspeqtSettings->setSerialPortName(m_ui->serialPortComboBox->currentText());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
     aspeqtSettings->setSerialPortHardwareUart(m_ui->mDirectUart->isChecked());
     aspeqtSettings->setSerialPortWriteDelay(m_ui->serialPortWriteDelayCombo->currentIndex());
     aspeqtSettings->setSerialPortCompErrDelay(m_ui->serialPortCompErrDelayBox->value());
-    aspeqtSettings->setStreamGuardDelay(m_ui->sbStreamGuardDelay->value());
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
     aspeqtSettings->setSerialPortUsePokeyDivisors(m_ui->serialPortUseDivisorsBox->isChecked());
     aspeqtSettings->setSerialPortPokeyDivisor(m_ui->serialPortDivisorEdit->value());
@@ -428,30 +477,28 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setTranslateEolOnPost(m_ui->eolPostCheckBox->isChecked());
     aspeqtSettings->setTranslateEolOnGet(m_ui->eolGetCheckBox->isChecked());
 
-    // Modem Bridge Settings
-    aspeqtSettings->setModemBridgeEnabled(m_ui->modemEnableBox->isChecked());
-    aspeqtSettings->setModemBridgePortName(m_ui->modemPortComboBox->currentText());
-    aspeqtSettings->setModemBridgeBaudRate(m_ui->modemBaudComboBox->currentText().toInt());
-    aspeqtSettings->setModemBridgeFlowControl(m_ui->modemFlowControlBox->isChecked());
-    aspeqtSettings->setModemBridgeSshEnabled(m_ui->modemSshBox->isChecked());
-    aspeqtSettings->setModemBridgeLocalEcho(m_ui->modemLocalEchoBox->isChecked());
+    // --- SAVING 4-PORT MATRIX ---
+    aspeqtSettings->setModemTransportMode(isBridge ? 1 : 0);
     aspeqtSettings->setModemBridgePhonebookPath(m_ui->modemPhonebookPathEdit->text());
-    aspeqtSettings->setEnableRDevice(m_ui->modemRBox->isChecked());
-    aspeqtSettings->setInvertCtsLogic(m_ui->modemInvertCtsBox->isChecked());
 
-    // BBS Listener Settings
-    aspeqtSettings->setBbsListenerEnabled(m_ui->enableBbsPort->isChecked());
-    aspeqtSettings->setModemListenPort(m_ui->bbsPortBox->value());
+    for(int i = 0; i < 4; i++) {
+        aspeqtSettings->setModemBridgeLocalEcho(i, m_modemLocalEchoBox[i]->isChecked());
+        aspeqtSettings->setBbsListenerEnabled(i, m_enableBbsPort[i]->isChecked());
+        aspeqtSettings->setModemListenPort(i, m_bbsPortBox[i]->value());
+        aspeqtSettings->setModemBridgePortName(i, m_modemPortComboBox[i]->currentText());
+        aspeqtSettings->setModemBridgeBaudRate(i, m_modemBaudComboBox[i]->currentText().toInt());
+        aspeqtSettings->setModemBridgeFlowControl(i, m_modemFlowControlBox[i]->isChecked());
+        aspeqtSettings->setInvertCtsLogic(i, m_modemInvertCtsBox[i]->isChecked());
+        aspeqtSettings->setStreamGuardDelay(i, m_sbStreamGuardDelay[i]->value());
+    }
 
-    // Printer  Settings
+    // --- SAVING PRINTER & WEB UI ---
     aspeqtSettings->setPrinterAutoPop(m_ui->printerAutoPopBox->isChecked());
     aspeqtSettings->setPrinterFeedMode(m_ui->printerFeedCombo->currentIndex());
     aspeqtSettings->setPrinterStyle(m_ui->printerStyleCombo->currentIndex());
     aspeqtSettings->setPrinterMarginTop(m_ui->marginTop->value());
     aspeqtSettings->setPrinterMarginLeft(m_ui->marginLeft->value());
     aspeqtSettings->setPrinterMarginLength(m_ui->marginLength->value());
-
-    // Web UI
     aspeqtSettings->setWebUiEnabled(m_ui->cbEnableWebUi->isChecked());
     aspeqtSettings->setWebUiPort(m_ui->sbHttpPort->value());
     aspeqtSettings->setWebUiWsPort(m_ui->sbWsPort->value());
@@ -462,7 +509,6 @@ void OptionsDialog::OptionsDialog_accepted()
     }
     aspeqtSettings->setBackend(backend);
     aspeqtSettings->setI18nLanguage(m_ui->i18nLanguageCombo->itemData(m_ui->i18nLanguageCombo->currentIndex()).toString());
-
     aspeqtSettings->setPrinterClearRequested(true);
 
     accept();

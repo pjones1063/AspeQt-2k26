@@ -260,7 +260,6 @@ MainWindow::MainWindow(QWidget *parent)
     }
     setGeometry(aspeqtSettings->lastHorizontalPos(),aspeqtSettings->lastVerticalPos(),aspeqtSettings->lastWidth(),aspeqtSettings->lastHeight());
 
-
     // Initialize Headless Cassette Deck
     m_casWorker = nullptr;
     m_casTimer = new QTimer(this);
@@ -325,21 +324,15 @@ MainWindow::MainWindow(QWidget *parent)
         btn->setIconSize(QSize(16, 16));
     };
 
-    // Ensure mutual exclusivity: If both were somehow checked in settings, R: Device wins.
-    if (aspeqtSettings->isRDeviceEnabled() && aspeqtSettings->isModemBridgeEnabled()) {
-        aspeqtSettings->setModemBridgeEnabled(false); // Force legacy bridge off
-    }
-
-
     // 2. Hangup
     btnHangup = new QToolButton(this);
     setupBtn(btnHangup, ":/icons/silk-icons/icons/disconnect.png", "H", tr("Hangup (NO CARRIER)"));
     connect(btnHangup, &QToolButton::clicked, [this]() {
-        if (aspeqtSettings->isRDeviceEnabled()) {
+        if (aspeqtSettings->modemTransportMode() == 0) {
             RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
             if (rDev) rDev->hangup();
-        } else if (modemBridge) {
-            modemBridge->hangup();
+        } else if (modemBridge[0]) {
+            modemBridge[0]->hangup();
         }
     });
 
@@ -347,22 +340,22 @@ MainWindow::MainWindow(QWidget *parent)
     btnMacroUser = new QToolButton(this);
     setupBtn(btnMacroUser, ":/icons/silk-icons/icons/user.png", "U", tr("Send Auto-User (ESC-U)"));
     connect(btnMacroUser, &QToolButton::clicked, [this]() {
-        if (aspeqtSettings->isRDeviceEnabled()) {
+        if (aspeqtSettings->modemTransportMode() == 0) {
             RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
             if (rDev) rDev->injectMacro('U');
-        } else if (modemBridge) {
-            modemBridge->injectMacro('U');
+        } else if (modemBridge[0]) {
+            modemBridge[0]->injectMacro('U');
         }
     });
 
     btnMacroPass = new QToolButton(this);
     setupBtn(btnMacroPass, ":/icons/silk-icons/icons/lock.png", "P", tr("Send Auto-Pass (ESC-P)"));
     connect(btnMacroPass, &QToolButton::clicked, [this]() {
-        if (aspeqtSettings->isRDeviceEnabled()) {
+        if (aspeqtSettings->modemTransportMode() == 0) {
             RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
             if (rDev) rDev->injectMacro('P');
-        } else if (modemBridge) {
-            modemBridge->injectMacro('P');
+        } else if (modemBridge[0]) {
+            modemBridge[0]->injectMacro('P');
         }
     });
 
@@ -447,52 +440,46 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sio, &SioWorker::txActivity, this, &MainWindow::blinkTx);
 
 
-    // -------------------------------------------------------
-    // MODEM BRIDGE SETUP
-    // -------------------------------------------------------
-    modemBridge = new ModemBridge(this);
+    for (int i = 0; i < 4; i++) {
+        // 1. Setup the Hardware Bridge Objects
+        modemBridge[i] = new ModemBridge(this, i);
 
-    // Connect Status Messages (Info)
-    connect(modemBridge, &ModemBridge::statusMessage, this, [](const QString &msg) {
-        // Use qDebug so the message handler catches it and colors it Blue (!i)
-        qDebug() << "!i [ModemBridge]" << msg;
-    });
+        connect(modemBridge[i], &ModemBridge::statusMessage, this, [i](const QString &msg) {
+            qDebug() << QString("!i [ModemBridge R%1] %2").arg(i+1).arg(msg);
+        });
+        connect(modemBridge[i], &ModemBridge::errorOccurred, this, [i](const QString &err) {
+            qCritical() << QString("!e [ModemBridge R%1] %2").arg(i+1).arg(err);
+        });
+        connect(modemBridge[i], &ModemBridge::traceData, this, &MainWindow::onSioTraceData);
+        connect(modemBridge[i], &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
+        connect(modemBridge[i], &ModemBridge::txActivity, this, &MainWindow::blinkTx);
 
-    // Connect Error Messages (Error)
-    connect(modemBridge, &ModemBridge::errorOccurred, this, [](const QString &err) {
-        // Use qCritical so the message handler catches it and colors it Red (!e)
-        qCritical() << "!e [ModemBridge]" << err;
-    });
-
-    // Commect Hex Dump
-    connect(modemBridge, &ModemBridge::traceData, this, &MainWindow::onSioTraceData);
-    connect(modemBridge, &ModemBridge::rxActivity, this, &MainWindow::blinkRx);
-    connect(modemBridge, &ModemBridge::txActivity, this, &MainWindow::blinkTx);
-
-    // Configure from Settings
-    if (aspeqtSettings->isModemBridgeEnabled()) {
-        modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
-                                   aspeqtSettings->modemBridgeBaudRate());
-        modemBridge->setFlowControl(aspeqtSettings->modemBridgeFlowControl());
-        modemBridge->setLocalEcho(aspeqtSettings->modemBridgeLocalEcho());
-        modemBridge->setTcpMode(aspeqtSettings->modemBridgeSshEnabled());
-
-        // Load Phonebook path
+        // Get Phonebook Path with Fallback
         QString pbPath = aspeqtSettings->modemBridgePhonebookPath();
         if (pbPath.isEmpty()) pbPath = g_aspeQtAppPath + "/phonebook.xml";
-        modemBridge->setPhonebookPath(pbPath);
 
-        modemBridge->start();
+        // Apply Settings to Bridge
+        modemBridge[i]->setSerialPort(aspeqtSettings->modemBridgePortName(i), aspeqtSettings->modemBridgeBaudRate(i));
+        modemBridge[i]->setFlowControl(aspeqtSettings->modemBridgeFlowControl(i));
+        modemBridge[i]->setLocalEcho(aspeqtSettings->modemBridgeLocalEcho(i));
+        modemBridge[i]->setPhonebookPath(pbPath);
+
+        // 2. Setup the Virtual R: Device Objects
+        RDevice *rDev = new RDevice(sio, i);
+        rDev->setParent(nullptr);
+        rDev->loadPhonebook(pbPath);
+
+        int currentMode = aspeqtSettings->modemTransportMode();
+        // 3. Transport Logic (Global Switch)
+        if (currentMode == 0) {
+            // Emulation Mode: Hijack SIO addresses $50, $51, $52, $53
+            sio->installDevice(0x50 + i, rDev);
+        } else {
+            // Hardware Bridge Mode: Ignore SIO, spin up the PC Serial COM port listeners
+            modemBridge[i]->start();
+        }
     }
-    updatePhonebookMenuState();
 
-    // -------------------------------------------------------
-    // R: Device
-    // -------------------------------------------------------
-    // When you create RDevice:
-    RDevice *rDev = new RDevice(sio);
-    rDev->setParent(nullptr);
-    sio->installDevice(0x50, rDev);
 
 
     // -------------------------------------------------------
@@ -685,12 +672,17 @@ MainWindow::~MainWindow()
     delete aspeqtSettings;
     delete sio;
     delete ui;
-    delete modemBridge;
+    for(int i = 0; i < 4; i++) delete modemBridge[i];
 
     qDebug() << "!d" << tr("AspeQt stopped at %1.").arg(QDateTime::currentDateTime().toString());
     qInstallMessageHandler(0);
     delete logMutex;
     delete logFile;
+
+    for(int i = 0; i < 4; i++) {
+        if (modemBridge[i]) delete modemBridge[i];
+    }
+
 }
 
 void MainWindow::createDeviceWidgets()
@@ -1595,58 +1587,46 @@ void MainWindow::on_actionOptions_triggered()
         deviceStatusChanged(i);
     }
 
-    RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
-    if (rDev) {
-        bool isRDeviceActive = aspeqtSettings->isRDeviceEnabled();
-        rDev->setEnabled(isRDeviceActive); // Updates internal flag and closes active sockets
 
-        // If newly enabled, ensure the phonebook is loaded from the current path
-        if (isRDeviceActive) {
-            rDev->loadPhonebook(aspeqtSettings->modemBridgePhonebookPath());
-        }
-        rDev->updateListenerConfig();
-    }
+    int currentMode = aspeqtSettings->modemTransportMode();
 
-    if (aspeqtSettings->isModemBridgeEnabled()) {
-        // 1. Create if missing
-        if (!modemBridge) {
-            modemBridge = new ModemBridge(this);
+    for (int i = 0; i < 4; i++) {
+        RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50 + i));
 
-            // Connect Status Messages (Info)
-            connect(modemBridge, &ModemBridge::statusMessage, this, [](const QString &msg) {
-                // Use qDebug so the message handler catches it and colors it Blue (!i)
-                qDebug() << "!i [ModemBridge]" << msg;
-            });
-
-            // Connect Error Messages (Error)
-            connect(modemBridge, &ModemBridge::errorOccurred, this, [](const QString &err) {
-                // Use qCritical so the message handler catches it and colors it Red (!e)
-                qCritical() << "!e [ModemBridge]" << err;
-            });
-        }
-
-        // 2. Update Configuration (in case Port/Baud changed)
-        modemBridge->setSerialPort(aspeqtSettings->modemBridgePortName(),
-                                   aspeqtSettings->modemBridgeBaudRate());
-        modemBridge->setFlowControl(aspeqtSettings->modemBridgeFlowControl());
-        modemBridge->setLocalEcho(aspeqtSettings->modemBridgeLocalEcho());
-        modemBridge->setTcpMode(aspeqtSettings->modemBridgeSshEnabled());
-
-        // Load Phonebook path
+        // Setup Phonebook Path safely
         QString pbPath = aspeqtSettings->modemBridgePhonebookPath();
         if (pbPath.isEmpty()) pbPath = g_aspeQtAppPath + "/phonebook.xml";
-        modemBridge->setPhonebookPath(pbPath);
-        modemBridge->start();
-        modemBridge->updateListenerConfig();
 
-    }
-    else {
-        // User Unchecked the box -> STOP THE BRIDGE (Drops DTR/RTS)
-        if (modemBridge) {
-            modemBridge->stop();
+        if (currentMode == 0) { // Virtual 850 Emulation
+            // Ensure RDevice is installed
+            if (!rDev) {
+                rDev = new RDevice(sio, i);
+                rDev->setParent(nullptr);
+                sio->installDevice(0x50 + i, rDev);
+            }
+
+            rDev->loadPhonebook(pbPath); // <-- [FIX] Applied to all RDevices safely
+
+            // Stop hardware bridge to free the COM port
+            if (modemBridge[i]) modemBridge[i]->stop();
+
+        } else { // Hardware Bridge Mode
+            // Ensure RDevice is uninstalled so we don't collide with physical 850
+            if (rDev) {
+                sio->uninstallDevice(0x50 + i);
+                rDev->deleteLater();
+            }
+
+            // Update Bridge Settings dynamically
+            modemBridge[i]->setSerialPort(aspeqtSettings->modemBridgePortName(i), aspeqtSettings->modemBridgeBaudRate(i));
+            modemBridge[i]->setFlowControl(aspeqtSettings->modemBridgeFlowControl(i));
+            modemBridge[i]->setLocalEcho(aspeqtSettings->modemBridgeLocalEcho(i));
+            modemBridge[i]->setPhonebookPath(pbPath);
+
+            modemBridge[i]->start();
+            modemBridge[i]->updateListenerConfig();
         }
     }
-
     ui->actionStartEmulation->trigger();
 }
 
@@ -2687,15 +2667,11 @@ void MainWindow::on_actionPhonebook_triggered()
     if (pd.exec() == QDialog::Accepted) {
         BbsEntry entry = pd.getSelectedEntry();
 
-        if (!entry.name.isEmpty()) {
-            // [FIX] Route to the correct active modem!
-            if (aspeqtSettings->isRDeviceEnabled()) {
-                RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
-                if (rDev) rDev->dial(entry);
-            }
-            else if (aspeqtSettings->isModemBridgeEnabled() && modemBridge) {
-                modemBridge->dial(entry);
-            }
+        if (aspeqtSettings->modemTransportMode() == 0) {
+            RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
+            if (rDev) rDev->dial(entry);
+        } else if (modemBridge[0]) {
+            modemBridge[0]->dial(entry);
         }
     }
 }
@@ -3171,34 +3147,33 @@ void MainWindow::toggleAutoSaveHeadless(int no)
 
 
 void MainWindow::hangupModem() {
-    if (aspeqtSettings->isRDeviceEnabled()) {
+    if (aspeqtSettings->modemTransportMode() == 0) {
         RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
         if (rDev) rDev->hangup();
-    } else if (modemBridge) {
-        modemBridge->hangup();
+    } else if (modemBridge[0]) {
+        modemBridge[0]->hangup();
     }
 }
 
 void MainWindow::sendMacroUser() {
-    if (aspeqtSettings->isRDeviceEnabled()) {
+    if (aspeqtSettings->modemTransportMode() == 0) {
         RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
         if (rDev) rDev->injectMacro('U');
-    } else if (modemBridge) {
-        modemBridge->injectMacro('U');
+    } else if (modemBridge[0]) {
+        modemBridge[0]->injectMacro('U');
     }
 }
 
 void MainWindow::sendMacroPass() {
-    if (aspeqtSettings->isRDeviceEnabled()) {
+    if (aspeqtSettings->modemTransportMode() == 0) {
         RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
         if (rDev) rDev->injectMacro('P');
-    } else if (modemBridge) {
-        modemBridge->injectMacro('P');
+    } else if (modemBridge[0]) {
+        modemBridge[0]->injectMacro('P');
     }
 }
 
 void MainWindow::dialBbsSilent(const QString &name, const QString &ip, int port, const QString &protocol, const QString &login, const QString &password) {
-    // 1. Reconstruct the BbsEntry object
     BbsEntry entry;
     entry.name = name;
     entry.ip = ip;
@@ -3207,22 +3182,16 @@ void MainWindow::dialBbsSilent(const QString &name, const QString &ip, int port,
     entry.login = login;
     entry.password = password;
 
-    // 2. Send it to whichever modem is active!
-    if (aspeqtSettings->isRDeviceEnabled()) {
+    if (aspeqtSettings->modemTransportMode() == 0) {
         RDevice *rDev = qobject_cast<RDevice*>(sio->getDevice(0x50));
         if (rDev) rDev->dial(entry);
-    } else if (aspeqtSettings->isModemBridgeEnabled() && modemBridge) {
-        modemBridge->dial(entry);
+    } else if (modemBridge[0]) {
+        modemBridge[0]->dial(entry);
     }
 
     qDebug() << "!i" << tr("[Web UI] Dialing BBS: %1 (%2)").arg(name, ip);
 }
 
-void MainWindow::toggleEmulationHeadless()
-{
-    // Safely simulate a real mouse click on the UI action
-    ui->actionStartEmulation->trigger();
-}
 
 void MainWindow::togglePrinterHeadless()
 {
@@ -3605,16 +3574,16 @@ void MainWindow::uploadAndMountHeadless(int slot, const QString &fileName, const
         }
     }
 }
-
 void MainWindow::onPacketInjectionRequested(const QByteArray &data) {
     if (!sio || !sio->isRunning()) {
-        qDebug() << "!e" << "[Injector] Cannot inject packet: SIO emulation is stopped.";
+        qDebug() << "!e" << tr("[Injector] Cannot inject packet: SIO emulation is stopped.");
         return;
     }
 
-    qDebug() << "!i" << tr("[Injector] Virtual Packet Step Triggered: %1 bytes").arg(data.size());
+    qDebug() << "!i" << tr("[Injector] Firing %1 bytes directly onto the Atari SIO Bus.").arg(data.size());
 
-    // We pass the raw bytes down to the SioWorker thread
+    // ALWAYS inject straight into the master SIO bus!
+    // The Atari SIO cable doesn't care about our internal modem settings.
     sio->injectVirtualPacket(data);
 }
 
@@ -3705,4 +3674,11 @@ void MainWindow::handle_actionNewDisk_triggered(int deviceId)
                             .arg(disk->deviceName())
                             .arg(disk->originalFileName())
                             .arg(disk->description());
+}
+
+
+void MainWindow::toggleEmulationHeadless()
+{
+    on_actionStartEmulation_triggered();
+    qDebug() << "!i [Headless] Emulation toggled via headless command.";
 }

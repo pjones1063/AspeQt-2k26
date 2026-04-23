@@ -4,7 +4,8 @@
 #include <QFile>
 #include <QDomDocument>
 
-ModemBridge::ModemBridge(QObject *parent) : QObject(parent),
+ModemBridge::ModemBridge(QObject *parent, int portIndex) : QObject(parent),
+    m_portIndex(portIndex),
     m_serial(new QSerialPort(this)),
     m_socket(new QTcpSocket(this)),
     m_ssh(new SshClient(this)),
@@ -76,14 +77,22 @@ void ModemBridge::setTcpMode(bool enableSsh) {
 }
 
 void ModemBridge::start() {
+    QString pName = m_serial->portName();
+
+    // GUARD CLAUSE: Do not attempt to open disabled/empty matrix ports
+    if (pName.isEmpty() || pName.compare("None", Qt::CaseInsensitive) == 0) {
+        m_isActive = false;
+        return;
+    }
+
     if (m_serial->open(QIODevice::ReadWrite)) {
         m_isActive = true;
-        emit statusMessage("Modem Bridge: Serial port opened.");
+        emit statusMessage(QString("Modem Bridge R%1: Serial port %2 opened.").arg(m_portIndex + 1).arg(pName));
         m_serial->setDataTerminalReady(true);
         m_serial->setRequestToSend(true);
         updateListenerConfig();
     } else {
-        emit errorOccurred("Modem Bridge: Failed to open serial port.");
+        emit errorOccurred(QString("Modem Bridge R%1: Failed to open serial port %2.").arg(m_portIndex + 1).arg(pName));
     }
 }
 
@@ -818,8 +827,8 @@ void ModemBridge::updateListenerConfig() {
     if (!aspeqtSettings) return;
 
     // Only listen if the Modem Bridge serial port is actually open
-    bool shouldListen = aspeqtSettings->bbsListenerEnabled() && m_isActive;
-    int port = aspeqtSettings->modemListenPort();
+    bool shouldListen = aspeqtSettings->bbsListenerEnabled(m_portIndex) && m_isActive;
+    int port = aspeqtSettings->modemListenPort(m_portIndex);
 
     if (shouldListen) {
         if (m_tcpServer->isListening()) {

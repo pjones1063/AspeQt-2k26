@@ -31,8 +31,9 @@ class RDevice : public SioDevice
 {
     Q_OBJECT
 
+
 public:
-    explicit RDevice(SioWorker *worker);
+    explicit RDevice(SioWorker *worker, int portIndex = 0);
     ~RDevice() override;
 
     void handleCommand(quint8 command, quint16 aux) override;
@@ -75,6 +76,7 @@ private slots:
 
 
 private:
+    int m_portIndex;
     enum class ModemState { CommandMode, StreamMode };
     enum class TelnetState { Normal, IacReceived, Will, Wont, Do, Dont, SubNegotiation, SubIac };
 

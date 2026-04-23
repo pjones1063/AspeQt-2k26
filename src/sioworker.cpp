@@ -120,6 +120,26 @@ void SioWorker::run()
 #endif
     /* Process SIO commands until we're explicitly stopped */
     while (!mustTerminate) {
+
+        // ====================================================================
+        // 1. UNIVERSAL VIRTUAL INJECTOR HOOK (Works in ALL modes)
+        // ====================================================================
+
+        m_virtualBufferMutex.lock();
+        if (!m_virtualBuffer.isEmpty()) {
+            QByteArray outData = m_virtualBuffer.dequeue();
+            m_virtualBufferMutex.unlock();
+
+            // Blast it directly to the physical Atari!
+            mPort->writeRawFrame(outData);
+
+            qDebug() << "!d" << "[SioWorker] Blasted VIRTUAL injected packet to the Atari:" << outData.size() << "bytes.";
+            usleep(2000);
+            continue; // Skip the rest of the loop and start fresh
+        }
+        m_virtualBufferMutex.unlock();
+
+
         // ====================================================================
         // Stream Mode Handler (High Priority)
         // ====================================================================
@@ -163,7 +183,7 @@ void SioWorker::run()
                 checkHardwareInterrupts(idleSleep);
             }
 #endif
-            int guardDelay = aspeqtSettings->streamGuardDelay();
+            int guardDelay = aspeqtSettings->streamGuardDelay(0);
             if (!aspeqtSettings->serialPortHardwareUart() && m_streamGuardTimer.elapsed() > guardDelay) {
                 if (mPort->isCommandLineAsserted()) {
                     qDebug() << "!d" << "[SioWorker] >>> FTDI CTS/DSR LOW <<< Atari asserted Command. Exiting Stream.";
@@ -186,25 +206,7 @@ void SioWorker::run()
         // ====================================================================
         // Standard SIO Command Handler
         // ====================================================================
-        QByteArray cmd;
-
-        // --- NEW: VIRTUAL INJECTOR HOOK ---
-        // Check if a packet was injected from the GUI debugger before asking the real COM port
-        m_virtualBufferMutex.lock();
-        if (!m_virtualBuffer.isEmpty()) {
-            cmd = m_virtualBuffer.dequeue();
-            m_virtualBufferMutex.unlock();
-
-            // Artificial delay so the UI thread doesn't lock up if you spam the inject button
-            usleep(2000);
-            qDebug() << "!d" << "[SioWorker] Processing VIRTUAL injected command packet.";
-        } else {
-            m_virtualBufferMutex.unlock();
-
-            // Standard behavior: Wait for the physical Atari to send something
-            cmd = mPort->readCommandFrame();
-        }
-
+        QByteArray cmd = mPort->readCommandFrame();
 
         // ----------------------------------
         if (mustTerminate) {
