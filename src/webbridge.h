@@ -5,7 +5,7 @@
 #include <QString>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QTimer>
+#include <QFutureWatcher>
 #include "tnfsclient.h"
 
 class MainWindow; // Forward declaration
@@ -59,12 +59,10 @@ public slots:
     void swapDiskUi(int slot);
 
 private slots:
-    void fetchNextTnfsBatch(); // Fired by the QTimer
+    void onTnfsBatchFetched(); // --- [NEW] Async Result Handler ---
 
 signals:
-    // ADDED FULLPATH TO THIS SIGNAL
     void diskStatusChanged(int slot, const QString &filename, const QString &properties, const QString &fullPath, bool autoSave, bool happyMode, bool writeProtected);
-
     void driveEmpty(int slot);
     void directoryListReceived(int slot, const QString &currentPath, const QJsonArray &files);
     void phonebookListReceived(const QJsonArray &entries);
@@ -75,17 +73,20 @@ signals:
     void casStatusChanged(QString filename, bool isPlaying);
     void notificationReceived(QString message, bool isError);
     void printerImageReceived(const QString &base64Data);
-    void currentSavePathReceived(const QString &path); // NEW
+    void currentSavePathReceived(const QString &path);
 
 private:
     MainWindow *mainWindow;
 
-    // TNFS Streaming State
+    // --- TNFS Streaming State ---
     TnfsClient *m_tnfsClient;
-    QTimer *m_tnfsTimer;
     int m_tnfsSlot;
     QString m_tnfsHost;
     QString m_tnfsPath;
+
+    // --- [NEW] Async Background Threading ---
+    void triggerNextTnfsBatch();
+    QFutureWatcher<QList<TnfsClient::DirectoryEntry>> *m_tnfsWatcher;
 };
 
 #endif // WEBBRIDGE_H

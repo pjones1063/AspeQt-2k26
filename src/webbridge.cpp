@@ -5,6 +5,7 @@
 #include <QDomDocument>
 #include <QFile>
 #include <QSettings>
+#include <QtConcurrent>
 
 #include "webbridge.h"
 #include "mainwindow.h"
@@ -19,32 +20,37 @@ WebBridge::WebBridge(MainWindow *mainWin, QObject *parent)
 {
     // Setup TNFS Background Streamer
     m_tnfsClient = new TnfsClient(this);
-    m_tnfsTimer = new QTimer(this);
-    connect(m_tnfsTimer, &QTimer::timeout, this, &WebBridge::fetchNextTnfsBatch);
+
+    // --- [NEW] Setup the Async Watcher instead of a QTimer ---
+    m_tnfsWatcher = new QFutureWatcher<QList<TnfsClient::DirectoryEntry>>(this);
+    connect(m_tnfsWatcher, &QFutureWatcherBase::finished, this, &WebBridge::onTnfsBatchFetched);
 }
 
-void WebBridge::mountDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionMountDisk_triggered", Q_ARG(int, slot)); }
-void WebBridge::mountFolderUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionMountFolder_triggered", Q_ARG(int, slot)); }
-void WebBridge::ejectDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "ejectHeadless", Q_ARG(int, slot)); }
-void WebBridge::saveDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionSave_triggered", Q_ARG(int, slot)); }
-void WebBridge::setHappyModeUi(int slot, bool enabled) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionHappyMode_triggered", Q_ARG(int, slot), Q_ARG(bool, enabled)); }
-void WebBridge::toggleAutoSaveUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "toggleAutoSaveHeadless", Q_ARG(int, slot)); }
-void WebBridge::swapDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "handle_actionSwap_triggered", Q_ARG(int, slot)); }
+// -----------------------------------------------------------------
+// UI ROUTING LOGIC (RESTORED NAMES + QUEUED CONNECTION FIX)
+// -----------------------------------------------------------------
+void WebBridge::mountDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionMountDisk_triggered", Qt::QueuedConnection, Q_ARG(int, slot)); }
+void WebBridge::mountFolderUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionMountFolder_triggered", Qt::QueuedConnection, Q_ARG(int, slot)); }
+void WebBridge::ejectDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "ejectHeadless", Qt::QueuedConnection, Q_ARG(int, slot)); }
+void WebBridge::saveDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "on_actionSave_triggered", Qt::QueuedConnection, Q_ARG(int, slot)); }
+void WebBridge::setHappyModeUi(int slot, bool enabled) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "handle_actionHappyMode_triggered", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(bool, enabled)); }
+void WebBridge::toggleAutoSaveUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "toggleAutoSaveHeadless", Qt::QueuedConnection, Q_ARG(int, slot)); }
+void WebBridge::swapDiskUi(int slot) { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "handle_actionSwap_triggered", Qt::QueuedConnection, Q_ARG(int, slot)); }
 
-void WebBridge::hangupUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "hangupModem"); }
-void WebBridge::macroUserUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "sendMacroUser"); }
-void WebBridge::macroPassUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "sendMacroPass"); }
+void WebBridge::hangupUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "hangupModem", Qt::QueuedConnection); }
+void WebBridge::macroUserUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "sendMacroUser", Qt::QueuedConnection); }
+void WebBridge::macroPassUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "sendMacroPass", Qt::QueuedConnection); }
 
-void WebBridge::toggleEmulationUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "toggleEmulationHeadless"); }
-void WebBridge::togglePrinterUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "togglePrinterHeadless"); }
+void WebBridge::toggleEmulationUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "toggleEmulationHeadless", Qt::QueuedConnection); }
+void WebBridge::togglePrinterUi() { if (mainWindow) QMetaObject::invokeMethod(mainWindow, "togglePrinterHeadless", Qt::QueuedConnection); }
+
 
 void WebBridge::requestFullStatus() {
-    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "refreshWebUi");
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "refreshWebUi", Qt::QueuedConnection);
 
     QSettings settings("AspeQt", "TNFS");
     QStringList savedHosts = settings.value("hostHistory").toStringList();
     emit tnfsHostHistoryReceived(savedHosts);
-
 }
 
 // -----------------------------------------------------------------
@@ -59,7 +65,7 @@ void WebBridge::requestDirectoryList(int slot, const QString &path) {
 
     if (!dir.exists() || !dir.isReadable()) {
         emit notificationReceived(tr("Cannot access directory: %1").arg(targetPath), true);
-        emit directoryListReceived(slot, targetPath, list); // Send empty list to clear UI
+        emit directoryListReceived(slot, targetPath, list);
         return;
     }
 
@@ -96,18 +102,15 @@ void WebBridge::mountFileSilentUi(int slot, const QString &filePath) {
 // WEB PHONEBOOK LOGIC
 // -----------------------------------------------------------------
 void WebBridge::requestPhonebookList() {
-    // 1. Find the phonebook path
     QString pbPath = aspeqtSettings->modemBridgePhonebookPath();
     if (pbPath.isEmpty()) pbPath = g_aspeQtAppPath + "/phonebook.xml";
 
     QJsonArray list;
     QFile file(pbPath);
 
-    // 2. Parse the XML and build the JSON Array
     if (file.open(QIODevice::ReadOnly)) {
         QDomDocument doc;
 
-        // --- NEW: Catch XML parsing errors! ---
         if (doc.setContent(&file)) {
             QDomNodeList bbsNodes = doc.elementsByTagName("BBS");
             for (int i = 0; i < bbsNodes.size(); i++) {
@@ -126,18 +129,16 @@ void WebBridge::requestPhonebookList() {
         }
         file.close();
     } else {
-        // --- NEW: Catch missing file errors! ---
         emit notificationReceived(tr("No phonebook found at: %1").arg(pbPath), true);
     }
 
-    // 3. Send it to the Web UI!
     emit phonebookListReceived(list);
 }
 
 
 void WebBridge::dialBbsUi(const QString &name, const QString &ip, int port, const QString &protocol, const QString &login, const QString &password) {
     if (mainWindow) {
-        QMetaObject::invokeMethod(mainWindow, "dialBbsSilent",
+        QMetaObject::invokeMethod(mainWindow, "dialBbsSilent", Qt::QueuedConnection,
                                   Q_ARG(QString, name), Q_ARG(QString, ip), Q_ARG(int, port),
                                   Q_ARG(QString, protocol), Q_ARG(QString, login), Q_ARG(QString, password));
     }
@@ -145,13 +146,14 @@ void WebBridge::dialBbsUi(const QString &name, const QString &ip, int port, cons
 
 void WebBridge::requestLogTextUi() {
     if (mainWindow) {
+        // Since we are waiting on a return value, we don't queue this specific invoke
         QString logData = mainWindow->getLogText();
         emit logTextReceived(logData);
     }
 }
 
 // -----------------------------------------------------------------
-// WEB TNFS BROWSER LOGIC (Streaming JSON)
+// WEB TNFS BROWSER LOGIC (Async Background Streamer)
 // -----------------------------------------------------------------
 
 void WebBridge::requestTnfsDirectoryList(int slot, const QString &host, const QString &path) {
@@ -159,44 +161,45 @@ void WebBridge::requestTnfsDirectoryList(int slot, const QString &host, const QS
     m_tnfsHost = host;
     m_tnfsPath = path;
 
-    // Connect and prepare the listing
     if (m_tnfsClient->connectToHost(host)) {
 
         QSettings settings("AspeQt", "TNFS");
         QStringList savedHosts = settings.value("hostHistory").toStringList();
         if (!savedHosts.contains(host)) {
-            savedHosts.prepend(host); // Add to the top!
+            savedHosts.prepend(host);
             settings.setValue("hostHistory", savedHosts);
             emit tnfsHostHistoryReceived(savedHosts);
         }
 
         if (m_tnfsClient->mount("/")) {
             if (m_tnfsClient->beginListing(path)) {
-                // SUCCESS! Start pulling batches every 10ms
-                m_tnfsTimer->start(10);
+                triggerNextTnfsBatch();
                 return;
             } else {
-                // --- Connected, but the specific Folder wasn't found ---
                 emit notificationReceived(tr("TNFS path not found: %1").arg(path), true);
                 emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
                 return;
             }
         } else {
-            // --- Connected to IP, but the TNFS Mount command was rejected ---
             emit notificationReceived(tr("Failed to mount TNFS host: %1").arg(host), true);
             emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
             return;
         }
     }
 
-    // --- The IP address doesn't exist or timed out ---
     emit notificationReceived(tr("Failed to connect to TNFS host: %1").arg(host), true);
     emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
 }
 
-void WebBridge::fetchNextTnfsBatch() {
-    // Pull the next 20 files from the UDP socket
-    QList<TnfsClient::DirectoryEntry> batch = m_tnfsClient->fetchNextBatch(20);
+void WebBridge::triggerNextTnfsBatch() {
+    QFuture<QList<TnfsClient::DirectoryEntry>> future = QtConcurrent::run([this]() {
+        return m_tnfsClient->fetchNextBatch(20);
+    });
+    m_tnfsWatcher->setFuture(future);
+}
+
+void WebBridge::onTnfsBatchFetched() {
+    auto batch = m_tnfsWatcher->result();
 
     QJsonArray list;
     for (const auto &entry : batch) {
@@ -207,42 +210,43 @@ void WebBridge::fetchNextTnfsBatch() {
     }
 
     bool finished = m_tnfsClient->isListingFinished();
-    if (finished) {
-        m_tnfsTimer->stop(); // We hit the bottom of the folder!
-    }
 
-    // Stream this batch to the phone
     emit tnfsDirectoryListReceived(m_tnfsSlot, m_tnfsHost, m_tnfsPath, list, finished);
+
+    if (!finished) {
+        triggerNextTnfsBatch();
+    }
 }
 
+// -----------------------------------------------------------------
+// CAS, PRINTER, AND DISK OPERATIONS
+// -----------------------------------------------------------------
+
 void WebBridge::mountTnfsSilentUi(int slot, const QString &url) {
-    // Forward the command to the Main Window headless mounter
     if (mainWindow) {
         QMetaObject::invokeMethod(mainWindow, "mountTnfsHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(QString, url));
     }
 }
 
 void WebBridge::mountCasSilentUi(const QString &filePath) {
-    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "mountCasHeadless", Q_ARG(QString, filePath));
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "mountCasHeadless", Qt::QueuedConnection, Q_ARG(QString, filePath));
 }
 
 void WebBridge::playCasUi() {
-    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "playCasHeadless");
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "playCasHeadless", Qt::QueuedConnection);
 }
 
 void WebBridge::rewindCasUi() {
-    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "rewindCasHeadless");
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "rewindCasHeadless", Qt::QueuedConnection);
 }
 
 void WebBridge::ejectCasUi() {
-    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "ejectCasHeadless");
+    if (mainWindow) QMetaObject::invokeMethod(mainWindow, "ejectCasHeadless", Qt::QueuedConnection);
 }
 
 void WebBridge::toggleWriteProtectUi(int slot, bool enabled) {
     if (mainWindow)  QMetaObject::invokeMethod(mainWindow, "toggleWriteProtectHeadless", Qt::QueuedConnection, Q_ARG(int, slot), Q_ARG(bool, enabled));
-
 }
-
 
 void WebBridge::requestPrinterImageUi() {
     if (mainWindow) {
@@ -258,15 +262,13 @@ void WebBridge::createBlankDiskUi(int slot, const QString &folder, const QString
 }
 
 void WebBridge::requestCurrentSavePathUi() {
-    // Grab the exact folder AspeQt is currently targeting
     QString path = aspeqtSettings->lastDiskImageDir();
-    if (path.isEmpty()) path = QDir::homePath(); // Fallback
+    if (path.isEmpty()) path = QDir::homePath();
 
     emit currentSavePathReceived(path);
 }
 
 void WebBridge::uploadAndMountUi(int slot, const QString &filename, const QString &base64Data) {
-    // Forward the base64 string from the browser directly to the Main Window
     if (mainWindow) {
         QMetaObject::invokeMethod(mainWindow, "uploadAndMountHeadless", Qt::QueuedConnection,
                                   Q_ARG(int, slot),

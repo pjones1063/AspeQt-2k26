@@ -8,7 +8,7 @@
 #include <QDebug>
 #include <QSettings>
 #include <QStyle>
-#include <QtConcurrent> // Required for background threads
+#include <QtConcurrent>
 #include <algorithm>
 
 /* tnfsbrowser.cpp - Constructor */
@@ -21,6 +21,10 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
 
     connectWatcher = new QFutureWatcher<bool>(this);
     connect(connectWatcher, &QFutureWatcherBase::finished, this, &TnfsBrowser::onConnectionFinished);
+
+    // --- [NEW] Setup the Fetch Watcher ---
+    fetchWatcher = new QFutureWatcher<QList<TnfsClient::DirectoryEntry>>(this);
+    connect(fetchWatcher, &QFutureWatcherBase::finished, this, &TnfsBrowser::onFetchFinished);
 
     // --- UI Layout ---
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -37,14 +41,10 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
     if (!savedHosts.isEmpty()) {
         hostCombo->addItems(savedHosts);
     } else {
-        //hostCombo->addItem("13leader.net"); // Default
         hostCombo->clear();
     }
 
-    // --- CRITICAL FIX: Removed "QPushButton *" type declaration ---
-    // This now initializes the CLASS MEMBER, not a local variable.
     btnConnect = new QPushButton(tr("Connect"), this);
-
     btnClear = new QPushButton(tr("Clear"), this);
     btnClear->setToolTip(tr("Clear saved host history"));
 
@@ -66,9 +66,9 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
 
     statusLabel = new QLabel(tr("Not Connected"), this);
 
-    // Activity Bar (Hidden by default)
+    // Activity Bar
     progressBar = new QProgressBar(this);
-    progressBar->setRange(0, 0); // Marquee mode (Infinite loop)
+    progressBar->setRange(0, 0); // Marquee mode
     progressBar->setTextVisible(false);
     progressBar->setFixedHeight(15);
     progressBar->setVisible(false);
@@ -108,11 +108,10 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
     connect(btnCancel, &QPushButton::clicked, this, &TnfsBrowser::onCancelClicked);
     connect(btnSort, &QToolButton::clicked, this, &TnfsBrowser::onSortClicked);
 
-    // --- Initialize Path ---
     currentPath = "/";
     m_activeHost = "";
 
-        // --- Auto-Navigate Logic ---
+    // --- Auto-Navigate Logic ---
     if (!initialUrl.isEmpty()) {
         QUrl qurl(initialUrl);
         QString host = qurl.host();
@@ -124,42 +123,35 @@ TnfsBrowser::TnfsBrowser(QWidget *parent, const QString &initialUrl)
             else path = "/";
         }
 
-        // --- FIX: Store the requested path immediately ---
-        // This ensures onConnectionFinished() uses this path instead of resetting to "/"
         currentPath = path;
 
         if (!host.isEmpty()) {
             hostCombo->setEditText(host);
-            // Trigger connection immediately
             onConnect();
         }
     }
 }
 
-
 TnfsBrowser::~TnfsBrowser()
 {
-    // Clean up watcher if running
     if (connectWatcher->isRunning()) {
         connectWatcher->waitForFinished();
     }
+    if (fetchWatcher->isRunning()) {
+        fetchWatcher->waitForFinished();
+    }
 }
 
-QString TnfsBrowser::getSelectedUrl() const
-{
-    return selectedUrl;
-}
+QString TnfsBrowser::getSelectedUrl() const { return selectedUrl; }
 
 QIcon TnfsBrowser::getIcon(const QString &name)
 {
-    // 1. Try embedded resources first
     if (name == "folder") return QIcon(":/icons/silk-icons/icons/folder.png");
     if (name == "disk")   return QIcon(":/icons/silk-icons/icons/drive_disk.png");
     if (name == "file")   return QIcon(":/icons/silk-icons/icons/page_white.png");
 
     if (name == "view-sort-ascending") {
         if (QIcon::hasThemeIcon("view-sort-ascending")) return QIcon::fromTheme("view-sort-ascending");
-        // Fallback if system theme missing
         return QIcon(":/icons/silk-icons/icons/arrow_up.png");
     }
     if (name == "view-sort-descending") {
@@ -167,20 +159,14 @@ QIcon TnfsBrowser::getIcon(const QString &name)
         return QIcon(":/icons/silk-icons/icons/arrow_down.png");
     }
 
-    // 2. Try System Theme (Linux Fallback)
-    if (QIcon::hasThemeIcon(name)) {
-        return QIcon::fromTheme(name);
-    }
+    if (QIcon::hasThemeIcon(name)) return QIcon::fromTheme(name);
 
-    // 3. Fallback to Qt Standard Icons
     if (name == "folder") return QApplication::style()->standardIcon(QStyle::SP_DirIcon);
     if (name == "file")   return QApplication::style()->standardIcon(QStyle::SP_FileIcon);
     if (name == "disk")   return QApplication::style()->standardIcon(QStyle::SP_DriveFDIcon);
 
     return QIcon();
 }
-
-
 
 void TnfsBrowser::onConnect()
 {
@@ -191,25 +177,20 @@ void TnfsBrowser::onConnect()
     }
     m_activeHost = host;
 
-    // 1. Disable UI to prevent double-clicks
     hostCombo->setEnabled(false);
     btnConnect->setEnabled(false);
     fileList->setEnabled(false);
 
-    // 2. Show "Connecting..." status
-    progressBar->setVisible(true); // Shows the bar, but animation will freeze
+    progressBar->setVisible(true);
     statusLabel->setText(tr("Connecting to %1...").arg(host));
 
-    // FORCE UI UPDATE: Ensures the label is drawn before we block
     QApplication::processEvents();
 
-    // 3. Synchronous Connection (Blocks UI for ~200ms - 2s)
     bool success = false;
     if (client->connectToHost(host)) {
         success = client->mount("/");
     }
 
-    // 4. Restore UI
     hostCombo->setEnabled(true);
     btnConnect->setEnabled(true);
     fileList->setEnabled(true);
@@ -218,11 +199,10 @@ void TnfsBrowser::onConnect()
     if (success) {
         statusLabel->setText(tr("Connected: %1").arg(currentPath));
 
-        // Save to History
         if (hostCombo->findText(host) == -1) {
             hostCombo->addItem(host);
         }
-        // Save settings...
+
         QSettings settings("AspeQt", "TNFS");
         QStringList history;
         for (int i = 0; i < hostCombo->count(); ++i) {
@@ -240,7 +220,6 @@ void TnfsBrowser::onConnect()
 
 void TnfsBrowser::onConnectionFinished()
 {
-    // 1. Re-enable UI
     hostCombo->setEnabled(true);
     btnConnect->setEnabled(true);
     fileList->setEnabled(true);
@@ -250,12 +229,8 @@ void TnfsBrowser::onConnectionFinished()
     QString host = hostCombo->currentText();
 
     if (success) {
-        // --- FIX: Do NOT reset currentPath to "/" here. ---
-        // The constructor (or previous state) has already set currentPath.
-
         statusLabel->setText(tr("Connected: %1").arg(currentPath));
 
-        // Save History
         if (hostCombo->findText(host) == -1) {
             hostCombo->addItem(host);
         }
@@ -266,7 +241,7 @@ void TnfsBrowser::onConnectionFinished()
         }
         settings.setValue("hostHistory", history);
 
-        refreshList(); // Load files using the preserved currentPath
+        refreshList();
     } else {
         statusLabel->setText(tr("Connection Failed."));
         QMessageBox::critical(this, tr("Connection Error"),
@@ -284,10 +259,8 @@ void TnfsBrowser::refreshList()
 
     statusLabel->setText(tr("Fetching %1...").arg(currentPath));
 
-    // Reset Sort
     m_sortAscending = true;
 
-    // Use helper or theme for sort icon
     QIcon icon = QIcon::fromTheme("view-sort-ascending");
     if (icon.isNull()) btnSort->setText("A-Z");
     else btnSort->setIcon(icon);
@@ -302,12 +275,28 @@ void TnfsBrowser::refreshList()
     }
 }
 
-
+// --- [NEW] Refactored loadNextBatch (Async Trigger) ---
 void TnfsBrowser::loadNextBatch()
 {
-    setCursor(Qt::WaitCursor);
+    // Prevent double-clicks while already fetching
+    if (fetchWatcher->isRunning()) return;
 
-    auto newItems = client->fetchNextBatch(20);
+    setCursor(Qt::WaitCursor);
+    btnMore->setEnabled(false); // Disable "More" button during load
+    progressBar->setVisible(true); // Animate the activity bar
+    statusLabel->setText(tr("Fetching %1...").arg(currentPath));
+
+    // Throw the ping-pong networking into the background!
+    QFuture<QList<TnfsClient::DirectoryEntry>> future = QtConcurrent::run([this]() {
+        return client->fetchNextBatch(20);
+    });
+    fetchWatcher->setFuture(future);
+}
+
+// --- [NEW] Async Result Handler ---
+void TnfsBrowser::onFetchFinished()
+{
+    auto newItems = fetchWatcher->result();
     bool finished = client->isListingFinished();
 
     // Sort first batch
@@ -322,11 +311,9 @@ void TnfsBrowser::loadNextBatch()
         QListWidgetItem *item = new QListWidgetItem(entry.name);
 
         if (entry.isDirectory) {
-            // FIX 3: Use the robust getIcon helper
             item->setIcon(getIcon("folder"));
             item->setData(Qt::UserRole, true);
         } else {
-            // FIX 4: Check for ALL common Atari/Retro extensions
             QString name = entry.name.toLower();
             if (name.endsWith(".atr") || name.endsWith(".xex") ||
                 name.endsWith(".exe") || name.endsWith(".com") ||
@@ -354,13 +341,15 @@ void TnfsBrowser::loadNextBatch()
         btnMore->setText(tr("More..."));
     }
 
-    if (!m_isFirstBatch) fileList->scrollToBottom();
+    if (!m_isFirstBatch && !newItems.isEmpty()) fileList->scrollToBottom();
 
     m_isFirstBatch = false;
+
+    // Restore UI state
     statusLabel->setText(tr("Browsing: %1").arg(currentPath));
+    progressBar->setVisible(false);
     unsetCursor();
 }
-
 
 void TnfsBrowser::onItemDoubleClicked(QListWidgetItem *item)
 {
@@ -401,9 +390,8 @@ void TnfsBrowser::onBackClicked()
 void TnfsBrowser::onClearHistory()
 {
     if (QMessageBox::StandardButton::Yes == QMessageBox::question(this, tr("Clear History"),
-                                                  tr("Clear all saved hosts?"), QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No)) {
+                                                                  tr("Clear all saved hosts?"), QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No)) {
         hostCombo->clear();
-        // hostCombo->addItem("13leader.net");
         QSettings settings("AspeQt", "TNFS");
         settings.remove("hostHistory");
         statusLabel->setText(tr("History cleared."));

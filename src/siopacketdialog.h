@@ -16,9 +16,9 @@
 #include <QSplitter>
 #include <QLabel>
 #include <QTimer>
-#include <QSpinBox>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QCheckBox>
 
 // The Core Data Structure
 struct SioPacket {
@@ -73,28 +73,28 @@ private slots:
     void onRowSelected(const QModelIndex &current, const QModelIndex &previous);
     void toggleInspector();
     void onRecordToggled(bool checked);
-    void onPlayToggled(bool checked);
-    void onPlaybackStep();
     void onFilterChanged(); // New Filter Slot
+    void processPendingPacket(); // Sniffer De-fragmentation
 
 private:
     QTableView *tableView;
     SioPacketModel *model;
     QSortFilterProxyModel *proxyModel; // Wireshark Filter Engine
 
+    // --- Sniffer Buffer Variables ---
+    QTimer *m_snifferTimer;
+    QByteArray m_pendingBuffer;
+    QString m_pendingDirection;
+    qint64 m_pendingTimestamp;
+
     // Filter UI
     QLineEdit *txtFilter;
     QComboBox *cmbFilterColumn;
 
-    // Playback & Record Deck
-    QPushButton *btnRecord;
-    QPushButton *btnPlay;
-    QSpinBox *spinPlayDelay;
-    bool m_isRecording = true;
-    bool m_isPlaying = false;
-    QTimer *m_playbackTimer;
-
     // UI Controls
+    QPushButton *btnRecord;
+    bool m_isRecording = true;
+    QCheckBox *chkSafeMode;
     QPushButton *btnClear;
     QPushButton *btnSave;
     QPushButton *btnInject;

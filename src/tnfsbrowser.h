@@ -27,13 +27,14 @@ public:
 
 private slots:
     void onConnect();
-    void onConnectionFinished(); // New slot for async result
+    void onConnectionFinished();
     void onItemDoubleClicked(QListWidgetItem *item);
     void onBackClicked();
     void onClearHistory();
     void onCancelClicked();
     void onSortClicked();
     void onMoreClicked();
+    void onFetchFinished(); // --- [NEW] Slot for background fetching ---
 
 private:
     TnfsClient *client;
@@ -42,15 +43,18 @@ private:
     QLabel *statusLabel;
 
     // UI Elements
-    QPushButton *btnConnect; // Made member to disable during connect
+    QPushButton *btnConnect;
     QPushButton *btnClear;
     QPushButton *btnCancel;
     QPushButton *btnMore;
     QToolButton *btnSort;
-    QProgressBar *progressBar; // The "Activity Bar"
+    QProgressBar *progressBar;
 
     // Async Connection Handling
     QFutureWatcher<bool> *connectWatcher;
+
+    // --- [NEW] Async Directory Fetching ---
+    QFutureWatcher<QList<TnfsClient::DirectoryEntry>> *fetchWatcher;
 
     bool m_sortAscending;
     QString currentPath;
@@ -60,8 +64,6 @@ private:
 
     void refreshList();
     void loadNextBatch();
-
-    // New Helper for Cross-Platform Icons
     QIcon getIcon(const QString &name);
 };
 
