@@ -8,6 +8,7 @@
 int main(int argc, char *argv[])
 {
     // 1. Initialize the Qt Application first
+    qputenv("QT_QPA_PLATFORMTHEME", "generic");
     QApplication a(argc, argv);
 
     // 2. Parse command-line arguments for the power-user override
@@ -27,7 +28,6 @@ int main(int argc, char *argv[])
             return 1; // Exit immediately!
         }
     }
-    // ------------------------------------
 
     // 4. Normal App Startup continues...
     MainWindow w;

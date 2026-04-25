@@ -42,6 +42,7 @@ ehthumbs.db
 
 # --- IDEs (VS Code, JetBrains) ---
 .vscode/
+.qt
 .idea/
 .venv/
 .project
