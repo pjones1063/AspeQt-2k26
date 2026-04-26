@@ -30,7 +30,6 @@ jobs:
 
       - name: Package with macdeployqt
         run: |
-          # Maintained original -dmg flag
           macdeployqt build/AspeQt.app -dmg -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
           mv build/AspeQt.dmg AspeQt-2K26-macOS.dmg
 
@@ -119,11 +118,12 @@ jobs:
       - name: Install Dependencies
         run: |
           apt-get update
-          # Critical: Added pkg-config and libcups2-dev for clean CMake configuration
+          # Critical fix: Added 'file' and 'binutils' for CPack dependency scanning
           apt-get install -y build-essential cmake git unzip ca-certificates \
-          pkg-config libcups2-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
-          qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
-          libssh-dev libgpiod-dev libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
+          pkg-config file binutils libcups2-dev qt6-base-dev qt6-serialport-dev \
+          qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev \
+          qt6-l10n-tools libssh-dev libgpiod-dev libgl1-mesa-dev libxkbcommon-dev \
+          libx11-xcb-dev
 
       - name: Compile AspeQt
         run: |
@@ -161,11 +161,11 @@ jobs:
       - name: Install Qt6 and Dependencies
         run: |
           apt-get update
-          # Critical: Added pkg-config and libcups2-dev for ARM build environment
+          # Critical fix: Added 'file' and 'binutils' for ARM CPack dependency scanning
           apt-get install -y build-essential cmake git unzip ca-certificates \
-          pkg-config libcups2-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
-          qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
-          libssh-dev libgpiod-dev libxkbcommon-dev libx11-xcb-dev
+          pkg-config file binutils libcups2-dev qt6-base-dev qt6-serialport-dev \
+          qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev \
+          qt6-l10n-tools libssh-dev libgpiod-dev libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt for Pi
         run: |

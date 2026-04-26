@@ -86,9 +86,10 @@ To install all necessary build tools and dependencies in one shot, run the follo
 ```bash
 sudo apt update
 sudo apt install build-essential cmake git unzip ca-certificates \
-qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
-qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
-libssh-dev
+pkg-config file binutils libcups2-dev qt6-base-dev qt6-serialport-dev \
+qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev \
+qt6-l10n-tools libssh-dev libgpiod-dev libgl1-mesa-dev libxkbcommon-dev \
+libx11-xcb-dev
 
 mkdir build
 cd build
