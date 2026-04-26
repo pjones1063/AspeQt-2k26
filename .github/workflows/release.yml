@@ -60,7 +60,6 @@ jobs:
         with:
           version: '6.5.3'
           arch: win64_mingw
-          # ADDED qthttpserver
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Compile AspeQt
@@ -90,7 +89,17 @@ jobs:
 
       - name: Build Inno Setup Installer
         shell: pwsh
-        run: iscc "AspeQt-Installer.iss"
+        run: |
+          # Automatically hunt down the .iss file wherever it is in the repository
+          $issFile = Get-ChildItem -Path . -Filter "AspeQt-Installer.iss" -Recurse | Select-Object -First 1
+          
+          if ($issFile) {
+              Write-Host "Found installer script at: $($issFile.FullName)" -ForegroundColor Cyan
+              iscc $issFile.FullName
+          } else {
+              Write-Error "CRITICAL: Could not find AspeQt-Installer.iss anywhere in the repository! Did you forget to commit it to GitHub?"
+              exit 1
+          }
 
       - name: Upload Windows Artifacts to GitHub
         uses: actions/upload-artifact@v4
@@ -99,6 +108,7 @@ jobs:
           path: |
             AspeQt-2K26-Windows-Portable.zip
             release/AspeQt-2K26-Setup.exe
+
 
   # ==========================================
   # 3. LINUX BUILD
@@ -175,3 +185,5 @@ jobs:
           path: |
             AspeQt-2K26-pi.64.deb
             AspeQt-2K26-pi.64-portable.tar.gz
+            
+            
