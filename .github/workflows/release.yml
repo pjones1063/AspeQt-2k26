@@ -5,7 +5,7 @@ on:
 
 jobs:
   # ==========================================
-  # 1. MACOS BUILD
+  # 1. MACOS BUILD (Restored to Original)
   # ==========================================
   build-mac:
     runs-on: macos-latest
@@ -28,11 +28,11 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . -j$(sysctl -n hw.ncpu)
 
-      - name: Package with macdeployqt and Sign
+      - name: Package with macdeployqt
         run: |
-          macdeployqt build/AspeQt.app -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
-          codesign --force --deep --sign - build/AspeQt.app
-          hdiutil create -volname "AspeQt-2K26" -srcfolder build/AspeQt.app -ov -format UDZO AspeQt-2K26-macOS.dmg
+          # Restored to use the -dmg flag as per your original script
+          macdeployqt build/AspeQt.app -dmg -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
+          mv build/AspeQt.dmg AspeQt-2K26-macOS.dmg
 
       - name: Upload DMG to GitHub
         uses: actions/upload-artifact@v4
@@ -41,7 +41,7 @@ jobs:
           path: AspeQt-2K26-macOS.dmg
 
   # ==========================================
-  # 2. WINDOWS BUILD
+  # 2. WINDOWS BUILD (Untouched)
   # ==========================================
   build-windows:
     runs-on: windows-latest
@@ -119,10 +119,11 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
+          # Standardized package names for Ubuntu 24.04 (Noble)
           sudo apt-get install -y build-essential cmake git unzip ca-certificates \
           qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
-          qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libssh-dev libgpiod-dev \
-          libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
+          qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
+          libssh-dev libgpiod-dev libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt
         run: |
@@ -158,10 +159,11 @@ jobs:
       - name: Install Qt6 and Dependencies via apt
         run: |
           sudo apt-get update
+          # Standardized package names for ARM64 runner
           sudo apt-get install -y build-essential cmake git unzip ca-certificates \
           qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
-          qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libssh-dev libgpiod-dev \
-          libxkbcommon-dev libx11-xcb-dev
+          qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
+          libssh-dev libgpiod-dev libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt for Pi
         run: |
@@ -184,4 +186,3 @@ jobs:
           path: |
             AspeQt-2K26-pi.64.deb
             AspeQt-2K26-pi.64-portable.tar.gz
-            
