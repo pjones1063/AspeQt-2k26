@@ -86,11 +86,12 @@ To install all necessary build tools and dependencies in one shot, run the follo
 ```bash
 sudo apt update
 sudo apt install build-essential cmake git unzip ca-certificates \
-qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev \
-libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev
-
+qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
+qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
+libssh-dev libgpiod-dev
 
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build . --parallel
+
