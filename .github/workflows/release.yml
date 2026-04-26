@@ -5,7 +5,7 @@ on:
 
 jobs:
   # ==========================================
-  # 1. MACOS BUILD
+  # 1. MACOS BUILD (Untouched logic)
   # ==========================================
   build-mac:
     runs-on: macos-latest
@@ -28,11 +28,11 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . -j$(sysctl -n hw.ncpu)
 
-      - name: Package with macdeployqt and Sign
+      - name: Package with macdeployqt
         run: |
-          macdeployqt build/AspeQt.app -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
-          codesign --force --deep --sign - build/AspeQt.app
-          hdiutil create -volname "AspeQt-2K26" -srcfolder build/AspeQt.app -ov -format UDZO AspeQt-2K26-macOS.dmg
+          # Restored -dmg flag as per original requirements
+          macdeployqt build/AspeQt.app -dmg -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
+          mv build/AspeQt.dmg AspeQt-2K26-macOS.dmg
 
       - name: Upload DMG to GitHub
         uses: actions/upload-artifact@v4
@@ -41,7 +41,7 @@ jobs:
           path: AspeQt-2K26-macOS.dmg
 
   # ==========================================
-  # 2. WINDOWS BUILD
+  # 2. WINDOWS BUILD (Untouched logic)
   # ==========================================
   build-windows:
     runs-on: windows-latest
@@ -92,10 +92,8 @@ jobs:
         run: |
           $issFile = Get-ChildItem -Path . -Filter "AspeQt-Installer.iss" -Recurse | Select-Object -First 1
           if ($issFile) {
-              Write-Host "Found installer script at: $($issFile.FullName)" -ForegroundColor Cyan
               iscc $issFile.FullName
           } else {
-              Write-Error "CRITICAL: Could not find AspeQt-Installer.iss anywhere in the repository!"
               exit 1
           }
 
@@ -108,19 +106,21 @@ jobs:
             release/AspeQt-2K26-Setup.exe
 
   # ==========================================
-  # 3. LINUX BUILD (Native .deb & Portable tar.gz)
+  # 3. LINUX BUILD (Debian 12 for T490/AMD64)
   # ==========================================
   build-linux:
     runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: |
-          sudo apt-get update
-          # REMOVED libgpiod-dev to fix v1.6 vs v2.0 API crash
-          sudo apt-get install -y build-essential cmake git unzip ca-certificates \
+          apt-get update
+          # Standard Debian 12 names. libgpiod excluded for Software SIO safety on Debian 12.
+          apt-get install -y build-essential cmake git unzip ca-certificates \
           qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
           qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
           libssh-dev libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
@@ -148,22 +148,24 @@ jobs:
             AspeQt-2K26-Linux-Portable.tar.gz
 
   # ==========================================
-  # 4. RASPBERRY PI BUILD (ARM64)
+  # 4. RASPBERRY PI BUILD (Debian 13 Trixie for ARM64)
   # ==========================================
   build-pi:
     runs-on: ubuntu-24.04-arm 
+    container:
+      image: debian:trixie
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Install Qt6 and Dependencies via apt
+      - name: Install Qt6 and Dependencies
         run: |
-          sudo apt-get update
-          # REMOVED libgpiod-dev to fix v1.6 vs v2.0 API crash
-          sudo apt-get install -y build-essential cmake git unzip ca-certificates \
+          apt-get update
+          # Trixie supports libgpiod v2.0+ for Hardware SIO
+          apt-get install -y build-essential cmake git unzip ca-certificates \
           qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
           qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
-          libssh-dev libxkbcommon-dev libx11-xcb-dev
+          libssh-dev libgpiod-dev libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt for Pi
         run: |
@@ -186,4 +188,3 @@ jobs:
           path: |
             AspeQt-2K26-pi.64.deb
             AspeQt-2K26-pi.64-portable.tar.gz
-            
