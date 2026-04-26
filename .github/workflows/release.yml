@@ -17,8 +17,8 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.3'
-          # ADDED webchannel to the module list!
-          modules: 'qtserialport qtwebsockets qtwebchannel'
+          # ADDED qthttpserver
+          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Install libssh
         run: brew install libssh
@@ -52,9 +52,7 @@ jobs:
       - name: Setup MSYS2 and libssh
         uses: msys2/setup-msys2@v2
         with:
-          # Switched to MINGW64 to perfectly match official Qt6 binaries
           msystem: MINGW64
-          # Added toolchain to fix the missing CMake Make/Compiler error!
           install: mingw-w64-x86_64-libssh mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
 
       - name: Install Qt
@@ -62,7 +60,8 @@ jobs:
         with:
           version: '6.5.3'
           arch: win64_mingw
-          modules: 'qtserialport qtwebsockets qtwebchannel'
+          # ADDED qthttpserver
+          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Compile AspeQt
         shell: msys2 {0}
@@ -77,7 +76,6 @@ jobs:
           mkdir release\win-temp
           Copy-Item "build\AspeQt.exe" "release\win-temp\"
           windeployqt.exe --dir "release\win-temp" "release\win-temp\AspeQt.exe"
-          # Adjusted paths for the MINGW64 environment
           Copy-Item "C:\msys64\mingw64\bin\libssh.dll" "release\win-temp\"
           Copy-Item "C:\msys64\mingw64\bin\libcrypto-3-x64.dll" "release\win-temp\"
           Copy-Item "C:\msys64\mingw64\bin\zlib1.dll" "release\win-temp\"
@@ -110,15 +108,14 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          # Added libgl1-mesa-dev and libxkbcommon-dev to ensure graphical libraries link properly
           sudo apt-get install -y libssh-dev build-essential cmake libgl1-mesa-dev libxkbcommon-dev
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.3'
-          # Added the missing modules here too!
-          modules: 'qtserialport qtwebsockets qtwebchannel'
+          # ADDED qthttpserver
+          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Compile and Package
         run: |
@@ -150,8 +147,8 @@ jobs:
       - name: Install Qt6 and Dependencies via apt
         run: |
           sudo apt-get update
-          # Added qt6-webchannel-dev and libxkbcommon-dev to fix the Pi errors!
-          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev
+          # ADDED qt6-httpserver-dev
+          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt for Pi
         run: |
