@@ -113,7 +113,7 @@ jobs:
             release/AspeQt-2K26-Setup.exe
 
   # ==========================================
-  # 3. LINUX BUILD (Native .deb & AppImage)
+  # 3. LINUX BUILD (Native .deb & Portable tar.gz)
   # ==========================================
   build-linux:
     runs-on: ubuntu-latest
@@ -121,10 +121,11 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Install Dependencies & Native Qt6
+      - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev libfuse2
+          # Installed your exact requested dependencies, plus standard X11/Mesa headers for cloud compiling
+          sudo apt-get install -y build-essential cmake git unzip ca-certificates qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt
         run: |
@@ -132,42 +133,14 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . -j$(nproc)
 
-      - name: Package Native .deb
+      - name: Package Native .deb and tar.gz
         run: |
           cd build
+          # SHLIBDEPS automatically links required Qt libraries into the .deb control file
           cpack -G DEB -D CPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON
           mv *.deb ../AspeQt-2K26-Linux.deb
           cd ..
-
-      - name: Package Portable AppImage
-        run: |
-          # Create standardized AppDir folder structure
-          mkdir -p AppDir/usr/bin AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/256x256/apps
-          cp build/AspeQt AppDir/usr/bin/
-          
-          # Copy the REAL icon from the repository
-          cp res/Atari.png AppDir/usr/share/icons/hicolor/256x256/apps/aspeqt.png
-          
-          # Desktop file required by the bundler
-          cat <<EOF > AppDir/usr/share/applications/aspeqt.desktop
-          [Desktop Entry]
-          Type=Application
-          Name=AspeQt
-          Exec=AspeQt
-          Icon=aspeqt
-          Categories=Utility;
-          EOF
-          
-          # Switch to modern linuxdeploy and the official Qt6 plugin (linuxdeployqt is deprecated and crashes on Qt6)
-          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
-          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
-          chmod +x linuxdeploy*.AppImage
-          
-          # Run the new bundler
-          export QMAKE=$(which qmake6)
-          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage --desktop-file AppDir/usr/share/applications/aspeqt.desktop --icon-file AppDir/usr/share/icons/hicolor/256x256/apps/aspeqt.png
-          
-          mv AspeQt-*-x86_64.AppImage AspeQt-2K26-Linux-Portable.AppImage
+          tar -cvzf AspeQt-2K26-Linux-Portable.tar.gz -C build AspeQt
 
       - name: Upload Linux Artifacts to GitHub
         uses: actions/upload-artifact@v4
@@ -175,7 +148,7 @@ jobs:
           name: Linux-Release
           path: |
             AspeQt-2K26-Linux.deb
-            AspeQt-2K26-Linux-Portable.AppImage
+            AspeQt-2K26-Linux-Portable.tar.gz
 
   # ==========================================
   # 4. RASPBERRY PI BUILD (ARM64)
@@ -189,7 +162,7 @@ jobs:
       - name: Install Qt6 and Dependencies via apt
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev libfuse2
+          sudo apt-get install -y build-essential cmake git unzip ca-certificates qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt for Pi
         run: |
@@ -212,3 +185,4 @@ jobs:
           path: |
             AspeQt-2K26-pi.64.deb
             AspeQt-2K26-pi.64-portable.tar.gz
+            
