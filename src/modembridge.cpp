@@ -400,29 +400,35 @@ void ModemBridge::processAtCommand(const QByteArray &cmd) {
 
 
 void ModemBridge::dial(const BbsEntry &entry) {
-
-    // FIX: Store the FULL entry into your existing class variable so
-    // injectMacro() has access to m_currentConnection.login and password!
     m_currentConnection = entry;
+    m_currentLogin = entry.login;
+    m_currentPassword = entry.password;
 
-    QString proto = entry.protocol.toUpper();
-    m_isSshMode = proto.startsWith("SSH");
+    // 1. Clean up any existing connections before dialing
+    if (m_socket->state() == QAbstractSocket::ConnectedState) {
+        m_socket->disconnectFromHost();
+    }
+    if (m_ssh->isConnected()) {
+        m_ssh->disconnectFromHost();
+    }
 
+    // 2. Determine Protocol (Catch both SSH and our new SSH-AUTH flag)
+    m_isSshMode = (entry.protocol.compare("SSH", Qt::CaseInsensitive) == 0) ||
+                  (entry.protocol.compare("SSH-AUTH", Qt::CaseInsensitive) == 0);
+
+    m_isTelnetMode = (entry.protocol.compare("TELNET", Qt::CaseInsensitive) == 0);
+
+    // 3. Execute the Dial
     if (m_isSshMode) {
-        // CRITICAL FIX: The SSH Protocol strictly requires a username string.
-        QString safeUser = entry.login.isEmpty() ? "guest" : entry.login;
+        emit statusMessage(QString("Modem Bridge: Negotiating SSH with %1...").arg(entry.ip));
 
-        if (proto == "SSH-AUTH") {
-            qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Authenticated SSH...";
-            m_ssh->connectToHost(entry.ip, entry.port, safeUser, entry.password);
-        } else {
-            qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Anonymous BBS SSH...";
-            // Pass safeUser but a BLANK password to let the BBS show its own ANSI login
-            m_ssh->connectToHost(entry.ip, entry.port, safeUser, "");
-        }
+        // --- NEW: Pass the privateKey field to the SSH wrapper ---
+        // If privateKey is empty, SshClient automatically falls back to standard Password auth!
+        m_ssh->connectToHost(entry.ip, entry.port, entry.login, entry.password, entry.privateKey);
+
     } else {
-        qDebug() << "!i [ModemBridge] Dialing" << entry.name << "via Telnet/TCP...";
-        connectTo(entry.ip, entry.port);
+        emit statusMessage(QString("Modem Bridge: Dialing %1:%2...").arg(entry.ip).arg(entry.port));
+        m_socket->connectToHost(entry.ip, entry.port);
     }
 }
 

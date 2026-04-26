@@ -886,25 +886,38 @@ QByteArray RDevice::dequeueNetworkData() {
 
 void RDevice::dial(const BbsEntry &entry) {
     m_currentConnection = entry;
-    QString proto = entry.protocol.toUpper();
-    m_isSshMode = proto.startsWith("SSH");
 
-    if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
-    if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+    // 1. Clean up any existing connections
+    if (tcpSocket->state() == QAbstractSocket::ConnectedState) {
+        tcpSocket->disconnectFromHost();
+    }
+    if (m_ssh->isConnected()) {
+        m_ssh->disconnectFromHost();
+    }
 
-    sendAtResponse("\r\nDIALING " + entry.name + "...\r\n");
+    // 2. Determine Protocol (Catch both SSH and SSH-AUTH)
+    bool isSsh = (entry.protocol.compare("SSH", Qt::CaseInsensitive) == 0) ||
+                 (entry.protocol.compare("SSH-AUTH", Qt::CaseInsensitive) == 0);
 
-    if (m_isSshMode) {
-        QString safeUser = entry.login.isEmpty() ? "guest" : entry.login;
-        if (proto == "SSH-AUTH") {
-            m_ssh->connectToHost(entry.ip, entry.port, safeUser, entry.password);
-        } else {
-            m_ssh->connectToHost(entry.ip, entry.port, safeUser, "");
-        }
+    // 3. Execute the Dial
+    if (isSsh) {
+        m_isSshMode = true;
+        m_isNetworkConnected = false;
+
+        qDebug() << "!i" << tr("[RDevice] Negotiating SSH with %1...").arg(entry.ip);
+
+        // --- NEW: Pass the privateKey field to the SSH wrapper ---
+        m_ssh->connectToHost(entry.ip, entry.port, entry.login, entry.password, entry.privateKey);
+
     } else {
+        m_isSshMode = false;
+        m_isNetworkConnected = false;
+
+        qDebug() << "!i" << tr("[RDevice] Dialing Telnet %1:%2...").arg(entry.ip).arg(entry.port);
         tcpSocket->connectToHost(entry.ip, entry.port);
     }
 }
+
 
 void RDevice::hangup() {
     {

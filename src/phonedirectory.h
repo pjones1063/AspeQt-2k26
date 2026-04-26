@@ -45,7 +45,6 @@ private:
     bool runEditDialog(BbsEntry &entry);
 
     // Helper to handle the "Save Changes?" prompt
-    // Returns true if safe to proceed, false if user cancelled.
     bool checkUnsavedChanges(const QString &actionName);
 };
 

@@ -19,7 +19,7 @@ public:
 
 public slots:
     // Actions triggered by the main thread
-    void processConnection(const QString &host, int port, const QString &user, const QString &password);
+    void processConnection(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath);
     void processWrite(const QByteArray &data);
     void processDisconnect();
     void setPollingInterval(int ms);
@@ -55,7 +55,7 @@ public:
     ~SshClient();
 
     // -- Public API --
-    void connectToHost(const QString &host, int port = 22, const QString &user = "", const QString &password = "");
+    void connectToHost(const QString &host, int port = 22, const QString &user = "", const QString &password = "", const QString &privateKeyPath = "");
     void disconnectFromHost();
     void write(const QByteArray &data);
     bool isConnected() const;
@@ -75,7 +75,7 @@ private:
 
 signals:
     // Internal signals to bridge commands to the worker thread
-    void _sigConnect(const QString &host, int port, const QString &user, const QString &password);
+    void _sigConnect(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath);
     void _sigWrite(const QByteArray &data);
     void _sigDisconnect();
 };

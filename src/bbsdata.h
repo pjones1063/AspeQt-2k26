@@ -7,11 +7,13 @@ struct BbsEntry {
     QString name;
     QString ip;
     int port;
-    QString protocol; // "TELNET", "SSH"
+    QString protocol;
     QString login;
     QString password;
+    QString privateKey;
     QString font;
     QString keyMap;
+
 
     // Helper to get "ip:port"
     QString address() const { return ip + ":" + QString::number(port); }

@@ -1,0 +1,169 @@
+name: Build and Release AspeQt-2k26
+
+# This tells GitHub to run this script whenever you go to the Actions tab and click "Run"
+on: 
+  workflow_dispatch:
+
+jobs:
+  # ==========================================
+  # 1. MACOS BUILD (Unsigned DMG)
+  # ==========================================
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.3'
+
+      - name: Install libssh
+        run: brew install libssh
+
+      - name: Compile AspeQt
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake --build . -j$(sysctl -n hw.ncpu)
+
+      - name: Package with macdeployqt
+        run: |
+          macdeployqt build/AspeQt.app -dmg -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
+          mv build/AspeQt.dmg AspeQt-2K26-macOS.dmg
+
+      - name: Upload DMG to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS-Release
+          path: AspeQt-2K26-macOS.dmg
+
+  # ==========================================
+  # 2. WINDOWS BUILD (Inno Setup Installer & ZIP)
+  # ==========================================
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2 and libssh
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          install: mingw-w64-ucrt-x86_64-libssh mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.3'
+          arch: win64_mingw
+
+      - name: Compile AspeQt
+        shell: msys2 {0}
+        run: |
+          mkdir build && cd build
+          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+          cmake --build . -j4
+
+      - name: Package with windeployqt
+        shell: pwsh
+        run: |
+          mkdir release\win-temp
+          Copy-Item "build\AspeQt.exe" "release\win-temp\"
+          windeployqt.exe --dir "release\win-temp" "release\win-temp\AspeQt.exe"
+          # Copy libssh and crypto dlls from MSYS2
+          Copy-Item "C:\msys64\ucrt64\bin\libssh.dll" "release\win-temp\"
+          Copy-Item "C:\msys64\ucrt64\bin\libcrypto-3-x64.dll" "release\win-temp\"
+          Copy-Item "C:\msys64\ucrt64\bin\zlib1.dll" "release\win-temp\"
+
+      - name: Create Portable ZIP
+        shell: pwsh
+        run: Compress-Archive -Path "release\win-temp\*" -DestinationPath "AspeQt-2K26-Windows-Portable.zip" -Force
+
+      - name: Build Inno Setup Installer
+        shell: pwsh
+        run: iscc "AspeQt-Installer.iss"
+
+      - name: Upload Windows Artifacts to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-Release
+          path: |
+            AspeQt-2K26-Windows-Portable.zip
+            release/AspeQt-2K26-Setup.exe
+
+  # ==========================================
+  # 3. LINUX BUILD (.deb and Portable tar.gz)
+  # ==========================================
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libssh-dev build-essential cmake
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.5.3'
+
+      - name: Compile and Package
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake --build . -j$(nproc)
+          cpack -G DEB
+          mv *.deb ../AspeQt-2K26-Linux.deb
+          cd ..
+          tar -cvzf AspeQt-2K26-Linux-Portable.tar.gz -C build AspeQt
+
+      - name: Upload Linux Artifacts to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: Linux-Release
+          path: |
+            AspeQt-2K26-Linux.deb
+            AspeQt-2K26-Linux-Portable.tar.gz
+            
+# ==========================================
+  # 4. RASPBERRY PI BUILD (.deb and .tar.gz)
+  # ==========================================
+  build-pi:
+    # This tells GitHub to use a real ARM64 processor!
+    runs-on: ubuntu-24.04-arm 
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Install Qt6 and Dependencies via apt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-tools-dev qt6-l10n-tools
+
+      - name: Compile AspeQt for Pi
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake --build . -j$(nproc)
+
+      - name: Package Pi binaries
+        run: |
+          cd build
+          cpack -G DEB
+          mv *.deb ../AspeQt-2K26-pi.64.deb
+          cd ..
+          tar -cvzf AspeQt-2K26-pi.64-portable.tar.gz -C build AspeQt
+
+      - name: Upload Pi Artifacts to GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: RaspberryPi-Release
+          path: |
+            AspeQt-2K26-pi.64.deb
+            AspeQt-2K26-pi.64-portable.tar.gz            
