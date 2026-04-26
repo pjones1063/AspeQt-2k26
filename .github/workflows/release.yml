@@ -5,7 +5,7 @@ on:
 
 jobs:
   # ==========================================
-  # 1. MACOS BUILD (Untouched logic)
+  # 1. MACOS BUILD (Untouched)
   # ==========================================
   build-mac:
     runs-on: macos-latest
@@ -30,7 +30,7 @@ jobs:
 
       - name: Package with macdeployqt
         run: |
-          # Restored -dmg flag as per original requirements
+          # Maintained original -dmg flag
           macdeployqt build/AspeQt.app -dmg -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
           mv build/AspeQt.dmg AspeQt-2K26-macOS.dmg
 
@@ -41,7 +41,7 @@ jobs:
           path: AspeQt-2K26-macOS.dmg
 
   # ==========================================
-  # 2. WINDOWS BUILD (Untouched logic)
+  # 2. WINDOWS BUILD (Untouched)
   # ==========================================
   build-windows:
     runs-on: windows-latest
@@ -106,12 +106,12 @@ jobs:
             release/AspeQt-2K26-Setup.exe
 
   # ==========================================
-  # 3. LINUX BUILD (Debian 12 for T490/AMD64)
+  # 3. LINUX BUILD (Debian 13 Trixie - AMD64)
   # ==========================================
   build-linux:
     runs-on: ubuntu-latest
     container:
-      image: debian:bookworm
+      image: debian:trixie
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -119,11 +119,11 @@ jobs:
       - name: Install Dependencies
         run: |
           apt-get update
-          # Standard Debian 12 names. libgpiod excluded for Software SIO safety on Debian 12.
+          # Critical: Added pkg-config and libcups2-dev for clean CMake configuration
           apt-get install -y build-essential cmake git unzip ca-certificates \
-          qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
+          pkg-config libcups2-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
           qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
-          libssh-dev libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
+          libssh-dev libgpiod-dev libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt
         run: |
@@ -148,7 +148,7 @@ jobs:
             AspeQt-2K26-Linux-Portable.tar.gz
 
   # ==========================================
-  # 4. RASPBERRY PI BUILD (Debian 13 Trixie for ARM64)
+  # 4. RASPBERRY PI BUILD (Debian 13 Trixie - ARM64)
   # ==========================================
   build-pi:
     runs-on: ubuntu-24.04-arm 
@@ -161,9 +161,9 @@ jobs:
       - name: Install Qt6 and Dependencies
         run: |
           apt-get update
-          # Trixie supports libgpiod v2.0+ for Hardware SIO
+          # Critical: Added pkg-config and libcups2-dev for ARM build environment
           apt-get install -y build-essential cmake git unzip ca-certificates \
-          qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
+          pkg-config libcups2-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev \
           qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools \
           libssh-dev libgpiod-dev libxkbcommon-dev libx11-xcb-dev
 
