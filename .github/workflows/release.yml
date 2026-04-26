@@ -73,12 +73,16 @@ jobs:
       - name: Package with windeployqt
         shell: pwsh
         run: |
-          mkdir release\win-temp
+          New-Item -ItemType Directory -Force -Path "release\win-temp"
           Copy-Item "build\AspeQt.exe" "release\win-temp\"
           windeployqt.exe --dir "release\win-temp" "release\win-temp\AspeQt.exe"
-          Copy-Item "C:\msys64\mingw64\bin\libssh.dll" "release\win-temp\"
-          Copy-Item "C:\msys64\mingw64\bin\libcrypto-3-x64.dll" "release\win-temp\"
-          Copy-Item "C:\msys64\mingw64\bin\zlib1.dll" "release\win-temp\"
+
+      - name: Copy MSYS2 Dependencies
+        shell: msys2 {0}
+        run: |
+          cp /mingw64/bin/libssh.dll release/win-temp/
+          cp /mingw64/bin/libcrypto-*.dll release/win-temp/
+          cp /mingw64/bin/zlib1.dll release/win-temp/
 
       - name: Create Portable ZIP
         shell: pwsh
@@ -171,4 +175,3 @@ jobs:
           path: |
             AspeQt-2K26-pi.64.deb
             AspeQt-2K26-pi.64-portable.tar.gz
-            
