@@ -124,8 +124,7 @@ jobs:
       - name: Install Dependencies & Native Qt6
         run: |
           sudo apt-get update
-          # Added imagemagick and patchelf to ensure the AppImage bundler has all the tools it needs to succeed
-          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev libfuse2 imagemagick patchelf file
+          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev libfuse2
 
       - name: Compile AspeQt
         run: |
@@ -146,8 +145,8 @@ jobs:
           mkdir -p AppDir/usr/bin AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/256x256/apps
           cp build/AspeQt AppDir/usr/bin/
           
-          # Forcefully re-encode the real Atari icon into a pristine PNG to prevent linuxdeployqt from crashing
-          convert res/Atari.png -resize 256x256 AppDir/usr/share/icons/hicolor/256x256/apps/aspeqt.png
+          # Copy the REAL icon from the repository
+          cp res/Atari.png AppDir/usr/share/icons/hicolor/256x256/apps/aspeqt.png
           
           # Desktop file required by the bundler
           cat <<EOF > AppDir/usr/share/applications/aspeqt.desktop
@@ -159,10 +158,15 @@ jobs:
           Categories=Utility;
           EOF
           
-          # Download and run linuxdeployqt to bundle all libraries
-          wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
-          chmod a+x linuxdeployqt-continuous-x86_64.AppImage
-          ./linuxdeployqt-continuous-x86_64.AppImage AppDir/usr/share/applications/aspeqt.desktop -appimage -unsupported-allow-new-glibc -qmake=$(which qmake6)
+          # Switch to modern linuxdeploy and the official Qt6 plugin (linuxdeployqt is deprecated and crashes on Qt6)
+          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+          wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+          chmod +x linuxdeploy*.AppImage
+          
+          # Run the new bundler
+          export QMAKE=$(which qmake6)
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage --desktop-file AppDir/usr/share/applications/aspeqt.desktop --icon-file AppDir/usr/share/icons/hicolor/256x256/apps/aspeqt.png
+          
           mv AspeQt-*-x86_64.AppImage AspeQt-2K26-Linux-Portable.AppImage
 
       - name: Upload Linux Artifacts to GitHub
