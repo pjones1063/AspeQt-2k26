@@ -30,13 +30,8 @@ jobs:
 
       - name: Package with macdeployqt and Sign
         run: |
-          # 1. Bundle all Qt libraries and libssh into the .app
           macdeployqt build/AspeQt.app -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
-          
-          # 2. Apply a deep Ad-Hoc signature to satisfy Apple Silicon strict requirements
           codesign --force --deep --sign - build/AspeQt.app
-          
-          # 3. Create the DMG image using native macOS tools
           hdiutil create -volname "AspeQt-2K26" -srcfolder build/AspeQt.app -ov -format UDZO AspeQt-2K26-macOS.dmg
 
       - name: Upload DMG to GitHub
@@ -124,8 +119,10 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          # Installed your exact requested dependencies, plus standard X11/Mesa headers for cloud compiling
-          sudo apt-get install -y build-essential cmake git unzip ca-certificates qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
+          sudo apt-get install -y build-essential cmake git unzip ca-certificates \
+          qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev \
+          libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev \
+          libgl1-mesa-dev libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt
         run: |
@@ -136,7 +133,6 @@ jobs:
       - name: Package Native .deb and tar.gz
         run: |
           cd build
-          # SHLIBDEPS automatically links required Qt libraries into the .deb control file
           cpack -G DEB -D CPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON
           mv *.deb ../AspeQt-2K26-Linux.deb
           cd ..
@@ -162,7 +158,10 @@ jobs:
       - name: Install Qt6 and Dependencies via apt
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake git unzip ca-certificates qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev libxkbcommon-dev libx11-xcb-dev
+          sudo apt-get install -y build-essential cmake git unzip ca-certificates \
+          qt6-base-dev libqt6serialport6-dev libqt6websockets6-dev \
+          libqt6webchannel6-dev libqt6httpserver6-dev libssh-dev libgpiod-dev \
+          libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt for Pi
         run: |
@@ -185,4 +184,3 @@ jobs:
           path: |
             AspeQt-2K26-pi.64.deb
             AspeQt-2K26-pi.64-portable.tar.gz
-            
