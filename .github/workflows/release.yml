@@ -1,12 +1,11 @@
 name: Build and Release AspeQt-2k26
 
-# This tells GitHub to run this script whenever you go to the Actions tab and click "Run"
 on: 
   workflow_dispatch:
 
 jobs:
   # ==========================================
-  # 1. MACOS BUILD (Unsigned DMG)
+  # 1. MACOS BUILD
   # ==========================================
   build-mac:
     runs-on: macos-latest
@@ -18,6 +17,8 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.3'
+          # ADDED webchannel to the module list!
+          modules: 'qtserialport qtwebsockets qtwebchannel'
 
       - name: Install libssh
         run: brew install libssh
@@ -40,7 +41,7 @@ jobs:
           path: AspeQt-2K26-macOS.dmg
 
   # ==========================================
-  # 2. WINDOWS BUILD (Inno Setup Installer & ZIP)
+  # 2. WINDOWS BUILD
   # ==========================================
   build-windows:
     runs-on: windows-latest
@@ -51,14 +52,17 @@ jobs:
       - name: Setup MSYS2 and libssh
         uses: msys2/setup-msys2@v2
         with:
-          msystem: UCRT64
-          install: mingw-w64-ucrt-x86_64-libssh mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-cmake
+          # Switched to MINGW64 to perfectly match official Qt6 binaries
+          msystem: MINGW64
+          # Added toolchain to fix the missing CMake Make/Compiler error!
+          install: mingw-w64-x86_64-libssh mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.3'
           arch: win64_mingw
+          modules: 'qtserialport qtwebsockets qtwebchannel'
 
       - name: Compile AspeQt
         shell: msys2 {0}
@@ -73,10 +77,10 @@ jobs:
           mkdir release\win-temp
           Copy-Item "build\AspeQt.exe" "release\win-temp\"
           windeployqt.exe --dir "release\win-temp" "release\win-temp\AspeQt.exe"
-          # Copy libssh and crypto dlls from MSYS2
-          Copy-Item "C:\msys64\ucrt64\bin\libssh.dll" "release\win-temp\"
-          Copy-Item "C:\msys64\ucrt64\bin\libcrypto-3-x64.dll" "release\win-temp\"
-          Copy-Item "C:\msys64\ucrt64\bin\zlib1.dll" "release\win-temp\"
+          # Adjusted paths for the MINGW64 environment
+          Copy-Item "C:\msys64\mingw64\bin\libssh.dll" "release\win-temp\"
+          Copy-Item "C:\msys64\mingw64\bin\libcrypto-3-x64.dll" "release\win-temp\"
+          Copy-Item "C:\msys64\mingw64\bin\zlib1.dll" "release\win-temp\"
 
       - name: Create Portable ZIP
         shell: pwsh
@@ -95,7 +99,7 @@ jobs:
             release/AspeQt-2K26-Setup.exe
 
   # ==========================================
-  # 3. LINUX BUILD (.deb and Portable tar.gz)
+  # 3. LINUX BUILD
   # ==========================================
   build-linux:
     runs-on: ubuntu-latest
@@ -106,12 +110,15 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libssh-dev build-essential cmake
+          # Added libgl1-mesa-dev and libxkbcommon-dev to ensure graphical libraries link properly
+          sudo apt-get install -y libssh-dev build-essential cmake libgl1-mesa-dev libxkbcommon-dev
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.3'
+          # Added the missing modules here too!
+          modules: 'qtserialport qtwebsockets qtwebchannel'
 
       - name: Compile and Package
         run: |
@@ -130,12 +137,11 @@ jobs:
           path: |
             AspeQt-2K26-Linux.deb
             AspeQt-2K26-Linux-Portable.tar.gz
-            
-# ==========================================
-  # 4. RASPBERRY PI BUILD (.deb and .tar.gz)
+
+  # ==========================================
+  # 4. RASPBERRY PI BUILD (ARM64)
   # ==========================================
   build-pi:
-    # This tells GitHub to use a real ARM64 processor!
     runs-on: ubuntu-24.04-arm 
     steps:
       - name: Checkout Source Code
@@ -144,7 +150,8 @@ jobs:
       - name: Install Qt6 and Dependencies via apt
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-tools-dev qt6-l10n-tools
+          # Added qt6-webchannel-dev and libxkbcommon-dev to fix the Pi errors!
+          sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt for Pi
         run: |
@@ -166,4 +173,5 @@ jobs:
           name: RaspberryPi-Release
           path: |
             AspeQt-2K26-pi.64.deb
-            AspeQt-2K26-pi.64-portable.tar.gz            
+            AspeQt-2K26-pi.64-portable.tar.gz
+            
