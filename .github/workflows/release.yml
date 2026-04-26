@@ -5,7 +5,7 @@ on:
 
 jobs:
   # ==========================================
-  # 1. MACOS BUILD (Untouched)
+  # 1. MACOS BUILD (Hardened for Apple Silicon)
   # ==========================================
   build-mac:
     runs-on: macos-latest
@@ -28,10 +28,14 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . -j$(sysctl -n hw.ncpu)
 
-      - name: Package with macdeployqt
+      - name: Bundle, Sign, and Package
         run: |
-          macdeployqt build/AspeQt.app -dmg -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
-          mv build/AspeQt.dmg AspeQt-2K26-macOS.dmg
+          # Bundling libraries first
+          macdeployqt build/AspeQt.app -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
+          # Deep signing is MANDATORY to fix your "Invalid Page" crash
+          codesign --force --deep --sign - build/AspeQt.app
+          # Manual DMG creation ensures the signed app is what gets packaged
+          hdiutil create -volname "AspeQt-2K26" -srcfolder build/AspeQt.app -ov -format UDZO AspeQt-2K26-macOS.dmg
 
       - name: Upload DMG to GitHub
         uses: actions/upload-artifact@v4
@@ -40,7 +44,7 @@ jobs:
           path: AspeQt-2K26-macOS.dmg
 
   # ==========================================
-  # 2. WINDOWS BUILD (Untouched)
+  # 2. WINDOWS BUILD (Standard MSYS2/MinGW)
   # ==========================================
   build-windows:
     runs-on: windows-latest
@@ -68,7 +72,7 @@ jobs:
           cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
           cmake --build . -j4
 
-      - name: Package with windeployqt
+      - name: Package and Copy DLLs
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path "release\win-temp"
@@ -90,13 +94,9 @@ jobs:
         shell: pwsh
         run: |
           $issFile = Get-ChildItem -Path . -Filter "AspeQt-Installer.iss" -Recurse | Select-Object -First 1
-          if ($issFile) {
-              iscc $issFile.FullName
-          } else {
-              exit 1
-          }
+          if ($issFile) { iscc $issFile.FullName } else { exit 1 }
 
-      - name: Upload Windows Artifacts to GitHub
+      - name: Upload Windows Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Windows-Release
@@ -105,41 +105,32 @@ jobs:
             release/AspeQt-2K26-Setup.exe
 
   # ==========================================
-  # 3. LINUX BUILD (Debian 13 Trixie - AMD64)
+  # 3. LINUX & PI JOBS (Unified Debian 13 Trixie)
   # ==========================================
-  build-linux:
+  build-linux-amd64:
     runs-on: ubuntu-latest
-    container:
-      image: debian:trixie
+    container: { image: "debian:trixie" }
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: Install Dependencies
+      - uses: actions/checkout@v4
+      - name: Install Audited Dependencies
         run: |
-          apt-get update
-          # Critical fix: Added 'file' and 'binutils' for CPack dependency scanning
-          apt-get install -y build-essential cmake git unzip ca-certificates \
-          pkg-config file binutils libcups2-dev qt6-base-dev qt6-serialport-dev \
-          qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev \
-          qt6-l10n-tools libssh-dev libgpiod-dev libgl1-mesa-dev libxkbcommon-dev \
-          libx11-xcb-dev
+          apt-get update && apt-get install -y \
+          binutils build-essential ca-certificates cmake file git libcups2-dev \
+          libgl1-mesa-dev libgpiod-dev libssh-dev libx11-xcb-dev libxkbcommon-dev \
+          pkg-config qt6-base-dev qt6-httpserver-dev qt6-l10n-tools \
+          qt6-serialport-dev qt6-tools-dev qt6-webchannel-dev qt6-websockets-dev unzip
 
-      - name: Compile AspeQt
+      - name: Build and Package
         run: |
           mkdir build && cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . -j$(nproc)
-
-      - name: Package Native .deb and tar.gz
-        run: |
-          cd build
           cpack -G DEB -D CPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON
           mv *.deb ../AspeQt-2K26-Linux.deb
           cd ..
           tar -cvzf AspeQt-2K26-Linux-Portable.tar.gz -C build AspeQt
 
-      - name: Upload Linux Artifacts to GitHub
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Linux-Release
@@ -147,41 +138,30 @@ jobs:
             AspeQt-2K26-Linux.deb
             AspeQt-2K26-Linux-Portable.tar.gz
 
-  # ==========================================
-  # 4. RASPBERRY PI BUILD (Debian 13 Trixie - ARM64)
-  # ==========================================
-  build-pi:
-    runs-on: ubuntu-24.04-arm 
-    container:
-      image: debian:trixie
+  build-linux-arm64:
+    runs-on: ubuntu-24.04-arm
+    container: { image: "debian:trixie" }
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: Install Qt6 and Dependencies
+      - uses: actions/checkout@v4
+      - name: Install Audited Dependencies
         run: |
-          apt-get update
-          # Critical fix: Added 'file' and 'binutils' for ARM CPack dependency scanning
-          apt-get install -y build-essential cmake git unzip ca-certificates \
-          pkg-config file binutils libcups2-dev qt6-base-dev qt6-serialport-dev \
-          qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev \
-          qt6-l10n-tools libssh-dev libgpiod-dev libxkbcommon-dev libx11-xcb-dev
+          apt-get update && apt-get install -y \
+          binutils build-essential ca-certificates cmake file git libcups2-dev \
+          libgl1-mesa-dev libgpiod-dev libssh-dev libx11-xcb-dev libxkbcommon-dev \
+          pkg-config qt6-base-dev qt6-httpserver-dev qt6-l10n-tools \
+          qt6-serialport-dev qt6-tools-dev qt6-webchannel-dev qt6-websockets-dev unzip
 
-      - name: Compile AspeQt for Pi
+      - name: Build and Package
         run: |
           mkdir build && cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release
           cmake --build . -j$(nproc)
-
-      - name: Package Pi .deb and Portable
-        run: |
-          cd build
           cpack -G DEB -D CPACK_DEBIAN_PACKAGE_SHLIBDEPS=ON
           mv *.deb ../AspeQt-2K26-pi.64.deb
           cd ..
           tar -cvzf AspeQt-2K26-pi.64-portable.tar.gz -C build AspeQt
 
-      - name: Upload Pi Artifacts to GitHub
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: RaspberryPi-Release
