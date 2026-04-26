@@ -147,8 +147,10 @@ jobs:
           mkdir -p AppDir/usr/bin AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/256x256/apps
           cp build/AspeQt AppDir/usr/bin/
           
-          # Dummy icon and Desktop file required by the bundler
-          touch AppDir/usr/share/icons/hicolor/256x256/apps/aspeqt.png
+          # Create a VALID dummy transparent icon (linuxdeployqt crashes on 0-byte files)
+          convert -size 256x256 xc:transparent AppDir/usr/share/icons/hicolor/256x256/apps/aspeqt.png
+          
+          # Dummy desktop file required by the bundler
           cat <<EOF > AppDir/usr/share/applications/aspeqt.desktop
           [Desktop Entry]
           Type=Application
