@@ -183,6 +183,9 @@ void SshBackend::pollLoop() {
 // ============================================================================
 
 SshClient::SshClient(QObject *parent) : QObject(parent), m_connectedStatus(false) {
+
+    ssh_init();
+
     m_backend = new SshBackend();
     m_backend->moveToThread(&m_thread);
 
@@ -222,6 +225,7 @@ SshClient::~SshClient() {
     disconnectFromHost();
     m_thread.quit();
     m_thread.wait();
+    ssh_finalize();
 }
 
 void SshClient::connectToHost(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath) {
