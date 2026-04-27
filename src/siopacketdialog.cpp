@@ -6,6 +6,7 @@
 #include <QColor>
 #include <QItemSelectionModel>
 #include <QRegularExpression>
+#include <QFontDatabase>
 
 // --- Authentic Atari Checksum Algorithm ---
 quint8 calculateAtariChecksum(const QByteArray &data, int length) {
@@ -175,9 +176,8 @@ SioPacketDialog::SioPacketDialog(QWidget *parent) : QDialog(parent) {
 
     txtDetails = new QTextEdit(this);
     txtDetails->setReadOnly(true);
-    QFont monoFont("Courier New");
-    monoFont.setStyleHint(QFont::Monospace);
-    monoFont.setFixedPitch(true);
+
+    QFont monoFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     monoFont.setPointSize(10);
     txtDetails->setFont(monoFont);
     txtDetails->setLineWrapMode(QTextEdit::NoWrap);
