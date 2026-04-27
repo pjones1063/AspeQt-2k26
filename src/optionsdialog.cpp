@@ -529,11 +529,8 @@ void OptionsDialog::on_modemPhonebookBrowseBtn_clicked()
 
 void OptionsDialog::on_modemPhonebookNewBtn_clicked()
 {
-#ifdef Q_OS_MAC
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Create New Dial Directory"), QDir::homePath(), tr("XML Files (*.xml);;All Files (*)"));
-#else
+
     QString fileName = QFileDialog::getSaveFileName(this, tr("Create New Dial Directory"), QDir::homePath() + "/phonebook.xml", tr("XML Files (*.xml);;All Files (*)"));
-#endif
 
     if (!fileName.isEmpty()) {
         if (!fileName.endsWith(".xml", Qt::CaseInsensitive)) {

@@ -47,7 +47,15 @@ Copy-Item "$BuildDir\AspeQt.exe" "$WinTemp\"
 Write-Host "Bundling MSYS2 Dependencies..." -ForegroundColor Cyan
 
 # List all the non-Qt MSYS2 DLLs your app needs here
-$MsysDlls = @("libssh.dll", "libcrypto-3-x64.dll", "zlib1.dll")
+$MsysDlls = @(
+    "libssh.dll",
+    "libcrypto-3-x64.dll",
+    "libssl-3-x64.dll",
+    "zlib1.dll",
+    "libgcc_s_seh-1.dll",
+    "libstdc++-6.dll",
+    "libwinpthread-1.dll"
+)
 
 foreach ($dll in $MsysDlls) {
     $found_dll = Get-ChildItem -Path "$Msys2Path\ucrt64\bin", "$Msys2Path\mingw64\bin" -Filter $dll -ErrorAction SilentlyContinue | Select-Object -First 1
