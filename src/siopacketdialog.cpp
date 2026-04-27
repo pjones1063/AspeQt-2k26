@@ -177,9 +177,22 @@ SioPacketDialog::SioPacketDialog(QWidget *parent) : QDialog(parent) {
     txtDetails = new QTextEdit(this);
     txtDetails->setReadOnly(true);
 
+    // --- THE FIX: Clean OS-Native Monospace Font ---
+// --- THE FIX: Clean OS-Native Monospace Font ---
+#ifdef Q_OS_MAC
+    QFont monoFont("Menlo", 10);       // Apple's crisp Retina-ready monospace
+#elif defined(Q_OS_WIN)
+    QFont monoFont("Consolas", 10);    // Microsoft's modern programming font
+#else
     QFont monoFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     monoFont.setPointSize(10);
+#endif
+
+    monoFont.setStyleHint(QFont::Monospace);
+    monoFont.setFixedPitch(true);
+    txtDetails->document()->setDefaultFont(monoFont);
     txtDetails->setFont(monoFont);
+
     txtDetails->setLineWrapMode(QTextEdit::NoWrap);
     txtDetails->setHtml("<span style='color:#888;'>Click a packet row to view details...</span>");
 
@@ -312,7 +325,8 @@ void SioPacketDialog::onRowSelected(const QModelIndex &current, const QModelInde
     }
 
     if (!pkt.rawData.isEmpty()) {
-        html += "<b style='color:#660000;'>Payload Hex & ATASCII:</b><br><pre style='margin-top: 5px;'>";
+        // --- THE FIX: Standard CSS Monospace ensures perfect alignment ---
+        html += "<b style='color:#660000;'>Payload Hex & ATASCII:</b><br><pre style='font-family: monospace; margin-top: 5px;'>";
 
         for (int i = 0; i < pkt.rawData.size(); i += 16) {
             QByteArray chunk = pkt.rawData.mid(i, 16);
