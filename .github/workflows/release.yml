@@ -1,6 +1,6 @@
 name: Build and Release AspeQt-2k26
 
-on: 
+on:
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,6 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.3'
-          # ADDED qthttpserver
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Install libssh
@@ -31,13 +30,8 @@ jobs:
 
       - name: Package with macdeployqt and Sign
         run: |
-          # 1. Bundle all Qt libraries and libssh into the .app
           macdeployqt build/AspeQt.app -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
-          
-          # 2. Apply a deep Ad-Hoc signature to satisfy Apple Silicon strict requirements
           codesign --force --deep --sign - build/AspeQt.app
-          
-          # 3. Create the DMG image using native macOS tools
           hdiutil create -volname "AspeQt-2K26" -srcfolder build/AspeQt.app -ov -format UDZO AspeQt-2K26-macOS.dmg
 
       - name: Upload DMG to GitHub
@@ -78,14 +72,13 @@ jobs:
       - name: Package with windeployqt
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force -Path "release\win-temp"
-          Copy-Item "build\AspeQt.exe" "release\win-temp\"
-          windeployqt.exe --dir "release\win-temp" "release\win-temp\AspeQt.exe"
+          New-Item -ItemType Directory -Force -Path "release/win-temp"
+          Copy-Item "build/AspeQt.exe" "release/win-temp/"
+          windeployqt.exe --dir "release/win-temp" "release/win-temp/AspeQt.exe"
 
       - name: Copy MSYS2 Dependencies
         shell: msys2 {0}
         run: |
-          # Copying the full dependency chain for LibSSH and MinGW
           cp /mingw64/bin/libssh.dll release/win-temp/
           cp /mingw64/bin/libcrypto-*.dll release/win-temp/
           cp /mingw64/bin/libssl-*.dll release/win-temp/
@@ -96,19 +89,17 @@ jobs:
 
       - name: Create Portable ZIP
         shell: pwsh
-        run: Compress-Archive -Path "release\win-temp\*" -DestinationPath "AspeQt-2K26-Windows-Portable.zip" -Force
+        run: Compress-Archive -Path "release/win-temp/*" -DestinationPath "AspeQt-2K26-Windows-Portable.zip" -Force
 
       - name: Build Inno Setup Installer
         shell: pwsh
         run: |
-          # Automatically hunt down the .iss file wherever it is in the repository
           $issFile = Get-ChildItem -Path . -Filter "AspeQt-Installer.iss" -Recurse | Select-Object -First 1
-          
           if ($issFile) {
               Write-Host "Found installer script at: $($issFile.FullName)" -ForegroundColor Cyan
               iscc $issFile.FullName
           } else {
-              Write-Error "CRITICAL: Could not find AspeQt-Installer.iss anywhere in the repository! Did you forget to commit it to GitHub?"
+              Write-Error "CRITICAL: Could not find AspeQt-Installer.iss anywhere in the repository!"
               exit 1
           }
 
@@ -119,7 +110,6 @@ jobs:
           path: |
             AspeQt-2K26-Windows-Portable.zip
             release/AspeQt-2K26-Setup.exe
-
 
   # ==========================================
   # 3. LINUX BUILD
@@ -139,7 +129,6 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.5.3'
-          # ADDED qthttpserver
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Compile and Package
@@ -164,7 +153,7 @@ jobs:
   # 4. RASPBERRY PI BUILD (ARM64)
   # ==========================================
   build-pi:
-    runs-on: ubuntu-24.04-arm 
+    runs-on: ubuntu-24.04-arm
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -172,7 +161,6 @@ jobs:
       - name: Install Qt6 and Dependencies via apt
         run: |
           sudo apt-get update
-          # ADDED qt6-httpserver-dev
           sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev
 
       - name: Compile AspeQt for Pi
