@@ -48,6 +48,24 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
         ssh_options_set(m_session, SSH_OPTIONS_USER, user.toUtf8().constData());
     }
 
+    // ---------------------------------------------------------
+    // CRITICAL FIX: Cross-Platform SSH Compatibility
+    // ---------------------------------------------------------
+    // 1. Bypass the buggy Post-Quantum KEX (mlkem) that crashes Windows.
+    const char* safe_kex = "curve25519-sha256,curve25519-sha256@libssh.org,"
+                           "ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,"
+                           "diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,"
+                           "diffie-hellman-group18-sha512";
+    ssh_options_set(m_session, SSH_OPTIONS_KEY_EXCHANGE, safe_kex);
+
+    // 2. Re-enable older Host Keys (ssh-rsa) to prevent "unsupported key"
+    //    errors on macOS/Linux when connecting to older retro/BBS servers.
+    const char* safe_hostkeys = "ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,"
+                                "ecdsa-sha2-nistp521,rsa-sha2-512,rsa-sha2-256,ssh-rsa";
+    ssh_options_set(m_session, SSH_OPTIONS_HOSTKEYS, safe_hostkeys);
+    // ---------------------------------------------------------
+
+
     // Connect to Server
     int rc = ssh_connect(m_session);
     if (rc != SSH_OK) {
