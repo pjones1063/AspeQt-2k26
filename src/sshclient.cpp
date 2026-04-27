@@ -48,21 +48,40 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
         ssh_options_set(m_session, SSH_OPTIONS_USER, user.toUtf8().constData());
     }
 
+
     // ---------------------------------------------------------
-    // CRITICAL FIX: Cross-Platform SSH Compatibility
+    // CRITICAL FIX: The Ultimate Retro-SSH Compatibility Block
     // ---------------------------------------------------------
-    // 1. Bypass the buggy Post-Quantum KEX (mlkem) that crashes Windows.
+
+    // 1. KEX: Bypass buggy mlkem, add legacy DH Exchange
     const char* safe_kex = "curve25519-sha256,curve25519-sha256@libssh.org,"
                            "ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,"
-                           "diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,"
-                           "diffie-hellman-group18-sha512";
+                           "diffie-hellman-group18-sha512,diffie-hellman-group16-sha512,"
+                           "diffie-hellman-group14-sha256,diffie-hellman-group14-sha1,"
+                           "diffie-hellman-group-exchange-sha1,"
+                           "diffie-hellman-group1-sha1";
     ssh_options_set(m_session, SSH_OPTIONS_KEY_EXCHANGE, safe_kex);
 
-    // 2. Re-enable older Host Keys (ssh-rsa) to prevent "unsupported key"
-    //    errors on macOS/Linux when connecting to older retro/BBS servers.
+    // 2. HOST KEYS: Add DSA (ssh-dss)
     const char* safe_hostkeys = "ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,"
-                                "ecdsa-sha2-nistp521,rsa-sha2-512,rsa-sha2-256,ssh-rsa";
+                                "ecdsa-sha2-nistp521,rsa-sha2-512,rsa-sha2-256,ssh-rsa,"
+                                "ssh-dss";
     ssh_options_set(m_session, SSH_OPTIONS_HOSTKEYS, safe_hostkeys);
+
+    // 3. CIPHERS: Add Blowfish, Cast128, and Arcfour (RC4)
+    const char* legacy_ciphers = "aes256-gcm@openssh.com,aes128-gcm@openssh.com,"
+                                 "aes256-ctr,aes192-ctr,aes128-ctr,"
+                                 "aes256-cbc,aes192-cbc,aes128-cbc,3des-cbc,"
+                                 "blowfish-cbc,cast128-cbc,arcfour256,arcfour128,arcfour";
+    ssh_options_set(m_session, SSH_OPTIONS_CIPHERS_C_S, legacy_ciphers);
+    ssh_options_set(m_session, SSH_OPTIONS_CIPHERS_S_C, legacy_ciphers);
+
+    // 4. MACs: Add Truncated SHA1/MD5
+    const char* legacy_macs = "hmac-sha2-512,hmac-sha2-256,hmac-sha1,hmac-md5,"
+                              "hmac-sha1-96,hmac-md5-96";
+    ssh_options_set(m_session, SSH_OPTIONS_HMAC_C_S, legacy_macs);
+    ssh_options_set(m_session, SSH_OPTIONS_HMAC_S_C, legacy_macs);
+
     // ---------------------------------------------------------
 
 
