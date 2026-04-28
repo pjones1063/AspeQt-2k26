@@ -2540,15 +2540,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="203" />
-        <location filename="../../src/mainwindow.cpp" line="1323" />
+        <location filename="../../src/mainwindow.cpp" line="1325" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Starte Emulation</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="206" />
         <location filename="../../src/mainwindow.ui" line="209" />
-        <location filename="../../src/mainwindow.cpp" line="1324" />
-        <location filename="../../src/mainwindow.cpp" line="1325" />
+        <location filename="../../src/mainwindow.cpp" line="1326" />
+        <location filename="../../src/mainwindow.cpp" line="1327" />
         <source>Start SIO peripheral emulation</source>
         <translation>Starte SIO Peripherie Emulation</translation>
     </message>
@@ -2632,7 +2632,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/mainwindow.ui" line="576" />
         <location filename="../../src/mainwindow.ui" line="579" />
-        <location filename="../../src/mainwindow.cpp" line="2725" />
+        <location filename="../../src/mainwindow.cpp" line="2727" />
         <source>Open BBS Phonebook</source>
         <translation>Öffnen Sie das BBS-Telefonbuch</translation>
     </message>
@@ -2652,8 +2652,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/mainwindow.ui" line="490" />
         <location filename="../../src/mainwindow.ui" line="493" />
-        <location filename="../../src/mainwindow.cpp" line="1291" />
-        <location filename="../../src/mainwindow.cpp" line="1292" />
+        <location filename="../../src/mainwindow.cpp" line="1293" />
+        <location filename="../../src/mainwindow.cpp" line="1294" />
         <source>Stop printer emulation</source>
         <translation>Stoppen Sie die Druckeremulation</translation>
     </message>
@@ -3143,7 +3143,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="256" />
-        <location filename="../../src/mainwindow.cpp" line="2377" />
+        <location filename="../../src/mainwindow.cpp" line="2379" />
         <source> -- Session: </source>
         <translation> -- Sitzung: </translation>
     </message>
@@ -3157,37 +3157,37 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Lösche Nachrichten</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="677" />
+        <location filename="../../src/mainwindow.cpp" line="676" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQ1 gestoppt bei %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="716" />
+        <location filename="../../src/mainwindow.cpp" line="718" />
         <source>Mount from TNFS Network...</source>
         <translation>Aus dem TNFS-Netzwerk mounten...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="738" />
+        <location filename="../../src/mainwindow.cpp" line="740" />
         <source>Mount TNFS</source>
         <translation>Mounten Sie TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="855" />
+        <location filename="../../src/mainwindow.cpp" line="857" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Diskettenimages %1 und %2 gewechselt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="909" />
+        <location filename="../../src/mainwindow.cpp" line="911" />
         <source>Cannot mount '%1': No empty disk slots.</source>
         <translation>Kann %1 nicht mounten: kein freier Platz.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1007" />
+        <location filename="../../src/mainwindow.cpp" line="1009" />
         <source>First run</source>
         <translation>Erster Lauf</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1008" />
+        <location filename="../../src/mainwindow.cpp" line="1010" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -3195,121 +3195,121 @@ Do you want to open the options dialog?</source>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="505" />
-        <location filename="../../src/mainwindow.cpp" line="1239" />
-        <location filename="../../src/mainwindow.cpp" line="1240" />
+        <location filename="../../src/mainwindow.cpp" line="1241" />
+        <location filename="../../src/mainwindow.cpp" line="1242" />
         <source>Hide drives D9-DO</source>
         <translation>Laufwerke D9-DO ausblenden</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1244" />
-        <location filename="../../src/mainwindow.cpp" line="1245" />
+        <location filename="../../src/mainwindow.cpp" line="1246" />
+        <location filename="../../src/mainwindow.cpp" line="1247" />
         <source>Show drives D9-DO</source>
         <translation>Antriebe D9-DO anzeigen</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1295" />
-        <location filename="../../src/mainwindow.cpp" line="1296" />
+        <location filename="../../src/mainwindow.cpp" line="1297" />
+        <location filename="../../src/mainwindow.cpp" line="1298" />
         <source>Start printer emulation</source>
         <translation>Starten Sie die Druckeremulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2128" />
+        <location filename="../../src/mainwindow.cpp" line="2130" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Datenträger %1] Auto-Commit EIN.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2130" />
+        <location filename="../../src/mainwindow.cpp" line="2132" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Datenträger %1] Auto-Commit AUS.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2346" />
-        <location filename="../../src/mainwindow.cpp" line="2409" />
+        <location filename="../../src/mainwindow.cpp" line="2348" />
+        <location filename="../../src/mainwindow.cpp" line="2411" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>AspeQt-Sitzungen (*.aspeqt);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2545" />
+        <location filename="../../src/mainwindow.cpp" line="2547" />
         <source>Drive %1 Happy Mode %2.</source>
         <translation>Fahre %1 Happy Mode %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2547" />
+        <location filename="../../src/mainwindow.cpp" line="2549" />
         <source>Enabled</source>
         <translation>Ermöglicht</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2547" />
+        <location filename="../../src/mainwindow.cpp" line="2549" />
         <source>Disabled</source>
         <translation>Deaktiviert</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2610" />
+        <location filename="../../src/mainwindow.cpp" line="2612" />
         <source>Mounted TNFS Stream: %1</source>
         <translation>Gemounteter TNFS-Stream: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2628" />
+        <location filename="../../src/mainwindow.cpp" line="2630" />
         <source>Mount Error</source>
         <translation>Mount-Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1280" />
+        <location filename="../../src/mainwindow.cpp" line="1282" />
         <source>Printer emulation stopped.</source>
         <translation>Die Druckeremulation wurde gestoppt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1282" />
+        <location filename="../../src/mainwindow.cpp" line="1284" />
         <source>Printer emulation started.</source>
         <translation>Die Druckeremulation wurde gestartet.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1314" />
+        <location filename="../../src/mainwindow.cpp" line="1316" />
         <source>&amp;Stop emulation</source>
         <translation>&amp;Stoppe Emulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1315" />
-        <location filename="../../src/mainwindow.cpp" line="1316" />
+        <location filename="../../src/mainwindow.cpp" line="1317" />
+        <location filename="../../src/mainwindow.cpp" line="1318" />
         <source>Stop SIO peripheral emulation</source>
         <translation>Stoppe SIO Peripherie Emulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1330" />
+        <location filename="../../src/mainwindow.cpp" line="1332" />
         <source>Emulation stopped.</source>
         <translation>Emulation gestoppt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1422" />
-        <location filename="../../src/mainwindow.cpp" line="1443" />
+        <location filename="../../src/mainwindow.cpp" line="1424" />
+        <location filename="../../src/mainwindow.cpp" line="1445" />
         <source>Folder image</source>
         <translation>Verzeichnis Image</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1455" />
-        <location filename="../../src/mainwindow.cpp" line="2087" />
-        <location filename="../../src/mainwindow.cpp" line="2139" />
-        <location filename="../../src/mainwindow.cpp" line="2184" />
+        <location filename="../../src/mainwindow.cpp" line="1457" />
+        <location filename="../../src/mainwindow.cpp" line="2089" />
+        <location filename="../../src/mainwindow.cpp" line="2141" />
+        <location filename="../../src/mainwindow.cpp" line="2186" />
         <source>Save failed</source>
         <translation>Speichern fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1456" />
-        <location filename="../../src/mainwindow.cpp" line="2087" />
-        <location filename="../../src/mainwindow.cpp" line="2139" />
-        <location filename="../../src/mainwindow.cpp" line="2184" />
+        <location filename="../../src/mainwindow.cpp" line="1458" />
+        <location filename="../../src/mainwindow.cpp" line="2089" />
+        <location filename="../../src/mainwindow.cpp" line="2141" />
+        <location filename="../../src/mainwindow.cpp" line="2186" />
         <source>'%1' cannot be saved, do you want to save the image with another name?</source>
         <translation>'%1' kann nicht gespeichert werden, möchten Sie das Image mit einem anderen Namen speichern?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1768" />
+        <location filename="../../src/mainwindow.cpp" line="1770" />
         <source>Unmounted disk %1</source>
         <translation>Diskettenimage %1 unmountet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1941" />
-        <location filename="../../src/mainwindow.cpp" line="2335" />
-        <location filename="../../src/mainwindow.cpp" line="3673" />
+        <location filename="../../src/mainwindow.cpp" line="1943" />
+        <location filename="../../src/mainwindow.cpp" line="2337" />
+        <location filename="../../src/mainwindow.cpp" line="3675" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] '%2' als '%3' gemountet.</translation>
     </message>
@@ -3322,12 +3322,12 @@ Do you want to open the options dialog?</source>
         <translation type="obsolete">Alle ATARI Diskettenimages (*.atr *.xfd *.atx *.pro);;SIO2PC ATR Diskettenimages (*.atr);;XFormer XFD Diskettenimages (*.xfd);;ATX Diskettenimages (*.atx);;Pro Diskettenimages (*.pro);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2167" />
+        <location filename="../../src/mainwindow.cpp" line="2169" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation>Alle Atari-Disk-Images (*.atr *.xfd *.pro);;SIO2PC ATR-Images (*.atr);;XFormer XFD-Images (*.xfd);;Pro-Images (*.pro);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1989" />
+        <location filename="../../src/mainwindow.cpp" line="1991" />
         <source>Open a folder image</source>
         <translation>Öffne ein Verzeichnis Image</translation>
     </message>
@@ -3359,13 +3359,13 @@ Do you want to open the options dialog?</source>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="341" />
-        <location filename="../../src/mainwindow.cpp" line="2726" />
+        <location filename="../../src/mainwindow.cpp" line="2728" />
         <source>Send Auto-User (ESC-U)</source>
         <translation>Auto-Benutzer senden (ESC-U)</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="352" />
-        <location filename="../../src/mainwindow.cpp" line="2727" />
+        <location filename="../../src/mainwindow.cpp" line="2729" />
         <source>Send Auto-Pass (ESC-P)</source>
         <translation>Auto-Pass senden (ESC-P)</translation>
     </message>
@@ -3400,274 +3400,274 @@ Do you want to open the options dialog?</source>
         <translation>Protokollfenster anzeigen</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1355" />
-        <location filename="../../src/mainwindow.cpp" line="2584" />
-        <location filename="../../src/mainwindow.cpp" line="3218" />
+        <location filename="../../src/mainwindow.cpp" line="1357" />
+        <location filename="../../src/mainwindow.cpp" line="2586" />
+        <location filename="../../src/mainwindow.cpp" line="3220" />
         <source>Loading...</source>
         <translation>Laden...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1355" />
-        <location filename="../../src/mainwindow.cpp" line="2584" />
-        <location filename="../../src/mainwindow.cpp" line="3218" />
+        <location filename="../../src/mainwindow.cpp" line="1357" />
+        <location filename="../../src/mainwindow.cpp" line="2586" />
+        <location filename="../../src/mainwindow.cpp" line="3220" />
         <source>Downloading from TNFS...</source>
         <translation>Von TNFS herunterladen...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1373" />
-        <location filename="../../src/mainwindow.cpp" line="1376" />
+        <location filename="../../src/mainwindow.cpp" line="1375" />
+        <location filename="../../src/mainwindow.cpp" line="1378" />
         <source>Executable (Local)</source>
         <translation>Ausführbare Datei (lokal)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1726" />
+        <location filename="../../src/mainwindow.cpp" line="1728" />
         <source>Slot %1 download aborted by user.</source>
         <translation>Download von Slot %1 wurde vom Benutzer abgebrochen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1956" />
+        <location filename="../../src/mainwindow.cpp" line="1958" />
         <source>Open a disk or executable image</source>
         <translation>Öffnen Sie eine Festplatte oder ein ausführbares Image</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1958" />
+        <location filename="../../src/mainwindow.cpp" line="1960" />
         <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
         <translation>Alle unterstützten Bilder (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR-Bilder (*.atr);;XFormer XFD-Bilder (*.xfd);;ATX-Bilder (*.atx);;Pro-Bilder (*.pro);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2036" />
+        <location filename="../../src/mainwindow.cpp" line="2038" />
         <source>Image file unsaved</source>
         <translation>Image Datei nicht gespeichert</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2036" />
+        <location filename="../../src/mainwindow.cpp" line="2038" />
         <source>'%1' has unsaved changes, do you want to save it?</source>
         <translation>'%1' hat ungespeicherte Änderungen, möchten Sie es speichern?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2628" />
+        <location filename="../../src/mainwindow.cpp" line="2630" />
         <source>Could not open TNFS stream from %1</source>
         <translation>Der TNFS-Stream von %1 konnte nicht geöffnet werden</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2648" />
+        <location filename="../../src/mainwindow.cpp" line="2650" />
         <source>Downloading: %1</source>
         <translation>Herunterladen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2650" />
+        <location filename="../../src/mainwindow.cpp" line="2652" />
         <source>Downloading...</source>
         <translation>Herunterladen...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2721" />
+        <location filename="../../src/mainwindow.cpp" line="2723" />
         <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
         <translation>Telefonbuch deaktiviert. Legen Sie den XML-Pfad unter Optionen -&gt; Modem Bridge fest.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2722" />
+        <location filename="../../src/mainwindow.cpp" line="2724" />
         <source>Macro User disabled. Set Phonebook XML path in Options.</source>
         <translation>Makrobenutzer deaktiviert. Legen Sie den XML-Pfad für das Telefonbuch in den Optionen fest.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2723" />
+        <location filename="../../src/mainwindow.cpp" line="2725" />
         <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
         <translation>Makropass deaktiviert. Legen Sie den XML-Pfad für das Telefonbuch in den Optionen fest.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2773" />
+        <location filename="../../src/mainwindow.cpp" line="2775" />
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2773" />
+        <location filename="../../src/mainwindow.cpp" line="2775" />
         <source>Could not extract manual to: </source>
         <translation>Das Handbuch konnte nicht extrahiert werden für:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3085" />
+        <location filename="../../src/mainwindow.cpp" line="3087" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
         <translation>[Web-Benutzeroberfläche] Warnung: Nicht gespeicherte Änderungen auf der Festplatte in Steckplatz %1 wurden durch die erzwungene Bereitstellung verworfen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3104" />
+        <location filename="../../src/mainwindow.cpp" line="3106" />
         <source>[Web UI] Mounted Executable to slot %1: %2</source>
         <translation>[Web-Benutzeroberfläche] Ausführbare Datei in Steckplatz %1 gemountet: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3106" />
+        <location filename="../../src/mainwindow.cpp" line="3108" />
         <source>[Web UI] Executable ready. Please cold start the Atari.</source>
         <translation>[Web-UI] Ausführbare Datei bereit. Bitte starten Sie den Atari kalt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3110" />
+        <location filename="../../src/mainwindow.cpp" line="3112" />
         <source>[Web UI] Failed to parse Executable: %1</source>
         <translation>[Web-Benutzeroberfläche] Fehler beim Parsen der ausführbaren Datei: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3130" />
+        <location filename="../../src/mainwindow.cpp" line="3132" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
         <translation>[Web-Benutzeroberfläche] Warnung: Nicht gespeicherte Änderungen auf der Festplatte in Steckplatz %1 wurden durch erzwungenes Auswerfen verworfen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3192" />
+        <location filename="../../src/mainwindow.cpp" line="3194" />
         <source>[Web UI] Dialing BBS: %1 (%2)</source>
         <translation>[Web-Benutzeroberfläche] BBS anrufen: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <location filename="../../src/mainwindow.cpp" line="3240" />
         <source>[Web UI] Mounted TNFS Stream: %1</source>
         <translation>[Web-Benutzeroberfläche] Gemounteter TNFS-Stream: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3248" />
+        <location filename="../../src/mainwindow.cpp" line="3250" />
         <source>[Web UI] Failed to mount TNFS Stream: %1</source>
         <translation>[Web-Benutzeroberfläche] Fehler beim Mounten des TNFS-Streams: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3249" />
+        <location filename="../../src/mainwindow.cpp" line="3251" />
         <source>Download failed or aborted: %1</source>
         <translation>Download fehlgeschlagen oder abgebrochen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3257" />
+        <location filename="../../src/mainwindow.cpp" line="3259" />
         <source>[Web UI] Write Protect for slot %1 set to %2</source>
         <translation>[Web-UI] Schreibschutz für Steckplatz %1 auf %2 gesetzt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3286" />
+        <location filename="../../src/mainwindow.cpp" line="3288" />
         <source>Web UI WebSocket Server started on port %1</source>
         <translation>Der Web-UI-WebSocket-Server wurde auf Port %1 gestartet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3288" />
+        <location filename="../../src/mainwindow.cpp" line="3290" />
         <source>Failed to start Web UI WebSocket Server.</source>
         <translation>Der Web-UI-WebSocket-Server konnte nicht gestartet werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3317" />
+        <location filename="../../src/mainwindow.cpp" line="3319" />
         <source>HTTP Dashboard available at http://localhost:%1</source>
         <translation>HTTP-Dashboard verfügbar unter http://localhost:%1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3319" />
+        <location filename="../../src/mainwindow.cpp" line="3321" />
         <source>Failed to start HTTP Server.</source>
         <translation>Der HTTP-Server konnte nicht gestartet werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3347" />
+        <location filename="../../src/mainwindow.cpp" line="3349" />
         <source>Web Dashboard and WebSocket servers completely shut down.</source>
         <translation>Web Dashboard- und WebSocket-Server wurden vollständig heruntergefahren.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3357" />
+        <location filename="../../src/mainwindow.cpp" line="3359" />
         <source>[Web UI] Failed to load cassette image: %1</source>
         <translation>[Web-Benutzeroberfläche] Kassettenbild konnte nicht geladen werden: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3367" />
+        <location filename="../../src/mainwindow.cpp" line="3369" />
         <source>[Web UI] Cassette Mounted: %1</source>
         <translation>[Web-Benutzeroberfläche] Kassette eingehängt: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3380" />
+        <location filename="../../src/mainwindow.cpp" line="3382" />
         <source>[Web UI] Cassette is already playing.</source>
         <translation>[Web-UI] Kassette wird bereits abgespielt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3384" />
+        <location filename="../../src/mainwindow.cpp" line="3386" />
         <source>[Web UI] Starting Cassette Playback.</source>
         <translation>[Web-Benutzeroberfläche] Starten der Kassettenwiedergabe.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3399" />
+        <location filename="../../src/mainwindow.cpp" line="3401" />
         <source>[Web UI] Rewinding Cassette...</source>
         <translation>[Web-Benutzeroberfläche] Kassette zurückspulen...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3423" />
+        <location filename="../../src/mainwindow.cpp" line="3425" />
         <source>[Web UI] Cassette Ejected.</source>
         <translation>[Web-Benutzeroberfläche] Kassette ausgeworfen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3439" />
+        <location filename="../../src/mainwindow.cpp" line="3441" />
         <source>[Web UI] Cassette Playback Finished.</source>
         <translation>[Web-Benutzeroberfläche] Kassettenwiedergabe abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3460" />
+        <location filename="../../src/mainwindow.cpp" line="3462" />
         <source>Failed to initialize blank disk.</source>
         <translation>Die leere Festplatte konnte nicht initialisiert werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3478" />
+        <location filename="../../src/mainwindow.cpp" line="3480" />
         <source>Failed to format blank disk.</source>
         <translation>Die leere Festplatte konnte nicht formatiert werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3497" />
+        <location filename="../../src/mainwindow.cpp" line="3499" />
         <source>Failed to save blank disk to host.</source>
         <translation>Die leere Festplatte konnte nicht auf dem Host gespeichert werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3505" />
+        <location filename="../../src/mainwindow.cpp" line="3507" />
         <source>Blank disk created: %1</source>
         <translation>Leere Festplatte erstellt: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3506" />
+        <location filename="../../src/mainwindow.cpp" line="3508" />
         <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
         <translation>[Web-Benutzeroberfläche] Leere Festplatte erstellt und bereitgestellt: %1 in Steckplatz %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3521" />
-        <location filename="../../src/mainwindow.cpp" line="3621" />
-        <location filename="../../src/mainwindow.cpp" line="3622" />
+        <location filename="../../src/mainwindow.cpp" line="3523" />
+        <location filename="../../src/mainwindow.cpp" line="3623" />
+        <location filename="../../src/mainwindow.cpp" line="3624" />
         <source>Empty</source>
         <translation>Leer</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3523" />
+        <location filename="../../src/mainwindow.cpp" line="3525" />
         <source>No file mounted.</source>
         <translation>Keine Datei gemountet.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3527" />
+        <location filename="../../src/mainwindow.cpp" line="3529" />
         <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Dateiname:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format/Typ:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absoluter Pfad:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3538" />
+        <location filename="../../src/mainwindow.cpp" line="3540" />
         <source>Drive Details</source>
         <translation>Laufwerksdetails</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3563" />
+        <location filename="../../src/mainwindow.cpp" line="3565" />
         <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
         <translation>[Web-Benutzeroberfläche] Die Datei wurde direkt im RAM im Steckplatz %1: %2 bereitgestellt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3566" />
+        <location filename="../../src/mainwindow.cpp" line="3568" />
         <source>Mounted to RAM: %1</source>
         <translation>Im RAM bereitgestellt: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3570" />
+        <location filename="../../src/mainwindow.cpp" line="3572" />
         <source>[Web UI] Failed to parse RAM image: %1</source>
         <translation>[Web-Benutzeroberfläche] RAM-Image konnte nicht analysiert werden: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3573" />
+        <location filename="../../src/mainwindow.cpp" line="3575" />
         <source>Failed to parse: %1</source>
         <translation>Fehler beim Parsen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3579" />
+        <location filename="../../src/mainwindow.cpp" line="3581" />
         <source>[Injector] Cannot inject packet: SIO emulation is stopped.</source>
         <translation>[Injector] Paket kann nicht injiziert werden: SIO-Emulation wurde gestoppt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3583" />
+        <location filename="../../src/mainwindow.cpp" line="3585" />
         <source>[Injector] Firing %1 bytes directly onto the Atari SIO Bus.</source>
         <translation>[Injector] Feuert %1 Bytes direkt auf den Atari-SIO-Bus ab.</translation>
     </message>
@@ -3676,7 +3676,7 @@ Do you want to open the options dialog?</source>
         <translation type="vanished">[Injektor] Virtueller Paketschritt ausgelöst: %1 Bytes</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3625" />
+        <location filename="../../src/mainwindow.cpp" line="3627" />
         <source>Swapped - Slot %1 -&gt; %2  |  Slot %3 -&gt; %4</source>
         <translation>Getauscht – Steckplatz %1 -&gt; %2 |  Steckplatz %3 -&gt; %4</translation>
     </message>
@@ -3801,22 +3801,22 @@ Do you want to open the options dialog?</source>
         <translation type="vanished">[Disk 15] Auto-commit AUS.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2165" />
+        <location filename="../../src/mainwindow.cpp" line="2167" />
         <source>Save image as</source>
         <translation>Speichere Image als</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2208" />
+        <location filename="../../src/mainwindow.cpp" line="2210" />
         <source>Revert to last saved</source>
         <translation>Zurück zum letzten gespeicherten Stand</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2209" />
+        <location filename="../../src/mainwindow.cpp" line="2211" />
         <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
         <translation>Wollen Sie wirklich mit '%1' zum letzten gespeicherten Stand zurück? Sie verlieren alle Änderungen, die gemacht wurden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2344" />
+        <location filename="../../src/mainwindow.cpp" line="2346" />
         <source>Open session</source>
         <translation>Öffne Sitzung</translation>
     </message>
@@ -3825,27 +3825,27 @@ Do you want to open the options dialog?</source>
         <translation type="vanished">AspeQt Sitzungen (*.apspqt);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2407" />
+        <location filename="../../src/mainwindow.cpp" line="2409" />
         <source>Save session as</source>
         <translation>Speichere Sitzung als</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2438" />
+        <location filename="../../src/mainwindow.cpp" line="2440" />
         <source>Open executable</source>
         <translation>Öffne ausführbare Datei</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2440" />
+        <location filename="../../src/mainwindow.cpp" line="2442" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>ATARI ausführbare Dateien (*.xex *.com *.exe);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2472" />
+        <location filename="../../src/mainwindow.cpp" line="2474" />
         <source>Open a cassette image</source>
         <translation>Öffne Cassettenimage</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2474" />
+        <location filename="../../src/mainwindow.cpp" line="2476" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>CAS Imagedateien (*.cas);;Alle Dateien (*)</translation>
     </message>
@@ -4667,23 +4667,21 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
     <message>
         <location filename="../../src/optionsdialog.cpp" line="524" />
         <location filename="../../src/optionsdialog.cpp" line="533" />
-        <location filename="../../src/optionsdialog.cpp" line="535" />
         <source>XML Files (*.xml);;All Files (*)</source>
         <translation>XML-Dateien (*.xml);;Alle Dateien (*)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.cpp" line="533" />
-        <location filename="../../src/optionsdialog.cpp" line="535" />
         <source>Create New Dial Directory</source>
         <translation>Erstellen Sie ein neues Wählverzeichnis</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="549" />
+        <location filename="../../src/optionsdialog.cpp" line="546" />
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="549" />
+        <location filename="../../src/optionsdialog.cpp" line="546" />
         <source>Could not create the phonebook file.</source>
         <translation>Die Telefonbuchdatei konnte nicht erstellt werden.</translation>
     </message>
@@ -5251,64 +5249,72 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
 <context>
     <name>PhoneDirectory</name>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="18" />
+        <location filename="../../src/phonedirectory.cpp" line="19" />
         <source>BBS Phonebook</source>
         <translation>BBS-Telefonbuch</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="26" />
+        <location filename="../../src/phonedirectory.cpp" line="27" />
         <source>Search BBS Name...</source>
         <translation>BBS-Namen suchen...</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>BBS Name</source>
         <translation>BBS-Name</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Address</source>
         <translation>Adresse</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Port</source>
         <translation>Hafen</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Protocol</source>
         <translation>Protokoll</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>User ID</source>
         <translation>Benutzer-ID</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="46" />
         <source>Edit Entry</source>
-        <translation>Eintrag bearbeiten</translation>
+        <translation type="vanished">Eintrag bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="49" />
         <source>Save to XML</source>
-        <translation>Als XML speichern</translation>
+        <translation type="vanished">Als XML speichern</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="52" />
+        <location filename="../../src/phonedirectory.cpp" line="60" />
         <source>Dial Selected</source>
         <translation>Wählen Sie Ausgewählt</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="55" />
+        <location filename="../../src/phonedirectory.cpp" line="52" />
         <source>Add</source>
         <translation>Hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="58" />
+        <location filename="../../src/phonedirectory.cpp" line="53" />
+        <source>Edit</source>
+        <translation>Bearbeiten</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="54" />
         <source>Delete</source>
         <translation>Löschen</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="56" />
+        <source>Save Changes</source>
+        <translation>Änderungen speichern</translation>
     </message>
     <message>
         <location filename="../../src/phonedirectory.cpp" line="61" />
@@ -5316,97 +5322,154 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="140" />
+        <location filename="../../src/phonedirectory.cpp" line="171" />
         <source>Saved</source>
         <translation>Gespeichert</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="140" />
         <source>Phonebook saved successfully!</source>
-        <translation>Telefonbuch erfolgreich gespeichert!</translation>
+        <translation type="vanished">Telefonbuch erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="142" />
+        <location filename="../../src/phonedirectory.cpp" line="173" />
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="142" />
         <source>Could not write to file.</source>
-        <translation>In die Datei konnte nicht geschrieben werden.</translation>
+        <translation type="vanished">In die Datei konnte nicht geschrieben werden.</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="151" />
+        <location filename="../../src/phonedirectory.cpp" line="204" />
+        <location filename="../../src/phonedirectory.cpp" line="365" />
         <source>Unsaved Changes</source>
         <translation>Nicht gespeicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="152" />
         <source>You have unsaved changes. Save before %1?</source>
-        <translation>Sie haben nicht gespeicherte Änderungen. Vor %1 speichern?</translation>
+        <translation type="vanished">Sie haben nicht gespeicherte Änderungen. Vor %1 speichern?</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="249" />
         <source>Edit BBS Entry</source>
-        <translation>BBS-Eintrag bearbeiten</translation>
+        <translation type="vanished">BBS-Eintrag bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="259" />
         <source>Telnet</source>
-        <translation>Telnet</translation>
+        <translation type="vanished">Telnet</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="260" />
         <source>SSH (BBS)</source>
-        <translation>SSH (BBS)</translation>
+        <translation type="vanished">SSH (BBS)</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="261" />
         <source>SSH (Auth)</source>
-        <translation>SSH (Auth)</translation>
+        <translation type="vanished">SSH (Auth)</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="289" />
         <source>Show</source>
-        <translation>Zeigen</translation>
+        <translation type="vanished">Zeigen</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="295" />
         <source>Name:</source>
-        <translation>Name:</translation>
+        <translation type="vanished">Name:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="296" />
         <source>Address:</source>
-        <translation>Adresse:</translation>
+        <translation type="vanished">Adresse:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="297" />
+        <location filename="../../src/phonedirectory.cpp" line="278" />
         <source>Protocol:</source>
         <translation>Protokoll:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="298" />
+        <location filename="../../src/phonedirectory.cpp" line="277" />
         <source>Port:</source>
         <translation>Hafen:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="299" />
+        <location filename="../../src/phonedirectory.cpp" line="171" />
+        <source>Phonebook saved successfully.</source>
+        <translation>Telefonbuch erfolgreich gespeichert.</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="173" />
+        <source>Failed to save phonebook to:
+%1</source>
+        <translation>Das Telefonbuch konnte nicht gespeichert werden unter:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="205" />
+        <source>You have unsaved changes. Do you want to save the phonebook before dialing?</source>
+        <translation>Sie haben nicht gespeicherte Änderungen. Möchten Sie das Telefonbuch vor dem Wählen speichern?</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="220" />
+        <source>Edit BBS</source>
+        <translation>BBS bearbeiten</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="256" />
+        <source>Used for standard auth, or as the Passphrase for an encrypted Key.</source>
+        <translation>Wird für die Standardauthentifizierung oder als Passphrase für einen verschlüsselten Schlüssel verwendet.</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="261" />
+        <source>Optional: Path to private key file</source>
+        <translation>Optional: Pfad zur privaten Schlüsseldatei</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="271" />
+        <source>Select Private Key File</source>
+        <translation>Wählen Sie Private Key File</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="271" />
+        <source>All Files (*)</source>
+        <translation>Alle Dateien (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="275" />
+        <source>BBS Name:</source>
+        <translation>BBS-Name:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="276" />
+        <source>Address (IP/DNS):</source>
+        <translation>Adresse (IP/DNS):</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="279" />
         <source>User ID:</source>
         <translation>Benutzer-ID:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="300" />
-        <source>Password:</source>
-        <translation>Passwort:</translation>
+        <location filename="../../src/phonedirectory.cpp" line="280" />
+        <source>Password/Passphrase:</source>
+        <translation>Passwort/Passphrase:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <location filename="../../src/phonedirectory.cpp" line="281" />
+        <source>Private Key:</source>
+        <translation>Privater Schlüssel:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="366" />
+        <source>You have unsaved changes. Do you want to save before %1?</source>
+        <translation>Sie haben nicht gespeicherte Änderungen. Möchten Sie vor %1 speichern?</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="vanished">Passwort:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="334" />
         <source>Confirm</source>
         <translation>Bestätigen</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <location filename="../../src/phonedirectory.cpp" line="334" />
         <source>Delete this entry?</source>
         <translation>Diesen Eintrag löschen?</translation>
     </message>
@@ -5444,6 +5507,19 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
     <message>
         <source>[%1] Print (%2 chars)</source>
         <translation type="vanished">[%1] Print (%2 Zeichen)</translation>
+    </message>
+</context>
+<context>
+    <name>RDevice</name>
+    <message>
+        <location filename="../../src/rdevice.cpp" line="907" />
+        <source>[RDevice] Negotiating SSH with %1...</source>
+        <translation>[RDevice] SSH wird mit %1 ausgehandelt...</translation>
+    </message>
+    <message>
+        <location filename="../../src/rdevice.cpp" line="916" />
+        <source>[RDevice] Dialing Telnet %1:%2...</source>
+        <translation>[RDevice] Telnet %1:%2 anrufen...</translation>
     </message>
 </context>
 <context>
@@ -5872,85 +5948,80 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
 <context>
     <name>SioPacketDialog</name>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="108" />
+        <location filename="../../src/siopacketdialog.cpp" line="109" />
         <source>SIO Packet Sniffer &amp; Inspector</source>
         <translation>SIO-Paket-Sniffer und -Inspektor</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="141" />
+        <location filename="../../src/siopacketdialog.cpp" line="149" />
         <source>e.g. R1: or NAK...</source>
         <translation>z.B. R1: oder NAK...</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="148" />
+        <location filename="../../src/siopacketdialog.cpp" line="156" />
         <source>🔍 Filter:</source>
         <translation>🔍 Filtern:</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="158" />
+        <location filename="../../src/siopacketdialog.cpp" line="166" />
         <source>Packet Inspector Details</source>
         <translation>Details zum Paketinspektor</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="161" />
-        <location filename="../../src/siopacketdialog.cpp" line="297" />
+        <location filename="../../src/siopacketdialog.cpp" line="169" />
+        <location filename="../../src/siopacketdialog.cpp" line="269" />
         <source>Collapse Details ▼</source>
         <translation>Details einklappen ▼</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="195" />
-        <location filename="../../src/siopacketdialog.cpp" line="250" />
+        <location filename="../../src/siopacketdialog.cpp" line="212" />
+        <location filename="../../src/siopacketdialog.cpp" line="259" />
         <source>🔴 Recording</source>
         <translation>🔴 Aufnahme</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="201" />
-        <location filename="../../src/siopacketdialog.cpp" line="260" />
         <source>▶ Auto-Play</source>
-        <translation>▶ Automatische Wiedergabe</translation>
+        <translation type="vanished">▶ Automatische Wiedergabe</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="211" />
+        <location filename="../../src/siopacketdialog.cpp" line="218" />
         <source>Clear</source>
         <translation>Klar</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="212" />
+        <location filename="../../src/siopacketdialog.cpp" line="219" />
         <source>Save CSV...</source>
         <translation>CSV speichern...</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="213" />
         <source>Inject Selected (Step)</source>
-        <translation>Ausgewählte Injektion (Schritt)</translation>
+        <translation type="vanished">Ausgewählte Injektion (Schritt)</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="224" />
         <source>Delay:</source>
-        <translation>Verzögerung:</translation>
+        <translation type="vanished">Verzögerung:</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="250" />
+        <location filename="../../src/siopacketdialog.cpp" line="259" />
         <source>⏸ Paused</source>
         <translation>⏸ Angehalten</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="256" />
         <source>⏹ Stop Playback</source>
-        <translation>⏹ Stoppen Sie die Wiedergabe</translation>
+        <translation type="vanished">⏹ Stoppen Sie die Wiedergabe</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="294" />
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
         <source>Expand Details ▲</source>
         <translation>Erweitern Sie Details ▲</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="393" />
+        <location filename="../../src/siopacketdialog.cpp" line="366" />
         <source>No Selection</source>
         <translation>Keine Auswahl</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="393" />
+        <location filename="../../src/siopacketdialog.cpp" line="366" />
         <source>Please select a packet row to inject.</source>
         <translation>Bitte wählen Sie eine Paketzeile zum Injizieren aus.</translation>
     </message>
@@ -5963,42 +6034,71 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
         <translation type="vanished">Sie können nur RX-Pakete (vom Atari stammender Datenverkehr) einspeisen.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="520" />
+        <location filename="../../src/siopacketdialog.cpp" line="221" />
+        <source>Inject Selected</source>
+        <translation>Ausgewählte Injektion</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="224" />
+        <source>Safe Mode (TX Only)</source>
+        <translation>Abgesicherter Modus (nur TX)</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="226" />
+        <source>Prevents injecting RX packets to avoid hardware collisions with a physical Atari.</source>
+        <translation>Verhindert das Einschleusen von RX-Paketen, um Hardwarekollisionen mit einem physischen Atari zu vermeiden.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="376" />
+        <source>Safe Mode Block</source>
+        <translation>Blockierung des abgesicherten Modus</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="377" />
+        <source>You are trying to inject an RX (Atari Command) packet while Safe Mode is enabled.
+
+This is blocked to prevent TX/RX collisions on the bus. Uncheck Safe Mode if you are purely testing virtual components without a physical Atari connected.</source>
+        <translation>Sie versuchen, ein RX-Paket (Atari Command) einzuschleusen, während der abgesicherte Modus aktiviert ist.
+
+Dies wird blockiert, um TX/RX-Kollisionen auf dem Bus zu verhindern. Deaktivieren Sie den abgesicherten Modus, wenn Sie lediglich virtuelle Komponenten testen, ohne dass ein physischer Atari angeschlossen ist.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="533" />
         <source>Empty</source>
         <translation>Leer</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="520" />
+        <location filename="../../src/siopacketdialog.cpp" line="533" />
         <source>No packets to save.</source>
         <translation>Keine Pakete zum Speichern.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="524" />
+        <location filename="../../src/siopacketdialog.cpp" line="537" />
         <source>Save SIO Trace</source>
         <translation>SIO-Trace speichern</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="524" />
+        <location filename="../../src/siopacketdialog.cpp" line="537" />
         <source>CSV Files (*.csv);;All Files (*)</source>
         <translation>CSV-Dateien (*.csv);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="529" />
+        <location filename="../../src/siopacketdialog.cpp" line="542" />
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="529" />
+        <location filename="../../src/siopacketdialog.cpp" line="542" />
         <source>Could not open file for writing.</source>
         <translation>Die Datei konnte nicht zum Schreiben geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="549" />
+        <location filename="../../src/siopacketdialog.cpp" line="588" />
         <source>Saved</source>
         <translation>Gespeichert</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="549" />
+        <location filename="../../src/siopacketdialog.cpp" line="588" />
         <source>SIO Trace saved successfully.</source>
         <translation>SIO Trace erfolgreich gespeichert.</translation>
     </message>
@@ -6508,7 +6608,7 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
         <translation>TNFS-Netzwerkbrowser</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="46" />
+        <location filename="../../src/tnfsbrowser.cpp" line="47" />
         <source>Connect</source>
         <translation>Verbinden</translation>
     </message>
@@ -6544,8 +6644,8 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
     </message>
     <message>
         <location filename="../../src/tnfsbrowser.cpp" line="87" />
-        <location filename="../../src/tnfsbrowser.cpp" line="283" />
-        <location filename="../../src/tnfsbrowser.cpp" line="354" />
+        <location filename="../../src/tnfsbrowser.cpp" line="258" />
+        <location filename="../../src/tnfsbrowser.cpp" line="341" />
         <source>More...</source>
         <translation>Mehr...</translation>
     </message>
@@ -6560,69 +6660,70 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
         <translation>Doppelklicken Sie auf eine Datei (.ATR/.XEX), um sie zu mounten.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="201" />
+        <location filename="../../src/tnfsbrowser.cpp" line="185" />
         <source>Connecting to %1...</source>
         <translation>Verbindung zu %1 wird hergestellt...</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="219" />
-        <location filename="../../src/tnfsbrowser.cpp" line="256" />
+        <location filename="../../src/tnfsbrowser.cpp" line="200" />
+        <location filename="../../src/tnfsbrowser.cpp" line="232" />
         <source>Connected: %1</source>
         <translation>Verbunden: %1</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="235" />
-        <location filename="../../src/tnfsbrowser.cpp" line="271" />
+        <location filename="../../src/tnfsbrowser.cpp" line="215" />
+        <location filename="../../src/tnfsbrowser.cpp" line="246" />
         <source>Connection Failed.</source>
         <translation>Verbindung fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="236" />
-        <location filename="../../src/tnfsbrowser.cpp" line="272" />
+        <location filename="../../src/tnfsbrowser.cpp" line="216" />
+        <location filename="../../src/tnfsbrowser.cpp" line="247" />
         <source>Connection Error</source>
         <translation>Verbindungsfehler</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="237" />
-        <location filename="../../src/tnfsbrowser.cpp" line="273" />
+        <location filename="../../src/tnfsbrowser.cpp" line="217" />
+        <location filename="../../src/tnfsbrowser.cpp" line="248" />
         <source>Could not reach host '%1'.
 Check internet or hostname.</source>
         <translation>Der Host „%1“ konnte nicht erreicht werden.
 Überprüfen Sie Internet oder Hostnamen.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="285" />
+        <location filename="../../src/tnfsbrowser.cpp" line="260" />
+        <location filename="../../src/tnfsbrowser.cpp" line="287" />
         <source>Fetching %1...</source>
         <translation>%1 wird abgerufen...</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="301" />
+        <location filename="../../src/tnfsbrowser.cpp" line="274" />
         <source>Error opening directory.</source>
         <translation>Fehler beim Öffnen des Verzeichnisses.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="350" />
+        <location filename="../../src/tnfsbrowser.cpp" line="337" />
         <source>No more items</source>
         <translation>Keine Artikel mehr</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="360" />
-        <location filename="../../src/tnfsbrowser.cpp" line="388" />
+        <location filename="../../src/tnfsbrowser.cpp" line="349" />
+        <location filename="../../src/tnfsbrowser.cpp" line="377" />
         <source>Browsing: %1</source>
         <translation>Durchsuchen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="403" />
+        <location filename="../../src/tnfsbrowser.cpp" line="392" />
         <source>Clear History</source>
         <translation>Verlauf löschen</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="404" />
+        <location filename="../../src/tnfsbrowser.cpp" line="393" />
         <source>Clear all saved hosts?</source>
         <translation>Alle gespeicherten Hosts löschen?</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="409" />
+        <location filename="../../src/tnfsbrowser.cpp" line="397" />
         <source>History cleared.</source>
         <translation>Verlauf gelöscht.</translation>
     </message>
@@ -6630,32 +6731,32 @@ Check internet or hostname.</source>
 <context>
     <name>WebBridge</name>
     <message>
-        <location filename="../../src/webbridge.cpp" line="61" />
+        <location filename="../../src/webbridge.cpp" line="67" />
         <source>Cannot access directory: %1</source>
         <translation>Auf das Verzeichnis %1 kann nicht zugegriffen werden</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="125" />
+        <location filename="../../src/webbridge.cpp" line="128" />
         <source>Phonebook XML is corrupted or invalid!</source>
         <translation>Das Telefonbuch-XML ist beschädigt oder ungültig!</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="130" />
+        <location filename="../../src/webbridge.cpp" line="132" />
         <source>No phonebook found at: %1</source>
         <translation>Kein Telefonbuch gefunden unter: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="180" />
+        <location filename="../../src/webbridge.cpp" line="179" />
         <source>TNFS path not found: %1</source>
         <translation>TNFS-Pfad nicht gefunden: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="186" />
+        <location filename="../../src/webbridge.cpp" line="184" />
         <source>Failed to mount TNFS host: %1</source>
         <translation>Der TNFS-Host konnte nicht gemountet werden: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="193" />
+        <location filename="../../src/webbridge.cpp" line="190" />
         <source>Failed to connect to TNFS host: %1</source>
         <translation>Es konnte keine Verbindung zum TNFS-Host hergestellt werden: %1</translation>
     </message>
