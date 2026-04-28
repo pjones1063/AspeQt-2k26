@@ -139,6 +139,7 @@ jobs:
           cpack -G DEB
           mv *.deb ../AspeQt-2K26-Linux.deb
           cd ..
+          cqtdeployer -bin build/AspeQt -targetDir AspeQt-Portable
           tar -cvzf AspeQt-2K26-Linux-Portable.tar.gz -C build AspeQt
 
       - name: Upload Linux Artifacts to GitHub
@@ -175,6 +176,7 @@ jobs:
           cpack -G DEB
           mv *.deb ../AspeQt-2K26-pi.64.deb
           cd ..
+          cqtdeployer -bin build/AspeQt -targetDir AspeQt-Portable
           tar -cvzf AspeQt-2K26-pi.64-portable.tar.gz -C build AspeQt
 
       - name: Upload Pi Artifacts to GitHub
