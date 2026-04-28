@@ -131,6 +131,13 @@ jobs:
           version: '6.5.3'
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
+      - name: Install CQtDeployer
+        run: |
+          sudo snap install cqtdeployer
+          sudo snap connect cqtdeployer:process-control
+          sudo snap connect cqtdeployer:removable-media
+          sudo snap connect cqtdeployer:system-backup
+
       - name: Compile and Package
         run: |
           mkdir build && cd build
@@ -164,6 +171,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential cmake libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev
 
+      - name: Install CQtDeployer
+        run: |
+          sudo snap install cqtdeployer
+          sudo snap connect cqtdeployer:process-control
+          sudo snap connect cqtdeployer:removable-media
+          sudo snap connect cqtdeployer:system-backup
+          
       - name: Compile AspeQt for Pi
         run: |
           mkdir build && cd build
