@@ -31,16 +31,24 @@ jobs:
       - name: Package with macdeployqt, Add Extras, and Sign
         run: |
           macdeployqt build/AspeQt.app -executable="build/AspeQt.app/Contents/MacOS/AspeQt" -always-overwrite
+          
+          # Sign the app bundle FIRST
           codesign --force --deep --sign - build/AspeQt.app
           
-          # Create a staging folder and move the App inside
+          # Create a staging folder
           mkdir dmg_staging
-          mv build/AspeQt.app dmg_staging/
+          
+          # CRITICAL FIX: Use 'cp -a' instead of 'mv' to avoid background security locks
+          cp -a build/AspeQt.app dmg_staging/
           
           # Copy extras alongside the .app
           cp -r doc dmg_staging/
           cp -r atari dmg_staging/
           cp -r python_w_samples dmg_staging/
+          
+          # Force filesystem sync and wait 3 seconds to ensure all locks are cleared
+          sync
+          sleep 3
           
           # Create DMG
           hdiutil create -volname "AspeQt-2K26" -srcfolder dmg_staging -ov -format UDZO AspeQt-2K26-macOS.dmg
