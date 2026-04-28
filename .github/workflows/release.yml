@@ -131,8 +131,8 @@ jobs:
       - name: Install System and Qt6 Dependencies
         run: |
           apt-get update
-          apt-get install -y git ca-certificates unzip wget build-essential cmake pkg-config libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev libgl1-mesa-dev libcups2-dev libgpiod-dev
-
+          apt-get install -y git ca-certificates unzip wget build-essential cmake pkg-config file libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev libgl1-mesa-dev libcups2-dev libgpiod-dev
+          
       - name: Compile and Package
         run: |
           mkdir build && cd build
@@ -166,8 +166,7 @@ jobs:
       - name: Install System and Qt6 Dependencies
         run: |
           apt-get update
-          apt-get install -y git ca-certificates unzip wget build-essential cmake pkg-config libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev libgl1-mesa-dev libcups2-dev libgpiod-dev
-
+          apt-get install -y git ca-certificates unzip wget build-essential cmake pkg-config file libssh-dev qt6-base-dev qt6-serialport-dev qt6-websockets-dev qt6-webchannel-dev qt6-httpserver-dev qt6-tools-dev qt6-l10n-tools libxkbcommon-dev libx11-xcb-dev libgl1-mesa-dev libcups2-dev libgpiod-dev
       - name: Compile AspeQt for Pi
         run: |
           mkdir build && cd build
