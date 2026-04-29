@@ -39,6 +39,7 @@
 #include "opcodes6502.h"
 #include "xeximage.h"
 #include "epsonprinter.h"
+#include "backendlibrarydialog.h"
 
 #include "websocketclientwrapper.h"
 #include "webbridge.h"
@@ -260,6 +261,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     setGeometry(aspeqtSettings->lastHorizontalPos(),aspeqtSettings->lastVerticalPos(),aspeqtSettings->lastWidth(),aspeqtSettings->lastHeight());
 
+
     // Initialize Headless Cassette Deck
     m_casWorker = nullptr;
     m_casTimer = new QTimer(this);
@@ -396,6 +398,21 @@ MainWindow::MainWindow(QWidget *parent)
     mainToolBar->addAction(ui->actionOptions);
     mainToolBar->addSeparator();
 
+    QAction* actionBackendLibrary = new QAction(QIcon(":/icons/oxygen-icons/16x16/actions/network.png"), tr("Backend App Library..."), this);
+    actionBackendLibrary->setStatusTip(tr("Manage and monitor external backend processes"));
+
+    // Insert the action right before "Options..."
+    ui->menu_Tools->insertAction(ui->actionOptions, actionBackendLibrary);
+
+    // Optional but looks great: Add a separator line between Library and Options
+    ui->menu_Tools->insertSeparator(ui->actionOptions);
+    connect(actionBackendLibrary, &QAction::triggered, this, [this]() {
+        BackendLibraryDialog dlg(backendManager, this);
+        dlg.exec();
+    });
+
+    ui->actionBootOption->setIcon(QIcon(":/icons/silk-icons/icons/drive_go.png"));
+
     // 1. Clear Log Button (Converted to a proper ToolButton)
     QToolButton *btnClearLog = new QToolButton(this);
     setupBtn(btnClearLog, ":/icons/silk-icons/icons/page_white_c.png", "C", tr("Clear log messages"));
@@ -439,6 +456,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sio, &SioWorker::rxActivity, this, &MainWindow::blinkRx);
     connect(sio, &SioWorker::txActivity, this, &MainWindow::blinkTx);
 
+    backendManager = new BackendManager(this);
+    connect(backendManager, &BackendManager::logMessage, this, &MainWindow::doLogMessage);
+    connect(qApp, &QCoreApplication::aboutToQuit, backendManager, &BackendManager::shutdownAll);
+    backendManager->startAllAutoStart();
 
     for (int i = 0; i < 4; i++) {
         // 1. Setup the Hardware Bridge Objects
@@ -918,6 +939,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if(isClosing)
         return;
     isClosing = true;
+
+    if (backendManager) {
+        backendManager->shutdownAll();
+    }
 
     // Save various session settings  //
     if (aspeqtSettings->saveWindowsPos()) {

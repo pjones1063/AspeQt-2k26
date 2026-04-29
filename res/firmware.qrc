@@ -35,6 +35,10 @@
         <file alias="dos.sys">boot_templates/$bootata/dos.sys</file>
         <file alias="$boot.bin">boot_templates/$bootata/$boot.bin</file>
     </qresource>
+
+    <qresource prefix="/boot_templates/wdriver">
+        <file alias="drivers.atr">boot_templates/wdriver/drivers.atr</file>
+    </qresource>
     
 </RCC>
 

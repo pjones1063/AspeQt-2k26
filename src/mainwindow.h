@@ -40,6 +40,8 @@
 #include "bbsdata.h"
 #include "aspeqtclientdevice.h"
 #include "siopacketdialog.h"
+#include "backendmanager.h"
+
 
 
 
@@ -135,6 +137,7 @@ private:
     int lastMessageRepeat;
     TnfsClient *tnfsClient;
     bool isClosing;
+    BackendManager* backendManager;
 
     QDialog *logWindow_;
     QList<QAction*> recentFilesActions_;

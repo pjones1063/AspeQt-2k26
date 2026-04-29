@@ -72,5 +72,6 @@
         <file>silk-icons/icons/folder.png</file>
         <file>main-icon/icon.jpeg</file>
         <file>oxygen-icons/16x16/actions/get_hot_new_stuff.png</file>
+        <file>silk-icons/icons/bricks.png</file>
     </qresource>
 </RCC>

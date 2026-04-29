@@ -218,7 +218,7 @@ void PhoneDirectory::onSaveClicked() {
 bool PhoneDirectory::runEditDialog(BbsEntry &entry) {
     QDialog *dlg = new QDialog(this);
     dlg->setWindowTitle(tr("Edit BBS"));
-    dlg->resize(400, 300);
+    dlg->setMinimumWidth(500);
 
     QFormLayout *formLayout = new QFormLayout(dlg);
 
