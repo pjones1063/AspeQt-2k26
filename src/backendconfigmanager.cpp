@@ -6,7 +6,7 @@ QList<BackendConfig> BackendConfigManager::loadConfigurations() const {
     QList<BackendConfig> configs;
     QSettings settings; // Uses the default Org/App names set in main()
 
-    int size = settings.beginReadArray(GROUP_NAME);
+    int size = settings.beginReadArray(BACKEND_GROUP_NAME);
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
         BackendConfig config;
@@ -30,7 +30,7 @@ QList<BackendConfig> BackendConfigManager::loadConfigurations() const {
 
 void BackendConfigManager::saveConfigurations(const QList<BackendConfig>& configs) {
     QSettings settings;
-    settings.beginWriteArray(GROUP_NAME);
+    settings.beginWriteArray(BACKEND_GROUP_NAME);
     for (int i = 0; i < configs.size(); ++i) {
         settings.setArrayIndex(i);
         settings.setValue("id", configs[i].id);

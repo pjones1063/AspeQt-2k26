@@ -16,7 +16,7 @@ public:
     void saveConfigurations(const QList<BackendConfig>& configs);
 
 private:
-    const QString GROUP_NAME = "BackendLibrary";
+    const QString BACKEND_GROUP_NAME = "BackendLibrary";
 };
 
 #endif // BACKENDCONFIGMANAGER_H
