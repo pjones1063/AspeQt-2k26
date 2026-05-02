@@ -41,6 +41,7 @@
 #include "epsonprinter.h"
 #include "backendlibrarydialog.h"
 
+
 #include "websocketclientwrapper.h"
 #include "webbridge.h"
 //#include "atarifilesystem.h"
@@ -362,6 +363,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
 
+
     // SIO Trace Toggle
     btnSioTrace = new QToolButton(this);
     setupBtn(btnSioTrace, ":/icons/silk-icons/icons/monitor.png", "HEX", tr("Toggle SIO Hex Dump Trace"));
@@ -397,6 +399,7 @@ MainWindow::MainWindow(QWidget *parent)
     mainToolBar->addAction(ui->actionShowPrinterTextOutput);
     mainToolBar->addAction(ui->actionOptions);
     mainToolBar->addSeparator();
+
 
     QAction* actionBackendLibrary = new QAction(QIcon(":/icons/oxygen-icons/16x16/actions/network.png"), tr("Backend App Library..."), this);
     actionBackendLibrary->setStatusTip(tr("Manage and monitor external backend processes"));
@@ -442,7 +445,7 @@ MainWindow::MainWindow(QWidget *parent)
     mainToolBar->addAction(ui->actionPhonebook);
     mainToolBar->addWidget(btnMacroUser);
     mainToolBar->addWidget(btnMacroPass);
-
+    mainToolBar->addSeparator();
 
     // D. Finalize Status Bar (Passive Indicators Only)
     // ------------------------------------------------
@@ -3709,3 +3712,4 @@ void MainWindow::toggleEmulationHeadless()
     on_actionStartEmulation_triggered();
     qDebug() << "!i [Headless] Emulation toggled via headless command.";
 }
+

@@ -116,7 +116,6 @@ public slots:
     void onPacketSnifferToggleClicked();
     void onPacketSnifferClosed();
 
-
 private:
     int untitledName;
     Ui::MainWindow *ui;

@@ -293,6 +293,221 @@
     </message>
 </context>
 <context>
+    <name>BackendEditDialog</name>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="12" />
+        <source>Edit Backend W: App</source>
+        <translation>Редактировать серверную часть W: приложение</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="24" />
+        <location filename="../../src/backendeditdialog.cpp" line="52" />
+        <source>Browse...</source>
+        <translation>Просматривать...</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="32" />
+        <source>Start automatically with AspeQt</source>
+        <translation>Автоматический запуск с AspeQt</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="36" />
+        <source>Key (e.g. PORT)</source>
+        <translation>Ключ (например, ПОРТ)</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="36" />
+        <source>Value</source>
+        <translation>Ценить</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="75" />
+        <source>Name:</source>
+        <translation>Имя:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="76" />
+        <source>Command:</source>
+        <translation>Команда:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="77" />
+        <source>Arguments:</source>
+        <translation>Аргументы:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="78" />
+        <source>Working Dir:</source>
+        <translation>Рабочий директор:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="79" />
+        <source>Environment:</source>
+        <translation>Среда:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="80" />
+        <source>Virtual Env:</source>
+        <translation>Виртуальная среда:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="83" />
+        <source>Save</source>
+        <translation>Сохранять</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="84" />
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="105" />
+        <source>Select Working Directory</source>
+        <translation>Выберите рабочий каталог</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="169" />
+        <source>Select Virtual Environment Directory</source>
+        <translation>Выберите каталог виртуальной среды</translation>
+    </message>
+</context>
+<context>
+    <name>BackendLibraryDialog</name>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="20" />
+        <source>Backend W: Apps Library</source>
+        <translation>Бэкэнд W: Библиотека приложений</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
+        <source>Status</source>
+        <translation>Статус</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
+        <source>Command</source>
+        <translation>Команда</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
+        <source>Auto-Start</source>
+        <translation>Автозапуск</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="32" />
+        <source>Add...</source>
+        <translation>Добавлять...</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="33" />
+        <source>Edit...</source>
+        <translation>Редактировать...</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="34" />
+        <source>Open Code</source>
+        <translation>Открытый код</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="35" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="213" />
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="37" />
+        <source>Start</source>
+        <translation>Начинать</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="38" />
+        <source>Stop</source>
+        <translation>Останавливаться</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="39" />
+        <source>View Log</source>
+        <translation>Посмотреть журнал</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="40" />
+        <source>Mount W: Drivers (D1:)</source>
+        <translation>Крепление W: Драйверы (D1:)</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="102" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="243" />
+        <source>Running</source>
+        <translation>Бег</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="102" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="243" />
+        <source>Stopped</source>
+        <translation>Остановлено</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="111" />
+        <source>Yes</source>
+        <translation>Да</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="111" />
+        <source>No</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="200" />
+        <source>No Directory</source>
+        <translation>Нет каталога</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="200" />
+        <source>Please set a Working Directory in the Edit menu first.</source>
+        <translation>Сначала установите рабочий каталог в меню «Правка».</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="213" />
+        <source>Are you sure you want to delete this app?</source>
+        <translation>Вы уверены, что хотите удалить это приложение?</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="279" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="297" />
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="279" />
+        <source>Could not load drivers.atr from firmware resources.</source>
+        <translation>Не удалось загрузить driver.atr с ресурсов прошивки.</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="295" />
+        <source>Success</source>
+        <translation>Успех</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="295" />
+        <source>W: Drivers mounted to D1: in RAM.
+
+Reboot the Atari to load them.</source>
+        <translation>W: Драйверы установлены в D1: в ОЗУ.
+
+Перезагрузите Atari, чтобы загрузить их.</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="297" />
+        <source>Could not communicate with the main emulator window.</source>
+        <translation>Не удалось связаться с главным окном эмулятора.</translation>
+    </message>
+</context>
+<context>
     <name>BootOptionsDialog</name>
     <message>
         <location filename="../../src/bootoptionsdialog.ui" line="14" />
@@ -1550,15 +1765,15 @@ Estimated time left: %1:%2</source>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="203" />
-        <location filename="../../src/mainwindow.cpp" line="1323" />
+        <location filename="../../src/mainwindow.cpp" line="1353" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Начать эмуляцию</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="206" />
         <location filename="../../src/mainwindow.ui" line="209" />
-        <location filename="../../src/mainwindow.cpp" line="1324" />
-        <location filename="../../src/mainwindow.cpp" line="1325" />
+        <location filename="../../src/mainwindow.cpp" line="1354" />
+        <location filename="../../src/mainwindow.cpp" line="1355" />
         <source>Start SIO peripheral emulation</source>
         <translation>Запустить эмуляцию периферийного устройства SIO</translation>
     </message>
@@ -1657,7 +1872,7 @@ Estimated time left: %1:%2</source>
     <message>
         <location filename="../../src/mainwindow.ui" line="576" />
         <location filename="../../src/mainwindow.ui" line="579" />
-        <location filename="../../src/mainwindow.cpp" line="2725" />
+        <location filename="../../src/mainwindow.cpp" line="2755" />
         <source>Open BBS Phonebook</source>
         <translation>Открыть телефонную книгу BBS</translation>
     </message>
@@ -1703,8 +1918,8 @@ Estimated time left: %1:%2</source>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="505" />
-        <location filename="../../src/mainwindow.cpp" line="1239" />
-        <location filename="../../src/mainwindow.cpp" line="1240" />
+        <location filename="../../src/mainwindow.cpp" line="1269" />
+        <location filename="../../src/mainwindow.cpp" line="1270" />
         <source>Hide drives D9-DO</source>
         <translation>Скрыть диски D9-DO</translation>
     </message>
@@ -1829,8 +2044,8 @@ Estimated time left: %1:%2</source>
     <message>
         <location filename="../../src/mainwindow.ui" line="490" />
         <location filename="../../src/mainwindow.ui" line="493" />
-        <location filename="../../src/mainwindow.cpp" line="1291" />
-        <location filename="../../src/mainwindow.cpp" line="1292" />
+        <location filename="../../src/mainwindow.cpp" line="1321" />
+        <location filename="../../src/mainwindow.cpp" line="1322" />
         <source>Stop printer emulation</source>
         <translation>Остановить эмуляцию принтера</translation>
     </message>
@@ -1845,54 +2060,54 @@ Estimated time left: %1:%2</source>
         <translation>Альт+Ч</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="174" />
+        <location filename="../../src/mainwindow.cpp" line="176" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt запустился на %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="233" />
-        <location filename="../../src/mainwindow.cpp" line="243" />
+        <location filename="../../src/mainwindow.cpp" line="235" />
+        <location filename="../../src/mainwindow.cpp" line="245" />
         <source>Session file error</source>
         <translation>Ошибка файла сеанса</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="254" />
+        <location filename="../../src/mainwindow.cpp" line="256" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt — эмулятор последовательной периферии Atari для Qt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="256" />
-        <location filename="../../src/mainwindow.cpp" line="2377" />
+        <location filename="../../src/mainwindow.cpp" line="258" />
+        <location filename="../../src/mainwindow.cpp" line="2407" />
         <source> -- Session: </source>
         <translation>-- Сессия:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="271" />
+        <location filename="../../src/mainwindow.cpp" line="274" />
         <source>19200 bits/sec</source>
         <translation>19200 бит/сек</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="677" />
+        <location filename="../../src/mainwindow.cpp" line="700" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt остановился на %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="855" />
+        <location filename="../../src/mainwindow.cpp" line="881" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Поменял местами диск %1 на диск %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="909" />
+        <location filename="../../src/mainwindow.cpp" line="935" />
         <source>Cannot mount '%1': No empty disk slots.</source>
         <translation>Невозможно смонтировать «%1»: нет пустых слотов для дисков.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1007" />
+        <location filename="../../src/mainwindow.cpp" line="1037" />
         <source>First run</source>
         <translation>Первый запуск</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1008" />
+        <location filename="../../src/mainwindow.cpp" line="1038" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1901,459 +2116,469 @@ Do you want to open the options dialog?</source>
 Хотите открыть диалоговое окно параметров?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1314" />
+        <location filename="../../src/mainwindow.cpp" line="1344" />
         <source>&amp;Stop emulation</source>
         <translation>&amp;Остановить эмуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1315" />
-        <location filename="../../src/mainwindow.cpp" line="1316" />
+        <location filename="../../src/mainwindow.cpp" line="1345" />
+        <location filename="../../src/mainwindow.cpp" line="1346" />
         <source>Stop SIO peripheral emulation</source>
         <translation>Остановить эмуляцию периферийного устройства SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1330" />
+        <location filename="../../src/mainwindow.cpp" line="1360" />
         <source>Emulation stopped.</source>
         <translation>Эмуляция прекратилась.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1422" />
-        <location filename="../../src/mainwindow.cpp" line="1443" />
+        <location filename="../../src/mainwindow.cpp" line="1452" />
+        <location filename="../../src/mainwindow.cpp" line="1473" />
         <source>Folder image</source>
         <translation>Изображение папки</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1455" />
-        <location filename="../../src/mainwindow.cpp" line="2087" />
-        <location filename="../../src/mainwindow.cpp" line="2139" />
-        <location filename="../../src/mainwindow.cpp" line="2184" />
+        <location filename="../../src/mainwindow.cpp" line="1485" />
+        <location filename="../../src/mainwindow.cpp" line="2117" />
+        <location filename="../../src/mainwindow.cpp" line="2169" />
+        <location filename="../../src/mainwindow.cpp" line="2214" />
         <source>Save failed</source>
         <translation>Сохранить не удалось</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1456" />
-        <location filename="../../src/mainwindow.cpp" line="2087" />
-        <location filename="../../src/mainwindow.cpp" line="2139" />
-        <location filename="../../src/mainwindow.cpp" line="2184" />
+        <location filename="../../src/mainwindow.cpp" line="1486" />
+        <location filename="../../src/mainwindow.cpp" line="2117" />
+        <location filename="../../src/mainwindow.cpp" line="2169" />
+        <location filename="../../src/mainwindow.cpp" line="2214" />
         <source>'%1' cannot be saved, do you want to save the image with another name?</source>
         <translation>«%1» невозможно сохранить. Хотите сохранить изображение под другим именем?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1768" />
+        <location filename="../../src/mainwindow.cpp" line="1798" />
         <source>Unmounted disk %1</source>
         <translation>Отключенный диск %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1941" />
-        <location filename="../../src/mainwindow.cpp" line="2335" />
-        <location filename="../../src/mainwindow.cpp" line="3673" />
+        <location filename="../../src/mainwindow.cpp" line="1971" />
+        <location filename="../../src/mainwindow.cpp" line="2365" />
+        <location filename="../../src/mainwindow.cpp" line="3703" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] «%2» смонтирован как «%3».</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2167" />
+        <location filename="../../src/mainwindow.cpp" line="2197" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation>Все образы дисков Atari (*.atr *.xfd *.pro);;Образы SIO2PC ATR (*.atr);;Образы XFormer XFD (*.xfd);;Образы Pro (*.pro);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1989" />
+        <location filename="../../src/mainwindow.cpp" line="2019" />
         <source>Open a folder image</source>
         <translation>Открыть изображение папки</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="234" />
-        <location filename="../../src/mainwindow.cpp" line="244" />
+        <location filename="../../src/mainwindow.cpp" line="236" />
+        <location filename="../../src/mainwindow.cpp" line="246" />
         <source>Requested session file not found...</source>
         <translation>Запрошенный файл сеанса не найден...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="290" />
+        <location filename="../../src/mainwindow.cpp" line="293" />
         <source>Adjust Shade Opacity</source>
         <translation>Отрегулируйте непрозрачность тени</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="298" />
+        <location filename="../../src/mainwindow.cpp" line="301" />
         <source>RX: Data Receiving from Internet</source>
         <translation>RX: получение данных из Интернета</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="304" />
+        <location filename="../../src/mainwindow.cpp" line="307" />
         <source>TX: Data Sending from Atari</source>
         <translation>TX: отправка данных из Atari</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="329" />
+        <location filename="../../src/mainwindow.cpp" line="332" />
         <source>Hangup (NO CARRIER)</source>
         <translation>Завершение разговора (НЕТ ОПЕРАТОРА)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="341" />
-        <location filename="../../src/mainwindow.cpp" line="2726" />
+        <location filename="../../src/mainwindow.cpp" line="344" />
+        <location filename="../../src/mainwindow.cpp" line="2756" />
         <source>Send Auto-User (ESC-U)</source>
         <translation>Отправить автоматического пользователя (ESC-U)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="352" />
-        <location filename="../../src/mainwindow.cpp" line="2727" />
+        <location filename="../../src/mainwindow.cpp" line="355" />
+        <location filename="../../src/mainwindow.cpp" line="2757" />
         <source>Send Auto-Pass (ESC-P)</source>
         <translation>Отправить автоматический пропуск (ESC-P)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="365" />
+        <location filename="../../src/mainwindow.cpp" line="369" />
         <source>Toggle SIO Hex Dump Trace</source>
         <translation>Переключить трассировку шестнадцатеричного дампа SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="371" />
+        <location filename="../../src/mainwindow.cpp" line="375" />
         <source>Toggle 6502 Disassembler</source>
         <translation>Переключить дизассемблер 6502</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="377" />
+        <location filename="../../src/mainwindow.cpp" line="381" />
         <source>Toggle SIO Packet Sniffer</source>
         <translation>Переключить анализатор пакетов SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="388" />
+        <location filename="../../src/mainwindow.cpp" line="392" />
         <source>Main Tools</source>
         <translation>Основные инструменты</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="401" />
+        <location filename="../../src/mainwindow.cpp" line="404" />
+        <source>Backend App Library...</source>
+        <translation>Внутренняя библиотека приложений...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="405" />
+        <source>Manage and monitor external backend processes</source>
+        <translation>Управление и мониторинг внешних серверных процессов</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="421" />
         <source>Clear log messages</source>
         <translation>Очистить сообщения журнала</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="408" />
+        <location filename="../../src/mainwindow.cpp" line="428" />
         <source>Show Log Window</source>
         <translation>Показать окно журнала</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="716" />
+        <location filename="../../src/mainwindow.cpp" line="742" />
         <source>Mount from TNFS Network...</source>
         <translation>Монтировать из сети TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="738" />
+        <location filename="../../src/mainwindow.cpp" line="764" />
         <source>Mount TNFS</source>
         <translation>Монтирование TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1244" />
-        <location filename="../../src/mainwindow.cpp" line="1245" />
+        <location filename="../../src/mainwindow.cpp" line="1274" />
+        <location filename="../../src/mainwindow.cpp" line="1275" />
         <source>Show drives D9-DO</source>
         <translation>Показать диски D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1355" />
-        <location filename="../../src/mainwindow.cpp" line="2584" />
-        <location filename="../../src/mainwindow.cpp" line="3218" />
+        <location filename="../../src/mainwindow.cpp" line="1385" />
+        <location filename="../../src/mainwindow.cpp" line="2614" />
+        <location filename="../../src/mainwindow.cpp" line="3248" />
         <source>Loading...</source>
         <translation>Загрузка...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1355" />
-        <location filename="../../src/mainwindow.cpp" line="2584" />
-        <location filename="../../src/mainwindow.cpp" line="3218" />
+        <location filename="../../src/mainwindow.cpp" line="1385" />
+        <location filename="../../src/mainwindow.cpp" line="2614" />
+        <location filename="../../src/mainwindow.cpp" line="3248" />
         <source>Downloading from TNFS...</source>
         <translation>Загрузка из TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1373" />
-        <location filename="../../src/mainwindow.cpp" line="1376" />
+        <location filename="../../src/mainwindow.cpp" line="1403" />
+        <location filename="../../src/mainwindow.cpp" line="1406" />
         <source>Executable (Local)</source>
         <translation>Исполняемый файл (локальный)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1726" />
+        <location filename="../../src/mainwindow.cpp" line="1756" />
         <source>Slot %1 download aborted by user.</source>
         <translation>Загрузка слота %1 прервана пользователем.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1956" />
+        <location filename="../../src/mainwindow.cpp" line="1986" />
         <source>Open a disk or executable image</source>
         <translation>Откройте диск или исполняемый образ</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1958" />
+        <location filename="../../src/mainwindow.cpp" line="1988" />
         <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
         <translation>Все поддерживаемые образы (*.atr *.xfd *.atx *.pro *.xex *.com);;Исполняемые файлы Atari (*.xex *.com);;образы SIO2PC ATR (*.atr);;образы XFormer XFD (*.xfd);;образы ATX (*.atx);;образы Pro (*.pro);;все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2036" />
+        <location filename="../../src/mainwindow.cpp" line="2066" />
         <source>Image file unsaved</source>
         <translation>Файл изображения несохранен.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2036" />
+        <location filename="../../src/mainwindow.cpp" line="2066" />
         <source>'%1' has unsaved changes, do you want to save it?</source>
         <translation>У «%1» есть несохраненные изменения. Хотите сохранить их?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2128" />
+        <location filename="../../src/mainwindow.cpp" line="2158" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Диск %1] Автоматическое подтверждение включено.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2130" />
+        <location filename="../../src/mainwindow.cpp" line="2160" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Диск %1] Автоматическое подтверждение отключено.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2346" />
-        <location filename="../../src/mainwindow.cpp" line="2409" />
+        <location filename="../../src/mainwindow.cpp" line="2376" />
+        <location filename="../../src/mainwindow.cpp" line="2439" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>Сеансы AspeQt (*.aspeqt);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2545" />
+        <location filename="../../src/mainwindow.cpp" line="2575" />
         <source>Drive %1 Happy Mode %2.</source>
         <translation>Диск %1 в счастливом режиме %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2547" />
+        <location filename="../../src/mainwindow.cpp" line="2577" />
         <source>Enabled</source>
         <translation>Включено</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2547" />
+        <location filename="../../src/mainwindow.cpp" line="2577" />
         <source>Disabled</source>
         <translation>Неполноценный</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2610" />
+        <location filename="../../src/mainwindow.cpp" line="2640" />
         <source>Mounted TNFS Stream: %1</source>
         <translation>Подключенный поток TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2628" />
+        <location filename="../../src/mainwindow.cpp" line="2658" />
         <source>Mount Error</source>
         <translation>Ошибка монтирования</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2628" />
+        <location filename="../../src/mainwindow.cpp" line="2658" />
         <source>Could not open TNFS stream from %1</source>
         <translation>Не удалось открыть поток TNFS от %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2648" />
+        <location filename="../../src/mainwindow.cpp" line="2678" />
         <source>Downloading: %1</source>
         <translation>Загрузка: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2650" />
+        <location filename="../../src/mainwindow.cpp" line="2680" />
         <source>Downloading...</source>
         <translation>Загрузка...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2721" />
+        <location filename="../../src/mainwindow.cpp" line="2751" />
         <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
         <translation>Телефонная книга отключена. Установите путь XML в «Параметры» -&gt; «Модемный мост».</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2722" />
+        <location filename="../../src/mainwindow.cpp" line="2752" />
         <source>Macro User disabled. Set Phonebook XML path in Options.</source>
         <translation>Пользователь макроса отключен. Установите путь XML телефонной книги в настройках.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2723" />
+        <location filename="../../src/mainwindow.cpp" line="2753" />
         <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
         <translation>Макропасс отключен. Установите путь XML телефонной книги в настройках.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2773" />
+        <location filename="../../src/mainwindow.cpp" line="2803" />
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2773" />
+        <location filename="../../src/mainwindow.cpp" line="2803" />
         <source>Could not extract manual to: </source>
         <translation>Не удалось извлечь руководство по:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3085" />
+        <location filename="../../src/mainwindow.cpp" line="3115" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
         <translation>[Веб-интерфейс] Предупреждение: несохраненные изменения на диске в слоте %1 были отменены при принудительном подключении.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3104" />
+        <location filename="../../src/mainwindow.cpp" line="3134" />
         <source>[Web UI] Mounted Executable to slot %1: %2</source>
         <translation>[Веб-интерфейс] Исполняемый файл установлен в слот %1: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3106" />
+        <location filename="../../src/mainwindow.cpp" line="3136" />
         <source>[Web UI] Executable ready. Please cold start the Atari.</source>
         <translation>[Веб-интерфейс] Исполняемый файл готов. Пожалуйста, запустите Atari в холодном состоянии.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3110" />
+        <location filename="../../src/mainwindow.cpp" line="3140" />
         <source>[Web UI] Failed to parse Executable: %1</source>
         <translation>[Веб-интерфейс] Не удалось проанализировать исполняемый файл: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3130" />
+        <location filename="../../src/mainwindow.cpp" line="3160" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
         <translation>[Веб-интерфейс] Предупреждение: несохраненные изменения на диске в слоте %1 были отменены в результате принудительного извлечения.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3192" />
+        <location filename="../../src/mainwindow.cpp" line="3222" />
         <source>[Web UI] Dialing BBS: %1 (%2)</source>
         <translation>[Веб-интерфейс] Набор номера BBS: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3238" />
+        <location filename="../../src/mainwindow.cpp" line="3268" />
         <source>[Web UI] Mounted TNFS Stream: %1</source>
         <translation>[Веб-интерфейс] Подключенный поток TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3248" />
+        <location filename="../../src/mainwindow.cpp" line="3278" />
         <source>[Web UI] Failed to mount TNFS Stream: %1</source>
         <translation>[Веб-интерфейс] Не удалось смонтировать поток TNFS: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3249" />
+        <location filename="../../src/mainwindow.cpp" line="3279" />
         <source>Download failed or aborted: %1</source>
         <translation>Загрузка не удалась или прервана: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3257" />
+        <location filename="../../src/mainwindow.cpp" line="3287" />
         <source>[Web UI] Write Protect for slot %1 set to %2</source>
         <translation>[Веб-интерфейс] Защита от записи для слота %1 установлена ​​на %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3286" />
+        <location filename="../../src/mainwindow.cpp" line="3316" />
         <source>Web UI WebSocket Server started on port %1</source>
         <translation>Веб-интерфейс WebSocket Server запущен на порту %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3288" />
+        <location filename="../../src/mainwindow.cpp" line="3318" />
         <source>Failed to start Web UI WebSocket Server.</source>
         <translation>Не удалось запустить сервер веб-интерфейса WebSocket.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3317" />
+        <location filename="../../src/mainwindow.cpp" line="3347" />
         <source>HTTP Dashboard available at http://localhost:%1</source>
         <translation>Панель мониторинга HTTP доступна по адресу http://localhost:%1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3319" />
+        <location filename="../../src/mainwindow.cpp" line="3349" />
         <source>Failed to start HTTP Server.</source>
         <translation>Не удалось запустить HTTP-сервер.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3347" />
+        <location filename="../../src/mainwindow.cpp" line="3377" />
         <source>Web Dashboard and WebSocket servers completely shut down.</source>
         <translation>Серверы Web Dashboard и WebSocket полностью отключены.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3357" />
+        <location filename="../../src/mainwindow.cpp" line="3387" />
         <source>[Web UI] Failed to load cassette image: %1</source>
         <translation>[Веб-интерфейс] Не удалось загрузить изображение кассеты: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3367" />
+        <location filename="../../src/mainwindow.cpp" line="3397" />
         <source>[Web UI] Cassette Mounted: %1</source>
         <translation>[Веб-интерфейс] Кассета установлена: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3380" />
+        <location filename="../../src/mainwindow.cpp" line="3410" />
         <source>[Web UI] Cassette is already playing.</source>
         <translation>[Веб-интерфейс] Кассета уже воспроизводится.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3384" />
+        <location filename="../../src/mainwindow.cpp" line="3414" />
         <source>[Web UI] Starting Cassette Playback.</source>
         <translation>[Веб-интерфейс] Запуск воспроизведения кассеты.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3399" />
+        <location filename="../../src/mainwindow.cpp" line="3429" />
         <source>[Web UI] Rewinding Cassette...</source>
         <translation>[Веб-интерфейс] Перемотка кассеты...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3423" />
+        <location filename="../../src/mainwindow.cpp" line="3453" />
         <source>[Web UI] Cassette Ejected.</source>
         <translation>[Веб-интерфейс] Кассета извлечена.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3439" />
+        <location filename="../../src/mainwindow.cpp" line="3469" />
         <source>[Web UI] Cassette Playback Finished.</source>
         <translation>[Веб-интерфейс] Воспроизведение кассеты завершено.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3460" />
+        <location filename="../../src/mainwindow.cpp" line="3490" />
         <source>Failed to initialize blank disk.</source>
         <translation>Не удалось инициализировать пустой диск.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3478" />
+        <location filename="../../src/mainwindow.cpp" line="3508" />
         <source>Failed to format blank disk.</source>
         <translation>Не удалось отформатировать пустой диск.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3497" />
+        <location filename="../../src/mainwindow.cpp" line="3527" />
         <source>Failed to save blank disk to host.</source>
         <translation>Не удалось сохранить пустой диск на хосте.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3505" />
+        <location filename="../../src/mainwindow.cpp" line="3535" />
         <source>Blank disk created: %1</source>
         <translation>Создан пустой диск: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3506" />
+        <location filename="../../src/mainwindow.cpp" line="3536" />
         <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
         <translation>[Веб-интерфейс] Создан и подключен пустой диск: %1 в слоте %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3521" />
-        <location filename="../../src/mainwindow.cpp" line="3621" />
-        <location filename="../../src/mainwindow.cpp" line="3622" />
+        <location filename="../../src/mainwindow.cpp" line="3551" />
+        <location filename="../../src/mainwindow.cpp" line="3651" />
+        <location filename="../../src/mainwindow.cpp" line="3652" />
         <source>Empty</source>
         <translation>Пустой</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3523" />
+        <location filename="../../src/mainwindow.cpp" line="3553" />
         <source>No file mounted.</source>
         <translation>Ни один файл не смонтирован.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3527" />
+        <location filename="../../src/mainwindow.cpp" line="3557" />
         <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Слот %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Имя файла:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Формат/тип:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Абсолютный путь:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3538" />
+        <location filename="../../src/mainwindow.cpp" line="3568" />
         <source>Drive Details</source>
         <translation>Подробности о диске</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3563" />
+        <location filename="../../src/mainwindow.cpp" line="3593" />
         <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
         <translation>[Веб-интерфейс] Файл смонтирован непосредственно в ОЗУ в слоте %1: %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3566" />
+        <location filename="../../src/mainwindow.cpp" line="3596" />
         <source>Mounted to RAM: %1</source>
         <translation>Установлено в ОЗУ: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3570" />
+        <location filename="../../src/mainwindow.cpp" line="3600" />
         <source>[Web UI] Failed to parse RAM image: %1</source>
         <translation>[Веб-интерфейс] Не удалось проанализировать образ оперативной памяти: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3573" />
+        <location filename="../../src/mainwindow.cpp" line="3603" />
         <source>Failed to parse: %1</source>
         <translation>Не удалось проанализировать: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3579" />
+        <location filename="../../src/mainwindow.cpp" line="3609" />
         <source>[Injector] Cannot inject packet: SIO emulation is stopped.</source>
         <translation>[Инжектор] Невозможно внедрить пакет: эмуляция SIO остановлена.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3583" />
+        <location filename="../../src/mainwindow.cpp" line="3613" />
         <source>[Injector] Firing %1 bytes directly onto the Atari SIO Bus.</source>
         <translation>[Инжектор] Запуск %1 байтов непосредственно в шину Atari SIO.</translation>
     </message>
@@ -2362,68 +2587,68 @@ Do you want to open the options dialog?</source>
         <translation type="vanished">[Инжектор] Активирован шаг виртуального пакета: %1 байт</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3625" />
+        <location filename="../../src/mainwindow.cpp" line="3655" />
         <source>Swapped - Slot %1 -&gt; %2  |  Slot %3 -&gt; %4</source>
         <translation>Поменяно местами — слот %1 -&gt; %2 |  Слот %3 -&gt; %4</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2165" />
+        <location filename="../../src/mainwindow.cpp" line="2195" />
         <source>Save image as</source>
         <translation>Сохранить изображение как</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2208" />
+        <location filename="../../src/mainwindow.cpp" line="2238" />
         <source>Revert to last saved</source>
         <translation>Вернуться к последнему сохраненному</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2209" />
+        <location filename="../../src/mainwindow.cpp" line="2239" />
         <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
         <translation>Вы действительно хотите вернуть «%1» в последнее сохраненное состояние? Вы потеряете внесенные изменения.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2344" />
+        <location filename="../../src/mainwindow.cpp" line="2374" />
         <source>Open session</source>
         <translation>Открытая сессия</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2407" />
+        <location filename="../../src/mainwindow.cpp" line="2437" />
         <source>Save session as</source>
         <translation>Сохранить сеанс как</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2438" />
+        <location filename="../../src/mainwindow.cpp" line="2468" />
         <source>Open executable</source>
         <translation>Открыть исполняемый файл</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2440" />
+        <location filename="../../src/mainwindow.cpp" line="2470" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Исполняемые файлы Atari (*.xex *.com *.exe);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2472" />
+        <location filename="../../src/mainwindow.cpp" line="2502" />
         <source>Open a cassette image</source>
         <translation>Открыть образ кассеты</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2474" />
+        <location filename="../../src/mainwindow.cpp" line="2504" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Образы CAS (*.cas);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1295" />
-        <location filename="../../src/mainwindow.cpp" line="1296" />
+        <location filename="../../src/mainwindow.cpp" line="1325" />
+        <location filename="../../src/mainwindow.cpp" line="1326" />
         <source>Start printer emulation</source>
         <translation>Запустить эмуляцию принтера</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1280" />
+        <location filename="../../src/mainwindow.cpp" line="1310" />
         <source>Printer emulation stopped.</source>
         <translation>Эмуляция принтера остановлена.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1282" />
+        <location filename="../../src/mainwindow.cpp" line="1312" />
         <source>Printer emulation started.</source>
         <translation>Эмуляция принтера началась.</translation>
     </message>
@@ -3153,7 +3378,7 @@ Leave unchecked for direct Raspberry Pi GPIO.</source>
         <location filename="../../src/optionsdialog.cpp" line="223" />
         <location filename="../../src/optionsdialog.cpp" line="232" />
         <source>English</source>
-        <translation>Английский</translation>
+        <translation>Русский</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.cpp" line="402" />
@@ -3237,23 +3462,21 @@ Please assign different ports.</source>
     <message>
         <location filename="../../src/optionsdialog.cpp" line="524" />
         <location filename="../../src/optionsdialog.cpp" line="533" />
-        <location filename="../../src/optionsdialog.cpp" line="535" />
         <source>XML Files (*.xml);;All Files (*)</source>
         <translation>XML-файлы (*.xml);;Все файлы (*)</translation>
     </message>
     <message>
         <location filename="../../src/optionsdialog.cpp" line="533" />
-        <location filename="../../src/optionsdialog.cpp" line="535" />
         <source>Create New Dial Directory</source>
         <translation>Создать новый каталог набора номера</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="549" />
+        <location filename="../../src/optionsdialog.cpp" line="546" />
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="549" />
+        <location filename="../../src/optionsdialog.cpp" line="546" />
         <source>Could not create the phonebook file.</source>
         <translation>Не удалось создать файл телефонной книги.</translation>
     </message>
@@ -3821,64 +4044,72 @@ Please assign different ports.</source>
 <context>
     <name>PhoneDirectory</name>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="18" />
+        <location filename="../../src/phonedirectory.cpp" line="19" />
         <source>BBS Phonebook</source>
         <translation>Телефонная книга BBS</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="26" />
+        <location filename="../../src/phonedirectory.cpp" line="27" />
         <source>Search BBS Name...</source>
         <translation>Поиск имени BBS...</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>BBS Name</source>
         <translation>Имя ББС</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Address</source>
         <translation>Адрес</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Port</source>
         <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Protocol</source>
         <translation>Протокол</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="33" />
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>User ID</source>
         <translation>ID пользователя</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="46" />
         <source>Edit Entry</source>
-        <translation>Редактировать запись</translation>
+        <translation type="vanished">Редактировать запись</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="49" />
         <source>Save to XML</source>
-        <translation>Сохранить в XML</translation>
+        <translation type="vanished">Сохранить в XML</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="52" />
+        <location filename="../../src/phonedirectory.cpp" line="60" />
         <source>Dial Selected</source>
         <translation>Циферблат выбран</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="55" />
+        <location filename="../../src/phonedirectory.cpp" line="52" />
         <source>Add</source>
         <translation>Добавлять</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="58" />
+        <location filename="../../src/phonedirectory.cpp" line="53" />
+        <source>Edit</source>
+        <translation>Редактировать</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="54" />
         <source>Delete</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="56" />
+        <source>Save Changes</source>
+        <translation>Сохранить изменения</translation>
     </message>
     <message>
         <location filename="../../src/phonedirectory.cpp" line="61" />
@@ -3886,97 +4117,154 @@ Please assign different ports.</source>
         <translation>Закрывать</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="140" />
+        <location filename="../../src/phonedirectory.cpp" line="171" />
         <source>Saved</source>
         <translation>Сохранено</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="140" />
         <source>Phonebook saved successfully!</source>
-        <translation>Телефонная книга успешно сохранена!</translation>
+        <translation type="vanished">Телефонная книга успешно сохранена!</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="142" />
+        <location filename="../../src/phonedirectory.cpp" line="173" />
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="142" />
         <source>Could not write to file.</source>
-        <translation>Не удалось записать в файл.</translation>
+        <translation type="vanished">Не удалось записать в файл.</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="151" />
+        <location filename="../../src/phonedirectory.cpp" line="204" />
+        <location filename="../../src/phonedirectory.cpp" line="365" />
         <source>Unsaved Changes</source>
         <translation>Несохраненные изменения</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="152" />
         <source>You have unsaved changes. Save before %1?</source>
-        <translation>У вас есть несохраненные изменения. Сохранить до %1?</translation>
+        <translation type="vanished">У вас есть несохраненные изменения. Сохранить до %1?</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="249" />
         <source>Edit BBS Entry</source>
-        <translation>Редактировать запись BBS</translation>
+        <translation type="vanished">Редактировать запись BBS</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="259" />
         <source>Telnet</source>
-        <translation>Телнет</translation>
+        <translation type="vanished">Телнет</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="260" />
         <source>SSH (BBS)</source>
-        <translation>SSH (ББС)</translation>
+        <translation type="vanished">SSH (ББС)</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="261" />
         <source>SSH (Auth)</source>
-        <translation>SSH (Аутентификация)</translation>
+        <translation type="vanished">SSH (Аутентификация)</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="289" />
         <source>Show</source>
-        <translation>Показывать</translation>
+        <translation type="vanished">Показывать</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="295" />
         <source>Name:</source>
-        <translation>Имя:</translation>
+        <translation type="vanished">Имя:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="296" />
         <source>Address:</source>
-        <translation>Адрес:</translation>
+        <translation type="vanished">Адрес:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="297" />
+        <location filename="../../src/phonedirectory.cpp" line="278" />
         <source>Protocol:</source>
         <translation>Протокол:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="298" />
+        <location filename="../../src/phonedirectory.cpp" line="277" />
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="299" />
+        <location filename="../../src/phonedirectory.cpp" line="171" />
+        <source>Phonebook saved successfully.</source>
+        <translation>Телефонная книга успешно сохранена.</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="173" />
+        <source>Failed to save phonebook to:
+%1</source>
+        <translation>Не удалось сохранить телефонную книгу в:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="205" />
+        <source>You have unsaved changes. Do you want to save the phonebook before dialing?</source>
+        <translation>У вас есть несохраненные изменения. Хотите сохранить телефонную книгу перед набором номера?</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="220" />
+        <source>Edit BBS</source>
+        <translation>Редактировать BBS</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="256" />
+        <source>Used for standard auth, or as the Passphrase for an encrypted Key.</source>
+        <translation>Используется для стандартной аутентификации или в качестве парольной фразы для зашифрованного ключа.</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="261" />
+        <source>Optional: Path to private key file</source>
+        <translation>Необязательно: путь к файлу закрытого ключа.</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="271" />
+        <source>Select Private Key File</source>
+        <translation>Выберите файл закрытого ключа</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="271" />
+        <source>All Files (*)</source>
+        <translation>Все файлы (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="275" />
+        <source>BBS Name:</source>
+        <translation>Название ББС:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="276" />
+        <source>Address (IP/DNS):</source>
+        <translation>Адрес (IP/DNS):</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="279" />
         <source>User ID:</source>
         <translation>ID пользователя:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="300" />
-        <source>Password:</source>
-        <translation>Пароль:</translation>
+        <location filename="../../src/phonedirectory.cpp" line="280" />
+        <source>Password/Passphrase:</source>
+        <translation>Пароль/парольная фраза:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <location filename="../../src/phonedirectory.cpp" line="281" />
+        <source>Private Key:</source>
+        <translation>Закрытый ключ:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="366" />
+        <source>You have unsaved changes. Do you want to save before %1?</source>
+        <translation>У вас есть несохраненные изменения. Хотите сохранить до %1?</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="vanished">Пароль:</translation>
+    </message>
+    <message>
+        <location filename="../../src/phonedirectory.cpp" line="334" />
         <source>Confirm</source>
         <translation>Подтверждать</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="350" />
+        <location filename="../../src/phonedirectory.cpp" line="334" />
         <source>Delete this entry?</source>
         <translation>Удалить эту запись?</translation>
     </message>
@@ -4006,6 +4294,19 @@ Please assign different ports.</source>
     <message>
         <source>[%1] ignored</source>
         <translation type="vanished">[%1] проигнорировано</translation>
+    </message>
+</context>
+<context>
+    <name>RDevice</name>
+    <message>
+        <location filename="../../src/rdevice.cpp" line="907" />
+        <source>[RDevice] Negotiating SSH with %1...</source>
+        <translation>[RDevice] Согласование SSH с %1...</translation>
+    </message>
+    <message>
+        <location filename="../../src/rdevice.cpp" line="916" />
+        <source>[RDevice] Dialing Telnet %1:%2...</source>
+        <translation>[RDevice] Набор номера Telnet %1:%2...</translation>
     </message>
 </context>
 <context>
@@ -4434,85 +4735,80 @@ Please assign different ports.</source>
 <context>
     <name>SioPacketDialog</name>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="108" />
+        <location filename="../../src/siopacketdialog.cpp" line="109" />
         <source>SIO Packet Sniffer &amp; Inspector</source>
         <translation>SIO-анализатор и инспектор пакетов</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="141" />
+        <location filename="../../src/siopacketdialog.cpp" line="149" />
         <source>e.g. R1: or NAK...</source>
         <translation>например R1: или НАК...</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="148" />
+        <location filename="../../src/siopacketdialog.cpp" line="156" />
         <source>🔍 Filter:</source>
         <translation>🔍 Фильтр:</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="158" />
+        <location filename="../../src/siopacketdialog.cpp" line="166" />
         <source>Packet Inspector Details</source>
         <translation>Подробности об инспекторе пакетов</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="161" />
-        <location filename="../../src/siopacketdialog.cpp" line="297" />
+        <location filename="../../src/siopacketdialog.cpp" line="169" />
+        <location filename="../../src/siopacketdialog.cpp" line="269" />
         <source>Collapse Details ▼</source>
         <translation>Свернуть подробности ▼</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="195" />
-        <location filename="../../src/siopacketdialog.cpp" line="250" />
+        <location filename="../../src/siopacketdialog.cpp" line="212" />
+        <location filename="../../src/siopacketdialog.cpp" line="259" />
         <source>🔴 Recording</source>
         <translation>🔴 Запись</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="201" />
-        <location filename="../../src/siopacketdialog.cpp" line="260" />
         <source>▶ Auto-Play</source>
-        <translation>▶ Автовоспроизведение</translation>
+        <translation type="vanished">▶ Автовоспроизведение</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="211" />
+        <location filename="../../src/siopacketdialog.cpp" line="218" />
         <source>Clear</source>
         <translation>Прозрачный</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="212" />
+        <location filename="../../src/siopacketdialog.cpp" line="219" />
         <source>Save CSV...</source>
         <translation>Сохранить CSV...</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="213" />
         <source>Inject Selected (Step)</source>
-        <translation>Вставить выбранное (шаг)</translation>
+        <translation type="vanished">Вставить выбранное (шаг)</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="224" />
         <source>Delay:</source>
-        <translation>Задерживать:</translation>
+        <translation type="vanished">Задерживать:</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="250" />
+        <location filename="../../src/siopacketdialog.cpp" line="259" />
         <source>⏸ Paused</source>
         <translation>⏸ Приостановлено</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="256" />
         <source>⏹ Stop Playback</source>
-        <translation>⏹ Остановить воспроизведение</translation>
+        <translation type="vanished">⏹ Остановить воспроизведение</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="294" />
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
         <source>Expand Details ▲</source>
         <translation>Развернуть детали ▲</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="393" />
+        <location filename="../../src/siopacketdialog.cpp" line="366" />
         <source>No Selection</source>
         <translation>Нет выбора</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="393" />
+        <location filename="../../src/siopacketdialog.cpp" line="366" />
         <source>Please select a packet row to inject.</source>
         <translation>Выберите строку пакета для вставки.</translation>
     </message>
@@ -4525,42 +4821,71 @@ Please assign different ports.</source>
         <translation type="vanished">Вы можете вставлять только пакеты RX (трафик, исходящий от Atari).</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="520" />
+        <location filename="../../src/siopacketdialog.cpp" line="221" />
+        <source>Inject Selected</source>
+        <translation>Вставить выбранное</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="224" />
+        <source>Safe Mode (TX Only)</source>
+        <translation>Безопасный режим (только TX)</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="226" />
+        <source>Prevents injecting RX packets to avoid hardware collisions with a physical Atari.</source>
+        <translation>Предотвращает внедрение пакетов RX, чтобы избежать конфликтов оборудования с физическим Atari.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="376" />
+        <source>Safe Mode Block</source>
+        <translation>Блокировка безопасного режима</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="377" />
+        <source>You are trying to inject an RX (Atari Command) packet while Safe Mode is enabled.
+
+This is blocked to prevent TX/RX collisions on the bus. Uncheck Safe Mode if you are purely testing virtual components without a physical Atari connected.</source>
+        <translation>Вы пытаетесь внедрить пакет RX (команда Atari), когда включен безопасный режим.
+
+Это заблокировано для предотвращения коллизий TX/RX на шине. Снимите флажок «Безопасный режим», если вы тестируете только виртуальные компоненты без подключения физического Atari.</translation>
+    </message>
+    <message>
+        <location filename="../../src/siopacketdialog.cpp" line="533" />
         <source>Empty</source>
         <translation>Пустой</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="520" />
+        <location filename="../../src/siopacketdialog.cpp" line="533" />
         <source>No packets to save.</source>
         <translation>Нет пакетов для сохранения.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="524" />
+        <location filename="../../src/siopacketdialog.cpp" line="537" />
         <source>Save SIO Trace</source>
         <translation>Сохранить трассировку SIO</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="524" />
+        <location filename="../../src/siopacketdialog.cpp" line="537" />
         <source>CSV Files (*.csv);;All Files (*)</source>
         <translation>CSV-файлы (*.csv);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="529" />
+        <location filename="../../src/siopacketdialog.cpp" line="542" />
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="529" />
+        <location filename="../../src/siopacketdialog.cpp" line="542" />
         <source>Could not open file for writing.</source>
         <translation>Не удалось открыть файл для записи.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="549" />
+        <location filename="../../src/siopacketdialog.cpp" line="588" />
         <source>Saved</source>
         <translation>Сохранено</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="549" />
+        <location filename="../../src/siopacketdialog.cpp" line="588" />
         <source>SIO Trace saved successfully.</source>
         <translation>Трассировка SIO успешно сохранена.</translation>
     </message>
@@ -5050,7 +5375,7 @@ Please assign different ports.</source>
         <translation>Сетевой браузер TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="46" />
+        <location filename="../../src/tnfsbrowser.cpp" line="47" />
         <source>Connect</source>
         <translation>Соединять</translation>
     </message>
@@ -5086,8 +5411,8 @@ Please assign different ports.</source>
     </message>
     <message>
         <location filename="../../src/tnfsbrowser.cpp" line="87" />
-        <location filename="../../src/tnfsbrowser.cpp" line="283" />
-        <location filename="../../src/tnfsbrowser.cpp" line="354" />
+        <location filename="../../src/tnfsbrowser.cpp" line="258" />
+        <location filename="../../src/tnfsbrowser.cpp" line="341" />
         <source>More...</source>
         <translation>Более...</translation>
     </message>
@@ -5102,69 +5427,70 @@ Please assign different ports.</source>
         <translation>Дважды щелкните файл (.ATR/.XEX), чтобы смонтировать его.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="201" />
+        <location filename="../../src/tnfsbrowser.cpp" line="185" />
         <source>Connecting to %1...</source>
         <translation>Подключение к %1...</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="219" />
-        <location filename="../../src/tnfsbrowser.cpp" line="256" />
+        <location filename="../../src/tnfsbrowser.cpp" line="200" />
+        <location filename="../../src/tnfsbrowser.cpp" line="232" />
         <source>Connected: %1</source>
         <translation>Подключено: %1</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="235" />
-        <location filename="../../src/tnfsbrowser.cpp" line="271" />
+        <location filename="../../src/tnfsbrowser.cpp" line="215" />
+        <location filename="../../src/tnfsbrowser.cpp" line="246" />
         <source>Connection Failed.</source>
         <translation>Соединение не удалось.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="236" />
-        <location filename="../../src/tnfsbrowser.cpp" line="272" />
+        <location filename="../../src/tnfsbrowser.cpp" line="216" />
+        <location filename="../../src/tnfsbrowser.cpp" line="247" />
         <source>Connection Error</source>
         <translation>Ошибка подключения</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="237" />
-        <location filename="../../src/tnfsbrowser.cpp" line="273" />
+        <location filename="../../src/tnfsbrowser.cpp" line="217" />
+        <location filename="../../src/tnfsbrowser.cpp" line="248" />
         <source>Could not reach host '%1'.
 Check internet or hostname.</source>
         <translation>Не удалось связаться с хостом «%1».
 Проверьте Интернет или имя хоста.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="285" />
+        <location filename="../../src/tnfsbrowser.cpp" line="260" />
+        <location filename="../../src/tnfsbrowser.cpp" line="287" />
         <source>Fetching %1...</source>
         <translation>Получение %1...</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="301" />
+        <location filename="../../src/tnfsbrowser.cpp" line="274" />
         <source>Error opening directory.</source>
         <translation>Ошибка открытия каталога.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="350" />
+        <location filename="../../src/tnfsbrowser.cpp" line="337" />
         <source>No more items</source>
         <translation>Больше нет предметов</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="360" />
-        <location filename="../../src/tnfsbrowser.cpp" line="388" />
+        <location filename="../../src/tnfsbrowser.cpp" line="349" />
+        <location filename="../../src/tnfsbrowser.cpp" line="377" />
         <source>Browsing: %1</source>
         <translation>Просмотр: %1</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="403" />
+        <location filename="../../src/tnfsbrowser.cpp" line="392" />
         <source>Clear History</source>
         <translation>Очистить историю</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="404" />
+        <location filename="../../src/tnfsbrowser.cpp" line="393" />
         <source>Clear all saved hosts?</source>
         <translation>Удалить все сохраненные хосты?</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="409" />
+        <location filename="../../src/tnfsbrowser.cpp" line="397" />
         <source>History cleared.</source>
         <translation>История очищена.</translation>
     </message>
@@ -5172,32 +5498,32 @@ Check internet or hostname.</source>
 <context>
     <name>WebBridge</name>
     <message>
-        <location filename="../../src/webbridge.cpp" line="61" />
+        <location filename="../../src/webbridge.cpp" line="67" />
         <source>Cannot access directory: %1</source>
         <translation>Невозможно получить доступ к каталогу: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="125" />
+        <location filename="../../src/webbridge.cpp" line="128" />
         <source>Phonebook XML is corrupted or invalid!</source>
         <translation>XML телефонной книги поврежден или недействителен!</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="130" />
+        <location filename="../../src/webbridge.cpp" line="132" />
         <source>No phonebook found at: %1</source>
         <translation>Телефонная книга не найдена по адресу: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="180" />
+        <location filename="../../src/webbridge.cpp" line="179" />
         <source>TNFS path not found: %1</source>
         <translation>Путь TNFS не найден: %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="186" />
+        <location filename="../../src/webbridge.cpp" line="184" />
         <source>Failed to mount TNFS host: %1</source>
         <translation>Не удалось подключить хост TNFS: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="193" />
+        <location filename="../../src/webbridge.cpp" line="190" />
         <source>Failed to connect to TNFS host: %1</source>
         <translation>Не удалось подключиться к хосту TNFS: %1.</translation>
     </message>
