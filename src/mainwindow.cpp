@@ -316,15 +316,14 @@ MainWindow::MainWindow(QWidget *parent)
     // B. Create Control Buttons (Using QToolButton for ease)
     // ------------------------------------------------
     auto setupBtn = [](QToolButton* btn, QString iconName, QString text, QString tip) {
-        // Try to load icon, fallback to text if missing
         QIcon icon(iconName);
-        if (icon.isNull()) btn->setText(text);
-        else btn->setIcon(icon);
+        btn->setIcon(icon);
+        btn->setText(text); // Always set text
 
         btn->setToolTip(tip);
-        btn->setAutoRaise(true); // Makes it look flat like the label icons
-        btn->setFixedSize(22, 22);
+        btn->setAutoRaise(true);
         btn->setIconSize(QSize(16, 16));
+        // btn->setFixedSize(22, 22); // REMOVE this so text isn't cut off
     };
 
     // 2. Hangup
@@ -363,7 +362,6 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
 
-
     // SIO Trace Toggle
     btnSioTrace = new QToolButton(this);
     setupBtn(btnSioTrace, ":/icons/silk-icons/icons/monitor.png", "HEX", tr("Toggle SIO Hex Dump Trace"));
@@ -392,8 +390,9 @@ MainWindow::MainWindow(QWidget *parent)
     QToolBar *mainToolBar = addToolBar(tr("Main Tools"));
     mainToolBar->setMovable(false);          // Lock it under the menu bar
     mainToolBar->setIconSize(QSize(16, 16)); // Keep icons uniform
-    ui->actionShowPrinterTextOutput->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
+    mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
+    ui->actionShowPrinterTextOutput->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
     mainToolBar->addAction(ui->actionStartEmulation);
     mainToolBar->addAction(ui->actionPrinterEmulation);
     mainToolBar->addAction(ui->actionShowPrinterTextOutput);
@@ -514,7 +513,6 @@ MainWindow::MainWindow(QWidget *parent)
     pcLink->moveToThread(sio);
     sio->installDevice(PCLINK_CDEVIC, pcLink);
 
-
     // -------------------------------------------------------
     // DEVICE $46: AspeQt Client Device & legacy support
     // -------------------------------------------------------
@@ -532,7 +530,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(client, SIGNAL(bootExe(QString)), this, SLOT(bootExeTriggered(QString)));
     connect(client, SIGNAL(bootCas(QString)), this, SLOT(bootCasTriggered(QString)));
     connect(client, SIGNAL(togglePrinterServer(bool)), this, SLOT(printServer(bool)));
-
 
     // -------------------------------------------------------
     // DEVICE $57: Pipe Network (W:)

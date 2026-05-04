@@ -27,6 +27,8 @@ private slots:
     void onBackendOutputLine(const QString& id, const QString& line, bool isError);
     void onEditSourceClicked();
     void onSelectionChanged();
+    void onClearLogClicked();
+    void onBackendLogCleared(const QString& id);
 
 private:
     BackendManager* m_manager;

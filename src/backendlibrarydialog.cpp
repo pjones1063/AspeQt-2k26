@@ -10,9 +10,9 @@
 #include <QFormLayout>
 #include <QUrl>
 #include <QDir>
-
 #include <QRegularExpression>
-
+#include <QToolBar>
+#include <QAction>
 
 BackendLibraryDialog::BackendLibraryDialog(BackendManager* manager, QWidget *parent)
     : QDialog(parent), m_manager(manager)
@@ -28,42 +28,73 @@ BackendLibraryDialog::BackendLibraryDialog(BackendManager* manager, QWidget *par
     m_table->setSelectionMode(QAbstractItemView::SingleSelection);
     m_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    // --- 2. The Toolbar Buttons (with Silk/Oxygen Icons) ---
-    QPushButton* btnAdd = new QPushButton(QIcon(":/icons/silk-icons/icons/add.png"), tr("Add..."), this);
-    QPushButton* btnEdit = new QPushButton(QIcon(":/icons/silk-icons/icons/wrench.png"), tr("Edit..."), this);
-    QPushButton* btnCode = new QPushButton(QIcon(":/icons/silk-icons/icons/folder_edit.png"), tr("Open Code"), this);
-    QPushButton* btnDelete = new QPushButton(QIcon(":/icons/silk-icons/icons/delete.png"), tr("Delete"), this);
+    // --- 2. The ToolBar & Actions ---
+    QToolBar* mainToolBar = new QToolBar(this);
+    mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly); // Icons only, no text
+    mainToolBar->setIconSize(QSize(16, 16)); // Keep icons uniform with main window
+    mainToolBar->setMovable(false);
 
-    QPushButton* btnStart = new QPushButton(QIcon(":/icons/silk-icons/icons/connect.png"), tr("Start"), this);
-    QPushButton* btnStop = new QPushButton(QIcon(":/icons/silk-icons/icons/disconnect.png"), tr("Stop"), this);
-    QPushButton* btnViewLog = new QPushButton(QIcon(":/icons/silk-icons/icons/page_white_text.png"), tr("View Log"), this);
-    QPushButton* btnMountDrivers = new QPushButton(QIcon(":/icons/oxygen-icons/16x16/devices/media_floppy.png"), tr("Mount W: Drivers (D1:)"), this);
+    // Create Actions
+    QAction* actStart = new QAction(QIcon(":/icons/silk-icons/icons/connect.png"), tr("Start"), this);
+    actStart->setToolTip(tr("Start Backend"));
 
-    // --- 3. Button Connections ---
-    connect(btnAdd, &QPushButton::clicked, this, &BackendLibraryDialog::onAddClicked);
-    connect(btnEdit, &QPushButton::clicked, this, &BackendLibraryDialog::onEditClicked);
-    connect(btnCode, &QPushButton::clicked, this, &BackendLibraryDialog::onEditSourceClicked);
-    connect(btnDelete, &QPushButton::clicked, this, &BackendLibraryDialog::onDeleteClicked);
+    QAction* actStop = new QAction(QIcon(":/icons/silk-icons/icons/disconnect.png"), tr("Stop"), this);
+    actStop->setToolTip(tr("Stop Backend"));
 
-    connect(btnStart, &QPushButton::clicked, this, &BackendLibraryDialog::onStartClicked);
-    connect(btnStop, &QPushButton::clicked, this, &BackendLibraryDialog::onStopClicked);
-    connect(btnViewLog, &QPushButton::clicked, this, &BackendLibraryDialog::onViewLogClicked);
-    connect(btnMountDrivers, &QPushButton::clicked, this, &BackendLibraryDialog::onMountDriversClicked);
+    QAction* actViewLog = new QAction(QIcon(":/icons/silk-icons/icons/page_white.png"), tr("View Log"), this);
+    actViewLog->setToolTip(tr("View Log"));
+
+    QAction* actClearLog = new QAction(QIcon(":/icons/silk-icons/icons/page_white_c.png"), tr("Clear Log"), this);
+    actClearLog->setToolTip(tr("Clear Log"));
+
+    QAction* actMountDrivers = new QAction(QIcon(":/icons/oxygen-icons/16x16/devices/media_floppy.png"), tr("Mount"), this);
+    actMountDrivers->setToolTip(tr("Mount Drivers"));
+
+    QAction* actAdd = new QAction(QIcon(":/icons/silk-icons/icons/add.png"), tr("Add..."), this);
+    actAdd->setToolTip(tr("Add New App"));
+
+    QAction* actEdit = new QAction(QIcon(":/icons/silk-icons/icons/wrench.png"), tr("Edit..."), this);
+    actEdit->setToolTip(tr("Edit Selected App"));
+
+    QAction* actCode = new QAction(QIcon(":/icons/silk-icons/icons/folder_edit.png"), tr("Open Code"), this);
+    actCode->setToolTip(tr("Open Working Directory"));
+
+    QAction* actDelete = new QAction(QIcon(":/icons/silk-icons/icons/delete.png"), tr("Delete"), this);
+    actDelete->setToolTip(tr("Delete Selected App"));
+
+    // --- 3. Action Connections ---
+    connect(actAdd, &QAction::triggered, this, &BackendLibraryDialog::onAddClicked);
+    connect(actEdit, &QAction::triggered, this, &BackendLibraryDialog::onEditClicked);
+    connect(actCode, &QAction::triggered, this, &BackendLibraryDialog::onEditSourceClicked);
+    connect(actDelete, &QAction::triggered, this, &BackendLibraryDialog::onDeleteClicked);
+    connect(actClearLog, &QAction::triggered, this, &BackendLibraryDialog::onClearLogClicked);
+    connect(m_manager, &BackendManager::backendLogCleared, this, &BackendLibraryDialog::onBackendLogCleared);
+
+    connect(actStart, &QAction::triggered, this, &BackendLibraryDialog::onStartClicked);
+    connect(actStop, &QAction::triggered, this, &BackendLibraryDialog::onStopClicked);
+    connect(actViewLog, &QAction::triggered, this, &BackendLibraryDialog::onViewLogClicked);
+    connect(actMountDrivers, &QAction::triggered, this, &BackendLibraryDialog::onMountDriversClicked);
 
     // Status updater connection
     connect(m_manager, &BackendManager::backendStateChanged, this, &BackendLibraryDialog::updateProcessStatus);
 
-    // --- 4. Top Layout ---
-    QHBoxLayout* topLayout = new QHBoxLayout();
-    topLayout->addWidget(btnStart);
-    topLayout->addWidget(btnStop);
-    topLayout->addWidget(btnViewLog);
-    topLayout->addWidget(btnMountDrivers);
-    topLayout->addStretch();
-    topLayout->addWidget(btnAdd);
-    topLayout->addWidget(btnEdit);
-    topLayout->addWidget(btnCode);
-    topLayout->addWidget(btnDelete);
+    // --- 4. Populate Toolbar ---
+    mainToolBar->addAction(actStart);
+    mainToolBar->addAction(actStop);
+    mainToolBar->addAction(actViewLog);
+    mainToolBar->addAction(actClearLog);
+    mainToolBar->addSeparator();
+    mainToolBar->addAction(actMountDrivers);
+
+    // Spacer to push remaining items to the right
+    QWidget* spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    mainToolBar->addWidget(spacer);
+
+    mainToolBar->addAction(actAdd);
+    mainToolBar->addAction(actEdit);
+    mainToolBar->addAction(actCode);
+    mainToolBar->addAction(actDelete);
 
     // --- 5. The Live Console & Splitter ---
     m_console = new QTextEdit(this);
@@ -78,8 +109,8 @@ BackendLibraryDialog::BackendLibraryDialog(BackendManager* manager, QWidget *par
 
     // --- 6. Main Layout ---
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->addLayout(topLayout);
-    mainLayout->addWidget(m_splitter); // Add the splitter instead of just the table
+    mainLayout->setMenuBar(mainToolBar); // Native placement for toolbars in dialogs/layouts
+    mainLayout->addWidget(m_splitter);
 
     // --- 7. Console Connections ---
     connect(m_table, &QTableWidget::itemSelectionChanged, this, &BackendLibraryDialog::onSelectionChanged);
@@ -362,5 +393,21 @@ void BackendLibraryDialog::onBackendOutputLine(const QString& id, const QString&
     // Auto-scroll if they were already at the bottom
     if (atBottom) {
         sb->setValue(sb->maximum());
+    }
+}
+
+void BackendLibraryDialog::onClearLogClicked()
+{
+    QString id = getSelectedId();
+    if (!id.isEmpty()) {
+        m_manager->clearBackendLog(id);
+    }
+}
+
+void BackendLibraryDialog::onBackendLogCleared(const QString& id)
+{
+    // Only clear the UI console if the currently selected app is the one that got cleared
+    if (id == getSelectedId()) {
+        m_console->clear();
     }
 }

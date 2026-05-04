@@ -683,7 +683,7 @@ Bazı programlar bu diyaloğu elle kapamanızı gerektirebilir.</translation>
     <message>
         <location filename="../../src/backendeditdialog.cpp" line="80" />
         <source>Virtual Env:</source>
-        <translation type="unfinished" />
+        <translation>Sanal Ortam:</translation>
     </message>
     <message>
         <location filename="../../src/backendeditdialog.cpp" line="83" />

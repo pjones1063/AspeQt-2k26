@@ -116,6 +116,7 @@ void BackendEditDialog::setConfig(const BackendConfig& config)
     editArguments->setText(config.arguments);
     editWorkingDir->setText(config.workingDirectory);
     chkAutoStart->setChecked(config.autoStart);
+    editVenvPath->setText(config.virtualEnvPath);
     tableEnv->setRowCount(0);
     for (auto it = config.environment.constBegin(); it != config.environment.constEnd(); ++it) {
         int row = tableEnv->rowCount();
@@ -135,6 +136,7 @@ BackendConfig BackendEditDialog::getConfig() const
     config.arguments = editArguments->text();
     config.workingDirectory = editWorkingDir->text();
     config.autoStart = chkAutoStart->isChecked();
+    config.virtualEnvPath = editVenvPath->text();
     config.environment.clear();
     for (int i = 0; i < tableEnv->rowCount(); ++i) {
         QString key = tableEnv->item(i, 0) ? tableEnv->item(i, 0)->text().trimmed() : "";

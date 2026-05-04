@@ -40,13 +40,14 @@ public:
 
     bool isRunning(const QString& id) const;
     QList<BackendConfig> getConfigurations() const;
+    void clearBackendLog(const QString& id);
+
 
 signals:
     // Emitted when a process changes state (useful for UI buttons)
     void backendStateChanged(const QString& id, bool isRunning);
     void backendOutputLine(const QString& id, const QString& line, bool isError);
-
-    // Connect this to MainWindow::doLogMessage
+    void backendLogCleared(const QString& id);
     void logMessage(int type, const QString& msg);
 
 private slots:
