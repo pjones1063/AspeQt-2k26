@@ -40,6 +40,8 @@
 #include "bbsdata.h"
 #include "aspeqtclientdevice.h"
 #include "siopacketdialog.h"
+#include "backendmanager.h"
+
 
 
 
@@ -114,7 +116,6 @@ public slots:
     void onPacketSnifferToggleClicked();
     void onPacketSnifferClosed();
 
-
 private:
     int untitledName;
     Ui::MainWindow *ui;
@@ -135,6 +136,7 @@ private:
     int lastMessageRepeat;
     TnfsClient *tnfsClient;
     bool isClosing;
+    BackendManager* backendManager;
 
     QDialog *logWindow_;
     QList<QAction*> recentFilesActions_;

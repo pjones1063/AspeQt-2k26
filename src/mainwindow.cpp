@@ -39,6 +39,8 @@
 #include "opcodes6502.h"
 #include "xeximage.h"
 #include "epsonprinter.h"
+#include "backendlibrarydialog.h"
+
 
 #include "websocketclientwrapper.h"
 #include "webbridge.h"
@@ -260,6 +262,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     setGeometry(aspeqtSettings->lastHorizontalPos(),aspeqtSettings->lastVerticalPos(),aspeqtSettings->lastWidth(),aspeqtSettings->lastHeight());
 
+
     // Initialize Headless Cassette Deck
     m_casWorker = nullptr;
     m_casTimer = new QTimer(this);
@@ -313,15 +316,14 @@ MainWindow::MainWindow(QWidget *parent)
     // B. Create Control Buttons (Using QToolButton for ease)
     // ------------------------------------------------
     auto setupBtn = [](QToolButton* btn, QString iconName, QString text, QString tip) {
-        // Try to load icon, fallback to text if missing
         QIcon icon(iconName);
-        if (icon.isNull()) btn->setText(text);
-        else btn->setIcon(icon);
+        btn->setIcon(icon);
+        btn->setText(text); // Always set text
 
         btn->setToolTip(tip);
-        btn->setAutoRaise(true); // Makes it look flat like the label icons
-        btn->setFixedSize(22, 22);
+        btn->setAutoRaise(true);
         btn->setIconSize(QSize(16, 16));
+        // btn->setFixedSize(22, 22); // REMOVE this so text isn't cut off
     };
 
     // 2. Hangup
@@ -388,13 +390,30 @@ MainWindow::MainWindow(QWidget *parent)
     QToolBar *mainToolBar = addToolBar(tr("Main Tools"));
     mainToolBar->setMovable(false);          // Lock it under the menu bar
     mainToolBar->setIconSize(QSize(16, 16)); // Keep icons uniform
-    ui->actionShowPrinterTextOutput->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
+    mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
+    ui->actionShowPrinterTextOutput->setIcon(QIcon(":/icons/silk-icons/icons/page_white_text.png"));
     mainToolBar->addAction(ui->actionStartEmulation);
     mainToolBar->addAction(ui->actionPrinterEmulation);
     mainToolBar->addAction(ui->actionShowPrinterTextOutput);
     mainToolBar->addAction(ui->actionOptions);
     mainToolBar->addSeparator();
+
+
+    QAction* actionBackendLibrary = new QAction(QIcon(":/icons/oxygen-icons/16x16/actions/network.png"), tr("Backend App Library..."), this);
+    actionBackendLibrary->setStatusTip(tr("Manage and monitor external backend processes"));
+
+    // Insert the action right before "Options..."
+    ui->menu_Tools->insertAction(ui->actionOptions, actionBackendLibrary);
+
+    // Optional but looks great: Add a separator line between Library and Options
+    ui->menu_Tools->insertSeparator(ui->actionOptions);
+    connect(actionBackendLibrary, &QAction::triggered, this, [this]() {
+        BackendLibraryDialog dlg(backendManager, this);
+        dlg.exec();
+    });
+
+    ui->actionBootOption->setIcon(QIcon(":/icons/silk-icons/icons/drive_go.png"));
 
     // 1. Clear Log Button (Converted to a proper ToolButton)
     QToolButton *btnClearLog = new QToolButton(this);
@@ -425,7 +444,7 @@ MainWindow::MainWindow(QWidget *parent)
     mainToolBar->addAction(ui->actionPhonebook);
     mainToolBar->addWidget(btnMacroUser);
     mainToolBar->addWidget(btnMacroPass);
-
+    mainToolBar->addSeparator();
 
     // D. Finalize Status Bar (Passive Indicators Only)
     // ------------------------------------------------
@@ -439,6 +458,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sio, &SioWorker::rxActivity, this, &MainWindow::blinkRx);
     connect(sio, &SioWorker::txActivity, this, &MainWindow::blinkTx);
 
+    backendManager = new BackendManager(this);
+    connect(backendManager, &BackendManager::logMessage, this, &MainWindow::doLogMessage);
+    connect(qApp, &QCoreApplication::aboutToQuit, backendManager, &BackendManager::shutdownAll);
+    backendManager->startAllAutoStart();
 
     for (int i = 0; i < 4; i++) {
         // 1. Setup the Hardware Bridge Objects
@@ -490,7 +513,6 @@ MainWindow::MainWindow(QWidget *parent)
     pcLink->moveToThread(sio);
     sio->installDevice(PCLINK_CDEVIC, pcLink);
 
-
     // -------------------------------------------------------
     // DEVICE $46: AspeQt Client Device & legacy support
     // -------------------------------------------------------
@@ -508,7 +530,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(client, SIGNAL(bootExe(QString)), this, SLOT(bootExeTriggered(QString)));
     connect(client, SIGNAL(bootCas(QString)), this, SLOT(bootCasTriggered(QString)));
     connect(client, SIGNAL(togglePrinterServer(bool)), this, SLOT(printServer(bool)));
-
 
     // -------------------------------------------------------
     // DEVICE $57: Pipe Network (W:)
@@ -918,6 +939,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if(isClosing)
         return;
     isClosing = true;
+
+    if (backendManager) {
+        backendManager->shutdownAll();
+    }
 
     // Save various session settings  //
     if (aspeqtSettings->saveWindowsPos()) {
@@ -3684,3 +3709,4 @@ void MainWindow::toggleEmulationHeadless()
     on_actionStartEmulation_triggered();
     qDebug() << "!i [Headless] Emulation toggled via headless command.";
 }
+

@@ -593,6 +593,221 @@ Bei manchen Programmen ist es unter Umständen nötig, diesen Dialog manuell zu 
     </message>
 </context>
 <context>
+    <name>BackendEditDialog</name>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="12" />
+        <source>Edit Backend W: App</source>
+        <translation>Backend bearbeiten W: App</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="24" />
+        <location filename="../../src/backendeditdialog.cpp" line="52" />
+        <source>Browse...</source>
+        <translation>Durchsuchen...</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="32" />
+        <source>Start automatically with AspeQt</source>
+        <translation>Starten Sie automatisch mit AspeQt</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="36" />
+        <source>Key (e.g. PORT)</source>
+        <translation>Schlüssel (z. B. PORT)</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="36" />
+        <source>Value</source>
+        <translation>Wert</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="75" />
+        <source>Name:</source>
+        <translation>Name:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="76" />
+        <source>Command:</source>
+        <translation>Befehl:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="77" />
+        <source>Arguments:</source>
+        <translation>Argumente:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="78" />
+        <source>Working Dir:</source>
+        <translation>Arbeitsdirektor:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="79" />
+        <source>Environment:</source>
+        <translation>Umfeld:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="80" />
+        <source>Virtual Env:</source>
+        <translation>Virtuelle Umgebung:</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="83" />
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="84" />
+        <source>Cancel</source>
+        <translation>Stornieren</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="105" />
+        <source>Select Working Directory</source>
+        <translation>Wählen Sie Arbeitsverzeichnis aus</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendeditdialog.cpp" line="169" />
+        <source>Select Virtual Environment Directory</source>
+        <translation>Wählen Sie „Verzeichnis der virtuellen Umgebung“ aus</translation>
+    </message>
+</context>
+<context>
+    <name>BackendLibraryDialog</name>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="20" />
+        <source>Backend W: Apps Library</source>
+        <translation>Backend W: Apps-Bibliothek</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
+        <source>Status</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
+        <source>Command</source>
+        <translation>Befehl</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
+        <source>Auto-Start</source>
+        <translation>Autostart</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="32" />
+        <source>Add...</source>
+        <translation>Hinzufügen...</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="33" />
+        <source>Edit...</source>
+        <translation>Bearbeiten...</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="34" />
+        <source>Open Code</source>
+        <translation>Code öffnen</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="35" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="213" />
+        <source>Delete</source>
+        <translation>Löschen</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="37" />
+        <source>Start</source>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="38" />
+        <source>Stop</source>
+        <translation>Stoppen</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="39" />
+        <source>View Log</source>
+        <translation>Protokoll anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="40" />
+        <source>Mount W: Drivers (D1:)</source>
+        <translation>Mount W: Treiber (D1:)</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="102" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="243" />
+        <source>Running</source>
+        <translation>Läuft</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="102" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="243" />
+        <source>Stopped</source>
+        <translation>Angehalten</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="111" />
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="111" />
+        <source>No</source>
+        <translation>NEIN</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="200" />
+        <source>No Directory</source>
+        <translation>Kein Verzeichnis</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="200" />
+        <source>Please set a Working Directory in the Edit menu first.</source>
+        <translation>Bitte legen Sie zunächst im Menü „Bearbeiten“ ein Arbeitsverzeichnis fest.</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="213" />
+        <source>Are you sure you want to delete this app?</source>
+        <translation>Möchten Sie diese App wirklich löschen?</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="279" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="297" />
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="279" />
+        <source>Could not load drivers.atr from firmware resources.</source>
+        <translation>Drivers.atr konnte nicht aus Firmware-Ressourcen geladen werden.</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="295" />
+        <source>Success</source>
+        <translation>Erfolg</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="295" />
+        <source>W: Drivers mounted to D1: in RAM.
+
+Reboot the Atari to load them.</source>
+        <translation>W: Treiber auf D1: im RAM gemountet.
+
+Starten Sie den Atari neu, um sie zu laden.</translation>
+    </message>
+    <message>
+        <location filename="../../src/backendlibrarydialog.cpp" line="297" />
+        <source>Could not communicate with the main emulator window.</source>
+        <translation>Es konnte nicht mit dem Hauptfenster des Emulators kommuniziert werden.</translation>
+    </message>
+</context>
+<context>
     <name>BootOptionsDialog</name>
     <message>
         <location filename="../../src/bootoptionsdialog.ui" line="14" />
@@ -2540,15 +2755,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="203" />
-        <location filename="../../src/mainwindow.cpp" line="1325" />
+        <location filename="../../src/mainwindow.cpp" line="1353" />
         <source>&amp;Start emulation</source>
         <translation>&amp;Starte Emulation</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="206" />
         <location filename="../../src/mainwindow.ui" line="209" />
-        <location filename="../../src/mainwindow.cpp" line="1326" />
-        <location filename="../../src/mainwindow.cpp" line="1327" />
+        <location filename="../../src/mainwindow.cpp" line="1354" />
+        <location filename="../../src/mainwindow.cpp" line="1355" />
         <source>Start SIO peripheral emulation</source>
         <translation>Starte SIO Peripherie Emulation</translation>
     </message>
@@ -2632,7 +2847,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/mainwindow.ui" line="576" />
         <location filename="../../src/mainwindow.ui" line="579" />
-        <location filename="../../src/mainwindow.cpp" line="2727" />
+        <location filename="../../src/mainwindow.cpp" line="2755" />
         <source>Open BBS Phonebook</source>
         <translation>Öffnen Sie das BBS-Telefonbuch</translation>
     </message>
@@ -2652,8 +2867,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../../src/mainwindow.ui" line="490" />
         <location filename="../../src/mainwindow.ui" line="493" />
-        <location filename="../../src/mainwindow.cpp" line="1293" />
-        <location filename="../../src/mainwindow.cpp" line="1294" />
+        <location filename="../../src/mainwindow.cpp" line="1321" />
+        <location filename="../../src/mainwindow.cpp" line="1322" />
         <source>Stop printer emulation</source>
         <translation>Stoppen Sie die Druckeremulation</translation>
     </message>
@@ -3117,13 +3332,13 @@ p, li { white-space: pre-wrap; }
         <translation>Speichere gemountete Diskettenimage-Gruppe als Standard</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="174" />
+        <location filename="../../src/mainwindow.cpp" line="176" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt gestartet bei %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="233" />
-        <location filename="../../src/mainwindow.cpp" line="243" />
+        <location filename="../../src/mainwindow.cpp" line="235" />
+        <location filename="../../src/mainwindow.cpp" line="245" />
         <source>Session file error</source>
         <translation>Sitzungsdatei-Fehler</translation>
     </message>
@@ -3137,18 +3352,18 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Angeforderte Sitzungsdatei nicht im aktuellen Pfad des Programms gefunden (es war kein Pfad angegeben). AspeQr macht mit der Standard-Sitzungs-Konfiguration weiter.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="254" />
+        <location filename="../../src/mainwindow.cpp" line="256" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - ATARI Serielle Peripherie Emulation für Qt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="256" />
-        <location filename="../../src/mainwindow.cpp" line="2379" />
+        <location filename="../../src/mainwindow.cpp" line="258" />
+        <location filename="../../src/mainwindow.cpp" line="2407" />
         <source> -- Session: </source>
         <translation> -- Sitzung: </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="271" />
+        <location filename="../../src/mainwindow.cpp" line="274" />
         <source>19200 bits/sec</source>
         <translation>19200 bits/sek</translation>
     </message>
@@ -3157,37 +3372,37 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Lösche Nachrichten</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="676" />
+        <location filename="../../src/mainwindow.cpp" line="700" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQ1 gestoppt bei %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="718" />
+        <location filename="../../src/mainwindow.cpp" line="742" />
         <source>Mount from TNFS Network...</source>
         <translation>Aus dem TNFS-Netzwerk mounten...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="740" />
+        <location filename="../../src/mainwindow.cpp" line="764" />
         <source>Mount TNFS</source>
         <translation>Mounten Sie TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="857" />
+        <location filename="../../src/mainwindow.cpp" line="881" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Diskettenimages %1 und %2 gewechselt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="911" />
+        <location filename="../../src/mainwindow.cpp" line="935" />
         <source>Cannot mount '%1': No empty disk slots.</source>
         <translation>Kann %1 nicht mounten: kein freier Platz.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1009" />
+        <location filename="../../src/mainwindow.cpp" line="1037" />
         <source>First run</source>
         <translation>Erster Lauf</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1010" />
+        <location filename="../../src/mainwindow.cpp" line="1038" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -3195,121 +3410,121 @@ Do you want to open the options dialog?</source>
     </message>
     <message>
         <location filename="../../src/mainwindow.ui" line="505" />
-        <location filename="../../src/mainwindow.cpp" line="1241" />
-        <location filename="../../src/mainwindow.cpp" line="1242" />
+        <location filename="../../src/mainwindow.cpp" line="1269" />
+        <location filename="../../src/mainwindow.cpp" line="1270" />
         <source>Hide drives D9-DO</source>
         <translation>Laufwerke D9-DO ausblenden</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1246" />
-        <location filename="../../src/mainwindow.cpp" line="1247" />
+        <location filename="../../src/mainwindow.cpp" line="1274" />
+        <location filename="../../src/mainwindow.cpp" line="1275" />
         <source>Show drives D9-DO</source>
         <translation>Antriebe D9-DO anzeigen</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1297" />
-        <location filename="../../src/mainwindow.cpp" line="1298" />
+        <location filename="../../src/mainwindow.cpp" line="1325" />
+        <location filename="../../src/mainwindow.cpp" line="1326" />
         <source>Start printer emulation</source>
         <translation>Starten Sie die Druckeremulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2130" />
+        <location filename="../../src/mainwindow.cpp" line="2158" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Datenträger %1] Auto-Commit EIN.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2132" />
+        <location filename="../../src/mainwindow.cpp" line="2160" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Datenträger %1] Auto-Commit AUS.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2348" />
-        <location filename="../../src/mainwindow.cpp" line="2411" />
+        <location filename="../../src/mainwindow.cpp" line="2376" />
+        <location filename="../../src/mainwindow.cpp" line="2439" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>AspeQt-Sitzungen (*.aspeqt);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2547" />
+        <location filename="../../src/mainwindow.cpp" line="2575" />
         <source>Drive %1 Happy Mode %2.</source>
         <translation>Fahre %1 Happy Mode %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2549" />
+        <location filename="../../src/mainwindow.cpp" line="2577" />
         <source>Enabled</source>
         <translation>Ermöglicht</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2549" />
+        <location filename="../../src/mainwindow.cpp" line="2577" />
         <source>Disabled</source>
         <translation>Deaktiviert</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2612" />
+        <location filename="../../src/mainwindow.cpp" line="2640" />
         <source>Mounted TNFS Stream: %1</source>
         <translation>Gemounteter TNFS-Stream: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2630" />
+        <location filename="../../src/mainwindow.cpp" line="2658" />
         <source>Mount Error</source>
         <translation>Mount-Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1282" />
+        <location filename="../../src/mainwindow.cpp" line="1310" />
         <source>Printer emulation stopped.</source>
         <translation>Die Druckeremulation wurde gestoppt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1284" />
+        <location filename="../../src/mainwindow.cpp" line="1312" />
         <source>Printer emulation started.</source>
         <translation>Die Druckeremulation wurde gestartet.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1316" />
+        <location filename="../../src/mainwindow.cpp" line="1344" />
         <source>&amp;Stop emulation</source>
         <translation>&amp;Stoppe Emulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1317" />
-        <location filename="../../src/mainwindow.cpp" line="1318" />
+        <location filename="../../src/mainwindow.cpp" line="1345" />
+        <location filename="../../src/mainwindow.cpp" line="1346" />
         <source>Stop SIO peripheral emulation</source>
         <translation>Stoppe SIO Peripherie Emulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1332" />
+        <location filename="../../src/mainwindow.cpp" line="1360" />
         <source>Emulation stopped.</source>
         <translation>Emulation gestoppt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1424" />
-        <location filename="../../src/mainwindow.cpp" line="1445" />
+        <location filename="../../src/mainwindow.cpp" line="1452" />
+        <location filename="../../src/mainwindow.cpp" line="1473" />
         <source>Folder image</source>
         <translation>Verzeichnis Image</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1457" />
-        <location filename="../../src/mainwindow.cpp" line="2089" />
-        <location filename="../../src/mainwindow.cpp" line="2141" />
-        <location filename="../../src/mainwindow.cpp" line="2186" />
+        <location filename="../../src/mainwindow.cpp" line="1485" />
+        <location filename="../../src/mainwindow.cpp" line="2117" />
+        <location filename="../../src/mainwindow.cpp" line="2169" />
+        <location filename="../../src/mainwindow.cpp" line="2214" />
         <source>Save failed</source>
         <translation>Speichern fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1458" />
-        <location filename="../../src/mainwindow.cpp" line="2089" />
-        <location filename="../../src/mainwindow.cpp" line="2141" />
-        <location filename="../../src/mainwindow.cpp" line="2186" />
+        <location filename="../../src/mainwindow.cpp" line="1486" />
+        <location filename="../../src/mainwindow.cpp" line="2117" />
+        <location filename="../../src/mainwindow.cpp" line="2169" />
+        <location filename="../../src/mainwindow.cpp" line="2214" />
         <source>'%1' cannot be saved, do you want to save the image with another name?</source>
         <translation>'%1' kann nicht gespeichert werden, möchten Sie das Image mit einem anderen Namen speichern?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1770" />
+        <location filename="../../src/mainwindow.cpp" line="1798" />
         <source>Unmounted disk %1</source>
         <translation>Diskettenimage %1 unmountet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1943" />
-        <location filename="../../src/mainwindow.cpp" line="2337" />
-        <location filename="../../src/mainwindow.cpp" line="3675" />
+        <location filename="../../src/mainwindow.cpp" line="1971" />
+        <location filename="../../src/mainwindow.cpp" line="2365" />
+        <location filename="../../src/mainwindow.cpp" line="3703" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] '%2' als '%3' gemountet.</translation>
     </message>
@@ -3322,352 +3537,362 @@ Do you want to open the options dialog?</source>
         <translation type="obsolete">Alle ATARI Diskettenimages (*.atr *.xfd *.atx *.pro);;SIO2PC ATR Diskettenimages (*.atr);;XFormer XFD Diskettenimages (*.xfd);;ATX Diskettenimages (*.atx);;Pro Diskettenimages (*.pro);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2169" />
+        <location filename="../../src/mainwindow.cpp" line="2197" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation>Alle Atari-Disk-Images (*.atr *.xfd *.pro);;SIO2PC ATR-Images (*.atr);;XFormer XFD-Images (*.xfd);;Pro-Images (*.pro);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1991" />
+        <location filename="../../src/mainwindow.cpp" line="2019" />
         <source>Open a folder image</source>
         <translation>Öffne ein Verzeichnis Image</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="234" />
-        <location filename="../../src/mainwindow.cpp" line="244" />
+        <location filename="../../src/mainwindow.cpp" line="236" />
+        <location filename="../../src/mainwindow.cpp" line="246" />
         <source>Requested session file not found...</source>
         <translation>Angeforderte Sitzungsdatei nicht gefunden...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="290" />
+        <location filename="../../src/mainwindow.cpp" line="293" />
         <source>Adjust Shade Opacity</source>
         <translation>Passen Sie die Deckkraft des Farbtons an</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="298" />
+        <location filename="../../src/mainwindow.cpp" line="301" />
         <source>RX: Data Receiving from Internet</source>
         <translation>RX: Datenempfang aus dem Internet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="304" />
+        <location filename="../../src/mainwindow.cpp" line="307" />
         <source>TX: Data Sending from Atari</source>
         <translation>TX: Datenversand von Atari</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="329" />
+        <location filename="../../src/mainwindow.cpp" line="332" />
         <source>Hangup (NO CARRIER)</source>
         <translation>Auflegen (KEIN TRÄGER)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="341" />
-        <location filename="../../src/mainwindow.cpp" line="2728" />
+        <location filename="../../src/mainwindow.cpp" line="344" />
+        <location filename="../../src/mainwindow.cpp" line="2756" />
         <source>Send Auto-User (ESC-U)</source>
         <translation>Auto-Benutzer senden (ESC-U)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="352" />
-        <location filename="../../src/mainwindow.cpp" line="2729" />
+        <location filename="../../src/mainwindow.cpp" line="355" />
+        <location filename="../../src/mainwindow.cpp" line="2757" />
         <source>Send Auto-Pass (ESC-P)</source>
         <translation>Auto-Pass senden (ESC-P)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="365" />
+        <location filename="../../src/mainwindow.cpp" line="369" />
         <source>Toggle SIO Hex Dump Trace</source>
         <translation>SIO-Hex-Dump-Trace umschalten</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="371" />
+        <location filename="../../src/mainwindow.cpp" line="375" />
         <source>Toggle 6502 Disassembler</source>
         <translation>Schalten Sie den 6502-Disassembler um</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="377" />
+        <location filename="../../src/mainwindow.cpp" line="381" />
         <source>Toggle SIO Packet Sniffer</source>
         <translation>Schalten Sie den SIO-Paket-Sniffer ein</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="388" />
+        <location filename="../../src/mainwindow.cpp" line="392" />
         <source>Main Tools</source>
         <translation>Hauptwerkzeuge</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="401" />
+        <location filename="../../src/mainwindow.cpp" line="404" />
+        <source>Backend App Library...</source>
+        <translation>Backend-App-Bibliothek...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="405" />
+        <source>Manage and monitor external backend processes</source>
+        <translation>Verwalten und überwachen Sie externe Backend-Prozesse</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="421" />
         <source>Clear log messages</source>
         <translation>Protokollmeldungen löschen</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="408" />
+        <location filename="../../src/mainwindow.cpp" line="428" />
         <source>Show Log Window</source>
         <translation>Protokollfenster anzeigen</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1357" />
-        <location filename="../../src/mainwindow.cpp" line="2586" />
-        <location filename="../../src/mainwindow.cpp" line="3220" />
+        <location filename="../../src/mainwindow.cpp" line="1385" />
+        <location filename="../../src/mainwindow.cpp" line="2614" />
+        <location filename="../../src/mainwindow.cpp" line="3248" />
         <source>Loading...</source>
         <translation>Laden...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1357" />
-        <location filename="../../src/mainwindow.cpp" line="2586" />
-        <location filename="../../src/mainwindow.cpp" line="3220" />
+        <location filename="../../src/mainwindow.cpp" line="1385" />
+        <location filename="../../src/mainwindow.cpp" line="2614" />
+        <location filename="../../src/mainwindow.cpp" line="3248" />
         <source>Downloading from TNFS...</source>
         <translation>Von TNFS herunterladen...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1375" />
-        <location filename="../../src/mainwindow.cpp" line="1378" />
+        <location filename="../../src/mainwindow.cpp" line="1403" />
+        <location filename="../../src/mainwindow.cpp" line="1406" />
         <source>Executable (Local)</source>
         <translation>Ausführbare Datei (lokal)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1728" />
+        <location filename="../../src/mainwindow.cpp" line="1756" />
         <source>Slot %1 download aborted by user.</source>
         <translation>Download von Slot %1 wurde vom Benutzer abgebrochen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1958" />
+        <location filename="../../src/mainwindow.cpp" line="1986" />
         <source>Open a disk or executable image</source>
         <translation>Öffnen Sie eine Festplatte oder ein ausführbares Image</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1960" />
+        <location filename="../../src/mainwindow.cpp" line="1988" />
         <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
         <translation>Alle unterstützten Bilder (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR-Bilder (*.atr);;XFormer XFD-Bilder (*.xfd);;ATX-Bilder (*.atx);;Pro-Bilder (*.pro);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2038" />
+        <location filename="../../src/mainwindow.cpp" line="2066" />
         <source>Image file unsaved</source>
         <translation>Image Datei nicht gespeichert</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2038" />
+        <location filename="../../src/mainwindow.cpp" line="2066" />
         <source>'%1' has unsaved changes, do you want to save it?</source>
         <translation>'%1' hat ungespeicherte Änderungen, möchten Sie es speichern?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2630" />
+        <location filename="../../src/mainwindow.cpp" line="2658" />
         <source>Could not open TNFS stream from %1</source>
         <translation>Der TNFS-Stream von %1 konnte nicht geöffnet werden</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2650" />
+        <location filename="../../src/mainwindow.cpp" line="2678" />
         <source>Downloading: %1</source>
         <translation>Herunterladen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2652" />
+        <location filename="../../src/mainwindow.cpp" line="2680" />
         <source>Downloading...</source>
         <translation>Herunterladen...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2723" />
+        <location filename="../../src/mainwindow.cpp" line="2751" />
         <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
         <translation>Telefonbuch deaktiviert. Legen Sie den XML-Pfad unter Optionen -&gt; Modem Bridge fest.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2724" />
+        <location filename="../../src/mainwindow.cpp" line="2752" />
         <source>Macro User disabled. Set Phonebook XML path in Options.</source>
         <translation>Makrobenutzer deaktiviert. Legen Sie den XML-Pfad für das Telefonbuch in den Optionen fest.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2725" />
+        <location filename="../../src/mainwindow.cpp" line="2753" />
         <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
         <translation>Makropass deaktiviert. Legen Sie den XML-Pfad für das Telefonbuch in den Optionen fest.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2775" />
+        <location filename="../../src/mainwindow.cpp" line="2803" />
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2775" />
+        <location filename="../../src/mainwindow.cpp" line="2803" />
         <source>Could not extract manual to: </source>
         <translation>Das Handbuch konnte nicht extrahiert werden für:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3087" />
+        <location filename="../../src/mainwindow.cpp" line="3115" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
         <translation>[Web-Benutzeroberfläche] Warnung: Nicht gespeicherte Änderungen auf der Festplatte in Steckplatz %1 wurden durch die erzwungene Bereitstellung verworfen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3106" />
+        <location filename="../../src/mainwindow.cpp" line="3134" />
         <source>[Web UI] Mounted Executable to slot %1: %2</source>
         <translation>[Web-Benutzeroberfläche] Ausführbare Datei in Steckplatz %1 gemountet: %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3108" />
+        <location filename="../../src/mainwindow.cpp" line="3136" />
         <source>[Web UI] Executable ready. Please cold start the Atari.</source>
         <translation>[Web-UI] Ausführbare Datei bereit. Bitte starten Sie den Atari kalt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3112" />
+        <location filename="../../src/mainwindow.cpp" line="3140" />
         <source>[Web UI] Failed to parse Executable: %1</source>
         <translation>[Web-Benutzeroberfläche] Fehler beim Parsen der ausführbaren Datei: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3132" />
+        <location filename="../../src/mainwindow.cpp" line="3160" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
         <translation>[Web-Benutzeroberfläche] Warnung: Nicht gespeicherte Änderungen auf der Festplatte in Steckplatz %1 wurden durch erzwungenes Auswerfen verworfen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3194" />
+        <location filename="../../src/mainwindow.cpp" line="3222" />
         <source>[Web UI] Dialing BBS: %1 (%2)</source>
         <translation>[Web-Benutzeroberfläche] BBS anrufen: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3240" />
+        <location filename="../../src/mainwindow.cpp" line="3268" />
         <source>[Web UI] Mounted TNFS Stream: %1</source>
         <translation>[Web-Benutzeroberfläche] Gemounteter TNFS-Stream: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3250" />
+        <location filename="../../src/mainwindow.cpp" line="3278" />
         <source>[Web UI] Failed to mount TNFS Stream: %1</source>
         <translation>[Web-Benutzeroberfläche] Fehler beim Mounten des TNFS-Streams: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3251" />
+        <location filename="../../src/mainwindow.cpp" line="3279" />
         <source>Download failed or aborted: %1</source>
         <translation>Download fehlgeschlagen oder abgebrochen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3259" />
+        <location filename="../../src/mainwindow.cpp" line="3287" />
         <source>[Web UI] Write Protect for slot %1 set to %2</source>
         <translation>[Web-UI] Schreibschutz für Steckplatz %1 auf %2 gesetzt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3288" />
+        <location filename="../../src/mainwindow.cpp" line="3316" />
         <source>Web UI WebSocket Server started on port %1</source>
         <translation>Der Web-UI-WebSocket-Server wurde auf Port %1 gestartet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3290" />
+        <location filename="../../src/mainwindow.cpp" line="3318" />
         <source>Failed to start Web UI WebSocket Server.</source>
         <translation>Der Web-UI-WebSocket-Server konnte nicht gestartet werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3319" />
+        <location filename="../../src/mainwindow.cpp" line="3347" />
         <source>HTTP Dashboard available at http://localhost:%1</source>
         <translation>HTTP-Dashboard verfügbar unter http://localhost:%1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3321" />
+        <location filename="../../src/mainwindow.cpp" line="3349" />
         <source>Failed to start HTTP Server.</source>
         <translation>Der HTTP-Server konnte nicht gestartet werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3349" />
+        <location filename="../../src/mainwindow.cpp" line="3377" />
         <source>Web Dashboard and WebSocket servers completely shut down.</source>
         <translation>Web Dashboard- und WebSocket-Server wurden vollständig heruntergefahren.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3359" />
+        <location filename="../../src/mainwindow.cpp" line="3387" />
         <source>[Web UI] Failed to load cassette image: %1</source>
         <translation>[Web-Benutzeroberfläche] Kassettenbild konnte nicht geladen werden: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3369" />
+        <location filename="../../src/mainwindow.cpp" line="3397" />
         <source>[Web UI] Cassette Mounted: %1</source>
         <translation>[Web-Benutzeroberfläche] Kassette eingehängt: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3382" />
+        <location filename="../../src/mainwindow.cpp" line="3410" />
         <source>[Web UI] Cassette is already playing.</source>
         <translation>[Web-UI] Kassette wird bereits abgespielt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3386" />
+        <location filename="../../src/mainwindow.cpp" line="3414" />
         <source>[Web UI] Starting Cassette Playback.</source>
         <translation>[Web-Benutzeroberfläche] Starten der Kassettenwiedergabe.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3401" />
+        <location filename="../../src/mainwindow.cpp" line="3429" />
         <source>[Web UI] Rewinding Cassette...</source>
         <translation>[Web-Benutzeroberfläche] Kassette zurückspulen...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3425" />
+        <location filename="../../src/mainwindow.cpp" line="3453" />
         <source>[Web UI] Cassette Ejected.</source>
         <translation>[Web-Benutzeroberfläche] Kassette ausgeworfen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3441" />
+        <location filename="../../src/mainwindow.cpp" line="3469" />
         <source>[Web UI] Cassette Playback Finished.</source>
         <translation>[Web-Benutzeroberfläche] Kassettenwiedergabe abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3462" />
+        <location filename="../../src/mainwindow.cpp" line="3490" />
         <source>Failed to initialize blank disk.</source>
         <translation>Die leere Festplatte konnte nicht initialisiert werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3480" />
+        <location filename="../../src/mainwindow.cpp" line="3508" />
         <source>Failed to format blank disk.</source>
         <translation>Die leere Festplatte konnte nicht formatiert werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3499" />
+        <location filename="../../src/mainwindow.cpp" line="3527" />
         <source>Failed to save blank disk to host.</source>
         <translation>Die leere Festplatte konnte nicht auf dem Host gespeichert werden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3507" />
+        <location filename="../../src/mainwindow.cpp" line="3535" />
         <source>Blank disk created: %1</source>
         <translation>Leere Festplatte erstellt: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3508" />
+        <location filename="../../src/mainwindow.cpp" line="3536" />
         <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
         <translation>[Web-Benutzeroberfläche] Leere Festplatte erstellt und bereitgestellt: %1 in Steckplatz %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3523" />
-        <location filename="../../src/mainwindow.cpp" line="3623" />
-        <location filename="../../src/mainwindow.cpp" line="3624" />
+        <location filename="../../src/mainwindow.cpp" line="3551" />
+        <location filename="../../src/mainwindow.cpp" line="3651" />
+        <location filename="../../src/mainwindow.cpp" line="3652" />
         <source>Empty</source>
         <translation>Leer</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3525" />
+        <location filename="../../src/mainwindow.cpp" line="3553" />
         <source>No file mounted.</source>
         <translation>Keine Datei gemountet.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3529" />
+        <location filename="../../src/mainwindow.cpp" line="3557" />
         <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
         <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Dateiname:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format/Typ:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absoluter Pfad:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3540" />
+        <location filename="../../src/mainwindow.cpp" line="3568" />
         <source>Drive Details</source>
         <translation>Laufwerksdetails</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3565" />
+        <location filename="../../src/mainwindow.cpp" line="3593" />
         <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
         <translation>[Web-Benutzeroberfläche] Die Datei wurde direkt im RAM im Steckplatz %1: %2 bereitgestellt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3568" />
+        <location filename="../../src/mainwindow.cpp" line="3596" />
         <source>Mounted to RAM: %1</source>
         <translation>Im RAM bereitgestellt: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3572" />
+        <location filename="../../src/mainwindow.cpp" line="3600" />
         <source>[Web UI] Failed to parse RAM image: %1</source>
         <translation>[Web-Benutzeroberfläche] RAM-Image konnte nicht analysiert werden: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3575" />
+        <location filename="../../src/mainwindow.cpp" line="3603" />
         <source>Failed to parse: %1</source>
         <translation>Fehler beim Parsen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3581" />
+        <location filename="../../src/mainwindow.cpp" line="3609" />
         <source>[Injector] Cannot inject packet: SIO emulation is stopped.</source>
         <translation>[Injector] Paket kann nicht injiziert werden: SIO-Emulation wurde gestoppt.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3585" />
+        <location filename="../../src/mainwindow.cpp" line="3613" />
         <source>[Injector] Firing %1 bytes directly onto the Atari SIO Bus.</source>
         <translation>[Injector] Feuert %1 Bytes direkt auf den Atari-SIO-Bus ab.</translation>
     </message>
@@ -3676,7 +3901,7 @@ Do you want to open the options dialog?</source>
         <translation type="vanished">[Injektor] Virtueller Paketschritt ausgelöst: %1 Bytes</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3627" />
+        <location filename="../../src/mainwindow.cpp" line="3655" />
         <source>Swapped - Slot %1 -&gt; %2  |  Slot %3 -&gt; %4</source>
         <translation>Getauscht – Steckplatz %1 -&gt; %2 |  Steckplatz %3 -&gt; %4</translation>
     </message>
@@ -3801,22 +4026,22 @@ Do you want to open the options dialog?</source>
         <translation type="vanished">[Disk 15] Auto-commit AUS.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2167" />
+        <location filename="../../src/mainwindow.cpp" line="2195" />
         <source>Save image as</source>
         <translation>Speichere Image als</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2210" />
+        <location filename="../../src/mainwindow.cpp" line="2238" />
         <source>Revert to last saved</source>
         <translation>Zurück zum letzten gespeicherten Stand</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2211" />
+        <location filename="../../src/mainwindow.cpp" line="2239" />
         <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
         <translation>Wollen Sie wirklich mit '%1' zum letzten gespeicherten Stand zurück? Sie verlieren alle Änderungen, die gemacht wurden.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2346" />
+        <location filename="../../src/mainwindow.cpp" line="2374" />
         <source>Open session</source>
         <translation>Öffne Sitzung</translation>
     </message>
@@ -3825,27 +4050,27 @@ Do you want to open the options dialog?</source>
         <translation type="vanished">AspeQt Sitzungen (*.apspqt);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2409" />
+        <location filename="../../src/mainwindow.cpp" line="2437" />
         <source>Save session as</source>
         <translation>Speichere Sitzung als</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2440" />
+        <location filename="../../src/mainwindow.cpp" line="2468" />
         <source>Open executable</source>
         <translation>Öffne ausführbare Datei</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2442" />
+        <location filename="../../src/mainwindow.cpp" line="2470" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>ATARI ausführbare Dateien (*.xex *.com *.exe);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2474" />
+        <location filename="../../src/mainwindow.cpp" line="2502" />
         <source>Open a cassette image</source>
         <translation>Öffne Cassettenimage</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2476" />
+        <location filename="../../src/mainwindow.cpp" line="2504" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>CAS Imagedateien (*.cas);;Alle Dateien (*)</translation>
     </message>
@@ -5422,7 +5647,7 @@ Bitte weisen Sie verschiedene Ports zu.</translation>
     <message>
         <location filename="../../src/phonedirectory.cpp" line="271" />
         <source>Select Private Key File</source>
-        <translation>Wählen Sie Private Key File</translation>
+        <translation>Wählen Sie „Private Schlüsseldatei“.</translation>
     </message>
     <message>
         <location filename="../../src/phonedirectory.cpp" line="271" />

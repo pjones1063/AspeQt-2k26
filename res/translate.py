@@ -12,8 +12,22 @@ from deep_translator import GoogleTranslator
 #  python3  res/translate.py
 #
 ########################################################
-#
-#
+
+# --- Hardcoded Language Names for the OptionsDialog ---
+# This ensures that when the combo box looks for "English", it finds 
+# the localized name of the target language (e.g., "Deutsch" instead of "Englisch" in German).
+LANGUAGE_NAMES = {
+    'de': 'Deutsch', 
+    'es': 'Español', 
+    'pl': 'Polski', 
+    'ru': 'Русский', 
+    'sk': 'Slovenčina', 
+    'tr': 'Türkçe', 
+    'fr': 'Français',
+    'cs': 'Čeština',
+    'it': 'Italiano'
+}
+
 # ---Detection function for paths and URLs ---
 def is_path_or_url(text):
     if not text:
@@ -57,50 +71,72 @@ def auto_translate_ts():
         print(f"\n[{time.strftime('%H:%M:%S')}] Processing {filename}...")
         translator = GoogleTranslator(source='en', target=lang_map[lang_code])
 
-        for message in root.iter('message'):
-            source = message.find('source')
-            translation = message.find('translation')
+        # --- CONTEXT ITERATION ---
+        # We need to iterate through contexts first to catch the OptionsDialog
+        for context in root.findall('context'):
+            context_name_elem = context.find('name')
+            context_name = context_name_elem.text if context_name_elem is not None else ""
 
-            if source is not None and translation is not None:
-                if translation.get('type') == 'unfinished' or not translation.text:
+            for message in context.findall('message'):
+                source = message.find('source')
+                translation = message.find('translation')
+
+                if source is not None and translation is not None:
                     original_text = source.text
                     
-                    if original_text:
-                        # --- NEW: The Path/URL Bypass ---
-                        if is_path_or_url(original_text):
-                            print(f" [!] Bypassing path/URL: '{original_text}'")
-                            translation.text = original_text # Copy exactly
+                    # --- NEW: OptionsDialog "English" Override ---
+                    # Always force this specific translation, even if it's not marked 'unfinished', 
+                    # to correct previously bad translations.
+                    if context_name == "OptionsDialog" and original_text == "English":
+                        target_name = LANGUAGE_NAMES.get(lang_code, "English")
+                        if translation.text != target_name:
+                            print(f" [!] Enforcing Language Name Override: '{original_text}' => '{target_name}'")
+                            translation.text = target_name
                             
                             if 'type' in translation.attrib:
                                 del translation.attrib['type'] # Mark as finished
                                 
                             modified = True
-                            continue # Skip the Google API and the sleep timer!
-                            
-                        # --- Standard Translation ---
-                        try:
-                            translated_text = translator.translate(original_text)
-                            translation.text = translated_text
-                            
-                            if 'type' in translation.attrib:
-                                del translation.attrib['type']
-                                
-                            print(f" -> '{original_text}' => '{translated_text}'")
-                            modified = True
-                            
-                            delay = random.uniform(2.0, 5.0)
-                            print(f"    [Sleeping for {delay:.2f}s...]")
-                            time.sleep(delay)
-                            
-                            tree_str = ET.tostring(root, encoding='utf-8', xml_declaration=True).decode('utf-8')
-                            tree_str = tree_str.replace("<?xml version='1.0' encoding='utf-8'?>", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE TS>")
-                            with open(filepath, 'w', encoding='utf-8') as f:
-                                f.write(tree_str)
+                        continue # Skip to the next message, override handled
 
-                        except Exception as e:
-                            print(f" [!] Error translating '{original_text}': {e}")
-                            print("    [Taking a 10-second penalty box sleep before retrying...]")
-                            time.sleep(10)
+                    # Only process normal translations if they are unfinished or empty
+                    if translation.get('type') == 'unfinished' or not translation.text:
+                        if original_text:
+                            # --- The Path/URL Bypass ---
+                            if is_path_or_url(original_text):
+                                print(f" [!] Bypassing path/URL: '{original_text}'")
+                                translation.text = original_text # Copy exactly
+                                
+                                if 'type' in translation.attrib:
+                                    del translation.attrib['type'] # Mark as finished
+                                    
+                                modified = True
+                                continue # Skip the Google API and the sleep timer!
+                                
+                            # --- Standard Translation ---
+                            try:
+                                translated_text = translator.translate(original_text)
+                                translation.text = translated_text
+                                
+                                if 'type' in translation.attrib:
+                                    del translation.attrib['type']
+                                    
+                                print(f" -> '{original_text}' => '{translated_text}'")
+                                modified = True
+                                
+                                delay = random.uniform(2.0, 5.0)
+                                print(f"    [Sleeping for {delay:.2f}s...]")
+                                time.sleep(delay)
+                                
+                                tree_str = ET.tostring(root, encoding='utf-8', xml_declaration=True).decode('utf-8')
+                                tree_str = tree_str.replace("<?xml version='1.0' encoding='utf-8'?>", "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE TS>")
+                                with open(filepath, 'w', encoding='utf-8') as f:
+                                    f.write(tree_str)
+
+                            except Exception as e:
+                                print(f" [!] Error translating '{original_text}': {e}")
+                                print("    [Taking a 10-second penalty box sleep before retrying...]")
+                                time.sleep(10)
 
         # Save any final bypass modifications that didn't trigger the API save block
         if modified:
