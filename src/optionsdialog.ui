@@ -5,14 +5,6 @@
   <property name="windowModality">
    <enum>Qt::WindowModality::ApplicationModal</enum>
   </property>
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>695</width>
-    <height>581</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Options</string>
   </property>
@@ -30,6 +22,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="maximumWidth">
+      <number>260</number>
      </property>
      <property name="headerHidden">
       <bool>true</bool>
@@ -102,7 +97,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="page_serialPort">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -699,7 +694,7 @@
        <item>
         <widget class="QTabWidget" name="nodeTabWidget">
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="tab_R1">
           <attribute name="title">
@@ -1361,7 +1356,7 @@
            <widget class="QComboBox" name="i18nLanguageCombo"/>
           </item>
           <item>
-           <spacer name="verticalSpacer">
+           <spacer name="verticalSpacer_1">
             <property name="orientation">
              <enum>Qt::Orientation::Vertical</enum>
             </property>
@@ -1371,7 +1366,7 @@
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>15</height>
+              <height>10</height>
              </size>
             </property>
            </spacer>
@@ -1430,7 +1425,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer_i18n_bottom">
+        <spacer name="i18nSpacer2">
          <property name="orientation">
           <enum>Qt::Orientation::Vertical</enum>
          </property>
