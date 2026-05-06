@@ -75,9 +75,9 @@ jobs:
       - name: Setup MSYS2 and libssh
         uses: msys2/setup-msys2@v2
         with:
-          msystem: MINGW64
+          msystem: UCRT64
           # ONLY install libssh. We rely on Qt's compiler for everything else.
-          install: mingw-w64-x86_64-libssh
+          install: mingw-w64-ucrt-x86_64-libssh
 
       - name: Install Qt
         id: qt-install
@@ -111,10 +111,10 @@ jobs:
           
           mkdir build; cd build
           
-          # Use explicit Dlibssh_DIR to completely avoid PowerShell semicolon bugs
+          # Combine Qt and MSYS2 into the Prefix Path securely inside double quotes
           cmake .. -G "MinGW Makefiles" `
-              -DCMAKE_PREFIX_PATH="$QtPath" `
-              -Dlibssh_DIR="$Msys2Path/mingw64/lib/cmake/libssh" `
+              -DCMAKE_PREFIX_PATH="$QtPath;$Msys2Path/ucrt64" `
+              -Dlibssh_DIR="$Msys2Path/ucrt64/lib/cmake/libssh" `
               -DCMAKE_BUILD_TYPE=Release `
               -DCMAKE_MAKE_PROGRAM="$CompilerPath/mingw32-make.exe" `
               -DCMAKE_CXX_COMPILER="$CompilerPath/g++.exe" `
@@ -139,7 +139,7 @@ jobs:
       - name: Copy MSYS2 Dependencies
         shell: pwsh 
         run: |
-          $BinPath = "C:\msys64\mingw64\bin"
+          $BinPath = "C:\msys64\ucrt64\bin"
           
           # ONLY copy the pure C libraries from MSYS2. 
           # Qt will handle libstdc++ and libgcc because of --compiler-runtime.

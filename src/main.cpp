@@ -8,7 +8,10 @@
 int main(int argc, char *argv[])
 {
     // 1. Initialize the Qt Application first
+
+#ifndef Q_OS_WIN
     qputenv("QT_QPA_PLATFORMTHEME", "generic");
+#endif
     QApplication a(argc, argv);
 
     // 2. Parse command-line arguments for the power-user override
