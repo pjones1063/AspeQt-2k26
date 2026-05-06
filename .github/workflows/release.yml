@@ -85,8 +85,8 @@ jobs:
         shell: msys2 {0}
         run: |
           mkdir build && cd build
-          # Pass the standard Windows environment variable $Qt6_DIR explicitly translated for MSYS2
-          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(cygpath -m $Qt6_DIR)"
+          # Use GitHub's native environment variable injection
+          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(cygpath -m '${{ env.Qt6_DIR }}')"
           cmake --build . -j4
 
       - name: Package with windeployqt & Add Extras
