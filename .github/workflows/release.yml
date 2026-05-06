@@ -108,23 +108,25 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path "release/win-temp"
           Copy-Item "build/AspeQt.exe" "release/win-temp/"
-          windeployqt.exe --dir "release/win-temp" "release/win-temp/AspeQt.exe"
+          
+          # ADDED --compiler-runtime so Qt provides the correct libstdc++-6.dll
+          windeployqt.exe --compiler-runtime --dir "release/win-temp" "release/win-temp/AspeQt.exe"
           
           # Copy extras into the Windows staging folder
           Copy-Item -Path "doc" -Destination "release/win-temp/" -Recurse
           Copy-Item -Path "atari" -Destination "release/win-temp/" -Recurse
           Copy-Item -Path "python_w_samples" -Destination "release/win-temp/" -Recurse
+          Copy-Item -Path "python_w_samples" -Destination "release/win-temp/" -Recurse
 
       - name: Copy MSYS2 Dependencies
         shell: msys2 {0}
         run: |
+          # ONLY copy the C-based dependencies. 
+          # DO NOT copy libstdc++-6.dll, libgcc_s_seh-1.dll, or libwinpthread-1.dll from MSYS2!
           cp /mingw64/bin/libssh.dll release/win-temp/
           cp /mingw64/bin/libcrypto-*.dll release/win-temp/
           cp /mingw64/bin/libssl-*.dll release/win-temp/
           cp /mingw64/bin/zlib1.dll release/win-temp/
-          cp /mingw64/bin/libstdc++-6.dll release/win-temp/
-          cp /mingw64/bin/libgcc_s_seh-1.dll release/win-temp/
-          cp /mingw64/bin/libwinpthread-1.dll release/win-temp/
 
       - name: Create Portable ZIP
         shell: pwsh
