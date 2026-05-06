@@ -62,6 +62,7 @@ jobs:
           name: macOS-Release
           path: AspeQt-2K26-macOS.dmg
 
+  
   # ==========================================
   # 2. WINDOWS BUILD
   # ==========================================
@@ -75,8 +76,7 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
-          # CRITICAL FIX 1: We removed the MSYS2 compiler and cmake here. 
-          # We ONLY want it to provide the libssh dependency.
+          # ONLY install libssh. We rely on Qt's compiler for everything else.
           install: mingw-w64-x86_64-libssh
 
       - name: Install Qt
@@ -88,18 +88,22 @@ jobs:
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Compile AspeQt
-        # CRITICAL FIX 2: Changed from 'msys2' to 'pwsh'. This forces CMake 
-        # to use the official Qt MinGW compiler installed in the previous step.
         shell: pwsh 
         run: |
-          # The MSYS2 action installs to C:\msys64 by default on GitHub runners
-          $Msys2Path = "C:/msys64/mingw64"
+          # 1. Define exact paths
           $QtPath = $env:QT_ROOT_DIR -replace "\\", "/"
+          $Msys2Path = "C:/msys64/mingw64"
+          
+          # 2. NO MORE GUESSWORK: Set the native Environment Variable directly.
+          # CMake natively reads $env:CMAKE_PREFIX_PATH. By using PowerShell to set it at 
+          # the OS level, we guarantee CMake sees BOTH paths without quoting bugs.
+          $env:CMAKE_PREFIX_PATH = "$QtPath;$Msys2Path"
+          Write-Host "Forcing CMake to search: $env:CMAKE_PREFIX_PATH" -ForegroundColor Green
           
           mkdir build; cd build
           
-          # Pass BOTH Qt and MSYS2 paths so CMake can find Qt6Config and libssh
-          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$QtPath;$Msys2Path"
+          # 3. Run CMake clean. It will automatically detect the Env Var and find everything.
+          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
           cmake --build . -j4
 
       - name: Package with windeployqt & Add Extras
@@ -108,7 +112,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path "release/win-temp"
           Copy-Item "build/AspeQt.exe" "release/win-temp/" -Force
           
-          # --compiler-runtime forces Qt to bundle its own, correct C++ libraries
+          # Force Qt to bundle its own, correct C++ libraries
           windeployqt.exe --compiler-runtime --dir "release/win-temp" "release/win-temp/AspeQt.exe"
           
           Copy-Item -Path "doc" -Destination "release/win-temp/" -Recurse -Force
@@ -116,13 +120,11 @@ jobs:
           Copy-Item -Path "python_w_samples" -Destination "release/win-temp/" -Recurse -Force
 
       - name: Copy MSYS2 Dependencies
-        # CRITICAL FIX 3: Also running in standard PowerShell now.
         shell: pwsh 
         run: |
           $BinPath = "C:\msys64\mingw64\bin"
           
-          # ONLY copy the C-based libraries from MSYS2. 
-          # Do NOT copy C++ libraries (libstdc++, libgcc) from MSYS2!
+          # ONLY copy the C-based libraries from MSYS2 to avoid DLL Hell.
           Copy-Item "$BinPath\libssh.dll" "release\win-temp\" -Force
           Copy-Item "$BinPath\libcrypto-*.dll" "release\win-temp\" -Force
           Copy-Item "$BinPath\libssl-*.dll" "release\win-temp\" -Force
@@ -151,6 +153,7 @@ jobs:
           path: |
             AspeQt-2K26-Windows-Portable.zip
             release/AspeQt-2K26-Setup.exe
+            
   # ==========================================
   # 3. LINUX BUILD (AMD64)
   # ==========================================
