@@ -38,20 +38,23 @@ jobs:
           # Create a staging folder
           mkdir dmg_staging
           
-          # CRITICAL FIX: Use 'cp -a' instead of 'mv' to avoid background security locks
-          cp -a build/AspeQt.app dmg_staging/
+          # Use macOS native 'ditto' instead of cp to safely clone the app bundle without tripping locks
+          ditto build/AspeQt.app dmg_staging/AspeQt.app
           
           # Copy extras alongside the .app
           cp -r doc dmg_staging/
           cp -r atari dmg_staging/
           cp -r python_w_samples dmg_staging/
           
-          # Force filesystem sync and wait 3 seconds to ensure all locks are cleared
+          # Sync and wait slightly longer for macOS background indexing
           sync
-          sleep 3
+          sleep 10
           
-          # Create DMG
-          hdiutil create -volname "AspeQt-2K26" -srcfolder dmg_staging -ov -format UDZO AspeQt-2K26-macOS.dmg
+          # Create DMG with a robust retry loop (tries 5 times, waiting 5 seconds between failures)
+          for i in {1..5}; do
+            echo "Attempt $i to create DMG..."
+            hdiutil create -volname "AspeQt-2K26" -srcfolder dmg_staging -ov -format UDZO AspeQt-2K26-macOS.dmg && break || sleep 5
+          done
 
       - name: Upload DMG to GitHub
         uses: actions/upload-artifact@v4
