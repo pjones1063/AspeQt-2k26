@@ -86,6 +86,8 @@ jobs:
           version: '6.10.*'
           arch: win64_mingw
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
+          # CRITICAL FIX: Tell the action to download the matching MinGW compiler!
+          tools: 'tools_mingw'
 
       - name: Compile AspeQt
         shell: pwsh 
@@ -93,7 +95,7 @@ jobs:
           $Msys2Path = "C:/msys64"
           $QtPath = $env:QT_ROOT_DIR -replace "\\", "/"
           
-          # Dynamically find the Qt MinGW Tools directory on the GitHub Runner
+          # Dynamically find the Qt MinGW Tools directory we just told it to download
           $QtToolsBase = Split-Path (Split-Path $QtPath) -Parent
           $CompilerPath = (Get-ChildItem -Path $QtToolsBase -Filter "mingw32-make.exe" -Recurse).DirectoryName | Select-Object -First 1
           
@@ -109,9 +111,10 @@ jobs:
           
           mkdir build; cd build
           
-          # YOUR EXACT POWERSHELL COMMAND
+          # Use explicit Dlibssh_DIR to completely avoid PowerShell semicolon bugs
           cmake .. -G "MinGW Makefiles" `
-              -DCMAKE_PREFIX_PATH="$QtPath;$Msys2Path/mingw64" `
+              -DCMAKE_PREFIX_PATH="$QtPath" `
+              -Dlibssh_DIR="$Msys2Path/mingw64/lib/cmake/libssh" `
               -DCMAKE_BUILD_TYPE=Release `
               -DCMAKE_MAKE_PROGRAM="$CompilerPath/mingw32-make.exe" `
               -DCMAKE_CXX_COMPILER="$CompilerPath/g++.exe" `
@@ -138,7 +141,8 @@ jobs:
         run: |
           $BinPath = "C:\msys64\mingw64\bin"
           
-          # ONLY copy the C-based libraries from MSYS2 to avoid DLL Hell.
+          # ONLY copy the pure C libraries from MSYS2. 
+          # Qt will handle libstdc++ and libgcc because of --compiler-runtime.
           Copy-Item "$BinPath\libssh.dll" "release\win-temp\" -Force
           Copy-Item "$BinPath\libcrypto-*.dll" "release\win-temp\" -Force
           Copy-Item "$BinPath\libssl-*.dll" "release\win-temp\" -Force
@@ -167,7 +171,7 @@ jobs:
           path: |
             AspeQt-2K26-Windows-Portable.zip
             release/AspeQt-2K26-Setup.exe
-            
+                        
   # ==========================================
   # 3. LINUX BUILD (AMD64)
   # ==========================================
