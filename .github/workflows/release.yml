@@ -107,16 +107,15 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path "release/win-temp"
-          Copy-Item "build/AspeQt.exe" "release/win-temp/"
+          Copy-Item "build/AspeQt.exe" "release/win-temp/" -Force
           
           # ADDED --compiler-runtime so Qt provides the correct libstdc++-6.dll
           windeployqt.exe --compiler-runtime --dir "release/win-temp" "release/win-temp/AspeQt.exe"
           
-          # Copy extras into the Windows staging folder
-          Copy-Item -Path "doc" -Destination "release/win-temp/" -Recurse
-          Copy-Item -Path "atari" -Destination "release/win-temp/" -Recurse
-          Copy-Item -Path "python_w_samples" -Destination "release/win-temp/" -Recurse
-          Copy-Item -Path "python_w_samples" -Destination "release/win-temp/" -Recurse
+          # Copy extras into the Windows staging folder (Added -Force to bypass the "already exists" error)
+          Copy-Item -Path "doc" -Destination "release/win-temp/" -Recurse -Force
+          Copy-Item -Path "atari" -Destination "release/win-temp/" -Recurse -Force
+          Copy-Item -Path "python_w_samples" -Destination "release/win-temp/" -Recurse -Force
 
       - name: Copy MSYS2 Dependencies
         shell: msys2 {0}
