@@ -62,8 +62,7 @@ jobs:
           name: macOS-Release
           path: AspeQt-2K26-macOS.dmg
 
-  
-  # ==========================================
+# ==========================================
   # 2. WINDOWS BUILD
   # ==========================================
   build-windows:
@@ -75,8 +74,9 @@ jobs:
       - name: Setup MSYS2 and libssh
         uses: msys2/setup-msys2@v2
         with:
-          msystem: MINGW64
-          install: mingw-w64-x86_64-libssh
+          # Qt 6.10 uses UCRT. We must match it exactly.
+          msystem: UCRT64
+          install: mingw-w64-ucrt-x86_64-libssh
 
       - name: Install Qt
         id: qt-install
@@ -84,8 +84,8 @@ jobs:
         with:
           version: '6.10.*'
           arch: win64_mingw
-          # Added qttools to ensure REQUIRED LinguistTools is found
-          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver qttools'
+          # Removed 'qttools' (it caused the crash and is already in the base package)
+          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
           tools: 'tools_mingw'
 
       - name: Compile AspeQt
@@ -108,15 +108,15 @@ jobs:
           Write-Host "Using Compiler Path: $CompilerPath"
           Write-Host "========================================="
           
-          # CRITICAL FIX 1: Add Compiler to PATH so CMake's internal ABI tests don't fail silently
+          # CRITICAL FIX 1: Add Compiler to PATH so CMake's internal ABI tests pass
           $env:PATH = "$CompilerPath;" + $env:PATH
           
           mkdir build; cd build
           
-          # CRITICAL FIX 2: Mimic local script's CMAKE_PREFIX_PATH exactly.
-          # This allows the compiler to find the <libssh/libssh.h> header.
+          # CRITICAL FIX 2: Align Prefix Path to Qt and UCRT64 to find libssh
+          $env:CMAKE_PREFIX_PATH = "$QtPath;$Msys2Path/ucrt64"
+          
           cmake .. -G "MinGW Makefiles" `
-              -DCMAKE_PREFIX_PATH="$Msys2Path/ucrt64;$Msys2Path/mingw64" `
               -DCMAKE_BUILD_TYPE=Release `
               -DCMAKE_MAKE_PROGRAM="$CompilerPath/mingw32-make.exe" `
               -DCMAKE_CXX_COMPILER="$CompilerPath/g++.exe" `
@@ -143,7 +143,8 @@ jobs:
       - name: Copy MSYS2 Dependencies
         shell: pwsh 
         run: |
-          $BinPath = "C:\msys64\mingw64\bin"
+          # Copying from the UCRT64 path
+          $BinPath = "C:\msys64\ucrt64\bin"
           
           Copy-Item "$BinPath\libssh.dll" "release\win-temp\" -Force
           Copy-Item "$BinPath\libcrypto-*.dll" "release\win-temp\" -Force
@@ -173,6 +174,7 @@ jobs:
           path: |
             AspeQt-2K26-Windows-Portable.zip
             release/AspeQt-2K26-Setup.exe
+            
                         
   # ==========================================
   # 3. LINUX BUILD (AMD64)
