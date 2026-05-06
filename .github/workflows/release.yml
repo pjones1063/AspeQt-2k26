@@ -16,7 +16,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.10.*'
+          version: '6.10.*' # Aligned with Windows
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Install libssh
@@ -75,6 +75,7 @@ jobs:
           install: mingw-w64-x86_64-libssh mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
 
       - name: Install Qt
+        id: qt-install # <--- CRITICAL FIX 1: We name this step so we can grab its output later
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.10.*'
@@ -84,23 +85,14 @@ jobs:
       - name: Compile AspeQt
         shell: msys2 {0}
         run: |
-          # 1. Inject the path directly from GitHub's runner environment (bypassing MSYS2 vars)
-          RAW_QT_PATH='${{ env.Qt6_DIR }}'
+          # <--- CRITICAL FIX 2: Explicitly grab the path and format it for MSYS2
+          RAW_PATH="${{ steps.qt-install.outputs.qtPath }}"
+          CLEAN_PATH=$(cygpath -m "$RAW_PATH")
           
-          # 2. Convert Windows backslashes (C:\...) to forward slashes (C:/...) so MSYS2 and CMake don't break
-          CLEAN_QT_PATH=$(echo "$RAW_QT_PATH" | tr '\\' '/')
-          
-          # 3. Print the path to the Action logs so we can verify it isn't blank
-          echo "========================================"
-          echo "INJECTED QT PATH: $CLEAN_QT_PATH"
-          echo "========================================"
-          
-          # 4. Run CMake using the sanitized, explicit path
           mkdir build && cd build
-          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CLEAN_QT_PATH"
+          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CLEAN_PATH"
           cmake --build . -j4
-          
-          
+
       - name: Package with windeployqt & Add Extras
         shell: pwsh
         run: |
