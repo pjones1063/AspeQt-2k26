@@ -85,9 +85,16 @@ jobs:
       - name: Compile AspeQt
         shell: msys2 {0}
         run: |
-          # <--- CRITICAL FIX 2: Explicitly grab the path and format it for MSYS2
-          RAW_PATH="${{ steps.qt-install.outputs.qtPath }}"
+          # Grab the specific environment variable we saw in the logs
+          RAW_PATH="${{ env.QT_ROOT_DIR }}"
+          
+          # Convert it to the MSYS2 forward-slash format
           CLEAN_PATH=$(cygpath -m "$RAW_PATH")
+          
+          echo "========================================"
+          echo "Using QT_ROOT_DIR: $RAW_PATH"
+          echo "Converted for MSYS2: $CLEAN_PATH"
+          echo "========================================"
           
           mkdir build && cd build
           cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CLEAN_PATH"
