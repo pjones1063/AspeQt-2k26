@@ -75,10 +75,12 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
-          install: mingw-w64-x86_64-libssh mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+          # CRITICAL FIX 1: We removed the MSYS2 compiler and cmake here. 
+          # We ONLY want it to provide the libssh dependency.
+          install: mingw-w64-x86_64-libssh
 
       - name: Install Qt
-        id: qt-install # <--- CRITICAL FIX 1: We name this step so we can grab its output later
+        id: qt-install
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.10.*'
@@ -86,21 +88,18 @@ jobs:
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Compile AspeQt
-        shell: msys2 {0}
+        # CRITICAL FIX 2: Changed from 'msys2' to 'pwsh'. This forces CMake 
+        # to use the official Qt MinGW compiler installed in the previous step.
+        shell: pwsh 
         run: |
-          # Grab the specific environment variable we saw in the logs
-          RAW_PATH="${{ env.QT_ROOT_DIR }}"
+          # The MSYS2 action installs to C:\msys64 by default on GitHub runners
+          $Msys2Path = "C:/msys64/mingw64"
+          $QtPath = $env:QT_ROOT_DIR -replace "\\", "/"
           
-          # Convert it to the MSYS2 forward-slash format
-          CLEAN_PATH=$(cygpath -m "$RAW_PATH")
+          mkdir build; cd build
           
-          echo "========================================"
-          echo "Using QT_ROOT_DIR: $RAW_PATH"
-          echo "Converted for MSYS2: $CLEAN_PATH"
-          echo "========================================"
-          
-          mkdir build && cd build
-          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CLEAN_PATH"
+          # Pass BOTH Qt and MSYS2 paths so CMake can find Qt6Config and libssh
+          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$QtPath;$Msys2Path"
           cmake --build . -j4
 
       - name: Package with windeployqt & Add Extras
@@ -109,23 +108,25 @@ jobs:
           New-Item -ItemType Directory -Force -Path "release/win-temp"
           Copy-Item "build/AspeQt.exe" "release/win-temp/" -Force
           
-          # ADDED --compiler-runtime so Qt provides the correct libstdc++-6.dll
+          # --compiler-runtime forces Qt to bundle its own, correct C++ libraries
           windeployqt.exe --compiler-runtime --dir "release/win-temp" "release/win-temp/AspeQt.exe"
           
-          # Copy extras into the Windows staging folder (Added -Force to bypass the "already exists" error)
           Copy-Item -Path "doc" -Destination "release/win-temp/" -Recurse -Force
           Copy-Item -Path "atari" -Destination "release/win-temp/" -Recurse -Force
           Copy-Item -Path "python_w_samples" -Destination "release/win-temp/" -Recurse -Force
 
       - name: Copy MSYS2 Dependencies
-        shell: msys2 {0}
+        # CRITICAL FIX 3: Also running in standard PowerShell now.
+        shell: pwsh 
         run: |
-          # ONLY copy the C-based dependencies. 
-          # DO NOT copy libstdc++-6.dll, libgcc_s_seh-1.dll, or libwinpthread-1.dll from MSYS2!
-          cp /mingw64/bin/libssh.dll release/win-temp/
-          cp /mingw64/bin/libcrypto-*.dll release/win-temp/
-          cp /mingw64/bin/libssl-*.dll release/win-temp/
-          cp /mingw64/bin/zlib1.dll release/win-temp/
+          $BinPath = "C:\msys64\mingw64\bin"
+          
+          # ONLY copy the C-based libraries from MSYS2. 
+          # Do NOT copy C++ libraries (libstdc++, libgcc) from MSYS2!
+          Copy-Item "$BinPath\libssh.dll" "release\win-temp\" -Force
+          Copy-Item "$BinPath\libcrypto-*.dll" "release\win-temp\" -Force
+          Copy-Item "$BinPath\libssl-*.dll" "release\win-temp\" -Force
+          Copy-Item "$BinPath\zlib1.dll" "release\win-temp\" -Force
 
       - name: Create Portable ZIP
         shell: pwsh
@@ -150,7 +151,6 @@ jobs:
           path: |
             AspeQt-2K26-Windows-Portable.zip
             release/AspeQt-2K26-Setup.exe
-
   # ==========================================
   # 3. LINUX BUILD (AMD64)
   # ==========================================
