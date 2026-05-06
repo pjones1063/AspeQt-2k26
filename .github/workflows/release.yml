@@ -75,7 +75,6 @@ jobs:
       - name: Setup MSYS2 and libssh
         uses: msys2/setup-msys2@v2
         with:
-          # FIX 1: MUST use MINGW64 (MSVCRT) to perfectly match Qt's bundled compiler
           msystem: MINGW64
           install: mingw-w64-x86_64-libssh
 
@@ -85,7 +84,8 @@ jobs:
         with:
           version: '6.10.*'
           arch: win64_mingw
-          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
+          # Added qttools to ensure REQUIRED LinguistTools is found
+          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver qttools'
           tools: 'tools_mingw'
 
       - name: Compile AspeQt
@@ -108,21 +108,25 @@ jobs:
           Write-Host "Using Compiler Path: $CompilerPath"
           Write-Host "========================================="
           
+          # CRITICAL FIX 1: Add Compiler to PATH so CMake's internal ABI tests don't fail silently
+          $env:PATH = "$CompilerPath;" + $env:PATH
+          
           mkdir build; cd build
           
-          # FIX 2: Set CMAKE_PREFIX_PATH as a pure Environment Variable.
-          # This prevents PowerShell from mangling the semicolon (;) on the command line.
-          $env:CMAKE_PREFIX_PATH = "$QtPath;$Msys2Path/mingw64"
-          
+          # CRITICAL FIX 2: Mimic local script's CMAKE_PREFIX_PATH exactly.
+          # This allows the compiler to find the <libssh/libssh.h> header.
           cmake .. -G "MinGW Makefiles" `
-              -Dlibssh_DIR="$Msys2Path/mingw64/lib/cmake/libssh" `
+              -DCMAKE_PREFIX_PATH="$Msys2Path/ucrt64;$Msys2Path/mingw64" `
               -DCMAKE_BUILD_TYPE=Release `
               -DCMAKE_MAKE_PROGRAM="$CompilerPath/mingw32-make.exe" `
               -DCMAKE_CXX_COMPILER="$CompilerPath/g++.exe" `
               -DCMAKE_C_COMPILER="$CompilerPath/gcc.exe" `
               -DCMAKE_RC_COMPILER="$CompilerPath/windres.exe" 
               
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+              
           cmake --build . -j4
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Package with windeployqt & Add Extras
         shell: pwsh
@@ -130,7 +134,6 @@ jobs:
           New-Item -ItemType Directory -Force -Path "release/win-temp"
           Copy-Item "build/AspeQt.exe" "release/win-temp/" -Force
           
-          # Force Qt to bundle its own, correct C++ libraries
           windeployqt.exe --compiler-runtime --dir "release/win-temp" "release/win-temp/AspeQt.exe"
           
           Copy-Item -Path "doc" -Destination "release/win-temp/" -Recurse -Force
@@ -140,7 +143,6 @@ jobs:
       - name: Copy MSYS2 Dependencies
         shell: pwsh 
         run: |
-          # FIX 3: Copy from the MSVCRT path
           $BinPath = "C:\msys64\mingw64\bin"
           
           Copy-Item "$BinPath\libssh.dll" "release\win-temp\" -Force
