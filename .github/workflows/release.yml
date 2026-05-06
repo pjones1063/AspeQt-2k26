@@ -14,9 +14,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
-          version: '6.10.*'
+          version: '6.11.*'
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Install libssh
@@ -75,9 +75,9 @@ jobs:
           install: mingw-w64-x86_64-libssh mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
-          version: '6.10.*'
+          version: '6.11.*'
           arch: win64_mingw
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
