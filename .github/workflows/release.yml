@@ -16,7 +16,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.11.*'
+          version: '6.10.*'
           modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
 
       - name: Install libssh
@@ -85,7 +85,8 @@ jobs:
         shell: msys2 {0}
         run: |
           mkdir build && cd build
-          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+          # Pass the standard Windows environment variable $Qt6_DIR explicitly translated for MSYS2
+          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(cygpath -m $Qt6_DIR)"
           cmake --build . -j4
 
       - name: Package with windeployqt & Add Extras
