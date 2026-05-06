@@ -90,20 +90,34 @@ jobs:
       - name: Compile AspeQt
         shell: pwsh 
         run: |
-          # 1. Define exact paths
+          $Msys2Path = "C:/msys64"
           $QtPath = $env:QT_ROOT_DIR -replace "\\", "/"
-          $Msys2Path = "C:/msys64/mingw64"
           
-          # 2. NO MORE GUESSWORK: Set the native Environment Variable directly.
-          # CMake natively reads $env:CMAKE_PREFIX_PATH. By using PowerShell to set it at 
-          # the OS level, we guarantee CMake sees BOTH paths without quoting bugs.
-          $env:CMAKE_PREFIX_PATH = "$QtPath;$Msys2Path"
-          Write-Host "Forcing CMake to search: $env:CMAKE_PREFIX_PATH" -ForegroundColor Green
+          # Dynamically find the Qt MinGW Tools directory on the GitHub Runner
+          $QtToolsBase = Split-Path (Split-Path $QtPath) -Parent
+          $CompilerPath = (Get-ChildItem -Path $QtToolsBase -Filter "mingw32-make.exe" -Recurse).DirectoryName | Select-Object -First 1
+          
+          if (-not $CompilerPath) {
+              Write-Error "CRITICAL: Could not locate the Qt MinGW compiler!"
+              exit 1
+          }
+          
+          $CompilerPath = $CompilerPath -replace "\\", "/"
+          Write-Host "========================================="
+          Write-Host "Using Compiler Path: $CompilerPath"
+          Write-Host "========================================="
           
           mkdir build; cd build
           
-          # 3. Run CMake clean. It will automatically detect the Env Var and find everything.
-          cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+          # YOUR EXACT POWERSHELL COMMAND
+          cmake .. -G "MinGW Makefiles" `
+              -DCMAKE_PREFIX_PATH="$QtPath;$Msys2Path/mingw64" `
+              -DCMAKE_BUILD_TYPE=Release `
+              -DCMAKE_MAKE_PROGRAM="$CompilerPath/mingw32-make.exe" `
+              -DCMAKE_CXX_COMPILER="$CompilerPath/g++.exe" `
+              -DCMAKE_C_COMPILER="$CompilerPath/gcc.exe" `
+              -DCMAKE_RC_COMPILER="$CompilerPath/windres.exe" 
+              
           cmake --build . -j4
 
       - name: Package with windeployqt & Add Extras
