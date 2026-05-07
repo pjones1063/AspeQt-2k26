@@ -62,6 +62,7 @@ jobs:
           name: macOS-Release
           path: AspeQt-2K26-macOS.dmg
 
+
   # ==========================================
   # 2. WINDOWS BUILD
   # ==========================================
@@ -91,24 +92,28 @@ jobs:
         run: |
           $QtRoot = $env:QT_ROOT_DIR
           $Msys2Path = "C:\msys64"
-
-          # DYNAMIC SEARCH: Find where the actual MinGW bin folder is
-          Write-Host "Searching for MinGW compiler..." -ForegroundColor Cyan
-          $CompilerBin = Get-ChildItem -Path "$QtRoot\.." -Filter "g++.exe" -Recurse | 
-                         Select-Object -First 1 -ExpandProperty DirectoryName
-
-          if (-not $CompilerBin) {
-              Write-Error "Could not find g++.exe in the Qt directory tree!"
+          
+          # Use the IQTA_TOOLS variable - this is the source of truth for the compiler
+          Write-Host "Locating MinGW in $env:IQTA_TOOLS..." -ForegroundColor Cyan
+          
+          # Find the folder starting with 'mingw' inside the Tools directory
+          $MinGWDir = Get-ChildItem -Path "$env:IQTA_TOOLS" -Directory -Filter "mingw*" | Select-Object -First 1
+          
+          if (-not $MinGWDir) {
+              Write-Error "Could not find any MinGW directory in $env:IQTA_TOOLS"
               exit 1
           }
-          Write-Host "Found compiler at: $CompilerBin" -ForegroundColor Green
+          
+          $CompilerBin = "$($MinGWDir.FullName)\bin"
+          Write-Host "Found compiler bin at: $CompilerBin" -ForegroundColor Green
     
-          # Add the discovered compiler to the PATH
+          # Add the discovered compiler to the PATH to shadow the system GCC
           $env:PATH = "$CompilerBin;" + $env:PATH
 
           if (!(Test-Path "build")) { mkdir build }
           cd build
           
+          # Correct prefix path for finding libssh and Qt in MSYS2/Qt trees
           $env:CMAKE_PREFIX_PATH = "$QtRoot;$Msys2Path\ucrt64"
           
           cmake .. -G "MinGW Makefiles" `
@@ -128,14 +133,17 @@ jobs:
           New-Item -ItemType Directory -Force -Path "release/win-temp"
           Copy-Item "build/AspeQt.exe" "release/win-temp/" -Force
           
+          # Use absolute path to windeployqt
           & "$QtBin\windeployqt.exe" --compiler-runtime --dir "release/win-temp" "release/win-temp/AspeQt.exe"
           
+          # Copy extra assets
           Copy-Item -Path "doc", "atari", "python_w_samples" -Destination "release/win-temp/" -Recurse -Force
 
       - name: Copy MSYS2 Dependencies
         shell: pwsh 
         run: |
           $BinPath = "C:\msys64\ucrt64\bin"
+          # Explicitly copy libssh and required support DLLs
           Copy-Item "$BinPath\libssh.dll", "$BinPath\zlib1.dll" -Destination "release\win-temp\" -Force
           Copy-Item "$BinPath\libcrypto-*.dll", "$BinPath\libssl-*.dll" -Destination "release\win-temp\" -Force
 
@@ -146,8 +154,14 @@ jobs:
       - name: Build Inno Setup Installer
         shell: pwsh
         run: |
+          # Locate the .iss file and run the compiler
           $issFile = Get-ChildItem -Path . -Filter "AspeQt-Installer.iss" -Recurse | Select-Object -First 1
-          if ($issFile) { iscc $issFile.FullName } else { exit 1 }
+          if ($issFile) { 
+              iscc $issFile.FullName 
+          } else { 
+              Write-Error "Installer script not found!"
+              exit 1 
+          }
 
       - name: Upload Windows Artifacts to GitHub
         uses: actions/upload-artifact@v4
