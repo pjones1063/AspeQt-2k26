@@ -23,7 +23,7 @@ This version migrates the codebase to **Qt 6**, fixing critical stability issues
 #### 2. Client TNFS Support
 * **Cloud Storage:** Direct support for mounting disk images from TNFS servers (like `13leader.net`) without needing local files.
 * **Dynamic Browsing:** Integrated TNFS browser with thread-safe download progress tracking.
-* **QT6 TNFS Server:** Companion TNFS-2K26 server at https://github.com/pjones1063/tnfsd-2k26/releases/
+* **QT6 TNFS Server:** Companion server at [TNFS-2k26](https://github.com/pjones1063/tnfsd-2k26/releases/)
 
 #### 3. Native W: and Y: Drivers
 * **W: (Network Device):** A native SIO implementation of the Network Streaming Device. Supports HTTP and FTP (via system `curl`) for downloading data directly to the Atari. Includes EOL translation between Unix (LF) and ATASCII (EOL).
@@ -40,7 +40,7 @@ This version migrates the codebase to **Qt 6**, fixing critical stability issues
 * **Dynamic Baud Rates:** Automatically handles the Atari's 19200 baud SIO initialization and dynamically down-shifts to 9600 baud for concurrent stream mode (highly recommended for Ice-T and BobTerm).
 * **🔌 HARDWARE COMPATIBILITY:** This feature fully supports both **standard USB SIO2PC adapters** (FTDI) and direct **Raspberry Pi raw UART** connections.
 * **FT-232 / USB Adapter Note:** If using a USB adapter, ensure it has the `CTS` pin connected to the Atari's `COMMAND` line. Depending on how your specific FTDI chip was configured at the factory, you may need to toggle the "Invert CTS Logic" setting in AspeQt's options for it to communicate properly.
-* **Documentation:** Please refer to the [Hardware Documentation](doc/) for USB SIO2PC wiring, CTS configuration, and Raspberry Pi SIO-to-GPIO setup.
+* **Documentation:** Please refer to the (doc/) for USB SIO2PC wiring, CTS configuration, and Raspberry Pi SIO-to-GPIO setup.
 
 #### 6. Interactive Web Dashboard (Remote UI)
 * **Mobile-Friendly Control:** A fully responsive HTML5 web interface that allows you to control the emulator remotely from your smartphone, tablet, or another PC on your local network.
