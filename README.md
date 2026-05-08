@@ -23,7 +23,7 @@ This version migrates the codebase to **Qt 6**, fixing critical stability issues
 #### 2. Client TNFS Support
 * **Cloud Storage:** Direct support for mounting disk images from TNFS servers (like `13leader.net`) without needing local files.
 * **Dynamic Browsing:** Integrated TNFS browser with thread-safe download progress tracking.
-* **QT6 TNFS Server** Companion TNFS-2K26 server at https://github.com/pjones1063/tnfsd-2k26/releases/
+* **QT6 TNFS Server:** Companion TNFS-2K26 server at https://github.com/pjones1063/tnfsd-2k26/releases/
 
 #### 3. Native W: and Y: Drivers
 * **W: (Network Device):** A native SIO implementation of the Network Streaming Device. Supports HTTP and FTP (via system `curl`) for downloading data directly to the Atari. Includes EOL translation between Unix (LF) and ATASCII (EOL).
