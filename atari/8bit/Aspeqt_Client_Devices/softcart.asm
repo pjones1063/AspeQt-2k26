@@ -74,7 +74,8 @@ dst sta $A000,y         ; High byte overwritten by 'target_hi'
 
     ; 5. EXECUTE
     cli                 
-    
+
+        
     ; Check if Init Vector ($BFFE) is populated
     lda $BFFF           
     beq skip_init       ; Skip if high byte is 0
@@ -96,6 +97,5 @@ do_init
 ; =================================================================
 Payload
     ; Change this filename to test different patched .car files
-    ins 'test.car' 
-
+    ins '/home/paul/eclipse-workspace/AspeQt-2k26-2026.3/atari/menu_Cart(NO Boot).car'
     run Start

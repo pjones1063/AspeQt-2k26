@@ -220,75 +220,97 @@ HandlerStat
     clc
     rts
 
+
 HandlerSpec
     stx SaveX       
-    lda $0342,x     
-    cmp #$50
-    beq DoSpec      
-    jmp SpecExit    
-DoSpec
+
+    ; 1. PREPARE BUFFER (Clear it with 0s)
     ldy #0
     lda #0
 ClearLoop
     sta IOBuf,y
     iny
     bne ClearLoop
+
+    ; 2. COPY DATA (The URL string from the IOCB)
     ldx SaveX
-    lda $0348,x
-    sta DBYTLO      
-    lda $0344,x
+    lda $0348,x     ; Length Low
+    sta DBYTLO      ; Safe to use here (SetupDCB hasn't run yet)
+    
+    lda $0344,x     ; Src Low
     sta SrcRead+1   
-    lda $0345,x
+    lda $0345,x     ; Src High
     sta SrcRead+2   
+    
     ldy #0
 CopyLoop
     cpy DBYTLO      
     bcs CopyDone    
+    
 SrcRead
-    lda $FFFF,y
+    lda $FFFF,y     ; Patch
     sta IOBuf,y     
     iny
     bne CopyLoop
 CopyDone
+
+    ; 3. CALCULATE ID AND SAVE TO STACK
     ldx SaveX       
-    lda $0341,x     
+    lda $0341,x     ; Fetch Unit Number from IOCB
     bne UnitOK_S    
-    lda #1          
+    lda #1          ; Default to Unit 1
 UnitOK_S
-    sta DBYTLO      
+    pha             ; PUSH UNIT TO STACK (Safe storage across subroutine)
+    
+    ; Calculate Reverse ID ($58 - Unit)
+    sta DBYTLO      ; Temp store the Unit number for math
     lda #$58        
     sec
-    sbc DBYTLO      
+    sbc DBYTLO      ; Subtract the Unit number
     sta CurrentDev  
+
+    ; 4. SETUP BASE SIO (Fills DAUX1/2, Buffers, etc.)
     jsr SetupDCB_Open 
-    lda DBYTLO
-    sta DUNIT 
-    lda #$50
-    sta DCOMND
-    lda #$80
+    
+    ; 5. OVERWRITE PARAMS FOR XIO COMMAND
+    pla             ; PULL UNIT FROM STACK
+    sta DUNIT       ; Safely store in SIO Unit register
+    
+    ldx SaveX
+    lda $0342,x     ; Fetch the XIO Command again (ICCMD)
+    sta DCOMND      ; OVERWRITE the 'O' left by SetupDCB_Open
+    
+    lda #$80        ; Write direction (Sending the URL string)
     sta DSTATS
-    lda #$3F
+    lda #$3F        ; Long Timeout
     sta DTIMLO
-    lda #1
+    
+    lda #1          ; Length 256
     sta DBYTHI
     lda #0
     sta DBYTLO
+    
+    ; 6. FIRE SIO
     jsr SIOV
     bmi SpecFail
+    
     ldx SaveX
     ldy #1
     clc
     rts
+
 SpecFail
     ldx SaveX
     ldy #144        
     sec
     rts
+    
 SpecExit
     ldx SaveX       
     ldy #1          
     clc
-    rts
+    rts     
+   
     
 RefillBuffer
     jsr SetupDCB_Read

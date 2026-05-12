@@ -1,4 +1,5 @@
 #include "sshclient.h"
+#include <fcntl.h>
 #include <QDebug>
 
 // ============================================================================
@@ -6,7 +7,7 @@
 // ============================================================================
 
 SshBackend::SshBackend(QObject *parent)
-    : QObject(parent), m_session(nullptr), m_channel(nullptr), m_isConnected(false), m_pollIntervalMs(10)
+    : QObject(parent), m_session(nullptr), m_channel(nullptr), m_sftp(nullptr), m_isConnected(false), m_pollIntervalMs(10), m_currentMode(ModeTerminal)
 {
 }
 
@@ -17,6 +18,10 @@ SshBackend::~SshBackend() {
 void SshBackend::cleanup() {
     m_isConnected = false;
 
+    if (m_sftp) {
+        sftp_free(m_sftp);
+        m_sftp = nullptr;
+    }
     if (m_channel) {
         if (ssh_channel_is_open(m_channel)) ssh_channel_close(m_channel);
         ssh_channel_free(m_channel);
@@ -29,10 +34,11 @@ void SshBackend::cleanup() {
     }
 }
 
-void SshBackend::processConnection(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath) {
+void SshBackend::processConnection(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath, SshMode mode) {
     // Ensure clean state before starting
     cleanup();
 
+    m_currentMode = mode;
     m_session = ssh_new();
     if (!m_session) {
         emit errorOccurred("Internal Error: Failed to create SSH session structure.");
@@ -47,7 +53,6 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
     if (!user.isEmpty()) {
         ssh_options_set(m_session, SSH_OPTIONS_USER, user.toUtf8().constData());
     }
-
 
     // ---------------------------------------------------------
     // CRITICAL FIX: The Ultimate Retro-SSH Compatibility Block
@@ -128,43 +133,187 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
         }
     }
 
-    // Open a Channel
-    m_channel = ssh_channel_new(m_session);
-    if (!m_channel) {
-        emit errorOccurred("SSH Channel Error: Failed to create channel.");
-        cleanup();
+    // --- MODE ROUTING (Terminal vs SFTP) ---
+    if (m_currentMode == ModeTerminal) {
+        // Open a Channel
+        m_channel = ssh_channel_new(m_session);
+        if (!m_channel) {
+            emit errorOccurred("SSH Channel Error: Failed to create channel.");
+            cleanup();
+            return;
+        }
+
+        rc = ssh_channel_open_session(m_channel);
+        if (rc != SSH_OK) {
+            emit errorOccurred(QString("SSH Session Error: %1").arg(ssh_get_error(m_session)));
+            cleanup();
+            return;
+        }
+
+        // Request a PTY (Terminal)
+        rc = ssh_channel_request_pty(m_channel);
+        if (rc != SSH_OK) {
+            emit errorOccurred(QString("SSH PTY Error: %1").arg(ssh_get_error(m_session)));
+            cleanup();
+            return;
+        }
+
+        // Request a Shell
+        rc = ssh_channel_request_shell(m_channel);
+        if (rc != SSH_OK) {
+            emit errorOccurred(QString("SSH Shell Error: %1").arg(ssh_get_error(m_session)));
+            cleanup();
+            return;
+        }
+
+        m_isConnected = true;
+        emit connected();
+
+        // Start polling loop for Terminal mode
+        QTimer::singleShot(0, this, &SshBackend::pollLoop);
+
+    } else if (m_currentMode == ModeSftp) {
+        // Initialize SFTP Subsystem
+        m_sftp = sftp_new(m_session);
+        if (!m_sftp) {
+            emit errorOccurred("SFTP Error: Failed to allocate session.");
+            cleanup();
+            return;
+        }
+
+        rc = sftp_init(m_sftp);
+        if (rc != SSH_OK) {
+            emit errorOccurred(QString("SFTP Init Error: %1").arg(ssh_get_error(m_session)));
+            cleanup();
+            return;
+        }
+
+        m_isConnected = true;
+        emit connected();
+        // Note: No pollLoop for SFTP. It is driven by processSftpRequest
+    }
+}
+
+void SshBackend::processSftpRequest(const QString &path, bool isDirectory) {
+    if (!m_isConnected || !m_sftp) return;
+
+    if (isDirectory) {
+        sftp_dir dir = sftp_opendir(m_sftp, path.toUtf8().constData());
+        if (!dir) {
+            emit errorOccurred("SFTP Error: Could not open directory.");
+            return;
+        }
+
+        sftp_attributes attributes;
+        QByteArray listing;
+
+        while ((attributes = sftp_readdir(m_sftp, dir)) != nullptr) {
+            QString name = QString::fromUtf8(attributes->name);
+            if (name != "." && name != "..") {
+                if (attributes->type == SSH_FILEXFER_TYPE_DIRECTORY) {
+                    name.append("/"); // The Folder Watermark
+                }
+                listing.append(name.toLatin1());
+                listing.append('\n');
+            }
+            sftp_attributes_free(attributes);
+        }
+        sftp_closedir(dir);
+
+        emit dataReceived(listing);
+        emit sftpTransferFinished();
+
+    } else {
+        sftp_file file = sftp_open(m_sftp, path.toUtf8().constData(), O_RDONLY, 0);
+        if (!file) {
+            emit errorOccurred("SFTP Error: Could not open file.");
+            return;
+        }
+
+        char buffer[4096];
+        int nbytes;
+
+        while ((nbytes = sftp_read(file, buffer, sizeof(buffer))) > 0) {
+            emit dataReceived(QByteArray(buffer, nbytes));
+        }
+
+        sftp_close(file);
+        emit sftpTransferFinished();
+    }
+}
+
+void SshBackend::processSftpAction(const QString &path, SftpAction action) {
+    if (!m_isConnected || !m_sftp) {
+        emit sftpActionFinished(false, "SFTP Not Connected");
         return;
     }
 
-    rc = ssh_channel_open_session(m_channel);
-    if (rc != SSH_OK) {
-        emit errorOccurred(QString("SSH Session Error: %1").arg(ssh_get_error(m_session)));
-        cleanup();
+    int rc = SSH_ERROR;
+    QString pathUtf8 = path.toUtf8().constData();
+
+    if (action == ActionMkdir) {
+        rc = sftp_mkdir(m_sftp, pathUtf8.toLocal8Bit(), 0755);
+    } else if (action == ActionRmdir) {
+        rc = sftp_rmdir(m_sftp, pathUtf8.toLocal8Bit());
+    } else if (action == ActionDelete) {
+        rc = sftp_unlink(m_sftp, pathUtf8.toLocal8Bit());
+    }
+
+    if (rc == SSH_OK) {
+        emit sftpActionFinished(true, "");
+    } else {
+        emit sftpActionFinished(false, QString(ssh_get_error(m_session)));
+    }
+}
+
+void SshBackend::processSftpRename(const QString &oldPath, const QString &newPath) {
+    if (!m_isConnected || !m_sftp) {
+        emit sftpActionFinished(false, "SFTP Not Connected");
         return;
     }
 
-    // Request a PTY (Terminal)
-    rc = ssh_channel_request_pty(m_channel);
-    if (rc != SSH_OK) {
-        emit errorOccurred(QString("SSH PTY Error: %1").arg(ssh_get_error(m_session)));
-        cleanup();
+    int rc = sftp_rename(m_sftp, oldPath.toUtf8().constData(), newPath.toUtf8().constData());
+
+    if (rc == SSH_OK) {
+        emit sftpActionFinished(true, "");
+    } else {
+        emit sftpActionFinished(false, QString(ssh_get_error(m_session)));
+    }
+}
+
+void SshBackend::processSftpWrite(const QString &path, const QByteArray &data) {
+    if (!m_isConnected || !m_sftp) {
+        emit errorOccurred("SFTP Write Error: Not Connected");
         return;
     }
 
-    // Request a Shell
-    rc = ssh_channel_request_shell(m_channel);
-    if (rc != SSH_OK) {
-        emit errorOccurred(QString("SSH Shell Error: %1").arg(ssh_get_error(m_session)));
-        cleanup();
+    sftp_file file = sftp_open(m_sftp, path.toUtf8().constData(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (!file) {
+        // Output explicit file creation failures so they hit the debugger/UI
+        emit errorOccurred(QString("SFTP Write Error: Could not create file. Reason: %1").arg(ssh_get_error(m_session)));
         return;
     }
 
-    // Success!
-    m_isConnected = true;
-    emit connected();
+    int totalWritten = 0;
+    int size = data.size();
+    const char* ptr = data.constData();
 
-    // Start polling loop
-    QTimer::singleShot(0, this, &SshBackend::pollLoop);
+    // Use a while loop because sftp_write does not guarantee full buffer dumps
+    while (totalWritten < size) {
+        int written = sftp_write(file, ptr + totalWritten, size - totalWritten);
+        if (written < 0) {
+            break; // Network/Protocol error
+        }
+        totalWritten += written;
+    }
+
+    sftp_close(file);
+
+    if (totalWritten < size) {
+        emit errorOccurred(QString("SFTP Write Failed: %1").arg(ssh_get_error(m_session)));
+    } else {
+        emit sftpTransferFinished();
+    }
 }
 
 void SshBackend::processWrite(const QByteArray &data) {
@@ -232,6 +381,10 @@ SshClient::SshClient(QObject *parent) : QObject(parent), m_connectedStatus(false
     connect(this, &SshClient::_sigConnect, m_backend, &SshBackend::processConnection);
     connect(this, &SshClient::_sigDisconnect, m_backend, &SshBackend::processDisconnect);
     connect(this, &SshClient::_sigWrite, m_backend, &SshBackend::processWrite);
+    connect(this, &SshClient::_sigSftpRequest, m_backend, &SshBackend::processSftpRequest);
+    connect(this, &SshClient::_sigSftpAction, m_backend, &SshBackend::processSftpAction);
+    connect(this, &SshClient::_sigSftpWrite, m_backend, &SshBackend::processSftpWrite);
+    connect(this, &SshClient::_sigSftpRename, m_backend, &SshBackend::processSftpRename);
 
     // ---------------------------------------------------------
     // Signal Wiring (Worker Thread -> Main Thread)
@@ -248,6 +401,8 @@ SshClient::SshClient(QObject *parent) : QObject(parent), m_connectedStatus(false
 
     connect(m_backend, &SshBackend::errorOccurred, this, &SshClient::error);
     connect(m_backend, &SshBackend::dataReceived, this, &SshClient::rxData);
+    connect(m_backend, &SshBackend::sftpTransferFinished, this, &SshClient::sftpFinished);
+    connect(m_backend, &SshBackend::sftpActionFinished, this, &SshClient::sftpActionFinished);
 
     // ---------------------------------------------------------
     // Thread Lifecycle
@@ -265,8 +420,8 @@ SshClient::~SshClient() {
     ssh_finalize();
 }
 
-void SshClient::connectToHost(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath) {
-    emit _sigConnect(host, port, user, password, privateKeyPath);
+void SshClient::connectToHost(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath, SshMode mode) {
+    emit _sigConnect(host, port, user, password, privateKeyPath, mode);
 }
 
 void SshClient::disconnectFromHost() {
@@ -275,6 +430,22 @@ void SshClient::disconnectFromHost() {
 
 void SshClient::write(const QByteArray &data) {
     emit _sigWrite(data);
+}
+
+void SshClient::requestSftp(const QString &path, bool isDirectory) {
+    emit _sigSftpRequest(path, isDirectory);
+}
+
+void SshClient::requestSftpAction(const QString &path, SftpAction action) {
+    emit _sigSftpAction(path, action);
+}
+
+void SshClient::requestSftpWrite(const QString &path, const QByteArray &data) {
+    emit _sigSftpWrite(path, data);
+}
+
+void SshClient::requestSftpRename(const QString &oldPath, const QString &newPath) {
+    emit _sigSftpRename(oldPath, newPath);
 }
 
 bool SshClient::isConnected() const {

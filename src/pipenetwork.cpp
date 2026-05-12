@@ -15,8 +15,11 @@ PipeNetwork::PipeNetwork(SioWorker *worker) :
     m_manager(new QNetworkAccessManager(this)),
     m_reply(nullptr),
     m_process(nullptr),
-    m_tcpSocket(nullptr)
+    m_tcpSocket(nullptr),
+    m_sshClient(new SshClient(this))
 {
+    // Auto-pipe incoming SFTP data into our standard buffer routine
+    connect(m_sshClient, &SshClient::rxData, this, &PipeNetwork::appendRxData);
     reset();
 }
 
@@ -56,6 +59,19 @@ void PipeNetwork::reset()
         m_tcpSocket->deleteLater();
         m_tcpSocket = nullptr;
     }
+
+    if (m_sshClient) {
+        // Disconnect gracefully if a session was left open
+        if (m_sshClient->isConnected()) {
+            m_sshClient->disconnectFromHost();
+        }
+
+        // --- BULLETPROOF FIX: Explicitly destroy the tracked Connection Handles ---
+        for (const auto &conn : m_sftpConnections) {
+            disconnect(conn);
+        }
+        m_sftpConnections.clear();
+    }
 }
 
 bool PipeNetwork::shouldTranslate(quint16 aux, bool globalSetting)
@@ -68,6 +84,8 @@ bool PipeNetwork::shouldTranslate(quint16 aux, bool globalSetting)
 
 QString PipeNetwork::cleanUrl(QString raw)
 {
+    while (raw.endsWith(QChar(0x00))) raw.chop(1);
+
     int eol = raw.indexOf(QChar(0x9B));
     if (eol != -1) raw.truncate(eol);
 
@@ -131,8 +149,14 @@ void PipeNetwork::openFtpConnection(const QString &urlStr)
         m_netFinished = true;
     });
 
-    connect(m_process, &QProcess::readyReadStandardOutput, this, [this](){
-        appendRxData(m_process->readAllStandardOutput());
+    connect(m_process, &QProcess::readyReadStandardOutput, this, [this, urlStr](){
+        QByteArray output = m_process->readAllStandardOutput();
+        // If the URL ends with a slash, it's a directory request.
+        if (urlStr.endsWith('/')) {
+            formatDirectoryListing(output);
+        } else {
+            appendRxData(output);
+        }
     });
 
     connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
@@ -175,6 +199,42 @@ void PipeNetwork::openHttpConnection(const QUrl &url)
     });
 }
 
+void PipeNetwork::openSftpConnection(const QUrl &url)
+{
+    m_protocol = ProtoSftp;
+
+    // Save the connection handles so we can explicitly kill them in reset()
+    m_sftpConnections.append(connect(m_sshClient, &SshClient::connected, this, [this, url]() {
+        QString path = url.path();
+        if (path.isEmpty()) path = "/";
+
+        bool isDir = path.endsWith('/');
+        m_sshClient->requestSftp(path, isDir);
+    }));
+
+    m_sftpConnections.append(connect(m_sshClient, &SshClient::sftpFinished, this, [this]() {
+        m_netFinished = true;
+        if (m_sessionTranslate && !m_rxBuffer.isEmpty() && !m_rxBuffer.endsWith((char)0x9B)) {
+            m_rxBuffer.append((char)0x9B);
+        }
+    }));
+
+    m_sftpConnections.append(connect(m_sshClient, &SshClient::error, this, [this](const QString &msg) {
+        qWarning() << "!e" << "[W:] SFTP Error:" << msg;
+        m_netFinished = true;
+    }));
+
+    // Fire the connection!
+    m_sshClient->connectToHost(
+        url.host(),
+        url.port(22),
+        url.userName(),
+        url.password(),
+        "", // Private key path (can pull from AspeQt settings later if desired)
+        ModeSftp
+        );
+}
+
 // ========================================================================
 // SIO COMMAND HANDLER
 // ========================================================================
@@ -194,6 +254,11 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         reset(); // Clear previous state
 
         m_lastUrl = cleanUrl(QString::fromLatin1(urlFrame));
+        if (!m_lastUrl.contains("://") && !m_currentPath.isEmpty()) {
+            // If m_currentPath is "sftp://server.com/dir/", this creates the full URI
+            m_lastUrl = m_currentPath + m_lastUrl;
+        }
+
         m_isWriteMode = (aux & 0x08);
         bool global = m_isWriteMode ? aspeqtSettings->translateEolOnPost() : aspeqtSettings->translateEolOnGet();
         m_sessionTranslate = shouldTranslate(aux, global);
@@ -205,19 +270,21 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         if (scheme == "tcp") {
             openTcpConnection(url);
         }
-        // HTTP/FTP only open instantly if in READ mode.
+        // HTTP/FTP/SFTP only open instantly if in READ mode.
         // If in WRITE mode, they wait for CLOSE (0x43) to send accumulated data.
         else if (!m_isWriteMode) {
             if (scheme == "ftp") openFtpConnection(m_lastUrl);
+            else if (scheme == "sftp") openSftpConnection(url);
             else openHttpConnection(url);
         }
         // Track protocol for WRITE mode execution later
         else {
-            m_protocol = (scheme == "ftp") ? ProtoFtp : ProtoHttp;
+            if (scheme == "ftp") m_protocol = ProtoFtp;
+            else if (scheme == "sftp") m_protocol = ProtoSftp;
+            else m_protocol = ProtoHttp;
         }
         break;
     }
-
 
     case 0x52: // READ
     {
@@ -245,10 +312,13 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
             } else if (m_protocol == ProtoTcp && m_tcpSocket) {
                 connect(m_tcpSocket, &QTcpSocket::readyRead, &loop, &QEventLoop::quit);
                 connect(m_tcpSocket, &QTcpSocket::disconnected, &loop, &QEventLoop::quit);
+            } else if (m_protocol == ProtoSftp && m_sshClient) {
+                connect(m_sshClient, &SshClient::sftpFinished, &loop, &QEventLoop::quit);
+                connect(m_sshClient, &SshClient::error, &loop, &QEventLoop::quit);
             }
 
             connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
-            timeout.start(5000); // 5 second timeout to prevent Emulator UI freezing
+            timeout.start(15000); // 15 second timeout to prevent Emulator UI freezing
             loop.exec();
         }
 
@@ -272,7 +342,6 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         break;
     }
 
-
     case 0x57: // WRITE
     {
         if (!sio->port()->writeCommandAck()) return;
@@ -290,7 +359,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
             chunkToSend = data;
         }
 
-        // Live Stream (TCP) vs Accumulate (HTTP/FTP)
+        // Live Stream (TCP) vs Accumulate (HTTP/FTP/SFTP)
         if (m_protocol == ProtoTcp) {
             if (m_tcpSocket && m_tcpSocket->state() == QAbstractSocket::ConnectedState) {
                 m_tcpSocket->write(chunkToSend);
@@ -307,8 +376,15 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
     {
         if (!sio->port()->writeCommandAck()) return;
 
-        // Execute batch uploads only for HTTP/FTP
-        if (m_isWriteMode && m_protocol != ProtoTcp && !m_txAccumulator.isEmpty()) {
+        // Execute batch uploads only for HTTP/FTP/SFTP
+        if (m_isWriteMode && m_protocol != ProtoTcp) {
+
+            // --- TRUNCATE ATARI SIO PADDING ---
+            // The Atari OS forces final SIO blocks to pad out to 256 bytes with 0x00.
+            // We cleanly shave those off here so the resulting cloud file is the exact byte size.
+            while (!m_txAccumulator.isEmpty() && m_txAccumulator.endsWith('\0')) {
+                m_txAccumulator.chop(1);
+            }
 
             if (m_protocol == ProtoFtp) {
                 m_process = new QProcess(this);
@@ -334,10 +410,232 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
                 connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
                 loop.exec();
                 reply->deleteLater();
+
+            } else if (m_protocol == ProtoSftp) {
+                QUrl url(m_lastUrl);
+                QEventLoop loop;
+                QTimer timeout;
+                timeout.setSingleShot(true);
+
+                // Context bound lambda connects
+                connect(m_sshClient, &SshClient::connected, &loop, [this, url]() {
+                    m_sshClient->requestSftpWrite(url.path(), m_txAccumulator);
+                });
+
+                connect(m_sshClient, &SshClient::sftpFinished, &loop, &QEventLoop::quit);
+
+                connect(m_sshClient, &SshClient::error, &loop, [&loop](const QString &msg) {
+                    qWarning() << "!e" << "[W:] SFTP Write Error:" << msg;
+                    loop.quit();
+                });
+
+                connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
+
+                m_sshClient->connectToHost(url.host(), url.port(22), url.userName(), url.password(), "", ModeSftp);
+                timeout.start(15000);
+                loop.exec();
+                m_sshClient->disconnectFromHost();
             }
         }
 
         reset(); // Safely teardown sockets and clear memory
+        sio->port()->writeComplete();
+        break;
+    }
+
+    case 0x21: // XIO 33 (Delete File)
+    case 0x2A: // XIO 42 (Remove Directory)
+    case 0x2C: // XIO 44 (Make Directory)
+    {
+        if (!sio->port()->writeCommandAck()) return;
+
+        QByteArray packet = sio->port()->readDataFrame(256);
+        sio->port()->writeDataAck();
+
+        QString fullUrl = cleanUrl(QString::fromLatin1(packet));
+        if (!fullUrl.contains("://") && !m_currentPath.isEmpty()) {
+            fullUrl = m_currentPath + fullUrl;
+        }
+
+        QUrl url(fullUrl);
+        QString scheme = url.scheme().toLower();
+        QString path = url.path();
+
+        QEventLoop loop;
+        QTimer timeout;
+        timeout.setSingleShot(true);
+        connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
+
+        if (scheme == "sftp") {
+            // -- SFTP LOGIC (libssh) --
+            SftpAction action = (command == 0x21) ? ActionDelete :
+                                    (command == 0x2A) ? ActionRmdir : ActionMkdir;
+
+            // Connect automatically, execute, and quit loop
+            connect(m_sshClient, &SshClient::connected, &loop, [this, path, action]() {
+                m_sshClient->requestSftpAction(path, action);
+            });
+
+            connect(m_sshClient, &SshClient::sftpActionFinished, &loop, [&loop](bool success, QString err) {
+                if (!success) qWarning() << "!e" << "[W:] SFTP Action Failed:" << err;
+                loop.quit();
+            });
+
+            m_sshClient->connectToHost(url.host(), url.port(22), url.userName(), url.password(), "", ModeSftp);
+            timeout.start(10000); // 10 seconds to connect and execute
+            loop.exec();
+            m_sshClient->disconnectFromHost();
+
+        } else if (scheme == "ftp") {
+            // -- FTP LOGIC (curl) --
+            QString ftpCmd;
+            // The directory/file part MUST be sent as a QUOTE command to the base URL
+            QString baseUrl = "ftp://" + url.host() + url.adjusted(QUrl::RemovePath).path();
+
+            if (command == 0x21) ftpCmd = "DELE " + path;
+            else if (command == 0x2A) ftpCmd = "RMD " + path;
+            else if (command == 0x2C) ftpCmd = "MKD " + path;
+
+            m_process = new QProcess(this);
+            connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &loop, &QEventLoop::quit);
+
+            // Send the FTP Quote command
+            m_process->start("curl", QStringList() << "-sS" << "-Q" << ftpCmd << baseUrl);
+            timeout.start(5000);
+            loop.exec();
+
+            if (m_process->exitCode() != 0) {
+                qWarning() << "!e" << "[W:] FTP Action Failed:" << m_process->readAllStandardError();
+            }
+            m_process->deleteLater();
+            m_process = nullptr;
+        }
+
+        sio->port()->writeComplete();
+        break;
+    }
+
+
+    case 0x29: // XIO 41 (Change Directory)
+    {
+        if (!sio->port()->writeCommandAck()) return;
+        QByteArray pathFrame = sio->port()->readDataFrame(256);
+        sio->port()->writeDataAck();
+
+        QString newPath = cleanUrl(QString::fromLatin1(pathFrame));
+
+        // Update internal CWD logic
+        if (newPath == "..") {
+            // Pop last directory (Go Up)
+            int lastSlash = m_currentPath.lastIndexOf('/', -2);
+            if (lastSlash != -1) m_currentPath.truncate(lastSlash + 1);
+
+        } else if (newPath.contains("://")) {
+            // Overwrite with a brand new Server URL (e.g., swapping to an FTP server)
+            m_currentPath = newPath;
+            if (!m_currentPath.endsWith('/')) m_currentPath.append('/');
+
+        } else if (newPath.startsWith('/')) {
+            // --- NEW FIX: Absolute Path on the current server ---
+            // Example: User types "/etc/"
+            QUrl currentUrl(m_currentPath);
+            currentUrl.setPath(newPath); // Replaces the path, keeps the IP/Password!
+            m_currentPath = currentUrl.toString();
+            if (!m_currentPath.endsWith('/')) m_currentPath.append('/');
+
+        } else {
+            // Append relative subfolder (Go Down)
+            m_currentPath.append(newPath);
+            if (!m_currentPath.endsWith('/')) m_currentPath.append('/');
+        }
+
+        sio->port()->writeComplete();
+        break;
+    }
+
+    case 0x20: // XIO 32 (Rename)
+    {
+        if (!sio->port()->writeCommandAck()) return;
+
+        QByteArray packet = sio->port()->readDataFrame(256);
+        sio->port()->writeDataAck();
+
+        // 1. Clean the string and hunt for the comma
+        QString raw = cleanUrl(QString::fromLatin1(packet));
+        int commaPos = raw.indexOf(',');
+
+        if (commaPos == -1) {
+            sio->port()->writeError(); // Abort: Bad syntax, no comma found
+            break;
+        }
+
+        // 2. Split into Old and New
+        QString oldStr = raw.left(commaPos).trimmed();
+        QString newStr = raw.mid(commaPos + 1).trimmed();
+
+        // 3. Resolve the full absolute URL for the Old file
+        if (!oldStr.contains("://") && !m_currentPath.isEmpty()) {
+            oldStr = m_currentPath + oldStr;
+        }
+
+        QUrl oldUrl(oldStr);
+        QString scheme = oldUrl.scheme().toLower();
+        QString oldPath = oldUrl.path();
+
+        // 4. Calculate the absolute path for the New file on the server
+        QString basePath = oldPath.section('/', 0, -2); // Grabs everything up to the last slash
+        QString newPath = basePath + "/" + newStr;
+
+        // 5. Setup the Async execution loop
+        QEventLoop loop;
+        QTimer timeout;
+        timeout.setSingleShot(true);
+        connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
+
+        if (scheme == "sftp") {
+            // -- SFTP RENAME LOGIC --
+            connect(m_sshClient, &SshClient::connected, &loop, [this, oldPath, newPath]() {
+                m_sshClient->requestSftpRename(oldPath, newPath);
+            });
+
+            connect(m_sshClient, &SshClient::sftpActionFinished, &loop, [&loop](bool success, QString err) {
+                if (!success) qWarning() << "!e" << "[W:] SFTP Rename Failed:" << err;
+                loop.quit();
+            });
+
+            // --- THE FINAL SAFETY NET: Error handler to prevent loop hanging ---
+            connect(m_sshClient, &SshClient::error, &loop, [&loop](const QString &msg) {
+                qWarning() << "!e" << "[W:] SFTP Rename Error:" << msg;
+                loop.quit();
+            });
+
+            m_sshClient->connectToHost(oldUrl.host(), oldUrl.port(22), oldUrl.userName(), oldUrl.password(), "", ModeSftp);
+            timeout.start(10000);
+            loop.exec();
+            m_sshClient->disconnectFromHost();
+
+        } else if (scheme == "ftp") {
+            // -- FTP RENAME LOGIC --
+            QString baseUrl = "ftp://" + oldUrl.host() + oldUrl.adjusted(QUrl::RemovePath).path();
+
+            m_process = new QProcess(this);
+            connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &loop, &QEventLoop::quit);
+
+            // FTP requires two sequential quote commands to execute a rename
+            m_process->start("curl", QStringList() << "-sS"
+                                                   << "-Q" << "RNFR " + oldPath
+                                                   << "-Q" << "RNTO " + newPath
+                                                   << baseUrl);
+            timeout.start(5000);
+            loop.exec();
+
+            if (m_process->exitCode() != 0) {
+                qWarning() << "!e" << "[W:] FTP Rename Failed:" << m_process->readAllStandardError();
+            }
+            m_process->deleteLater();
+            m_process = nullptr;
+        }
+
         sio->port()->writeComplete();
         break;
     }
@@ -381,5 +679,26 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
     default:
         sio->port()->writeCommandNak();
         break;
+    }
+}
+
+void PipeNetwork::formatDirectoryListing(QByteArray rawListing)
+{
+    m_rxBuffer.clear();
+    QStringList lines = QString::fromLatin1(rawListing).split('\n', Qt::SkipEmptyParts);
+
+    for (const QString &line : lines) {
+        // AI Logic: Detects if entry is a directory (usually starts with 'd')
+        bool isDir = line.startsWith('d');
+
+        // Simple regex/split to get the filename (usually the last part of ls -l)
+        QString name = line.section(' ', -1).trimmed();
+
+        if (!name.isEmpty() && name != "." && name != "..") {
+            if (isDir) name.append("/"); // The Watermark
+
+            m_rxBuffer.append(name.toLatin1());
+            m_rxBuffer.append((char)0x9B); // Atari EOL
+        }
     }
 }

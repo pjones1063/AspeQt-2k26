@@ -1,7 +1,7 @@
 /*
  * pipenetwork.h
  * Network Streaming Device (W:) for AspeQt
- * Refactored Architecture: TCP, HTTP, and FTP Support
+ * Refactored Architecture: TCP, HTTP, FTP, and SFTP Support
  */
 
 #ifndef PIPENETWORK_H
@@ -14,6 +14,9 @@
 #include <QTimer>
 #include <QProcess>
 #include <QTcpSocket>
+#include <QList>
+#include <QMetaObject>
+#include "sshclient.h"
 
 class PipeNetwork : public SioDevice
 {
@@ -25,12 +28,13 @@ public:
     void handleCommand(quint8 command, quint16 aux) override;
 
 private:
-    enum Protocol { ProtoNone, ProtoHttp, ProtoFtp, ProtoTcp };
+    enum Protocol { ProtoNone, ProtoHttp, ProtoFtp, ProtoTcp, ProtoSftp };
 
     QNetworkAccessManager *m_manager;
     QNetworkReply         *m_reply;
     QProcess              *m_process;
     QTcpSocket            *m_tcpSocket;
+    SshClient             *m_sshClient;
 
     QByteArray m_rxBuffer;
     QByteArray m_txAccumulator;
@@ -40,17 +44,23 @@ private:
     bool m_isWriteMode;
     bool m_sessionTranslate;
     QString m_lastUrl;
+    QString m_currentPath;
+
+    // Tracks specific lambdas so we can explicitly kill them
+    QList<QMetaObject::Connection> m_sftpConnections;
 
     // Core Helpers
     void reset();
     QString cleanUrl(QString raw);
     bool shouldTranslate(quint16 aux, bool globalSetting);
     void appendRxData(QByteArray rawData);
+    void formatDirectoryListing(QByteArray rawListing);
 
     // Protocol Handlers
     void openTcpConnection(const QUrl &url);
     void openFtpConnection(const QString &urlStr);
     void openHttpConnection(const QUrl &url);
+    void openSftpConnection(const QUrl &url);
 
 signals:
     void sendFireAndForget(QString url, QByteArray data);
