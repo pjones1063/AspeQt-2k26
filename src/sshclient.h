@@ -16,7 +16,8 @@ enum SshMode {
 enum SftpAction {
     ActionMkdir,
     ActionRmdir,
-    ActionDelete
+    ActionDelete,
+    ActionCheckDir
 };
 
 // ============================================================================
@@ -35,7 +36,7 @@ public slots:
     void processWrite(const QByteArray &data);
     void processDisconnect();
     void setPollingInterval(int ms);
-    void processSftpRequest(const QString &path, bool isDirectory);
+    void processSftpRequest(const QString &path, bool isDirectory, const QString &filter); // <-- UPDATED
     void processSftpAction(const QString &path, SftpAction action);
     void processSftpWrite(const QString &path, const QByteArray &data);
     void processSftpRename(const QString &oldPath, const QString &newPath);
@@ -76,10 +77,10 @@ public:
 
     // -- Public API --
     void connectToHost(const QString &host, int port = 22, const QString &user = "", const QString &password = "", const QString &privateKeyPath = "", SshMode mode = ModeTerminal);
-    void requestSftp(const QString &path, bool isDirectory);
+    void requestSftp(const QString &path, bool isDirectory, const QString &filter = ""); // <-- UPDATED
     void requestSftpAction(const QString &path, SftpAction action);
     void requestSftpWrite(const QString &path, const QByteArray &data);
-    void requestSftpRename(const QString &oldPath, const QString &newPath); // <-- MOVED HERE (Correct Spot)
+    void requestSftpRename(const QString &oldPath, const QString &newPath);
     void disconnectFromHost();
     void write(const QByteArray &data);
     bool isConnected() const;
@@ -101,7 +102,7 @@ private:
 
 signals:
     void _sigConnect(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath, SshMode mode);
-    void _sigSftpRequest(const QString &path, bool isDirectory);
+    void _sigSftpRequest(const QString &path, bool isDirectory, const QString &filter); // <-- UPDATED
     void _sigSftpAction(const QString &path, SftpAction action);
     void _sigSftpWrite(const QString &path, const QByteArray &data);
     void _sigSftpRename(const QString &oldPath, const QString &newPath);

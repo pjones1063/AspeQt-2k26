@@ -1,6 +1,7 @@
 #include "sshclient.h"
 #include <fcntl.h>
 #include <QDebug>
+#include <QRegularExpression> // <-- NEW: Added for filtering
 
 // ============================================================================
 // SshBackend Implementation (Background Thread Logic)
@@ -194,24 +195,46 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
     }
 }
 
-void SshBackend::processSftpRequest(const QString &path, bool isDirectory) {
+void SshBackend::processSftpRequest(const QString &path, bool isDirectory, const QString &filter) {
     if (!m_isConnected || !m_sftp) return;
 
+    // --- STRIP SLASHES FOR HOME DIR MAPPING ---
+    QString safePath = path;
+    if (safePath.startsWith('/')) safePath.remove(0, 1);
+    if (safePath.endsWith('/')) safePath.chop(1); // Strip trailing slash for strict servers
+    if (safePath.isEmpty()) safePath = "."; // '.' forces libssh to open the default Home folder
+
     if (isDirectory) {
-        sftp_dir dir = sftp_opendir(m_sftp, path.toUtf8().constData());
+        // --- CORRECTED: Use safePath ---
+        sftp_dir dir = sftp_opendir(m_sftp, safePath.toUtf8().constData());
         if (!dir) {
-            emit errorOccurred("SFTP Error: Could not open directory.");
+            emit errorOccurred(QString("SFTP Error: Could not open directory. (%1)").arg(ssh_get_error(m_session)));
             return;
         }
 
         sftp_attributes attributes;
         QByteArray listing;
 
+        // Setup the Wildcard Regex Engine
+        QRegularExpression rx;
+        if (!filter.isEmpty()) {
+            QString safeFilter = filter;
+            if (safeFilter == "*.*") safeFilter = "*";
+            rx = QRegularExpression(QRegularExpression::wildcardToRegularExpression(safeFilter), QRegularExpression::CaseInsensitiveOption);
+        }
+
         while ((attributes = sftp_readdir(m_sftp, dir)) != nullptr) {
             QString name = QString::fromUtf8(attributes->name);
             if (name != "." && name != "..") {
+
+                // Apply the Filter
+                if (!filter.isEmpty() && !rx.match(name).hasMatch()) {
+                    sftp_attributes_free(attributes);
+                    continue;
+                }
+
                 if (attributes->type == SSH_FILEXFER_TYPE_DIRECTORY) {
-                    name.append("/"); // The Folder Watermark
+                    name.append("/");
                 }
                 listing.append(name.toLatin1());
                 listing.append('\n');
@@ -224,9 +247,10 @@ void SshBackend::processSftpRequest(const QString &path, bool isDirectory) {
         emit sftpTransferFinished();
 
     } else {
-        sftp_file file = sftp_open(m_sftp, path.toUtf8().constData(), O_RDONLY, 0);
+        // --- CORRECTED: Use safePath for downloads too ---
+        sftp_file file = sftp_open(m_sftp, safePath.toUtf8().constData(), O_RDONLY, 0);
         if (!file) {
-            emit errorOccurred("SFTP Error: Could not open file.");
+            emit errorOccurred(QString("SFTP Error: Could not open file. (%1)").arg(ssh_get_error(m_session)));
             return;
         }
 
@@ -249,14 +273,29 @@ void SshBackend::processSftpAction(const QString &path, SftpAction action) {
     }
 
     int rc = SSH_ERROR;
-    QString pathUtf8 = path.toUtf8().constData();
+
+    // --- NEW: Strip leading slash ---
+    QString safePath = path;
+    if (safePath.startsWith('/')) safePath.remove(0, 1);
+    if (safePath.isEmpty()) safePath = ".";
+
+    QByteArray pathBytes = safePath.toUtf8(); // Safe byte array assignment
 
     if (action == ActionMkdir) {
-        rc = sftp_mkdir(m_sftp, pathUtf8.toLocal8Bit(), 0755);
+        rc = sftp_mkdir(m_sftp, pathBytes.constData(), 0755);
     } else if (action == ActionRmdir) {
-        rc = sftp_rmdir(m_sftp, pathUtf8.toLocal8Bit());
+        rc = sftp_rmdir(m_sftp, pathBytes.constData());
     } else if (action == ActionDelete) {
-        rc = sftp_unlink(m_sftp, pathUtf8.toLocal8Bit());
+        rc = sftp_unlink(m_sftp, pathBytes.constData());
+    } else if (action == ActionCheckDir) {
+        // --- NEW: Try to open the directory to prove it exists ---
+        sftp_dir dir = sftp_opendir(m_sftp, pathBytes.constData());
+        if (dir) {
+            sftp_closedir(dir);
+            rc = SSH_OK;
+        } else {
+            rc = SSH_ERROR;
+        }
     }
 
     if (rc == SSH_OK) {
@@ -265,6 +304,8 @@ void SshBackend::processSftpAction(const QString &path, SftpAction action) {
         emit sftpActionFinished(false, QString(ssh_get_error(m_session)));
     }
 }
+
+
 
 void SshBackend::processSftpRename(const QString &oldPath, const QString &newPath) {
     if (!m_isConnected || !m_sftp) {
@@ -272,7 +313,16 @@ void SshBackend::processSftpRename(const QString &oldPath, const QString &newPat
         return;
     }
 
-    int rc = sftp_rename(m_sftp, oldPath.toUtf8().constData(), newPath.toUtf8().constData());
+    // --- NEW: Strip leading slash for Home Directory mapping ---
+    QString safeOld = oldPath;
+    if (safeOld.startsWith('/')) safeOld.remove(0, 1);
+    if (safeOld.isEmpty()) safeOld = ".";
+
+    QString safeNew = newPath;
+    if (safeNew.startsWith('/')) safeNew.remove(0, 1);
+    if (safeNew.isEmpty()) safeNew = ".";
+
+    int rc = sftp_rename(m_sftp, safeOld.toUtf8().constData(), safeNew.toUtf8().constData());
 
     if (rc == SSH_OK) {
         emit sftpActionFinished(true, "");
@@ -281,15 +331,20 @@ void SshBackend::processSftpRename(const QString &oldPath, const QString &newPat
     }
 }
 
+
 void SshBackend::processSftpWrite(const QString &path, const QByteArray &data) {
     if (!m_isConnected || !m_sftp) {
         emit errorOccurred("SFTP Write Error: Not Connected");
         return;
     }
 
-    sftp_file file = sftp_open(m_sftp, path.toUtf8().constData(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    // --- NEW: Strip leading slash ---
+    QString safePath = path;
+    if (safePath.startsWith('/')) safePath.remove(0, 1);
+    if (safePath.isEmpty()) safePath = ".";
+
+    sftp_file file = sftp_open(m_sftp, safePath.toUtf8().constData(), O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (!file) {
-        // Output explicit file creation failures so they hit the debugger/UI
         emit errorOccurred(QString("SFTP Write Error: Could not create file. Reason: %1").arg(ssh_get_error(m_session)));
         return;
     }
@@ -298,12 +353,9 @@ void SshBackend::processSftpWrite(const QString &path, const QByteArray &data) {
     int size = data.size();
     const char* ptr = data.constData();
 
-    // Use a while loop because sftp_write does not guarantee full buffer dumps
     while (totalWritten < size) {
         int written = sftp_write(file, ptr + totalWritten, size - totalWritten);
-        if (written < 0) {
-            break; // Network/Protocol error
-        }
+        if (written < 0) break;
         totalWritten += written;
     }
 
@@ -315,6 +367,7 @@ void SshBackend::processSftpWrite(const QString &path, const QByteArray &data) {
         emit sftpTransferFinished();
     }
 }
+
 
 void SshBackend::processWrite(const QByteArray &data) {
     if (!m_isConnected || !m_channel) return;
@@ -432,8 +485,9 @@ void SshClient::write(const QByteArray &data) {
     emit _sigWrite(data);
 }
 
-void SshClient::requestSftp(const QString &path, bool isDirectory) {
-    emit _sigSftpRequest(path, isDirectory);
+// --- UPDATED ---
+void SshClient::requestSftp(const QString &path, bool isDirectory, const QString &filter) {
+    emit _sigSftpRequest(path, isDirectory, filter);
 }
 
 void SshClient::requestSftpAction(const QString &path, SftpAction action) {

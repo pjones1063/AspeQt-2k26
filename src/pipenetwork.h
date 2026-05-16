@@ -45,6 +45,7 @@ private:
     bool m_sessionTranslate;
     QString m_lastUrl;
     QString m_currentPath;
+    QString m_dirFilter; // <-- NEW: Holds the wildcard pattern (*.TXT)
 
     // Tracks specific lambdas so we can explicitly kill them
     QList<QMetaObject::Connection> m_sftpConnections;
