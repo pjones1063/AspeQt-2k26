@@ -15,7 +15,7 @@
 ;  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 
-	icl "menu_sym.asm"
+	icl "sym.asm"
 	
 	org $4000
 Start

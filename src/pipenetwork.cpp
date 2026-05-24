@@ -382,7 +382,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
     case 0x43: // CLOSE
     {
         if (!sio->port()->writeCommandAck()) return;
-        bool closeSuccess = true; // <-- NEW: Track Upload Success
+        bool closeSuccess = false; // <-- FLAG FAILURE DEFAULT
 
         if (m_isWriteMode && m_protocol != ProtoTcp) {
             while (!m_txAccumulator.isEmpty() && m_txAccumulator.endsWith('\0')) {
@@ -403,12 +403,10 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
 
                     if (m_process->exitCode() == 0) {
                         qDebug() << "!n" << tr("[W:] FTP Upload Complete.");
+                        closeSuccess = true; // <-- EXPLICIT SUCCESS
                     } else {
-                        closeSuccess = false; // <-- FLAG FAILURE
                         qWarning() << "!e" << "[W:] FTP Upload Failed:" << m_process->readAllStandardError();
                     }
-                } else {
-                    closeSuccess = false;
                 }
 
             } else if (m_protocol == ProtoHttp) {
@@ -421,7 +419,9 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
                 loop.exec();
 
                 if (reply->error() != QNetworkReply::NoError) {
-                    closeSuccess = false;
+                    qWarning() << "!e" << "[W:] HTTP Upload Failed:" << reply->errorString();
+                } else {
+                    closeSuccess = true; // <-- EXPLICIT SUCCESS
                 }
                 reply->deleteLater();
 
@@ -435,10 +435,12 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
                     m_sshClient->requestSftpWrite(url.path(), m_txAccumulator);
                 });
 
-                connect(m_sshClient, &SshClient::sftpFinished, &loop, &QEventLoop::quit);
+                connect(m_sshClient, &SshClient::sftpFinished, &loop, [&loop, &closeSuccess]() {
+                    closeSuccess = true; // <-- EXPLICIT SUCCESS
+                    loop.quit();
+                });
 
-                connect(m_sshClient, &SshClient::error, &loop, [&loop, &closeSuccess](const QString &msg) {
-                    closeSuccess = false; // <-- FLAG FAILURE
+                connect(m_sshClient, &SshClient::error, &loop, [&loop](const QString &msg) {
                     qWarning() << "!e" << "[W:] SFTP Write Error:" << msg;
                     loop.quit();
                 });
@@ -450,6 +452,8 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
                 loop.exec();
                 m_sshClient->disconnectFromHost();
             }
+        } else {
+            closeSuccess = true; // Read mode or TCP closes cleanly automatically
         }
 
         reset();
@@ -487,7 +491,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         timeout.setSingleShot(true);
         connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
 
-        bool actionSuccess = true; // <-- NEW: Track the result
+        bool actionSuccess = false; // <-- FLAG FAILURE DEFAULT
 
         if (scheme == "sftp") {
             SftpAction action = (command == 0x21) ? ActionDelete :
@@ -499,7 +503,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
 
             // Capture the boolean by reference [&actionSuccess]
             connect(m_sshClient, &SshClient::sftpActionFinished, &loop, [&loop, &actionSuccess](bool success, QString err) {
-                actionSuccess = success;
+                actionSuccess = success; // Lambda properly assigns true on success
                 if (!success) qWarning() << "!e" << "[W:] SFTP Action Failed:" << err;
                 loop.quit();
             });
@@ -525,13 +529,12 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
             loop.exec();
 
             if (m_process->exitCode() != 0) {
-                actionSuccess = false; // <-- FLAG FAILURE
                 qWarning() << "!e" << "[W:] FTP Action Failed:" << m_process->readAllStandardError();
+            } else {
+                actionSuccess = true; // <-- EXPLICIT SUCCESS
             }
             m_process->deleteLater();
             m_process = nullptr;
-        } else {
-            actionSuccess = false; // Unsupported protocol
         }
 
         // --- NEW: Conditionally report success or failure to the Atari ---
@@ -580,7 +583,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
 
         QUrl url(targetPath);
         QString scheme = url.scheme().toLower();
-        bool cdSuccess = true;
+        bool cdSuccess = false; // <-- FLAG FAILURE DEFAULT
 
         // --- NEW: Asynchronously Validate the Path before committing it ---
         if (scheme == "sftp") {
@@ -599,8 +602,8 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
                 loop.quit();
             });
 
-            connect(m_sshClient, &SshClient::error, &loop, [&loop, &cdSuccess](const QString &msg) {
-                cdSuccess = false;
+            connect(m_sshClient, &SshClient::error, &loop, [&loop](const QString &msg) {
+                qWarning() << "!e" << "[W:] SFTP Error:" << msg;
                 loop.quit();
             });
 
@@ -608,6 +611,8 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
             timeout.start(10000);
             loop.exec();
             m_sshClient->disconnectFromHost();
+        } else {
+            cdSuccess = true; // Fallback: FTP/HTTP assumes path is valid as they don't do pre-flight checks currently.
         }
 
         // --- NEW: Only update local path and ACK if the server verified it ---
@@ -655,7 +660,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
         timeout.setSingleShot(true);
         connect(&timeout, &QTimer::timeout, &loop, &QEventLoop::quit);
 
-        bool renameSuccess = true; // <-- NEW: Track the result
+        bool renameSuccess = false; // <-- FLAG FAILURE DEFAULT
 
         if (scheme == "sftp") {
             connect(m_sshClient, &SshClient::connected, &loop, [this, oldPath, newPath]() {
@@ -668,8 +673,7 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
                 loop.quit();
             });
 
-            connect(m_sshClient, &SshClient::error, &loop, [&loop, &renameSuccess](const QString &msg) {
-                renameSuccess = false;
+            connect(m_sshClient, &SshClient::error, &loop, [&loop](const QString &msg) {
                 qWarning() << "!e" << "[W:] SFTP Rename Error:" << msg;
                 loop.quit();
             });
@@ -693,13 +697,12 @@ void PipeNetwork::handleCommand(quint8 command, quint16 aux)
             loop.exec();
 
             if (m_process->exitCode() != 0) {
-                renameSuccess = false; // <-- FLAG FAILURE
                 qWarning() << "!e" << "[W:] FTP Rename Failed:" << m_process->readAllStandardError();
+            } else {
+                renameSuccess = true; // <-- EXPLICIT SUCCESS
             }
             m_process->deleteLater();
             m_process = nullptr;
-        } else {
-            renameSuccess = false;
         }
 
         // --- NEW: Conditionally report success or failure to the Atari ---

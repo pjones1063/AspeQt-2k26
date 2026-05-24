@@ -7,9 +7,8 @@
 #include "atarisio.h"
 #include "aspeqtsettings.h"
 #include <QTime>
-#include <QThread> // [ADDED] Needed for sleep in readRawFrame
+#include <QThread>
 #include <QtDebug>
-
 #include <string.h>
 #include <fcntl.h>
 #include <errno.h>

@@ -16,7 +16,7 @@
 ;   write A000 BFFF /home/paul/eclipse-workspace/8-bit-bin/menu_cart_boot.img 
 ;	OPT h-t+
 
-	icl 'menu_sym.asm'
+	icl 'sym.asm'
 	org $BFFA
  	.word Start
  	.word $0500

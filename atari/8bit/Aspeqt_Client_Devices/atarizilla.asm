@@ -3,7 +3,7 @@
 ;
 ;  Requires: menu_sym.asm, printf.asm
 
-    icl "menu_sym.asm"
+    icl "sym.asm"
 
     org $4000
 
@@ -13,13 +13,17 @@ Start
 ; --- Data Buffers ---
 TBuf        .ds 256
 DBuf        .ds 256
+NetBuf      .ds 257      ; Dedicated 256-byte SIO Buffer (padded for printf)
+MaskBuf     .ds 20       
 TBufLen     .byte 0
 DBufLen     .byte 0
-ErrCode     .byte 0      ; Required for printf %b to safely display CIO errors
+ErrCode     .byte 0      
+LineCount   .byte 0      
+RemBufPtr   .byte 0      ; Pointer for the 256-byte SIO buffer
 
 StrWSFTP    .byte 'W:SFTP://',0
 StrW        .byte 'W:',0
-StrD        .byte 'D1:',0    ; <-- NOW DYNAMIC!
+StrD        .byte 'D1:',0    
 
 LocEOF      .byte 0
 RemEOF      .byte 0
@@ -28,11 +32,10 @@ RemEOF      .byte 0
 ; STRING BUILDER SUBROUTINES
 ; ====================================================================
 
-; --- W: Buffer (Network Drive) Helpers ---
 .proc ClearTBuf
     lda #0
     sta TBufLen
-    sta TBuf            ; Null terminate immediately
+    sta TBuf            
     rts
 .endp
 
@@ -63,6 +66,20 @@ _done
     rts
 .endp
 
+.proc AppendTBufMask
+    ldy #0
+@   lda MaskBuf,y
+    cmp #155        
+    beq _done
+    ldx TBufLen
+    sta TBuf,x
+    inc TBufLen
+    iny
+    bne @-
+_done
+    rts
+.endp
+
 .proc AppendTBufChar
     ldx TBufLen
     sta TBuf,x
@@ -71,12 +88,21 @@ _done
 .endp
 
 .proc FinishTBuf
+    ldx TBufLen
+    cpx #255
+    bcs _donePad
+    lda #0          
+_padLoop
+    sta TBuf,x
+    inx
+    cpx #255
+    bne _padLoop
+_donePad
     lda #155        
-    jsr AppendTBufChar
+    sta TBuf+255    
     rts
 .endp
 
-; --- D: Buffer (Local Drive) Helpers ---
 .proc ClearDBuf
     lda #0
     sta DBufLen
@@ -111,6 +137,20 @@ _done
     rts
 .endp
 
+.proc AppendDBufMask
+    ldy #0
+@   lda MaskBuf,y
+    cmp #155
+    beq _done
+    ldx DBufLen
+    sta DBuf,x
+    inc DBufLen
+    iny
+    bne @-
+_done
+    rts
+.endp
+
 .proc AppendDBufChar
     ldx DBufLen
     sta DBuf,x
@@ -119,8 +159,91 @@ _done
 .endp
 
 .proc FinishDBuf
-    lda #155
+    lda #155        
     jsr AppendDBufChar
+    rts
+.endp
+
+; ====================================================================
+; HARDWARE SIO HELPER ROUTINES
+; ====================================================================
+
+.proc SioW
+    ; Core parameters shared across all W: commands
+    lda #$57            ; DDEVIC: $57 is ATASCII 'W' - Required by AspeQt PipeNetwork
+    sta DDEVIC
+    lda #$01            ; DUNIT: 1
+    sta DUNIT
+    lda #$0F            ; DTIMLO: 15 second timeout
+    sta DTIMLO
+    jsr SIOV
+    rts
+.endp
+
+.proc GetRemoteLine
+    ; Assembles a line in TBuf by streaming 256-byte SIO blocks
+    ldx #0
+_loop
+    lda RemBufPtr
+    bne _readByte
+    
+    lda RemEOF
+    bne _eof
+    
+    ; Fetch next 256-byte block via SIO ($52)
+    lda #$52
+    sta DCOMND
+    lda #$80            ; Read
+    sta DSTATS
+    lda #<NetBuf
+    sta DBUFLO
+    lda #>NetBuf
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    sta DAUX1           ; Clear Aux params for safety
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    beq _readByte
+    
+    ; SIO Error / EOF
+    lda #1
+    sta RemEOF
+    jmp _eof
+
+_readByte
+    ldy RemBufPtr
+    lda NetBuf,y
+    inc RemBufPtr       ; Naturally wraps 255 -> 0, triggering next block fetch
+    
+    cmp #0
+    beq _block_end      ; Padding hit, block ended early
+
+    cmp #155
+    beq _line_done
+
+    sta TBuf,x
+    inx
+    jmp _loop
+
+_block_end
+    lda #0
+    sta RemBufPtr       ; Force fetch on next loop
+    jmp _loop
+
+_line_done
+    lda #155
+    sta TBuf,x
+    rts
+
+_eof
+    lda #1
+    sta RemEOF
+    lda #155
+    sta TBuf,x
     rts
 .endp
 
@@ -129,38 +252,35 @@ _done
 ; ====================================================================
 
 .proc PrintError
-    ; Safely print CIO status from Y using printf library pointer
     sty ErrCode
     jsr printf
-    .byte 155,'I/O Error: %b',155,0
+    .byte 155,'Error Code: %b',155,0
     .word ErrCode
     rts
 .endp
 
 .proc PrintCharScreen
-    ; Prints a single character in A to the screen (IOCB 0)
-    sty Temp2           ; <-- FIX: Preserve Y because CIOV overwrites it!
-    tay                 ; Move char to Y for CIO
+    sty Temp2           
+    tay                 
     ldx #$00
-    lda #$0B            ; PUT BYTE
+    lda #$0B            
     sta iccom,x
     lda #0
     sta icblen,x
     sta icblen+1,x
-    tya                 ; Move char back to A
+    tya                 
     jsr ciov
-    ldy Temp2           ; <-- FIX: Restore Y so loops don't freeze
+    ldy Temp2           
     rts
 .endp
 
 .proc PrintPadded19
-    ; Prints exactly 19 chars from pointer Temp1. Pads with spaces.
     ldy #0
 _loop
     lda (Temp1),y
-    beq _pad            ; Stop at NULL
+    beq _pad            
     cmp #155
-    beq _pad            ; Stop at ATASCII Return
+    beq _pad            
     jsr PrintCharScreen
     iny
     cpy #19
@@ -219,20 +339,26 @@ MainProgram
     jsr printf
     .byte 'Connecting to host...',155,0
 
-    ; Execute XIO 41 (Change Directory) to initialize C++ path
-    ldx #$10
+    ; Execute SIO $29 (Change Directory) to initialize C++ path
     lda #$29
-    sta iccom,x
+    sta DCOMND
+    lda #$40            ; Write Data Frame
+    sta DSTATS
     lda #<TBuf
-    sta icbadr,x
+    sta DBUFLO
     lda #>TBuf
-    sta icbadr+1,x
-    lda #0              
-    sta icaux1,x
-    sta icaux2,x
-    sta icblen,x        
-    sta icblen+1,x
-    jsr ciov
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    lda #8
+    sta DAUX1           
+    lda #0              ; CRITICAL FIX: Explicitly zero DAUX2 to prevent checksum/parse failure
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _errInit        
 
 MainMenu
     jsr printf
@@ -291,6 +417,13 @@ WaitKey
     jsr Input1
     jmp MainMenu
 
+_errInit
+    jsr PrintError
+    jsr printf
+    .byte 155,'Connection Failed!',155
+    .byte 'Press Return to retry.',0
+    jsr Input1
+    jmp Start
 
 ; ====================================================================
 ; THE DUAL-PANE COMMANDER ENGINE
@@ -298,86 +431,115 @@ WaitKey
 
 DoDualList
     jsr printf
-    .byte 125,'Fetching Dual Directories...',155,155,0
+    .byte 125,'File Mask [*.*]: ',0
+    jsr Input
+    
+    lda InputBuf
+    cmp #155
+    beq _useDefaultMask
 
-    ; 1. Setup Local Path (D*.*)
+    ldy #0
+_copyMask
+    lda InputBuf,y
+    sta MaskBuf,y
+    cmp #155
+    beq _maskDone
+    iny
+    cpy #18             
+    bne _copyMask
+    lda #155
+    sta MaskBuf,y
+    jmp _maskDone
+
+_useDefaultMask
+    lda #'*'
+    sta MaskBuf
+    lda #'.'
+    sta MaskBuf+1
+    lda #'*'
+    sta MaskBuf+2
+    lda #155
+    sta MaskBuf+3
+
+_maskDone
+    jsr printf
+    .byte 155,'Fetching Dual Directories...',155,155,0
+
+    lda #0
+    sta LocEOF
+    sta RemEOF
+    sta LineCount
+    sta RemBufPtr
+
     jsr ClearDBuf
     lda #<StrD
     sta Temp1
     lda #>StrD
     sta Temp1+1
     jsr AppendDBufStr
-    lda #'*'
-    jsr AppendDBufChar
-    lda #'.'
-    jsr AppendDBufChar
-    lda #'*'
-    jsr AppendDBufChar
+    jsr AppendDBufMask
     jsr FinishDBuf
 
-    ; 2. Setup Remote Path (W:*)
     jsr ClearTBuf
     lda #<StrW
     sta Temp1
     lda #>StrW
     sta Temp1+1
     jsr AppendTBufStr
-    lda #'*'
-    jsr AppendTBufChar
+    jsr AppendTBufMask
     jsr FinishTBuf
 
-    lda #0
-    sta LocEOF
-    sta RemEOF
-
-    ; 3. Open D: (IOCB #1)
+    ; 1. Local Open (CIO)
     ldx #$10
-    lda #$03            ; OPEN
+    lda #$03            
     sta iccom,x
     lda #<DBuf
     sta icbadr,x
     lda #>DBuf
     sta icbadr+1,x
-    lda #6              ; Dir Mode
+    lda #6              
     sta icaux1,x
     lda #0              
     sta icaux2,x
-    lda #0              ; Length 0 for OPEN
+    lda #0              
     sta icblen,x
     sta icblen+1,x
     jsr ciov
     jmi _ddlLocErr      
 
-    ; 4. Open W: (IOCB #2)
-    ldx #$20
-    lda #$03            ; OPEN
-    sta iccom,x
+    ; 2. Remote Open (SIO $4F)
+    lda #$4F
+    sta DCOMND
+    lda #$40
+    sta DSTATS
     lda #<TBuf
-    sta icbadr,x
+    sta DBUFLO
     lda #>TBuf
-    sta icbadr+1,x
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
     lda #6              ; Dir Mode
-    sta icaux1,x
-    lda #1              
-    sta icaux2,x
-    lda #0              ; Length 0 for OPEN
-    sta icblen,x
-    sta icblen+1,x
-    jsr ciov
-    jmi _ddlRemErr      
+    sta DAUX1
+    lda #1              ; Text Mode
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _ddlRemErr      
 
 _ddlLoop
     ; Fetch Local Line
     lda LocEOF
     jne _ddlFetchRem    
     ldx #$10
-    lda #$05            ; GET RECORD
+    lda #$05            
     sta iccom,x
     lda #<DBuf
     sta icbadr,x
     lda #>DBuf
     sta icbadr+1,x
-    lda #255            ; Safe buffer size for text record
+    lda #255            
     sta icblen,x
     lda #0
     sta icblen+1,x
@@ -386,70 +548,73 @@ _ddlLoop
     lda #1
     sta LocEOF
     lda #0
-    sta DBuf            ; Null out buffer on EOF
+    sta DBuf            
 
 _ddlFetchRem
     ; Fetch Remote Line
     lda RemEOF
     jne _ddlDraw        
-    ldx #$20
-    lda #$05            ; GET RECORD
-    sta iccom,x
-    lda #<TBuf
-    sta icbadr,x
-    lda #>TBuf
-    sta icbadr+1,x
-    lda #255            ; Safe buffer size for text record
-    sta icblen,x
-    lda #0
-    sta icblen+1,x
-    jsr ciov
-    jpl _ddlDraw        
-    lda #1
-    sta RemEOF
-    lda #0
-    sta TBuf            ; Null out buffer on EOF
-
+    jsr GetRemoteLine
+    
 _ddlDraw
-    ; Check if BOTH are empty
     lda LocEOF
     and RemEOF
     jne _ddlEnd         
 
-    ; Draw Left Pane (19 chars)
     lda #<DBuf
     sta Temp1
     lda #>DBuf
     sta Temp1+1
     jsr PrintPadded19
 
-    ; Draw Divider (1 char)
     lda #'|'
     jsr PrintCharScreen
 
-    ; Draw Right Pane (19 chars)
     lda #<TBuf
     sta Temp1
     lda #>TBuf
     sta Temp1+1
     jsr PrintPadded19
 
-    ; Draw Newline
     lda #155
     jsr PrintCharScreen
+    
+    inc LineCount
+    lda LineCount
+    cmp #20             
+    bne _ddlNext
 
+    jsr printf
+    .byte '- Press Return for more -',0
+    jsr Input1          
+    
+    lda #155            
+    jsr PrintCharScreen
+    
+    lda #0              
+    sta LineCount
+
+_ddlNext
     jmp _ddlLoop
 
 _ddlEnd
+    ; Local Close (CIO)
     ldx #$10
     lda #$0C
     sta iccom,x
     jsr ciov
 
-    ldx #$20
-    lda #$0C
-    sta iccom,x
-    jsr ciov
+    ; Remote Close (SIO $43)
+    lda #$43
+    sta DCOMND
+    lda #$00
+    sta DSTATS
+    lda #0
+    sta DBYTLO
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
 
     jsr printf
     .byte 155,'- End of Directories -',155,0
@@ -469,7 +634,7 @@ _ddlRemErr
 
 
 ; ====================================================================
-; LOCAL MENU HANDLERS (D:)
+; LOCAL MENU HANDLERS (D: - REMAIN ON CIO)
 ; ====================================================================
 
 DoChangeDrive
@@ -477,14 +642,14 @@ DoChangeDrive
     .byte 155,'Enter Local Drive Number (1-8): ',0
     jsr Input1
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
     cmp #'1'
     jcc _cdrvBad        
     cmp #'9'
     jcs _cdrvBad        
 
-    sta StrD+1          ; Overwrite the number in the StrD byte array!
+    sta StrD+1          
     
     jsr printf
     .byte 155,'Local Drive Changed!',155,0
@@ -499,7 +664,7 @@ DoLocalRename
     .byte 155,'Old Local Filename: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearDBuf
@@ -516,7 +681,7 @@ DoLocalRename
     .byte 'New Local Filename: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr AppendDBufInput
@@ -526,7 +691,7 @@ DoLocalRename
     .byte 155,'Renaming on Local Drive...',155,0
 
     ldx #$10
-    lda #$20            ; XIO 32
+    lda #$20            
     sta iccom,x
     lda #<DBuf
     sta icbadr,x
@@ -551,7 +716,7 @@ DoLocalDelete
     .byte 155,'Local Filename to Delete: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearDBuf
@@ -567,7 +732,7 @@ DoLocalDelete
     .byte 155,'Deleting from Local Drive...',155,0
 
     ldx #$10
-    lda #$21            ; XIO 33
+    lda #$21            
     sta iccom,x
     lda #<DBuf
     sta icbadr,x
@@ -589,7 +754,7 @@ _errLocDEL
 
 
 ; ====================================================================
-; REMOTE MENU HANDLERS (W:)
+; REMOTE MENU HANDLERS (W: - CONVERTED TO PURE SIO)
 ; ====================================================================
 
 DoChangeDir
@@ -597,7 +762,7 @@ DoChangeDir
     .byte 155,"Enter remote dir ('..' to go up): ",0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearTBuf
@@ -609,20 +774,23 @@ DoChangeDir
     jsr AppendTBufInput
     jsr FinishTBuf
 
-    ldx #$10
-    lda #$29            ; XIO 41
-    sta iccom,x
+    lda #$29            
+    sta DCOMND
+    lda #$40
+    sta DSTATS
     lda #<TBuf
-    sta icbadr,x
+    sta DBUFLO
     lda #>TBuf
-    sta icbadr+1,x
-    lda #0              
-    sta icaux1,x
-    sta icaux2,x
-    sta icblen,x        
-    sta icblen+1,x
-    jsr ciov
-    jmi _errCD          
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _errCD          
     
     jsr printf
     .byte 155,'Directory changed!',155,0
@@ -637,7 +805,7 @@ DoViewText
     .byte 155,'Remote Filename: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearTBuf
@@ -652,68 +820,70 @@ DoViewText
     jsr printf
     .byte 155,'Downloading text...',155,0
 
-    ldx #$10
-    lda #$03            ; OPEN
-    sta iccom,x
-    lda #4              ; READ
-    sta icaux1,x
-    lda #1              ; TEXT
-    sta icaux2,x
+    ; Remote Open (SIO $4F)
+    lda #$4F
+    sta DCOMND
+    lda #$40
+    sta DSTATS
     lda #<TBuf
-    sta icbadr,x
+    sta DBUFLO
     lda #>TBuf
-    sta icbadr+1,x
-    lda #0              ; Length 0 for OPEN
-    sta icblen,x
-    sta icblen+1,x
-    jsr ciov
-    jmi _errVT          
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    lda #4              ; Read
+    sta DAUX1
+    lda #1              ; Text
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _errVT          
 
 _vtLoop
-    ldx #$10
-    lda #$05            ; GET RECORD
-    sta iccom,x
-    lda #<IOBuf
-    sta icbadr,x
-    lda #>IOBuf
-    sta icbadr+1,x
-    lda #252            ; <-- FIX: IOBuf is 252 bytes in menu_sym.asm
-    sta icblen,x
+    ; Remote Read (SIO $52)
+    lda #$52
+    sta DCOMND
+    lda #$80
+    sta DSTATS
+    lda #<NetBuf
+    sta DBUFLO
+    lda #>NetBuf
+    sta DBUFHI
     lda #0
-    sta icblen+1,x
-    jsr ciov
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    lda #0
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    bne _vtEof
     
-    tya
-    pha                 ; Save CIO Status
-    lda icblen,x
-    beq _vtCheckEOF     ; Skip print if 0 bytes read
-    
-    ldy #0
-@   lda IOBuf,y
-    cmp #155
-    beq @+
-    iny
-    bne @-
-@   lda #0
-    sta IOBuf,y
+    ; Null terminate the block strictly for printf
+    lda #0
+    sta NetBuf+256
 
     jsr printf
     .byte '%s',155,0
-    .word IOBuf
-
-_vtCheckEOF
-    pla                 ; Restore Status
-    cmp #136
-    jeq _vtEof
-    tax
-    jmi _errVT          ; Error if N flag set and not 136
+    .word NetBuf
     jmp _vtLoop
 
 _vtEof
-    ldx #$10
-    lda #$0C            ; CLOSE
-    sta iccom,x
-    jsr ciov
+    ; Remote Close (SIO $43)
+    lda #$43
+    sta DCOMND
+    lda #$00
+    sta DSTATS
+    lda #0
+    sta DBYTLO
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
+
     jsr printf
     .byte 155,'- End of File -',155,0
     jmp WaitKey
@@ -727,7 +897,7 @@ DoRename
     .byte 155,'Old Remote Filename: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearTBuf
@@ -744,7 +914,7 @@ DoRename
     .byte 'New Remote Filename: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr AppendTBufInput
@@ -753,20 +923,24 @@ DoRename
     jsr printf
     .byte 155,'Renaming on W:...',155,0
 
-    ldx #$10
-    lda #$20            ; XIO 32
-    sta iccom,x
+    lda #$20            
+    sta DCOMND
+    lda #$40
+    sta DSTATS
     lda #<TBuf
-    sta icbadr,x
+    sta DBUFLO
     lda #>TBuf
-    sta icbadr+1,x
-    lda #0              
-    sta icaux1,x
-    sta icaux2,x
-    sta icblen,x        
-    sta icblen+1,x
-    jsr ciov
-    jmi _errRN          
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _errRN          
+    
     jsr printf
     .byte 155,'Remote rename successful!',155,0
     jmp WaitKey
@@ -780,7 +954,7 @@ DoDelete
     .byte 155,'Remote Filename to Delete: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearTBuf
@@ -795,20 +969,24 @@ DoDelete
     jsr printf
     .byte 155,'Deleting from W:...',155,0
 
-    ldx #$10
-    lda #$21            ; XIO 33
-    sta iccom,x
+    lda #$21            
+    sta DCOMND
+    lda #$40
+    sta DSTATS
     lda #<TBuf
-    sta icbadr,x
+    sta DBUFLO
     lda #>TBuf
-    sta icbadr+1,x
-    lda #0              
-    sta icaux1,x
-    sta icaux2,x
-    sta icblen,x        
-    sta icblen+1,x
-    jsr ciov
-    jmi _errDEL         
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _errDEL         
+    
     jsr printf
     .byte 155,'Remote delete successful!',155,0
     jmp WaitKey
@@ -826,7 +1004,7 @@ DoDownload
     .byte 155,'Remote Filename: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearTBuf
@@ -843,7 +1021,7 @@ DoDownload
     .word StrD
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearDBuf
@@ -858,23 +1036,28 @@ DoDownload
     jsr printf
     .byte 155,'Downloading (high-speed binary)...',155,0
 
-    ldx #$10
-    lda #$03
-    sta iccom,x
-    lda #4
-    sta icaux1,x
-    lda #2              
-    sta icaux2,x
+    ; Remote Open (SIO $4F)
+    lda #$4F
+    sta DCOMND
+    lda #$40
+    sta DSTATS
     lda #<TBuf
-    sta icbadr,x
+    sta DBUFLO
     lda #>TBuf
-    sta icbadr+1,x
-    lda #0              ; Length 0 for OPEN
-    sta icblen,x
-    sta icblen+1,x
-    jsr ciov
-    jmi _errDL          
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    lda #4
+    sta DAUX1
+    lda #2              ; Binary
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _errDL          
 
+    ; Local Open (CIO)
     ldx #$20
     lda #$03
     sta iccom,x
@@ -886,59 +1069,64 @@ DoDownload
     sta icbadr,x
     lda #>DBuf
     sta icbadr+1,x
-    lda #0              ; Length 0 for OPEN
+    lda #0              
     sta icblen,x
     sta icblen+1,x
     jsr ciov
     jmi _errDLClose1    
 
 _dlLoop
-    ldx #$10
-    lda #$07            ; GET CHARACTERS
-    sta iccom,x
-    lda #<IOBuf
-    sta icbadr,x
-    lda #>IOBuf
-    sta icbadr+1,x
-    lda #252            ; <-- FIX: IOBuf in menu_sym is 252 bytes
-    sta icblen,x
+    ; Remote Read (SIO $52)
+    lda #$52
+    sta DCOMND
+    lda #$80
+    sta DSTATS
+    lda #<NetBuf
+    sta DBUFLO
+    lda #>NetBuf
+    sta DBUFHI
     lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    bne _dlEof     
+
+    ; Local Write (CIO PUT CHARACTERS)
+    ldx #$20
+    lda #$0B            
+    sta iccom,x
+    lda #<NetBuf
+    sta icbadr,x
+    lda #>NetBuf
+    sta icbadr+1,x
+    lda #0
+    sta icblen,x
+    lda #1
     sta icblen+1,x
     jsr ciov
-    
-    tya
-    pha                 ; Save CIO status
-    lda icblen,x
-    bne _dlWrite        ; If lower byte > 0, write bytes
-    beq _dlCheckEOF     ; If 0, nothing to write
-
-_dlWrite
-    ldx #$20
-    lda #$0B            ; PUT CHARACTERS
-    sta iccom,x
-    lda #<IOBuf
-    sta icbadr,x
-    lda #>IOBuf
-    sta icbadr+1,x
-    ; icblen already contains exact bytes read from GET
-    jsr ciov
-    jmi _dlEnd          ; Write Error
-
-_dlCheckEOF
-    pla                 ; Restore status
-    cmp #136            
-    jeq _dlEof
-    tax
-    jmi _dlEnd          ; Any other error aborts
+    jmi _dlEnd          
     jmp _dlLoop
 
 _dlEnd
     jsr PrintError
 _dlEof
-    ldx #$10
-    lda #$0C
-    sta iccom,x
-    jsr ciov
+    ; Remote Close (SIO $43)
+    lda #$43
+    sta DCOMND
+    lda #$00
+    sta DSTATS
+    lda #0
+    sta DBYTLO
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
+
+    ; Local Close (CIO)
     ldx #$20
     lda #$0C
     sta iccom,x
@@ -950,10 +1138,16 @@ _dlEof
 
 _errDLClose1
     jsr PrintError
-    ldx #$10
-    lda #$0C
-    sta iccom,x
-    jsr ciov
+    lda #$43
+    sta DCOMND
+    lda #$00
+    sta DSTATS
+    lda #0
+    sta DBYTLO
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
     jmp WaitKey
 
 _errDL
@@ -967,7 +1161,7 @@ DoUpload
     .word StrD
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearDBuf
@@ -983,7 +1177,7 @@ DoUpload
     .byte 'Remote Savename: ',0
     jsr Input
     lda InputBuf
-    cmp #155            ; Empty Guard
+    cmp #155            
     jeq MainMenu
 
     jsr ClearTBuf
@@ -998,6 +1192,7 @@ DoUpload
     jsr printf
     .byte 155,'Uploading (high-speed binary)...',155,0
 
+    ; Local Open (CIO)
     ldx #$10
     lda #$03
     sta iccom,x
@@ -1009,60 +1204,81 @@ DoUpload
     sta icbadr,x
     lda #>DBuf
     sta icbadr+1,x
-    lda #0              ; Length 0 for OPEN
+    lda #0              
     sta icblen,x
     sta icblen+1,x
     jsr ciov
     jmi _errUL          
 
-    ldx #$20
-    lda #$03
-    sta iccom,x
-    lda #8
-    sta icaux1,x
-    lda #2              
-    sta icaux2,x
+    ; Remote Open (SIO $4F)
+    lda #$4F
+    sta DCOMND
+    lda #$40
+    sta DSTATS
     lda #<TBuf
-    sta icbadr,x
+    sta DBUFLO
     lda #>TBuf
-    sta icbadr+1,x
-    lda #0              ; Length 0 for OPEN
-    sta icblen,x
-    sta icblen+1,x
-    jsr ciov
-    jmi _errULClose1    
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    lda #8              ; Write
+    sta DAUX1
+    lda #2              ; Binary
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _errULClose1    
 
 _ulLoop
+    ; Local Read (CIO GET CHARACTERS)
     ldx #$10
-    lda #$07            ; GET CHARACTERS
+    lda #$07            
     sta iccom,x
-    lda #<IOBuf
+    lda #<NetBuf
     sta icbadr,x
-    lda #>IOBuf
+    lda #>NetBuf
     sta icbadr+1,x
-    lda #252            ; <-- FIX: IOBuf in menu_sym is 252 bytes
+    lda #0              
     sta icblen,x
-    lda #0
+    lda #1
     sta icblen+1,x
     jsr ciov
     
     tya
-    pha                 ; Save CIO status
-    lda icblen,x
-    bne _ulWrite
-    beq _ulCheckEOF
+    pha                 
+    
+    ; Bulletproof Zero-Padding logic
+    ldy icblen,x
+    beq _ulCheckEOF     ; Skip send if exactly 0 bytes read on EOF
+_padLoop
+    cpy #0
+    beq _sendUL         ; Break loop when Y wraps from 255 -> 0
+    lda #0
+    sta NetBuf,y
+    iny
+    bne _padLoop        ; Continue until Y hits 0
 
-_ulWrite
-    ldx #$20
-    lda #$0B            ; PUT CHARACTERS
-    sta iccom,x
-    lda #<IOBuf
-    sta icbadr,x
-    lda #>IOBuf
-    sta icbadr+1,x
-    ; icblen holds bytes read
-    jsr ciov
-    jmi _ulEnd
+_sendUL
+    ; Remote Write (SIO $57)
+    lda #$57
+    sta DCOMND
+    lda #$40
+    sta DSTATS
+    lda #<NetBuf
+    sta DBUFLO
+    lda #>NetBuf
+    sta DBUFHI
+    lda #0
+    sta DBYTLO
+    lda #1
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
+    cpy #1
+    jne _ulEnd
 
 _ulCheckEOF
     pla
@@ -1075,14 +1291,23 @@ _ulCheckEOF
 _ulEnd
     jsr PrintError
 _ulEof
+    ; Local Close (CIO)
     ldx #$10
     lda #$0C
     sta iccom,x
     jsr ciov
-    ldx #$20
-    lda #$0C
-    sta iccom,x
-    jsr ciov
+    
+    ; Remote Close (SIO $43)
+    lda #$43
+    sta DCOMND
+    lda #$00
+    sta DSTATS
+    lda #0
+    sta DBYTLO
+    sta DBYTHI
+    sta DAUX1
+    sta DAUX2
+    jsr SioW
 
     jsr printf
     .byte 155,'Upload complete!',155,0
@@ -1106,9 +1331,5 @@ DoQuit
     .byte 125,'Goodbye.',155,0
     jmp (DOSVEC)        
 
-; ====================================================================
-; INCLUDES
-; ====================================================================
     icl 'printf.asm' 
     run Start
-    

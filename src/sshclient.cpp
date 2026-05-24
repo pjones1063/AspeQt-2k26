@@ -425,6 +425,9 @@ SshClient::SshClient(QObject *parent) : QObject(parent), m_connectedStatus(false
 
     ssh_init();
 
+    qRegisterMetaType<SshMode>("SshMode");
+    qRegisterMetaType<SftpAction>("SftpAction");
+
     m_backend = new SshBackend();
     m_backend->moveToThread(&m_thread);
 
