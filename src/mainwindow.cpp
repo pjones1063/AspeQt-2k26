@@ -19,7 +19,7 @@
 #include <QDateTime>
 #include <QBuffer>
 
-#include "tnfsbrowser.h"
+#include "networkbrowser.h"
 #include "tnfsimage.h"
 #include "rdevice.h"
 
@@ -2590,7 +2590,7 @@ void MainWindow::handle_actionMountTnfs_triggered(int deviceId)
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     // 2. Launch the thread-safe browser with the LAST SAVED URL
-    TnfsBrowser browser(this, aspeqtSettings->restoreTnfsLocation() ? g_lastTnfsUrl : "");
+    NetworkBrowser browser(this, aspeqtSettings->restoreTnfsLocation() ? g_lastTnfsUrl : "");
 
     // 3. Restore Cursor
     QApplication::restoreOverrideCursor();

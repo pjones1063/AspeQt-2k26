@@ -1,8 +1,9 @@
 /*
- * tnfsbrowser.h
+ * networkbrowser.h
+ * Universal Network Browser for AspeQt-2k26
  */
-#ifndef TNFSBROWSER_H
-#define TNFSBROWSER_H
+#ifndef NETWORKBROWSER_H
+#define NETWORKBROWSER_H
 
 #include <QDialog>
 #include <QListWidget>
@@ -14,15 +15,16 @@
 #include <QIcon>
 #include <QProgressBar>
 #include <QFutureWatcher>
-#include "tnfsclient.h"
+#include <QRadioButton>
+#include "inetworkclient.h"
 
-class TnfsBrowser : public QDialog
+class NetworkBrowser : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit TnfsBrowser(QWidget *parent = nullptr, const QString &initialUrl = "");
-    ~TnfsBrowser();
+    explicit NetworkBrowser(QWidget *parent = nullptr, const QString &initialUrl = "");
+    ~NetworkBrowser();
     QString getSelectedUrl() const;
 
 private slots:
@@ -34,17 +36,22 @@ private slots:
     void onCancelClicked();
     void onSortClicked();
     void onMoreClicked();
-    void onFetchFinished(); // --- [NEW] Slot for background fetching ---
+    void onFetchFinished();
+    void onLoginClicked();
+    void onProtocolChanged(); // <--- NEW: Listens for radio button toggles
 
 private:
-    TnfsClient *client;
+    INetworkClient *m_client;
     QComboBox *hostCombo;
     QListWidget *fileList;
     QLabel *statusLabel;
 
     // UI Elements
+    QRadioButton *radioTnfs;
+    QRadioButton *radioFtp;
     QPushButton *btnConnect;
     QPushButton *btnClear;
+    QPushButton *btnLogin;
     QPushButton *btnCancel;
     QPushButton *btnMore;
     QToolButton *btnSort;
@@ -53,18 +60,23 @@ private:
     // Async Connection Handling
     QFutureWatcher<bool> *connectWatcher;
 
-    // --- [NEW] Async Directory Fetching ---
-    QFutureWatcher<QList<TnfsClient::DirectoryEntry>> *fetchWatcher;
+    // Async Directory Fetching
+    QFutureWatcher<QList<INetworkClient::DirectoryEntry>> *fetchWatcher;
 
     bool m_sortAscending;
     QString currentPath;
     QString selectedUrl;
     QString m_activeHost;
+    QString m_activeProtocol;
     bool m_isFirstBatch;
+
+    // Credential Storage
+    QString m_savedUser;
+    QString m_savedPass;
 
     void refreshList();
     void loadNextBatch();
     QIcon getIcon(const QString &name);
 };
 
-#endif // TNFSBROWSER_H
+#endif // NETWORKBROWSER_H

@@ -1,5 +1,7 @@
 #include "tnfsimage.h"
 #include "tnfsclient.h"
+#include "ftpclient.h"
+#include "inetworkclient.h"
 #include <QUrl>
 #include <QDebug>
 #include <QApplication>
@@ -44,12 +46,17 @@ void TnfsImage::cleanupAtx()
 
 bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
 {
-    m_driveIdentity = "TNFS (RAM)";
+    m_driveIdentity = "Network (RAM)";
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     QUrl qurl(url);
     QString fullPath = qurl.path(QUrl::ComponentFormattingOption::FullyDecoded);
     QString host = qurl.host();
+
+    // Grab the scheme AND credentials before we cross the thread boundary
+    QString scheme = qurl.scheme().toLower();
+    QString ftpUser = qurl.userName();
+    QString ftpPass = qurl.password();
 
     m_imgData.clear();
     m_bootSectors.clear();
@@ -75,21 +82,45 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     // BACKGROUND DOWNLOAD ENGINE (Bypasses UI freezing and processEvents delay)
     // ========================================================================
     QFuture<QByteArray> future = QtConcurrent::run([=]() -> QByteArray {
-        TnfsClient client;
-        if (!client.connectToHost(host)) return QByteArray();
-        if (!client.mount("/")) return QByteArray();
 
-        quint32 totalSize = client.getFileSize(pathNoSlash);
-        if (totalSize == 0) totalSize = client.getFileSize(pathWithSlash);
+        // 1. Create the correct Universal Client
+        INetworkClient *client = nullptr;
+        if (scheme == "ftp") {
+            FtpClient* ftp = new FtpClient();
+            // Inject the credentials into the background worker!
+            if (!ftpUser.isEmpty()) {
+                ftp->setCredentials(ftpUser, ftpPass);
+            }
+            client = ftp;
+        } else {
+            client = new TnfsClient();
+        }
 
-        quint8 handle = client.openFile(pathNoSlash);
-        if (handle == 0xFF) handle = client.openFile(pathWithSlash);
-
-        if (handle == 0xFF) {
+        if (!client->connectToHost(host)) {
+            delete client;
             return QByteArray();
         }
 
-        if (totalSize == 0) totalSize = client.getFileSize(handle);
+        // 2. TNFS requires an explicit root mount command, FTP does not
+        if (scheme != "ftp") {
+            if (!static_cast<TnfsClient*>(client)->mount("/")) {
+                delete client;
+                return QByteArray();
+            }
+        }
+
+        quint32 totalSize = client->getFileSize(pathNoSlash);
+        if (totalSize == 0) totalSize = client->getFileSize(pathWithSlash);
+
+        quint8 handle = client->openFile(pathNoSlash);
+        if (handle == 0xFF) handle = client->openFile(pathWithSlash);
+
+        if (handle == 0xFF) {
+            delete client;
+            return QByteArray();
+        }
+
+        if (totalSize == 0) totalSize = client->getFileSize(handle);
 
         if (totalSize > 0) qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(" << totalSize << "bytes)...";
         else qDebug() << "!i" << m_driveIdentity + ":" << "Downloading" << pathNoSlash << "(Stream mode)...";
@@ -104,13 +135,13 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
             // Check for user cancel
             if (activeIdPtr && *activeIdPtr != myId) {
                 qDebug() << "!w" << m_driveIdentity + ":" << "Download aborted by user.";
-                client.closeFile(handle);
+                client->closeFile(handle);
+                delete client;
                 return QByteArray();
             }
 
-            // [PIPELINE ACTIVATION] Ask for 32KB. The TnfsClient will automatically
-            // slice this into 16 concurrent UDP requests using the sliding window.
-            QByteArray chunk = client.readFile(handle, offset, 32768);
+            // [PIPELINE ACTIVATION] Ask for 32KB chunks natively!
+            QByteArray chunk = client->readFile(handle, offset, 32768);
             if (chunk.isEmpty()) break;
 
             data.append(chunk);
@@ -122,7 +153,8 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
             // Hard limit to prevent memory exhaustion
             if (data.size() > 16 * 1024 * 1024) {
                 qWarning() << "!e" << m_driveIdentity + ":" << "File too large (>16MB). Aborting.";
-                client.closeFile(handle);
+                client->closeFile(handle);
+                delete client;
                 return QByteArray();
             }
         }
@@ -130,7 +162,8 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
         if (totalSize > 0) emit this->downloadProgress(totalSize, totalSize);
         else emit this->downloadProgress(data.size(), data.size());
 
-        client.closeFile(handle);
+        client->closeFile(handle);
+        delete client;
         return data;
     });
 
@@ -648,4 +681,3 @@ bool TnfsImage::readSectorAtx(quint16 sector, QByteArray &data)
 
     return true;
 }
-

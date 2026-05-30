@@ -7,7 +7,7 @@
 #include <QVector>
 #include <QNetworkDatagram>
 
-TnfsClient::TnfsClient(QObject *parent) : QObject(parent) {
+TnfsClient::TnfsClient(QObject *parent) : INetworkClient(parent) {
     socket = new QUdpSocket(this);
 
     // 1MB OS Buffer to prevent dropping pipelined responses
@@ -23,6 +23,12 @@ TnfsClient::~TnfsClient() {
 }
 
 bool TnfsClient::connectToHost(const QString &host, quint16 port) {
+
+    // --- [THE FIX] Catch the interface's 0 value and use the TNFS default ---
+    if (port == 0) {
+        port = 16384;
+    }
+
     serverPort = port;
     QHostInfo info = QHostInfo::fromName(host);
     if (info.error() != QHostInfo::NoError || info.addresses().isEmpty()) {
@@ -313,7 +319,7 @@ bool TnfsClient::beginListing(const QString &path)
     return true;
 }
 
-QList<TnfsClient::DirectoryEntry> TnfsClient::fetchNextBatch(int count)
+QList<INetworkClient::DirectoryEntry> TnfsClient::fetchNextBatch(int count)
 {
     QList<DirectoryEntry> entries;
     if (m_dirHandle == 0xFF) return entries;
@@ -359,7 +365,7 @@ void TnfsClient::endListing()
     }
 }
 
-QList<TnfsClient::DirectoryEntry> TnfsClient::listDirectory(const QString &path) {
+QList<INetworkClient::DirectoryEntry> TnfsClient::listDirectory(const QString &path) {
     QList<DirectoryEntry> entries;
     if (beginListing(path)) {
         while (!m_listingFinished) {

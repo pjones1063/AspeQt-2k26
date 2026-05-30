@@ -21,7 +21,7 @@ ErrCode     .byte 0
 LineCount   .byte 0      
 RemBufPtr   .byte 0      ; Pointer for the 256-byte SIO buffer
 
-StrWSFTP    .byte 'W:SFTP://',0
+StrWSFTP    .byte 'W:sftp://',0  ; FIXED: Lowercase scheme for QUrl
 StrW        .byte 'W:',0
 StrD        .byte 'D1:',0    
 
@@ -88,20 +88,19 @@ _done
 .endp
 
 .proc FinishTBuf
+    ; FIXED: Terminate string immediately, then pad with nulls
     ldx TBufLen
-    cpx #255
-    bcs _donePad
+    lda #155        
+    sta TBuf,x
+    inx
     lda #0          
 _padLoop
     sta TBuf,x
     inx
-    cpx #255
-    bne _padLoop
-_donePad
-    lda #155        
-    sta TBuf+255    
+    bne _padLoop    
     rts
 .endp
+
 
 .proc ClearDBuf
     lda #0
@@ -193,7 +192,7 @@ _loop
     ; Fetch next 256-byte block via SIO ($52)
     lda #$52
     sta DCOMND
-    lda #$80            ; Read
+    lda #$40            ; FIXED: $40 is Read
     sta DSTATS
     lda #<NetBuf
     sta DBUFLO
@@ -203,7 +202,8 @@ _loop
     sta DBYTLO
     lda #1
     sta DBYTHI
-    sta DAUX1           ; Clear Aux params for safety
+    lda #0              ; FIXED: Explicitly clear accumulator for DAUX safety
+    sta DAUX1           
     sta DAUX2
     jsr SioW
     cpy #1
@@ -342,7 +342,7 @@ MainProgram
     ; Execute SIO $29 (Change Directory) to initialize C++ path
     lda #$29
     sta DCOMND
-    lda #$40            ; Write Data Frame
+    lda #$80            ; FIXED: $80 is Write (Sending payload)
     sta DSTATS
     lda #<TBuf
     sta DBUFLO
@@ -352,10 +352,9 @@ MainProgram
     sta DBYTLO
     lda #1
     sta DBYTHI
-    lda #8
+    lda #0              ; FIXED: DAUX1 must be 0 for $29 CD
     sta DAUX1           
-    lda #0              ; CRITICAL FIX: Explicitly zero DAUX2 to prevent checksum/parse failure
-    sta DAUX2
+    sta DAUX2           ; FIXED: Explicitly zero DAUX2 
     jsr SioW
     cpy #1
     jne _errInit        
@@ -510,7 +509,7 @@ _maskDone
     ; 2. Remote Open (SIO $4F)
     lda #$4F
     sta DCOMND
-    lda #$40
+    lda #$80            ; FIXED: $80 is Write (Sending URL payload)
     sta DSTATS
     lda #<TBuf
     sta DBUFLO
@@ -607,7 +606,7 @@ _ddlEnd
     ; Remote Close (SIO $43)
     lda #$43
     sta DCOMND
-    lda #$00
+    lda #$00            ; $00 is fine here, no payload
     sta DSTATS
     lda #0
     sta DBYTLO
@@ -776,7 +775,7 @@ DoChangeDir
 
     lda #$29            
     sta DCOMND
-    lda #$40
+    lda #$80            ; FIXED: $80 is Write (Sending payload)
     sta DSTATS
     lda #<TBuf
     sta DBUFLO
@@ -786,6 +785,7 @@ DoChangeDir
     sta DBYTLO
     lda #1
     sta DBYTHI
+    lda #0              ; FIXED: Explicitly clear accumulator
     sta DAUX1
     sta DAUX2
     jsr SioW
@@ -823,7 +823,7 @@ DoViewText
     ; Remote Open (SIO $4F)
     lda #$4F
     sta DCOMND
-    lda #$40
+    lda #$80            ; FIXED: $80 is Write (Sending URL payload)
     sta DSTATS
     lda #<TBuf
     sta DBUFLO
@@ -845,7 +845,7 @@ _vtLoop
     ; Remote Read (SIO $52)
     lda #$52
     sta DCOMND
-    lda #$80
+    lda #$40            ; FIXED: $40 is Read (Fetching text chunk)
     sta DSTATS
     lda #<NetBuf
     sta DBUFLO
@@ -855,7 +855,7 @@ _vtLoop
     sta DBYTLO
     lda #1
     sta DBYTHI
-    lda #0
+    lda #0              ; CLEAR ACCUMULATOR FIX
     sta DAUX1
     sta DAUX2
     jsr SioW
@@ -925,7 +925,7 @@ DoRename
 
     lda #$20            
     sta DCOMND
-    lda #$40
+    lda #$80            ; FIXED: $80 is Write (Sending old,new string payload)
     sta DSTATS
     lda #<TBuf
     sta DBUFLO
@@ -935,6 +935,7 @@ DoRename
     sta DBYTLO
     lda #1
     sta DBYTHI
+    lda #0              ; CLEAR ACCUMULATOR
     sta DAUX1
     sta DAUX2
     jsr SioW
@@ -971,7 +972,7 @@ DoDelete
 
     lda #$21            
     sta DCOMND
-    lda #$40
+    lda #$80            ; FIXED: $80 is Write (Sending filename payload)
     sta DSTATS
     lda #<TBuf
     sta DBUFLO
@@ -981,6 +982,7 @@ DoDelete
     sta DBYTLO
     lda #1
     sta DBYTHI
+    lda #0              ; CLEAR ACCUMULATOR
     sta DAUX1
     sta DAUX2
     jsr SioW
@@ -1039,7 +1041,7 @@ DoDownload
     ; Remote Open (SIO $4F)
     lda #$4F
     sta DCOMND
-    lda #$40
+    lda #$80            ; FIXED: $80 is Write (Sending URL payload)
     sta DSTATS
     lda #<TBuf
     sta DBUFLO
@@ -1079,7 +1081,7 @@ _dlLoop
     ; Remote Read (SIO $52)
     lda #$52
     sta DCOMND
-    lda #$80
+    lda #$40            ; FIXED: $40 is Read (Fetching binary chunk)
     sta DSTATS
     lda #<NetBuf
     sta DBUFLO
@@ -1089,6 +1091,7 @@ _dlLoop
     sta DBYTLO
     lda #1
     sta DBYTHI
+    lda #0              ; CLEAR ACCUMULATOR 
     sta DAUX1
     sta DAUX2
     jsr SioW
@@ -1213,7 +1216,7 @@ DoUpload
     ; Remote Open (SIO $4F)
     lda #$4F
     sta DCOMND
-    lda #$40
+    lda #$80            ; FIXED: $80 is Write (Sending URL payload)
     sta DSTATS
     lda #<TBuf
     sta DBUFLO
@@ -1249,9 +1252,13 @@ _ulLoop
     tya
     pha                 
     
-    ; Bulletproof Zero-Padding logic
-    ldy icblen,x
-    beq _ulCheckEOF     ; Skip send if exactly 0 bytes read on EOF
+    ; FIXED: Bulletproof Zero-Padding logic checking MSB first
+    lda icblen+1,x      ; Check MSB of bytes read
+    bne _sendUL         ; If MSB != 0 (256 bytes read), skip padding and send!
+    
+    ldy icblen,x        ; Check LSB of bytes read
+    beq _ulCheckEOF     ; If MSB is 0 AND LSB is 0, EOF hit, no data to send.
+
 _padLoop
     cpy #0
     beq _sendUL         ; Break loop when Y wraps from 255 -> 0
@@ -1264,7 +1271,7 @@ _sendUL
     ; Remote Write (SIO $57)
     lda #$57
     sta DCOMND
-    lda #$40
+    lda #$80            ; FIXED: $80 is Write (Sending binary chunk)
     sta DSTATS
     lda #<NetBuf
     sta DBUFLO
@@ -1274,6 +1281,7 @@ _sendUL
     sta DBYTLO
     lda #1
     sta DBYTHI
+    lda #0              ; CLEAR ACCUMULATOR
     sta DAUX1
     sta DAUX2
     jsr SioW
@@ -1333,3 +1341,4 @@ DoQuit
 
     icl 'printf.asm' 
     run Start
+    

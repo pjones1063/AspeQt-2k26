@@ -4,22 +4,17 @@
 #ifndef TNFSCLIENT_H
 #define TNFSCLIENT_H
 
-#include <QObject>
+#include "inetworkclient.h"
 #include <QUdpSocket>
 #include <QMutex>
 #include <QList>
 
-class TnfsClient : public QObject
+class TnfsClient : public INetworkClient
 {
     Q_OBJECT
 public:
     explicit TnfsClient(QObject *parent = nullptr);
-    ~TnfsClient();
-
-    struct DirectoryEntry {
-        QString name;
-        bool isDirectory;
-    };
+    ~TnfsClient() override;
 
     enum SeekMode {
         TnfsSeekSet = 0x00,
@@ -42,23 +37,24 @@ public:
         CMD_LSEEK    = 0x24
     };
 
-    bool connectToHost(const QString &host, quint16 port = 16384);
+    bool connectToHost(const QString &host, quint16 port = 16384) override;
+
+    // Mount is specific to TNFS, not in the universal interface, but kept for compatibility
     bool mount(const QString &remotePath);
 
     QList<DirectoryEntry> listDirectory(const QString &path);
 
-    bool beginListing(const QString &path);
-    QList<DirectoryEntry> fetchNextBatch(int count);
-    void endListing();
-    bool isListingFinished() const { return m_listingFinished; }
+    bool beginListing(const QString &path) override;
+    QList<DirectoryEntry> fetchNextBatch(int count) override;
+    void endListing() override;
+    bool isListingFinished() const override { return m_listingFinished; }
 
-    quint32 getFileSize(const QString &path);
-    quint32 getFileSize(quint8 handle);
-    quint8 openFile(const QString &path);
+    quint32 getFileSize(const QString &path) override;
+    quint32 getFileSize(quint8 handle) override;
+    quint8 openFile(const QString &path) override;
 
-    // [UPDATED] size changed to quint32 to support large pipelined reads
-    Q_INVOKABLE QByteArray readFile(quint8 handle, quint32 offset, quint32 size);
-    Q_INVOKABLE void closeFile(quint8 handle);
+    Q_INVOKABLE QByteArray readFile(quint8 handle, quint32 offset, quint32 size) override;
+    Q_INVOKABLE void closeFile(quint8 handle) override;
 
 private:
     QUdpSocket *socket;
