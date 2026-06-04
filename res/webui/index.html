@@ -89,7 +89,7 @@
         .file-item { padding: 12px 15px; border-bottom: 1px solid var(--border-light); cursor: pointer; display: flex; align-items: center; gap: 12px; font-size: 14px; }
         .file-item:hover { background-color: var(--item-hover); }
         .btn-success { background: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        input[type="text"], select { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--border-color); }
+        input[type="text"], input[type="password"], select { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--border-color); }
         .pb-search-container { padding: 10px 15px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); }
         .pb-search-input { width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; }
         .pb-item { padding: 12px 15px; border-bottom: 1px solid var(--border-light); cursor: pointer; display: flex; flex-direction: column; gap: 4px; }
@@ -159,15 +159,33 @@
     <div id="tnfs-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>TNFS Network Browser</h3>
+                <h3>Universal Network Browser</h3>
                 <button class="close-btn" onclick="closeTnfsModal()"><i class="bi bi-x-lg"></i></button>
             </div>
             <div style="padding: 10px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px;">
+                
+                <div style="display: flex; gap: 15px; padding: 4px 2px;">
+                    <label style="cursor: pointer; color: var(--text-main); font-weight: bold; font-size: 14px;">
+                        <input type="radio" name="net-protocol" value="tnfs" checked onchange="updateNetAuthUI()"> TNFS
+                    </label>
+                    <label style="cursor: pointer; color: var(--text-main); font-weight: bold; font-size: 14px;">
+                        <input type="radio" name="net-protocol" value="ftp" onchange="updateNetAuthUI()"> FTP
+                    </label>
+                    <label style="cursor: pointer; color: var(--text-main); font-weight: bold; font-size: 14px;">
+                        <input type="radio" name="net-protocol" value="sftp" onchange="updateNetAuthUI()"> SFTP
+                    </label>
+                </div>
+
                 <select id="tnfs-host-select" style="width: 100%; padding: 6px; border-radius: 4px;" onchange="if(this.value) document.getElementById('tnfs-host').value = this.value;">
                     <option value="" disabled selected>History...</option>
                 </select>
                 <div style="display: flex; gap: 8px; width: 100%;">
-                    <input type="text" id="tnfs-host" value="13leader.net" placeholder="13leader.net" style="flex: 1; padding: 6px; border-radius: 4px;">
+                    <input type="text" id="tnfs-host" value="13leader.net" placeholder="user:pass@server.com or 13leader.net" style="flex: 1; padding: 6px; border-radius: 4px;">
+                    
+                    <button class="tool-btn" id="btn-net-auth" onclick="openNetAuthModal()" title="Set Server Credentials" style="background: var(--bg-panel); border: 1px solid var(--border-color);">
+                        <i class="bi bi-lock"></i>
+                    </button>
+                    
                     <button class="btn-success" onclick="connectTnfs()">Connect</button>
                 </div>
             </div>
@@ -183,6 +201,32 @@
             </div>
 
             <div class="modal-body" id="tnfs-list"></div>
+        </div>
+    </div>
+
+    <div id="net-auth-modal" class="modal" style="z-index: 1050;">
+        <div class="modal-content" style="max-width: 350px;">
+            <div class="modal-header">
+                <h3>Server Authentication</h3>
+                <button class="close-btn" onclick="closeNetAuthModal()"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <div style="padding: 20px; display: flex; flex-direction: column; gap: 15px;">
+                <div>
+                    <label style="font-weight: bold; font-size: 14px; color: var(--text-muted);">Username</label>
+                    <input type="text" id="auth-user" placeholder="anonymous" style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid var(--border-color); box-sizing: border-box;">
+                </div>
+                <div>
+                    <label style="font-weight: bold; font-size: 14px; color: var(--text-muted);">Password</label>
+                    <input type="password" id="auth-pass" placeholder="Leave blank for default" style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid var(--border-color); box-sizing: border-box;">
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                    <button id="btn-auth-anon" class="tool-btn" style="background: var(--header-bg);" onclick="clearNetAuth()">Anonymous</button>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="tool-btn" onclick="closeNetAuthModal()">Cancel</button>
+                        <button class="btn-success" style="padding: 8px 16px;" onclick="saveNetAuth()">Save</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -306,7 +350,7 @@
             item.innerHTML = `
                 <div class="drive-actions">
                     <div class="drive-label">${letter}:</div>
-                    <button class="drive-btn" onclick="uiActionMountTnfs(${index})" title="Mount from TNFS"><i class="bi bi-globe"></i></button>
+                    <button class="drive-btn" onclick="uiActionMountTnfs(${index})" title="Network Browser"><i class="bi bi-globe"></i></button>
                     <button class="drive-btn" onclick="uiActionMountDisk(${index})" title="Mount Disk"><i class="bi bi-floppy"></i></button>
                     <button class="drive-btn" style="color: var(--primary);" onclick="uiActionPromptNewDisk(${index})" title="Create Blank Disk"><i class="bi bi-file-earmark-plus"></i></button>
                     <button class="drive-btn" onclick="uiActionMountFolder(${index})" title="Mount Folder"><i class="bi bi-folder"></i></button>
@@ -326,7 +370,6 @@
                 </div>
             `;
             
-            // --- NEW: HTML5 Drag & Drop Listeners ---
             item.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 item.style.outline = '2px dashed var(--primary)';
@@ -371,6 +414,10 @@
         let tnfsSortMode = 0; 
         let currentTnfsFiles = [];    
         let isTnfsFinished = false;   
+        
+        // --- NEW: Auth State Variables ---
+        let savedNetUser = localStorage.getItem('netUser') || "";
+        let savedNetPass = localStorage.getItem('netPass') || "";
 
         // --- CONNECTION LOGIC ---
         function initWebChannel() {
@@ -511,9 +558,9 @@
 
                     backend.tnfsDirectoryListReceived.connect(function(slot, host, path, files, isFinished) {
                         tnfsCurrentPath = path; 
-                        tnfsCurrentHost = host;
                         isTnfsFinished = isFinished;
-                        document.getElementById('tnfs-current-path').innerText = "tnfs://" + host + path;
+                        
+                        document.getElementById('tnfs-current-path').innerText = host + path;
                         
                         currentTnfsFiles = currentTnfsFiles.concat(files);
                         renderTnfsList();
@@ -557,7 +604,6 @@
                         }
                         document.getElementById('printer-modal').style.display = 'block';
                     });
-
                     
                     backend.notificationReceived.connect(function(message, isError) {
                         showToast(message, isError);
@@ -591,14 +637,13 @@
             };
         }
 
-        // --- NEW: DRAG & DROP FILE UPLOAD LOGIC ---
+        // --- DRAG & DROP FILE UPLOAD LOGIC ---
         function handleFileUpload(slot, file) {
             if (!backend) {
                 showToast("Not connected to AspeQt.", true);
                 return;
             }
 
-            // Quick validation for common Atari extensions (optional, but good UX)
             const validExts = ['.atr', '.atx', '.pro', '.xfd', '.xex', '.com', '.cas'];
             const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
             if (!validExts.includes(ext)) {
@@ -610,17 +655,88 @@
             
             const reader = new FileReader();
             reader.onload = function(e) {
-                // e.target.result is a Data URL like: "data:application/octet-stream;base64,...."
-                // We just want the raw Base64 string to send to C++
                 const base64Data = e.target.result.split(',')[1];
-                
-                // Blast it over the WebSocket!
                 backend.uploadAndMountUi(slot, file.name, base64Data);
             };
             reader.onerror = function() {
                 showToast(`Failed to read ${file.name}.`, true);
             };
-            reader.readAsDataURL(file); // Triggers onload when done
+            reader.readAsDataURL(file);
+        }
+
+        // --- AUTHENTICATION MODAL LOGIC ---
+        function openNetAuthModal() {
+            document.getElementById('auth-user').value = savedNetUser;
+            document.getElementById('auth-pass').value = savedNetPass;
+            updateNetAuthUI();
+            document.getElementById('net-auth-modal').style.display = 'block';
+        }
+
+        function closeNetAuthModal() {
+            document.getElementById('net-auth-modal').style.display = 'none';
+        }
+
+        function saveNetAuth() {
+            savedNetUser = document.getElementById('auth-user').value.trim();
+            savedNetPass = document.getElementById('auth-pass').value; // Never trim passwords
+            
+            localStorage.setItem('netUser', savedNetUser);
+            localStorage.setItem('netPass', savedNetPass);
+            
+            updatePadlockIcon();
+            closeNetAuthModal();
+        }
+
+        function clearNetAuth() {
+            savedNetUser = "";
+            savedNetPass = "";
+            localStorage.removeItem('netUser');
+            localStorage.removeItem('netPass');
+            
+            updatePadlockIcon();
+            closeNetAuthModal();
+        }
+
+        function updateNetAuthUI() {
+            // Update Padlock Enabled/Disabled State
+            let lockBtn = document.getElementById('btn-net-auth');
+            let selectedProtocol = document.querySelector('input[name="net-protocol"]:checked').value;
+            
+            if (selectedProtocol === 'tnfs') {
+                lockBtn.disabled = true;
+                lockBtn.style.opacity = '0.5';
+            } else {
+                lockBtn.disabled = false;
+                lockBtn.style.opacity = '1';
+            }
+
+            // Update Auth Modal Strictness
+            let btnAnon = document.getElementById('btn-auth-anon');
+            let userField = document.getElementById('auth-user');
+            let passField = document.getElementById('auth-pass');
+
+            if (selectedProtocol === 'sftp') {
+                btnAnon.disabled = true;
+                btnAnon.style.opacity = '0.5';
+                userField.placeholder = "Required for SFTP";
+                passField.placeholder = "Required for SFTP";
+            } else {
+                btnAnon.disabled = false;
+                btnAnon.style.opacity = '1';
+                userField.placeholder = "anonymous";
+                passField.placeholder = "Leave blank for default";
+            }
+        }
+
+        function updatePadlockIcon() {
+            let lockBtn = document.getElementById('btn-net-auth');
+            if (savedNetUser && savedNetUser.toLowerCase() !== 'anonymous') {
+                lockBtn.innerHTML = '<i class="bi bi-lock-fill" style="color: #28a745;"></i>';
+                lockBtn.title = "Credentials Set: " + savedNetUser;
+            } else {
+                lockBtn.innerHTML = '<i class="bi bi-lock"></i>';
+                lockBtn.title = "Set Server Credentials";
+            }
         }
 
         // --- REMAINING HELPER FUNCTIONS ---
@@ -646,10 +762,13 @@
                      let parts = tnfsCurrentPath.split('/').filter(p => p.length > 0);
                      parts.pop(); 
                      let newPath = "/" + parts.join('/');
+                     if (!newPath.endsWith('/')) newPath += '/';
                      listDiv.innerHTML = ''; 
                      currentTnfsFiles = []; 
                      document.getElementById('tnfs-loading').style.display = 'block';
-                     backend.requestTnfsDirectoryList(tnfsCurrentSlot, tnfsCurrentHost, newPath);
+                     
+                     let targetUrl = tnfsCurrentHost + newPath;
+                     backend.requestNetworkDirectoryList(tnfsCurrentSlot, targetUrl);
                 };
                 listDiv.appendChild(upItem);
             }
@@ -667,11 +786,14 @@
                         listDiv.innerHTML = '';
                         currentTnfsFiles = []; 
                         document.getElementById('tnfs-loading').style.display = 'block';
-                        backend.requestTnfsDirectoryList(tnfsCurrentSlot, tnfsCurrentHost, newPath);
+                        
+                        let targetUrl = tnfsCurrentHost + newPath;
+                        backend.requestNetworkDirectoryList(tnfsCurrentSlot, targetUrl);
                     } else {
-                        let fullUrl = "tnfs://" + tnfsCurrentHost + tnfsCurrentPath;
+                        let fullUrl = tnfsCurrentHost + tnfsCurrentPath;
                         if (!fullUrl.endsWith('/')) fullUrl += '/';
                         fullUrl += file.name;
+                        
                         backend.mountTnfsSilentUi(tnfsCurrentSlot, fullUrl);
                         closeTnfsModal();
                     }
@@ -762,17 +884,51 @@
             document.getElementById('tnfs-loading').style.display = 'none'; 
             document.getElementById('tnfs-modal').style.display = 'block';
         }
+        
+        // --- UPGRADED: Universal URL Parsing with Padlock Injection ---
         function connectTnfs() {
-            let hostInput = document.getElementById('tnfs-host').value.trim(); if (!hostInput) return;
-            tnfsCurrentHost = hostInput.replace("tnfs://", "").split('/')[0];
-            currentTnfsFiles = []; 
-            tnfsSortMode = 0;
-            document.getElementById('btn-tnfs-sort').innerHTML = '<i class="bi bi-filter"></i>';
-            document.getElementById('btn-tnfs-sort').style.color = '';
-            document.getElementById('tnfs-list').innerHTML = ''; 
-            document.getElementById('tnfs-loading').style.display = 'block';
-            if(backend) backend.requestTnfsDirectoryList(tnfsCurrentSlot, tnfsCurrentHost, "/");
+            let hostInput = document.getElementById('tnfs-host').value.trim(); 
+            if (!hostInput) return;
+            
+            let selectedProtocol = document.querySelector('input[name="net-protocol"]:checked').value;
+
+            if (!hostInput.includes("://")) {
+                hostInput = selectedProtocol + "://" + hostInput;
+            }
+
+            try {
+                let urlObj = new URL(hostInput);
+                
+                // Inject Padlock Credentials if the user didn't explicitly type them in the address bar
+                let finalUser = urlObj.username ? decodeURIComponent(urlObj.username) : savedNetUser;
+                let finalPass = urlObj.password ? decodeURIComponent(urlObj.password) : savedNetPass;
+                
+                // Reconstruct the Base URL safely to preserve injected credentials
+                // (URL.origin strips credentials automatically in JS, so we build it manually)
+                let credString = "";
+                if (finalUser && finalUser.toLowerCase() !== 'anonymous') {
+                    credString = encodeURIComponent(finalUser) + (finalPass ? ":" + encodeURIComponent(finalPass) : "") + "@";
+                }
+                tnfsCurrentHost = urlObj.protocol + "//" + credString + urlObj.host;
+                
+                let startPath = urlObj.pathname || "/";
+                if (!startPath.endsWith('/')) startPath += '/';
+                
+                currentTnfsFiles = []; 
+                tnfsSortMode = 0;
+                document.getElementById('btn-tnfs-sort').innerHTML = '<i class="bi bi-filter"></i>';
+                document.getElementById('btn-tnfs-sort').style.color = '';
+                document.getElementById('tnfs-list').innerHTML = ''; 
+                document.getElementById('tnfs-loading').style.display = 'block';
+                
+                let targetUrl = tnfsCurrentHost + startPath;
+                if(backend) backend.requestNetworkDirectoryList(tnfsCurrentSlot, targetUrl);
+
+            } catch (e) {
+                showToast("Invalid network URL format.", true);
+            }
         }
+        
         function uiActionMountDisk(slot) { modalMode = 'file'; modalCurrentSlot = slot; if(backend) backend.requestDirectoryList(slot, ""); }
         function uiActionMountFolder(slot) { modalMode = 'folder'; modalCurrentSlot = slot; if(backend) backend.requestDirectoryList(slot, ""); }
         function uiActionAutoSave(slot) { if(backend) backend.toggleAutoSaveUi(slot); }
@@ -840,6 +996,9 @@
             }
         }
 
+        // Initialize Padlock icon state and Auth UI on boot
+        updatePadlockIcon();
+        updateNetAuthUI();
         initWebChannel(); 
 
     </script>  

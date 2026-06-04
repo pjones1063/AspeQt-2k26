@@ -38,7 +38,7 @@ private slots:
     void onMoreClicked();
     void onFetchFinished();
     void onLoginClicked();
-    void onProtocolChanged(); // <--- NEW: Listens for radio button toggles
+    void onProtocolChanged();
 
 private:
     INetworkClient *m_client;
@@ -49,6 +49,7 @@ private:
     // UI Elements
     QRadioButton *radioTnfs;
     QRadioButton *radioFtp;
+    QRadioButton *radioSftp;
     QPushButton *btnConnect;
     QPushButton *btnClear;
     QPushButton *btnLogin;
@@ -67,6 +68,7 @@ private:
     QString currentPath;
     QString selectedUrl;
     QString m_activeHost;
+    quint16 m_activePort;
     QString m_activeProtocol;
     bool m_isFirstBatch;
 

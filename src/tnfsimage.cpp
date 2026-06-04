@@ -1,6 +1,7 @@
 #include "tnfsimage.h"
 #include "tnfsclient.h"
 #include "ftpclient.h"
+#include "sftpclient.h" // <--- NEW: Added SFTP Client
 #include "inetworkclient.h"
 #include <QUrl>
 #include <QDebug>
@@ -52,11 +53,12 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
     QUrl qurl(url);
     QString fullPath = qurl.path(QUrl::ComponentFormattingOption::FullyDecoded);
     QString host = qurl.host();
+    quint16 port = qurl.port(0);
 
     // Grab the scheme AND credentials before we cross the thread boundary
-    QString scheme = qurl.scheme().toLower();
-    QString ftpUser = qurl.userName();
-    QString ftpPass = qurl.password();
+    QString scheme  = qurl.scheme().toLower();
+    QString ftpUser = qurl.userName(QUrl::FullyDecoded);
+    QString ftpPass = qurl.password(QUrl::FullyDecoded);
 
     m_imgData.clear();
     m_bootSectors.clear();
@@ -92,17 +94,25 @@ bool TnfsImage::openUrl(const QString &url, volatile int *activeIdPtr, int myId)
                 ftp->setCredentials(ftpUser, ftpPass);
             }
             client = ftp;
+        } else if (scheme == "sftp") {
+            // --- NEW: Added SFTP background instantiation ---
+            SftpClient* sftp = new SftpClient();
+            if (!ftpUser.isEmpty()) {
+                sftp->setCredentials(ftpUser, ftpPass);
+            }
+            client = sftp;
         } else {
             client = new TnfsClient();
         }
 
-        if (!client->connectToHost(host)) {
+        if (!client->connectToHost(host, port)) {
             delete client;
             return QByteArray();
         }
 
-        // 2. TNFS requires an explicit root mount command, FTP does not
-        if (scheme != "ftp") {
+        // 2. TNFS requires an explicit root mount command, FTP & SFTP do not
+        // --- NEW: Updated logic to exclude SFTP from TNFS mount logic ---
+        if (scheme != "ftp" && scheme != "sftp") {
             if (!static_cast<TnfsClient*>(client)->mount("/")) {
                 delete client;
                 return QByteArray();

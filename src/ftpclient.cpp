@@ -93,7 +93,7 @@ bool FtpClient::connectToHost(const QString &host, quint16 port)
 
     QString res;
     int code = sendCommand("", res);
-    if (code != 220 && code != 0) return false;
+    if (code != 220 ) return false;
 
     QString actualUser = m_user.isEmpty() ? "anonymous" : m_user;
     QString actualPass = m_pass.isEmpty() ? "aspeqt@retro.net" : m_pass;

@@ -5,29 +5,29 @@
     <name>%1: key is empty</name>
     <message>
         <source>QSystemSemaphore</source>
-        <translation type="vanished">%1&#xa0;: la clé est vide</translation>
+        <translation type="vanished">%1 : la clé est vide</translation>
     </message>
 </context>
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../../src/aboutdialog.ui" line="14"/>
+        <location filename="../../src/aboutdialog.ui" line="14" />
         <source>About AspeQt</source>
         <translation>À propos d’AspeQt</translation>
     </message>
     <message>
-        <location filename="../../src/aboutdialog.ui" line="31"/>
+        <location filename="../../src/aboutdialog.ui" line="31" />
         <source>AspeQt 2k26: Atari Serial Peripheral Emulator for Qt</source>
-        <translation>AspeQt 2k26&#xa0;: émulateur de périphériques série Atari pour Qt</translation>
+        <translation>AspeQt 2k26 : émulateur de périphériques série Atari pour Qt</translation>
     </message>
     <message>
-        <location filename="../../src/aboutdialog.ui" line="64"/>
-        <location filename="../../src/aboutdialog.cpp" line="23"/>
+        <location filename="../../src/aboutdialog.ui" line="64" />
+        <location filename="../../src/aboutdialog.cpp" line="23" />
         <source>qrc:/documentation/about.html</source>
         <translation>qrc:/documentation/about.html</translation>
     </message>
     <message>
-        <location filename="../../src/aboutdialog.cpp" line="22"/>
+        <location filename="../../src/aboutdialog.cpp" line="22" />
         <source>version %1</source>
         <translation>version %1</translation>
     </message>
@@ -35,97 +35,97 @@
 <context>
     <name>AspeqtClientDevice</name>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="34"/>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="291"/>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="441"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="34" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="291" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="441" />
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Échec de la lecture du bloc de données</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="45"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="45" />
         <source>[%1] List filter set: [%2]</source>
-        <translation>[%1] Filtre de liste défini&#xa0;: [%2]</translation>
+        <translation>[%1] Filtre de liste défini : [%2]</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="74"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="74" />
         <source>[%1] Set Path: [%2]</source>
-        <translation>[%1] Définir le chemin&#xa0;: [%2]</translation>
+        <translation>[%1] Définir le chemin : [%2]</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="100"/>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="495"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="100" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="495" />
         <source>** AspeQt home folder not set - Goto Tools&gt;Options&gt;Emulation</source>
         <translation>** Dossier personnel AspeQt non défini - Allez dans Outils&gt;Options&gt;Émulation</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="205"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="205" />
         <source>[%1] Date/time sent to client (%2).</source>
         <translation>[%1] Date/heure envoyée au client (%2).</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="226"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="226" />
         <source>[%1] Swapped disk %2 with disk %3.</source>
         <translation>[%1] Le disque %2 a été remplacé par le disque %3.</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="230"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="230" />
         <source>[%1] Invalid swap request for drives: (%2)-(%3).</source>
-        <translation>[%1] Demande d&apos;échange non valide pour les lecteurs&#xa0;: (%2)-(%3).</translation>
+        <translation>[%1] Demande d'échange non valide pour les lecteurs : (%2)-(%3).</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="257"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="257" />
         <source>[%1] ALL images were remotely unmounted</source>
         <translation>[%1] TOUTES les images ont été démontées à distance</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="265"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="265" />
         <source>[%1] Remotely unmounted disk %2</source>
         <translation>[%1] Disque %2 démonté à distance</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="269"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="269" />
         <source>[%1] Invalid drive number: %2 for remote unmount</source>
-        <translation>[%1] Numéro de lecteur invalide&#xa0;: %2 pour le démontage à distance</translation>
+        <translation>[%1] Numéro de lecteur invalide : %2 pour le démontage à distance</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="281"/>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="433"/>
-        <source>[%1] AspeQt can&apos;t determine the folder where the image file must be created/mounted!</source>
-        <translation>[%1] AspeQt ne peut pas déterminer le dossier dans lequel le fichier image doit être créé/monté&#xa0;!</translation>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="281" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="433" />
+        <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
+        <translation>[%1] AspeQt ne peut pas déterminer le dossier dans lequel le fichier image doit être créé/monté !</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="307"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="307" />
         <source>[%1] Invalid image file attribute: %2</source>
-        <translation>[%1] Attribut de fichier image non valide&#xa0;: %2</translation>
+        <translation>[%1] Attribut de fichier image non valide : %2</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="316"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="316" />
         <source>[%1] Can not create PC File: %2</source>
-        <translation>[%1] Impossible de créer le fichier PC&#xa0;: %2</translation>
+        <translation>[%1] Impossible de créer le fichier PC : %2</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="399"/>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="407"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="399" />
+        <location filename="../../src/aspeqtclientdevice.cpp" line="407" />
         <source>[%1] Saved disk %2</source>
         <translation>[%1] Disque enregistré %2</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="416"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="416" />
         <source>[%1] Invalid drive number: %2 for remote save</source>
-        <translation>[%1] Numéro de lecteur invalide&#xa0;: %2 pour la sauvegarde à distance</translation>
+        <translation>[%1] Numéro de lecteur invalide : %2 pour la sauvegarde à distance</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="503"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="503" />
         <source> Get Path: [%1]</source>
-        <translation>Obtenir le chemin&#xa0;: [%1]</translation>
+        <translation>Obtenir le chemin : [%1]</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="524"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="524" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation>Commande [%1]&#xa0;:&#xa0;$%2, aux&#xa0;:&#xa0;$%3 NAKed.</translation>
+        <translation>Commande [%1] : $%2, aux : $%3 NAKed.</translation>
     </message>
     <message>
-        <location filename="../../src/aspeqtclientdevice.cpp" line="541"/>
+        <location filename="../../src/aspeqtclientdevice.cpp" line="541" />
         <source>[%1] Image %2 mounted</source>
         <translation>[%1] Image %2 montée</translation>
     </message>
@@ -133,168 +133,168 @@
 <context>
     <name>AtariFileSystem</name>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="257"/>
+        <location filename="../../src/atarifilesystem.cpp" line="257" />
         <source>Atari file system error</source>
         <translation>Erreur du système de fichiers Atari</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="257"/>
-        <source>Cannot create directory &apos;%1&apos;.</source>
-        <translation>Impossible de créer le répertoire &apos;%1&apos;.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="257" />
+        <source>Cannot create directory '%1'.</source>
+        <translation>Impossible de créer le répertoire '%1'.</translation>
     </message>
 </context>
 <context>
     <name>AtariSioBackend</name>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="850"/>
-        <source>Cannot open serial port &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;ouvrir le port série &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="850" />
+        <source>Cannot open serial port '%1': %2</source>
+        <translation>Impossible d'ouvrir le port série '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="859"/>
-        <location filename="../../src/serialport-unix.cpp" line="867"/>
-        <source>Cannot open AtariSio driver &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;ouvrir le pilote AtariSio &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="859" />
+        <location filename="../../src/serialport-unix.cpp" line="867" />
+        <source>Cannot open AtariSio driver '%1': %2</source>
+        <translation>Impossible d'ouvrir le pilote AtariSio '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="891"/>
+        <location filename="../../src/serialport-unix.cpp" line="891" />
         <source>Cannot set AtariSio driver mode: %1</source>
-        <translation>Impossible de définir le mode du pilote AtariSio&#xa0;: %1</translation>
+        <translation>Impossible de définir le mode du pilote AtariSio : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="898"/>
+        <location filename="../../src/serialport-unix.cpp" line="898" />
         <source>Cannot set AtariSio to autobaud mode: %1</source>
-        <translation>Impossible de définir AtariSio en mode autobaud&#xa0;: %1</translation>
+        <translation>Impossible de définir AtariSio en mode autobaud : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="905"/>
+        <location filename="../../src/serialport-unix.cpp" line="905" />
         <source>Cannot create the cancel pipe</source>
-        <translation>Impossible de créer le canal d&apos;annulation</translation>
+        <translation>Impossible de créer le canal d'annulation</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="923"/>
-        <source>Emulation started through AtariSIO backend on &apos;%1&apos; with %2 handshaking.</source>
-        <translation>L&apos;émulation a démarré via le backend AtariSIO sur &apos;%1&apos; avec une négociation %2.</translation>
+        <location filename="../../src/serialport-unix.cpp" line="923" />
+        <source>Emulation started through AtariSIO backend on '%1' with %2 handshaking.</source>
+        <translation>L'émulation a démarré via le backend AtariSIO sur '%1' avec une négociation %2.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="939"/>
+        <location filename="../../src/serialport-unix.cpp" line="939" />
         <source>Cannot close serial port: %1</source>
-        <translation>Impossible de fermer le port série&#xa0;: %1</translation>
+        <translation>Impossible de fermer le port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="950"/>
+        <location filename="../../src/serialport-unix.cpp" line="950" />
         <source>Cannot stop AtariSio backend.</source>
-        <translation>Impossible d&apos;arrêter le backend AtariSio.</translation>
+        <translation>Impossible d'arrêter le backend AtariSio.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="957"/>
+        <location filename="../../src/serialport-unix.cpp" line="957" />
         <source>Cannot set AtariSio speed to %1: %2</source>
-        <translation>Impossible de définir la vitesse d&apos;AtariSio sur %1&#xa0;: %2</translation>
+        <translation>Impossible de définir la vitesse d'AtariSio sur %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="960"/>
-        <location filename="../../src/serialport-unix.cpp" line="1008"/>
+        <location filename="../../src/serialport-unix.cpp" line="960" />
+        <location filename="../../src/serialport-unix.cpp" line="1008" />
         <source>%1 bits/sec</source>
         <translation>%1 bits/s</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="961"/>
-        <location filename="../../src/serialport-unix.cpp" line="1009"/>
+        <location filename="../../src/serialport-unix.cpp" line="961" />
+        <location filename="../../src/serialport-unix.cpp" line="1009" />
         <source>Serial port speed set to %1.</source>
         <translation>Vitesse du port série définie sur %1.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1015"/>
+        <location filename="../../src/serialport-unix.cpp" line="1015" />
         <source>Illegal condition using select!</source>
-        <translation>Condition illégale en utilisant select&#xa0;!</translation>
+        <translation>Condition illégale en utilisant select !</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1035"/>
+        <location filename="../../src/serialport-unix.cpp" line="1035" />
         <source>Cannot read data frame: %1</source>
-        <translation>Impossible de lire le bloc de données&#xa0;: %1</translation>
+        <translation>Impossible de lire le bloc de données : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1055"/>
+        <location filename="../../src/serialport-unix.cpp" line="1055" />
         <source>Cannot write data frame: %1</source>
-        <translation>Impossible d&apos;écrire le bloc de données&#xa0;: %1</translation>
+        <translation>Impossible d'écrire le bloc de données : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1066"/>
+        <location filename="../../src/serialport-unix.cpp" line="1066" />
         <source>Cannot write command ACK: %1</source>
-        <translation>Impossible d&apos;écrire la commande ACK&#xa0;: %1</translation>
+        <translation>Impossible d'écrire la commande ACK : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1076"/>
+        <location filename="../../src/serialport-unix.cpp" line="1076" />
         <source>Cannot write command NAK: %1</source>
-        <translation>Impossible d&apos;écrire la commande NAK&#xa0;: %1</translation>
+        <translation>Impossible d'écrire la commande NAK : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1085"/>
+        <location filename="../../src/serialport-unix.cpp" line="1085" />
         <source>Cannot write data ACK: %1</source>
-        <translation>Impossible d&apos;écrire les données ACK&#xa0;: %1</translation>
+        <translation>Impossible d'écrire les données ACK : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1094"/>
+        <location filename="../../src/serialport-unix.cpp" line="1094" />
         <source>Cannot write data NAK: %1</source>
-        <translation>Impossible d&apos;écrire les données NAK&#xa0;: %1</translation>
+        <translation>Impossible d'écrire les données NAK : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1103"/>
+        <location filename="../../src/serialport-unix.cpp" line="1103" />
         <source>Cannot write COMPLETE byte: %1</source>
-        <translation>Impossible d&apos;écrire l&apos;octet COMPLET&#xa0;: %1</translation>
+        <translation>Impossible d'écrire l'octet COMPLET : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1112"/>
+        <location filename="../../src/serialport-unix.cpp" line="1112" />
         <source>Cannot write ERROR byte: %1</source>
-        <translation>Impossible d&apos;écrire l&apos;octet d&apos;ERREUR&#xa0;: %1</translation>
+        <translation>Impossible d'écrire l'octet d'ERREUR : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1126"/>
+        <location filename="../../src/serialport-unix.cpp" line="1126" />
         <source>Cannot write raw frame: %1</source>
-        <translation>Impossible d&apos;écrire l&apos;image brute&#xa0;: %1</translation>
+        <translation>Impossible d'écrire l'image brute : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1137"/>
+        <location filename="../../src/serialport-unix.cpp" line="1137" />
         <source>Block too long.</source>
         <translation>Bloquer trop longtemps.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1140"/>
+        <location filename="../../src/serialport-unix.cpp" line="1140" />
         <source>Command not acknowledged.</source>
         <translation>Commande non reconnue.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1143"/>
+        <location filename="../../src/serialport-unix.cpp" line="1143" />
         <source>Command timeout.</source>
         <translation>Expiration du délai de commande.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1146"/>
+        <location filename="../../src/serialport-unix.cpp" line="1146" />
         <source>Checksum error.</source>
         <translation>Erreur de somme de contrôle.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1149"/>
+        <location filename="../../src/serialport-unix.cpp" line="1149" />
         <source>Device error.</source>
         <translation>Erreur de périphérique.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1152"/>
+        <location filename="../../src/serialport-unix.cpp" line="1152" />
         <source>Data frame not acknowledged.</source>
         <translation>Trame de données non reconnue.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1155"/>
+        <location filename="../../src/serialport-unix.cpp" line="1155" />
         <source>Unknown AtariSio driver error.</source>
         <translation>Erreur inconnue du pilote AtariSio.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="1178"/>
+        <location filename="../../src/serialport-unix.cpp" line="1178" />
         <source>Cannot read raw frame: %1</source>
-        <translation>Impossible de lire l&apos;image brute&#xa0;: %1</translation>
+        <translation>Impossible de lire l'image brute : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="814"/>
+        <location filename="../../src/serialport-windows.cpp" line="814" />
         <source>AtariSIO is only available under Linux.</source>
         <translation>AtariSIO est uniquement disponible sous Linux.</translation>
     </message>
@@ -302,318 +302,318 @@
 <context>
     <name>BackendEditDialog</name>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="12"/>
+        <location filename="../../src/backendeditdialog.cpp" line="12" />
         <source>Edit Backend W: App</source>
-        <translation>Modifier le backend W&#xa0;:&#xa0;application</translation>
+        <translation>Modifier le backend W : application</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="24"/>
-        <location filename="../../src/backendeditdialog.cpp" line="52"/>
+        <location filename="../../src/backendeditdialog.cpp" line="24" />
+        <location filename="../../src/backendeditdialog.cpp" line="52" />
         <source>Browse...</source>
         <translation>Parcourir...</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="32"/>
+        <location filename="../../src/backendeditdialog.cpp" line="32" />
         <source>Start automatically with AspeQt</source>
         <translation>Démarrez automatiquement avec AspeQt</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="36"/>
+        <location filename="../../src/backendeditdialog.cpp" line="36" />
         <source>Key (e.g. PORT)</source>
         <translation>Clé (par exemple PORT)</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="36"/>
+        <location filename="../../src/backendeditdialog.cpp" line="36" />
         <source>Value</source>
         <translation>Valeur</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="75"/>
+        <location filename="../../src/backendeditdialog.cpp" line="75" />
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="76"/>
+        <location filename="../../src/backendeditdialog.cpp" line="76" />
         <source>Command:</source>
         <translation>Commande:</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="77"/>
+        <location filename="../../src/backendeditdialog.cpp" line="77" />
         <source>Arguments:</source>
-        <translation>Arguments&#xa0;:</translation>
+        <translation>Arguments :</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="78"/>
+        <location filename="../../src/backendeditdialog.cpp" line="78" />
         <source>Working Dir:</source>
-        <translation>Directeur de travail&#xa0;:</translation>
+        <translation>Directeur de travail :</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="79"/>
+        <location filename="../../src/backendeditdialog.cpp" line="79" />
         <source>Environment:</source>
         <translation>Environnement:</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="80"/>
+        <location filename="../../src/backendeditdialog.cpp" line="80" />
         <source>Virtual Env:</source>
-        <translation>Environnement virtuel&#xa0;:</translation>
+        <translation>Environnement virtuel :</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="83"/>
+        <location filename="../../src/backendeditdialog.cpp" line="83" />
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="84"/>
+        <location filename="../../src/backendeditdialog.cpp" line="84" />
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="105"/>
+        <location filename="../../src/backendeditdialog.cpp" line="105" />
         <source>Select Working Directory</source>
         <translation>Sélectionnez le répertoire de travail</translation>
     </message>
     <message>
-        <location filename="../../src/backendeditdialog.cpp" line="171"/>
+        <location filename="../../src/backendeditdialog.cpp" line="171" />
         <source>Select Virtual Environment Directory</source>
-        <translation>Sélectionnez le répertoire de l&apos;environnement virtuel</translation>
+        <translation>Sélectionnez le répertoire de l'environnement virtuel</translation>
     </message>
 </context>
 <context>
     <name>BackendLibraryDialog</name>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="20"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="20" />
         <source>Backend W: Apps Library</source>
-        <translation>Backend W&#xa0;: bibliothèque d&apos;applications</translation>
+        <translation>Backend W : bibliothèque d'applications</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="25"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
         <source>Status</source>
         <translation>Statut</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="25"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="25"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
         <source>Command</source>
         <translation>Commande</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="25"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="25" />
         <source>Auto-Start</source>
         <translation>Démarrage automatique</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="39"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="39" />
         <source>Start Backend</source>
         <translation>Démarrer le back-end</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="42"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="42" />
         <source>Stop Backend</source>
         <translation>Arrêter le back-end</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="47"/>
-        <location filename="../../src/backendlibrarydialog.cpp" line="48"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="47" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="48" />
         <source>Clear Log</source>
         <translation>Effacer le journal</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="50"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="50" />
         <source>Mount</source>
         <translation>Monter</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="51"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="51" />
         <source>Mount Drivers</source>
         <translation>Pilotes de montage</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="53"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="53" />
         <source>Add...</source>
         <translation>Ajouter...</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="54"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="54" />
         <source>Add New App</source>
         <translation>Ajouter une nouvelle application</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="56"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="56" />
         <source>Edit...</source>
         <translation>Modifier...</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="57"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="57" />
         <source>Edit Selected App</source>
-        <translation>Modifier l&apos;application sélectionnée</translation>
+        <translation>Modifier l'application sélectionnée</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="59"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="59" />
         <source>Open Code</source>
         <translation>Code ouvert</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="60"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="60" />
         <source>Open Working Directory</source>
         <translation>Ouvrir le répertoire de travail</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="62"/>
-        <location filename="../../src/backendlibrarydialog.cpp" line="244"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="62" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="244" />
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="63"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="63" />
         <source>Delete Selected App</source>
-        <translation>Supprimer l&apos;application sélectionnée</translation>
+        <translation>Supprimer l'application sélectionnée</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="38"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="38" />
         <source>Start</source>
         <translation>Commencer</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="41"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="41" />
         <source>Stop</source>
         <translation>Arrêt</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="44"/>
-        <location filename="../../src/backendlibrarydialog.cpp" line="45"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="44" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="45" />
         <source>View Log</source>
         <translation>Afficher le journal</translation>
     </message>
     <message>
         <source>Mount W: Drivers (D1:)</source>
-        <translation type="vanished">Monture W&#xa0;: Pilotes (D1&#xa0;:)</translation>
+        <translation type="vanished">Monture W : Pilotes (D1 :)</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="133"/>
-        <location filename="../../src/backendlibrarydialog.cpp" line="274"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="133" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="274" />
         <source>Running</source>
-        <translation>En cours d&apos;exécution</translation>
+        <translation>En cours d'exécution</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="133"/>
-        <location filename="../../src/backendlibrarydialog.cpp" line="274"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="133" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="274" />
         <source>Stopped</source>
         <translation>Arrêté</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="142"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="142" />
         <source>Yes</source>
         <translation>Oui</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="142"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="142" />
         <source>No</source>
         <translation>Non</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="231"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="231" />
         <source>No Directory</source>
         <translation>Aucun répertoire</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="231"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="231" />
         <source>Please set a Working Directory in the Edit menu first.</source>
-        <translation>Veuillez d&apos;abord définir un répertoire de travail dans le menu Edition.</translation>
+        <translation>Veuillez d'abord définir un répertoire de travail dans le menu Edition.</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="244"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="244" />
         <source>Are you sure you want to delete this app?</source>
-        <translation>Êtes-vous sûr de vouloir supprimer cette application&#xa0;?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer cette application ?</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="310"/>
-        <location filename="../../src/backendlibrarydialog.cpp" line="328"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="310" />
+        <location filename="../../src/backendlibrarydialog.cpp" line="328" />
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="310"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="310" />
         <source>Could not load drivers.atr from firmware resources.</source>
         <translation>Impossible de charger drivers.atr à partir des ressources du micrologiciel.</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="326"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="326" />
         <source>Success</source>
         <translation>Succès</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="326"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="326" />
         <source>W: Drivers mounted to D1: in RAM.
 
 Reboot the Atari to load them.</source>
         <translation>W : Pilotes montés sur D1 : en RAM.
 
-Redémarrez l&apos;Atari pour les charger.</translation>
+Redémarrez l'Atari pour les charger.</translation>
     </message>
     <message>
-        <location filename="../../src/backendlibrarydialog.cpp" line="328"/>
+        <location filename="../../src/backendlibrarydialog.cpp" line="328" />
         <source>Could not communicate with the main emulator window.</source>
-        <translation>Impossible de communiquer avec la fenêtre principale de l&apos;émulateur.</translation>
+        <translation>Impossible de communiquer avec la fenêtre principale de l'émulateur.</translation>
     </message>
 </context>
 <context>
     <name>BootOptionsDialog</name>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="14"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="14" />
         <source>Folder Boot Options</source>
         <translation>Options de démarrage du dossier</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="48"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="48" />
         <source>Folder Image Boot Options</source>
-        <translation>Options de démarrage de l&apos;image de dossier</translation>
+        <translation>Options de démarrage de l'image de dossier</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="63"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="63" />
         <source>Select the DOS you want to boot your Atari with</source>
         <translation>Sélectionnez le DOS avec lequel vous souhaitez démarrer votre Atari</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="73"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="73" />
         <source>SmartDOS 6.1D</source>
         <translation>SmartDOS 6.1D</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="89"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="89" />
         <source>SpartaDOS 3.2G</source>
         <translation>SpartaDOS 3.2G</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="105"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="105" />
         <source>MyPicoDOS 4.05 (Standard)</source>
         <translation>MonPicoDOS 4.05 (Standard)</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="121"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="121" />
         <source>MyDOS 4.x</source>
         <translation>MonDOS 4.x</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="137"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="137" />
         <source>AtariDOS 2.x</source>
         <translation>AtariDOS 2.x</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="150"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="150" />
         <source>DosXL 2.x</source>
         <translation>DosXL 2.x</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="164"/>
-        <source>(Check if you&apos;re already using a high-speed OS)</source>
-        <translation>(Vérifiez si vous utilisez déjà un système d&apos;exploitation haut débit)</translation>
+        <location filename="../../src/bootoptionsdialog.ui" line="164" />
+        <source>(Check if you're already using a high-speed OS)</source>
+        <translation>(Vérifiez si vous utilisez déjà un système d'exploitation haut débit)</translation>
     </message>
     <message>
-        <location filename="../../src/bootoptionsdialog.ui" line="180"/>
+        <location filename="../../src/bootoptionsdialog.ui" line="180" />
         <source>Disable high speed SIO</source>
         <translation>Désactiver le SIO haute vitesse</translation>
     </message>
@@ -621,346 +621,346 @@ Redémarrez l&apos;Atari pour les charger.</translation>
 <context>
     <name>CassetteDialog</name>
     <message>
-        <location filename="../../src/cassettedialog.ui" line="23"/>
+        <location filename="../../src/cassettedialog.ui" line="23" />
         <source>Cassette image playback</source>
-        <translation>Lecture d&apos;images sur cassette</translation>
+        <translation>Lecture d'images sur cassette</translation>
     </message>
     <message>
-        <location filename="../../src/cassettedialog.ui" line="35"/>
-        <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+        <location filename="../../src/cassettedialog.ui" line="35" />
+        <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation>Faites tout ce qui est nécessaire dans votre Atari pour charger cette image de cassette, comme redémarrer tout en maintenant les boutons Option et Démarrer enfoncés ou en entrant &quot;CLOAD&quot; dans l&apos;invite BASIC.
+        <translation>Faites tout ce qui est nécessaire dans votre Atari pour charger cette image de cassette, comme redémarrer tout en maintenant les boutons Option et Démarrer enfoncés ou en entrant "CLOAD" dans l'invite BASIC.
 
 Lorsque vous entendez le bip, appuyez sur le bouton OK ci-dessous et appuyez sur une touche de votre Atari à peu près en même temps.</translation>
     </message>
     <message>
-        <location filename="../../src/cassettedialog.cpp" line="28"/>
-        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
+        <location filename="../../src/cassettedialog.cpp" line="28" />
+        <source>AspeQt is ready to playback the cassette image file '%1'.
 
 The estimated playback duration is: %2:%3
 
-Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation>AspeQt est prêt à lire le fichier image de la cassette &apos;%1&apos;.
+        <translation>AspeQt est prêt à lire le fichier image de la cassette '%1'.
 
-La durée de lecture estimée est&#xa0;:&#xa0;%2:%3
+La durée de lecture estimée est : %2:%3
 
-Faites tout ce qui est nécessaire dans votre Atari pour charger cette image de cassette, comme redémarrer tout en maintenant les boutons Option et Démarrer enfoncés ou en entrant &quot;CLOAD&quot; dans l&apos;invite BASIC.
+Faites tout ce qui est nécessaire dans votre Atari pour charger cette image de cassette, comme redémarrer tout en maintenant les boutons Option et Démarrer enfoncés ou en entrant "CLOAD" dans l'invite BASIC.
 
 Lorsque vous entendez le bip, appuyez sur le bouton OK ci-dessous et appuyez sur une touche de votre Atari à peu près en même temps.</translation>
     </message>
     <message>
-        <location filename="../../src/cassettedialog.cpp" line="80"/>
-        <location filename="../../src/cassettedialog.cpp" line="95"/>
+        <location filename="../../src/cassettedialog.cpp" line="80" />
+        <location filename="../../src/cassettedialog.cpp" line="95" />
         <source>Playing back cassette image.
 
 Estimated time left: %1:%2</source>
         <translation>Lecture d’une image de cassette.
 
-Temps restant estimé&#xa0;: %1:%2</translation>
+Temps restant estimé : %1:%2</translation>
     </message>
 </context>
 <context>
     <name>CassetteWorker</name>
     <message>
-        <location filename="../../src/sioworker.cpp" line="428"/>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;ouvrir &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/sioworker.cpp" line="428" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Impossible d'ouvrir '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="439"/>
-        <location filename="../../src/sioworker.cpp" line="450"/>
-        <location filename="../../src/sioworker.cpp" line="472"/>
-        <location filename="../../src/sioworker.cpp" line="482"/>
-        <source>Cannot read &apos;%1&apos;: %2</source>
-        <translation>Impossible de lire &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/sioworker.cpp" line="439" />
+        <location filename="../../src/sioworker.cpp" line="450" />
+        <location filename="../../src/sioworker.cpp" line="472" />
+        <location filename="../../src/sioworker.cpp" line="482" />
+        <source>Cannot read '%1': %2</source>
+        <translation>Impossible de lire '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="456"/>
-        <source>Cannot open &apos;%1&apos;: The header does not match.</source>
-        <translation>Impossible d&apos;ouvrir &apos;%1&apos; : l&apos;en-tête ne correspond pas.</translation>
+        <location filename="../../src/sioworker.cpp" line="456" />
+        <source>Cannot open '%1': The header does not match.</source>
+        <translation>Impossible d'ouvrir '%1' : l'en-tête ne correspond pas.</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="461"/>
-        <source>[Cassette]: File description &apos;%2&apos;.</source>
-        <translation>[Cassette]&#xa0;: description du fichier &apos;%2&apos;.</translation>
+        <location filename="../../src/sioworker.cpp" line="461" />
+        <source>[Cassette]: File description '%2'.</source>
+        <translation>[Cassette] : description du fichier '%2'.</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="506"/>
-        <source>[Cassette] Skipping unsupported chunk &apos;%1&apos; (%2 bytes)</source>
-        <translation>[Cassette] Ignorer le bloc non pris en charge &apos;%1&apos; (%2 octets)</translation>
+        <location filename="../../src/sioworker.cpp" line="506" />
+        <source>[Cassette] Skipping unsupported chunk '%1' (%2 bytes)</source>
+        <translation>[Cassette] Ignorer le bloc non pris en charge '%1' (%2 octets)</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="555"/>
+        <location filename="../../src/sioworker.cpp" line="555" />
         <source>[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)</source>
-        <translation>[Cassette] Lecture de l&apos;enregistrement %1 sur %2 (%3 ms d&apos;intervalle + %4 octets de données)</translation>
+        <translation>[Cassette] Lecture de l'enregistrement %1 sur %2 (%3 ms d'intervalle + %4 octets de données)</translation>
     </message>
 </context>
 <context>
     <name>ClipboardDevice</name>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="99"/>
+        <location filename="../../src/miscdevices.cpp" line="99" />
         <source>[Y:] Open for Write (Accumulator Reset)</source>
-        <translation>[Y&#xa0;:] Ouvert pour l&apos;écriture (réinitialisation de l&apos;accumulateur)</translation>
+        <translation>[Y :] Ouvert pour l'écriture (réinitialisation de l'accumulateur)</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="122"/>
+        <location filename="../../src/miscdevices.cpp" line="122" />
         <source>[Y:] Open for Read (Buffered %1 bytes)</source>
-        <translation>[Y&#xa0;:] Ouvert en lecture (%1 octets tamponnés)</translation>
+        <translation>[Y :] Ouvert en lecture (%1 octets tamponnés)</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="146"/>
+        <location filename="../../src/miscdevices.cpp" line="146" />
         <source>[Y:] Sent EOF</source>
-        <translation>[Y&#xa0;:] Envoyé EOF</translation>
+        <translation>[Y :] Envoyé EOF</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="187"/>
+        <location filename="../../src/miscdevices.cpp" line="187" />
         <source>[Y:] Close: Clipboard Updated (%1 chars).</source>
-        <translation>[Y&#xa0;:] Fermer&#xa0;: Presse-papiers mis à jour (%1 caractères).</translation>
+        <translation>[Y :] Fermer : Presse-papiers mis à jour (%1 caractères).</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="189"/>
+        <location filename="../../src/miscdevices.cpp" line="189" />
         <source>[Y:] Close: Buffer empty, clipboard not touched.</source>
-        <translation>[Y&#xa0;:] Fermer&#xa0;: tampon vide, presse-papiers non touché.</translation>
+        <translation>[Y :] Fermer : tampon vide, presse-papiers non touché.</translation>
     </message>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="201"/>
+        <location filename="../../src/miscdevices.cpp" line="201" />
         <source>[Y:] Unknown Command: $%1</source>
-        <translation>[Y&#xa0;:] Commande inconnue&#xa0;: $%1</translation>
+        <translation>[Y :] Commande inconnue : $%1</translation>
     </message>
 </context>
 <context>
     <name>CloseButton</name>
     <message>
         <source>Close Tab</source>
-        <translation type="vanished">Fermer l&apos;onglet</translation>
+        <translation type="vanished">Fermer l'onglet</translation>
     </message>
 </context>
 <context>
     <name>CreateImageDialog</name>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="23"/>
+        <location filename="../../src/createimagedialog.ui" line="23" />
         <source>Create a disk image</source>
         <translation>Créer une image disque</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="44"/>
+        <location filename="../../src/createimagedialog.ui" line="44" />
         <source>Standard single density</source>
         <translation>Densité simple standard</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="54"/>
+        <location filename="../../src/createimagedialog.ui" line="54" />
         <source>Standard enhanced (also called medium or dual) density</source>
         <translation>Densité standard améliorée (également appelée moyenne ou double)</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="61"/>
+        <location filename="../../src/createimagedialog.ui" line="61" />
         <source>Standard double density</source>
         <translation>Double densité standard</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="68"/>
+        <location filename="../../src/createimagedialog.ui" line="68" />
         <source>Double sided double density</source>
         <translation>Double face double densité</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="75"/>
+        <location filename="../../src/createimagedialog.ui" line="75" />
         <source>Double density harddisk</source>
         <translation>Disque dur double densité</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="82"/>
+        <location filename="../../src/createimagedialog.ui" line="82" />
         <source>Custom</source>
         <translation>Coutume</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="100"/>
+        <location filename="../../src/createimagedialog.ui" line="100" />
         <source>Number of sectors:</source>
         <translation>Nombre de secteurs :</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="124"/>
+        <location filename="../../src/createimagedialog.ui" line="124" />
         <source>Sector density:</source>
-        <translation>Densité sectorielle&#xa0;:</translation>
+        <translation>Densité sectorielle :</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="132"/>
+        <location filename="../../src/createimagedialog.ui" line="132" />
         <source>Single (128 bytes per sector)</source>
         <translation>Unique (128 octets par secteur)</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="137"/>
+        <location filename="../../src/createimagedialog.ui" line="137" />
         <source>Double (256 bytes per sector)</source>
         <translation>Double (256 octets par secteur)</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="142"/>
+        <location filename="../../src/createimagedialog.ui" line="142" />
         <source>512 bytes per sector</source>
         <translation>512 octets par secteur</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="147"/>
+        <location filename="../../src/createimagedialog.ui" line="147" />
         <source>8192 bytes per sector</source>
         <translation>8192 octets par secteur</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.ui" line="163"/>
+        <location filename="../../src/createimagedialog.ui" line="163" />
         <source>Total image capacity: 92160 bytes (90 K)</source>
-        <translation>Capacité totale d&apos;image&#xa0;: 92&#xa0;160 octets (90&#xa0;K)</translation>
+        <translation>Capacité totale d'image : 92 160 octets (90 K)</translation>
     </message>
     <message>
-        <location filename="../../src/createimagedialog.cpp" line="75"/>
+        <location filename="../../src/createimagedialog.cpp" line="75" />
         <source>Total image capacity: %1 bytes (%2 K)</source>
-        <translation>Capacité totale de l&apos;image&#xa0;: %1 octets (%2 Ko)</translation>
+        <translation>Capacité totale de l'image : %1 octets (%2 Ko)</translation>
     </message>
 </context>
 <context>
     <name>DiskEditDialog</name>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="23"/>
+        <location filename="../../src/diskeditdialog.ui" line="23" />
         <source>MainWindow</source>
         <translation>Fenêtre principale</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="92"/>
+        <location filename="../../src/diskeditdialog.ui" line="92" />
         <source>Stay on Top</source>
         <translation>Restez au top</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="111"/>
+        <location filename="../../src/diskeditdialog.ui" line="111" />
         <source>toolBar</source>
-        <translation>Barre d&apos;outils</translation>
+        <translation>Barre d'outils</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="150"/>
-        <location filename="../../src/diskeditdialog.ui" line="153"/>
-        <location filename="../../src/diskeditdialog.ui" line="156"/>
+        <location filename="../../src/diskeditdialog.ui" line="150" />
+        <location filename="../../src/diskeditdialog.ui" line="153" />
+        <location filename="../../src/diskeditdialog.ui" line="156" />
         <source>Go to the parent directory</source>
         <translation>Accédez au répertoire parent</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="165"/>
+        <location filename="../../src/diskeditdialog.ui" line="165" />
         <source>Add files...</source>
         <translation>Ajouter des fichiers...</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="168"/>
-        <location filename="../../src/diskeditdialog.ui" line="171"/>
+        <location filename="../../src/diskeditdialog.ui" line="168" />
+        <location filename="../../src/diskeditdialog.ui" line="171" />
         <source>Add files to this directory</source>
         <translation>Ajouter des fichiers à ce répertoire</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="183"/>
+        <location filename="../../src/diskeditdialog.ui" line="183" />
         <source>Extract files...</source>
         <translation>Extraire les fichiers...</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="186"/>
-        <location filename="../../src/diskeditdialog.ui" line="189"/>
+        <location filename="../../src/diskeditdialog.ui" line="186" />
+        <location filename="../../src/diskeditdialog.ui" line="189" />
         <source>Extract selected files</source>
         <translation>Extraire les fichiers sélectionnés</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="201"/>
+        <location filename="../../src/diskeditdialog.ui" line="201" />
         <source>Text conversion</source>
         <translation>Conversion de texte</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="204"/>
-        <location filename="../../src/diskeditdialog.ui" line="207"/>
-        <location filename="../../src/diskeditdialog.cpp" line="649"/>
-        <location filename="../../src/diskeditdialog.cpp" line="650"/>
+        <location filename="../../src/diskeditdialog.ui" line="204" />
+        <location filename="../../src/diskeditdialog.ui" line="207" />
+        <location filename="../../src/diskeditdialog.cpp" line="649" />
+        <location filename="../../src/diskeditdialog.cpp" line="650" />
         <source>Text conversion is off</source>
         <translation>La conversion du texte est désactivée</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="219"/>
+        <location filename="../../src/diskeditdialog.ui" line="219" />
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="222"/>
-        <location filename="../../src/diskeditdialog.ui" line="225"/>
+        <location filename="../../src/diskeditdialog.ui" line="222" />
+        <location filename="../../src/diskeditdialog.ui" line="225" />
         <source>Delete selected files</source>
         <translation>Supprimer les fichiers sélectionnés</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="228"/>
+        <location filename="../../src/diskeditdialog.ui" line="228" />
         <source>Del</source>
         <translation>Del</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="237"/>
+        <location filename="../../src/diskeditdialog.ui" line="237" />
         <source>Print</source>
         <translation>Imprimer</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.ui" line="240"/>
+        <location filename="../../src/diskeditdialog.ui" line="240" />
         <source>Print Directory Listing</source>
         <translation>Imprimer la liste du répertoire</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="477"/>
+        <location filename="../../src/diskeditdialog.cpp" line="477" />
         <source>No file system</source>
         <translation>Pas de système de fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="478"/>
+        <location filename="../../src/diskeditdialog.cpp" line="478" />
         <source>Atari Dos 1.0</source>
         <translation>Atari Dos 1.0</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="479"/>
+        <location filename="../../src/diskeditdialog.cpp" line="479" />
         <source>Atari Dos 2.0</source>
         <translation>Atari Dos 2.0</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="480"/>
+        <location filename="../../src/diskeditdialog.cpp" line="480" />
         <source>Atari Dos 2.5</source>
         <translation>Atari Dos 2.5</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="481"/>
+        <location filename="../../src/diskeditdialog.cpp" line="481" />
         <source>MyDos</source>
         <translation>Mes Dos</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="482"/>
+        <location filename="../../src/diskeditdialog.cpp" line="482" />
         <source>SpartaDos</source>
         <translation>SpartaDos</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="574"/>
-        <location filename="../../src/diskeditdialog.cpp" line="600"/>
-        <location filename="../../src/diskeditdialog.cpp" line="614"/>
+        <location filename="../../src/diskeditdialog.cpp" line="574" />
+        <location filename="../../src/diskeditdialog.cpp" line="600" />
+        <location filename="../../src/diskeditdialog.cpp" line="614" />
         <source>AspeQt - Exploring %1</source>
         <translation>AspeQt - Exploration de %1</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="625"/>
+        <location filename="../../src/diskeditdialog.cpp" line="625" />
         <source>Extract files</source>
         <translation>Extraire des fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="645"/>
-        <location filename="../../src/diskeditdialog.cpp" line="646"/>
+        <location filename="../../src/diskeditdialog.cpp" line="645" />
+        <location filename="../../src/diskeditdialog.cpp" line="646" />
         <source>Text conversion is on</source>
         <translation>La conversion de texte est activée</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="657"/>
+        <location filename="../../src/diskeditdialog.cpp" line="657" />
         <source>Confirmation</source>
         <translation>Confirmation</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="657"/>
+        <location filename="../../src/diskeditdialog.cpp" line="657" />
         <source>Are you sure you want to delete selected files?</source>
-        <translation>Êtes-vous sûr de vouloir supprimer les fichiers sélectionnés&#xa0;?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer les fichiers sélectionnés ?</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="669"/>
+        <location filename="../../src/diskeditdialog.cpp" line="669" />
         <source>Add files</source>
         <translation>Ajouter des fichiers</translation>
     </message>
@@ -968,57 +968,57 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>DiskGeometry</name>
     <message>
-        <location filename="../../src/diskimage.cpp" line="220"/>
+        <location filename="../../src/diskimage.cpp" line="220" />
         <source>SD Diskette</source>
         <translation>Disquette SD</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="222"/>
+        <location filename="../../src/diskimage.cpp" line="222" />
         <source>ED Diskette</source>
         <translation>Disquette ED</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="224"/>
+        <location filename="../../src/diskimage.cpp" line="224" />
         <source>DD Diskette</source>
         <translation>Disquette DD</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="226"/>
+        <location filename="../../src/diskimage.cpp" line="226" />
         <source>QD Diskette</source>
         <translation>Disquette QD</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="229"/>
+        <location filename="../../src/diskimage.cpp" line="229" />
         <source>%1 sector SD HardDrive</source>
         <translation>Disque dur SD du secteur %1</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="231"/>
+        <location filename="../../src/diskimage.cpp" line="231" />
         <source>%1 sector DD HardDrive</source>
         <translation>Disque dur DD du secteur %1</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="233"/>
+        <location filename="../../src/diskimage.cpp" line="233" />
         <source>%1 sector, %2 bytes/sector HardDrive</source>
         <translation>%1 secteur, %2 octets/secteur Disque dur</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="236"/>
+        <location filename="../../src/diskimage.cpp" line="236" />
         <source>%1 %2 tracks/side, %3 sectors/track, %4 bytes/sector diskette</source>
         <translation>%1 %2 pistes/côté, %3 secteurs/piste, %4 octets/disquette secteur</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="237"/>
+        <location filename="../../src/diskimage.cpp" line="237" />
         <source>DS</source>
         <translation>DS</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="237"/>
+        <location filename="../../src/diskimage.cpp" line="237" />
         <source>SS</source>
         <translation>SS</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="243"/>
+        <location filename="../../src/diskimage.cpp" line="243" />
         <source>%1 (%2k)</source>
         <translation>%1 (%2k)</translation>
     </message>
@@ -1026,130 +1026,130 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>DiskImageAtx</name>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="38"/>
-        <location filename="../../src/diskimageatx.cpp" line="45"/>
-        <location filename="../../src/diskimageatx.cpp" line="53"/>
-        <location filename="../../src/diskimageatx.cpp" line="146"/>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;ouvrir &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/diskimageatx.cpp" line="38" />
+        <location filename="../../src/diskimageatx.cpp" line="45" />
+        <location filename="../../src/diskimageatx.cpp" line="53" />
+        <location filename="../../src/diskimageatx.cpp" line="146" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Impossible d'ouvrir '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="47"/>
+        <location filename="../../src/diskimageatx.cpp" line="47" />
         <source>Cannot read the header: %1.</source>
-        <translation>Impossible de lire l&apos;en-tête&#xa0;: %1.</translation>
+        <translation>Impossible de lire l'en-tête : %1.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="53"/>
+        <location filename="../../src/diskimageatx.cpp" line="53" />
         <source>Not a valid ATX file.</source>
-        <translation>Ce n&apos;est pas un fichier ATX valide.</translation>
+        <translation>Ce n'est pas un fichier ATX valide.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="60"/>
+        <location filename="../../src/diskimageatx.cpp" line="60" />
         <source>VAPI version %1: %2</source>
-        <translation>Version VAPI %1&#xa0;: %2</translation>
+        <translation>Version VAPI %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="132"/>
+        <location filename="../../src/diskimageatx.cpp" line="132" />
         <source>Tracks=%1 Sectors=%2</source>
         <translation>Pistes=%1 Secteurs=%2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="148"/>
+        <location filename="../../src/diskimageatx.cpp" line="148" />
         <source>Too many sectors in the image (%1).</source>
-        <translation>Trop de secteurs dans l&apos;image (%1).</translation>
+        <translation>Trop de secteurs dans l'image (%1).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="174"/>
-        <location filename="../../src/diskimageatx.cpp" line="233"/>
+        <location filename="../../src/diskimageatx.cpp" line="174" />
+        <location filename="../../src/diskimageatx.cpp" line="233" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation>[%1] Impossible de rechercher le secteur %2&#xa0;: %3</translation>
+        <translation>[%1] Impossible de rechercher le secteur %2 : %3</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="177"/>
+        <location filename="../../src/diskimageatx.cpp" line="177" />
         <source>Sector number is out of bounds.</source>
         <translation>Le numéro de secteur est hors limites.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="188"/>
+        <location filename="../../src/diskimageatx.cpp" line="188" />
         <source>[%1] Track %2 out of bounds</source>
         <translation>[%1] Suivre %2 hors des limites</translation>
     </message>
     <message>
-        <location filename="../../src/diskimageatx.cpp" line="264"/>
+        <location filename="../../src/diskimageatx.cpp" line="264" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation>[%1] Impossible de lire à partir du secteur %2&#xa0;: %3.</translation>
+        <translation>[%1] Impossible de lire à partir du secteur %2 : %3.</translation>
     </message>
 </context>
 <context>
     <name>DiskImagePro</name>
     <message>
-        <location filename="../../src/diskimagepro.cpp" line="30"/>
-        <location filename="../../src/diskimagepro.cpp" line="37"/>
-        <location filename="../../src/diskimagepro.cpp" line="48"/>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;ouvrir &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/diskimagepro.cpp" line="30" />
+        <location filename="../../src/diskimagepro.cpp" line="37" />
+        <location filename="../../src/diskimagepro.cpp" line="48" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Impossible d'ouvrir '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimagepro.cpp" line="39"/>
+        <location filename="../../src/diskimagepro.cpp" line="39" />
         <source>Cannot read the header: %1.</source>
-        <translation>Impossible de lire l&apos;en-tête&#xa0;: %1.</translation>
+        <translation>Impossible de lire l'en-tête : %1.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimagepro.cpp" line="48"/>
+        <location filename="../../src/diskimagepro.cpp" line="48" />
         <source>Not a valid PRO file.</source>
-        <translation>Il ne s&apos;agit pas d&apos;un fichier PRO valide.</translation>
+        <translation>Il ne s'agit pas d'un fichier PRO valide.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimagepro.cpp" line="87"/>
+        <location filename="../../src/diskimagepro.cpp" line="87" />
         <source>[%1] Cannot seek to sector %2: out of bounds.</source>
-        <translation>[%1] Impossible de rechercher le secteur %2&#xa0;: hors limites.</translation>
+        <translation>[%1] Impossible de rechercher le secteur %2 : hors limites.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimagepro.cpp" line="94"/>
+        <location filename="../../src/diskimagepro.cpp" line="94" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation>[%1] Impossible de rechercher le secteur %2&#xa0;: %3</translation>
+        <translation>[%1] Impossible de rechercher le secteur %2 : %3</translation>
     </message>
     <message>
-        <location filename="../../src/diskimagepro.cpp" line="123"/>
+        <location filename="../../src/diskimagepro.cpp" line="123" />
         <source>Error in .pro image: sector: %1 dupnum: %2</source>
-        <translation>Erreur dans l&apos;image .pro&#xa0;: secteur&#xa0;: %1 dupnum&#xa0;:&#xa0;%2</translation>
+        <translation>Erreur dans l'image .pro : secteur : %1 dupnum : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimagepro.cpp" line="162"/>
+        <location filename="../../src/diskimagepro.cpp" line="162" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation>[%1] Impossible de lire à partir du secteur %2&#xa0;: %3.</translation>
+        <translation>[%1] Impossible de lire à partir du secteur %2 : %3.</translation>
     </message>
 </context>
 <context>
     <name>DocDisplayWindow</name>
     <message>
-        <location filename="../../src/docdisplaywindow.ui" line="17"/>
+        <location filename="../../src/docdisplaywindow.ui" line="17" />
         <source>AspeQt User Manual</source>
-        <translation>Manuel d&apos;utilisation d&apos;AspeQt</translation>
+        <translation>Manuel d'utilisation d'AspeQt</translation>
     </message>
     <message>
-        <location filename="../../src/docdisplaywindow.ui" line="35"/>
+        <location filename="../../src/docdisplaywindow.ui" line="35" />
         <source>qrc:/documentation/AspeQt User Manual-English.html</source>
-        <translation>qrc:/documentation/Manuel d&apos;utilisation AspeQt-anglais.html</translation>
+        <translation>qrc:/documentation/Manuel d'utilisation AspeQt-anglais.html</translation>
     </message>
     <message>
-        <location filename="../../src/docdisplaywindow.ui" line="48"/>
+        <location filename="../../src/docdisplaywindow.ui" line="48" />
         <source>toolBar</source>
-        <translation>Barre d&apos;outils</translation>
+        <translation>Barre d'outils</translation>
     </message>
     <message>
-        <location filename="../../src/docdisplaywindow.ui" line="76"/>
+        <location filename="../../src/docdisplaywindow.ui" line="76" />
         <source>Print</source>
         <translation>Imprimer</translation>
     </message>
     <message>
-        <location filename="../../src/docdisplaywindow.ui" line="79"/>
-        <location filename="../../src/docdisplaywindow.ui" line="82"/>
+        <location filename="../../src/docdisplaywindow.ui" line="79" />
+        <location filename="../../src/docdisplaywindow.ui" line="82" />
         <source>Print User Manual</source>
-        <translation>Imprimer le manuel d&apos;utilisation</translation>
+        <translation>Imprimer le manuel d'utilisation</translation>
     </message>
     <message>
-        <location filename="../../src/docdisplaywindow.ui" line="85"/>
+        <location filename="../../src/docdisplaywindow.ui" line="85" />
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
@@ -1157,279 +1157,279 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>Dos10FileSystem</name>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="479"/>
-        <location filename="../../src/atarifilesystem.cpp" line="487"/>
-        <location filename="../../src/atarifilesystem.cpp" line="493"/>
-        <location filename="../../src/atarifilesystem.cpp" line="547"/>
-        <location filename="../../src/atarifilesystem.cpp" line="560"/>
-        <location filename="../../src/atarifilesystem.cpp" line="565"/>
-        <location filename="../../src/atarifilesystem.cpp" line="582"/>
-        <location filename="../../src/atarifilesystem.cpp" line="587"/>
-        <location filename="../../src/atarifilesystem.cpp" line="600"/>
-        <location filename="../../src/atarifilesystem.cpp" line="662"/>
-        <location filename="../../src/atarifilesystem.cpp" line="672"/>
-        <location filename="../../src/atarifilesystem.cpp" line="695"/>
-        <location filename="../../src/atarifilesystem.cpp" line="710"/>
-        <location filename="../../src/atarifilesystem.cpp" line="715"/>
-        <location filename="../../src/atarifilesystem.cpp" line="726"/>
-        <location filename="../../src/atarifilesystem.cpp" line="745"/>
-        <location filename="../../src/atarifilesystem.cpp" line="754"/>
-        <location filename="../../src/atarifilesystem.cpp" line="766"/>
-        <location filename="../../src/atarifilesystem.cpp" line="773"/>
-        <location filename="../../src/atarifilesystem.cpp" line="789"/>
-        <location filename="../../src/atarifilesystem.cpp" line="794"/>
-        <location filename="../../src/atarifilesystem.cpp" line="803"/>
-        <location filename="../../src/atarifilesystem.cpp" line="809"/>
-        <location filename="../../src/atarifilesystem.cpp" line="819"/>
-        <location filename="../../src/atarifilesystem.cpp" line="897"/>
-        <location filename="../../src/atarifilesystem.cpp" line="902"/>
-        <location filename="../../src/atarifilesystem.cpp" line="911"/>
+        <location filename="../../src/atarifilesystem.cpp" line="479" />
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <location filename="../../src/atarifilesystem.cpp" line="547" />
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="582" />
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
         <source>Atari file system error</source>
         <translation>Erreur du système de fichiers Atari</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="479"/>
-        <source>Cannot create file &apos;%1&apos;.</source>
-        <translation>Impossible de créer le fichier &apos;%1&apos;.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="479" />
+        <source>Cannot create file '%1'.</source>
+        <translation>Impossible de créer le fichier '%1'.</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="487"/>
-        <location filename="../../src/atarifilesystem.cpp" line="493"/>
-        <source>Cannot read &apos;%1&apos;: %2</source>
-        <translation>Impossible de lire &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <source>Cannot read '%1': %2</source>
+        <translation>Impossible de lire '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="487"/>
-        <location filename="../../src/atarifilesystem.cpp" line="672"/>
-        <location filename="../../src/atarifilesystem.cpp" line="766"/>
-        <location filename="../../src/atarifilesystem.cpp" line="789"/>
-        <location filename="../../src/atarifilesystem.cpp" line="803"/>
-        <location filename="../../src/atarifilesystem.cpp" line="897"/>
+        <location filename="../../src/atarifilesystem.cpp" line="487" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
         <source>Sector read failed.</source>
         <translation>La lecture du secteur a échoué.</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="493"/>
-        <location filename="../../src/atarifilesystem.cpp" line="809"/>
+        <location filename="../../src/atarifilesystem.cpp" line="493" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
         <source>File number mismatch.</source>
         <translation>Incohérence des numéros de dossier.</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="547"/>
-        <source>Cannot write to &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;écrire dans &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="547" />
+        <source>Cannot write to '%1': %2</source>
+        <translation>Impossible d'écrire dans '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="560"/>
-        <location filename="../../src/atarifilesystem.cpp" line="565"/>
-        <location filename="../../src/atarifilesystem.cpp" line="587"/>
-        <location filename="../../src/atarifilesystem.cpp" line="600"/>
-        <location filename="../../src/atarifilesystem.cpp" line="662"/>
-        <location filename="../../src/atarifilesystem.cpp" line="672"/>
-        <location filename="../../src/atarifilesystem.cpp" line="695"/>
-        <location filename="../../src/atarifilesystem.cpp" line="710"/>
-        <location filename="../../src/atarifilesystem.cpp" line="715"/>
-        <location filename="../../src/atarifilesystem.cpp" line="726"/>
-        <location filename="../../src/atarifilesystem.cpp" line="745"/>
-        <location filename="../../src/atarifilesystem.cpp" line="754"/>
-        <location filename="../../src/atarifilesystem.cpp" line="766"/>
-        <location filename="../../src/atarifilesystem.cpp" line="773"/>
-        <source>Cannot insert &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;insérer &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="672" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="766" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <source>Cannot insert '%1': %2</source>
+        <translation>Impossible d'insérer '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="560"/>
-        <location filename="../../src/atarifilesystem.cpp" line="710"/>
+        <location filename="../../src/atarifilesystem.cpp" line="560" />
+        <location filename="../../src/atarifilesystem.cpp" line="710" />
         <source>Cannot find a suitable file name.</source>
         <translation>Impossible de trouver un nom de fichier approprié.</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="565"/>
-        <location filename="../../src/atarifilesystem.cpp" line="715"/>
+        <location filename="../../src/atarifilesystem.cpp" line="565" />
+        <location filename="../../src/atarifilesystem.cpp" line="715" />
         <source>Directory is full.</source>
-        <translation>L&apos;annuaire est plein.</translation>
+        <translation>L'annuaire est plein.</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="582"/>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;ouvrir &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="582" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Impossible d'ouvrir '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="587"/>
-        <location filename="../../src/atarifilesystem.cpp" line="600"/>
-        <location filename="../../src/atarifilesystem.cpp" line="726"/>
-        <location filename="../../src/atarifilesystem.cpp" line="745"/>
+        <location filename="../../src/atarifilesystem.cpp" line="587" />
+        <location filename="../../src/atarifilesystem.cpp" line="600" />
+        <location filename="../../src/atarifilesystem.cpp" line="726" />
+        <location filename="../../src/atarifilesystem.cpp" line="745" />
         <source>Disk is full.</source>
         <translation>Le disque est plein.</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="624"/>
+        <location filename="../../src/atarifilesystem.cpp" line="624" />
         <source>File system error</source>
         <translation>Erreur du système de fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="624"/>
-        <source>Number of bytes (%1) read from &apos;%2&apos; is not equal to expected data size of (%3)</source>
-        <translation>Le nombre d&apos;octets (%1) lus à partir de « %2 » n&apos;est pas égal à la taille de données attendue de (%3)</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="624" />
+        <source>Number of bytes (%1) read from '%2' is not equal to expected data size of (%3)</source>
+        <translation>Le nombre d'octets (%1) lus à partir de « %2 » n'est pas égal à la taille de données attendue de (%3)</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="662"/>
-        <location filename="../../src/atarifilesystem.cpp" line="695"/>
-        <location filename="../../src/atarifilesystem.cpp" line="754"/>
-        <location filename="../../src/atarifilesystem.cpp" line="773"/>
-        <location filename="../../src/atarifilesystem.cpp" line="794"/>
-        <location filename="../../src/atarifilesystem.cpp" line="902"/>
+        <location filename="../../src/atarifilesystem.cpp" line="662" />
+        <location filename="../../src/atarifilesystem.cpp" line="695" />
+        <location filename="../../src/atarifilesystem.cpp" line="754" />
+        <location filename="../../src/atarifilesystem.cpp" line="773" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
         <source>Sector write failed.</source>
-        <translation>L&apos;écriture du secteur a échoué.</translation>
+        <translation>L'écriture du secteur a échoué.</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="789"/>
-        <location filename="../../src/atarifilesystem.cpp" line="794"/>
-        <location filename="../../src/atarifilesystem.cpp" line="803"/>
-        <location filename="../../src/atarifilesystem.cpp" line="809"/>
-        <location filename="../../src/atarifilesystem.cpp" line="819"/>
-        <location filename="../../src/atarifilesystem.cpp" line="897"/>
-        <location filename="../../src/atarifilesystem.cpp" line="902"/>
-        <location filename="../../src/atarifilesystem.cpp" line="911"/>
-        <source>Cannot delete &apos;%1&apos;: %2</source>
-        <translation>Impossible de supprimer &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="789" />
+        <location filename="../../src/atarifilesystem.cpp" line="794" />
+        <location filename="../../src/atarifilesystem.cpp" line="803" />
+        <location filename="../../src/atarifilesystem.cpp" line="809" />
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="897" />
+        <location filename="../../src/atarifilesystem.cpp" line="902" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
+        <source>Cannot delete '%1': %2</source>
+        <translation>Impossible de supprimer '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="819"/>
-        <location filename="../../src/atarifilesystem.cpp" line="911"/>
+        <location filename="../../src/atarifilesystem.cpp" line="819" />
+        <location filename="../../src/atarifilesystem.cpp" line="911" />
         <source>Bitmap write failed.</source>
-        <translation>Échec de l&apos;écriture du bitmap.</translation>
+        <translation>Échec de l'écriture du bitmap.</translation>
     </message>
 </context>
 <context>
     <name>DriveWidget</name>
     <message>
-        <location filename="../../src/drivewidget.ui" line="23"/>
+        <location filename="../../src/drivewidget.ui" line="23" />
         <source>Frame</source>
         <translation>Cadre</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="55"/>
+        <location filename="../../src/drivewidget.ui" line="55" />
         <source>1:</source>
-        <translation>1&#xa0;:</translation>
+        <translation>1 :</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="129"/>
+        <location filename="../../src/drivewidget.ui" line="129" />
         <source>Mount disk image...</source>
-        <translation>Monter l&apos;image disque...</translation>
+        <translation>Monter l'image disque...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="138"/>
+        <location filename="../../src/drivewidget.ui" line="138" />
         <source>Create blank disk...</source>
         <translation>Créer un disque vierge...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="141"/>
+        <location filename="../../src/drivewidget.ui" line="141" />
         <source>Create a blank disk and mount it to this slot</source>
         <translation>Créez un disque vierge et montez-le sur cet emplacement</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="144"/>
+        <location filename="../../src/drivewidget.ui" line="144" />
         <source>Create a blank disk and mount it to D%1</source>
         <translation>Créez un disque vierge et montez-le sur D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="153"/>
+        <location filename="../../src/drivewidget.ui" line="153" />
         <source>Mount folder image...</source>
-        <translation>Monter l&apos;image du dossier...</translation>
+        <translation>Monter l'image du dossier...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="162"/>
+        <location filename="../../src/drivewidget.ui" line="162" />
         <source>Unmount</source>
         <translation>Démonter</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="171"/>
+        <location filename="../../src/drivewidget.ui" line="171" />
         <source>Explore..</source>
         <translation>Explorer..</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="180"/>
+        <location filename="../../src/drivewidget.ui" line="180" />
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="192"/>
+        <location filename="../../src/drivewidget.ui" line="192" />
         <source>Auto save</source>
         <translation>Sauvegarde automatique</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="204"/>
+        <location filename="../../src/drivewidget.ui" line="204" />
         <source>Happy Enhancement</source>
         <translation>Bonne amélioration</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="213"/>
+        <location filename="../../src/drivewidget.ui" line="213" />
         <source>Folder Boot Options</source>
         <translation>Options de démarrage du dossier</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="216"/>
+        <location filename="../../src/drivewidget.ui" line="216" />
         <source>Change Boot Options for D%1</source>
         <translation>Modifier les options de démarrage pour D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="225"/>
+        <location filename="../../src/drivewidget.ui" line="225" />
         <source>Save as...</source>
         <translation>Enregistrer sous...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="228"/>
+        <location filename="../../src/drivewidget.ui" line="228" />
         <source>Save image as... for D%1</source>
-        <translation>Enregistrer l&apos;image sous... pour D%1</translation>
+        <translation>Enregistrer l'image sous... pour D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="237"/>
+        <location filename="../../src/drivewidget.ui" line="237" />
         <source>Revert to original</source>
-        <translation>Revenir à l&apos;original</translation>
+        <translation>Revenir à l'original</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="240"/>
+        <location filename="../../src/drivewidget.ui" line="240" />
         <source>Revert image to last saved state for D%1</source>
-        <translation>Rétablir l&apos;image au dernier état enregistré pour D%1</translation>
+        <translation>Rétablir l'image au dernier état enregistré pour D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="248"/>
+        <location filename="../../src/drivewidget.ui" line="248" />
         <source>Write protected</source>
         <translation>Protégé en écriture</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="257"/>
+        <location filename="../../src/drivewidget.ui" line="257" />
         <source>Inspect Sectors...</source>
         <translation>Inspecter les secteurs...</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="260"/>
+        <location filename="../../src/drivewidget.ui" line="260" />
         <source>Open low-level sector inspector for D%1</source>
         <translation>Ouvrir un inspecteur de secteur de bas niveau pour D%1</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="269"/>
+        <location filename="../../src/drivewidget.ui" line="269" />
         <source>Exchange Drives</source>
         <translation>Échange de disques</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="272"/>
+        <location filename="../../src/drivewidget.ui" line="272" />
         <source>Exchange this disk with the slot below it (Click twice to toggle)</source>
-        <translation>Échangez ce disque avec l&apos;emplacement en dessous (cliquez deux fois pour basculer)</translation>
+        <translation>Échangez ce disque avec l'emplacement en dessous (cliquez deux fois pour basculer)</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="275"/>
+        <location filename="../../src/drivewidget.ui" line="275" />
         <source>Exchange D%1 with the slot below it</source>
-        <translation>Échangez D%1 avec l&apos;emplacement en dessous</translation>
+        <translation>Échangez D%1 avec l'emplacement en dessous</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="284"/>
+        <location filename="../../src/drivewidget.ui" line="284" />
         <source>Drive Info</source>
         <translation>Informations sur le lecteur</translation>
     </message>
     <message>
-        <location filename="../../src/drivewidget.ui" line="287"/>
+        <location filename="../../src/drivewidget.ui" line="287" />
         <source>Show Drive Information</source>
         <translation>Afficher les informations sur le lecteur</translation>
     </message>
@@ -1437,136 +1437,136 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>EpsonPrinter</name>
     <message>
-        <location filename="../../src/epsonprinter.cpp" line="22"/>
+        <location filename="../../src/epsonprinter.cpp" line="22" />
         <source>[%1] ignored</source>
         <translation>[%1] ignoré</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinter.cpp" line="43"/>
+        <location filename="../../src/epsonprinter.cpp" line="43" />
         <source>[%1] Get status.</source>
         <translation>[%1] Obtenez le statut.</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinter.cpp" line="65"/>
+        <location filename="../../src/epsonprinter.cpp" line="65" />
         <source>[%1] Received %2 bytes. Parsing instantly.</source>
         <translation>[%1] %2 octets reçus. Analyse instantanée.</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinter.cpp" line="76"/>
+        <location filename="../../src/epsonprinter.cpp" line="76" />
         <source>[%1] Print Job Closed by Atari.</source>
-        <translation>[%1] Travail d&apos;impression fermé par Atari.</translation>
+        <translation>[%1] Travail d'impression fermé par Atari.</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinter.cpp" line="91"/>
+        <location filename="../../src/epsonprinter.cpp" line="91" />
         <source>[%1] Unknown Command: $%2</source>
-        <translation>[%1] Commande inconnue&#xa0;: $%2</translation>
+        <translation>[%1] Commande inconnue : $%2</translation>
     </message>
 </context>
 <context>
     <name>EpsonPrinterWindow</name>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="14"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="14" />
         <source>AspeQt - Printer output preview</source>
-        <translation>AspeQt - Aperçu de la sortie de l&apos;imprimante</translation>
+        <translation>AspeQt - Aperçu de la sortie de l'imprimante</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="30"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="30" />
         <source>toolBar</source>
-        <translation>Barre d&apos;outils</translation>
+        <translation>Barre d'outils</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="62"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="62" />
         <source>Save to a file...</source>
         <translation>Enregistrer dans un fichier...</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="65"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="65" />
         <source>Save contents to a file (Ctrl+S)</source>
         <translation>Enregistrer le contenu dans un fichier (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="68"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="68" />
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="77"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="77" />
         <source>Clear</source>
         <translation>Clair</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="80"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="80" />
         <source>Clear contents (Ctrl+C)</source>
         <translation>Effacer le contenu (Ctrl+C)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="83"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="83" />
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="92"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="92" />
         <source>Print</source>
         <translation>Imprimer</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="95"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="95" />
         <source>Send contents to physical printer (Ctrl+P)</source>
         <translation>Envoyer le contenu à une imprimante physique (Ctrl+P)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="98"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="98" />
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="107"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="107" />
         <source>Zoom In</source>
         <translation>Zoomer</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="110"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="110" />
         <source>Zoom In (Ctrl++)</source>
         <translation>Zoomer (Ctrl++)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="113"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="113" />
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="122"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="122" />
         <source>Zoom Out</source>
         <translation>Zoom arrière</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="125"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="125" />
         <source>Zoom Out (Ctrl+-)</source>
         <translation>Zoom arrière (Ctrl+-)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.ui" line="128"/>
+        <location filename="../../src/epsonprinterwindow.ui" line="128" />
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="154"/>
-        <location filename="../../src/epsonprinterwindow.cpp" line="223"/>
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>Empty</source>
         <translation>Vide</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="154"/>
+        <location filename="../../src/epsonprinterwindow.cpp" line="154" />
         <source>There is no printout to save!</source>
-        <translation>Il n’y a aucune impression à sauvegarder&#xa0;!</translation>
+        <translation>Il n’y a aucune impression à sauvegarder !</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="161"/>
+        <location filename="../../src/epsonprinterwindow.cpp" line="161" />
         <source>Save Printout</source>
-        <translation>Enregistrer l&apos;impression</translation>
+        <translation>Enregistrer l'impression</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="162"/>
+        <location filename="../../src/epsonprinterwindow.cpp" line="162" />
         <source>PDF Document (*.pdf);;PNG Image (*.png)</source>
         <translation>Document PDF (*.pdf);;Image PNG (*.png)</translation>
     </message>
@@ -1575,105 +1575,105 @@ Temps restant estimé&#xa0;: %1:%2</translation>
         <translation type="vanished">Image PNG (*.png);;Document PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../../src/epsonprinterwindow.cpp" line="223"/>
+        <location filename="../../src/epsonprinterwindow.cpp" line="223" />
         <source>There is no printout to print!</source>
-        <translation>Il n’y a pas d’impression à imprimer&#xa0;!</translation>
+        <translation>Il n’y a pas d’impression à imprimer !</translation>
     </message>
 </context>
 <context>
     <name>FileTypes</name>
     <message>
-        <location filename="../../src/miscutils.cpp" line="109"/>
+        <location filename="../../src/miscutils.cpp" line="109" />
         <source>ATR disk image</source>
         <translation>Image disque ATR</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="111"/>
+        <location filename="../../src/miscutils.cpp" line="111" />
         <source>gzipped ATR disk image</source>
         <translation>image disque ATR compressée</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="113"/>
+        <location filename="../../src/miscutils.cpp" line="113" />
         <source>XFD disk image</source>
         <translation>Image disque XFD</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="115"/>
+        <location filename="../../src/miscutils.cpp" line="115" />
         <source>gziped XFD disk image</source>
         <translation>Image disque XFD gzipée</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="117"/>
+        <location filename="../../src/miscutils.cpp" line="117" />
         <source>DCM disk image</source>
         <translation>Image disque DCM</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="119"/>
+        <location filename="../../src/miscutils.cpp" line="119" />
         <source>gzipped DCM disk image</source>
         <translation>image disque DCM compressée</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="121"/>
+        <location filename="../../src/miscutils.cpp" line="121" />
         <source>SCP disk image</source>
         <translation>Image disque SCP</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="123"/>
+        <location filename="../../src/miscutils.cpp" line="123" />
         <source>gzipped SCP disk image</source>
         <translation>Image disque SCP compressée</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="125"/>
+        <location filename="../../src/miscutils.cpp" line="125" />
         <source>DI disk image</source>
         <translation>Image disque DI</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="127"/>
+        <location filename="../../src/miscutils.cpp" line="127" />
         <source>gzipped DI disk image</source>
         <translation>image disque DI compressée</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="129"/>
+        <location filename="../../src/miscutils.cpp" line="129" />
         <source>PRO disk image</source>
         <translation>Image disque PRO</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="131"/>
+        <location filename="../../src/miscutils.cpp" line="131" />
         <source>gzipped PRO disk image</source>
         <translation>Image disque PRO compressée</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="133"/>
+        <location filename="../../src/miscutils.cpp" line="133" />
         <source>VAPI (ATX) disk image</source>
         <translation>Image disque VAPI (ATX)</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="135"/>
+        <location filename="../../src/miscutils.cpp" line="135" />
         <source>gzipped VAPI (ATX) disk image</source>
         <translation>Image disque gzippée VAPI (ATX)</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="137"/>
+        <location filename="../../src/miscutils.cpp" line="137" />
         <source>CAS cassette image</source>
         <translation>Image de la cassette CAS</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="139"/>
+        <location filename="../../src/miscutils.cpp" line="139" />
         <source>gzipped CAS cassette image</source>
         <translation>image de la cassette CAS compressée</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="141"/>
+        <location filename="../../src/miscutils.cpp" line="141" />
         <source>Atari executable</source>
         <translation>Exécutable Atari</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="143"/>
+        <location filename="../../src/miscutils.cpp" line="143" />
         <source>gzipped Atari executable</source>
         <translation>Exécutable Atari compressé</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="145"/>
+        <location filename="../../src/miscutils.cpp" line="145" />
         <source>unknown file type</source>
         <translation>type de fichier inconnu</translation>
     </message>
@@ -1681,17 +1681,17 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>FolderImage</name>
     <message>
-        <location filename="../../src/folderimage.cpp" line="113"/>
-        <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
-        <translation>Impossible de refléter &apos;%1&apos; dans &apos;%2&apos; : aucun nom Atari approprié n&apos;a été trouvé.</translation>
+        <location filename="../../src/folderimage.cpp" line="113" />
+        <source>Cannot mirror '%1' in '%2': No suitable Atari name can be found.</source>
+        <translation>Impossible de refléter '%1' dans '%2' : aucun nom Atari approprié n'a été trouvé.</translation>
     </message>
     <message>
-        <location filename="../../src/folderimage.cpp" line="186"/>
-        <source>Cannot mirror %1 of %2 files in &apos;%3&apos;: Atari directory is full.</source>
-        <translation>Impossible de mettre en miroir %1 des %2 fichiers dans &apos;%3&apos;&#xa0;: le répertoire Atari est plein.</translation>
+        <location filename="../../src/folderimage.cpp" line="186" />
+        <source>Cannot mirror %1 of %2 files in '%3': Atari directory is full.</source>
+        <translation>Impossible de mettre en miroir %1 des %2 fichiers dans '%3' : le répertoire Atari est plein.</translation>
     </message>
     <message>
-        <location filename="../../src/folderimage.h" line="52"/>
+        <location filename="../../src/folderimage.h" line="52" />
         <source>Folder image</source>
         <translation>Image du dossier</translation>
     </message>
@@ -1699,12 +1699,12 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>GzFile</name>
     <message>
-        <location filename="../../src/miscutils.cpp" line="175"/>
+        <location filename="../../src/miscutils.cpp" line="175" />
         <source>gzdopen() failed.</source>
         <translation>gzdopen() a échoué.</translation>
     </message>
     <message>
-        <location filename="../../src/miscutils.cpp" line="202"/>
+        <location filename="../../src/miscutils.cpp" line="202" />
         <source>gzseek() failed.</source>
         <translation>gzseek() a échoué.</translation>
     </message>
@@ -1712,7 +1712,7 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>InfoWidget</name>
     <message>
-        <location filename="../../src/infowidget.ui" line="20"/>
+        <location filename="../../src/infowidget.ui" line="20" />
         <source>Form</source>
         <translation>Formulaire</translation>
     </message>
@@ -1720,39 +1720,39 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>LogDisplayDialog</name>
     <message>
-        <location filename="../../src/logdisplaydialog.ui" line="14"/>
+        <location filename="../../src/logdisplaydialog.ui" line="14" />
         <source>AspeQt Log View</source>
         <translation>Vue du journal AspeQt</translation>
     </message>
     <message>
-        <location filename="../../src/logdisplaydialog.cpp" line="48"/>
+        <location filename="../../src/logdisplaydialog.cpp" line="48" />
         <source>Save Log</source>
         <translation>Enregistrer le journal</translation>
     </message>
     <message>
-        <location filename="../../src/logdisplaydialog.cpp" line="50"/>
+        <location filename="../../src/logdisplaydialog.cpp" line="50" />
         <source>Text Files (*.txt);;HTML Files (*.html);;All Files (*)</source>
         <translation>Fichiers texte (*.txt);;Fichiers HTML (*.html);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/logdisplaydialog.cpp" line="64"/>
+        <location filename="../../src/logdisplaydialog.cpp" line="64" />
         <source>Success</source>
         <translation>Succès</translation>
     </message>
     <message>
-        <location filename="../../src/logdisplaydialog.cpp" line="64"/>
+        <location filename="../../src/logdisplaydialog.cpp" line="64" />
         <source>Log saved successfully!</source>
-        <translation>Journal enregistré avec succès&#xa0;!</translation>
+        <translation>Journal enregistré avec succès !</translation>
     </message>
     <message>
-        <location filename="../../src/logdisplaydialog.cpp" line="66"/>
+        <location filename="../../src/logdisplaydialog.cpp" line="66" />
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../src/logdisplaydialog.cpp" line="66"/>
+        <location filename="../../src/logdisplaydialog.cpp" line="66" />
         <source>Could not save the log file.</source>
-        <translation>Impossible d&apos;enregistrer le fichier journal.</translation>
+        <translation>Impossible d'enregistrer le fichier journal.</translation>
     </message>
 </context>
 <context>
@@ -1789,957 +1789,957 @@ Temps restant estimé&#xa0;: %1:%2</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/mainwindow.ui" line="88"/>
+        <location filename="../../src/mainwindow.ui" line="88" />
         <source>&amp;Disk</source>
         <translation>&amp;Disque</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="99"/>
+        <location filename="../../src/mainwindow.ui" line="99" />
         <source>&amp;File</source>
         <translation>&amp;Déposer</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="115"/>
+        <location filename="../../src/mainwindow.ui" line="115" />
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="125"/>
+        <location filename="../../src/mainwindow.ui" line="125" />
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="135"/>
+        <location filename="../../src/mainwindow.ui" line="135" />
         <source>Window</source>
         <translation>Fenêtre</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="160"/>
+        <location filename="../../src/mainwindow.ui" line="160" />
         <source>Unmount &amp;all</source>
         <translation>Démonter et tout</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="163"/>
+        <location filename="../../src/mainwindow.ui" line="163" />
         <source>Unmount all</source>
         <translation>Tout démonter</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="166"/>
+        <location filename="../../src/mainwindow.ui" line="166" />
         <source>Ctrl+U</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="178"/>
+        <location filename="../../src/mainwindow.ui" line="178" />
         <source>&amp;Options...</source>
         <translation>&amp;Options...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="181"/>
-        <location filename="../../src/mainwindow.ui" line="184"/>
+        <location filename="../../src/mainwindow.ui" line="181" />
+        <location filename="../../src/mainwindow.ui" line="184" />
         <source>Open options dialog</source>
         <translation>Ouvrir la boîte de dialogue des options</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="187"/>
+        <location filename="../../src/mainwindow.ui" line="187" />
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="203"/>
-        <location filename="../../src/mainwindow.cpp" line="1350"/>
+        <location filename="../../src/mainwindow.ui" line="203" />
+        <location filename="../../src/mainwindow.cpp" line="1350" />
         <source>&amp;Start emulation</source>
-        <translation>&amp;Démarrer l&apos;émulation</translation>
+        <translation>&amp;Démarrer l'émulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="206"/>
-        <location filename="../../src/mainwindow.ui" line="209"/>
-        <location filename="../../src/mainwindow.cpp" line="1351"/>
-        <location filename="../../src/mainwindow.cpp" line="1352"/>
+        <location filename="../../src/mainwindow.ui" line="206" />
+        <location filename="../../src/mainwindow.ui" line="209" />
+        <location filename="../../src/mainwindow.cpp" line="1351" />
+        <location filename="../../src/mainwindow.cpp" line="1352" />
         <source>Start SIO peripheral emulation</source>
-        <translation>Démarrer l&apos;émulation du périphérique SIO</translation>
+        <translation>Démarrer l'émulation du périphérique SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="212"/>
+        <location filename="../../src/mainwindow.ui" line="212" />
         <source>Alt+E</source>
         <translation>Alt+E</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="223"/>
-        <location filename="../../src/mainwindow.ui" line="226"/>
+        <location filename="../../src/mainwindow.ui" line="223" />
+        <location filename="../../src/mainwindow.ui" line="226" />
         <source>Mount to the first available slot</source>
         <translation>Monter sur le premier emplacement disponible</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="235"/>
+        <location filename="../../src/mainwindow.ui" line="235" />
         <source>Mount &amp;disk image...</source>
-        <translation>Monter l&apos;image disque...</translation>
+        <translation>Monter l'image disque...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="238"/>
-        <location filename="../../src/mainwindow.ui" line="241"/>
+        <location filename="../../src/mainwindow.ui" line="238" />
+        <location filename="../../src/mainwindow.ui" line="241" />
         <source>Mount a disk image to the first available slot</source>
         <translation>Monter une image disque sur le premier emplacement disponible</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="244"/>
+        <location filename="../../src/mainwindow.ui" line="244" />
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="253"/>
+        <location filename="../../src/mainwindow.ui" line="253" />
         <source>Mount &amp;folder image...</source>
-        <translation>Monter l&apos;image et le dossier...</translation>
+        <translation>Monter l'image et le dossier...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="256"/>
-        <location filename="../../src/mainwindow.ui" line="259"/>
+        <location filename="../../src/mainwindow.ui" line="256" />
+        <location filename="../../src/mainwindow.ui" line="259" />
         <source>Mount a folder image to the first available slot</source>
         <translation>Monter une image de dossier sur le premier emplacement disponible</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="262"/>
+        <location filename="../../src/mainwindow.ui" line="262" />
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="271"/>
+        <location filename="../../src/mainwindow.ui" line="271" />
         <source>New disk image...</source>
         <translation>Nouvelle image disque...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="274"/>
-        <location filename="../../src/mainwindow.ui" line="277"/>
+        <location filename="../../src/mainwindow.ui" line="274" />
+        <location filename="../../src/mainwindow.ui" line="277" />
         <source>Create a new disk image file and mount it to the first available slot</source>
         <translation>Créez un nouveau fichier image disque et montez-le sur le premier emplacement disponible</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="280"/>
+        <location filename="../../src/mainwindow.ui" line="280" />
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="292"/>
+        <location filename="../../src/mainwindow.ui" line="292" />
         <source>&amp;Save session</source>
         <translation>&amp;Enregistrer la session</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="295"/>
+        <location filename="../../src/mainwindow.ui" line="295" />
         <source>Save current session to a file</source>
         <translation>Enregistrer la session en cours dans un fichier</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="298"/>
+        <location filename="../../src/mainwindow.ui" line="298" />
         <source>Save current session</source>
         <translation>Enregistrer la session en cours</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="301"/>
+        <location filename="../../src/mainwindow.ui" line="301" />
         <source>Alt+S</source>
         <translation>Alt+S</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="310"/>
+        <location filename="../../src/mainwindow.ui" line="310" />
         <source>&amp;Open session...</source>
         <translation>&amp;Séance ouverte...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="313"/>
-        <location filename="../../src/mainwindow.ui" line="316"/>
+        <location filename="../../src/mainwindow.ui" line="313" />
+        <location filename="../../src/mainwindow.ui" line="316" />
         <source>Open a previously saved session</source>
         <translation>Ouvrir une session précédemment enregistrée</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="319"/>
+        <location filename="../../src/mainwindow.ui" line="319" />
         <source>Alt+O</source>
         <translation>Alt+O</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="328"/>
+        <location filename="../../src/mainwindow.ui" line="328" />
         <source>&amp;Boot Atari executable...</source>
-        <translation>&amp;Démarrer l&apos;exécutable Atari...</translation>
+        <translation>&amp;Démarrer l'exécutable Atari...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="331"/>
-        <location filename="../../src/mainwindow.ui" line="334"/>
+        <location filename="../../src/mainwindow.ui" line="331" />
+        <location filename="../../src/mainwindow.ui" line="334" />
         <source>Boot an Atari executable</source>
         <translation>Démarrez un exécutable Atari</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="337"/>
+        <location filename="../../src/mainwindow.ui" line="337" />
         <source>Alt+B</source>
         <translation>Alt+B</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="355"/>
+        <location filename="../../src/mainwindow.ui" line="355" />
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="358"/>
-        <location filename="../../src/mainwindow.ui" line="361"/>
+        <location filename="../../src/mainwindow.ui" line="358" />
+        <location filename="../../src/mainwindow.ui" line="361" />
         <source>Save D1</source>
         <translation>Enregistrer D1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="373"/>
-        <location filename="../../src/mainwindow.ui" line="376"/>
-        <location filename="../../src/mainwindow.ui" line="379"/>
+        <location filename="../../src/mainwindow.ui" line="373" />
+        <location filename="../../src/mainwindow.ui" line="376" />
+        <location filename="../../src/mainwindow.ui" line="379" />
         <source>Show printer text output</source>
-        <translation>Afficher la sortie du texte de l&apos;imprimante</translation>
+        <translation>Afficher la sortie du texte de l'imprimante</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="382"/>
+        <location filename="../../src/mainwindow.ui" line="382" />
         <source>Alt+Shift+T</source>
         <translation>Alt+Maj+T</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="391"/>
+        <location filename="../../src/mainwindow.ui" line="391" />
         <source>Playback cassette image...</source>
-        <translation>Lecture de l&apos;image de la cassette...</translation>
+        <translation>Lecture de l'image de la cassette...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="394"/>
-        <location filename="../../src/mainwindow.ui" line="397"/>
+        <location filename="../../src/mainwindow.ui" line="394" />
+        <location filename="../../src/mainwindow.ui" line="397" />
         <source>Playback a cassette image</source>
-        <translation>Lecture d&apos;une image de cassette</translation>
+        <translation>Lecture d'une image de cassette</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="400"/>
+        <location filename="../../src/mainwindow.ui" line="400" />
         <source>Alt+C</source>
         <translation>Alt+C</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="409"/>
+        <location filename="../../src/mainwindow.ui" line="409" />
         <source>&amp;Quit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="412"/>
+        <location filename="../../src/mainwindow.ui" line="412" />
         <source>Quit AspeQt</source>
         <translation>Quitter AspeQt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="415"/>
+        <location filename="../../src/mainwindow.ui" line="415" />
         <source>Alt+Q</source>
         <translation>Alt+Q</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="424"/>
+        <location filename="../../src/mainwindow.ui" line="424" />
         <source>&amp;About AspeQt</source>
-        <translation>&amp;À propos d&apos;AspeQt</translation>
+        <translation>&amp;À propos d'AspeQt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="427"/>
+        <location filename="../../src/mainwindow.ui" line="427" />
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="432"/>
+        <location filename="../../src/mainwindow.ui" line="432" />
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="440"/>
+        <location filename="../../src/mainwindow.ui" line="440" />
         <source>Contents</source>
         <translation>Contenu</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="445"/>
+        <location filename="../../src/mainwindow.ui" line="445" />
         <source>Index</source>
         <translation>Indice</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="457"/>
-        <location filename="../../src/mainwindow.ui" line="460"/>
-        <location filename="../../src/mainwindow.ui" line="463"/>
+        <location filename="../../src/mainwindow.ui" line="457" />
+        <location filename="../../src/mainwindow.ui" line="460" />
+        <location filename="../../src/mainwindow.ui" line="463" />
         <source>User Manual</source>
-        <translation>Manuel d&apos;utilisation</translation>
+        <translation>Manuel d'utilisation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="466"/>
+        <location filename="../../src/mainwindow.ui" line="466" />
         <source>Ctrl+Shift+U</source>
         <translation>Ctrl+Maj+U</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="475"/>
+        <location filename="../../src/mainwindow.ui" line="475" />
         <source>Save mounted image group as default</source>
-        <translation>Enregistrer le groupe d&apos;images montées par défaut</translation>
+        <translation>Enregistrer le groupe d'images montées par défaut</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="490"/>
-        <location filename="../../src/mainwindow.ui" line="493"/>
-        <location filename="../../src/mainwindow.cpp" line="1318"/>
-        <location filename="../../src/mainwindow.cpp" line="1319"/>
+        <location filename="../../src/mainwindow.ui" line="490" />
+        <location filename="../../src/mainwindow.ui" line="493" />
+        <location filename="../../src/mainwindow.cpp" line="1318" />
+        <location filename="../../src/mainwindow.cpp" line="1319" />
         <source>Stop printer emulation</source>
-        <translation>Arrêter l&apos;émulation de l&apos;imprimante</translation>
+        <translation>Arrêter l'émulation de l'imprimante</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="496"/>
+        <location filename="../../src/mainwindow.ui" line="496" />
         <source>Alt+P</source>
         <translation>Alt+P</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="505"/>
-        <location filename="../../src/mainwindow.cpp" line="1266"/>
-        <location filename="../../src/mainwindow.cpp" line="1267"/>
+        <location filename="../../src/mainwindow.ui" line="505" />
+        <location filename="../../src/mainwindow.cpp" line="1266" />
+        <location filename="../../src/mainwindow.cpp" line="1267" />
         <source>Hide drives D9-DO</source>
         <translation>Masquer les lecteurs D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="508"/>
+        <location filename="../../src/mainwindow.ui" line="508" />
         <source>Alt+H</source>
         <translation>Alt+H</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="517"/>
+        <location filename="../../src/mainwindow.ui" line="517" />
         <source>Toggle mini mode</source>
         <translation>Basculer en mode mini</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="520"/>
+        <location filename="../../src/mainwindow.ui" line="520" />
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="532"/>
+        <location filename="../../src/mainwindow.ui" line="532" />
         <source>Toggle shade mode</source>
         <translation>Basculer le mode ombre</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="535"/>
+        <location filename="../../src/mainwindow.ui" line="535" />
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="544"/>
-        <location filename="../../src/mainwindow.ui" line="547"/>
-        <location filename="../../src/mainwindow.ui" line="550"/>
+        <location filename="../../src/mainwindow.ui" line="544" />
+        <location filename="../../src/mainwindow.ui" line="547" />
+        <location filename="../../src/mainwindow.ui" line="550" />
         <source>Open log window</source>
         <translation>Ouvrir la fenêtre du journal</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="553"/>
+        <location filename="../../src/mainwindow.ui" line="553" />
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="558"/>
+        <location filename="../../src/mainwindow.ui" line="558" />
         <source>Boot Options...</source>
         <translation>Options de démarrage...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="561"/>
-        <location filename="../../src/mainwindow.ui" line="564"/>
+        <location filename="../../src/mainwindow.ui" line="561" />
+        <location filename="../../src/mainwindow.ui" line="564" />
         <source>Configure firmware and boot options</source>
         <translation>Configurer le micrologiciel et les options de démarrage</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="573"/>
+        <location filename="../../src/mainwindow.ui" line="573" />
         <source>Phonebook...</source>
         <translation>Répertoire...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="576"/>
-        <location filename="../../src/mainwindow.ui" line="579"/>
-        <location filename="../../src/mainwindow.cpp" line="2752"/>
+        <location filename="../../src/mainwindow.ui" line="576" />
+        <location filename="../../src/mainwindow.ui" line="579" />
+        <location filename="../../src/mainwindow.cpp" line="2752" />
         <source>Open BBS Phonebook</source>
         <translation>Ouvrir le répertoire BBS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.ui" line="582"/>
+        <location filename="../../src/mainwindow.ui" line="582" />
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="176"/>
+        <location filename="../../src/mainwindow.cpp" line="176" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt a démarré à %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="235"/>
-        <location filename="../../src/mainwindow.cpp" line="245"/>
+        <location filename="../../src/mainwindow.cpp" line="235" />
+        <location filename="../../src/mainwindow.cpp" line="245" />
         <source>Session file error</source>
         <translation>Erreur de fichier de session</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="236"/>
-        <location filename="../../src/mainwindow.cpp" line="246"/>
+        <location filename="../../src/mainwindow.cpp" line="236" />
+        <location filename="../../src/mainwindow.cpp" line="246" />
         <source>Requested session file not found...</source>
         <translation>Fichier de session demandé introuvable...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="256"/>
+        <location filename="../../src/mainwindow.cpp" line="256" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Émulateur de périphériques série Atari pour Qt</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="258"/>
-        <location filename="../../src/mainwindow.cpp" line="2404"/>
+        <location filename="../../src/mainwindow.cpp" line="258" />
+        <location filename="../../src/mainwindow.cpp" line="2404" />
         <source> -- Session: </source>
         <translation>-- Session:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="274"/>
+        <location filename="../../src/mainwindow.cpp" line="274" />
         <source>19200 bits/sec</source>
         <translation>19 200 bits/sec</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="293"/>
+        <location filename="../../src/mainwindow.cpp" line="293" />
         <source>Adjust Shade Opacity</source>
-        <translation>Ajuster l&apos;opacité de l&apos;ombre</translation>
+        <translation>Ajuster l'opacité de l'ombre</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="301"/>
+        <location filename="../../src/mainwindow.cpp" line="301" />
         <source>RX: Data Receiving from Internet</source>
-        <translation>RX&#xa0;:&#xa0;réception de données depuis Internet</translation>
+        <translation>RX : réception de données depuis Internet</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="307"/>
+        <location filename="../../src/mainwindow.cpp" line="307" />
         <source>TX: Data Sending from Atari</source>
-        <translation>TX&#xa0;:&#xa0;envoi de données depuis Atari</translation>
+        <translation>TX : envoi de données depuis Atari</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="331"/>
+        <location filename="../../src/mainwindow.cpp" line="331" />
         <source>Hangup (NO CARRIER)</source>
         <translation>Raccrocher (PAS DE TRANSPORTEUR)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="343"/>
-        <location filename="../../src/mainwindow.cpp" line="2753"/>
+        <location filename="../../src/mainwindow.cpp" line="343" />
+        <location filename="../../src/mainwindow.cpp" line="2753" />
         <source>Send Auto-User (ESC-U)</source>
-        <translation>Envoyer automatiquement à l&apos;utilisateur (ESC-U)</translation>
+        <translation>Envoyer automatiquement à l'utilisateur (ESC-U)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="354"/>
-        <location filename="../../src/mainwindow.cpp" line="2754"/>
+        <location filename="../../src/mainwindow.cpp" line="354" />
+        <location filename="../../src/mainwindow.cpp" line="2754" />
         <source>Send Auto-Pass (ESC-P)</source>
         <translation>Envoyer un passe automatique (ESC-P)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="367"/>
+        <location filename="../../src/mainwindow.cpp" line="367" />
         <source>Toggle SIO Hex Dump Trace</source>
         <translation>Basculer la trace de vidage hexadécimal SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="373"/>
+        <location filename="../../src/mainwindow.cpp" line="373" />
         <source>Toggle 6502 Disassembler</source>
         <translation>Basculer le désassembleur 6502</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="379"/>
+        <location filename="../../src/mainwindow.cpp" line="379" />
         <source>Toggle SIO Packet Sniffer</source>
         <translation>Activer/Désactiver le renifleur de paquets SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="390"/>
+        <location filename="../../src/mainwindow.cpp" line="390" />
         <source>Main Tools</source>
         <translation>Outils principaux</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="403"/>
+        <location filename="../../src/mainwindow.cpp" line="403" />
         <source>Backend App Library...</source>
-        <translation>Bibliothèque d&apos;applications back-end...</translation>
+        <translation>Bibliothèque d'applications back-end...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="404"/>
+        <location filename="../../src/mainwindow.cpp" line="404" />
         <source>Manage and monitor external backend processes</source>
         <translation>Gérer et surveiller les processus backend externes</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="420"/>
+        <location filename="../../src/mainwindow.cpp" line="420" />
         <source>Clear log messages</source>
         <translation>Effacer les messages du journal</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="427"/>
+        <location filename="../../src/mainwindow.cpp" line="427" />
         <source>Show Log Window</source>
         <translation>Afficher la fenêtre du journal</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="697"/>
+        <location filename="../../src/mainwindow.cpp" line="697" />
         <source>AspeQt stopped at %1.</source>
-        <translation>AspeQt s&apos;est arrêté à %1.</translation>
+        <translation>AspeQt s'est arrêté à %1.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="739"/>
+        <location filename="../../src/mainwindow.cpp" line="739" />
         <source>Mount from TNFS Network...</source>
         <translation>Monter à partir du réseau TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="761"/>
+        <location filename="../../src/mainwindow.cpp" line="761" />
         <source>Mount TNFS</source>
         <translation>Monter TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="878"/>
+        <location filename="../../src/mainwindow.cpp" line="878" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Le disque %1 a été remplacé par le disque %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="932"/>
-        <source>Cannot mount &apos;%1&apos;: No empty disk slots.</source>
-        <translation>Impossible de monter &apos;%1&apos;&#xa0;: aucun emplacement de disque vide.</translation>
+        <location filename="../../src/mainwindow.cpp" line="932" />
+        <source>Cannot mount '%1': No empty disk slots.</source>
+        <translation>Impossible de monter '%1' : aucun emplacement de disque vide.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1034"/>
+        <location filename="../../src/mainwindow.cpp" line="1034" />
         <source>First run</source>
         <translation>Première course</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1035"/>
+        <location filename="../../src/mainwindow.cpp" line="1035" />
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
         <translation>Vous exécutez AspeQt pour la première fois.
 
-Voulez-vous ouvrir la boîte de dialogue des options&#xa0;?</translation>
+Voulez-vous ouvrir la boîte de dialogue des options ?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1271"/>
-        <location filename="../../src/mainwindow.cpp" line="1272"/>
+        <location filename="../../src/mainwindow.cpp" line="1271" />
+        <location filename="../../src/mainwindow.cpp" line="1272" />
         <source>Show drives D9-DO</source>
         <translation>Afficher les lecteurs D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1307"/>
+        <location filename="../../src/mainwindow.cpp" line="1307" />
         <source>Printer emulation stopped.</source>
-        <translation>L&apos;émulation de l&apos;imprimante s&apos;est arrêtée.</translation>
+        <translation>L'émulation de l'imprimante s'est arrêtée.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1309"/>
+        <location filename="../../src/mainwindow.cpp" line="1309" />
         <source>Printer emulation started.</source>
-        <translation>L&apos;émulation de l&apos;imprimante a démarré.</translation>
+        <translation>L'émulation de l'imprimante a démarré.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1322"/>
-        <location filename="../../src/mainwindow.cpp" line="1323"/>
+        <location filename="../../src/mainwindow.cpp" line="1322" />
+        <location filename="../../src/mainwindow.cpp" line="1323" />
         <source>Start printer emulation</source>
-        <translation>Démarrer l&apos;émulation de l&apos;imprimante</translation>
+        <translation>Démarrer l'émulation de l'imprimante</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1341"/>
+        <location filename="../../src/mainwindow.cpp" line="1341" />
         <source>&amp;Stop emulation</source>
-        <translation>&amp;Arrêter l&apos;émulation</translation>
+        <translation>&amp;Arrêter l'émulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1342"/>
-        <location filename="../../src/mainwindow.cpp" line="1343"/>
+        <location filename="../../src/mainwindow.cpp" line="1342" />
+        <location filename="../../src/mainwindow.cpp" line="1343" />
         <source>Stop SIO peripheral emulation</source>
-        <translation>Arrêter l&apos;émulation du périphérique SIO</translation>
+        <translation>Arrêter l'émulation du périphérique SIO</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1357"/>
+        <location filename="../../src/mainwindow.cpp" line="1357" />
         <source>Emulation stopped.</source>
-        <translation>L&apos;émulation s&apos;est arrêtée.</translation>
+        <translation>L'émulation s'est arrêtée.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1382"/>
-        <location filename="../../src/mainwindow.cpp" line="2611"/>
-        <location filename="../../src/mainwindow.cpp" line="3245"/>
+        <location filename="../../src/mainwindow.cpp" line="1382" />
+        <location filename="../../src/mainwindow.cpp" line="2611" />
+        <location filename="../../src/mainwindow.cpp" line="3245" />
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1382"/>
-        <location filename="../../src/mainwindow.cpp" line="2611"/>
-        <location filename="../../src/mainwindow.cpp" line="3245"/>
+        <location filename="../../src/mainwindow.cpp" line="1382" />
+        <location filename="../../src/mainwindow.cpp" line="2611" />
+        <location filename="../../src/mainwindow.cpp" line="3245" />
         <source>Downloading from TNFS...</source>
         <translation>Téléchargement depuis TNFS...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1400"/>
-        <location filename="../../src/mainwindow.cpp" line="1403"/>
+        <location filename="../../src/mainwindow.cpp" line="1400" />
+        <location filename="../../src/mainwindow.cpp" line="1403" />
         <source>Executable (Local)</source>
         <translation>Exécutable (local)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1449"/>
-        <location filename="../../src/mainwindow.cpp" line="1470"/>
+        <location filename="../../src/mainwindow.cpp" line="1449" />
+        <location filename="../../src/mainwindow.cpp" line="1470" />
         <source>Folder image</source>
         <translation>Image du dossier</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1482"/>
-        <location filename="../../src/mainwindow.cpp" line="2114"/>
-        <location filename="../../src/mainwindow.cpp" line="2166"/>
-        <location filename="../../src/mainwindow.cpp" line="2211"/>
+        <location filename="../../src/mainwindow.cpp" line="1482" />
+        <location filename="../../src/mainwindow.cpp" line="2114" />
+        <location filename="../../src/mainwindow.cpp" line="2166" />
+        <location filename="../../src/mainwindow.cpp" line="2211" />
         <source>Save failed</source>
-        <translation>Échec de l&apos;enregistrement</translation>
+        <translation>Échec de l'enregistrement</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1483"/>
-        <location filename="../../src/mainwindow.cpp" line="2114"/>
-        <location filename="../../src/mainwindow.cpp" line="2166"/>
-        <location filename="../../src/mainwindow.cpp" line="2211"/>
-        <source>&apos;%1&apos; cannot be saved, do you want to save the image with another name?</source>
-        <translation>&apos;%1&apos; ne peut pas être enregistré, souhaitez-vous enregistrer l&apos;image sous un autre nom&#xa0;?</translation>
+        <location filename="../../src/mainwindow.cpp" line="1483" />
+        <location filename="../../src/mainwindow.cpp" line="2114" />
+        <location filename="../../src/mainwindow.cpp" line="2166" />
+        <location filename="../../src/mainwindow.cpp" line="2211" />
+        <source>'%1' cannot be saved, do you want to save the image with another name?</source>
+        <translation>'%1' ne peut pas être enregistré, souhaitez-vous enregistrer l'image sous un autre nom ?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1753"/>
+        <location filename="../../src/mainwindow.cpp" line="1753" />
         <source>Slot %1 download aborted by user.</source>
-        <translation>Téléchargement de l&apos;emplacement %1 abandonné par l&apos;utilisateur.</translation>
+        <translation>Téléchargement de l'emplacement %1 abandonné par l'utilisateur.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1795"/>
+        <location filename="../../src/mainwindow.cpp" line="1795" />
         <source>Unmounted disk %1</source>
         <translation>Disque non monté %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1968"/>
-        <location filename="../../src/mainwindow.cpp" line="2362"/>
-        <location filename="../../src/mainwindow.cpp" line="3700"/>
-        <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
-        <translation>[%1] Monté &apos;%2&apos; en tant que &apos;%3&apos;.</translation>
+        <location filename="../../src/mainwindow.cpp" line="1968" />
+        <location filename="../../src/mainwindow.cpp" line="2362" />
+        <location filename="../../src/mainwindow.cpp" line="3700" />
+        <source>[%1] Mounted '%2' as '%3'.</source>
+        <translation>[%1] Monté '%2' en tant que '%3'.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1983"/>
+        <location filename="../../src/mainwindow.cpp" line="1983" />
         <source>Open a disk or executable image</source>
         <translation>Ouvrir un disque ou une image exécutable</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1985"/>
+        <location filename="../../src/mainwindow.cpp" line="1985" />
         <source>All Supported Images (*.atr *.xfd *.atx *.pro *.xex *.com);;Atari Executables (*.xex *.com);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;ATX images (*.atx);;Pro images (*.pro);;All files (*)</source>
         <translation>Toutes les images prises en charge (*.atr *.xfd *.atx *.pro *.xex *.com);;Exécutables Atari (*.xex *.com);;Images SIO2PC ATR (*.atr);;Images XFormer XFD (*.xfd);;Images ATX (*.atx);;Images Pro (*.pro);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2016"/>
+        <location filename="../../src/mainwindow.cpp" line="2016" />
         <source>Open a folder image</source>
         <translation>Ouvrir une image de dossier</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2063"/>
+        <location filename="../../src/mainwindow.cpp" line="2063" />
         <source>Image file unsaved</source>
         <translation>Fichier image non enregistré</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2063"/>
-        <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
-        <translation>«&#xa0;%1&#xa0;» comporte des modifications non enregistrées, souhaitez-vous l&apos;enregistrer&#xa0;?</translation>
+        <location filename="../../src/mainwindow.cpp" line="2063" />
+        <source>'%1' has unsaved changes, do you want to save it?</source>
+        <translation>« %1 » comporte des modifications non enregistrées, souhaitez-vous l'enregistrer ?</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2155"/>
+        <location filename="../../src/mainwindow.cpp" line="2155" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disque %1] Validation automatique activée.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2157"/>
+        <location filename="../../src/mainwindow.cpp" line="2157" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disque %1] Validation automatique désactivée.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2192"/>
+        <location filename="../../src/mainwindow.cpp" line="2192" />
         <source>Save image as</source>
-        <translation>Enregistrer l&apos;image sous</translation>
+        <translation>Enregistrer l'image sous</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2194"/>
+        <location filename="../../src/mainwindow.cpp" line="2194" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation>Toutes les images de disque Atari (*.atr *.xfd *.pro);;Images SIO2PC ATR (*.atr);;Images XFormer XFD (*.xfd);;Images Pro (*.pro);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2235"/>
+        <location filename="../../src/mainwindow.cpp" line="2235" />
         <source>Revert to last saved</source>
         <translation>Revenir au dernier enregistrement</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2236"/>
-        <source>Do you really want to revert &apos;%1&apos; to its last saved state? You will lose the changes that has been made.</source>
-        <translation>Voulez-vous vraiment restaurer &apos;%1&apos; à son dernier état enregistré&#xa0;? Vous perdrez les modifications apportées.</translation>
+        <location filename="../../src/mainwindow.cpp" line="2236" />
+        <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
+        <translation>Voulez-vous vraiment restaurer '%1' à son dernier état enregistré ? Vous perdrez les modifications apportées.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2371"/>
+        <location filename="../../src/mainwindow.cpp" line="2371" />
         <source>Open session</source>
         <translation>Séance ouverte</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2373"/>
-        <location filename="../../src/mainwindow.cpp" line="2436"/>
+        <location filename="../../src/mainwindow.cpp" line="2373" />
+        <location filename="../../src/mainwindow.cpp" line="2436" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>Sessions AspeQt (*.aspeqt);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2434"/>
+        <location filename="../../src/mainwindow.cpp" line="2434" />
         <source>Save session as</source>
         <translation>Enregistrer la session sous</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2465"/>
+        <location filename="../../src/mainwindow.cpp" line="2465" />
         <source>Open executable</source>
-        <translation>Ouvrir l&apos;exécutable</translation>
+        <translation>Ouvrir l'exécutable</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2467"/>
+        <location filename="../../src/mainwindow.cpp" line="2467" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Exécutables Atari (*.xex *.com *.exe);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2499"/>
+        <location filename="../../src/mainwindow.cpp" line="2499" />
         <source>Open a cassette image</source>
         <translation>Ouvrir une image de cassette</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2501"/>
+        <location filename="../../src/mainwindow.cpp" line="2501" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Images CAS (*.cas);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2572"/>
+        <location filename="../../src/mainwindow.cpp" line="2572" />
         <source>Drive %1 Happy Mode %2.</source>
         <translation>Conduisez %1 Mode Heureux %2.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2574"/>
+        <location filename="../../src/mainwindow.cpp" line="2574" />
         <source>Enabled</source>
         <translation>Activé</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2574"/>
+        <location filename="../../src/mainwindow.cpp" line="2574" />
         <source>Disabled</source>
         <translation>Désactivé</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2637"/>
+        <location filename="../../src/mainwindow.cpp" line="2637" />
         <source>Mounted TNFS Stream: %1</source>
-        <translation>Flux TNFS monté&#xa0;: %1</translation>
+        <translation>Flux TNFS monté : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2655"/>
+        <location filename="../../src/mainwindow.cpp" line="2655" />
         <source>Mount Error</source>
         <translation>Erreur de montage</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2655"/>
+        <location filename="../../src/mainwindow.cpp" line="2655" />
         <source>Could not open TNFS stream from %1</source>
-        <translation>Impossible d&apos;ouvrir le flux TNFS à partir de %1</translation>
+        <translation>Impossible d'ouvrir le flux TNFS à partir de %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2675"/>
+        <location filename="../../src/mainwindow.cpp" line="2675" />
         <source>Downloading: %1</source>
-        <translation>Téléchargement&#xa0;: %1</translation>
+        <translation>Téléchargement : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2677"/>
+        <location filename="../../src/mainwindow.cpp" line="2677" />
         <source>Downloading...</source>
         <translation>Téléchargement...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2748"/>
+        <location filename="../../src/mainwindow.cpp" line="2748" />
         <source>Phonebook disabled. Set XML path in Options -&gt; Modem Bridge.</source>
         <translation>Répertoire désactivé. Définissez le chemin XML dans Options -&gt; Modem Bridge.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2749"/>
+        <location filename="../../src/mainwindow.cpp" line="2749" />
         <source>Macro User disabled. Set Phonebook XML path in Options.</source>
         <translation>Utilisateur de macro désactivé. Définissez le chemin XML du répertoire dans Options.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2750"/>
+        <location filename="../../src/mainwindow.cpp" line="2750" />
         <source>Macro Pass disabled. Set Phonebook XML path in Options.</source>
         <translation>Passe Macro désactivé. Définissez le chemin XML du répertoire dans Options.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2800"/>
+        <location filename="../../src/mainwindow.cpp" line="2800" />
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="2800"/>
+        <location filename="../../src/mainwindow.cpp" line="2800" />
         <source>Could not extract manual to: </source>
-        <translation>Impossible d&apos;extraire le manuel vers&#xa0;:</translation>
+        <translation>Impossible d'extraire le manuel vers :</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3112"/>
+        <location filename="../../src/mainwindow.cpp" line="3112" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced mount.</source>
-        <translation>[interface utilisateur Web] Avertissement&#xa0;: les modifications non enregistrées sur le disque dans l&apos;emplacement %1 ont été ignorées par un montage forcé.</translation>
+        <translation>[interface utilisateur Web] Avertissement : les modifications non enregistrées sur le disque dans l'emplacement %1 ont été ignorées par un montage forcé.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3131"/>
+        <location filename="../../src/mainwindow.cpp" line="3131" />
         <source>[Web UI] Mounted Executable to slot %1: %2</source>
-        <translation>[interface utilisateur Web] Exécutable monté sur l&apos;emplacement %1&#xa0;: %2</translation>
+        <translation>[interface utilisateur Web] Exécutable monté sur l'emplacement %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3133"/>
+        <location filename="../../src/mainwindow.cpp" line="3133" />
         <source>[Web UI] Executable ready. Please cold start the Atari.</source>
-        <translation>[Web UI] Exécutable prêt. Veuillez démarrer l&apos;Atari à froid.</translation>
+        <translation>[Web UI] Exécutable prêt. Veuillez démarrer l'Atari à froid.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3137"/>
+        <location filename="../../src/mainwindow.cpp" line="3137" />
         <source>[Web UI] Failed to parse Executable: %1</source>
-        <translation>[interface utilisateur Web] Échec de l&apos;analyse de l&apos;exécutable&#xa0;: %1</translation>
+        <translation>[interface utilisateur Web] Échec de l'analyse de l'exécutable : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3157"/>
+        <location filename="../../src/mainwindow.cpp" line="3157" />
         <source>[Web UI] Warning: Unsaved changes on disk in slot %1 were discarded by forced eject.</source>
-        <translation>[interface utilisateur Web] Avertissement&#xa0;: les modifications non enregistrées sur le disque dans l&apos;emplacement %1 ont été ignorées par éjection forcée.</translation>
+        <translation>[interface utilisateur Web] Avertissement : les modifications non enregistrées sur le disque dans l'emplacement %1 ont été ignorées par éjection forcée.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3219"/>
+        <location filename="../../src/mainwindow.cpp" line="3219" />
         <source>[Web UI] Dialing BBS: %1 (%2)</source>
-        <translation>[interface utilisateur Web] Appel du BBS&#xa0;:&#xa0;%1 (%2)</translation>
+        <translation>[interface utilisateur Web] Appel du BBS : %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3265"/>
+        <location filename="../../src/mainwindow.cpp" line="3265" />
         <source>[Web UI] Mounted TNFS Stream: %1</source>
-        <translation>[interface utilisateur Web] Flux TNFS monté&#xa0;:&#xa0;%1</translation>
+        <translation>[interface utilisateur Web] Flux TNFS monté : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3275"/>
+        <location filename="../../src/mainwindow.cpp" line="3275" />
         <source>[Web UI] Failed to mount TNFS Stream: %1</source>
-        <translation>[interface utilisateur Web] Échec du montage du flux TNFS&#xa0;: %1</translation>
+        <translation>[interface utilisateur Web] Échec du montage du flux TNFS : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3276"/>
+        <location filename="../../src/mainwindow.cpp" line="3276" />
         <source>Download failed or aborted: %1</source>
-        <translation>Le téléchargement a échoué ou a été abandonné&#xa0;: %1</translation>
+        <translation>Le téléchargement a échoué ou a été abandonné : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3284"/>
+        <location filename="../../src/mainwindow.cpp" line="3284" />
         <source>[Web UI] Write Protect for slot %1 set to %2</source>
-        <translation>[interface utilisateur Web] Protection en écriture pour l&apos;emplacement %1 défini sur %2</translation>
+        <translation>[interface utilisateur Web] Protection en écriture pour l'emplacement %1 défini sur %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3313"/>
+        <location filename="../../src/mainwindow.cpp" line="3313" />
         <source>Web UI WebSocket Server started on port %1</source>
         <translation>Web UI WebSocket Server démarré sur le port %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3315"/>
+        <location filename="../../src/mainwindow.cpp" line="3315" />
         <source>Failed to start Web UI WebSocket Server.</source>
         <translation>Échec du démarrage du serveur Web UI WebSocket.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3344"/>
+        <location filename="../../src/mainwindow.cpp" line="3344" />
         <source>HTTP Dashboard available at http://localhost:%1</source>
         <translation>Tableau de bord HTTP disponible sur http://localhost:%1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3346"/>
+        <location filename="../../src/mainwindow.cpp" line="3346" />
         <source>Failed to start HTTP Server.</source>
         <translation>Échec du démarrage du serveur HTTP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3374"/>
+        <location filename="../../src/mainwindow.cpp" line="3374" />
         <source>Web Dashboard and WebSocket servers completely shut down.</source>
         <translation>Les serveurs Web Dashboard et WebSocket sont complètement arrêtés.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3384"/>
+        <location filename="../../src/mainwindow.cpp" line="3384" />
         <source>[Web UI] Failed to load cassette image: %1</source>
-        <translation>[interface utilisateur Web] Échec du chargement de l&apos;image de la cassette&#xa0;: %1</translation>
+        <translation>[interface utilisateur Web] Échec du chargement de l'image de la cassette : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3394"/>
+        <location filename="../../src/mainwindow.cpp" line="3394" />
         <source>[Web UI] Cassette Mounted: %1</source>
-        <translation>[interface utilisateur Web] Cassette montée&#xa0;:&#xa0;%1</translation>
+        <translation>[interface utilisateur Web] Cassette montée : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3407"/>
+        <location filename="../../src/mainwindow.cpp" line="3407" />
         <source>[Web UI] Cassette is already playing.</source>
         <translation>[Web UI] La cassette est déjà en cours de lecture.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3411"/>
+        <location filename="../../src/mainwindow.cpp" line="3411" />
         <source>[Web UI] Starting Cassette Playback.</source>
         <translation>[Interface Web] Démarrage de la lecture de la cassette.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3426"/>
+        <location filename="../../src/mainwindow.cpp" line="3426" />
         <source>[Web UI] Rewinding Cassette...</source>
         <translation>[UI Web] Rembobinage de la cassette...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3450"/>
+        <location filename="../../src/mainwindow.cpp" line="3450" />
         <source>[Web UI] Cassette Ejected.</source>
         <translation>[Interface Web] Cassette éjectée.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3466"/>
+        <location filename="../../src/mainwindow.cpp" line="3466" />
         <source>[Web UI] Cassette Playback Finished.</source>
         <translation>[Interface Web] Lecture de cassette terminée.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3487"/>
+        <location filename="../../src/mainwindow.cpp" line="3487" />
         <source>Failed to initialize blank disk.</source>
-        <translation>Échec de l&apos;initialisation du disque vierge.</translation>
+        <translation>Échec de l'initialisation du disque vierge.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3505"/>
+        <location filename="../../src/mainwindow.cpp" line="3505" />
         <source>Failed to format blank disk.</source>
         <translation>Échec du formatage du disque vierge.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3524"/>
+        <location filename="../../src/mainwindow.cpp" line="3524" />
         <source>Failed to save blank disk to host.</source>
-        <translation>Échec de l&apos;enregistrement du disque vierge sur l&apos;hôte.</translation>
+        <translation>Échec de l'enregistrement du disque vierge sur l'hôte.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3532"/>
+        <location filename="../../src/mainwindow.cpp" line="3532" />
         <source>Blank disk created: %1</source>
-        <translation>Disque vierge créé&#xa0;: %1</translation>
+        <translation>Disque vierge créé : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3533"/>
+        <location filename="../../src/mainwindow.cpp" line="3533" />
         <source>[Web UI] Created and mounted blank disk: %1 in slot %2</source>
-        <translation>[interface utilisateur Web] Disque vierge créé et monté&#xa0;: %1 dans l&apos;emplacement %2</translation>
+        <translation>[interface utilisateur Web] Disque vierge créé et monté : %1 dans l'emplacement %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3548"/>
-        <location filename="../../src/mainwindow.cpp" line="3648"/>
-        <location filename="../../src/mainwindow.cpp" line="3649"/>
+        <location filename="../../src/mainwindow.cpp" line="3548" />
+        <location filename="../../src/mainwindow.cpp" line="3648" />
+        <location filename="../../src/mainwindow.cpp" line="3649" />
         <source>Empty</source>
         <translation>Vide</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3550"/>
+        <location filename="../../src/mainwindow.cpp" line="3550" />
         <source>No file mounted.</source>
         <translation>Aucun fichier monté.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3554"/>
-        <source>&lt;table width=&apos;350&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
-        <translation>&lt;table width=&apos;350&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Emplacement %1&#xa0;:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nom de fichier&#xa0;:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format/Type&#xa0;:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Chemin absolu&#xa0;:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+        <location filename="../../src/mainwindow.cpp" line="3554" />
+        <source>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Slot %1:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Filename:&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format / Type:&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Absolute Path:&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;table width='350'&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Emplacement %1 :&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Nom de fichier :&lt;/b&gt;&lt;br&gt;%2&lt;br&gt;&lt;br&gt;&lt;b&gt;Format/Type :&lt;/b&gt;&lt;br&gt;%3&lt;br&gt;&lt;br&gt;&lt;b&gt;Chemin absolu :&lt;/b&gt;&lt;br&gt;%4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3565"/>
+        <location filename="../../src/mainwindow.cpp" line="3565" />
         <source>Drive Details</source>
         <translation>Détails du lecteur</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3590"/>
+        <location filename="../../src/mainwindow.cpp" line="3590" />
         <source>[Web UI] Mounted file directly to RAM in slot %1: %2</source>
-        <translation>[interface utilisateur Web] Fichier monté directement dans la RAM dans l&apos;emplacement %1&#xa0;: %2</translation>
+        <translation>[interface utilisateur Web] Fichier monté directement dans la RAM dans l'emplacement %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3593"/>
+        <location filename="../../src/mainwindow.cpp" line="3593" />
         <source>Mounted to RAM: %1</source>
-        <translation>Monté sur la RAM&#xa0;: %1</translation>
+        <translation>Monté sur la RAM : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3597"/>
+        <location filename="../../src/mainwindow.cpp" line="3597" />
         <source>[Web UI] Failed to parse RAM image: %1</source>
-        <translation>[interface utilisateur Web] Échec de l&apos;analyse de l&apos;image RAM&#xa0;: %1</translation>
+        <translation>[interface utilisateur Web] Échec de l'analyse de l'image RAM : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3600"/>
+        <location filename="../../src/mainwindow.cpp" line="3600" />
         <source>Failed to parse: %1</source>
-        <translation>Échec de l&apos;analyse&#xa0;: %1</translation>
+        <translation>Échec de l'analyse : %1</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3606"/>
+        <location filename="../../src/mainwindow.cpp" line="3606" />
         <source>[Injector] Cannot inject packet: SIO emulation is stopped.</source>
-        <translation>[Injecteur] Impossible d&apos;injecter le paquet&#xa0;: l&apos;émulation SIO est arrêtée.</translation>
+        <translation>[Injecteur] Impossible d'injecter le paquet : l'émulation SIO est arrêtée.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3610"/>
+        <location filename="../../src/mainwindow.cpp" line="3610" />
         <source>[Injector] Firing %1 bytes directly onto the Atari SIO Bus.</source>
         <translation>[Injecteur] Déclenche %1 octets directement sur le bus Atari SIO.</translation>
     </message>
     <message>
         <source>[Injector] Virtual Packet Step Triggered: %1 bytes</source>
-        <translation type="vanished">[Injecteur] Étape de paquet virtuel déclenchée&#xa0;: %1 octets</translation>
+        <translation type="vanished">[Injecteur] Étape de paquet virtuel déclenchée : %1 octets</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="3652"/>
+        <location filename="../../src/mainwindow.cpp" line="3652" />
         <source>Swapped - Slot %1 -&gt; %2  |  Slot %3 -&gt; %4</source>
         <translation>Échangé - Emplacement %1 -&gt; %2 |  Emplacement %3 -&gt; %4</translation>
     </message>
@@ -2747,350 +2747,558 @@ Voulez-vous ouvrir la boîte de dialogue des options&#xa0;?</translation>
 <context>
     <name>MyModel</name>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="226"/>
-        <location filename="../../src/diskeditdialog.cpp" line="396"/>
+        <location filename="../../src/diskeditdialog.cpp" line="226" />
+        <location filename="../../src/diskeditdialog.cpp" line="396" />
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="226"/>
+        <location filename="../../src/diskeditdialog.cpp" line="226" />
         <source>Could not delete files. (Is this file system supported?)</source>
-        <translation>Impossible de supprimer les fichiers. (Ce système de fichiers est-il pris en charge&#xa0;?)</translation>
+        <translation>Impossible de supprimer les fichiers. (Ce système de fichiers est-il pris en charge ?)</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="246"/>
+        <location filename="../../src/diskeditdialog.cpp" line="246" />
         <source>No</source>
         <translation>Non</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="249"/>
+        <location filename="../../src/diskeditdialog.cpp" line="249" />
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="252"/>
+        <location filename="../../src/diskeditdialog.cpp" line="252" />
         <source>Extension</source>
         <translation>Extension</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="255"/>
+        <location filename="../../src/diskeditdialog.cpp" line="255" />
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="258"/>
+        <location filename="../../src/diskeditdialog.cpp" line="258" />
         <source>Time</source>
         <translation>Temps</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="261"/>
+        <location filename="../../src/diskeditdialog.cpp" line="261" />
         <source>Notes</source>
         <translation>Remarques</translation>
     </message>
     <message>
-        <location filename="../../src/diskeditdialog.cpp" line="396"/>
+        <location filename="../../src/diskeditdialog.cpp" line="396" />
         <source>Could not insert files.
 
 Possible causes:
 - File system not supported (e.g. SpartaDOS)
 - Disk is full
 - File name invalid</source>
-        <translation>Impossible d&apos;insérer des fichiers.
+        <translation>Impossible d'insérer des fichiers.
 
-Causes possibles&#xa0;:
+Causes possibles :
 - Système de fichiers non pris en charge (par exemple SpartaDOS)
 - Le disque est plein
 - Nom de fichier invalide</translation>
     </message>
 </context>
 <context>
+    <name>NetworkBrowser</name>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="24" />
+        <source>Universal Network Browser</source>
+        <translation>Navigateur réseau universel</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="44" />
+        <source>TNFS</source>
+        <translation>TNFS</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="45" />
+        <source>FTP</source>
+        <translation>FTP</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="46" />
+        <source>SFTP</source>
+        <translation>SFTP</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="49" />
+        <source>Protocol:</source>
+        <translation>Protocole:</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="67" />
+        <source>Connect</source>
+        <translation>Connecter</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="68" />
+        <source>Clear</source>
+        <translation>Clair</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="69" />
+        <source>Clear saved host history</source>
+        <translation>Effacer l'historique de l'hôte enregistré</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="74" />
+        <location filename="../../src/networkbrowser.cpp" line="288" />
+        <source>Set Server Credentials</source>
+        <translation>Définir les informations d'identification du serveur</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="77" />
+        <source>Host Address:</source>
+        <translation>Adresse de l'hôte :</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="85" />
+        <source>.. (Up)</source>
+        <translation>.. (En haut)</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="89" />
+        <source>Sort A-Z / Z-A</source>
+        <translation>Trier de A à Z / de Z à A</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="92" />
+        <location filename="../../src/networkbrowser.cpp" line="222" />
+        <source>Not Connected</source>
+        <translation>Non connecté</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="110" />
+        <location filename="../../src/networkbrowser.cpp" line="493" />
+        <location filename="../../src/networkbrowser.cpp" line="571" />
+        <source>More...</source>
+        <translation>Plus...</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="112" />
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="123" />
+        <source>Double-click a file (.ATR/.XEX) to Mount it.</source>
+        <translation>Double-cliquez sur un fichier (.ATR/.XEX) pour le monter.</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="185" />
+        <location filename="../../src/networkbrowser.cpp" line="286" />
+        <source>Credentials Set: </source>
+        <translation>Ensemble d'informations d'identification :</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="234" />
+        <source>Server Authentication</source>
+        <translation>Authentification du serveur</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="249" />
+        <source>Anonymous</source>
+        <translation>Anonyme</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="254" />
+        <source>SFTP requires an explicit SSH username and password.</source>
+        <translation>SFTP nécessite un nom d'utilisateur et un mot de passe SSH explicites.</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="255" />
+        <location filename="../../src/networkbrowser.cpp" line="256" />
+        <source>Required for SFTP</source>
+        <translation>Requis pour SFTP</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="259" />
+        <source>Leave blank for default</source>
+        <translation>Laisser vide par défaut</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="262" />
+        <source>Username:</source>
+        <translation>Nom d'utilisateur:</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="263" />
+        <source>Password:</source>
+        <translation>Mot de passe:</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="399" />
+        <source>Connecting to %1 on port %2...</source>
+        <translation>Connexion à %1 sur le port %2...</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="401" />
+        <source>Connecting to %1...</source>
+        <translation>Connexion à %1...</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="435" />
+        <location filename="../../src/networkbrowser.cpp" line="466" />
+        <source>Connected: %1</source>
+        <translation>Connecté : %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="450" />
+        <location filename="../../src/networkbrowser.cpp" line="482" />
+        <source>Connection Failed.</source>
+        <translation>Échec de la connexion.</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="451" />
+        <location filename="../../src/networkbrowser.cpp" line="483" />
+        <source>Connection Error</source>
+        <translation>Erreur de connexion</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="452" />
+        <source>Could not reach host '%1'.
+Check credentials, hostname, or port.</source>
+        <translation>Impossible d'atteindre l'hôte '%1'.
+Vérifiez les informations d'identification, le nom d'hôte ou le port.</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="484" />
+        <source>Could not reach host '%1'.
+Check credentials or hostname.</source>
+        <translation>Impossible d'atteindre l'hôte '%1'.
+Vérifiez les informations d'identification ou le nom d'hôte.</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="495" />
+        <location filename="../../src/networkbrowser.cpp" line="520" />
+        <source>Fetching %1...</source>
+        <translation>Récupération de %1...</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="509" />
+        <source>Error opening directory.</source>
+        <translation>Erreur lors de l'ouverture du répertoire.</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="567" />
+        <source>No more items</source>
+        <translation>Plus d'articles</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="578" />
+        <location filename="../../src/networkbrowser.cpp" line="620" />
+        <source>Browsing: %1</source>
+        <translation>Navigation : %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="635" />
+        <source>Clear History</source>
+        <translation>Effacer l'historique</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="636" />
+        <source>Clear all saved hosts?</source>
+        <translation>Effacer tous les hôtes enregistrés ?</translation>
+    </message>
+    <message>
+        <location filename="../../src/networkbrowser.cpp" line="640" />
+        <source>History cleared.</source>
+        <translation>L'histoire effacée.</translation>
+    </message>
+</context>
+<context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="9"/>
+        <location filename="../../src/optionsdialog.ui" line="9" />
         <source>Options</source>
         <translation>Possibilités</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="34"/>
+        <location filename="../../src/optionsdialog.ui" line="34" />
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="39"/>
+        <location filename="../../src/optionsdialog.ui" line="39" />
         <source>Serial I/O backends</source>
-        <translation>Backends d&apos;E/S série</translation>
+        <translation>Backends d'E/S série</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="46"/>
+        <location filename="../../src/optionsdialog.ui" line="46" />
         <source>Standard serial port</source>
         <translation>Port série standard</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="54"/>
+        <location filename="../../src/optionsdialog.ui" line="54" />
         <source>AtariSIO</source>
         <translation>AtariSIO</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="63"/>
-        <location filename="../../src/optionsdialog.ui" line="511"/>
+        <location filename="../../src/optionsdialog.ui" line="63" />
+        <location filename="../../src/optionsdialog.ui" line="511" />
         <source>Emulation</source>
         <translation>Émulation</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="68"/>
+        <location filename="../../src/optionsdialog.ui" line="68" />
         <source>Hayes Modem Emulator</source>
         <translation>Émulateur de modem Hayes</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="76"/>
+        <location filename="../../src/optionsdialog.ui" line="76" />
         <source>Epson Printer Emulator</source>
-        <translation>Émulateur d&apos;imprimante Epson</translation>
+        <translation>Émulateur d'imprimante Epson</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="81"/>
-        <location filename="../../src/optionsdialog.ui" line="1345"/>
+        <location filename="../../src/optionsdialog.ui" line="81" />
+        <location filename="../../src/optionsdialog.ui" line="1345" />
         <source>User interface</source>
         <translation>Interface utilisateur</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="86"/>
+        <location filename="../../src/optionsdialog.ui" line="86" />
         <source>Web Interface</source>
         <translation>Interface Web</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="122"/>
+        <location filename="../../src/optionsdialog.ui" line="122" />
         <source>Standard serial port backend options</source>
         <translation>Options backend de port série standard</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="131"/>
-        <location filename="../../src/optionsdialog.ui" line="411"/>
+        <location filename="../../src/optionsdialog.ui" line="131" />
+        <location filename="../../src/optionsdialog.ui" line="411" />
         <source>Use this backend</source>
         <translation>Utilisez ce back-end</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="144"/>
+        <location filename="../../src/optionsdialog.ui" line="144" />
         <source>Direct Hardware UART (RasPi)</source>
         <translation>UART matériel direct (RasPi)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="157"/>
+        <location filename="../../src/optionsdialog.ui" line="157" />
         <source>Port name:</source>
-        <translation>Nom du port&#xa0;:</translation>
+        <translation>Nom du port :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="173"/>
-        <location filename="../../src/optionsdialog.ui" line="444"/>
+        <location filename="../../src/optionsdialog.ui" line="173" />
+        <location filename="../../src/optionsdialog.ui" line="444" />
         <source>Handshake method:</source>
-        <translation>Méthode de poignée de main&#xa0;:</translation>
+        <translation>Méthode de poignée de main :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="181"/>
-        <location filename="../../src/optionsdialog.ui" line="452"/>
+        <location filename="../../src/optionsdialog.ui" line="181" />
+        <location filename="../../src/optionsdialog.ui" line="452" />
         <source>RI</source>
         <translation>RI</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="186"/>
-        <location filename="../../src/optionsdialog.ui" line="457"/>
+        <location filename="../../src/optionsdialog.ui" line="186" />
+        <location filename="../../src/optionsdialog.ui" line="457" />
         <source>DSR</source>
         <translation>DSR</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="191"/>
-        <location filename="../../src/optionsdialog.ui" line="462"/>
+        <location filename="../../src/optionsdialog.ui" line="191" />
+        <location filename="../../src/optionsdialog.ui" line="462" />
         <source>CTS</source>
         <translation>CTS</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="196"/>
+        <location filename="../../src/optionsdialog.ui" line="196" />
         <source>NONE</source>
         <translation>AUCUN</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="201"/>
+        <location filename="../../src/optionsdialog.ui" line="201" />
         <source>SOFTWARE (SIO2BT)</source>
         <translation>LOGICIEL (SIO2BT)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="218"/>
+        <location filename="../../src/optionsdialog.ui" line="218" />
         <source>Write delay [ms]:</source>
-        <translation>Délai d&apos;écriture [ms]&#xa0;:</translation>
+        <translation>Délai d'écriture [ms] :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="232"/>
+        <location filename="../../src/optionsdialog.ui" line="232" />
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="237"/>
+        <location filename="../../src/optionsdialog.ui" line="237" />
         <source>10</source>
         <translation>10</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="242"/>
+        <location filename="../../src/optionsdialog.ui" line="242" />
         <source>20</source>
         <translation>20</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="247"/>
+        <location filename="../../src/optionsdialog.ui" line="247" />
         <source>30</source>
         <translation>30</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="252"/>
+        <location filename="../../src/optionsdialog.ui" line="252" />
         <source>40</source>
         <translation>40</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="257"/>
+        <location filename="../../src/optionsdialog.ui" line="257" />
         <source>50</source>
         <translation>50</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="262"/>
+        <location filename="../../src/optionsdialog.ui" line="262" />
         <source>60</source>
         <translation>60</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="276"/>
+        <location filename="../../src/optionsdialog.ui" line="276" />
         <source>High speed mode baud rate:</source>
-        <translation>Débit en bauds en mode haute vitesse&#xa0;:</translation>
+        <translation>Débit en bauds en mode haute vitesse :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="287"/>
+        <location filename="../../src/optionsdialog.ui" line="287" />
         <source>19200 (1x)</source>
         <translation>19200 (1x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="292"/>
+        <location filename="../../src/optionsdialog.ui" line="292" />
         <source>38400 (2x)</source>
         <translation>38400 (2x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="297"/>
+        <location filename="../../src/optionsdialog.ui" line="297" />
         <source>57600 (3x)</source>
         <translation>57600 (3x)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="305"/>
+        <location filename="../../src/optionsdialog.ui" line="305" />
         <source>Use non-standard speeds</source>
         <translation>Utiliser des vitesses non standard</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="321"/>
+        <location filename="../../src/optionsdialog.ui" line="321" />
         <source>High speed mode POKEY divisor:</source>
-        <translation>Diviseur POKEY en mode haute vitesse&#xa0;:</translation>
+        <translation>Diviseur POKEY en mode haute vitesse :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="341"/>
+        <location filename="../../src/optionsdialog.ui" line="341" />
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Complete/Error response delay (μs)&lt;br&gt;See manual for more information&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Délai de réponse complète/erreur (μs)&lt;br&gt;Voir le manuel pour plus d&apos;informations&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;Délai de réponse complète/erreur (μs)&lt;br&gt;Voir le manuel pour plus d'informations&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="348"/>
+        <location filename="../../src/optionsdialog.ui" line="348" />
         <source>μs</source>
         <translation>µs</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="402"/>
+        <location filename="../../src/optionsdialog.ui" line="402" />
         <source>AtariSIO backend options</source>
         <translation>Options du back-end AtariSIO</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="424"/>
+        <location filename="../../src/optionsdialog.ui" line="424" />
         <source>Device name:</source>
-        <translation>Nom de l&apos;appareil&#xa0;:</translation>
+        <translation>Nom de l'appareil :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="431"/>
+        <location filename="../../src/optionsdialog.ui" line="431" />
         <source>/dev/atarisio0</source>
         <translation>/dev/atarisio0</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="532"/>
+        <location filename="../../src/optionsdialog.ui" line="532" />
         <source>Use custom baud rate for cassette emulation</source>
-        <translation>Utiliser un débit en bauds personnalisé pour l&apos;émulation de cassette</translation>
+        <translation>Utiliser un débit en bauds personnalisé pour l'émulation de cassette</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="539"/>
+        <location filename="../../src/optionsdialog.ui" line="539" />
         <source>Filter out underscore character from file names</source>
         <translation>Filtrer le caractère de soulignement des noms de fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="554"/>
+        <location filename="../../src/optionsdialog.ui" line="554" />
         <source>        (Required for AtariDOS compatibility)</source>
         <translation>(Requis pour la compatibilité AtariDOS)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="577"/>
+        <location filename="../../src/optionsdialog.ui" line="577" />
         <source>Use high speed executable loader</source>
-        <translation>Utiliser un chargeur d&apos;exécutable à grande vitesse</translation>
+        <translation>Utiliser un chargeur d'exécutable à grande vitesse</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="587"/>
+        <location filename="../../src/optionsdialog.ui" line="587" />
         <source>Enable this for text-based web services. Disable for binary data.</source>
         <translation>Activez cette option pour les services Web basés sur du texte. Désactiver pour les données binaires.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="590"/>
+        <location filename="../../src/optionsdialog.ui" line="590" />
         <source>Convert Atari EOL (155) to LF (10) on Network Write</source>
         <translation>Convertir Atari EOL (155) en LF (10) en écriture réseau</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="613"/>
+        <location filename="../../src/optionsdialog.ui" line="613" />
         <source>Enable this to read Unix text files properly on Atari. Disable for binary files.</source>
         <translation>Activez ceci pour lire correctement les fichiers texte Unix sur Atari. Désactivé pour les fichiers binaires.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="616"/>
+        <location filename="../../src/optionsdialog.ui" line="616" />
         <source>Convert LF (10) to Atari EOL (155) on Network Read</source>
         <translation>Convertir LF (10) en Atari EOL (155) en lecture réseau</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="626"/>
+        <location filename="../../src/optionsdialog.ui" line="626" />
         <source>CAPITAL letters in file names</source>
         <translation>Lettres MAJUSCULES dans les noms de fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="633"/>
+        <location filename="../../src/optionsdialog.ui" line="633" />
         <source>Restore last TNFS location on mount</source>
         <translation>Restaurer le dernier emplacement TNFS lors du montage</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="665"/>
+        <location filename="../../src/optionsdialog.ui" line="665" />
         <source>Global Transport Mode (Select One)</source>
         <translation>Mode de transport global (sélectionnez-en un)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="671"/>
+        <location filename="../../src/optionsdialog.ui" line="671" />
         <source>Use this if you DO NOT have a physical Atari 850 connected.</source>
         <translation>Utilisez-le si vous n’avez PAS d’Atari 850 physique connecté.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="674"/>
+        <location filename="../../src/optionsdialog.ui" line="674" />
         <source>Virtual 850 Emulation (SIO R: to TCP)</source>
-        <translation>Émulation virtuelle 850 (SIO R&#xa0;: vers TCP)</translation>
+        <translation>Émulation virtuelle 850 (SIO R : vers TCP)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="684"/>
+        <location filename="../../src/optionsdialog.ui" line="684" />
         <source>Use this if a REAL Atari 850 is connected to the PC via serial cables.</source>
         <translation>Utilisez-le si un VRAI Atari 850 est connecté au PC via des câbles série.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="687"/>
+        <location filename="../../src/optionsdialog.ui" line="687" />
         <source>Hardware Bridge Mode (Physical RS232 to TCP)</source>
         <translation>Mode pont matériel (physique RS232 vers TCP)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="701"/>
+        <location filename="../../src/optionsdialog.ui" line="701" />
         <source>R1: (Primary)</source>
-        <translation>R1&#xa0;: (Primaire)</translation>
+        <translation>R1 : (Primaire)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="714"/>
+        <location filename="../../src/optionsdialog.ui" line="714" />
         <source>Phonebook XML:</source>
-        <translation>XML du répertoire téléphonique&#xa0;:</translation>
+        <translation>XML du répertoire téléphonique :</translation>
     </message>
     <message>
         <source>Hayes Modem Emulator (Rs232 to TCP Bridge)</source>
@@ -3106,7 +3314,7 @@ Causes possibles&#xa0;:
     </message>
     <message>
         <source>Enable 850 Emulator  (R: to TCP)</source>
-        <translation type="vanished">Activer l&apos;émulateur 850 (R&#xa0;: vers TCP)</translation>
+        <translation type="vanished">Activer l'émulateur 850 (R : vers TCP)</translation>
     </message>
     <message>
         <source>Enable Modem Bridge (RS232 to TCP)</source>
@@ -3114,27 +3322,27 @@ Causes possibles&#xa0;:
     </message>
     <message>
         <source>Enable 850 Device  (R: to TCP)</source>
-        <translation type="vanished">Activer le périphérique 850 (R&#xa0;: vers TCP)</translation>
+        <translation type="vanished">Activer le périphérique 850 (R : vers TCP)</translation>
     </message>
     <message>
         <source>Enable if using a standard FTDI USB adapter. Leave unchecked for direct Raspberry Pi GPIO.</source>
         <translation type="vanished">Activez si vous utilisez un adaptateur USB FTDI standard. Laissez décoché pour le GPIO Raspberry Pi direct.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="816"/>
-        <location filename="../../src/optionsdialog.ui" line="927"/>
-        <location filename="../../src/optionsdialog.ui" line="1038"/>
-        <location filename="../../src/optionsdialog.ui" line="1149"/>
+        <location filename="../../src/optionsdialog.ui" line="816" />
+        <location filename="../../src/optionsdialog.ui" line="927" />
+        <location filename="../../src/optionsdialog.ui" line="1038" />
+        <location filename="../../src/optionsdialog.ui" line="1149" />
         <source>Invert CTS Logic (Standard USB Adapters)</source>
         <translation>Inverser la logique CTS (adaptateurs USB standard)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="823"/>
-        <location filename="../../src/optionsdialog.ui" line="934"/>
-        <location filename="../../src/optionsdialog.ui" line="1045"/>
-        <location filename="../../src/optionsdialog.ui" line="1156"/>
+        <location filename="../../src/optionsdialog.ui" line="823" />
+        <location filename="../../src/optionsdialog.ui" line="934" />
+        <location filename="../../src/optionsdialog.ui" line="1045" />
+        <location filename="../../src/optionsdialog.ui" line="1156" />
         <source>FTDI/USB Latency:</source>
-        <translation>Latence FTDI/USB&#xa0;:</translation>
+        <translation>Latence FTDI/USB :</translation>
     </message>
     <message>
         <source>ms</source>
@@ -3142,31 +3350,31 @@ Causes possibles&#xa0;:
     </message>
     <message>
         <source>Enable BBS Listener (Auto-Answer):</source>
-        <translation type="vanished">Activer l&apos;écouteur BBS (réponse automatique)&#xa0;:</translation>
+        <translation type="vanished">Activer l'écouteur BBS (réponse automatique) :</translation>
     </message>
     <message>
         <source>BBS Listener TCP Port</source>
-        <translation type="vanished">Port TCP de l&apos;écouteur BBS</translation>
+        <translation type="vanished">Port TCP de l'écouteur BBS</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="773"/>
-        <location filename="../../src/optionsdialog.ui" line="884"/>
-        <location filename="../../src/optionsdialog.ui" line="995"/>
-        <location filename="../../src/optionsdialog.ui" line="1106"/>
+        <location filename="../../src/optionsdialog.ui" line="773" />
+        <location filename="../../src/optionsdialog.ui" line="884" />
+        <location filename="../../src/optionsdialog.ui" line="995" />
+        <location filename="../../src/optionsdialog.ui" line="1106" />
         <source>Bridge Serial Port:</source>
-        <translation>Port série du pont&#xa0;:</translation>
+        <translation>Port série du pont :</translation>
     </message>
     <message>
         <source>Must be different from the SIO port.</source>
         <translation type="vanished">Doit être différent du port SIO.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="783"/>
-        <location filename="../../src/optionsdialog.ui" line="894"/>
-        <location filename="../../src/optionsdialog.ui" line="1005"/>
-        <location filename="../../src/optionsdialog.ui" line="1116"/>
+        <location filename="../../src/optionsdialog.ui" line="783" />
+        <location filename="../../src/optionsdialog.ui" line="894" />
+        <location filename="../../src/optionsdialog.ui" line="1005" />
+        <location filename="../../src/optionsdialog.ui" line="1116" />
         <source>Baud Rate:</source>
-        <translation>Débit en bauds&#xa0;:</translation>
+        <translation>Débit en bauds :</translation>
     </message>
     <message>
         <source>300</source>
@@ -3189,26 +3397,26 @@ Causes possibles&#xa0;:
         <translation type="vanished">4800</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="791"/>
-        <location filename="../../src/optionsdialog.ui" line="902"/>
-        <location filename="../../src/optionsdialog.ui" line="1013"/>
-        <location filename="../../src/optionsdialog.ui" line="1124"/>
+        <location filename="../../src/optionsdialog.ui" line="791" />
+        <location filename="../../src/optionsdialog.ui" line="902" />
+        <location filename="../../src/optionsdialog.ui" line="1013" />
+        <location filename="../../src/optionsdialog.ui" line="1124" />
         <source>9600</source>
         <translation>9600</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="796"/>
-        <location filename="../../src/optionsdialog.ui" line="907"/>
-        <location filename="../../src/optionsdialog.ui" line="1018"/>
-        <location filename="../../src/optionsdialog.ui" line="1129"/>
+        <location filename="../../src/optionsdialog.ui" line="796" />
+        <location filename="../../src/optionsdialog.ui" line="907" />
+        <location filename="../../src/optionsdialog.ui" line="1018" />
+        <location filename="../../src/optionsdialog.ui" line="1129" />
         <source>19200</source>
         <translation>19200</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="801"/>
-        <location filename="../../src/optionsdialog.ui" line="912"/>
-        <location filename="../../src/optionsdialog.ui" line="1023"/>
-        <location filename="../../src/optionsdialog.ui" line="1134"/>
+        <location filename="../../src/optionsdialog.ui" line="801" />
+        <location filename="../../src/optionsdialog.ui" line="912" />
+        <location filename="../../src/optionsdialog.ui" line="1023" />
+        <location filename="../../src/optionsdialog.ui" line="1134" />
         <source>38400</source>
         <translation>38400</translation>
     </message>
@@ -3218,13 +3426,13 @@ Causes possibles&#xa0;:
     </message>
     <message>
         <source>Highly recommended for Atari 850 Interface.</source>
-        <translation type="vanished">Fortement recommandé pour l&apos;interface Atari 850.</translation>
+        <translation type="vanished">Fortement recommandé pour l'interface Atari 850.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="809"/>
-        <location filename="../../src/optionsdialog.ui" line="920"/>
-        <location filename="../../src/optionsdialog.ui" line="1031"/>
-        <location filename="../../src/optionsdialog.ui" line="1142"/>
+        <location filename="../../src/optionsdialog.ui" line="809" />
+        <location filename="../../src/optionsdialog.ui" line="920" />
+        <location filename="../../src/optionsdialog.ui" line="1031" />
+        <location filename="../../src/optionsdialog.ui" line="1142" />
         <source>Enable Hardware Flow Control (RTS/CTS)</source>
         <translation>Activer le contrôle de flux matériel (RTS/CTS)</translation>
     </message>
@@ -3233,211 +3441,211 @@ Causes possibles&#xa0;:
         <translation type="vanished">Activer la prise en charge SSH (Port 22)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="707"/>
-        <location filename="../../src/optionsdialog.ui" line="850"/>
-        <location filename="../../src/optionsdialog.ui" line="961"/>
-        <location filename="../../src/optionsdialog.ui" line="1072"/>
+        <location filename="../../src/optionsdialog.ui" line="707" />
+        <location filename="../../src/optionsdialog.ui" line="850" />
+        <location filename="../../src/optionsdialog.ui" line="961" />
+        <location filename="../../src/optionsdialog.ui" line="1072" />
         <source>Local Echo (Half Duplex)</source>
         <translation>Écho local (semi-duplex)</translation>
     </message>
     <message>
         <source>Phonebook XML Path:</source>
-        <translation type="vanished">Chemin XML du répertoire&#xa0;:</translation>
+        <translation type="vanished">Chemin XML du répertoire :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="723"/>
+        <location filename="../../src/optionsdialog.ui" line="723" />
         <source>Click ... to select dialdirectory.xml</source>
         <translation>Cliquez sur ... pour sélectionner dialdirectory.xml</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="730"/>
+        <location filename="../../src/optionsdialog.ui" line="730" />
         <source>...</source>
-        <translation></translation>
+        <translation />
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="737"/>
+        <location filename="../../src/optionsdialog.ui" line="737" />
         <source>New</source>
         <translation>Nouveau</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="746"/>
-        <location filename="../../src/optionsdialog.ui" line="857"/>
-        <location filename="../../src/optionsdialog.ui" line="968"/>
-        <location filename="../../src/optionsdialog.ui" line="1079"/>
+        <location filename="../../src/optionsdialog.ui" line="746" />
+        <location filename="../../src/optionsdialog.ui" line="857" />
+        <location filename="../../src/optionsdialog.ui" line="968" />
+        <location filename="../../src/optionsdialog.ui" line="1079" />
         <source>Enable BBS Listener:</source>
-        <translation>Activer l&apos;écouteur BBS&#xa0;:</translation>
+        <translation>Activer l'écouteur BBS :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="830"/>
-        <location filename="../../src/optionsdialog.ui" line="941"/>
-        <location filename="../../src/optionsdialog.ui" line="1052"/>
-        <location filename="../../src/optionsdialog.ui" line="1163"/>
+        <location filename="../../src/optionsdialog.ui" line="830" />
+        <location filename="../../src/optionsdialog.ui" line="941" />
+        <location filename="../../src/optionsdialog.ui" line="1052" />
+        <location filename="../../src/optionsdialog.ui" line="1163" />
         <source> ms</source>
         <translation>MS</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="844"/>
+        <location filename="../../src/optionsdialog.ui" line="844" />
         <source>R2: (Serial)</source>
-        <translation>R2&#xa0;: (Série)</translation>
+        <translation>R2 : (Série)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="955"/>
+        <location filename="../../src/optionsdialog.ui" line="955" />
         <source>R3: (Serial)</source>
-        <translation>R3&#xa0;: (Série)</translation>
+        <translation>R3 : (Série)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1066"/>
+        <location filename="../../src/optionsdialog.ui" line="1066" />
         <source>R4: (Serial) </source>
-        <translation>R4&#xa0;: (Série)</translation>
+        <translation>R4 : (Série)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1184"/>
+        <location filename="../../src/optionsdialog.ui" line="1184" />
         <source>Epson FX-80 Printer Emulator</source>
-        <translation>Émulateur d&apos;imprimante Epson FX-80</translation>
+        <translation>Émulateur d'imprimante Epson FX-80</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1190"/>
+        <location filename="../../src/optionsdialog.ui" line="1190" />
         <source>Automatically open Preview Window when printing starts</source>
-        <translation>Ouvrir automatiquement la fenêtre d&apos;aperçu au démarrage de l&apos;impression</translation>
+        <translation>Ouvrir automatiquement la fenêtre d'aperçu au démarrage de l'impression</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1197"/>
+        <location filename="../../src/optionsdialog.ui" line="1197" />
         <source>Paper Mode:</source>
-        <translation>Mode papier&#xa0;:</translation>
+        <translation>Mode papier :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1205"/>
+        <location filename="../../src/optionsdialog.ui" line="1205" />
         <source>Continuous Tractor Feed (Banners)</source>
         <translation>Alimentation continue du tracteur (bannières)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1210"/>
+        <location filename="../../src/optionsdialog.ui" line="1210" />
         <source>Single Sheet (Cut-Sheet Feeder)</source>
         <translation>Feuille simple (chargeur feuille à feuille)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1218"/>
+        <location filename="../../src/optionsdialog.ui" line="1218" />
         <source>Paper Style:</source>
-        <translation>Style de papier&#xa0;:</translation>
+        <translation>Style de papier :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1226"/>
+        <location filename="../../src/optionsdialog.ui" line="1226" />
         <source>Pure White</source>
         <translation>Blanc pur</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1231"/>
+        <location filename="../../src/optionsdialog.ui" line="1231" />
         <source>Vintage Green-Bar</source>
         <translation>Bar Vert Vintage</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1236"/>
+        <location filename="../../src/optionsdialog.ui" line="1236" />
         <source>Aged Yellow</source>
         <translation>Jaune vieilli</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1244"/>
-        <location filename="../../src/optionsdialog.ui" line="1267"/>
-        <location filename="../../src/optionsdialog.ui" line="1283"/>
+        <location filename="../../src/optionsdialog.ui" line="1244" />
+        <location filename="../../src/optionsdialog.ui" line="1267" />
+        <location filename="../../src/optionsdialog.ui" line="1283" />
         <source>px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1260"/>
+        <location filename="../../src/optionsdialog.ui" line="1260" />
         <source>Top Margin:</source>
-        <translation>Marge supérieure&#xa0;:</translation>
+        <translation>Marge supérieure :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1299"/>
+        <location filename="../../src/optionsdialog.ui" line="1299" />
         <source>Left Margin:</source>
-        <translation>Marge gauche&#xa0;:</translation>
+        <translation>Marge gauche :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1306"/>
+        <location filename="../../src/optionsdialog.ui" line="1306" />
         <source>Page Length:</source>
-        <translation>Longueur des pages&#xa0;:</translation>
+        <translation>Longueur des pages :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1351"/>
+        <location filename="../../src/optionsdialog.ui" line="1351" />
         <source>Language:</source>
         <translation>Langue:</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1377"/>
+        <location filename="../../src/optionsdialog.ui" line="1377" />
         <source>Minimize to system tray</source>
-        <translation>Réduire dans la barre d&apos;état système</translation>
+        <translation>Réduire dans la barre d'état système</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1384"/>
+        <location filename="../../src/optionsdialog.ui" line="1384" />
         <source>Save window positions and sizes</source>
         <translation>Enregistrer les positions et les tailles des fenêtres</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1394"/>
+        <location filename="../../src/optionsdialog.ui" line="1394" />
         <source>Save D9-DO drive visibility status</source>
-        <translation>Enregistrer l&apos;état de visibilité du lecteur D9-DO</translation>
+        <translation>Enregistrer l'état de visibilité du lecteur D9-DO</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1404"/>
+        <location filename="../../src/optionsdialog.ui" line="1404" />
         <source>Enable Shade in Mini Mode by default</source>
         <translation>Activer Shade en mode Mini par défaut</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1417"/>
+        <location filename="../../src/optionsdialog.ui" line="1417" />
         <source>Use larger font in drive slot descriptions</source>
         <translation>Utiliser une police plus grande dans les descriptions des emplacements de lecteur</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1447"/>
+        <location filename="../../src/optionsdialog.ui" line="1447" />
         <source>Web Dashboard Settings</source>
         <translation>Paramètres du tableau de bord Web</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1453"/>
+        <location filename="../../src/optionsdialog.ui" line="1453" />
         <source>Enable Web Interface Dashboard</source>
-        <translation>Activer le tableau de bord de l&apos;interface Web</translation>
+        <translation>Activer le tableau de bord de l'interface Web</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1460"/>
+        <location filename="../../src/optionsdialog.ui" line="1460" />
         <source>HTTP Dashboard Port:</source>
-        <translation>Port du tableau de bord HTTP&#xa0;:</translation>
+        <translation>Port du tableau de bord HTTP :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1477"/>
+        <location filename="../../src/optionsdialog.ui" line="1477" />
         <source>WebSocket Bridge Port:</source>
-        <translation>Port du pont WebSocket&#xa0;:</translation>
+        <translation>Port du pont WebSocket :</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.ui" line="1514"/>
+        <location filename="../../src/optionsdialog.ui" line="1514" />
         <source>Save/Commit or Cancel/Ignore changes made to the settings</source>
         <translation>Enregistrer/Valider ou Annuler/Ignorer les modifications apportées aux paramètres</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="67"/>
-        <location filename="../../src/optionsdialog.cpp" line="160"/>
+        <location filename="../../src/optionsdialog.cpp" line="67" />
+        <location filename="../../src/optionsdialog.cpp" line="160" />
         <source>Custom</source>
         <translation>Coutume</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="148"/>
-        <location filename="../../src/optionsdialog.cpp" line="398"/>
+        <location filename="../../src/optionsdialog.cpp" line="148" />
+        <location filename="../../src/optionsdialog.cpp" line="398" />
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="220"/>
+        <location filename="../../src/optionsdialog.cpp" line="220" />
         <source>Automatic</source>
         <translation>Automatique</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="223"/>
-        <location filename="../../src/optionsdialog.cpp" line="232"/>
+        <location filename="../../src/optionsdialog.cpp" line="223" />
+        <location filename="../../src/optionsdialog.cpp" line="232" />
         <source>English</source>
         <translation>Français</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="402"/>
-        <location filename="../../src/optionsdialog.cpp" line="421"/>
+        <location filename="../../src/optionsdialog.cpp" line="402" />
+        <location filename="../../src/optionsdialog.cpp" line="421" />
         <source>Port Conflict</source>
         <translation>Conflit portuaire</translation>
     </message>
@@ -3452,7 +3660,7 @@ Please select a different port for the Modem.</source>
 Veuillez sélectionner un autre port pour le modem.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="403"/>
+        <location filename="../../src/optionsdialog.cpp" line="403" />
         <source>You cannot use the same Serial Port (%1) for both
 SIO Emulation and Modem Bridge R%2.
 
@@ -3463,21 +3671,21 @@ Please select a different port.</source>
 Veuillez sélectionner un autre port.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="410"/>
+        <location filename="../../src/optionsdialog.cpp" line="410" />
         <source>Matrix Port Conflict</source>
         <translation>Conflit de port matriciel</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="411"/>
+        <location filename="../../src/optionsdialog.cpp" line="411" />
         <source>You cannot assign the same physical Serial Port (%1) to both R%2 and R%3.
 
-Please select different ports, or set unused ports to &apos;None&apos;.</source>
+Please select different ports, or set unused ports to 'None'.</source>
         <translation>Vous ne pouvez pas attribuer le même port série physique (%1) à R%2 et R%3.
 
-Veuillez sélectionner différents ports ou définir les ports inutilisés sur «&#xa0;Aucun&#xa0;».</translation>
+Veuillez sélectionner différents ports ou définir les ports inutilisés sur « Aucun ».</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="421"/>
+        <location filename="../../src/optionsdialog.cpp" line="421" />
         <source>The HTTP Dashboard Port and WebSocket Bridge Port cannot be the same.
 
 Please assign different ports.</source>
@@ -3486,52 +3694,52 @@ Please assign different ports.</source>
 Veuillez attribuer des ports différents.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="439"/>
-        <location filename="../../src/optionsdialog.cpp" line="448"/>
+        <location filename="../../src/optionsdialog.cpp" line="439" />
+        <location filename="../../src/optionsdialog.cpp" line="448" />
         <source>TCP Port Conflict</source>
         <translation>Conflit de ports TCP</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="440"/>
+        <location filename="../../src/optionsdialog.cpp" line="440" />
         <source>You cannot assign the same BBS Listener Port (%1) to both R%2 and R%3.
 
 Please assign different ports.</source>
-        <translation>Vous ne pouvez pas attribuer le même port d&apos;écoute BBS (%1) à R%2 et R%3.
+        <translation>Vous ne pouvez pas attribuer le même port d'écoute BBS (%1) à R%2 et R%3.
 
 Veuillez attribuer des ports différents.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="449"/>
+        <location filename="../../src/optionsdialog.cpp" line="449" />
         <source>BBS Listener Port %1 on R%2 conflicts with the Web UI ports.
 
 Please assign different ports.</source>
-        <translation>Le port d&apos;écoute BBS %1 sur R%2 est en conflit avec les ports de l&apos;interface utilisateur Web.
+        <translation>Le port d'écoute BBS %1 sur R%2 est en conflit avec les ports de l'interface utilisateur Web.
 
 Veuillez attribuer des ports différents.</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="524"/>
+        <location filename="../../src/optionsdialog.cpp" line="524" />
         <source>Select Dial Directory</source>
         <translation>Sélectionnez le répertoire de numérotation</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="524"/>
-        <location filename="../../src/optionsdialog.cpp" line="533"/>
+        <location filename="../../src/optionsdialog.cpp" line="524" />
+        <location filename="../../src/optionsdialog.cpp" line="533" />
         <source>XML Files (*.xml);;All Files (*)</source>
         <translation>Fichiers XML (*.xml);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="533"/>
+        <location filename="../../src/optionsdialog.cpp" line="533" />
         <source>Create New Dial Directory</source>
         <translation>Créer un nouveau répertoire de numérotation</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="546"/>
+        <location filename="../../src/optionsdialog.cpp" line="546" />
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../src/optionsdialog.cpp" line="546"/>
+        <location filename="../../src/optionsdialog.cpp" line="546" />
         <source>Could not create the phonebook file.</source>
         <translation>Impossible de créer le fichier de répertoire.</translation>
     </message>
@@ -3539,559 +3747,559 @@ Veuillez attribuer des ports différents.</translation>
 <context>
     <name>PCLINK</name>
     <message>
-        <location filename="../../src/pclink.cpp" line="181"/>
+        <location filename="../../src/pclink.cpp" line="181" />
         <source>PCLINK Command=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</source>
         <translation>Commande PCLINK=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="193"/>
+        <location filename="../../src/pclink.cpp" line="193" />
         <source>[%1] P</source>
         <translation>[%1]P</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="200"/>
+        <location filename="../../src/pclink.cpp" line="200" />
         <source>[%1] R</source>
         <translation>[%1]R</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="218"/>
+        <location filename="../../src/pclink.cpp" line="218" />
         <source>[%1] Get status for [%2]</source>
         <translation>[%1] Obtenir le statut de [%2]</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="229"/>
+        <location filename="../../src/pclink.cpp" line="229" />
         <source>[%1] Speed poll</source>
         <translation>[%1] Sondage rapide</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="236"/>
+        <location filename="../../src/pclink.cpp" line="236" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation>Commande [%1]&#xa0;:&#xa0;$%2, aux&#xa0;:&#xa0;$%3 NAKed.</translation>
+        <translation>Commande [%1] : $%2, aux : $%3 NAKed.</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="269"/>
+        <location filename="../../src/pclink.cpp" line="269" />
         <source>PCLINK[%1] Mount %2</source>
         <translation>PCLINK[%1] Monter %2</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="311"/>
+        <location filename="../../src/pclink.cpp" line="311" />
         <source>PCLINK[%1] Unmount</source>
         <translation>PCLINK[%1] Démonter</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="464"/>
+        <location filename="../../src/pclink.cpp" line="464" />
         <source>match: %1%2%3%4%5%6%7%8%9%10%11 with %12%13%14%15%16%17%18%19%20%21%22: </source>
-        <translation>correspondance&#xa0;: %1%2%3%4%5%6%7%8%9%10%11 avec %12%13%14%15%16%17%18%19%20%21%22&#xa0;:</translation>
+        <translation>correspondance : %1%2%3%4%5%6%7%8%9%10%11 avec %12%13%14%15%16%17%18%19%20%21%22 :</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="477"/>
+        <location filename="../../src/pclink.cpp" line="477" />
         <source>no match</source>
         <translation>pas de correspondance</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="488"/>
+        <location filename="../../src/pclink.cpp" line="488" />
         <source>atr mismatch: not HIDDEN or ARCHIVED</source>
-        <translation>inadéquation atr&#xa0;: ni CACHÉ ni ARCHIVÉ</translation>
+        <translation>inadéquation atr : ni CACHÉ ni ARCHIVÉ</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="496"/>
+        <location filename="../../src/pclink.cpp" line="496" />
         <source>atr mismatch: not PROTECTED</source>
-        <translation>incompatibilité atr&#xa0;: non PROTÉGÉ</translation>
+        <translation>incompatibilité atr : non PROTÉGÉ</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="505"/>
+        <location filename="../../src/pclink.cpp" line="505" />
         <source>atr mismatch: not UNPROTECTED</source>
-        <translation>incompatibilité atr&#xa0;: non NON PROTÉGÉ</translation>
+        <translation>incompatibilité atr : non NON PROTÉGÉ</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="514"/>
+        <location filename="../../src/pclink.cpp" line="514" />
         <source>atr mismatch: not SUBDIR</source>
-        <translation>incompatibilité atr&#xa0;: pas SUBDIR</translation>
+        <translation>incompatibilité atr : pas SUBDIR</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="523"/>
+        <location filename="../../src/pclink.cpp" line="523" />
         <source>atr mismatch: not FILE</source>
-        <translation>incompatibilité atr&#xa0;: pas de FICHIER</translation>
+        <translation>incompatibilité atr : pas de FICHIER</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="528"/>
+        <location filename="../../src/pclink.cpp" line="528" />
         <source>match</source>
         <translation>correspondre</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="593"/>
-        <source>%1: got fname &apos;%2&apos;</source>
-        <translation>%1&#xa0;: j&apos;ai obtenu le nom &apos;%2&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="593" />
+        <source>%1: got fname '%2'</source>
+        <translation>%1 : j'ai obtenu le nom '%2'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="601"/>
-        <source>%1: stat &apos;%2&apos;</source>
-        <translation>%1&#xa0;: statistique &apos;%2&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="601" />
+        <source>%1: stat '%2'</source>
+        <translation>%1 : statistique '%2'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="611"/>
-        <source>&apos;%1&apos;: is a symlink</source>
-        <translation>&apos;%1&apos;&#xa0;: est un lien symbolique</translation>
+        <location filename="../../src/pclink.cpp" line="611" />
+        <source>'%1': is a symlink</source>
+        <translation>'%1' : est un lien symbolique</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="615"/>
-        <source>&apos;%1&apos;: can&apos;t be accessed</source>
-        <translation>&apos;%1&apos;&#xa0;: inaccessible</translation>
+        <location filename="../../src/pclink.cpp" line="615" />
+        <source>'%1': can't be accessed</source>
+        <translation>'%1' : inaccessible</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="616"/>
+        <location filename="../../src/pclink.cpp" line="616" />
         <source>access error code %1</source>
-        <translation>accéder au code d&apos;erreur %1</translation>
+        <translation>accéder au code d'erreur %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="713"/>
+        <location filename="../../src/pclink.cpp" line="713" />
         <source>Internal error: dir_cache should be NULL!</source>
-        <translation>Erreur interne&#xa0;: dir_cache doit être NULL&#xa0;!</translation>
+        <translation>Erreur interne : dir_cache doit être NULL !</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="844"/>
+        <location filename="../../src/pclink.cpp" line="844" />
         <source>closing all files</source>
         <translation>fermer tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1120"/>
-        <source>&apos;P&apos; WRONG DATA FRAME, expected size %1 got %2</source>
-        <translation>&apos;P&apos; MAUVAIS TRAME DE DONNÉES, taille attendue %1 a obtenu %2</translation>
+        <location filename="../../src/pclink.cpp" line="1120" />
+        <source>'P' WRONG DATA FRAME, expected size %1 got %2</source>
+        <translation>'P' MAUVAIS TRAME DE DONNÉES, taille attendue %1 a obtenu %2</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1138"/>
+        <location filename="../../src/pclink.cpp" line="1138" />
         <source>PARBLK retry, ignored</source>
         <translation>Nouvelle tentative PARBLK, ignorée</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1152"/>
+        <location filename="../../src/pclink.cpp" line="1152" />
         <source>%1 (fno $%02)</source>
         <translation>%1 (fno $%02)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1166"/>
+        <location filename="../../src/pclink.cpp" line="1166" />
         <source>bad handle 1 %1</source>
         <translation>mauvaise poignée 1 %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1173"/>
-        <location filename="../../src/pclink.cpp" line="1308"/>
+        <location filename="../../src/pclink.cpp" line="1173" />
+        <location filename="../../src/pclink.cpp" line="1308" />
         <source>bad size $0000 (0)</source>
         <translation>mauvaise taille 0000 $ (0)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1193"/>
+        <location filename="../../src/pclink.cpp" line="1193" />
         <source>size $%1 (%2), buffer $%3 (%4)</source>
         <translation>taille $%1 (%2), tampon $%3 (%4)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1204"/>
-        <location filename="../../src/pclink.cpp" line="1324"/>
-        <location filename="../../src/pclink.cpp" line="1481"/>
-        <location filename="../../src/pclink.cpp" line="1641"/>
+        <location filename="../../src/pclink.cpp" line="1204" />
+        <location filename="../../src/pclink.cpp" line="1324" />
+        <location filename="../../src/pclink.cpp" line="1481" />
+        <location filename="../../src/pclink.cpp" line="1641" />
         <source>serial communication error, abort</source>
         <translation>erreur de communication série, abandon</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1210"/>
-        <location filename="../../src/pclink.cpp" line="1330"/>
-        <location filename="../../src/pclink.cpp" line="1498"/>
-        <location filename="../../src/pclink.cpp" line="1576"/>
+        <location filename="../../src/pclink.cpp" line="1210" />
+        <location filename="../../src/pclink.cpp" line="1330" />
+        <location filename="../../src/pclink.cpp" line="1498" />
+        <location filename="../../src/pclink.cpp" line="1576" />
         <source>handle %1</source>
         <translation>gérer %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1227"/>
+        <location filename="../../src/pclink.cpp" line="1227" />
         <source>FREAD: cannot read %1 bytes from dir</source>
-        <translation>FREAD&#xa0;: impossible de lire %1 octets à partir du répertoire</translation>
+        <translation>FREAD : impossible de lire %1 octets à partir du répertoire</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1244"/>
+        <location filename="../../src/pclink.cpp" line="1244" />
         <source>FREAD: cannot seek to $%1 (%2)</source>
-        <translation>FREAD&#xa0;: impossible de rechercher $%1 (%2)</translation>
+        <translation>FREAD : impossible de rechercher $%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1253"/>
+        <location filename="../../src/pclink.cpp" line="1253" />
         <source>FREAD: cannot read %1 bytes from file</source>
-        <translation>FREAD&#xa0;: impossible de lire %1 octets du fichier</translation>
+        <translation>FREAD : impossible de lire %1 octets du fichier</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1281"/>
+        <location filename="../../src/pclink.cpp" line="1281" />
         <source>FREAD: send $%1 (%2), status $%3</source>
-        <translation>FREAD&#xa0;: envoyer $%1 (%2), état $%3</translation>
+        <translation>FREAD : envoyer $%1 (%2), état $%3</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1301"/>
+        <location filename="../../src/pclink.cpp" line="1301" />
         <source>bad handle 2 %1</source>
         <translation>mauvaise poignée 2 %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1316"/>
+        <location filename="../../src/pclink.cpp" line="1316" />
         <source>size $%1 (%2)</source>
         <translation>taille $%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1336"/>
+        <location filename="../../src/pclink.cpp" line="1336" />
         <source>FWRITE: cannot seek to $%1 (%2)</source>
-        <translation>FWRITE&#xa0;: impossible de rechercher $%1 (%2)</translation>
+        <translation>FWRITE : impossible de rechercher $%1 (%2)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1349"/>
+        <location filename="../../src/pclink.cpp" line="1349" />
         <source>FWRITE: block CRC mismatch</source>
-        <translation>FWRITE&#xa0;: bloquer l&apos;incompatibilité CRC</translation>
+        <translation>FWRITE : bloquer l'incompatibilité CRC</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1375"/>
+        <location filename="../../src/pclink.cpp" line="1375" />
         <source>FWRITE: cannot write %1 bytes to file</source>
-        <translation>FWRITE&#xa0;: impossible d&apos;écrire %1 octets dans le fichier</translation>
+        <translation>FWRITE : impossible d'écrire %1 octets dans le fichier</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1386"/>
+        <location filename="../../src/pclink.cpp" line="1386" />
         <source>FWRITE: received $%1 (%2), status $%3</source>
-        <translation>FWRITE&#xa0;:&#xa0;reçu $%1 (%2), état $%3</translation>
+        <translation>FWRITE : reçu $%1 (%2), état $%3</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1398"/>
+        <location filename="../../src/pclink.cpp" line="1398" />
         <source>bad handle 3 %1</source>
         <translation>mauvaise poignée 3 %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1406"/>
-        <location filename="../../src/pclink.cpp" line="1565"/>
-        <location filename="../../src/pclink.cpp" line="1603"/>
-        <location filename="../../src/pclink.cpp" line="1946"/>
-        <location filename="../../src/pclink.cpp" line="2055"/>
-        <location filename="../../src/pclink.cpp" line="2134"/>
-        <location filename="../../src/pclink.cpp" line="2224"/>
-        <location filename="../../src/pclink.cpp" line="2298"/>
-        <location filename="../../src/pclink.cpp" line="2382"/>
-        <location filename="../../src/pclink.cpp" line="2579"/>
+        <location filename="../../src/pclink.cpp" line="1406" />
+        <location filename="../../src/pclink.cpp" line="1565" />
+        <location filename="../../src/pclink.cpp" line="1603" />
+        <location filename="../../src/pclink.cpp" line="1946" />
+        <location filename="../../src/pclink.cpp" line="2055" />
+        <location filename="../../src/pclink.cpp" line="2134" />
+        <location filename="../../src/pclink.cpp" line="2224" />
+        <location filename="../../src/pclink.cpp" line="2298" />
+        <location filename="../../src/pclink.cpp" line="2382" />
+        <location filename="../../src/pclink.cpp" line="2579" />
         <source>bad exec</source>
         <translation>mauvais exécutif</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1413"/>
+        <location filename="../../src/pclink.cpp" line="1413" />
         <source>handle %1, newpos $%2 (%3)</source>
         <translation>gérer %1, nouveau pos $%2 (%3)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1437"/>
+        <location filename="../../src/pclink.cpp" line="1437" />
         <source>bad handle 4 %1</source>
         <translation>mauvaise poignée 4 %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1444"/>
-        <location filename="../../src/pclink.cpp" line="1474"/>
-        <location filename="../../src/pclink.cpp" line="2509"/>
+        <location filename="../../src/pclink.cpp" line="1444" />
+        <location filename="../../src/pclink.cpp" line="1474" />
+        <location filename="../../src/pclink.cpp" line="2509" />
         <source>device $%1</source>
         <translation>appareil $%1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1455"/>
+        <location filename="../../src/pclink.cpp" line="1455" />
         <source>handle %1, send $%2 (%3)</source>
         <translation>gérer %1, envoyer $%2 (%3)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1491"/>
+        <location filename="../../src/pclink.cpp" line="1491" />
         <source>bad handle 5 %1</source>
         <translation>mauvaise poignée 5 %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1508"/>
+        <location filename="../../src/pclink.cpp" line="1508" />
         <source>eof_flg %1</source>
         <translation>eof_flg %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1527"/>
+        <location filename="../../src/pclink.cpp" line="1527" />
         <source>FNEXT: EOF</source>
-        <translation>FNEXT&#xa0;:&#xa0;EOF</translation>
+        <translation>FNEXT : EOF</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1537"/>
+        <location filename="../../src/pclink.cpp" line="1537" />
         <source>FNEXT: status %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
-        <translation>FNEXT&#xa0;: statut %1, envoyer $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
+        <translation>FNEXT : statut %1, envoyer $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1571"/>
+        <location filename="../../src/pclink.cpp" line="1571" />
         <source>bad handle 6 %1</source>
         <translation>mauvaise poignée 6 %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1619"/>
-        <source>mode: $%1, atr1: $%2, atr2: $%3, path: &apos;%4&apos;, name: &apos;%5&apos;</source>
-        <translation>mode : $%1, atr1 : $%2, atr2 : $%3, chemin : &apos;%4&apos;, nom : &apos;%5&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="1619" />
+        <source>mode: $%1, atr1: $%2, atr2: $%3, path: '%4', name: '%5'</source>
+        <translation>mode : $%1, atr1 : $%2, atr2 : $%3, chemin : '%4', nom : '%5'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1653"/>
+        <location filename="../../src/pclink.cpp" line="1653" />
         <source>unsupported fmode ($%1)</source>
         <translation>fmode non pris en charge ($%1)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1662"/>
-        <source>invalid path 1 &apos;%1&apos;</source>
-        <translation>chemin non valide 1 &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="1662" />
+        <source>invalid path 1 '%1'</source>
+        <translation>chemin non valide 1 '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1667"/>
-        <location filename="../../src/pclink.cpp" line="2068"/>
-        <source>local path &apos;%1&apos;</source>
-        <translation>chemin local &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="1667" />
+        <location filename="../../src/pclink.cpp" line="2068" />
+        <source>local path '%1'</source>
+        <translation>chemin local '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1676"/>
+        <location filename="../../src/pclink.cpp" line="1676" />
         <source>FOPEN: too many channels open</source>
-        <translation>FOPEN&#xa0;: trop de canaux ouverts</translation>
+        <translation>FOPEN : trop de canaux ouverts</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1683"/>
-        <location filename="../../src/pclink.cpp" line="1779"/>
-        <source>FOPEN: cannot stat &apos;%1&apos;</source>
-        <translation>FOPEN&#xa0;: impossible de déclarer &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="1683" />
+        <location filename="../../src/pclink.cpp" line="1779" />
+        <source>FOPEN: cannot stat '%1'</source>
+        <translation>FOPEN : impossible de déclarer '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1697"/>
+        <location filename="../../src/pclink.cpp" line="1697" />
         <source> ! fmode &amp; 0x10</source>
         <translation>! mode f &amp; 0x10</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1736"/>
+        <location filename="../../src/pclink.cpp" line="1736" />
         <source>FOPEN: file not found</source>
-        <translation>FOPEN&#xa0;: fichier introuvable</translation>
+        <translation>FOPEN : fichier introuvable</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1746"/>
+        <location filename="../../src/pclink.cpp" line="1746" />
         <source>FOPEN: creating file</source>
-        <translation>FOPEN&#xa0;: création du fichier</translation>
+        <translation>FOPEN : création du fichier</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1753"/>
-        <source>FOPEN: bad filename &apos;%1&apos;</source>
-        <translation>FOPEN&#xa0;: nom de fichier incorrect &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="1753" />
+        <source>FOPEN: bad filename '%1'</source>
+        <translation>FOPEN : nom de fichier incorrect '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1773"/>
-        <source>FOPEN: full local path &apos;%1&apos;</source>
-        <translation>FOPEN&#xa0;: chemin local complet &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="1773" />
+        <source>FOPEN: full local path '%1'</source>
+        <translation>FOPEN : chemin local complet '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1790"/>
-        <source>FOPEN: &apos;%1&apos; is read-only</source>
-        <translation>FOPEN&#xa0;: &apos;%1&apos; est en lecture seule</translation>
+        <location filename="../../src/pclink.cpp" line="1790" />
+        <source>FOPEN: '%1' is read-only</source>
+        <translation>FOPEN : '%1' est en lecture seule</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1820"/>
-        <source>FOPEN: cannot open &apos;%1&apos;, %2 (%3)</source>
-        <translation>FOPEN&#xa0;: impossible d&apos;ouvrir &apos;%1&apos;, %2 (%3)</translation>
+        <location filename="../../src/pclink.cpp" line="1820" />
+        <source>FOPEN: cannot open '%1', %2 (%3)</source>
+        <translation>FOPEN : impossible d'ouvrir '%1', %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1859"/>
+        <location filename="../../src/pclink.cpp" line="1859" />
         <source>FOPEN: bad handle 7 %1</source>
-        <translation>FOPEN&#xa0;: mauvaise poignée 7&#xa0;%1</translation>
+        <translation>FOPEN : mauvaise poignée 7 %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1869"/>
+        <location filename="../../src/pclink.cpp" line="1869" />
         <source>FOPEN: %1 handle %2</source>
-        <translation>FOPEN&#xa0;: %1 descripteur %2</translation>
+        <translation>FOPEN : %1 descripteur %2</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1882"/>
+        <location filename="../../src/pclink.cpp" line="1882" />
         <source>FOPEN: dir EOF?</source>
-        <translation>FOPEN&#xa0;: vers EOF&#xa0;?</translation>
+        <translation>FOPEN : vers EOF ?</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1914"/>
+        <location filename="../../src/pclink.cpp" line="1914" />
         <source>FOPEN: send %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
-        <translation>FOPEN&#xa0;: envoyer %1, envoyer $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
+        <translation>FOPEN : envoyer %1, envoyer $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1954"/>
-        <source>invalid path 2 &apos;%1&apos;</source>
-        <translation>chemin non valide 2 &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="1954" />
+        <source>invalid path 2 '%1'</source>
+        <translation>chemin non valide 2 '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1963"/>
-        <location filename="../../src/pclink.cpp" line="2074"/>
-        <source>cannot open dir &apos;%1&apos;</source>
-        <translation>impossible d&apos;ouvrir le répertoire &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="1963" />
+        <location filename="../../src/pclink.cpp" line="2074" />
+        <source>cannot open dir '%1'</source>
+        <translation>impossible d'ouvrir le répertoire '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="1968"/>
-        <source>local path &apos;%1&apos;, fatr1 $%2</source>
-        <translation>chemin local &apos;%1&apos;, fatr1 $%2</translation>
+        <location filename="../../src/pclink.cpp" line="1968" />
+        <source>local path '%1', fatr1 $%2</source>
+        <translation>chemin local '%1', fatr1 $%2</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2021"/>
-        <source>RENAME: renaming &apos;%1&apos; -&gt; &apos;%2&apos;</source>
-        <translation>RENOMMER&#xa0;: renommer &apos;%1&apos; -&gt; &apos;%2&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2021" />
+        <source>RENAME: renaming '%1' -&gt; '%2'</source>
+        <translation>RENOMMER : renommer '%1' -&gt; '%2'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2025"/>
-        <source>RENAME: &apos;%1&apos; already exists</source>
-        <translation>RENOMMER&#xa0;: &apos;%1&apos; existe déjà</translation>
+        <location filename="../../src/pclink.cpp" line="2025" />
+        <source>RENAME: '%1' already exists</source>
+        <translation>RENOMMER : '%1' existe déjà</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2032"/>
+        <location filename="../../src/pclink.cpp" line="2032" />
         <source>RENAME: %1</source>
-        <translation>RENOMMER&#xa0;: %1</translation>
+        <translation>RENOMMER : %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2063"/>
-        <source>invalid path 3 &apos;%1&apos;</source>
-        <translation>chemin non valide 3 &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2063" />
+        <source>invalid path 3 '%1'</source>
+        <translation>chemin non valide 3 '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2107"/>
-        <source>REMOVE: delete &apos;%1&apos;</source>
-        <translation>SUPPRIMER&#xa0;: supprimer &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2107" />
+        <source>REMOVE: delete '%1'</source>
+        <translation>SUPPRIMER : supprimer '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2110"/>
-        <source>REMOVE: cannot delete &apos;%1&apos;</source>
-        <translation>SUPPRIMER&#xa0;: impossible de supprimer &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2110" />
+        <source>REMOVE: cannot delete '%1'</source>
+        <translation>SUPPRIMER : impossible de supprimer '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2140"/>
+        <location filename="../../src/pclink.cpp" line="2140" />
         <source>illegal fatr2 $%1</source>
         <translation>fatr2 illégal $%1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2149"/>
-        <source>invalid path 4 &apos;%1&apos;</source>
-        <translation>chemin non valide 4 &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2149" />
+        <source>invalid path 4 '%1'</source>
+        <translation>chemin non valide 4 '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2154"/>
-        <source>local path &apos;%1&apos;, fatr1 $%2 fatr2 $%3</source>
-        <translation>chemin local &apos;%1&apos;, fatr1 $%2 fatr2 $%3</translation>
+        <location filename="../../src/pclink.cpp" line="2154" />
+        <source>local path '%1', fatr1 $%2 fatr2 $%3</source>
+        <translation>chemin local '%1', fatr1 $%2 fatr2 $%3</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2161"/>
-        <source>CHMOD: cannot open dir &apos;%1&apos;</source>
-        <translation>CHMOD&#xa0;: impossible d&apos;ouvrir le répertoire &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2161" />
+        <source>CHMOD: cannot open dir '%1'</source>
+        <translation>CHMOD : impossible d'ouvrir le répertoire '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2193"/>
-        <source>CHMOD: change atrs in &apos;%1&apos;</source>
-        <translation>CHMOD&#xa0;: modifier les atrs dans &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2193" />
+        <source>CHMOD: change atrs in '%1'</source>
+        <translation>CHMOD : modifier les atrs dans '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2202"/>
-        <source>CHMOD: failed on &apos;%1&apos;</source>
-        <translation>CHMOD&#xa0;: échec sur &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2202" />
+        <source>CHMOD: failed on '%1'</source>
+        <translation>CHMOD : échec sur '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2232"/>
-        <source>invalid path 5 &apos;%1&apos;</source>
-        <translation>chemin non valide 5 &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2232" />
+        <source>invalid path 5 '%1'</source>
+        <translation>chemin non valide 5 '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2242"/>
-        <location filename="../../src/pclink.cpp" line="2316"/>
-        <source>bad dir name &apos;%1&apos;</source>
-        <translation>mauvais nom de répertoire &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2242" />
+        <location filename="../../src/pclink.cpp" line="2316" />
+        <source>bad dir name '%1'</source>
+        <translation>mauvais nom de répertoire '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2256"/>
-        <source>making dir &apos;%1&apos;, time %2-%3-%4 %5:%6:%7</source>
-        <translation>création du répertoire &apos;%1&apos;, heure %2-%3-%4 %5:%6:%7</translation>
+        <location filename="../../src/pclink.cpp" line="2256" />
+        <source>making dir '%1', time %2-%3-%4 %5:%6:%7</source>
+        <translation>création du répertoire '%1', heure %2-%3-%4 %5:%6:%7</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2261"/>
-        <source>MKDIR: &apos;%1&apos; already exists</source>
-        <translation>MKDIR&#xa0;: &apos;%1&apos; existe déjà</translation>
+        <location filename="../../src/pclink.cpp" line="2261" />
+        <source>MKDIR: '%1' already exists</source>
+        <translation>MKDIR : '%1' existe déjà</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2272"/>
-        <source>MKDIR: cannot make dir &apos;%1&apos;</source>
-        <translation>MKDIR&#xa0;: impossible de créer le répertoire &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2272" />
+        <source>MKDIR: cannot make dir '%1'</source>
+        <translation>MKDIR : impossible de créer le répertoire '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2306"/>
-        <source>invalid path 6 &apos;%1&apos;</source>
-        <translation>chemin non valide 6 &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2306" />
+        <source>invalid path 6 '%1'</source>
+        <translation>chemin non valide 6 '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2330"/>
-        <source>cannot stat &apos;%1&apos;</source>
-        <translation>impossible de déclarer &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2330" />
+        <source>cannot stat '%1'</source>
+        <translation>impossible de déclarer '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2338"/>
-        <source>&apos;%1&apos; can&apos;t be accessed</source>
-        <translation>&apos;%1&apos; n&apos;est pas accessible</translation>
+        <location filename="../../src/pclink.cpp" line="2338" />
+        <source>'%1' can't be accessed</source>
+        <translation>'%1' n'est pas accessible</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2346"/>
-        <source>&apos;%1&apos; is not a directory</source>
-        <translation>&apos;%1&apos; n&apos;est pas un répertoire</translation>
+        <location filename="../../src/pclink.cpp" line="2346" />
+        <source>'%1' is not a directory</source>
+        <translation>'%1' n'est pas un répertoire</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2353"/>
-        <source>dir &apos;%1&apos; is write-protected</source>
-        <translation>le répertoire &apos;%1&apos; est protégé en écriture</translation>
+        <location filename="../../src/pclink.cpp" line="2353" />
+        <source>dir '%1' is write-protected</source>
+        <translation>le répertoire '%1' est protégé en écriture</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2358"/>
-        <source>delete dir &apos;%1&apos;</source>
-        <translation>supprimer le répertoire &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2358" />
+        <source>delete dir '%1'</source>
+        <translation>supprimer le répertoire '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2364"/>
-        <source>RMDIR: cannot del &apos;%1&apos;, %2 (%3)</source>
-        <translation>RMDIR&#xa0;: impossible de supprimer &apos;%1&apos;, %2 (%3)</translation>
+        <location filename="../../src/pclink.cpp" line="2364" />
+        <source>RMDIR: cannot del '%1', %2 (%3)</source>
+        <translation>RMDIR : impossible de supprimer '%1', %2 (%3)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2390"/>
-        <source>invalid path 7 &apos;%1&apos;</source>
-        <translation>chemin non valide 7 &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2390" />
+        <source>invalid path 7 '%1'</source>
+        <translation>chemin non valide 7 '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2399"/>
-        <source>cannot access &apos;%1&apos;, %2</source>
-        <translation>impossible d&apos;accéder à &apos;%1&apos;, %2</translation>
+        <location filename="../../src/pclink.cpp" line="2399" />
+        <source>cannot access '%1', %2</source>
+        <translation>impossible d'accéder à '%1', %2</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2424"/>
-        <source>new current dir &apos;%1&apos;</source>
-        <translation>nouveau répertoire actuel &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2424" />
+        <source>new current dir '%1'</source>
+        <translation>nouveau répertoire actuel '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2442"/>
+        <location filename="../../src/pclink.cpp" line="2442" />
         <source>device $1</source>
-        <translation>appareil 1&#xa0;$</translation>
+        <translation>appareil 1 $</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2462"/>
-        <source>send &apos;%1&apos;</source>
-        <translation>envoyer &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2462" />
+        <source>send '%1'</source>
+        <translation>envoyer '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2523"/>
-        <source>reading &apos;%1&apos;</source>
-        <translation>lecture de &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2523" />
+        <source>reading '%1'</source>
+        <translation>lecture de '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2558"/>
+        <location filename="../../src/pclink.cpp" line="2558" />
         <source>DFREE: send info (%1 bytes)</source>
-        <translation>DFREE&#xa0;: envoyer des informations (%1 octets)</translation>
+        <translation>DFREE : envoyer des informations (%1 octets)</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2587"/>
+        <location filename="../../src/pclink.cpp" line="2587" />
         <source>invalid name</source>
         <translation>nom invalide</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2596"/>
-        <source>writing &apos;%1&apos;</source>
-        <translation>écrire &apos;%1&apos;</translation>
+        <location filename="../../src/pclink.cpp" line="2596" />
+        <source>writing '%1'</source>
+        <translation>écrire '%1'</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2616"/>
+        <location filename="../../src/pclink.cpp" line="2616" />
         <source>CHVOL: %1</source>
-        <translation>CHVOL&#xa0;:&#xa0;%1</translation>
+        <translation>CHVOL : %1</translation>
     </message>
     <message>
-        <location filename="../../src/pclink.cpp" line="2622"/>
+        <location filename="../../src/pclink.cpp" line="2622" />
         <source>fno $%1 not implemented</source>
         <translation>fno $%1 non implémenté</translation>
     </message>
@@ -4099,109 +4307,109 @@ Veuillez attribuer des ports différents.</translation>
 <context>
     <name>PhoneDirectory</name>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="19"/>
+        <location filename="../../src/phonedirectory.cpp" line="19" />
         <source>BBS Phonebook</source>
         <translation>Annuaire BBS</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="27"/>
+        <location filename="../../src/phonedirectory.cpp" line="27" />
         <source>Search BBS Name...</source>
         <translation>Rechercher le nom BBS...</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="34"/>
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>BBS Name</source>
         <translation>Nom du BBS</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="34"/>
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Address</source>
         <translation>Adresse</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="34"/>
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="34"/>
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>Protocol</source>
         <translation>Protocole</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="34"/>
+        <location filename="../../src/phonedirectory.cpp" line="34" />
         <source>User ID</source>
-        <translation>ID de l&apos;utilisateur</translation>
+        <translation>ID de l'utilisateur</translation>
     </message>
     <message>
         <source>Edit Entry</source>
-        <translation type="vanished">Modifier l&apos;entrée</translation>
+        <translation type="vanished">Modifier l'entrée</translation>
     </message>
     <message>
         <source>Save to XML</source>
         <translation type="vanished">Enregistrer au format XML</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="60"/>
+        <location filename="../../src/phonedirectory.cpp" line="60" />
         <source>Dial Selected</source>
         <translation>Composer la sélection</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="52"/>
+        <location filename="../../src/phonedirectory.cpp" line="52" />
         <source>Add</source>
         <translation>Ajouter</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="53"/>
+        <location filename="../../src/phonedirectory.cpp" line="53" />
         <source>Edit</source>
         <translation>Modifier</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="54"/>
+        <location filename="../../src/phonedirectory.cpp" line="54" />
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="56"/>
+        <location filename="../../src/phonedirectory.cpp" line="56" />
         <source>Save Changes</source>
         <translation>Enregistrer les modifications</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="61"/>
+        <location filename="../../src/phonedirectory.cpp" line="61" />
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="171"/>
+        <location filename="../../src/phonedirectory.cpp" line="171" />
         <source>Saved</source>
         <translation>Enregistré</translation>
     </message>
     <message>
         <source>Phonebook saved successfully!</source>
-        <translation type="vanished">Répertoire enregistré avec succès&#xa0;!</translation>
+        <translation type="vanished">Répertoire enregistré avec succès !</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="173"/>
+        <location filename="../../src/phonedirectory.cpp" line="173" />
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
         <source>Could not write to file.</source>
-        <translation type="vanished">Impossible d&apos;écrire dans le fichier.</translation>
+        <translation type="vanished">Impossible d'écrire dans le fichier.</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="204"/>
-        <location filename="../../src/phonedirectory.cpp" line="365"/>
+        <location filename="../../src/phonedirectory.cpp" line="204" />
+        <location filename="../../src/phonedirectory.cpp" line="365" />
         <source>Unsaved Changes</source>
         <translation>Modifications non enregistrées</translation>
     </message>
     <message>
         <source>You have unsaved changes. Save before %1?</source>
-        <translation type="vanished">Vous avez des modifications non enregistrées. Enregistrer avant %1&#xa0;?</translation>
+        <translation type="vanished">Vous avez des modifications non enregistrées. Enregistrer avant %1 ?</translation>
     </message>
     <message>
         <source>Edit BBS Entry</source>
-        <translation type="vanished">Modifier l&apos;entrée BBS</translation>
+        <translation type="vanished">Modifier l'entrée BBS</translation>
     </message>
     <message>
         <source>Telnet</source>
@@ -4228,106 +4436,106 @@ Veuillez attribuer des ports différents.</translation>
         <translation type="vanished">Adresse:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="278"/>
+        <location filename="../../src/phonedirectory.cpp" line="278" />
         <source>Protocol:</source>
         <translation>Protocole:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="277"/>
+        <location filename="../../src/phonedirectory.cpp" line="277" />
         <source>Port:</source>
         <translation>Port:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="171"/>
+        <location filename="../../src/phonedirectory.cpp" line="171" />
         <source>Phonebook saved successfully.</source>
         <translation>Répertoire enregistré avec succès.</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="173"/>
+        <location filename="../../src/phonedirectory.cpp" line="173" />
         <source>Failed to save phonebook to:
 %1</source>
-        <translation>Échec de l&apos;enregistrement du répertoire dans&#xa0;:
+        <translation>Échec de l'enregistrement du répertoire dans :
 %1</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="205"/>
+        <location filename="../../src/phonedirectory.cpp" line="205" />
         <source>You have unsaved changes. Do you want to save the phonebook before dialing?</source>
-        <translation>Vous avez des modifications non enregistrées. Voulez-vous enregistrer le répertoire avant de composer un numéro&#xa0;?</translation>
+        <translation>Vous avez des modifications non enregistrées. Voulez-vous enregistrer le répertoire avant de composer un numéro ?</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="220"/>
+        <location filename="../../src/phonedirectory.cpp" line="220" />
         <source>Edit BBS</source>
         <translation>Modifier le BBS</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="256"/>
+        <location filename="../../src/phonedirectory.cpp" line="256" />
         <source>Used for standard auth, or as the Passphrase for an encrypted Key.</source>
-        <translation>Utilisé pour l&apos;authentification standard ou comme phrase secrète pour une clé cryptée.</translation>
+        <translation>Utilisé pour l'authentification standard ou comme phrase secrète pour une clé cryptée.</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="261"/>
+        <location filename="../../src/phonedirectory.cpp" line="261" />
         <source>Optional: Path to private key file</source>
-        <translation>Facultatif&#xa0;: chemin d&apos;accès au fichier de clé privée</translation>
+        <translation>Facultatif : chemin d'accès au fichier de clé privée</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="271"/>
+        <location filename="../../src/phonedirectory.cpp" line="271" />
         <source>Select Private Key File</source>
         <translation>Sélectionnez le fichier de clé privée</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="271"/>
+        <location filename="../../src/phonedirectory.cpp" line="271" />
         <source>All Files (*)</source>
         <translation>Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="275"/>
+        <location filename="../../src/phonedirectory.cpp" line="275" />
         <source>BBS Name:</source>
-        <translation>Nom du BBS&#xa0;:</translation>
+        <translation>Nom du BBS :</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="276"/>
+        <location filename="../../src/phonedirectory.cpp" line="276" />
         <source>Address (IP/DNS):</source>
-        <translation>Adresse (IP/DNS)&#xa0;:</translation>
+        <translation>Adresse (IP/DNS) :</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="279"/>
+        <location filename="../../src/phonedirectory.cpp" line="279" />
         <source>User ID:</source>
-        <translation>ID de l&apos;utilisateur:</translation>
+        <translation>ID de l'utilisateur:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="280"/>
+        <location filename="../../src/phonedirectory.cpp" line="280" />
         <source>Password/Passphrase:</source>
-        <translation>Mot de passe/phrase secrète&#xa0;:</translation>
+        <translation>Mot de passe/phrase secrète :</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="281"/>
+        <location filename="../../src/phonedirectory.cpp" line="281" />
         <source>Private Key:</source>
-        <translation>Clé privée&#xa0;:</translation>
+        <translation>Clé privée :</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="366"/>
+        <location filename="../../src/phonedirectory.cpp" line="366" />
         <source>You have unsaved changes. Do you want to save before %1?</source>
-        <translation>Vous avez des modifications non enregistrées. Voulez-vous enregistrer avant %1&#xa0;?</translation>
+        <translation>Vous avez des modifications non enregistrées. Voulez-vous enregistrer avant %1 ?</translation>
     </message>
     <message>
         <source>Password:</source>
         <translation type="vanished">Mot de passe:</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="334"/>
+        <location filename="../../src/phonedirectory.cpp" line="334" />
         <source>Confirm</source>
         <translation>Confirmer</translation>
     </message>
     <message>
-        <location filename="../../src/phonedirectory.cpp" line="334"/>
+        <location filename="../../src/phonedirectory.cpp" line="334" />
         <source>Delete this entry?</source>
-        <translation>Supprimer cette entrée&#xa0;?</translation>
+        <translation>Supprimer cette entrée ?</translation>
     </message>
 </context>
 <context>
     <name>PipeNetwork</name>
     <message>
-        <location filename="../../src/pipenetwork.cpp" line="324"/>
+        <location filename="../../src/pipenetwork.cpp" line="405" />
         <source>[W:] FTP Upload Complete.</source>
         <translation>[W:] Téléchargement FTP terminé.</translation>
     </message>
@@ -4350,11 +4558,11 @@ Veuillez attribuer des ports différents.</translation>
     <name>QAbstractSocket</name>
     <message>
         <source>Socket operation timed out</source>
-        <translation type="vanished">L&apos;opération socket a expirée</translation>
+        <translation type="vanished">L'opération socket a expirée</translation>
     </message>
     <message>
         <source>Operation on socket is not supported</source>
-        <translation type="vanished">L&apos;opération sur le socket n&apos;est pas supportée</translation>
+        <translation type="vanished">L'opération sur le socket n'est pas supportée</translation>
     </message>
     <message>
         <source>Host not found</source>
@@ -4370,15 +4578,15 @@ Veuillez attribuer des ports différents.</translation>
     </message>
     <message>
         <source>Trying to connect while connection is in progress</source>
-        <translation type="vanished">Tentative de connexion alors qu&apos;une autre connexion est en cours</translation>
+        <translation type="vanished">Tentative de connexion alors qu'une autre connexion est en cours</translation>
     </message>
     <message>
         <source>Socket is not connected</source>
-        <translation type="vanished">Le socket n&apos;est pas connectée</translation>
+        <translation type="vanished">Le socket n'est pas connectée</translation>
     </message>
     <message>
         <source>Network unreachable</source>
-        <translation type="vanished">Le réseau n&apos;est pas accessible</translation>
+        <translation type="vanished">Le réseau n'est pas accessible</translation>
     </message>
 </context>
 <context>
@@ -4448,7 +4656,7 @@ Veuillez attribuer des ports différents.</translation>
     </message>
     <message>
         <source>Triggers the action</source>
-        <translation type="vanished">Déclenche l&apos;action</translation>
+        <translation type="vanished">Déclenche l'action</translation>
     </message>
     <message>
         <source>Increase the value</source>
@@ -4468,7 +4676,7 @@ Veuillez attribuer des ports différents.</translation>
     </message>
     <message>
         <source>Toggles the state</source>
-        <translation type="vanished">Bascule l&apos;état</translation>
+        <translation type="vanished">Bascule l'état</translation>
     </message>
     <message>
         <source>Scrolls to the left</source>
@@ -4517,8 +4725,8 @@ Veuillez attribuer des ports différents.</translation>
 <context>
     <name>QApplication</name>
     <message>
-        <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
-        <translation type="vanished">L&apos;exécutable &quot;%1&quot; requiert Qt %2 (Qt %3 trouvé).</translation>
+        <source>Executable '%1' requires Qt %2, found Qt %3.</source>
+        <translation type="vanished">L'exécutable "%1" requiert Qt %2 (Qt %3 trouvé).</translation>
     </message>
     <message>
         <source>Incompatible Qt Library Error</source>
@@ -4583,7 +4791,7 @@ Veuillez attribuer des ports différents.</translation>
 <context>
     <name>QCocoaTheme</name>
     <message>
-        <source>Don&apos;t Save</source>
+        <source>Don't Save</source>
         <translation type="vanished">Ne pas enregistrer</translation>
     </message>
 </context>
@@ -4591,35 +4799,35 @@ Veuillez attribuer des ports différents.</translation>
     <name>QColorDialog</name>
     <message>
         <source>Hu&amp;e:</source>
-        <translation type="vanished">&amp;Teinte&#xa0;:</translation>
+        <translation type="vanished">&amp;Teinte :</translation>
     </message>
     <message>
         <source>&amp;Sat:</source>
-        <translation type="vanished">&amp;Sat&#xa0;:</translation>
+        <translation type="vanished">&amp;Sat :</translation>
     </message>
     <message>
         <source>&amp;Val:</source>
-        <translation type="vanished">&amp;Val&#xa0;:</translation>
+        <translation type="vanished">&amp;Val :</translation>
     </message>
     <message>
         <source>&amp;Red:</source>
-        <translation type="vanished">&amp;Rouge&#xa0;:</translation>
+        <translation type="vanished">&amp;Rouge :</translation>
     </message>
     <message>
         <source>&amp;Green:</source>
-        <translation type="vanished">&amp;Vert&#xa0;:</translation>
+        <translation type="vanished">&amp;Vert :</translation>
     </message>
     <message>
         <source>Bl&amp;ue:</source>
-        <translation type="vanished">Ble&amp;u&#xa0;:</translation>
+        <translation type="vanished">Ble&amp;u :</translation>
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation type="vanished">Canal a&amp;lpha&#xa0;:</translation>
+        <translation type="vanished">Canal a&amp;lpha :</translation>
     </message>
     <message>
         <source>&amp;HTML:</source>
-        <translation type="vanished">&amp;HTML&#xa0;:</translation>
+        <translation type="vanished">&amp;HTML :</translation>
     </message>
     <message>
         <source>Cursor at %1, %2
@@ -4645,7 +4853,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>&amp;Pick Screen Color</source>
-        <translation type="vanished">&amp;Sélectionner une couleur à l&apos;écran</translation>
+        <translation type="vanished">&amp;Sélectionner une couleur à l'écran</translation>
     </message>
 </context>
 <context>
@@ -4675,27 +4883,27 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Displays help on commandline options.</source>
-        <translation type="vanished">Afficher l&apos;aide des options de la ligne de commande.</translation>
+        <translation type="vanished">Afficher l'aide des options de la ligne de commande.</translation>
     </message>
     <message>
         <source>Displays help including Qt specific options.</source>
-        <translation type="vanished">Afficher l&apos;aide en incluant les options spécifiques à Qt.</translation>
+        <translation type="vanished">Afficher l'aide en incluant les options spécifiques à Qt.</translation>
     </message>
     <message>
-        <source>Unknown option &apos;%1&apos;.</source>
-        <translation type="vanished">Option inconnue &quot;%1&quot;.</translation>
+        <source>Unknown option '%1'.</source>
+        <translation type="vanished">Option inconnue "%1".</translation>
     </message>
     <message>
         <source>Unknown options: %1.</source>
-        <translation type="vanished">Options inconnues&#xa0;: %1.</translation>
+        <translation type="vanished">Options inconnues : %1.</translation>
     </message>
     <message>
-        <source>Missing value after &apos;%1&apos;.</source>
-        <translation type="vanished">Valeur manquante après &quot;%1&quot;.</translation>
+        <source>Missing value after '%1'.</source>
+        <translation type="vanished">Valeur manquante après "%1".</translation>
     </message>
     <message>
-        <source>Unexpected value after &apos;%1&apos;.</source>
-        <translation type="vanished">Valeur inattendue après &quot;%1&quot;.</translation>
+        <source>Unexpected value after '%1'.</source>
+        <translation type="vanished">Valeur inattendue après "%1".</translation>
     </message>
     <message>
         <source>[options]</source>
@@ -4703,15 +4911,15 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Usage: %1</source>
-        <translation type="vanished">Utilisation&#xa0;: %1</translation>
+        <translation type="vanished">Utilisation : %1</translation>
     </message>
     <message>
         <source>Options:</source>
-        <translation type="vanished">Options&#xa0;:</translation>
+        <translation type="vanished">Options :</translation>
     </message>
     <message>
         <source>Arguments:</source>
-        <translation type="vanished">Arguments&#xa0;:</translation>
+        <translation type="vanished">Arguments :</translation>
     </message>
 </context>
 <context>
@@ -4719,17 +4927,17 @@ Appuyer sur Échap pour annuler</translation>
     <message>
         <source>%1: key is empty</source>
         <comment>QSystemSemaphore</comment>
-        <translation type="vanished">%1&#xa0;: la clé est vide</translation>
+        <translation type="vanished">%1 : la clé est vide</translation>
     </message>
     <message>
         <source>%1: unable to make key</source>
         <comment>QSystemSemaphore</comment>
-        <translation type="vanished">%1&#xa0;: impossible de créer la clé</translation>
+        <translation type="vanished">%1 : impossible de créer la clé</translation>
     </message>
     <message>
         <source>%1: ftok failed</source>
         <comment>QSystemSemaphore</comment>
-        <translation type="vanished">%1&#xa0;: ftok a échoué</translation>
+        <translation type="vanished">%1 : ftok a échoué</translation>
     </message>
 </context>
 <context>
@@ -4744,15 +4952,15 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Scheduled printing:</source>
-        <translation type="vanished">Impressions planifiées&#xa0;:</translation>
+        <translation type="vanished">Impressions planifiées :</translation>
     </message>
     <message>
         <source>Billing information:</source>
-        <translation type="vanished">Informations de facturation&#xa0;:</translation>
+        <translation type="vanished">Informations de facturation :</translation>
     </message>
     <message>
         <source>Job priority:</source>
-        <translation type="vanished">Priorité de la tâche&#xa0;:</translation>
+        <translation type="vanished">Priorité de la tâche :</translation>
     </message>
     <message>
         <source>Banner Pages</source>
@@ -4761,12 +4969,12 @@ Appuyer sur Échap pour annuler</translation>
     <message>
         <source>End:</source>
         <comment>Banner page at end</comment>
-        <translation type="vanished">Finales&#xa0;:</translation>
+        <translation type="vanished">Finales :</translation>
     </message>
     <message>
         <source>Start:</source>
         <comment>Banner page at start</comment>
-        <translation type="vanished">Premières&#xa0;:</translation>
+        <translation type="vanished">Premières :</translation>
     </message>
     <message>
         <source>Print Immediately</source>
@@ -4852,11 +5060,11 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation type="vanished">Nom d&apos;utilisateur&#xa0;:</translation>
+        <translation type="vanished">Nom d'utilisateur :</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="vanished">Mot de passe&#xa0;:</translation>
+        <translation type="vanished">Mot de passe :</translation>
     </message>
 </context>
 <context>
@@ -4871,18 +5079,18 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Unable to rollback transaction</source>
-        <translation type="vanished">Impossible d&apos;annuler la transaction</translation>
+        <translation type="vanished">Impossible d'annuler la transaction</translation>
     </message>
     <message>
         <source>Unable to set autocommit</source>
-        <translation type="vanished">Impossible d&apos;activer l&apos;autocommit</translation>
+        <translation type="vanished">Impossible d'activer l'autocommit</translation>
     </message>
 </context>
 <context>
     <name>QDB2Result</name>
     <message>
         <source>Unable to execute statement</source>
-        <translation type="vanished">Impossible d&apos;exécuter la requête</translation>
+        <translation type="vanished">Impossible d'exécuter la requête</translation>
     </message>
     <message>
         <source>Unable to prepare statement</source>
@@ -4890,11 +5098,11 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Unable to bind variable</source>
-        <translation type="vanished">Impossible d&apos;utiliser la variable</translation>
+        <translation type="vanished">Impossible d'utiliser la variable</translation>
     </message>
     <message>
         <source>Unable to fetch record %1</source>
-        <translation type="vanished">Impossible de récupérer l&apos;enregistrement %1</translation>
+        <translation type="vanished">Impossible de récupérer l'enregistrement %1</translation>
     </message>
     <message>
         <source>Unable to fetch next</source>
@@ -4934,8 +5142,8 @@ Appuyer sur Échap pour annuler</translation>
 <context>
     <name>QDialog</name>
     <message>
-        <source>What&apos;s This?</source>
-        <translation type="vanished">Qu&apos;est-ce que c&apos;est&#xa0;?</translation>
+        <source>What's This?</source>
+        <translation type="vanished">Qu'est-ce que c'est ?</translation>
     </message>
 </context>
 <context>
@@ -4997,7 +5205,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Resolver initialization failed</source>
-        <translation type="vanished">L&apos;initialisation du résolveur a échoué</translation>
+        <translation type="vanished">L'initialisation du résolveur a échoué</translation>
     </message>
     <message>
         <source>IPv6 addresses for nameservers is currently not supported</source>
@@ -5005,7 +5213,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Server could not process query</source>
-        <translation type="vanished">Le serveur n&apos;a pas pu traiter la requête</translation>
+        <translation type="vanished">Le serveur n'a pas pu traiter la requête</translation>
     </message>
     <message>
         <source>Server failure</source>
@@ -5013,7 +5221,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Non existent domain</source>
-        <translation type="vanished">Le domaine n&apos;existe pas</translation>
+        <translation type="vanished">Le domaine n'existe pas</translation>
     </message>
     <message>
         <source>Server refused to answer</source>
@@ -5029,51 +5237,51 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Invalid IPv4 address record</source>
-        <translation type="vanished">L&apos;enregistrement d&apos;adresse IPv4 est invalide</translation>
+        <translation type="vanished">L'enregistrement d'adresse IPv4 est invalide</translation>
     </message>
     <message>
         <source>Invalid IPv6 address record</source>
-        <translation type="vanished">L&apos;enregistrement d&apos;adresse IPv6 est invalide</translation>
+        <translation type="vanished">L'enregistrement d'adresse IPv6 est invalide</translation>
     </message>
     <message>
         <source>Invalid canonical name record</source>
-        <translation type="vanished">L&apos;enregistrement du nom canonique est invalide</translation>
+        <translation type="vanished">L'enregistrement du nom canonique est invalide</translation>
     </message>
     <message>
         <source>Invalid name server record</source>
-        <translation type="vanished">L&apos;enregistrement du nom de serveur est invalide</translation>
+        <translation type="vanished">L'enregistrement du nom de serveur est invalide</translation>
     </message>
     <message>
         <source>Invalid pointer record</source>
-        <translation type="vanished">L&apos;enregistrement pointeur est invalide</translation>
+        <translation type="vanished">L'enregistrement pointeur est invalide</translation>
     </message>
     <message>
         <source>Invalid mail exchange record</source>
-        <translation type="vanished">L&apos;enregistrement du serveur de mail est invalide</translation>
+        <translation type="vanished">L'enregistrement du serveur de mail est invalide</translation>
     </message>
     <message>
         <source>Invalid service record</source>
-        <translation type="vanished">L&apos;enregistrement service est invalide</translation>
+        <translation type="vanished">L'enregistrement service est invalide</translation>
     </message>
     <message>
         <source>Invalid text record</source>
-        <translation type="vanished">L&apos;enregistrement texte est invalide</translation>
+        <translation type="vanished">L'enregistrement texte est invalide</translation>
     </message>
     <message>
-        <source>Resolver library can&apos;t be loaded: No runtime library loading support</source>
-        <translation type="vanished">La bibliothèque du résolveur ne peut pas être chargée&#xa0;: le chargement de bibliothèque à l&apos;exécution n&apos;est pas supporté</translation>
+        <source>Resolver library can't be loaded: No runtime library loading support</source>
+        <translation type="vanished">La bibliothèque du résolveur ne peut pas être chargée : le chargement de bibliothèque à l'exécution n'est pas supporté</translation>
     </message>
     <message>
         <source>No hostname given</source>
-        <translation type="vanished">Aucun nom d&apos;hôte n&apos;a été donné</translation>
+        <translation type="vanished">Aucun nom d'hôte n'a été donné</translation>
     </message>
     <message>
         <source>Invalid hostname</source>
-        <translation type="vanished">Nom d&apos;hôte invalide</translation>
+        <translation type="vanished">Nom d'hôte invalide</translation>
     </message>
     <message>
         <source>Host %1 could not be found.</source>
-        <translation type="vanished">Impossible de trouver l&apos;hôte %1.</translation>
+        <translation type="vanished">Impossible de trouver l'hôte %1.</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -5105,7 +5313,7 @@ Appuyer sur Échap pour annuler</translation>
     <name>QDomParser</name>
     <message>
         <source>Error occurred while processing XML declaration</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement de la déclaration XML</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement de la déclaration XML</translation>
     </message>
     <message>
         <source>Multiple DTD sections are not allowed</source>
@@ -5113,39 +5321,39 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Error occurred while processing document type declaration</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement de la déclaration du type de document</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement de la déclaration du type de document</translation>
     </message>
     <message>
         <source>Error occurred while processing comment</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement du commentaire</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement du commentaire</translation>
     </message>
     <message>
         <source>Error occurred while processing a processing instruction</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement d&apos;une instruction de traitement</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement d'une instruction de traitement</translation>
     </message>
     <message>
         <source>Error occurred while processing a start element</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement d&apos;un élément de démarrage</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement d'un élément de démarrage</translation>
     </message>
     <message>
-        <source>Unexpected end element &apos;%1&apos;</source>
-        <translation type="vanished">Élément de fin inattendu &apos;%1&apos;</translation>
+        <source>Unexpected end element '%1'</source>
+        <translation type="vanished">Élément de fin inattendu '%1'</translation>
     </message>
     <message>
         <source>Error occurred while processing an end element</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement d&apos;un élément final</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement d'un élément final</translation>
     </message>
     <message>
         <source>Error occurred while processing the element content</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement du contenu de l&apos;élément</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement du contenu de l'élément</translation>
     </message>
     <message>
         <source>Error occurred while processing comments</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement des commentaires</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement des commentaires</translation>
     </message>
     <message>
         <source>Error occurred while processing an entity reference</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement d&apos;une référence d&apos;entité</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement d'une référence d'entité</translation>
     </message>
     <message>
         <source>Unexpected token</source>
@@ -5157,11 +5365,11 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Error occurred while processing entity declaration</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement de la déclaration d&apos;entité</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement de la déclaration d'entité</translation>
     </message>
     <message>
         <source>Error occurred while processing notation declaration</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors du traitement de la déclaration de notation</translation>
+        <translation type="vanished">Une erreur s'est produite lors du traitement de la déclaration de notation</translation>
     </message>
 </context>
 <context>
@@ -5199,8 +5407,8 @@ Appuyer sur Échap pour annuler</translation>
         <translation type="vanished">Socket invalide (nullptr)</translation>
     </message>
     <message>
-        <source>To start a handshake you must set peer&apos;s address and port first</source>
-        <translation type="vanished">Pour démarrer une poignée de main, vous devez d&apos;abord définir l&apos;adresse et le port du homologue.</translation>
+        <source>To start a handshake you must set peer's address and port first</source>
+        <translation type="vanished">Pour démarrer une poignée de main, vous devez d'abord définir l'adresse et le port du homologue.</translation>
     </message>
     <message>
         <source>To start a handshake, DTLS server requires non-empty datagram (client hello)</source>
@@ -5216,11 +5424,11 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Cannot continue handshake, not in InProgress state</source>
-        <translation type="vanished">Impossible de continuer la négociation, pas dans l&apos;état InProgress</translation>
+        <translation type="vanished">Impossible de continuer la négociation, pas dans l'état InProgress</translation>
     </message>
     <message>
         <source>Cannot resume, not in VerificationError state</source>
-        <translation type="vanished">Impossible de reprendre, pas dans l&apos;état VerificationError</translation>
+        <translation type="vanished">Impossible de reprendre, pas dans l'état VerificationError</translation>
     </message>
     <message>
         <source>No handshake in progress, nothing to abort</source>
@@ -5228,11 +5436,11 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Cannot send shutdown alert, not encrypted</source>
-        <translation type="vanished">Impossible d&apos;envoyer une alerte d&apos;arrêt, non chiffré</translation>
+        <translation type="vanished">Impossible d'envoyer une alerte d'arrêt, non chiffré</translation>
     </message>
     <message>
         <source>Cannot write a datagram, not in encrypted state</source>
-        <translation type="vanished">Impossible d&apos;écrire un datagramme, pas dans un état crypté</translation>
+        <translation type="vanished">Impossible d'écrire un datagramme, pas dans un état crypté</translation>
     </message>
     <message>
         <source>Cannot read a datagram, not in encrypted state</source>
@@ -5269,7 +5477,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Error while writing: %1</source>
-        <translation type="vanished">Erreur lors de l&apos;écriture&#xa0;: %1</translation>
+        <translation type="vanished">Erreur lors de l'écriture : %1</translation>
     </message>
     <message>
         <source>The DTLS connection has been shutdown</source>
@@ -5277,7 +5485,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Error while reading: %1</source>
-        <translation type="vanished">Erreur lors de la lecture&#xa0;: %1</translation>
+        <translation type="vanished">Erreur lors de la lecture : %1</translation>
     </message>
 </context>
 <context>
@@ -5295,23 +5503,23 @@ Appuyer sur Échap pour annuler</translation>
     <name>QErrorMessage</name>
     <message>
         <source>Debug Message:</source>
-        <translation type="vanished">Message de débogage&#xa0;:</translation>
+        <translation type="vanished">Message de débogage :</translation>
     </message>
     <message>
         <source>Warning:</source>
-        <translation type="vanished">Avertissement&#xa0;:</translation>
+        <translation type="vanished">Avertissement :</translation>
     </message>
     <message>
         <source>Critical Error:</source>
-        <translation type="vanished">Erreur critique&#xa0;:</translation>
+        <translation type="vanished">Erreur critique :</translation>
     </message>
     <message>
         <source>Fatal Error:</source>
-        <translation type="vanished">Erreur fatale&#xa0;:</translation>
+        <translation type="vanished">Erreur fatale :</translation>
     </message>
     <message>
         <source>Information:</source>
-        <translation type="vanished">Information&#xa0;:</translation>
+        <translation type="vanished">Information :</translation>
     </message>
     <message>
         <source>&amp;Show this message again</source>
@@ -5330,7 +5538,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Source file does not exist.</source>
-        <translation type="vanished">Le fichier source n&apos;existe pas.</translation>
+        <translation type="vanished">Le fichier source n'existe pas.</translation>
     </message>
     <message>
         <source>Destination file exists</source>
@@ -5346,7 +5554,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Unable to restore from %1: %2</source>
-        <translation type="vanished">Impossible de restaurer à partir de %1&#xa0;: %2</translation>
+        <translation type="vanished">Impossible de restaurer à partir de %1 : %2</translation>
     </message>
     <message>
         <source>Will not rename sequential file using block copy</source>
@@ -5358,23 +5566,23 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Cannot open destination file: %1</source>
-        <translation type="vanished">Impossible d&apos;ouvrir le fichier de destination&#xa0;: %1</translation>
+        <translation type="vanished">Impossible d'ouvrir le fichier de destination : %1</translation>
     </message>
     <message>
         <source>Cannot open %1 for input</source>
-        <translation type="vanished">Impossible d&apos;ouvrir %1 en lecture</translation>
+        <translation type="vanished">Impossible d'ouvrir %1 en lecture</translation>
     </message>
     <message>
         <source>Cannot open for output: %1</source>
-        <translation type="vanished">Impossible d&apos;ouvrir en écriture&#xa0;: %1</translation>
+        <translation type="vanished">Impossible d'ouvrir en écriture : %1</translation>
     </message>
     <message>
         <source>Cannot open for output</source>
-        <translation type="vanished">Impossible d&apos;ouvrir en écriture</translation>
+        <translation type="vanished">Impossible d'ouvrir en écriture</translation>
     </message>
     <message>
         <source>Failure to write block</source>
-        <translation type="vanished">Impossible d&apos;écrire un bloc</translation>
+        <translation type="vanished">Impossible d'écrire un bloc</translation>
     </message>
     <message>
         <source>Cannot create %1 for output</source>
@@ -5396,7 +5604,7 @@ Appuyer sur Échap pour annuler</translation>
     <name>QFileDialog</name>
     <message>
         <source>Look in:</source>
-        <translation type="vanished">Voir dans&#xa0;:</translation>
+        <translation type="vanished">Voir dans :</translation>
     </message>
     <message>
         <source>Back</source>
@@ -5404,7 +5612,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Go back</source>
-        <translation type="vanished">Aller à l&apos;élément précédent</translation>
+        <translation type="vanished">Aller à l'élément précédent</translation>
     </message>
     <message>
         <source>Alt+Left</source>
@@ -5416,7 +5624,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Go forward</source>
-        <translation type="vanished">Va à l&apos;élément suivant</translation>
+        <translation type="vanished">Va à l'élément suivant</translation>
     </message>
     <message>
         <source>Alt+Right</source>
@@ -5472,7 +5680,7 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Files of type:</source>
-        <translation type="vanished">Fichiers de type&#xa0;:</translation>
+        <translation type="vanished">Fichiers de type :</translation>
     </message>
     <message>
         <source>Find Directory</source>
@@ -5488,11 +5696,11 @@ Appuyer sur Échap pour annuler</translation>
     </message>
     <message>
         <source>Directory:</source>
-        <translation type="vanished">Dossier&#xa0;:</translation>
+        <translation type="vanished">Dossier :</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
-        <translation type="vanished">&amp;Nom de fichier&#xa0;:</translation>
+        <translation type="vanished">&amp;Nom de fichier :</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -5550,7 +5758,7 @@ Veuillez vérifier que le nom du dossier est correct.</translation>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation type="vanished">Le fichier %1 existe déjà
-Voulez-vous l&apos;écraser&#xa0;?</translation>
+Voulez-vous l'écraser ?</translation>
     </message>
     <message>
         <source>%1
@@ -5569,14 +5777,14 @@ Veuillez vérifier que le nom du fichier est correct.</translation>
         <translation type="vanished">Supprimer</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is write protected.
+        <source>'%1' is write protected.
 Do you want to delete it anyway?</source>
-        <translation type="vanished">&quot;%1&quot; est protégé en écriture.
-Voulez-vous quand même le supprimer&#xa0;?</translation>
+        <translation type="vanished">"%1" est protégé en écriture.
+Voulez-vous quand même le supprimer ?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete &apos;%1&apos;?</source>
-        <translation type="vanished">Êtes-vous sûr de vouloir supprimer &quot;%1&quot;&#xa0;?</translation>
+        <source>Are you sure you want to delete '%1'?</source>
+        <translation type="vanished">Êtes-vous sûr de vouloir supprimer "%1" ?</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
@@ -5664,12 +5872,12 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">Nom de fichier invalide</translation>
     </message>
     <message>
-        <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
-        <translation type="vanished">&lt;b&gt;Le nom &quot;%1&quot; ne peut pas être utilisé.&lt;/b&gt;&lt;p&gt;Essayez un autre nom avec moins de caractères ou sans ponctuation.</translation>
+        <source>&lt;b&gt;The name "%1" can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
+        <translation type="vanished">&lt;b&gt;Le nom "%1" ne peut pas être utilisé.&lt;/b&gt;&lt;p&gt;Essayez un autre nom avec moins de caractères ou sans ponctuation.</translation>
     </message>
     <message>
-        <source>&lt;b&gt;The name &quot;%1&quot; cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
-        <translation type="vanished">&lt;b&gt;Le nom &quot;%1&quot; ne peut pas être utilisé.&lt;/b&gt;&lt;p&gt;Essayez un autre nom avec moins de caractères ou sans ponctuation.</translation>
+        <source>&lt;b&gt;The name "%1" cannot be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuation marks.</source>
+        <translation type="vanished">&lt;b&gt;Le nom "%1" ne peut pas être utilisé.&lt;/b&gt;&lt;p&gt;Essayez un autre nom avec moins de caractères ou sans ponctuation.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -5748,12 +5956,12 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Extra</source>
-        <extracomment>The word for &quot;Extra&quot; as in &quot;Extra Bold, Extra Thin&quot; used as a pattern for string searches</extracomment>
+        <extracomment>The word for "Extra" as in "Extra Bold, Extra Thin" used as a pattern for string searches</extracomment>
         <translation type="vanished">Très</translation>
     </message>
     <message>
         <source>Demi</source>
-        <extracomment>The word for &quot;Demi&quot; as in &quot;Demi Bold&quot; used as a pattern for string searches</extracomment>
+        <extracomment>The word for "Demi" as in "Demi Bold" used as a pattern for string searches</extracomment>
         <translation type="vanished">Demi</translation>
     </message>
     <message>
@@ -5901,8 +6109,8 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">Runique</translation>
     </message>
     <message>
-        <source>N&apos;Ko</source>
-        <translation type="vanished">N&apos;Ko</translation>
+        <source>N'Ko</source>
+        <translation type="vanished">N'Ko</translation>
     </message>
 </context>
 <context>
@@ -5941,7 +6149,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Wr&amp;iting System</source>
-        <translation type="vanished">&amp;Système d&apos;écriture</translation>
+        <translation type="vanished">&amp;Système d'écriture</translation>
     </message>
 </context>
 <context>
@@ -5952,19 +6160,19 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Host %1 not found</source>
-        <translation type="vanished">L&apos;hôte %1 est introuvable</translation>
+        <translation type="vanished">L'hôte %1 est introuvable</translation>
     </message>
     <message>
         <source>Connection refused to host %1</source>
-        <translation type="vanished">La connexion à l&apos;hôte %1 est refusée</translation>
+        <translation type="vanished">La connexion à l'hôte %1 est refusée</translation>
     </message>
     <message>
         <source>Connection timed out to host %1</source>
-        <translation type="vanished">La connexion à l&apos;hôte %1 a expirée</translation>
+        <translation type="vanished">La connexion à l'hôte %1 a expirée</translation>
     </message>
     <message>
         <source>Connected to host %1</source>
-        <translation type="vanished">Connecté à l&apos;hôte %1</translation>
+        <translation type="vanished">Connecté à l'hôte %1</translation>
     </message>
     <message>
         <source>Data Connection refused</source>
@@ -5977,55 +6185,55 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <message>
         <source>Connecting to host failed:
 %1</source>
-        <translation type="vanished">Échec de la connexion à l&apos;hôte&#xa0;:
+        <translation type="vanished">Échec de la connexion à l'hôte :
 %1</translation>
     </message>
     <message>
         <source>Login failed:
 %1</source>
-        <translation type="vanished">Échec de l&apos;identification&#xa0;:
+        <translation type="vanished">Échec de l'identification :
 %1</translation>
     </message>
     <message>
         <source>Listing directory failed:
 %1</source>
-        <translation type="vanished">Échec du listage du dossier&#xa0;:
+        <translation type="vanished">Échec du listage du dossier :
 %1</translation>
     </message>
     <message>
         <source>Changing directory failed:
 %1</source>
-        <translation type="vanished">Échec du changement de dossier&#xa0;:
+        <translation type="vanished">Échec du changement de dossier :
 %1</translation>
     </message>
     <message>
         <source>Downloading file failed:
 %1</source>
-        <translation type="vanished">Échec du téléchargement du fichier&#xa0;:
+        <translation type="vanished">Échec du téléchargement du fichier :
 %1</translation>
     </message>
     <message>
         <source>Uploading file failed:
 %1</source>
-        <translation type="vanished">Échec de l&apos;envoi du fichier&#xa0;:
+        <translation type="vanished">Échec de l'envoi du fichier :
 %1</translation>
     </message>
     <message>
         <source>Removing file failed:
 %1</source>
-        <translation type="vanished">Échec de la suppression du fichier&#xa0;:
+        <translation type="vanished">Échec de la suppression du fichier :
 %1</translation>
     </message>
     <message>
         <source>Creating directory failed:
 %1</source>
-        <translation type="vanished">Échec de la création du dossier&#xa0;:
+        <translation type="vanished">Échec de la création du dossier :
 %1</translation>
     </message>
     <message>
         <source>Removing directory failed:
 %1</source>
-        <translation type="vanished">Échec de la suppression du dossier&#xa0;:
+        <translation type="vanished">Échec de la suppression du dossier :
 %1</translation>
     </message>
     <message>
@@ -6060,7 +6268,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QGuiApplication</name>
     <message>
         <source>QT_LAYOUT_DIRECTION</source>
-        <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
+        <comment>Translate this string to the string 'LTR' in left-to-right languages or to 'RTL' in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation type="vanished">LTR</translation>
     </message>
     <message>
@@ -6069,7 +6277,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Path to the platform plugins.</source>
-        <translation type="vanished">Chemin d&apos;accès aux plugins de la plateforme.</translation>
+        <translation type="vanished">Chemin d'accès aux plugins de la plateforme.</translation>
     </message>
     <message>
         <source>Platform theme.</source>
@@ -6092,12 +6300,12 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">Titre de la première fenêtre.</translation>
     </message>
     <message>
-        <source>Sets the application&apos;s layout direction to Qt::RightToLeft (debugging helper).</source>
-        <translation type="vanished">Définit la direction de mise en page de l&apos;application sur Qt::RightToLeft (assistant de débogage).</translation>
+        <source>Sets the application's layout direction to Qt::RightToLeft (debugging helper).</source>
+        <translation type="vanished">Définit la direction de mise en page de l'application sur Qt::RightToLeft (assistant de débogage).</translation>
     </message>
     <message>
         <source>Restores the application from an earlier session.</source>
-        <translation type="vanished">Restaure l&apos;application d&apos;une session antérieure.</translation>
+        <translation type="vanished">Restaure l'application d'une session antérieure.</translation>
     </message>
     <message>
         <source>Display name, overrides $DISPLAY.</source>
@@ -6105,7 +6313,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Instance name according to ICCCM 4.1.2.5.</source>
-        <translation type="vanished">Nom de l&apos;instance selon ICCCM 4.1.2.5.</translation>
+        <translation type="vanished">Nom de l'instance selon ICCCM 4.1.2.5.</translation>
     </message>
     <message>
         <source>Disable mouse grabbing (useful in debuggers).</source>
@@ -6113,7 +6321,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Force mouse grabbing (even when running in a debugger).</source>
-        <translation type="vanished">Forcer la saisie de la souris (même lors de l&apos;exécution dans un débogueur).</translation>
+        <translation type="vanished">Forcer la saisie de la souris (même lors de l'exécution dans un débogueur).</translation>
     </message>
     <message>
         <source>ID of the X11 Visual to use.</source>
@@ -6136,7 +6344,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QHostInfo</name>
     <message>
         <source>No host name given</source>
-        <translation type="vanished">Aucun nom d&apos;hôte n&apos;a été donné</translation>
+        <translation type="vanished">Aucun nom d'hôte n'a été donné</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -6147,11 +6355,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QHostInfoAgent</name>
     <message>
         <source>No host name given</source>
-        <translation type="vanished">Aucun nom d&apos;hôte n&apos;a été donné</translation>
+        <translation type="vanished">Aucun nom d'hôte n'a été donné</translation>
     </message>
     <message>
         <source>Invalid hostname</source>
-        <translation type="vanished">Nom d&apos;hôte invalide</translation>
+        <translation type="vanished">Nom d'hôte invalide</translation>
     </message>
     <message>
         <source>Unknown address type</source>
@@ -6174,7 +6382,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QHttp</name>
     <message>
         <source>Host %1 not found</source>
-        <translation type="vanished">L&apos;hôte %1 est introuvable</translation>
+        <translation type="vanished">L'hôte %1 est introuvable</translation>
     </message>
     <message>
         <source>Connection refused</source>
@@ -6190,7 +6398,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Host requires authentication</source>
-        <translation type="vanished">L&apos;hôte requiert une authentification</translation>
+        <translation type="vanished">L'hôte requiert une authentification</translation>
     </message>
     <message>
         <source>Data corrupted</source>
@@ -6221,7 +6429,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Error parsing authentication request from proxy</source>
-        <translation type="vanished">Erreur d&apos;analyse de la reqête d&apos;authentification depuis le proxy</translation>
+        <translation type="vanished">Erreur d'analyse de la reqête d'authentification depuis le proxy</translation>
     </message>
     <message>
         <source>Authentication required</source>
@@ -6256,7 +6464,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QIBaseDriver</name>
     <message>
         <source>Error opening database</source>
-        <translation type="vanished">Erreur lors de l&apos;ouverture de la base de données</translation>
+        <translation type="vanished">Erreur lors de l'ouverture de la base de données</translation>
     </message>
     <message>
         <source>Could not start transaction</source>
@@ -6268,7 +6476,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to rollback transaction</source>
-        <translation type="vanished">Impossible d&apos;annuler la transaction</translation>
+        <translation type="vanished">Impossible d'annuler la transaction</translation>
     </message>
 </context>
 <context>
@@ -6279,11 +6487,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to write BLOB</source>
-        <translation type="vanished">Impossible d&apos;écrire le BLOB</translation>
+        <translation type="vanished">Impossible d'écrire le BLOB</translation>
     </message>
     <message>
         <source>Unable to open BLOB</source>
-        <translation type="vanished">Impossible d&apos;ouvrir le BLOB</translation>
+        <translation type="vanished">Impossible d'ouvrir le BLOB</translation>
     </message>
     <message>
         <source>Unable to read BLOB</source>
@@ -6299,7 +6507,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Could not get query info</source>
-        <translation type="vanished">Impossible d&apos;avoir les informations sur la requête</translation>
+        <translation type="vanished">Impossible d'avoir les informations sur la requête</translation>
     </message>
     <message>
         <source>Could not start transaction</source>
@@ -6311,7 +6519,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Could not allocate statement</source>
-        <translation type="vanished">Impossible d&apos;allouer la requête</translation>
+        <translation type="vanished">Impossible d'allouer la requête</translation>
     </message>
     <message>
         <source>Could not prepare statement</source>
@@ -6331,15 +6539,15 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to execute query</source>
-        <translation type="vanished">Impossible d&apos;exécuter la requête</translation>
+        <translation type="vanished">Impossible d'exécuter la requête</translation>
     </message>
     <message>
         <source>Could not fetch next item</source>
-        <translation type="vanished">Impossible de récuperer l&apos;élément suivant</translation>
+        <translation type="vanished">Impossible de récuperer l'élément suivant</translation>
     </message>
     <message>
         <source>Could not get statement info</source>
-        <translation type="vanished">Impossible d&apos;avoir les informations sur la requête</translation>
+        <translation type="vanished">Impossible d'avoir les informations sur la requête</translation>
     </message>
 </context>
 <context>
@@ -6381,11 +6589,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unsupported image format</source>
-        <translation type="vanished">Format d&apos;image non supporté</translation>
+        <translation type="vanished">Format d'image non supporté</translation>
     </message>
     <message>
         <source>Unable to read image data</source>
-        <translation type="vanished">Impossible de lire les données de l&apos;image</translation>
+        <translation type="vanished">Impossible de lire les données de l'image</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -6400,41 +6608,41 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Device is not set</source>
-        <translation type="vanished">Le périphérique n&apos;est pas prêt</translation>
+        <translation type="vanished">Le périphérique n'est pas prêt</translation>
     </message>
     <message>
         <source>Cannot open device for writing: %1</source>
-        <translation type="vanished">Impossible d&apos;ouvrir le périphérique en écriture&#xa0;: %1</translation>
+        <translation type="vanished">Impossible d'ouvrir le périphérique en écriture : %1</translation>
     </message>
     <message>
         <source>Device not writable</source>
-        <translation type="vanished">Le périphérique n&apos;est pas accessible en écriture</translation>
+        <translation type="vanished">Le périphérique n'est pas accessible en écriture</translation>
     </message>
     <message>
         <source>Unsupported image format</source>
-        <translation type="vanished">Format d&apos;image non supporté</translation>
+        <translation type="vanished">Format d'image non supporté</translation>
     </message>
     <message>
         <source>Image is empty</source>
-        <translation type="vanished">L&apos;image est vide</translation>
+        <translation type="vanished">L'image est vide</translation>
     </message>
 </context>
 <context>
     <name>QInputDialog</name>
     <message>
         <source>Enter a value:</source>
-        <translation type="vanished">Entrer une valeur&#xa0;:</translation>
+        <translation type="vanished">Entrer une valeur :</translation>
     </message>
 </context>
 <context>
     <name>QJsonParseError</name>
     <message>
         <source>no error occurred</source>
-        <translation type="vanished">aucune erreur ne s&apos;est produite</translation>
+        <translation type="vanished">aucune erreur ne s'est produite</translation>
     </message>
     <message>
         <source>unterminated object</source>
-        <translation type="vanished">l&apos;objet n&apos;est pas terminé</translation>
+        <translation type="vanished">l'objet n'est pas terminé</translation>
     </message>
     <message>
         <source>missing name separator</source>
@@ -6442,7 +6650,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>unterminated array</source>
-        <translation type="vanished">le tableau n&apos;est pas terminé</translation>
+        <translation type="vanished">le tableau n'est pas terminé</translation>
     </message>
     <message>
         <source>missing value separator</source>
@@ -6450,7 +6658,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>illegal value</source>
-        <translation type="vanished">la valeur n&apos;est pas autorisée</translation>
+        <translation type="vanished">la valeur n'est pas autorisée</translation>
     </message>
     <message>
         <source>invalid termination by number</source>
@@ -6458,11 +6666,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>illegal number</source>
-        <translation type="vanished">le nombre n&apos;est pas autorisé</translation>
+        <translation type="vanished">le nombre n'est pas autorisé</translation>
     </message>
     <message>
         <source>invalid escape sequence</source>
-        <translation type="vanished">la séquence d&apos;échappement est invalide</translation>
+        <translation type="vanished">la séquence d'échappement est invalide</translation>
     </message>
     <message>
         <source>invalid UTF8 string</source>
@@ -6470,7 +6678,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>unterminated string</source>
-        <translation type="vanished">la chaîne n&apos;est pas terminée</translation>
+        <translation type="vanished">la chaîne n'est pas terminée</translation>
     </message>
     <message>
         <source>object is missing after a comma</source>
@@ -6497,23 +6705,23 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>%1, ...</source>
-        <extracomment>This text is an &quot;unfinished&quot; shortcut, expands like &quot;Ctrl+A, ...&quot;</extracomment>
+        <extracomment>This text is an "unfinished" shortcut, expands like "Ctrl+A, ..."</extracomment>
         <translation type="vanished">%1, …</translation>
     </message>
 </context>
 <context>
     <name>QLibrary</name>
     <message>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation type="vanished">&quot;%1&quot; n&apos;est pas un objet ELF (%2)</translation>
+        <source>'%1' is not an ELF object (%2)</source>
+        <translation type="vanished">"%1" n'est pas un objet ELF (%2)</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation type="vanished">&quot;%1&quot; n&apos;est pas un objet ELF</translation>
+        <source>'%1' is not an ELF object</source>
+        <translation type="vanished">"%1" n'est pas un objet ELF</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation type="vanished">&quot;%1&quot; n&apos;est pas un objet ELF valide (%2)</translation>
+        <source>'%1' is an invalid ELF object (%2)</source>
+        <translation type="vanished">"%1" n'est pas un objet ELF valide (%2)</translation>
     </message>
     <message>
         <source>odd cpu architecture</source>
@@ -6537,7 +6745,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>shstrtab section header seems to be at %1</source>
-        <translation type="vanished">L&apos;en-tête de la section shstrtab semble être à %1</translation>
+        <translation type="vanished">L'en-tête de la section shstrtab semble être à %1</translation>
     </message>
     <message>
         <source>string table seems to be at %1</source>
@@ -6553,31 +6761,31 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>missing section data. This is not a library.</source>
-        <translation type="vanished">données de section manquantes. Ce n&apos;est pas une bibliothèque.</translation>
+        <translation type="vanished">données de section manquantes. Ce n'est pas une bibliothèque.</translation>
     </message>
     <message>
-        <source>Plugin verification data mismatch in &apos;%1&apos;</source>
-        <translation type="vanished">Les données de vérification du plugin sont différentes dans &quot;%1&quot;</translation>
+        <source>Plugin verification data mismatch in '%1'</source>
+        <translation type="vanished">Les données de vérification du plugin sont différentes dans "%1"</translation>
     </message>
     <message>
-        <source>Failed to extract plugin meta data from &apos;%1&apos;</source>
-        <translation type="vanished">Échec de l&apos;extraction des métadonnées du plug-in de &apos;%1&apos;</translation>
+        <source>Failed to extract plugin meta data from '%1'</source>
+        <translation type="vanished">Échec de l'extraction des métadonnées du plug-in de '%1'</translation>
     </message>
     <message>
         <source>The shared library was not found.</source>
         <translation type="vanished">La bibliothèque partagée est introuvable.</translation>
     </message>
     <message>
-        <source>The file &apos;%1&apos; is not a valid Qt plugin.</source>
-        <translation type="vanished">Le fichier &quot;%1&quot; n&apos;est pas un plugin Qt valide.</translation>
+        <source>The file '%1' is not a valid Qt plugin.</source>
+        <translation type="vanished">Le fichier "%1" n'est pas un plugin Qt valide.</translation>
     </message>
     <message>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
-        <translation type="vanished">Le plugin &quot;%1&quot;  utilise une bibliothèque Qt incompatible. (%2.%3.%4) [%5]</translation>
+        <source>The plugin '%1' uses incompatible Qt library. (%2.%3.%4) [%5]</source>
+        <translation type="vanished">Le plugin "%1"  utilise une bibliothèque Qt incompatible. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
-        <translation type="vanished">Le plugin &quot;%1&quot; utilise une bibliothèque Qt incompatible. (Il est impossible de mélanger des bibliothèques compilées en Debug et Release.)</translation>
+        <source>The plugin '%1' uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
+        <translation type="vanished">Le plugin "%1" utilise une bibliothèque Qt incompatible. (Il est impossible de mélanger des bibliothèques compilées en Debug et Release.)</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -6585,19 +6793,19 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Cannot load library %1: %2</source>
-        <translation type="vanished">Impossible de charger la bibliothèque %1&#xa0;: %2</translation>
+        <translation type="vanished">Impossible de charger la bibliothèque %1 : %2</translation>
     </message>
     <message>
         <source>Cannot unload library %1: %2</source>
-        <translation type="vanished">Impossible de libérer la bibliothèque %1&#xa0;: %2</translation>
+        <translation type="vanished">Impossible de libérer la bibliothèque %1 : %2</translation>
     </message>
     <message>
-        <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
-        <translation type="vanished">Impossible de résoudre le symbole &quot;%1&quot; dans %2&#xa0;: %3</translation>
+        <source>Cannot resolve symbol "%1" in %2: %3</source>
+        <translation type="vanished">Impossible de résoudre le symbole "%1" dans %2 : %3</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a valid Mach-O binary (%2)</source>
-        <translation type="vanished">&quot;%1&quot; n&apos;est pas un binaire Mach-O valide (%2)</translation>
+        <source>'%1' is not a valid Mach-O binary (%2)</source>
+        <translation type="vanished">"%1" n'est pas un binaire Mach-O valide (%2)</translation>
     </message>
     <message>
         <source>file is corrupt</source>
@@ -6609,7 +6817,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>no suitable architecture in fat binary</source>
-        <translation type="vanished">aucune architecture n&apos;est adaptée au binaire fat</translation>
+        <translation type="vanished">aucune architecture n'est adaptée au binaire fat</translation>
     </message>
     <message>
         <source>invalid magic %1</source>
@@ -6617,15 +6825,15 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>wrong architecture</source>
-        <translation type="vanished">l&apos;architecture n&apos;est pas correcte</translation>
+        <translation type="vanished">l'architecture n'est pas correcte</translation>
     </message>
     <message>
         <source>not a dynamic library</source>
-        <translation type="vanished">la bibliothèque n&apos;est pas une bibliothèque dynamique</translation>
+        <translation type="vanished">la bibliothèque n'est pas une bibliothèque dynamique</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is not a Qt plugin</source>
-        <translation type="vanished">&quot;%1&quot; n&apos;est pas un plugin Qt</translation>
+        <source>'%1' is not a Qt plugin</source>
+        <translation type="vanished">"%1" n'est pas un plugin Qt</translation>
     </message>
 </context>
 <context>
@@ -6663,93 +6871,93 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QLocalServer</name>
     <message>
         <source>%1: Name error</source>
-        <translation type="vanished">%1&#xa0;: Erreur de nom</translation>
+        <translation type="vanished">%1 : Erreur de nom</translation>
     </message>
     <message>
         <source>%1: Permission denied</source>
-        <translation type="vanished">%1&#xa0;: Permission refusée</translation>
+        <translation type="vanished">%1 : Permission refusée</translation>
     </message>
     <message>
         <source>%1: Address in use</source>
-        <translation type="vanished">%1&#xa0;: Adresse déjà utilisée</translation>
+        <translation type="vanished">%1 : Adresse déjà utilisée</translation>
     </message>
     <message>
         <source>%1: Unknown error %2</source>
-        <translation type="vanished">%1&#xa0;: Erreur inconnue %2</translation>
+        <translation type="vanished">%1 : Erreur inconnue %2</translation>
     </message>
 </context>
 <context>
     <name>QLocalSocket</name>
     <message>
         <source>%1: Connection refused</source>
-        <translation type="vanished">%1&#xa0;: Connexion refusée</translation>
+        <translation type="vanished">%1 : Connexion refusée</translation>
     </message>
     <message>
         <source>%1: Remote closed</source>
-        <translation type="vanished">%1&#xa0;: Connexion fermée</translation>
+        <translation type="vanished">%1 : Connexion fermée</translation>
     </message>
     <message>
         <source>%1: Invalid name</source>
-        <translation type="vanished">%1&#xa0;: Nom invalide</translation>
+        <translation type="vanished">%1 : Nom invalide</translation>
     </message>
     <message>
         <source>%1: Socket access error</source>
-        <translation type="vanished">%1&#xa0;: Erreur d&apos;accès au socket</translation>
+        <translation type="vanished">%1 : Erreur d'accès au socket</translation>
     </message>
     <message>
         <source>%1: Socket resource error</source>
-        <translation type="vanished">%1&#xa0;: Erreur de ressource du socket</translation>
+        <translation type="vanished">%1 : Erreur de ressource du socket</translation>
     </message>
     <message>
         <source>%1: Socket operation timed out</source>
-        <translation type="vanished">%1&#xa0;: L&apos;opération socket est expirée</translation>
+        <translation type="vanished">%1 : L'opération socket est expirée</translation>
     </message>
     <message>
         <source>%1: Datagram too large</source>
-        <translation type="vanished">%1&#xa0;: Le datagramme est trop grand</translation>
+        <translation type="vanished">%1 : Le datagramme est trop grand</translation>
     </message>
     <message>
         <source>%1: Connection error</source>
-        <translation type="vanished">%1&#xa0;: Erreur de connexion</translation>
+        <translation type="vanished">%1 : Erreur de connexion</translation>
     </message>
     <message>
         <source>%1: The socket operation is not supported</source>
-        <translation type="vanished">%1&#xa0;: L&apos;opération n&apos;est pas supportée</translation>
+        <translation type="vanished">%1 : L'opération n'est pas supportée</translation>
     </message>
     <message>
         <source>%1: Operation not permitted when socket is in this state</source>
-        <translation type="vanished">%1&#xa0;: L&apos;opération n&apos;est pas permise lorsque le socket est dans cet état</translation>
+        <translation type="vanished">%1 : L'opération n'est pas permise lorsque le socket est dans cet état</translation>
     </message>
     <message>
         <source>%1: Unknown error</source>
-        <translation type="vanished">%1&#xa0;: L&apos;erreur est inconnue</translation>
+        <translation type="vanished">%1 : L'erreur est inconnue</translation>
     </message>
     <message>
         <source>Trying to connect while connection is in progress</source>
-        <translation type="vanished">Tentative de connexion alors qu&apos;une autre connexion est en cours</translation>
+        <translation type="vanished">Tentative de connexion alors qu'une autre connexion est en cours</translation>
     </message>
     <message>
         <source>%1: Unknown error %2</source>
-        <translation type="vanished">%1&#xa0;: Erreur inconnue %2</translation>
+        <translation type="vanished">%1 : Erreur inconnue %2</translation>
     </message>
     <message>
         <source>%1: Access denied</source>
-        <translation type="vanished">%1&#xa0;: Autorisation refusée</translation>
+        <translation type="vanished">%1 : Autorisation refusée</translation>
     </message>
     <message>
         <source>Socket is not connected</source>
-        <translation type="vanished">Le socket n&apos;est pas connecté</translation>
+        <translation type="vanished">Le socket n'est pas connecté</translation>
     </message>
 </context>
 <context>
     <name>QMYSQLDriver</name>
     <message>
         <source>Unable to allocate a MYSQL object</source>
-        <translation type="vanished">Impossible d&apos;allouer un objet MYSQL</translation>
+        <translation type="vanished">Impossible d'allouer un objet MYSQL</translation>
     </message>
     <message>
-        <source>Unable to open database &apos;%1&apos;</source>
-        <translation type="vanished">Impossible d&apos;ouvrir la base de données &quot;%1&quot;</translation>
+        <source>Unable to open database '%1'</source>
+        <translation type="vanished">Impossible d'ouvrir la base de données "%1"</translation>
     </message>
     <message>
         <source>Unable to connect</source>
@@ -6765,7 +6973,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to rollback transaction</source>
-        <translation type="vanished">Impossible d&apos;annuler la transaction</translation>
+        <translation type="vanished">Impossible d'annuler la transaction</translation>
     </message>
 </context>
 <context>
@@ -6776,7 +6984,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to execute query</source>
-        <translation type="vanished">Impossible d&apos;exécuter la requête</translation>
+        <translation type="vanished">Impossible d'exécuter la requête</translation>
     </message>
     <message>
         <source>Unable to store result</source>
@@ -6784,7 +6992,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to execute next query</source>
-        <translation type="vanished">Impossible d&apos;exécuter la prochaine requête</translation>
+        <translation type="vanished">Impossible d'exécuter la prochaine requête</translation>
     </message>
     <message>
         <source>Unable to store next result</source>
@@ -6792,23 +7000,23 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to prepare statement</source>
-        <translation type="vanished">Impossible de préparer l&apos;instruction</translation>
+        <translation type="vanished">Impossible de préparer l'instruction</translation>
     </message>
     <message>
         <source>Unable to reset statement</source>
-        <translation type="vanished">Impossible de réinitialiser l&apos;instruction</translation>
+        <translation type="vanished">Impossible de réinitialiser l'instruction</translation>
     </message>
     <message>
         <source>Unable to bind value</source>
-        <translation type="vanished">Impossible d&apos;attacher la valeur</translation>
+        <translation type="vanished">Impossible d'attacher la valeur</translation>
     </message>
     <message>
         <source>Unable to execute statement</source>
-        <translation type="vanished">Impossible d&apos;exécuter la requête</translation>
+        <translation type="vanished">Impossible d'exécuter la requête</translation>
     </message>
     <message>
         <source>Unable to bind outvalues</source>
-        <translation type="vanished">Impossible d&apos;attacher les valeurs de sortie</translation>
+        <translation type="vanished">Impossible d'attacher les valeurs de sortie</translation>
     </message>
     <message>
         <source>Unable to store statement results</source>
@@ -6908,9 +7116,9 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">Masquer les détails…</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under multiple licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of GNU (L)GPL.&lt;/p&gt;&lt;p&gt;Qt licensed under GNU (L)GPL is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the respective licenses.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
+        <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under multiple licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of GNU (L)GPL.&lt;/p&gt;&lt;p&gt;Qt licensed under GNU (L)GPL is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the respective licenses.&lt;/p&gt;&lt;p&gt;Please see &lt;a href="http://%2/"&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href="http://%3/"&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
         <extracomment>Leave this text untranslated or include a verbatim copy of it below and note that it is the authoritative version in case of doubt.</extracomment>
-        <translation type="vanished">&lt;p&gt;Qt est une boîte à outils C++ pour le développement d&apos;applications multiplateformes.&lt;/p&gt;&lt;p&gt;Qt offre une portabilité à source unique sur tous les principaux systèmes d&apos;exploitation de bureau. Il est également disponible pour Linux embarqué et d&apos;autres systèmes d&apos;exploitation embarqués et mobiles.&lt;/p&gt;&lt;p&gt;Qt est disponible sous plusieurs options de licence conçues pour répondre aux besoins de nos différents utilisateurs.&lt;/p&gt;&lt;p&gt;La licence Qt en vertu de notre accord de licence commerciale est appropriée pour le développement de logiciels propriétaires/commerciaux pour lesquels vous ne souhaitez pas partager de code source avec des tiers ou ne pouvez pas vous conformer aux termes de GNU (L)GPL.&lt;/p&gt;&lt;p&gt;La licence Qt sous GNU (L)GPL est appropriée pour le développement de Les applications Qt à condition que vous puissiez vous conformer aux termes et conditions des licences respectives.&lt;/p&gt;&lt;p&gt;Veuillez consulter &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; pour un aperçu des licences Qt.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd et autres contributeurs.&lt;/p&gt;&lt;p&gt;Qt et le logo Qt sont des marques commerciales de The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt est le produit The Qt Company Ltd développé sous un projet open source. Voir &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; pour plus d&apos;informations.&lt;/p&gt;</translation>
+        <translation type="vanished">&lt;p&gt;Qt est une boîte à outils C++ pour le développement d'applications multiplateformes.&lt;/p&gt;&lt;p&gt;Qt offre une portabilité à source unique sur tous les principaux systèmes d'exploitation de bureau. Il est également disponible pour Linux embarqué et d'autres systèmes d'exploitation embarqués et mobiles.&lt;/p&gt;&lt;p&gt;Qt est disponible sous plusieurs options de licence conçues pour répondre aux besoins de nos différents utilisateurs.&lt;/p&gt;&lt;p&gt;La licence Qt en vertu de notre accord de licence commerciale est appropriée pour le développement de logiciels propriétaires/commerciaux pour lesquels vous ne souhaitez pas partager de code source avec des tiers ou ne pouvez pas vous conformer aux termes de GNU (L)GPL.&lt;/p&gt;&lt;p&gt;La licence Qt sous GNU (L)GPL est appropriée pour le développement de Les applications Qt à condition que vous puissiez vous conformer aux termes et conditions des licences respectives.&lt;/p&gt;&lt;p&gt;Veuillez consulter &lt;a href="http://%2/"&gt;%2&lt;/a&gt; pour un aperçu des licences Qt.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd et autres contributeurs.&lt;/p&gt;&lt;p&gt;Qt et le logo Qt sont des marques commerciales de The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt est le produit The Qt Company Ltd développé sous un projet open source. Voir &lt;a href="http://%3/"&gt;%3&lt;/a&gt; pour plus d'informations.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>OK</source>
@@ -6925,8 +7133,8 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">&lt;h3&gt;À propos de Qt&lt;/h3&gt;&lt;p&gt;Ce programme utilise la version %1 de Qt.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
-        <translation type="vanished">&lt;p&gt;Qt est dédié au développement d&apos;applications C++ multiplateformes.&lt;/p&gt;&lt;p&gt;Qt offre un code source unique compatible avec les principaux systèmes d&apos;exploitation &quot;de bureau&quot; (Linux, Mac, Windows). Qt est également compatible avec des systèmes d&apos;exploitation embarqués de type Linux ou autres.&lt;/p&gt;&lt;p&gt;Qt est utilisable sous les termes de trois types de licence différents, afin de répondre aux besoins d&apos;un maximum d&apos;utilisateurs.&lt;/p&gt;&lt;p&gt;La licence commerciale de Qt est appropriée pour le développement de logiciels propriétaires/commerciaux pour lesquels vous ne souhaitez pas partager le code source avec des tierces parties ou pour lesquels les termes de la licence GNU LGPL version 3 ou GNU LGPL version 2.1 ne vous conviennent pas.&lt;/p&gt;&lt;p&gt;La licence GNU LGPL version 3 de Qt est appropriée pour le développement d&apos;applications Qt si vous acceptez les termes et conditions de la licence GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;La licence GNU LGPL version 2.1 est appropriée pour le développement d&apos;applications Qt si vous acceptez les termes et conditions de la licence GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Veuillez consulter &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; pour le détail des différents types de licence Qt.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 &quot;The Qt Company Ltd&quot; et autres contributeurs.&lt;/p&gt;&lt;p&gt;Qt et le logo Qt sont des marques de &quot;The Qt Company Ltd&quot;.&lt;/p&gt;&lt;p&gt;Qt est le produit de &quot;The Qt Company Ltd&quot;, développé sous forme de projet open source. Veuillez trouver de plus amples information à &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href="http://%2/"&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href="http://%3/"&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
+        <translation type="vanished">&lt;p&gt;Qt est dédié au développement d'applications C++ multiplateformes.&lt;/p&gt;&lt;p&gt;Qt offre un code source unique compatible avec les principaux systèmes d'exploitation "de bureau" (Linux, Mac, Windows). Qt est également compatible avec des systèmes d'exploitation embarqués de type Linux ou autres.&lt;/p&gt;&lt;p&gt;Qt est utilisable sous les termes de trois types de licence différents, afin de répondre aux besoins d'un maximum d'utilisateurs.&lt;/p&gt;&lt;p&gt;La licence commerciale de Qt est appropriée pour le développement de logiciels propriétaires/commerciaux pour lesquels vous ne souhaitez pas partager le code source avec des tierces parties ou pour lesquels les termes de la licence GNU LGPL version 3 ou GNU LGPL version 2.1 ne vous conviennent pas.&lt;/p&gt;&lt;p&gt;La licence GNU LGPL version 3 de Qt est appropriée pour le développement d'applications Qt si vous acceptez les termes et conditions de la licence GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;La licence GNU LGPL version 2.1 est appropriée pour le développement d'applications Qt si vous acceptez les termes et conditions de la licence GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Veuillez consulter &lt;a href="http://%2/"&gt;%2&lt;/a&gt; pour le détail des différents types de licence Qt.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 "The Qt Company Ltd" et autres contributeurs.&lt;/p&gt;&lt;p&gt;Qt et le logo Qt sont des marques de "The Qt Company Ltd".&lt;/p&gt;&lt;p&gt;Qt est le produit de "The Qt Company Ltd", développé sous forme de projet open source. Veuillez trouver de plus amples information à &lt;a href="http://%3/"&gt;%3&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>About Qt</source>
@@ -6937,23 +7145,23 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QNativeSocketEngine</name>
     <message>
         <source>Unable to initialize non-blocking socket</source>
-        <translation type="vanished">Impossible d&apos;initialiser le socket asynchrone</translation>
+        <translation type="vanished">Impossible d'initialiser le socket asynchrone</translation>
     </message>
     <message>
         <source>Unable to initialize broadcast socket</source>
-        <translation type="vanished">Impossible d&apos;initialiser le socket en broadcast</translation>
+        <translation type="vanished">Impossible d'initialiser le socket en broadcast</translation>
     </message>
     <message>
         <source>Attempt to use IPv6 socket on a platform with no IPv6 support</source>
-        <translation type="vanished">Tentative d&apos;utiliser un socket IPv6 sur une plateforme qui ne supporte pas IPv6</translation>
+        <translation type="vanished">Tentative d'utiliser un socket IPv6 sur une plateforme qui ne supporte pas IPv6</translation>
     </message>
     <message>
         <source>The remote host closed the connection</source>
-        <translation type="vanished">L&apos;hôte distant a fermé la connexion</translation>
+        <translation type="vanished">L'hôte distant a fermé la connexion</translation>
     </message>
     <message>
         <source>Network operation timed out</source>
-        <translation type="vanished">L&apos;opération réseau est expirée</translation>
+        <translation type="vanished">L'opération réseau est expirée</translation>
     </message>
     <message>
         <source>Out of resources</source>
@@ -6961,11 +7169,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unsupported socket operation</source>
-        <translation type="vanished">L&apos;opération socket n&apos;est pas supportée</translation>
+        <translation type="vanished">L'opération socket n'est pas supportée</translation>
     </message>
     <message>
         <source>Protocol type not supported</source>
-        <translation type="vanished">Le protocol n&apos;est pas géré</translation>
+        <translation type="vanished">Le protocol n'est pas géré</translation>
     </message>
     <message>
         <source>Invalid socket descriptor</source>
@@ -6973,7 +7181,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Host unreachable</source>
-        <translation type="vanished">L&apos;hôte n&apos;est pas accessible</translation>
+        <translation type="vanished">L'hôte n'est pas accessible</translation>
     </message>
     <message>
         <source>Network unreachable</source>
@@ -6993,15 +7201,15 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>The bound address is already in use</source>
-        <translation type="vanished">L&apos;adresse liée est déjà utilisée</translation>
+        <translation type="vanished">L'adresse liée est déjà utilisée</translation>
     </message>
     <message>
         <source>The address is not available</source>
-        <translation type="vanished">L&apos;adresse n&apos;est pas disponible</translation>
+        <translation type="vanished">L'adresse n'est pas disponible</translation>
     </message>
     <message>
         <source>The address is protected</source>
-        <translation type="vanished">L&apos;adresse est protégée</translation>
+        <translation type="vanished">L'adresse est protégée</translation>
     </message>
     <message>
         <source>Datagram was too large to send</source>
@@ -7009,7 +7217,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to send a message</source>
-        <translation type="vanished">Impossible d&apos;envoyer un message</translation>
+        <translation type="vanished">Impossible d'envoyer un message</translation>
     </message>
     <message>
         <source>Unable to receive a message</source>
@@ -7017,7 +7225,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to write</source>
-        <translation type="vanished">Impossible d&apos;écrire</translation>
+        <translation type="vanished">Impossible d'écrire</translation>
     </message>
     <message>
         <source>Network error</source>
@@ -7056,52 +7264,52 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QNetworkAccessCacheBackend</name>
     <message>
         <source>Error opening %1</source>
-        <translation type="vanished">Erreur lors de l&apos;ouverture de %1</translation>
+        <translation type="vanished">Erreur lors de l'ouverture de %1</translation>
     </message>
 </context>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
         <source>Invalid URI: %1</source>
-        <translation type="vanished">URI invalide&#xa0;: %1</translation>
+        <translation type="vanished">URI invalide : %1</translation>
     </message>
 </context>
 <context>
     <name>QNetworkAccessDebugPipeBackend</name>
     <message>
         <source>Write error writing to %1: %2</source>
-        <translation type="vanished">Erreur lors de l&apos;écriture dans %1&#xa0;: %2</translation>
+        <translation type="vanished">Erreur lors de l'écriture dans %1 : %2</translation>
     </message>
     <message>
         <source>Socket error on %1: %2</source>
-        <translation type="vanished">Erreur de socket sur %1&#xa0;: %2</translation>
+        <translation type="vanished">Erreur de socket sur %1 : %2</translation>
     </message>
     <message>
         <source>Remote host closed the connection prematurely on %1</source>
-        <translation type="vanished">L&apos;hôte distant a fermé sa connexion de façon prématurée sur %1</translation>
+        <translation type="vanished">L'hôte distant a fermé sa connexion de façon prématurée sur %1</translation>
     </message>
 </context>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
         <source>Request for opening non-local file %1</source>
-        <translation type="vanished">Requête d&apos;ouverture de fichier distant %1</translation>
+        <translation type="vanished">Requête d'ouverture de fichier distant %1</translation>
     </message>
     <message>
         <source>Error opening %1: %2</source>
-        <translation type="vanished">Erreur lors de l&apos;ouverture de %1&#xa0;: %2</translation>
+        <translation type="vanished">Erreur lors de l'ouverture de %1 : %2</translation>
     </message>
     <message>
         <source>Write error writing to %1: %2</source>
-        <translation type="vanished">Erreur d&apos;écriture de %1&#xa0;: %2</translation>
+        <translation type="vanished">Erreur d'écriture de %1 : %2</translation>
     </message>
     <message>
         <source>Cannot open %1: Path is a directory</source>
-        <translation type="vanished">Impossible d&apos;ouvrir %1&#xa0;: le chemin est un dossier</translation>
+        <translation type="vanished">Impossible d'ouvrir %1 : le chemin est un dossier</translation>
     </message>
     <message>
         <source>Read error reading from %1: %2</source>
-        <translation type="vanished">Erreur de lecture de %1&#xa0;: %2</translation>
+        <translation type="vanished">Erreur de lecture de %1 : %2</translation>
     </message>
 </context>
 <context>
@@ -7112,37 +7320,37 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Cannot open %1: is a directory</source>
-        <translation type="vanished">Impossible d&apos;ouvrir %1&#xa0;: le chemin est un dossier</translation>
+        <translation type="vanished">Impossible d'ouvrir %1 : le chemin est un dossier</translation>
     </message>
     <message>
         <source>Logging in to %1 failed: authentication required</source>
-        <translation type="vanished">La connexion à %1 a échoué&#xa0;: authentification requise</translation>
+        <translation type="vanished">La connexion à %1 a échoué : authentification requise</translation>
     </message>
     <message>
         <source>Error while downloading %1: %2</source>
-        <translation type="vanished">Erreur lors du téléchargement de %1&#xa0;: %2</translation>
+        <translation type="vanished">Erreur lors du téléchargement de %1 : %2</translation>
     </message>
     <message>
         <source>Error while uploading %1: %2</source>
-        <translation type="vanished">Erreur lors de l&apos;envoi de %1&#xa0;: %2</translation>
+        <translation type="vanished">Erreur lors de l'envoi de %1 : %2</translation>
     </message>
 </context>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
         <source>Network access is disabled.</source>
-        <translation type="vanished">L&apos;accès au réseau est désactivé.</translation>
+        <translation type="vanished">L'accès au réseau est désactivé.</translation>
     </message>
 </context>
 <context>
     <name>QNetworkReply</name>
     <message>
         <source>Error downloading %1 - server replied: %2</source>
-        <translation type="vanished">Erreur lors du téléchargement de %1 - le serveur a répondu&#xa0;: %2</translation>
+        <translation type="vanished">Erreur lors du téléchargement de %1 - le serveur a répondu : %2</translation>
     </message>
     <message>
         <source>Background request not allowed.</source>
-        <translation type="vanished">La requête en arrière-plan n&apos;est pas autorisée.</translation>
+        <translation type="vanished">La requête en arrière-plan n'est pas autorisée.</translation>
     </message>
     <message>
         <source>Network session error.</source>
@@ -7157,19 +7365,19 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">Erreur réseau temporaire.</translation>
     </message>
     <message>
-        <source>Protocol &quot;%1&quot; is unknown</source>
-        <translation type="vanished">Le protocole &quot;%1&quot; est inconnu</translation>
+        <source>Protocol "%1" is unknown</source>
+        <translation type="vanished">Le protocole "%1" est inconnu</translation>
     </message>
     <message>
         <source>Error transferring %1 - server replied: %2</source>
-        <translation type="vanished">Erreur lors du transfert de %1 - le serveur a répondu&#xa0;: %2</translation>
+        <translation type="vanished">Erreur lors du transfert de %1 - le serveur a répondu : %2</translation>
     </message>
 </context>
 <context>
     <name>QNetworkReplyHttpImpl</name>
     <message>
         <source>Operation canceled</source>
-        <translation type="vanished">L&apos;opération est annulée</translation>
+        <translation type="vanished">L'opération est annulée</translation>
     </message>
     <message>
         <source>No suitable proxy found</source>
@@ -7180,7 +7388,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QNetworkReplyImpl</name>
     <message>
         <source>Operation canceled</source>
-        <translation type="vanished">L&apos;opération est annulée</translation>
+        <translation type="vanished">L'opération est annulée</translation>
     </message>
 </context>
 <context>
@@ -7198,11 +7406,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>The session was aborted by the user or system.</source>
-        <translation type="vanished">La session a été annulée par l&apos;utilisateur ou le système.</translation>
+        <translation type="vanished">La session a été annulée par l'utilisateur ou le système.</translation>
     </message>
     <message>
         <source>The requested operation is not supported by the system.</source>
-        <translation type="vanished">L&apos;opération requise n&apos;est pas supportée par le système.</translation>
+        <translation type="vanished">L'opération requise n'est pas supportée par le système.</translation>
     </message>
     <message>
         <source>The specified configuration cannot be used.</source>
@@ -7218,11 +7426,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <message>
         <source>Unable to initialize</source>
         <comment>QOCIDriver</comment>
-        <translation type="vanished">Impossible d&apos;initialiser</translation>
+        <translation type="vanished">Impossible d'initialiser</translation>
     </message>
     <message>
         <source>Unable to logon</source>
-        <translation type="vanished">Impossible d&apos;ouvrir une session</translation>
+        <translation type="vanished">Impossible d'ouvrir une session</translation>
     </message>
     <message>
         <source>Unable to begin transaction</source>
@@ -7230,22 +7438,22 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to commit transaction</source>
-        <translation type="vanished">Impossible d&apos;enregistrer la transaction</translation>
+        <translation type="vanished">Impossible d'enregistrer la transaction</translation>
     </message>
     <message>
         <source>Unable to rollback transaction</source>
-        <translation type="vanished">Impossible d&apos;annuler la transaction</translation>
+        <translation type="vanished">Impossible d'annuler la transaction</translation>
     </message>
 </context>
 <context>
     <name>QOCIResult</name>
     <message>
         <source>Unable to bind column for batch execute</source>
-        <translation type="vanished">Impossible d&apos;attacher la colonne pour une exécution en batch</translation>
+        <translation type="vanished">Impossible d'attacher la colonne pour une exécution en batch</translation>
     </message>
     <message>
         <source>Unable to execute batch statement</source>
-        <translation type="vanished">Impossible d&apos;exécuter l&apos;instruction batch</translation>
+        <translation type="vanished">Impossible d'exécuter l'instruction batch</translation>
     </message>
     <message>
         <source>Unable to goto next</source>
@@ -7253,23 +7461,23 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to alloc statement</source>
-        <translation type="vanished">Impossible d&apos;allouer l&apos;instruction</translation>
+        <translation type="vanished">Impossible d'allouer l'instruction</translation>
     </message>
     <message>
         <source>Unable to prepare statement</source>
-        <translation type="vanished">Impossible de préparer l&apos;instruction</translation>
+        <translation type="vanished">Impossible de préparer l'instruction</translation>
     </message>
     <message>
         <source>Unable to get statement type</source>
-        <translation type="vanished">Impossible d&apos;obtenir le type de l&apos;instruction</translation>
+        <translation type="vanished">Impossible d'obtenir le type de l'instruction</translation>
     </message>
     <message>
         <source>Unable to bind value</source>
-        <translation type="vanished">Impossible d&apos;attacher la valeur</translation>
+        <translation type="vanished">Impossible d'attacher la valeur</translation>
     </message>
     <message>
         <source>Unable to execute statement</source>
-        <translation type="vanished">Impossible d&apos;exéctuer l&apos;instruction</translation>
+        <translation type="vanished">Impossible d'exéctuer l'instruction</translation>
     </message>
 </context>
 <context>
@@ -7279,12 +7487,12 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">Impossible de se connecter</translation>
     </message>
     <message>
-        <source>Unable to connect - Driver doesn&apos;t support all functionality required</source>
+        <source>Unable to connect - Driver doesn't support all functionality required</source>
         <translation type="vanished">Impossible de se connecter - Le pilote ne supporte pas toutes les fonctionnalités nécessaires</translation>
     </message>
     <message>
         <source>Unable to disable autocommit</source>
-        <translation type="vanished">Impossible de désactiver l&apos;autocommit</translation>
+        <translation type="vanished">Impossible de désactiver l'autocommit</translation>
     </message>
     <message>
         <source>Unable to commit transaction</source>
@@ -7292,11 +7500,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to rollback transaction</source>
-        <translation type="vanished">Impossible d&apos;annuler la transaction</translation>
+        <translation type="vanished">Impossible d'annuler la transaction</translation>
     </message>
     <message>
         <source>Unable to enable autocommit</source>
-        <translation type="vanished">Impossible d&apos;activer l&apos;autocommit</translation>
+        <translation type="vanished">Impossible d'activer l'autocommit</translation>
     </message>
 </context>
 <context>
@@ -7306,12 +7514,12 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">Impossible de récupérer le dernier</translation>
     </message>
     <message>
-        <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
-        <translation type="vanished">QODBCResult::reset&#xa0;: Impossible d&apos;utiliser &quot;SQL_CURSOR_STATIC&quot; comme attribut de requête. Veuillez vérifier la configuration de votre pilote ODBC</translation>
+        <source>QODBCResult::reset: Unable to set 'SQL_CURSOR_STATIC' as statement attribute. Please check your ODBC driver configuration</source>
+        <translation type="vanished">QODBCResult::reset : Impossible d'utiliser "SQL_CURSOR_STATIC" comme attribut de requête. Veuillez vérifier la configuration de votre pilote ODBC</translation>
     </message>
     <message>
         <source>Unable to execute statement</source>
-        <translation type="vanished">Impossible d&apos;exécuter l&apos;instruction</translation>
+        <translation type="vanished">Impossible d'exécuter l'instruction</translation>
     </message>
     <message>
         <source>Unable to fetch</source>
@@ -7331,11 +7539,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to prepare statement</source>
-        <translation type="vanished">Impossible de préparer l&apos;instruction</translation>
+        <translation type="vanished">Impossible de préparer l'instruction</translation>
     </message>
     <message>
         <source>Unable to bind variable</source>
-        <translation type="vanished">Impossible d&apos;attacher la variable</translation>
+        <translation type="vanished">Impossible d'attacher la variable</translation>
     </message>
 </context>
 <context>
@@ -7354,11 +7562,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Could not rollback transaction</source>
-        <translation type="vanished">Impossible d&apos;annuler la transaction</translation>
+        <translation type="vanished">Impossible d'annuler la transaction</translation>
     </message>
     <message>
         <source>Unable to subscribe</source>
-        <translation type="vanished">Impossible de s&apos;inscrire</translation>
+        <translation type="vanished">Impossible de s'inscrire</translation>
     </message>
     <message>
         <source>Unable to unsubscribe</source>
@@ -7369,7 +7577,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QPSQLResult</name>
     <message>
         <source>Query results lost - probably discarded on executing another SQL query.</source>
-        <translation type="vanished">La requête a perdu des résultats - probablement ignorés lors de l&apos;exécution d&apos;une autre requête SQL.</translation>
+        <translation type="vanished">La requête a perdu des résultats - probablement ignorés lors de l'exécution d'une autre requête SQL.</translation>
     </message>
     <message>
         <source>Unable to create query</source>
@@ -7381,11 +7589,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Unable to send query</source>
-        <translation type="vanished">Impossible d&apos;envoyer la requête</translation>
+        <translation type="vanished">Impossible d'envoyer la requête</translation>
     </message>
     <message>
         <source>Unable to prepare statement</source>
-        <translation type="vanished">Impossible de préparer l&apos;instruction</translation>
+        <translation type="vanished">Impossible de préparer l'instruction</translation>
     </message>
 </context>
 <context>
@@ -7400,19 +7608,19 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Page size:</source>
-        <translation type="vanished">Dimensions&#xa0;:</translation>
+        <translation type="vanished">Dimensions :</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="vanished">Largeur&#xa0;:</translation>
+        <translation type="vanished">Largeur :</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="vanished">Hauteur&#xa0;:</translation>
+        <translation type="vanished">Hauteur :</translation>
     </message>
     <message>
         <source>Paper source:</source>
-        <translation type="vanished">Source du papier&#xa0;:</translation>
+        <translation type="vanished">Source du papier :</translation>
     </message>
     <message>
         <source>Orientation</source>
@@ -7460,11 +7668,11 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>Page order:</source>
-        <translation type="vanished">Ordre des pages&#xa0;:</translation>
+        <translation type="vanished">Ordre des pages :</translation>
     </message>
     <message>
         <source>Pages per sheet:</source>
-        <translation type="vanished">Pages par feuille&#xa0;:</translation>
+        <translation type="vanished">Pages par feuille :</translation>
     </message>
     <message>
         <source>Millimeters (mm)</source>
@@ -7496,32 +7704,32 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>mm</source>
-        <extracomment>Unit &apos;Millimeter&apos;</extracomment>
+        <extracomment>Unit 'Millimeter'</extracomment>
         <translation type="vanished">mm</translation>
     </message>
     <message>
         <source>pt</source>
-        <extracomment>Unit &apos;Points&apos;</extracomment>
+        <extracomment>Unit 'Points'</extracomment>
         <translation type="vanished">pt</translation>
     </message>
     <message>
         <source>in</source>
-        <extracomment>Unit &apos;Inch&apos;</extracomment>
+        <extracomment>Unit 'Inch'</extracomment>
         <translation type="vanished">po</translation>
     </message>
     <message>
         <source>P̸</source>
-        <extracomment>Unit &apos;Pica&apos;</extracomment>
+        <extracomment>Unit 'Pica'</extracomment>
         <translation type="vanished">P̸</translation>
     </message>
     <message>
         <source>DD</source>
-        <extracomment>Unit &apos;Didot&apos;</extracomment>
+        <extracomment>Unit 'Didot'</extracomment>
         <translation type="vanished">DD</translation>
     </message>
     <message>
         <source>CC</source>
-        <extracomment>Unit &apos;Cicero&apos;</extracomment>
+        <extracomment>Unit 'Cicero'</extracomment>
         <translation type="vanished">CC</translation>
     </message>
 </context>
@@ -7559,7 +7767,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     </message>
     <message>
         <source>%1 x %2 in</source>
-        <extracomment>Page size in &apos;Inch&apos;.</extracomment>
+        <extracomment>Page size in 'Inch'.</extracomment>
         <translation type="vanished">%1 x %2 po</translation>
     </message>
     <message>
@@ -8082,7 +8290,7 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
     <name>QPluginLoader</name>
     <message>
         <source>The plugin was not loaded.</source>
-        <translation type="vanished">Le plugin n&apos;a pas été chargé.</translation>
+        <translation type="vanished">Le plugin n'a pas été chargé.</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -8180,16 +8388,16 @@ Voulez-vous quand même le supprimer&#xa0;?</translation>
         <translation type="vanished">Définition des pages non valable</translation>
     </message>
     <message>
-        <source>%1 does not follow the correct syntax. Please use &apos;,&apos; to separate ranges and pages, &apos;-&apos; to define ranges and make sure ranges do not intersect with each other.</source>
-        <translation type="vanished">%1 est syntaxiquement incorrect. Veuillez utiliser &quot;,&quot; pour séparer les pages ou les suites de pages, &quot;-&quot; pour définir des suites de pages et assurez-vous que les suites de pages ne se recouvrent pas.</translation>
+        <source>%1 does not follow the correct syntax. Please use ',' to separate ranges and pages, '-' to define ranges and make sure ranges do not intersect with each other.</source>
+        <translation type="vanished">%1 est syntaxiquement incorrect. Veuillez utiliser "," pour séparer les pages ou les suites de pages, "-" pour définir des suites de pages et assurez-vous que les suites de pages ne se recouvrent pas.</translation>
     </message>
     <message>
         <source>Duplex Settings Conflicts</source>
-        <translation type="vanished">Conflits dans les pages recto&#xa0;/ verso</translation>
+        <translation type="vanished">Conflits dans les pages recto / verso</translation>
     </message>
     <message>
         <source>There are conflicts in duplex settings. Do you want to fix them?</source>
-        <translation type="vanished">Il y a des conflits dans la configuration des pages recto&#xa0;/ verso. Voulez-vous les corriger&#xa0;?</translation>
+        <translation type="vanished">Il y a des conflits dans la configuration des pages recto / verso. Voulez-vous les corriger ?</translation>
     </message>
     <message>
         <source>Print to File (PDF)</source>
@@ -8216,24 +8424,24 @@ Veuillez choisir un nom de fichier différent.</translation>
     <message>
         <source>File %1 is not writable.
 Please choose a different file name.</source>
-        <translation type="vanished">Impossible d&apos;écrire dans le fichier %1.
+        <translation type="vanished">Impossible d'écrire dans le fichier %1.
 Veuillez choisir un nom de fichier différent.</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to overwrite it?</source>
         <translation type="vanished">%1 existe.
-Voulez-vous l&apos;écraser&#xa0;?</translation>
+Voulez-vous l'écraser ?</translation>
     </message>
     <message>
-        <source>Options &apos;Pages Per Sheet&apos; and &apos;Page Set&apos; cannot be used together.
+        <source>Options 'Pages Per Sheet' and 'Page Set' cannot be used together.
 Please turn one of those options off.</source>
-        <translation type="vanished">Les options &quot;Pages par feuille&quot; et &quot;Configuration de la page&quot; ne peuvent pas être utilisées ensemble.
-Veuillez désactiver l&apos;une de ces options.</translation>
+        <translation type="vanished">Les options "Pages par feuille" et "Configuration de la page" ne peuvent pas être utilisées ensemble.
+Veuillez désactiver l'une de ces options.</translation>
     </message>
     <message>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation type="vanished">La valeur &quot;De&quot; ne peut pas être plus grande que la valeur &quot;à&quot;.</translation>
+        <source>The 'From' value cannot be greater than the 'To' value.</source>
+        <translation type="vanished">La valeur "De" ne peut pas être plus grande que la valeur "à".</translation>
     </message>
     <message>
         <source>OK</source>
@@ -8327,7 +8535,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     <name>QPrintPropertiesDialog</name>
     <message>
         <source>Printer Properties</source>
-        <translation type="vanished">Propriétés de l&apos;imprimante</translation>
+        <translation type="vanished">Propriétés de l'imprimante</translation>
     </message>
     <message>
         <source>Job Options</source>
@@ -8339,15 +8547,15 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>There are conflicts in page setup options. Do you want to fix them?</source>
-        <translation type="vanished">Il y a des conflits dans les options de la configuration des pages. Voulez-vous les corriger&#xa0;?</translation>
+        <translation type="vanished">Il y a des conflits dans les options de la configuration des pages. Voulez-vous les corriger ?</translation>
     </message>
     <message>
         <source>Advanced Option Conflicts</source>
-        <translation type="vanished">Conflits d&apos;options avancés</translation>
+        <translation type="vanished">Conflits d'options avancés</translation>
     </message>
     <message>
         <source>There are conflicts in some advanced options. Do you want to fix them?</source>
-        <translation type="vanished">Il y a des conflits dans certaines options avancées. Voulez-vous les corriger&#xa0;?</translation>
+        <translation type="vanished">Il y a des conflits dans certaines options avancées. Voulez-vous les corriger ?</translation>
     </message>
 </context>
 <context>
@@ -8405,7 +8613,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Page Set:</source>
-        <translation type="vanished">Configuration de la page&#xa0;:</translation>
+        <translation type="vanished">Configuration de la page :</translation>
     </message>
     <message>
         <source>Output Settings</source>
@@ -8413,7 +8621,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="vanished">Copies&#xa0;:</translation>
+        <translation type="vanished">Copies :</translation>
     </message>
     <message>
         <source>Collate</source>
@@ -8441,7 +8649,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Duplex Printing</source>
-        <translation type="vanished">Impression recto&#xa0;/ verso</translation>
+        <translation type="vanished">Impression recto / verso</translation>
     </message>
     <message>
         <source>None</source>
@@ -8461,7 +8669,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Specify pages or ranges separated by commas. Ranges are specified by two numbers separated by a hyphen. E.g: 3,5-7,9 prints pages 3, 5, 6, 7 and 9.</source>
-        <translation type="vanished">Spécifiez des pages ou des suites de pages séparées par des virgules. Les suites de pages sont spécifiées en utilisant deux nombres séparés par un tiret. Par exemple&#xa0;: 3,5-7,9 imprimera les pages 3, 5, 6, 7 et 9.</translation>
+        <translation type="vanished">Spécifiez des pages ou des suites de pages séparées par des virgules. Les suites de pages sont spécifiées en utilisant deux nombres séparés par un tiret. Par exemple : 3,5-7,9 imprimera les pages 3, 5, 6, 7 et 9.</translation>
     </message>
     <message>
         <source>Double Sided Printing</source>
@@ -8492,7 +8700,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>&amp;Name:</source>
-        <translation type="vanished">&amp;Nom&#xa0;:</translation>
+        <translation type="vanished">&amp;Nom :</translation>
     </message>
     <message>
         <source>P&amp;roperties</source>
@@ -8500,7 +8708,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="vanished">Emplacement&#xa0;:</translation>
+        <translation type="vanished">Emplacement :</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -8508,11 +8716,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="vanished">Type&#xa0;:</translation>
+        <translation type="vanished">Type :</translation>
     </message>
     <message>
         <source>Output &amp;file:</source>
-        <translation type="vanished">&amp;Fichier de sortie&#xa0;:</translation>
+        <translation type="vanished">&amp;Fichier de sortie :</translation>
     </message>
     <message>
         <source>...</source>
@@ -8523,7 +8731,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     <name>QProcess</name>
     <message>
         <source>Process failed to start</source>
-        <translation type="vanished">Le processus n&apos;a pas réussi à démarrer</translation>
+        <translation type="vanished">Le processus n'a pas réussi à démarrer</translation>
     </message>
     <message>
         <source>Error reading from process</source>
@@ -8531,7 +8739,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Error writing to process</source>
-        <translation type="vanished">Erreur d&apos;écriture vers le processus</translation>
+        <translation type="vanished">Erreur d'écriture vers le processus</translation>
     </message>
     <message>
         <source>Process crashed</source>
@@ -8539,31 +8747,31 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Process failed to start (spawned process exited with code 127)</source>
-        <translation type="vanished">Le processus n&apos;a pu démarrer (le processus généré a terminé avec le code 127)</translation>
+        <translation type="vanished">Le processus n'a pu démarrer (le processus généré a terminé avec le code 127)</translation>
     </message>
     <message>
         <source>No program defined</source>
-        <translation type="vanished">Aucun programme n&apos;est défini</translation>
+        <translation type="vanished">Aucun programme n'est défini</translation>
     </message>
     <message>
         <source>Could not open input redirection for reading</source>
-        <translation type="vanished">Impossible d&apos;ouvrir la redirection d&apos;entrée en lecture</translation>
+        <translation type="vanished">Impossible d'ouvrir la redirection d'entrée en lecture</translation>
     </message>
     <message>
         <source>Could not open output redirection for writing</source>
-        <translation type="vanished">Impossible d&apos;ouvrir la redirection de sortie en écriture</translation>
+        <translation type="vanished">Impossible d'ouvrir la redirection de sortie en écriture</translation>
     </message>
     <message>
         <source>Resource error (fork failure): %1</source>
-        <translation type="vanished">Erreur de ressouce (échec du fork)&#xa0;: %1</translation>
+        <translation type="vanished">Erreur de ressouce (échec du fork) : %1</translation>
     </message>
     <message>
         <source>Process operation timed out</source>
-        <translation type="vanished">L&apos;opération de processus a expiré</translation>
+        <translation type="vanished">L'opération de processus a expiré</translation>
     </message>
     <message>
         <source>Process failed to start: %1</source>
-        <translation type="vanished">Le démarrage du processus a échoué&#xa0;: %1</translation>
+        <translation type="vanished">Le démarrage du processus a échoué : %1</translation>
     </message>
 </context>
 <context>
@@ -8591,11 +8799,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     <name>QRegExp</name>
     <message>
         <source>no error occurred</source>
-        <translation type="vanished">aucune erreur ne s&apos;est produite</translation>
+        <translation type="vanished">aucune erreur ne s'est produite</translation>
     </message>
     <message>
         <source>disabled feature used</source>
-        <translation type="vanished">l&apos;option est désactivée</translation>
+        <translation type="vanished">l'option est désactivée</translation>
     </message>
     <message>
         <source>bad char class syntax</source>
@@ -8607,7 +8815,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>lookbehinds not supported, see QTBUG-2371</source>
-        <translation type="vanished">la fonctionnalité lookbehinds n&apos;est pas supportée, voir le rapport de bug QTBUG-2371</translation>
+        <translation type="vanished">la fonctionnalité lookbehinds n'est pas supportée, voir le rapport de bug QTBUG-2371</translation>
     </message>
     <message>
         <source>bad repetition syntax</source>
@@ -8631,7 +8839,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>invalid interval</source>
-        <translation type="vanished">l&apos;intervalle est invalide</translation>
+        <translation type="vanished">l'intervalle est invalide</translation>
     </message>
     <message>
         <source>invalid category</source>
@@ -8654,7 +8862,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>unrecognized character follows \</source>
-        <translation type="vanished">le caractère suivant le \ n&apos;a pas été reconnu</translation>
+        <translation type="vanished">le caractère suivant le \ n'a pas été reconnu</translation>
     </message>
     <message>
         <source>numbers out of order in {} quantifier</source>
@@ -8670,7 +8878,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>invalid escape sequence in character class</source>
-        <translation type="vanished">la classe de caractères contient une séquence d&apos;échappement invalide</translation>
+        <translation type="vanished">la classe de caractères contient une séquence d'échappement invalide</translation>
     </message>
     <message>
         <source>range out of order in character class</source>
@@ -8678,15 +8886,15 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>nothing to repeat</source>
-        <translation type="vanished">il n&apos;y a rien à répéter</translation>
+        <translation type="vanished">il n'y a rien à répéter</translation>
     </message>
     <message>
         <source>internal error: unexpected repeat</source>
-        <translation type="vanished">erreur interne&#xa0;: répétition inattendue</translation>
+        <translation type="vanished">erreur interne : répétition inattendue</translation>
     </message>
     <message>
         <source>unrecognized character after (? or (?-</source>
-        <translation type="vanished">le caractère après (? ou (?- n&apos;est pas reconnu</translation>
+        <translation type="vanished">le caractère après (? ou (?- n'est pas reconnu</translation>
     </message>
     <message>
         <source>POSIX named classes are supported only within a class</source>
@@ -8706,7 +8914,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>unknown option bit(s) set</source>
-        <translation type="vanished">l&apos;option définie est inconnue</translation>
+        <translation type="vanished">l'option définie est inconnue</translation>
     </message>
     <message>
         <source>missing ) after comment</source>
@@ -8714,7 +8922,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>regular expression is too large</source>
-        <translation type="vanished">l&apos;expression régulière est trop large</translation>
+        <translation type="vanished">l'expression régulière est trop large</translation>
     </message>
     <message>
         <source>failed to get memory</source>
@@ -8726,19 +8934,19 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>internal error: code overflow</source>
-        <translation type="vanished">erreur interne&#xa0;: débordement du code</translation>
+        <translation type="vanished">erreur interne : débordement du code</translation>
     </message>
     <message>
         <source>unrecognized character after (?&lt;</source>
-        <translation type="vanished">le caractère après (?&lt; n&apos;est pas reconnu</translation>
+        <translation type="vanished">le caractère après (?&lt; n'est pas reconnu</translation>
     </message>
     <message>
         <source>lookbehind assertion is not fixed length</source>
-        <translation type="vanished">l&apos;assertion lookbehind n&apos;est pas de longueur fixe</translation>
+        <translation type="vanished">l'assertion lookbehind n'est pas de longueur fixe</translation>
     </message>
     <message>
         <source>malformed number or name after (?(</source>
-        <translation type="vanished">le nombre ou le nom après (?( n&apos;est pas formé correctement</translation>
+        <translation type="vanished">le nombre ou le nom après (?( n'est pas formé correctement</translation>
     </message>
     <message>
         <source>conditional group contains more than two branches</source>
@@ -8758,11 +8966,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>POSIX collating elements are not supported</source>
-        <translation type="vanished">Les éléments d&apos;assemblage POSIX ne sont pas pris en charge</translation>
+        <translation type="vanished">Les éléments d'assemblage POSIX ne sont pas pris en charge</translation>
     </message>
     <message>
         <source>this version of PCRE is not compiled with PCRE_UTF8 support</source>
-        <translation type="vanished">cette version de PCRE n&apos;est pas compilée avec le support de PCRE_UTF8</translation>
+        <translation type="vanished">cette version de PCRE n'est pas compilée avec le support de PCRE_UTF8</translation>
     </message>
     <message>
         <source>character value in \x{...} sequence is too large</source>
@@ -8774,7 +8982,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>\C not allowed in lookbehind assertion</source>
-        <translation type="vanished">\C n&apos;est pas autorisé dans une assertion de type lookbehind</translation>
+        <translation type="vanished">\C n'est pas autorisé dans une assertion de type lookbehind</translation>
     </message>
     <message>
         <source>PCRE does not support \L, \l, \N{name}, \U, or \u</source>
@@ -8794,7 +9002,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>unrecognized character after (?P</source>
-        <translation type="vanished">le caractère après (?P n&apos;est pas reconnu</translation>
+        <translation type="vanished">le caractère après (?P n'est pas reconnu</translation>
     </message>
     <message>
         <source>syntax error in subpattern name (missing terminator)</source>
@@ -8810,11 +9018,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>support for \P, \p, and \X has not been compiled</source>
-        <translation type="vanished">le support de \P, \p et \X n&apos;a pas été compilé</translation>
+        <translation type="vanished">le support de \P, \p et \X n'a pas été compilé</translation>
     </message>
     <message>
         <source>malformed \P or \p sequence</source>
-        <translation type="vanished">la séquence \P ou \p n&apos;est pas formée correctement</translation>
+        <translation type="vanished">la séquence \P ou \p n'est pas formée correctement</translation>
     </message>
     <message>
         <source>unknown property name after \P or \p</source>
@@ -8834,19 +9042,19 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>internal error: overran compiling workspace</source>
-        <translation type="vanished">erreur interne&#xa0;: dépassement de l&apos;espace de travail de compilation</translation>
+        <translation type="vanished">erreur interne : dépassement de l'espace de travail de compilation</translation>
     </message>
     <message>
         <source>internal error: previously-checked referenced subpattern not found</source>
-        <translation type="vanished">erreur interne&#xa0;: le sous-motif référencé qui a déjà été vérifié n&apos;a pas été trouvé</translation>
+        <translation type="vanished">erreur interne : le sous-motif référencé qui a déjà été vérifié n'a pas été trouvé</translation>
     </message>
     <message>
         <source>DEFINE group contains more than one branch</source>
-        <translation type="vanished">le groupe DEFINE contient plus d&apos;une branche</translation>
+        <translation type="vanished">le groupe DEFINE contient plus d'une branche</translation>
     </message>
     <message>
         <source>repeating a DEFINE group is not allowed</source>
-        <translation type="vanished">la répétion d&apos;un groupe DEFINE n&apos;est pas autorisée</translation>
+        <translation type="vanished">la répétion d'un groupe DEFINE n'est pas autorisée</translation>
     </message>
     <message>
         <source>inconsistent NEWLINE options</source>
@@ -8854,7 +9062,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>\g is not followed by a braced, angle-bracketed, or quoted name/number or by a plain number</source>
-        <translation type="vanished">\g n&apos;est pas suivi par un nom ou un nombre entre crochets, entre crochets droits ou entre guillemets ou par un nombre plein</translation>
+        <translation type="vanished">\g n'est pas suivi par un nom ou un nombre entre crochets, entre crochets droits ou entre guillemets ou par un nombre plein</translation>
     </message>
     <message>
         <source>a numbered reference must not be zero</source>
@@ -8862,11 +9070,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>an argument is not allowed for (*ACCEPT), (*FAIL), or (*COMMIT)</source>
-        <translation type="vanished">un argument n&apos;est pas autorisé pour (*ACCEPT), (*FAIL) ou (*COMMIT)</translation>
+        <translation type="vanished">un argument n'est pas autorisé pour (*ACCEPT), (*FAIL) ou (*COMMIT)</translation>
     </message>
     <message>
         <source>(*VERB) not recognized</source>
-        <translation type="vanished">(*VERB) n&apos;est pas reconnu</translation>
+        <translation type="vanished">(*VERB) n'est pas reconnu</translation>
     </message>
     <message>
         <source>number is too big</source>
@@ -8882,11 +9090,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>] is an invalid data character in JavaScript compatibility mode</source>
-        <translation type="vanished">le caractère ] n&apos;est pas une donnée valide dans le mode de compatibilité avec le JavaScript</translation>
+        <translation type="vanished">le caractère ] n'est pas une donnée valide dans le mode de compatibilité avec le JavaScript</translation>
     </message>
     <message>
         <source>different names for subpatterns of the same number are not allowed</source>
-        <translation type="vanished">des noms différents pour des sous-motifs ayant le même nombre n&apos;est pas autorisé</translation>
+        <translation type="vanished">des noms différents pour des sous-motifs ayant le même nombre n'est pas autorisé</translation>
     </message>
     <message>
         <source>(*MARK) must have an argument</source>
@@ -8894,7 +9102,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>this version of PCRE is not compiled with PCRE_UCP support</source>
-        <translation type="vanished">cette version de PCRE n&apos;est pas compilée avec le support de PCRE_UCP</translation>
+        <translation type="vanished">cette version de PCRE n'est pas compilée avec le support de PCRE_UCP</translation>
     </message>
     <message>
         <source>\c must be followed by an ASCII character</source>
@@ -8902,15 +9110,15 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>\k is not followed by a braced, angle-bracketed, or quoted name</source>
-        <translation type="vanished">\k n&apos;est pas suivi par un nom entre crochets, entre crochets droits ou entre guillemets</translation>
+        <translation type="vanished">\k n'est pas suivi par un nom entre crochets, entre crochets droits ou entre guillemets</translation>
     </message>
     <message>
         <source>internal error: unknown opcode in find_fixedlength()</source>
-        <translation type="vanished">erreur interne&#xa0;: l&apos;opcode dans find_fixedlenght() est inconnu</translation>
+        <translation type="vanished">erreur interne : l'opcode dans find_fixedlenght() est inconnu</translation>
     </message>
     <message>
         <source>\N is not supported in a class</source>
-        <translation type="vanished">\N n&apos;est pas supporté dans une classe</translation>
+        <translation type="vanished">\N n'est pas supporté dans une classe</translation>
     </message>
     <message>
         <source>too many forward references</source>
@@ -8918,7 +9126,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>disallowed Unicode code point (&gt;= 0xd800 &amp;&amp; &lt;= 0xdfff)</source>
-        <translation type="vanished">le code point Unicode (&gt;= 0xd800 &amp;&amp; &lt;= 0xdfff) n&apos;est pas autorisé</translation>
+        <translation type="vanished">le code point Unicode (&gt;= 0xd800 &amp;&amp; &lt;= 0xdfff) n'est pas autorisé</translation>
     </message>
     <message>
         <source>invalid UTF-16 string</source>
@@ -8938,19 +9146,19 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>setting UTF is disabled by the application</source>
-        <translation type="vanished">l&apos;application ne permet pas d&apos;utiliser UTF</translation>
+        <translation type="vanished">l'application ne permet pas d'utiliser UTF</translation>
     </message>
     <message>
         <source>non-hex character in \x{} (closing brace missing?)</source>
-        <translation type="vanished">caractère non-hexa dans \x{} (accolade fermante manquante&#xa0;?)</translation>
+        <translation type="vanished">caractère non-hexa dans \x{} (accolade fermante manquante ?)</translation>
     </message>
     <message>
         <source>non-octal character in \o{} (closing brace missing?)</source>
-        <translation type="vanished">caractère non-octal dans \o{} (accolade fermante manquante&#xa0;?)</translation>
+        <translation type="vanished">caractère non-octal dans \o{} (accolade fermante manquante ?)</translation>
     </message>
     <message>
         <source>escape sequence is invalid in character class</source>
-        <translation type="vanished">la classe de caractères contient une séquence d&apos;échappement invalide</translation>
+        <translation type="vanished">la classe de caractères contient une séquence d'échappement invalide</translation>
     </message>
     <message>
         <source>quantifier does not follow a repeatable item</source>
@@ -8966,7 +9174,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>unrecognised compile-time option bit(s)</source>
-        <translation type="vanished">bit(s) d&apos;option non reconnu(s) au moment de la compilation</translation>
+        <translation type="vanished">bit(s) d'option non reconnu(s) au moment de la compilation</translation>
     </message>
     <message>
         <source>missing ) after (?# comment</source>
@@ -8974,7 +9182,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>failed to allocate heap memory</source>
-        <translation type="vanished">impossible d&apos;allouer la mémoire sur le tas</translation>
+        <translation type="vanished">impossible d'allouer la mémoire sur le tas</translation>
     </message>
     <message>
         <source>unmatched closing parenthesis</source>
@@ -8986,7 +9194,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>a relative value of zero is not allowed</source>
-        <translation type="vanished">une valeur relative de zéro n&apos;est pas autorisée</translation>
+        <translation type="vanished">une valeur relative de zéro n'est pas autorisée</translation>
     </message>
     <message>
         <source>conditional subpattern contains more than two branches</source>
@@ -9002,7 +9210,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>internal error in pcre2_study(): should not occur</source>
-        <translation type="vanished">erreur interne dans pcre2_study()&#xa0;: ne devrait pas se produire</translation>
+        <translation type="vanished">erreur interne dans pcre2_study() : ne devrait pas se produire</translation>
     </message>
     <message>
         <source>this version of PCRE2 does not have Unicode support</source>
@@ -9014,11 +9222,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>lookbehind is too complicated</source>
-        <translation type="vanished">regarder derrière c&apos;est trop compliqué</translation>
+        <translation type="vanished">regarder derrière c'est trop compliqué</translation>
     </message>
     <message>
         <source>\C is not allowed in a lookbehind assertion in UTF-16 mode</source>
-        <translation type="vanished">\C n&apos;est pas autorisé dans une assertion lookbehind en mode UTF-16</translation>
+        <translation type="vanished">\C n'est pas autorisé dans une assertion lookbehind en mode UTF-16</translation>
     </message>
     <message>
         <source>PCRE2 does not support \F, \L, \l, \N{name}, \U, or \u</source>
@@ -9034,11 +9242,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>invalid escape sequence in (*VERB) name</source>
-        <translation type="vanished">séquence d&apos;échappement invalide dans le nom (*VERB)</translation>
+        <translation type="vanished">séquence d'échappement invalide dans le nom (*VERB)</translation>
     </message>
     <message>
         <source>syntax error in subpattern name (missing terminator?)</source>
-        <translation type="vanished">erreur de syntaxe dans le nom du sous-modèle (terminateur manquant&#xa0;?)</translation>
+        <translation type="vanished">erreur de syntaxe dans le nom du sous-modèle (terminateur manquant ?)</translation>
     </message>
     <message>
         <source>two named subpatterns have the same name (PCRE2_DUPNAMES not set)</source>
@@ -9070,11 +9278,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>internal error: unknown newline setting</source>
-        <translation type="vanished">erreur interne&#xa0;: paramètre de nouvelle ligne inconnu</translation>
+        <translation type="vanished">erreur interne : paramètre de nouvelle ligne inconnu</translation>
     </message>
     <message>
         <source>(?R (recursive pattern call) must be followed by a closing parenthesis</source>
-        <translation type="vanished">(?R (appel de motif récursif) doit être suivi d&apos;une parenthèse fermante</translation>
+        <translation type="vanished">(?R (appel de motif récursif) doit être suivi d'une parenthèse fermante</translation>
     </message>
     <message>
         <source>obsolete error (should not occur)</source>
@@ -9090,31 +9298,31 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>internal error: parsed pattern overflow</source>
-        <translation type="vanished">erreur interne&#xa0;:&#xa0;dépassement de modèle analysé</translation>
+        <translation type="vanished">erreur interne : dépassement de modèle analysé</translation>
     </message>
     <message>
         <source>\c must be followed by a printable ASCII character</source>
-        <translation type="vanished">\c doit être suivi d&apos;un caractère ASCII imprimable</translation>
+        <translation type="vanished">\c doit être suivi d'un caractère ASCII imprimable</translation>
     </message>
     <message>
         <source>\c must be followed by a letter or one of [\]^_?</source>
-        <translation type="vanished">\c doit être suivi d&apos;une lettre ou de l&apos;un des [\]^_&#xa0;?</translation>
+        <translation type="vanished">\c doit être suivi d'une lettre ou de l'un des [\]^_ ?</translation>
     </message>
     <message>
         <source>internal error: unknown meta code in check_lookbehinds()</source>
-        <translation type="vanished">erreur interne&#xa0;: métacode inconnu dans check_lookbehinds()</translation>
+        <translation type="vanished">erreur interne : métacode inconnu dans check_lookbehinds()</translation>
     </message>
     <message>
         <source>callout string is too long</source>
-        <translation type="vanished">la chaîne d&apos;accroche est trop longue</translation>
+        <translation type="vanished">la chaîne d'accroche est trop longue</translation>
     </message>
     <message>
         <source>using UTF is disabled by the application</source>
-        <translation type="vanished">l&apos;utilisation d&apos;UTF est désactivée par l&apos;application</translation>
+        <translation type="vanished">l'utilisation d'UTF est désactivée par l'application</translation>
     </message>
     <message>
         <source>using UCP is disabled by the application</source>
-        <translation type="vanished">l&apos;utilisation d&apos;UCP est désactivée par l&apos;application</translation>
+        <translation type="vanished">l'utilisation d'UCP est désactivée par l'application</translation>
     </message>
     <message>
         <source>character code point value in \u.... sequence is too large</source>
@@ -9130,11 +9338,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>internal error: unknown opcode in auto_possessify()</source>
-        <translation type="vanished">erreur interne&#xa0;: opcode inconnu dans auto_possessify()</translation>
+        <translation type="vanished">erreur interne : opcode inconnu dans auto_possessify()</translation>
     </message>
     <message>
         <source>missing terminating delimiter for callout with string argument</source>
-        <translation type="vanished">délimiteur de fin manquant pour l&apos;appel avec argument de chaîne</translation>
+        <translation type="vanished">délimiteur de fin manquant pour l'appel avec argument de chaîne</translation>
     </message>
     <message>
         <source>unrecognized string delimiter follows (?C</source>
@@ -9142,43 +9350,43 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>using \C is disabled by the application</source>
-        <translation type="vanished">l&apos;utilisation de \C est désactivée par l&apos;application</translation>
+        <translation type="vanished">l'utilisation de \C est désactivée par l'application</translation>
     </message>
     <message>
         <source>(?| and/or (?J: or (?x: parentheses are too deeply nested</source>
-        <translation type="vanished">(?| et/ou (?J&#xa0;: ou (?x&#xa0;: les parenthèses sont trop profondément imbriquées</translation>
+        <translation type="vanished">(?| et/ou (?J : ou (?x : les parenthèses sont trop profondément imbriquées</translation>
     </message>
     <message>
         <source>using \C is disabled in this PCRE2 library</source>
-        <translation type="vanished">l&apos;utilisation de \C est désactivée dans cette bibliothèque PCRE2</translation>
+        <translation type="vanished">l'utilisation de \C est désactivée dans cette bibliothèque PCRE2</translation>
     </message>
     <message>
         <source>regular expression is too complicated</source>
-        <translation type="vanished">l&apos;expression régulière est trop compliquée</translation>
+        <translation type="vanished">l'expression régulière est trop compliquée</translation>
     </message>
     <message>
         <source>lookbehind assertion is too long</source>
-        <translation type="vanished">L&apos;affirmation de recherche est trop longue</translation>
+        <translation type="vanished">L'affirmation de recherche est trop longue</translation>
     </message>
     <message>
         <source>pattern string is longer than the limit set by the application</source>
-        <translation type="vanished">la chaîne de modèle est plus longue que la limite définie par l&apos;application</translation>
+        <translation type="vanished">la chaîne de modèle est plus longue que la limite définie par l'application</translation>
     </message>
     <message>
         <source>internal error: unknown code in parsed pattern</source>
-        <translation type="vanished">erreur interne&#xa0;: code inconnu dans le modèle analysé</translation>
+        <translation type="vanished">erreur interne : code inconnu dans le modèle analysé</translation>
     </message>
     <message>
         <source>internal error: bad code value in parsed_skip()</source>
-        <translation type="vanished">erreur interne&#xa0;: valeur de code incorrecte dans parsed_skip()</translation>
+        <translation type="vanished">erreur interne : valeur de code incorrecte dans parsed_skip()</translation>
     </message>
     <message>
         <source>PCRE2_EXTRA_ALLOW_SURROGATE_ESCAPES is not allowed in UTF-16 mode</source>
-        <translation type="vanished">PCRE2_EXTRA_ALLOW_SURROGATE_ESCAPES n&apos;est pas autorisé en mode UTF-16</translation>
+        <translation type="vanished">PCRE2_EXTRA_ALLOW_SURROGATE_ESCAPES n'est pas autorisé en mode UTF-16</translation>
     </message>
     <message>
         <source>invalid option bits with PCRE2_LITERAL</source>
-        <translation type="vanished">bits d&apos;option invalides avec PCRE2_LITERAL</translation>
+        <translation type="vanished">bits d'option invalides avec PCRE2_LITERAL</translation>
     </message>
     <message>
         <source>\N{U+dddd} is supported only in Unicode (UTF) mode</source>
@@ -9186,7 +9394,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>invalid hyphen in option setting</source>
-        <translation type="vanished">trait d&apos;union invalide dans le paramètre d&apos;option</translation>
+        <translation type="vanished">trait d'union invalide dans le paramètre d'option</translation>
     </message>
     <message>
         <source>(*alpha_assertion) not recognized</source>
@@ -9194,7 +9402,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>script runs require Unicode support, which this version of PCRE2 does not have</source>
-        <translation type="vanished">les exécutions de script nécessitent la prise en charge d&apos;Unicode, ce que cette version de PCRE2 n&apos;a pas</translation>
+        <translation type="vanished">les exécutions de script nécessitent la prise en charge d'Unicode, ce que cette version de PCRE2 n'a pas</translation>
     </message>
     <message>
         <source>too many capturing groups (maximum 65535)</source>
@@ -9214,107 +9422,107 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>UTF-8 error: 1 byte missing at end</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: 1 octet manquant à la fin</translation>
+        <translation type="vanished">Erreur UTF-8 : 1 octet manquant à la fin</translation>
     </message>
     <message>
         <source>UTF-8 error: 2 bytes missing at end</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: 2 octets manquants à la fin</translation>
+        <translation type="vanished">Erreur UTF-8 : 2 octets manquants à la fin</translation>
     </message>
     <message>
         <source>UTF-8 error: 3 bytes missing at end</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: 3 octets manquants à la fin</translation>
+        <translation type="vanished">Erreur UTF-8 : 3 octets manquants à la fin</translation>
     </message>
     <message>
         <source>UTF-8 error: 4 bytes missing at end</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: 4 octets manquants à la fin</translation>
+        <translation type="vanished">Erreur UTF-8 : 4 octets manquants à la fin</translation>
     </message>
     <message>
         <source>UTF-8 error: 5 bytes missing at end</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: 5 octets manquants à la fin</translation>
+        <translation type="vanished">Erreur UTF-8 : 5 octets manquants à la fin</translation>
     </message>
     <message>
         <source>UTF-8 error: byte 2 top bits not 0x80</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: octet 2 bits supérieurs non 0x80</translation>
+        <translation type="vanished">Erreur UTF-8 : octet 2 bits supérieurs non 0x80</translation>
     </message>
     <message>
         <source>UTF-8 error: byte 3 top bits not 0x80</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: octet 3 bits supérieurs non 0x80</translation>
+        <translation type="vanished">Erreur UTF-8 : octet 3 bits supérieurs non 0x80</translation>
     </message>
     <message>
         <source>UTF-8 error: byte 4 top bits not 0x80</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: octet 4 bits supérieurs non 0x80</translation>
+        <translation type="vanished">Erreur UTF-8 : octet 4 bits supérieurs non 0x80</translation>
     </message>
     <message>
         <source>UTF-8 error: byte 5 top bits not 0x80</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: octet 5 bits supérieurs et non 0x80</translation>
+        <translation type="vanished">Erreur UTF-8 : octet 5 bits supérieurs et non 0x80</translation>
     </message>
     <message>
         <source>UTF-8 error: byte 6 top bits not 0x80</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: octet 6 bits supérieurs et non 0x80</translation>
+        <translation type="vanished">Erreur UTF-8 : octet 6 bits supérieurs et non 0x80</translation>
     </message>
     <message>
         <source>UTF-8 error: 5-byte character is not allowed (RFC 3629)</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: les caractères de 5 octets ne sont pas autorisés (RFC 3629)</translation>
+        <translation type="vanished">Erreur UTF-8 : les caractères de 5 octets ne sont pas autorisés (RFC 3629)</translation>
     </message>
     <message>
         <source>UTF-8 error: 6-byte character is not allowed (RFC 3629)</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: les caractères à 6 octets ne sont pas autorisés (RFC 3629)</translation>
+        <translation type="vanished">Erreur UTF-8 : les caractères à 6 octets ne sont pas autorisés (RFC 3629)</translation>
     </message>
     <message>
         <source>UTF-8 error: code points greater than 0x10ffff are not defined</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: les points de code supérieurs à 0x10ffff ne sont pas définis</translation>
+        <translation type="vanished">Erreur UTF-8 : les points de code supérieurs à 0x10ffff ne sont pas définis</translation>
     </message>
     <message>
         <source>UTF-8 error: code points 0xd800-0xdfff are not defined</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: les points de code 0xd800-0xdfff ne sont pas définis</translation>
+        <translation type="vanished">Erreur UTF-8 : les points de code 0xd800-0xdfff ne sont pas définis</translation>
     </message>
     <message>
         <source>UTF-8 error: overlong 2-byte sequence</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: séquence trop longue de 2&#xa0;octets</translation>
+        <translation type="vanished">Erreur UTF-8 : séquence trop longue de 2 octets</translation>
     </message>
     <message>
         <source>UTF-8 error: overlong 3-byte sequence</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: séquence trop longue de 3&#xa0;octets</translation>
+        <translation type="vanished">Erreur UTF-8 : séquence trop longue de 3 octets</translation>
     </message>
     <message>
         <source>UTF-8 error: overlong 4-byte sequence</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: séquence trop longue de 4&#xa0;octets</translation>
+        <translation type="vanished">Erreur UTF-8 : séquence trop longue de 4 octets</translation>
     </message>
     <message>
         <source>UTF-8 error: overlong 5-byte sequence</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: séquence trop longue de 5&#xa0;octets</translation>
+        <translation type="vanished">Erreur UTF-8 : séquence trop longue de 5 octets</translation>
     </message>
     <message>
         <source>UTF-8 error: overlong 6-byte sequence</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: séquence trop longue de 6&#xa0;octets</translation>
+        <translation type="vanished">Erreur UTF-8 : séquence trop longue de 6 octets</translation>
     </message>
     <message>
         <source>UTF-8 error: isolated byte with 0x80 bit set</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: octet isolé avec bit 0x80 défini</translation>
+        <translation type="vanished">Erreur UTF-8 : octet isolé avec bit 0x80 défini</translation>
     </message>
     <message>
         <source>UTF-8 error: illegal byte (0xfe or 0xff)</source>
-        <translation type="vanished">Erreur UTF-8&#xa0;: octet illégal (0xfe ou 0xff)</translation>
+        <translation type="vanished">Erreur UTF-8 : octet illégal (0xfe ou 0xff)</translation>
     </message>
     <message>
         <source>UTF-16 error: missing low surrogate at end</source>
-        <translation type="vanished">Erreur UTF-16&#xa0;: manque de substitut faible à la fin</translation>
+        <translation type="vanished">Erreur UTF-16 : manque de substitut faible à la fin</translation>
     </message>
     <message>
         <source>UTF-16 error: invalid low surrogate</source>
-        <translation type="vanished">Erreur UTF-16&#xa0;: substitut faible non valide</translation>
+        <translation type="vanished">Erreur UTF-16 : substitut faible non valide</translation>
     </message>
     <message>
         <source>UTF-16 error: isolated low surrogate</source>
-        <translation type="vanished">Erreur UTF-16&#xa0;: substitut faible isolé</translation>
+        <translation type="vanished">Erreur UTF-16 : substitut faible isolé</translation>
     </message>
     <message>
         <source>UTF-32 error: code points 0xd800-0xdfff are not defined</source>
-        <translation type="vanished">Erreur UTF-32&#xa0;: les points de code 0xd800-0xdfff ne sont pas définis</translation>
+        <translation type="vanished">Erreur UTF-32 : les points de code 0xd800-0xdfff ne sont pas définis</translation>
     </message>
     <message>
         <source>UTF-32 error: code points greater than 0x10ffff are not defined</source>
-        <translation type="vanished">Erreur UTF-32&#xa0;: les points de code supérieurs à 0x10ffff ne sont pas définis</translation>
+        <translation type="vanished">Erreur UTF-32 : les points de code supérieurs à 0x10ffff ne sont pas définis</translation>
     </message>
     <message>
         <source>bad data value</source>
@@ -9322,7 +9530,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>patterns do not all use the same character tables</source>
-        <translation type="vanished">les modèles n&apos;utilisent pas tous les mêmes tables de caractères</translation>
+        <translation type="vanished">les modèles n'utilisent pas tous les mêmes tables de caractères</translation>
     </message>
     <message>
         <source>magic number missing</source>
@@ -9330,7 +9538,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>pattern compiled in wrong mode: 8/16/32-bit error</source>
-        <translation type="vanished">modèle compilé dans un mauvais mode&#xa0;: erreur 8/16/32 bits</translation>
+        <translation type="vanished">modèle compilé dans un mauvais mode : erreur 8/16/32 bits</translation>
     </message>
     <message>
         <source>bad offset value</source>
@@ -9338,7 +9546,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>bad option value</source>
-        <translation type="vanished">mauvaise valeur d&apos;option</translation>
+        <translation type="vanished">mauvaise valeur d'option</translation>
     </message>
     <message>
         <source>invalid replacement string</source>
@@ -9350,11 +9558,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>callout error code</source>
-        <translation type="vanished">code d&apos;erreur de légende</translation>
+        <translation type="vanished">code d'erreur de légende</translation>
     </message>
     <message>
         <source>invalid data in workspace for DFA restart</source>
-        <translation type="vanished">données non valides dans l&apos;espace de travail pour le redémarrage de DFA</translation>
+        <translation type="vanished">données non valides dans l'espace de travail pour le redémarrage de DFA</translation>
     </message>
     <message>
         <source>too much recursion for DFA matching</source>
@@ -9366,19 +9574,19 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>function is not supported for DFA matching</source>
-        <translation type="vanished">la fonction n&apos;est pas prise en charge pour la correspondance DFA</translation>
+        <translation type="vanished">la fonction n'est pas prise en charge pour la correspondance DFA</translation>
     </message>
     <message>
         <source>pattern contains an item that is not supported for DFA matching</source>
-        <translation type="vanished">le modèle contient un élément qui n&apos;est pas compatible avec la correspondance DFA</translation>
+        <translation type="vanished">le modèle contient un élément qui n'est pas compatible avec la correspondance DFA</translation>
     </message>
     <message>
         <source>workspace size exceeded in DFA matching</source>
-        <translation type="vanished">taille de l&apos;espace de travail dépassée dans la correspondance DFA</translation>
+        <translation type="vanished">taille de l'espace de travail dépassée dans la correspondance DFA</translation>
     </message>
     <message>
         <source>internal error - pattern overwritten?</source>
-        <translation type="vanished">erreur interne - motif écrasé&#xa0;?</translation>
+        <translation type="vanished">erreur interne - motif écrasé ?</translation>
     </message>
     <message>
         <source>bad JIT option</source>
@@ -9418,11 +9626,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>requested value is not available</source>
-        <translation type="vanished">la valeur demandée n&apos;est pas disponible</translation>
+        <translation type="vanished">la valeur demandée n'est pas disponible</translation>
     </message>
     <message>
         <source>requested value is not set</source>
-        <translation type="vanished">la valeur demandée n&apos;est pas définie</translation>
+        <translation type="vanished">la valeur demandée n'est pas définie</translation>
     </message>
     <message>
         <source>offset limit set without PCRE2_USE_OFFSET_LIMIT</source>
@@ -9430,7 +9638,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>bad escape sequence in replacement string</source>
-        <translation type="vanished">mauvaise séquence d&apos;échappement dans la chaîne de remplacement</translation>
+        <translation type="vanished">mauvaise séquence d'échappement dans la chaîne de remplacement</translation>
     </message>
     <message>
         <source>expected closing curly bracket in replacement string</source>
@@ -9442,7 +9650,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>match with end before start or start moved backwards is not supported</source>
-        <translation type="vanished">la correspondance avec la fin avant le début ou le début déplacé vers l&apos;arrière n&apos;est pas pris en charge</translation>
+        <translation type="vanished">la correspondance avec la fin avant le début ou le début déplacé vers l'arrière n'est pas pris en charge</translation>
     </message>
     <message>
         <source>too many replacements (more than INT_MAX)</source>
@@ -9466,7 +9674,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>PCRE2_MATCH_INVALID_UTF is not supported for DFA matching</source>
-        <translation type="vanished">PCRE2_MATCH_INVALID_UTF n&apos;est pas compatible avec la correspondance DFA</translation>
+        <translation type="vanished">PCRE2_MATCH_INVALID_UTF n'est pas compatible avec la correspondance DFA</translation>
     </message>
     <message>
         <source>parentheses are too deeply nested</source>
@@ -9493,7 +9701,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     <name>QSQLite2Driver</name>
     <message>
         <source>Error opening database</source>
-        <translation type="vanished">Erreur lors de l&apos;ouverture de la base de données</translation>
+        <translation type="vanished">Erreur lors de l'ouverture de la base de données</translation>
     </message>
     <message>
         <source>Unable to begin transaction</source>
@@ -9505,7 +9713,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Unable to rollback transaction</source>
-        <translation type="vanished">Impossible d&apos;annuler la transaction</translation>
+        <translation type="vanished">Impossible d'annuler la transaction</translation>
     </message>
 </context>
 <context>
@@ -9516,14 +9724,14 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Unable to execute statement</source>
-        <translation type="vanished">Impossible d&apos;exécuter l&apos;instruction</translation>
+        <translation type="vanished">Impossible d'exécuter l'instruction</translation>
     </message>
 </context>
 <context>
     <name>QSQLiteDriver</name>
     <message>
         <source>Error opening database</source>
-        <translation type="vanished">Erreur lors de l&apos;ouverture de la base de données</translation>
+        <translation type="vanished">Erreur lors de l'ouverture de la base de données</translation>
     </message>
     <message>
         <source>Error closing database</source>
@@ -9539,7 +9747,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Unable to rollback transaction</source>
-        <translation type="vanished">Impossible d&apos;annuler la transaction</translation>
+        <translation type="vanished">Impossible d'annuler la transaction</translation>
     </message>
 </context>
 <context>
@@ -9554,11 +9762,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Unable to execute statement</source>
-        <translation type="vanished">Impossible d&apos;exécuter l&apos;instruction</translation>
+        <translation type="vanished">Impossible d'exécuter l'instruction</translation>
     </message>
     <message>
         <source>Unable to execute multiple statements at a time</source>
-        <translation type="vanished">Impossible d&apos;exécuter plusieurs instructions à la fois</translation>
+        <translation type="vanished">Impossible d'exécuter plusieurs instructions à la fois</translation>
     </message>
     <message>
         <source>Unable to reset statement</source>
@@ -9566,7 +9774,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Unable to bind parameters</source>
-        <translation type="vanished">Impossible d&apos;attacher les paramètres</translation>
+        <translation type="vanished">Impossible d'attacher les paramètres</translation>
     </message>
     <message>
         <source>Parameter count mismatch</source>
@@ -9577,26 +9785,26 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     <name>QSaveFile</name>
     <message>
         <source>Existing file %1 is not writable</source>
-        <translation type="vanished">Le fichier existant %1 n&apos;est pas accessible en écriture</translation>
+        <translation type="vanished">Le fichier existant %1 n'est pas accessible en écriture</translation>
     </message>
     <message>
         <source>Filename refers to a directory</source>
         <translation type="vanished">Le nom de fichier est associé à un répertoire</translation>
     </message>
     <message>
-        <source>QSaveFile cannot open &apos;%1&apos; without direct write fallback enabled.</source>
-        <translation type="vanished">QSaveFile ne peut pas ouvrir &apos;%1&apos; sans l&apos;activation du repli d&apos;écriture directe.</translation>
+        <source>QSaveFile cannot open '%1' without direct write fallback enabled.</source>
+        <translation type="vanished">QSaveFile ne peut pas ouvrir '%1' sans l'activation du repli d'écriture directe.</translation>
     </message>
     <message>
         <source>Writing canceled by application</source>
-        <translation type="vanished">L&apos;écriture a été annulée par l&apos;application</translation>
+        <translation type="vanished">L'écriture a été annulée par l'application</translation>
     </message>
 </context>
 <context>
     <name>QScrollBar</name>
     <message>
         <source>Scroll here</source>
-        <translation type="vanished">Défiler jusqu&apos;ici</translation>
+        <translation type="vanished">Défiler jusqu'ici</translation>
     </message>
     <message>
         <source>Left edge</source>
@@ -9651,93 +9859,93 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     <name>QSctpSocket</name>
     <message>
         <source>The remote host closed the connection</source>
-        <translation type="vanished">L&apos;hôte distant a fermé la connexion</translation>
+        <translation type="vanished">L'hôte distant a fermé la connexion</translation>
     </message>
 </context>
 <context>
     <name>QSharedMemory</name>
     <message>
         <source>%1: unable to set key on lock</source>
-        <translation type="vanished">%1&#xa0;: impossible d&apos;affecter la clé au verrou</translation>
+        <translation type="vanished">%1 : impossible d'affecter la clé au verrou</translation>
     </message>
     <message>
         <source>%1: create size is less then 0</source>
-        <translation type="vanished">%1&#xa0;: taille de création est inférieur à 0</translation>
+        <translation type="vanished">%1 : taille de création est inférieur à 0</translation>
     </message>
     <message>
         <source>%1: unable to lock</source>
-        <translation type="vanished">%1&#xa0;: impossible de vérrouiller</translation>
+        <translation type="vanished">%1 : impossible de vérrouiller</translation>
     </message>
     <message>
         <source>%1: unable to unlock</source>
-        <translation type="vanished">%1&#xa0;: impossible de déverrouiller</translation>
+        <translation type="vanished">%1 : impossible de déverrouiller</translation>
     </message>
     <message>
         <source>%1: key is empty</source>
-        <translation type="vanished">%1&#xa0;: la clé est vide</translation>
+        <translation type="vanished">%1 : la clé est vide</translation>
     </message>
     <message>
         <source>%1: bad name</source>
-        <translation type="vanished">%1&#xa0;: nom incorrect</translation>
+        <translation type="vanished">%1 : nom incorrect</translation>
     </message>
     <message>
-        <source>%1: UNIX key file doesn&apos;t exist</source>
-        <translation type="vanished">%1&#xa0;: le fichier de clés UNIX n&apos;existe pas</translation>
+        <source>%1: UNIX key file doesn't exist</source>
+        <translation type="vanished">%1 : le fichier de clés UNIX n'existe pas</translation>
     </message>
     <message>
         <source>%1: ftok failed</source>
-        <translation type="vanished">%1&#xa0;: ftok a échoué</translation>
+        <translation type="vanished">%1 : ftok a échoué</translation>
     </message>
     <message>
         <source>%1: unable to make key</source>
-        <translation type="vanished">%1&#xa0;: impossible de créer la clé</translation>
+        <translation type="vanished">%1 : impossible de créer la clé</translation>
     </message>
     <message>
         <source>%1: system-imposed size restrictions</source>
-        <translation type="vanished">%1&#xa0;: le système impose des restrictions sur la taille</translation>
+        <translation type="vanished">%1 : le système impose des restrictions sur la taille</translation>
     </message>
     <message>
         <source>%1: not attached</source>
-        <translation type="vanished">%1&#xa0;: n&apos;est attaché</translation>
+        <translation type="vanished">%1 : n'est attaché</translation>
     </message>
     <message>
         <source>%1: permission denied</source>
-        <translation type="vanished">%1&#xa0;: permission refusée</translation>
+        <translation type="vanished">%1 : permission refusée</translation>
     </message>
     <message>
         <source>%1: already exists</source>
-        <translation type="vanished">%1&#xa0;: existe déjà</translation>
+        <translation type="vanished">%1 : existe déjà</translation>
     </message>
     <message>
-        <source>%1: doesn&apos;t exist</source>
-        <translation type="vanished">%1&#xa0;: n&apos;existe pas</translation>
+        <source>%1: doesn't exist</source>
+        <translation type="vanished">%1 : n'existe pas</translation>
     </message>
     <message>
         <source>%1: out of resources</source>
-        <translation type="vanished">%1&#xa0;: manque de ressources</translation>
+        <translation type="vanished">%1 : manque de ressources</translation>
     </message>
     <message>
         <source>%1: unknown error %2</source>
-        <translation type="vanished">%1&#xa0;: erreur inconnue %2</translation>
+        <translation type="vanished">%1 : erreur inconnue %2</translation>
     </message>
     <message>
         <source>%1: invalid size</source>
-        <translation type="vanished">%1&#xa0;: la taille est invalide</translation>
+        <translation type="vanished">%1 : la taille est invalide</translation>
     </message>
     <message>
         <source>%1: key error</source>
-        <translation type="vanished">%1&#xa0;: erreur de clé</translation>
+        <translation type="vanished">%1 : erreur de clé</translation>
     </message>
     <message>
         <source>%1: size query failed</source>
-        <translation type="vanished">%1&#xa0;: la requête de taille a échoué</translation>
+        <translation type="vanished">%1 : la requête de taille a échoué</translation>
     </message>
 </context>
 <context>
     <name>QShortcut</name>
     <message>
         <source>Space</source>
-        <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
+        <extracomment>This and all following "incomprehensible" strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation type="vanished">Espace</translation>
     </message>
     <message>
@@ -9916,7 +10124,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Home Page</source>
-        <translation type="vanished">Page d&apos;accueil</translation>
+        <translation type="vanished">Page d'accueil</translation>
     </message>
     <message>
         <source>Favorites</source>
@@ -10048,7 +10256,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Screensaver</source>
-        <translation type="vanished">Économiseur d&apos;écran</translation>
+        <translation type="vanished">Économiseur d'écran</translation>
     </message>
     <message>
         <source>WWW</source>
@@ -10260,7 +10468,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Split Screen</source>
-        <translation type="vanished">Partager l&apos;écran</translation>
+        <translation type="vanished">Partager l'écran</translation>
     </message>
     <message>
         <source>Support</source>
@@ -10320,7 +10528,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Mail Forward</source>
-        <translation type="vanished">Faire suivre l&apos;e-mail</translation>
+        <translation type="vanished">Faire suivre l'e-mail</translation>
     </message>
     <message>
         <source>Pictures</source>
@@ -10542,7 +10750,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Toggle Call/Hangup</source>
-        <extracomment>Button that will hang up if we&apos;re in call, or make a call if we&apos;re not.</extracomment>
+        <extracomment>Button that will hang up if we're in call, or make a call if we're not.</extracomment>
         <translation type="vanished">Décrocher/Raccrocher</translation>
     </message>
     <message>
@@ -10767,7 +10975,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Proxy host not found</source>
-        <translation type="vanished">L&apos;hôte proxy est introuvable</translation>
+        <translation type="vanished">L'hôte proxy est introuvable</translation>
     </message>
     <message>
         <source>Connection to proxy timed out</source>
@@ -10775,11 +10983,11 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>Proxy authentication failed</source>
-        <translation type="vanished">L&apos;authentification proxy a échoué</translation>
+        <translation type="vanished">L'authentification proxy a échoué</translation>
     </message>
     <message>
         <source>Proxy authentication failed: %1</source>
-        <translation type="vanished">L&apos;authentification proxy a échoué&#xa0;: %1</translation>
+        <translation type="vanished">L'authentification proxy a échoué : %1</translation>
     </message>
     <message>
         <source>SOCKS version 5 protocol error</source>
@@ -10799,19 +11007,19 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     </message>
     <message>
         <source>SOCKSv5 command not supported</source>
-        <translation type="vanished">La commande SOCKSv5 n&apos;est pas supportée</translation>
+        <translation type="vanished">La commande SOCKSv5 n'est pas supportée</translation>
     </message>
     <message>
         <source>Address type not supported</source>
-        <translation type="vanished">Le type d&apos;adresse n&apos;est pas supporté</translation>
+        <translation type="vanished">Le type d'adresse n'est pas supporté</translation>
     </message>
     <message>
         <source>Unknown SOCKSv5 proxy error code 0x%1</source>
-        <translation type="vanished">Erreur proxy SOCKSv5 inconnue&#xa0;: 0x%1</translation>
+        <translation type="vanished">Erreur proxy SOCKSv5 inconnue : 0x%1</translation>
     </message>
     <message>
         <source>Network operation timed out</source>
-        <translation type="vanished">L&apos;opération réseau a expiré</translation>
+        <translation type="vanished">L'opération réseau a expiré</translation>
     </message>
 </context>
 <context>
@@ -10859,7 +11067,7 @@ Veuillez désactiver l&apos;une de ces options.</translation>
     <message>
         <source>alert message</source>
         <extracomment>Role of an accessible object</extracomment>
-        <translation type="vanished">message d&apos;alerte</translation>
+        <translation type="vanished">message d'alerte</translation>
     </message>
     <message>
         <source>frame</source>
@@ -10921,7 +11129,7 @@ Role of an accessible object</extracomment>
     <message>
         <source>tool bar</source>
         <extracomment>Role of an accessible object</extracomment>
-        <translation type="vanished">barre d&apos;outils</translation>
+        <translation type="vanished">barre d'outils</translation>
     </message>
     <message>
         <source>status bar</source>
@@ -10966,7 +11174,7 @@ Role of an accessible object</extracomment>
     <message>
         <source>help balloon</source>
         <extracomment>Role of an accessible object</extracomment>
-        <translation type="vanished">bulle d&apos;aide</translation>
+        <translation type="vanished">bulle d'aide</translation>
     </message>
     <message>
         <source>assistant</source>
@@ -10991,7 +11199,7 @@ Role of an accessible object</extracomment>
     <message>
         <source>tree item</source>
         <extracomment>Role of an accessible object</extracomment>
-        <translation type="vanished">élément d&apos;un arbre</translation>
+        <translation type="vanished">élément d'un arbre</translation>
     </message>
     <message>
         <source>page tab</source>
@@ -11106,7 +11314,7 @@ Role of an accessible object</extracomment>
     <message>
         <source>page tab list</source>
         <extracomment>Role of an accessible object</extracomment>
-        <translation type="vanished">liste d&apos;onglets de page</translation>
+        <translation type="vanished">liste d'onglets de page</translation>
     </message>
     <message>
         <source>clock</source>
@@ -11197,7 +11405,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Invalid input data</source>
-        <translation type="vanished">Donnée d&apos;entrée non valable</translation>
+        <translation type="vanished">Donnée d'entrée non valable</translation>
     </message>
     <message>
         <source>The given Diffie-Hellman parameters are deemed unsafe</source>
@@ -11264,7 +11472,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>An error occurred attempting to set %1 to %2</source>
-        <translation type="vanished">Une erreur s&apos;est produite lors de la tentative de définition de %1 sur %2</translation>
+        <translation type="vanished">Une erreur s'est produite lors de la tentative de définition de %1 sur %2</translation>
     </message>
     <message>
         <source>Wrong value for %1 (%2)</source>
@@ -11292,34 +11500,34 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>The issuer certificate could not be found</source>
-        <translation type="vanished">Le certificat de l&apos;émetteur est introuvable</translation>
+        <translation type="vanished">Le certificat de l'émetteur est introuvable</translation>
     </message>
     <message>
         <source>The certificate signature could not be decrypted</source>
-        <translation type="vanished">La signature du certificat n&apos;a pas pu être décryptée</translation>
+        <translation type="vanished">La signature du certificat n'a pas pu être décryptée</translation>
     </message>
     <message>
         <source>The public key in the certificate could not be read</source>
-        <translation type="vanished">La clé publique du certificat n&apos;a pas pu être lue</translation>
+        <translation type="vanished">La clé publique du certificat n'a pas pu être lue</translation>
     </message>
     <message>
         <source>The signature of the certificate is invalid</source>
-        <translation type="vanished">La signature du certificat n&apos;est pas valide</translation>
+        <translation type="vanished">La signature du certificat n'est pas valide</translation>
     </message>
     <message>
         <source>The certificate is not yet valid</source>
-        <translation type="vanished">Le certificat n&apos;est pas encore valide</translation>
+        <translation type="vanished">Le certificat n'est pas encore valide</translation>
     </message>
     <message>
         <source>The certificate has expired</source>
         <translation type="vanished">Le certificat a expiré</translation>
     </message>
     <message>
-        <source>The certificate&apos;s notBefore field contains an invalid time</source>
+        <source>The certificate's notBefore field contains an invalid time</source>
         <translation type="vanished">Le champ notBefore du certificat inclut une heure invalide</translation>
     </message>
     <message>
-        <source>The certificate&apos;s notAfter field contains an invalid time</source>
+        <source>The certificate's notAfter field contains an invalid time</source>
         <translation type="vanished">Le champ notAfter du certificat inclut une heure invalide</translation>
     </message>
     <message>
@@ -11332,15 +11540,15 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>The issuer certificate of a locally looked up certificate could not be found</source>
-        <translation type="vanished">Le certificat de l&apos;émetteur d&apos;un certificat converti localement est introuvable</translation>
+        <translation type="vanished">Le certificat de l'émetteur d'un certificat converti localement est introuvable</translation>
     </message>
     <message>
         <source>No certificates could be verified</source>
-        <translation type="vanished">Aucun certificat n&apos;a pu être vérifié</translation>
+        <translation type="vanished">Aucun certificat n'a pu être vérifié</translation>
     </message>
     <message>
         <source>One of the CA certificates is invalid</source>
-        <translation type="vanished">L&apos;un des certificats CA n&apos;est pas valide</translation>
+        <translation type="vanished">L'un des certificats CA n'est pas valide</translation>
     </message>
     <message>
         <source>The basicConstraints path length parameter has been exceeded</source>
@@ -11352,19 +11560,19 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>The root CA certificate is not trusted for this purpose</source>
-        <translation type="vanished">Le certificat CA racine n&apos;est pas sécurisé pour cet objectif</translation>
+        <translation type="vanished">Le certificat CA racine n'est pas sécurisé pour cet objectif</translation>
     </message>
     <message>
         <source>The root CA certificate is marked to reject the specified purpose</source>
-        <translation type="vanished">Le certificat CA racine est marqué pour rejeter l&apos;objectif spécifié</translation>
+        <translation type="vanished">Le certificat CA racine est marqué pour rejeter l'objectif spécifié</translation>
     </message>
     <message>
         <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
-        <translation type="vanished">Le certificat de l&apos;émetteur candidat actuel a été rejeté car le nom de son sujet ne correspondait pas au nom de l&apos;émetteur du certificat actuel</translation>
+        <translation type="vanished">Le certificat de l'émetteur candidat actuel a été rejeté car le nom de son sujet ne correspondait pas au nom de l'émetteur du certificat actuel</translation>
     </message>
     <message>
         <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
-        <translation type="vanished">Le certificat de l&apos;émetteur candidat actuel a été rejeté car le nom de son sujet et son numéro de série étaient présents et ne correspondaient pas à l&apos;identifiant de la clé d&apos;autorité du certificat actuel</translation>
+        <translation type="vanished">Le certificat de l'émetteur candidat actuel a été rejeté car le nom de son sujet et son numéro de série étaient présents et ne correspondaient pas à l'identifiant de la clé d'autorité du certificat actuel</translation>
     </message>
     <message>
         <source>The peer did not present any certificate</source>
@@ -11372,7 +11580,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>The host name did not match any of the valid hosts for this certificate</source>
-        <translation type="vanished">Le nom d&apos;hôte ne correspondait à aucun des hôtes valides pour ce certificat</translation>
+        <translation type="vanished">Le nom d'hôte ne correspondait à aucun des hôtes valides pour ce certificat</translation>
     </message>
     <message>
         <source>The peer certificate is blacklisted</source>
@@ -11380,7 +11588,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>No OCSP status response found</source>
-        <translation type="vanished">Aucune réponse d&apos;état OCSP trouvée</translation>
+        <translation type="vanished">Aucune réponse d'état OCSP trouvée</translation>
     </message>
     <message>
         <source>The OCSP status request had invalid syntax</source>
@@ -11396,7 +11604,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>OCSP responder was unable to return a status for the requested certificate</source>
-        <translation type="vanished">Le répondeur OCSP n&apos;a pas pu renvoyer un statut pour le certificat demandé</translation>
+        <translation type="vanished">Le répondeur OCSP n'a pas pu renvoyer un statut pour le certificat demandé</translation>
     </message>
     <message>
         <source>The server requires the client to sign the OCSP request in order to construct a response</source>
@@ -11404,22 +11612,22 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>The client is not authorized to request OCSP status from this server</source>
-        <translation type="vanished">Le client n&apos;est pas autorisé à demander le statut OCSP à ce serveur</translation>
+        <translation type="vanished">Le client n'est pas autorisé à demander le statut OCSP à ce serveur</translation>
     </message>
     <message>
-        <source>OCSP responder&apos;s identity cannot be verified</source>
-        <translation type="vanished">L&apos;identité du répondeur OCSP ne peut pas être vérifiée</translation>
+        <source>OCSP responder's identity cannot be verified</source>
+        <translation type="vanished">L'identité du répondeur OCSP ne peut pas être vérifiée</translation>
     </message>
     <message>
         <source>The identity of a certificate in an OCSP response cannot be established</source>
-        <translation type="vanished">L&apos;identité d&apos;un certificat dans une réponse OCSP ne peut pas être établie</translation>
+        <translation type="vanished">L'identité d'un certificat dans une réponse OCSP ne peut pas être établie</translation>
     </message>
     <message>
         <source>The certificate status response has expired</source>
-        <translation type="vanished">La réponse sur l&apos;état du certificat a expiré</translation>
+        <translation type="vanished">La réponse sur l'état du certificat a expiré</translation>
     </message>
     <message>
-        <source>The certificate&apos;s status is unknown</source>
+        <source>The certificate's status is unknown</source>
         <translation type="vanished">Le statut du certificat est inconnu</translation>
     </message>
     <message>
@@ -11432,31 +11640,31 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Error creating SSL session: %1</source>
-        <translation type="vanished">Erreur lors de la création de la session SSL&#xa0;: %1</translation>
+        <translation type="vanished">Erreur lors de la création de la session SSL : %1</translation>
     </message>
     <message>
         <source>Server-side QSslSocket does not support OCSP stapling</source>
-        <translation type="vanished">QSslSocket côté serveur ne prend pas en charge l&apos;agrafage OCSP</translation>
+        <translation type="vanished">QSslSocket côté serveur ne prend pas en charge l'agrafage OCSP</translation>
     </message>
     <message>
         <source>Failed to enable OCSP stapling</source>
-        <translation type="vanished">Échec de l&apos;activation de l&apos;agrafage OCSP</translation>
+        <translation type="vanished">Échec de l'activation de l'agrafage OCSP</translation>
     </message>
     <message>
         <source>Client-side sockets do not send OCSP responses</source>
-        <translation type="vanished">Les sockets côté client n&apos;envoient pas de réponses OCSP</translation>
+        <translation type="vanished">Les sockets côté client n'envoient pas de réponses OCSP</translation>
     </message>
     <message>
         <source>Unable to init SSL Context: %1</source>
-        <translation type="vanished">Impossible d&apos;initialiser le contexte SSL&#xa0;: %1</translation>
+        <translation type="vanished">Impossible d'initialiser le contexte SSL : %1</translation>
     </message>
     <message>
         <source>Unable to write data: %1</source>
-        <translation type="vanished">Impossible d&apos;écrire les données&#xa0;: %1</translation>
+        <translation type="vanished">Impossible d'écrire les données : %1</translation>
     </message>
     <message>
         <source>Unable to decrypt data: %1</source>
-        <translation type="vanished">Impossible de décrypter les données&#xa0;: %1</translation>
+        <translation type="vanished">Impossible de décrypter les données : %1</translation>
     </message>
     <message>
         <source>Failed to decode OCSP response</source>
@@ -11464,7 +11672,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Failed to extract basic OCSP response</source>
-        <translation type="vanished">Échec de l&apos;extraction de la réponse OCSP de base</translation>
+        <translation type="vanished">Échec de l'extraction de la réponse OCSP de base</translation>
     </message>
     <message>
         <source>No certificate verification store, cannot verify OCSP response</source>
@@ -11472,11 +11680,11 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Failed to decode a SingleResponse from OCSP status response</source>
-        <translation type="vanished">Échec du décodage d&apos;une SingleResponse à partir de la réponse d&apos;état OCSP</translation>
+        <translation type="vanished">Échec du décodage d'une SingleResponse à partir de la réponse d'état OCSP</translation>
     </message>
     <message>
-        <source>Failed to extract &apos;this update time&apos; from the SingleResponse</source>
-        <translation type="vanished">Échec de l&apos;extraction de « cette heure de mise à jour » de SingleResponse</translation>
+        <source>Failed to extract 'this update time' from the SingleResponse</source>
+        <translation type="vanished">Échec de l'extraction de « cette heure de mise à jour » de SingleResponse</translation>
     </message>
     <message>
         <source>The TLS/SSL connection has been closed</source>
@@ -11484,19 +11692,19 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Error while reading: %1</source>
-        <translation type="vanished">Erreur lors de la lecture&#xa0;: %1</translation>
+        <translation type="vanished">Erreur lors de la lecture : %1</translation>
     </message>
     <message>
         <source>Error during SSL handshake: %1</source>
-        <translation type="vanished">Erreur lors de la connexion SSL&#xa0;: %1</translation>
+        <translation type="vanished">Erreur lors de la connexion SSL : %1</translation>
     </message>
     <message>
         <source>TLS initialization failed</source>
-        <translation type="vanished">L&apos;initialisation TLS a échoué</translation>
+        <translation type="vanished">L'initialisation TLS a échoué</translation>
     </message>
     <message>
         <source>Attempted to use an unsupported protocol.</source>
-        <translation type="vanished">Tentative d&apos;utilisation d&apos;un protocole non pris en charge.</translation>
+        <translation type="vanished">Tentative d'utilisation d'un protocole non pris en charge.</translation>
     </message>
     <message>
         <source>Insufficient memory</source>
@@ -11512,7 +11720,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>An internal token was invalid</source>
-        <translation type="vanished">Un jeton interne n&apos;était pas valide</translation>
+        <translation type="vanished">Un jeton interne n'était pas valide</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -11520,11 +11728,11 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>No authority could be contacted for authorization</source>
-        <translation type="vanished">Aucune autorité n&apos;a pu être contactée pour obtenir une autorisation</translation>
+        <translation type="vanished">Aucune autorité n'a pu être contactée pour obtenir une autorisation</translation>
     </message>
     <message>
         <source>No credentials</source>
-        <translation type="vanished">Aucune information d&apos;identification</translation>
+        <translation type="vanished">Aucune information d'identification</translation>
     </message>
     <message>
         <source>The target is unknown or unreachable</source>
@@ -11536,11 +11744,11 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>The hostname provided does not match the one received from the peer</source>
-        <translation type="vanished">Le nom d&apos;hôte fourni ne correspond pas à celui reçu du homologue</translation>
+        <translation type="vanished">Le nom d'hôte fourni ne correspond pas à celui reçu du homologue</translation>
     </message>
     <message>
         <source>No common protocol exists between the client and the server</source>
-        <translation type="vanished">Aucun protocole commun n&apos;existe entre le client et le serveur</translation>
+        <translation type="vanished">Aucun protocole commun n'existe entre le client et le serveur</translation>
     </message>
     <message>
         <source>Unexpected or badly-formatted message received</source>
@@ -11548,7 +11756,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>The data could not be encrypted</source>
-        <translation type="vanished">Les données n&apos;ont pas pu être cryptées</translation>
+        <translation type="vanished">Les données n'ont pas pu être cryptées</translation>
     </message>
     <message>
         <source>No cipher suites in common</source>
@@ -11556,7 +11764,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>The credentials were not recognized / Invalid argument</source>
-        <translation type="vanished">Les identifiants n&apos;ont pas été reconnus / Argument invalide</translation>
+        <translation type="vanished">Les identifiants n'ont pas été reconnus / Argument invalide</translation>
     </message>
     <message>
         <source>The message was tampered with, damaged or out of sequence.</source>
@@ -11568,7 +11776,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Unknown error occurred: %1</source>
-        <translation type="vanished">Une erreur inconnue s&apos;est produite&#xa0;: %1</translation>
+        <translation type="vanished">Une erreur inconnue s'est produite : %1</translation>
     </message>
     <message>
         <source>Invalid protocol chosen</source>
@@ -11584,7 +11792,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Server did not accept any certificate we could present.</source>
-        <translation type="vanished">Le serveur n&apos;a accepté aucun certificat que nous pourrions présenter.</translation>
+        <translation type="vanished">Le serveur n'a accepté aucun certificat que nous pourrions présenter.</translation>
     </message>
     <message>
         <source>Algorithm mismatch</source>
@@ -11592,15 +11800,15 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Handshake failed: %1</source>
-        <translation type="vanished">Échec de la négociation&#xa0;: %1</translation>
+        <translation type="vanished">Échec de la négociation : %1</translation>
     </message>
     <message>
         <source>Failed to query the TLS context: %1</source>
-        <translation type="vanished">Échec de l&apos;interrogation du contexte TLS&#xa0;: %1</translation>
+        <translation type="vanished">Échec de l'interrogation du contexte TLS : %1</translation>
     </message>
     <message>
         <source>Did not get the required attributes for the connection.</source>
-        <translation type="vanished">Je n&apos;ai pas obtenu les attributs requis pour la connexion.</translation>
+        <translation type="vanished">Je n'ai pas obtenu les attributs requis pour la connexion.</translation>
     </message>
     <message>
         <source>Unwanted protocol was negotiated</source>
@@ -11608,11 +11816,11 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Renegotiation was unsuccessful: %1</source>
-        <translation type="vanished">La renégociation a échoué&#xa0;: %1</translation>
+        <translation type="vanished">La renégociation a échoué : %1</translation>
     </message>
     <message>
         <source>Schannel failed to encrypt data: %1</source>
-        <translation type="vanished">Schannel n&apos;a pas réussi à chiffrer les données&#xa0;: %1</translation>
+        <translation type="vanished">Schannel n'a pas réussi à chiffrer les données : %1</translation>
     </message>
     <message>
         <source>Cannot provide a certificate with no key</source>
@@ -11687,30 +11895,30 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Application Data</source>
-        <translation type="vanished">Données d&apos;applications</translation>
+        <translation type="vanished">Données d'applications</translation>
     </message>
     <message>
         <source>Application Configuration</source>
-        <translation type="vanished">Configuration de l&apos;application</translation>
+        <translation type="vanished">Configuration de l'application</translation>
     </message>
 </context>
 <context>
     <name>QStateMachine</name>
     <message>
-        <source>Missing initial state in compound state &apos;%1&apos;</source>
-        <translation type="vanished">L&apos;état initial est manquant dans l&apos;état composé &quot;%1&quot;</translation>
+        <source>Missing initial state in compound state '%1'</source>
+        <translation type="vanished">L'état initial est manquant dans l'état composé "%1"</translation>
     </message>
     <message>
-        <source>Missing default state in history state &apos;%1&apos;</source>
-        <translation type="vanished">L&apos;état par défaut est manquant dans l&apos;état de l&apos;historique &quot;%1&quot;</translation>
+        <source>Missing default state in history state '%1'</source>
+        <translation type="vanished">L'état par défaut est manquant dans l'état de l'historique "%1"</translation>
     </message>
     <message>
-        <source>No common ancestor for targets and source of transition from state &apos;%1&apos;</source>
-        <translation type="vanished">Aucun ancêtre commun pour les cibles et la source de la transition depuis l&apos;état &quot;%1&quot;</translation>
+        <source>No common ancestor for targets and source of transition from state '%1'</source>
+        <translation type="vanished">Aucun ancêtre commun pour les cibles et la source de la transition depuis l'état "%1"</translation>
     </message>
     <message>
-        <source>Child mode of state machine &apos;%1&apos; is not &apos;ExclusiveStates&apos;.</source>
-        <translation type="vanished">Le mode enfant de la machine à états &apos;%1&apos; n&apos;est pas &apos;ExclusiveStates&apos;.</translation>
+        <source>Child mode of state machine '%1' is not 'ExclusiveStates'.</source>
+        <translation type="vanished">Le mode enfant de la machine à états '%1' n'est pas 'ExclusiveStates'.</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -11721,34 +11929,34 @@ Role of an accessible object</extracomment>
     <name>QSystemSemaphore</name>
     <message>
         <source>%1: permission denied</source>
-        <translation type="vanished">%1&#xa0;: permission refusée</translation>
+        <translation type="vanished">%1 : permission refusée</translation>
     </message>
     <message>
         <source>%1: already exists</source>
-        <translation type="vanished">%1&#xa0;: existe déjà</translation>
+        <translation type="vanished">%1 : existe déjà</translation>
     </message>
     <message>
         <source>%1: does not exist</source>
-        <translation type="vanished">%1&#xa0;: n&apos;existe pas</translation>
+        <translation type="vanished">%1 : n'existe pas</translation>
     </message>
     <message>
         <source>%1: out of resources</source>
-        <translation type="vanished">%1&#xa0;: manque de ressources</translation>
+        <translation type="vanished">%1 : manque de ressources</translation>
     </message>
     <message>
         <source>%1: unknown error %2</source>
-        <translation type="vanished">%1&#xa0;: erreur inconnue %2</translation>
+        <translation type="vanished">%1 : erreur inconnue %2</translation>
     </message>
 </context>
 <context>
     <name>QTDSDriver</name>
     <message>
         <source>Unable to open connection</source>
-        <translation type="vanished">Impossible d&apos;ouvrir la connexion</translation>
+        <translation type="vanished">Impossible d'ouvrir la connexion</translation>
     </message>
     <message>
         <source>Unable to use database</source>
-        <translation type="vanished">Impossible d&apos;utiliser la base de données</translation>
+        <translation type="vanished">Impossible d'utiliser la base de données</translation>
     </message>
 </context>
 <context>
@@ -11773,31 +11981,31 @@ Role of an accessible object</extracomment>
     <name>QTgaFile</name>
     <message>
         <source>Could not read image data</source>
-        <translation type="vanished">Impossible de lire les données de l&apos;image</translation>
+        <translation type="vanished">Impossible de lire les données de l'image</translation>
     </message>
     <message>
         <source>Sequential device (eg socket) for image read not supported</source>
-        <translation type="vanished">Les périphériques séquentiels (par exemple un socket) pour la lecture d&apos;image ne sont pas supportés</translation>
+        <translation type="vanished">Les périphériques séquentiels (par exemple un socket) pour la lecture d'image ne sont pas supportés</translation>
     </message>
     <message>
         <source>Seek file/device for image read failed</source>
-        <translation type="vanished">La recherche d&apos;un fichier/périphérique pour la lecture d&apos;image a échoué</translation>
+        <translation type="vanished">La recherche d'un fichier/périphérique pour la lecture d'image a échoué</translation>
     </message>
     <message>
         <source>Image header read failed</source>
-        <translation type="vanished">La lecture de l&apos;en-tête de l&apos;image a échoué</translation>
+        <translation type="vanished">La lecture de l'en-tête de l'image a échoué</translation>
     </message>
     <message>
         <source>Image type not supported</source>
-        <translation type="vanished">Le type d&apos;image n&apos;est pas supporté</translation>
+        <translation type="vanished">Le type d'image n'est pas supporté</translation>
     </message>
     <message>
         <source>Image depth not valid</source>
-        <translation type="vanished">La profondeur de l&apos;image n&apos;est pas valide</translation>
+        <translation type="vanished">La profondeur de l'image n'est pas valide</translation>
     </message>
     <message>
         <source>Could not seek to image read footer</source>
-        <translation type="vanished">Impossible de trouver le pied de page de l&apos;image lue</translation>
+        <translation type="vanished">Impossible de trouver le pied de page de l'image lue</translation>
     </message>
     <message>
         <source>Could not read footer</source>
@@ -11805,7 +12013,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Image type (non-TrueVision 2.0) not supported</source>
-        <translation type="vanished">Le type d&apos;image (non-TrueVision 2.0) n&apos;est pas supporté</translation>
+        <translation type="vanished">Le type d'image (non-TrueVision 2.0) n'est pas supporté</translation>
     </message>
     <message>
         <source>Could not reset to read data</source>
@@ -11816,7 +12024,7 @@ Role of an accessible object</extracomment>
     <name>QUdpSocket</name>
     <message>
         <source>Unable to send a datagram</source>
-        <translation type="vanished">Impossible d&apos;envoyer un datagramme</translation>
+        <translation type="vanished">Impossible d'envoyer un datagramme</translation>
     </message>
     <message>
         <source>No datagram available for reading</source>
@@ -11938,8 +12146,8 @@ Role of an accessible object</extracomment>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <source>What&apos;s This?</source>
-        <translation type="vanished">Qu&apos;est-ce que c&apos;est&#xa0;?</translation>
+        <source>What's This?</source>
+        <translation type="vanished">Qu'est-ce que c'est ?</translation>
     </message>
 </context>
 <context>
@@ -11969,7 +12177,7 @@ Role of an accessible object</extracomment>
     </message>
     <message>
         <source>Copy &amp;Link Location</source>
-        <translation type="vanished">Copier l&apos;adresse du &amp;lien</translation>
+        <translation type="vanished">Copier l'adresse du &amp;lien</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -12058,7 +12266,7 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     <name>QXml</name>
     <message>
         <source>no error occurred</source>
-        <translation type="vanished">aucune erreur ne s&apos;est produite</translation>
+        <translation type="vanished">aucune erreur ne s'est produite</translation>
     </message>
     <message>
         <source>error triggered by consumer</source>
@@ -12070,11 +12278,11 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>more than one document type definition</source>
-        <translation type="vanished">plus d&apos;une définition de type de document</translation>
+        <translation type="vanished">plus d'une définition de type de document</translation>
     </message>
     <message>
         <source>error occurred while parsing element</source>
-        <translation type="vanished">une erreur s&apos;est produite pendant l&apos;analyse syntaxique de l&apos;élement</translation>
+        <translation type="vanished">une erreur s'est produite pendant l'analyse syntaxique de l'élement</translation>
     </message>
     <message>
         <source>tag mismatch</source>
@@ -12082,7 +12290,7 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>error occurred while parsing content</source>
-        <translation type="vanished">une erreur s&apos;est produite pendant l&apos;analyse syntaxique du contenu</translation>
+        <translation type="vanished">une erreur s'est produite pendant l'analyse syntaxique du contenu</translation>
     </message>
     <message>
         <source>unexpected character</source>
@@ -12090,7 +12298,7 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>invalid name for processing instruction</source>
-        <translation type="vanished">le nom d&apos;instruction est invalide</translation>
+        <translation type="vanished">le nom d'instruction est invalide</translation>
     </message>
     <message>
         <source>version expected while reading the XML declaration</source>
@@ -12098,19 +12306,19 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>wrong value for standalone declaration</source>
-        <translation type="vanished">valeur incorrecte pour une déclaration &quot;standalone&quot;</translation>
+        <translation type="vanished">valeur incorrecte pour une déclaration "standalone"</translation>
     </message>
     <message>
         <source>encoding declaration or standalone declaration expected while reading the XML declaration</source>
-        <translation type="vanished">déclaration d&apos;encodage ou déclaration &quot;standalone&quot; attendue lors de la lecture de la déclaration XML</translation>
+        <translation type="vanished">déclaration d'encodage ou déclaration "standalone" attendue lors de la lecture de la déclaration XML</translation>
     </message>
     <message>
         <source>standalone declaration expected while reading the XML declaration</source>
-        <translation type="vanished">déclaration &quot;standalone&quot; attendue lors de la lecture de la déclaration XML</translation>
+        <translation type="vanished">déclaration "standalone" attendue lors de la lecture de la déclaration XML</translation>
     </message>
     <message>
         <source>error occurred while parsing document type definition</source>
-        <translation type="vanished">une erreur s&apos;est produite pendant l&apos;analyse syntaxique de la définition du type de document</translation>
+        <translation type="vanished">une erreur s'est produite pendant l'analyse syntaxique de la définition du type de document</translation>
     </message>
     <message>
         <source>letter is expected</source>
@@ -12118,11 +12326,11 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>error occurred while parsing comment</source>
-        <translation type="vanished">une erreur s&apos;est produite pendant l&apos;analyse syntaxique du commentaire</translation>
+        <translation type="vanished">une erreur s'est produite pendant l'analyse syntaxique du commentaire</translation>
     </message>
     <message>
         <source>error occurred while parsing reference</source>
-        <translation type="vanished">une erreur s&apos;est produite pendant l&apos;analyse syntaxique d&apos;une référence</translation>
+        <translation type="vanished">une erreur s'est produite pendant l'analyse syntaxique d'une référence</translation>
     </message>
     <message>
         <source>internal general entity reference not allowed in DTD</source>
@@ -12130,7 +12338,7 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>external parsed general entity reference not allowed in attribute value</source>
-        <translation type="vanished">référence à une entité générale externe non autorisée dans la valeur d&apos;attribut</translation>
+        <translation type="vanished">référence à une entité générale externe non autorisée dans la valeur d'attribut</translation>
     </message>
     <message>
         <source>external parsed general entity reference not allowed in DTD</source>
@@ -12146,7 +12354,7 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>error in the text declaration of an external entity</source>
-        <translation type="vanished">erreur dans la déclaration texte d&apos;une entité externe</translation>
+        <translation type="vanished">erreur dans la déclaration texte d'une entité externe</translation>
     </message>
 </context>
 <context>
@@ -12157,35 +12365,35 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>Invalid entity value.</source>
-        <translation type="vanished">La valeur de l&apos;entité est invalide.</translation>
+        <translation type="vanished">La valeur de l'entité est invalide.</translation>
     </message>
     <message>
         <source>Invalid XML character.</source>
         <translation type="vanished">Le caractère XML est invalide.</translation>
     </message>
     <message>
-        <source>Sequence &apos;]]&gt;&apos; not allowed in content.</source>
-        <translation type="vanished">La séquence &quot;]]&gt;&quot; n&apos;est pas autorisée dans le contenu.</translation>
+        <source>Sequence ']]&gt;' not allowed in content.</source>
+        <translation type="vanished">La séquence "]]&gt;" n'est pas autorisée dans le contenu.</translation>
     </message>
     <message>
         <source>Encountered incorrectly encoded content.</source>
         <translation type="vanished">Du contenu avec un encodage incorrect a été rencontré.</translation>
     </message>
     <message>
-        <source>Namespace prefix &apos;%1&apos; not declared</source>
-        <translation type="vanished">Le préfixe d&apos;espace de noms &quot;%1&quot; n&apos;a pas été déclaré</translation>
+        <source>Namespace prefix '%1' not declared</source>
+        <translation type="vanished">Le préfixe d'espace de noms "%1" n'a pas été déclaré</translation>
     </message>
     <message>
         <source>Illegal namespace declaration.</source>
-        <translation type="vanished">La déclaration d&apos;espace de noms n&apos;est pas correcte.</translation>
+        <translation type="vanished">La déclaration d'espace de noms n'est pas correcte.</translation>
     </message>
     <message>
-        <source>Attribute &apos;%1&apos; redefined.</source>
-        <translation type="vanished">L&apos;attribut &apos;%1&apos; est redéfini.</translation>
+        <source>Attribute '%1' redefined.</source>
+        <translation type="vanished">L'attribut '%1' est redéfini.</translation>
     </message>
     <message>
-        <source>Unexpected character &apos;%1&apos; in public id literal.</source>
-        <translation type="vanished">Le caractère &quot;%1&quot; est inattendu pour une valeur d&apos;identifiant public.</translation>
+        <source>Unexpected character '%1' in public id literal.</source>
+        <translation type="vanished">Le caractère "%1" est inattendu pour une valeur d'identifiant public.</translation>
     </message>
     <message>
         <source>Invalid XML version string.</source>
@@ -12193,27 +12401,27 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>Unsupported XML version.</source>
-        <translation type="vanished">La version XML n&apos;est pas supportée.</translation>
+        <translation type="vanished">La version XML n'est pas supportée.</translation>
     </message>
     <message>
         <source>The standalone pseudo attribute must appear after the encoding.</source>
-        <translation type="vanished">Le pseudo-attribut &quot;standalone&quot; doit apparaître après l&apos;encodage.</translation>
+        <translation type="vanished">Le pseudo-attribut "standalone" doit apparaître après l'encodage.</translation>
     </message>
     <message>
         <source>%1 is an invalid encoding name.</source>
-        <translation type="vanished">%1 n&apos;est pas un nom d&apos;encodage valide.</translation>
+        <translation type="vanished">%1 n'est pas un nom d'encodage valide.</translation>
     </message>
     <message>
         <source>Encoding %1 is unsupported</source>
-        <translation type="vanished">%1 n&apos;est pas un encodage supporté</translation>
+        <translation type="vanished">%1 n'est pas un encodage supporté</translation>
     </message>
     <message>
         <source>Standalone accepts only yes or no.</source>
-        <translation type="vanished">Les seules valeurs possibles pour &quot;standalone&quot; sont &quot;yes&quot; ou &quot;no&quot;.</translation>
+        <translation type="vanished">Les seules valeurs possibles pour "standalone" sont "yes" ou "no".</translation>
     </message>
     <message>
         <source>Invalid attribute in XML declaration.</source>
-        <translation type="vanished">L&apos;attribut dans la déclaration XML est invalide.</translation>
+        <translation type="vanished">L'attribut dans la déclaration XML est invalide.</translation>
     </message>
     <message>
         <source>Premature end of document.</source>
@@ -12224,48 +12432,48 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
         <translation type="vanished">Le document est invalide.</translation>
     </message>
     <message>
-        <source>&apos;%1&apos;</source>
+        <source>'%1'</source>
         <comment>expected</comment>
-        <extracomment>&apos;&lt;first option&gt;&apos;</extracomment>
-        <translation type="vanished">&quot;%1&quot;</translation>
+        <extracomment>'&lt;first option&gt;'</extracomment>
+        <translation type="vanished">"%1"</translation>
     </message>
     <message>
-        <source>%1 or &apos;%2&apos;</source>
+        <source>%1 or '%2'</source>
         <comment>expected</comment>
-        <extracomment>&lt;first option&gt;, &apos;&lt;second option&gt;&apos;</extracomment>
-        <translation type="vanished">%1 ou &quot;%2&quot;</translation>
+        <extracomment>&lt;first option&gt;, '&lt;second option&gt;'</extracomment>
+        <translation type="vanished">%1 ou "%2"</translation>
     </message>
     <message>
-        <source>%1, &apos;%2&apos;</source>
+        <source>%1, '%2'</source>
         <comment>expected</comment>
-        <extracomment>&lt;options so far&gt;, &apos;&lt;next option&gt;&apos;</extracomment>
-        <translation type="vanished">%1, &quot;%2&quot;</translation>
+        <extracomment>&lt;options so far&gt;, '&lt;next option&gt;'</extracomment>
+        <translation type="vanished">%1, "%2"</translation>
     </message>
     <message>
-        <source>%1, or &apos;%2&apos;</source>
+        <source>%1, or '%2'</source>
         <comment>expected</comment>
-        <extracomment>&lt;options so far&gt;, or &apos;&lt;final option&gt;&apos;</extracomment>
-        <translation type="vanished">%1, ou &quot;%2&quot;</translation>
+        <extracomment>&lt;options so far&gt;, or '&lt;final option&gt;'</extracomment>
+        <translation type="vanished">%1, ou "%2"</translation>
     </message>
     <message>
-        <source>Expected %1, but got &apos;%2&apos;.</source>
-        <translation type="vanished">Attendu %1, obtenu &quot;%2&quot;.</translation>
+        <source>Expected %1, but got '%2'.</source>
+        <translation type="vanished">Attendu %1, obtenu "%2".</translation>
     </message>
     <message>
-        <source>Unexpected &apos;%1&apos;.</source>
-        <translation type="vanished">&quot;%1&quot; inattendu.</translation>
+        <source>Unexpected '%1'.</source>
+        <translation type="vanished">"%1" inattendu.</translation>
     </message>
     <message>
         <source>Expected </source>
         <translation type="vanished">Attendu </translation>
     </message>
     <message>
-        <source>, but got &apos;</source>
-        <translation type="vanished">, mais trouvé &apos;</translation>
+        <source>, but got '</source>
+        <translation type="vanished">, mais trouvé '</translation>
     </message>
     <message>
-        <source>Unexpected &apos;</source>
-        <translation type="vanished">Inattendu &apos;</translation>
+        <source>Unexpected '</source>
+        <translation type="vanished">Inattendu '</translation>
     </message>
     <message>
         <source>Expected character data.</source>
@@ -12281,7 +12489,7 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>Entity expands to more characters than the entity expansion limit.</source>
-        <translation type="vanished">L&apos;entité se développe en plus de caractères que la limite autorisée.</translation>
+        <translation type="vanished">L'entité se développe en plus de caractères que la limite autorisée.</translation>
     </message>
     <message>
         <source>Start tag expected.</source>
@@ -12289,7 +12497,7 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>NDATA in parameter entity declaration.</source>
-        <translation type="vanished">NDATA dans une déclaration de paramètre d&apos;entité.</translation>
+        <translation type="vanished">NDATA dans une déclaration de paramètre d'entité.</translation>
     </message>
     <message>
         <source>XML declaration not at start of document.</source>
@@ -12297,15 +12505,15 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>%1 is an invalid processing instruction name.</source>
-        <translation type="vanished">%1 n&apos;est pas un nom d&apos;instruction valide.</translation>
+        <translation type="vanished">%1 n'est pas un nom d'instruction valide.</translation>
     </message>
     <message>
         <source>Invalid processing instruction name.</source>
-        <translation type="vanished">Le nom d&apos;instruction est invalide.</translation>
+        <translation type="vanished">Le nom d'instruction est invalide.</translation>
     </message>
     <message>
         <source>%1 is an invalid PUBLIC identifier.</source>
-        <translation type="vanished">%1 n&apos;est pas un identifiant PUBLIC valide.</translation>
+        <translation type="vanished">%1 n'est pas un identifiant PUBLIC valide.</translation>
     </message>
     <message>
         <source>Invalid XML name.</source>
@@ -12316,16 +12524,16 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
         <translation type="vanished">Les tags ouvrant et fermants ne correspondent pas.</translation>
     </message>
     <message>
-        <source>Entity &apos;%1&apos; not declared.</source>
-        <translation type="vanished">L&apos;entité &quot;%1&quot; n&apos;est pas déclarée.</translation>
+        <source>Entity '%1' not declared.</source>
+        <translation type="vanished">L'entité "%1" n'est pas déclarée.</translation>
     </message>
     <message>
-        <source>Reference to unparsed entity &apos;%1&apos;.</source>
-        <translation type="vanished">La référence à l&apos;entité &quot;%1&quot; n&apos;est pas analysée.</translation>
+        <source>Reference to unparsed entity '%1'.</source>
+        <translation type="vanished">La référence à l'entité "%1" n'est pas analysée.</translation>
     </message>
     <message>
-        <source>Reference to external entity &apos;%1&apos; in attribute value.</source>
-        <translation type="vanished">La référence à l&apos;entité externe &quot;%1&quot; comme valeur d&apos;attribut.</translation>
+        <source>Reference to external entity '%1' in attribute value.</source>
+        <translation type="vanished">La référence à l'entité externe "%1" comme valeur d'attribut.</translation>
     </message>
     <message>
         <source>Invalid character reference.</source>
@@ -12335,108 +12543,108 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
 <context>
     <name>RDevice</name>
     <message>
-        <location filename="../../src/rdevice.cpp" line="907"/>
+        <location filename="../../src/rdevice.cpp" line="907" />
         <source>[RDevice] Negotiating SSH with %1...</source>
         <translation>[RDevice] Négociation SSH avec %1...</translation>
     </message>
     <message>
-        <location filename="../../src/rdevice.cpp" line="916"/>
+        <location filename="../../src/rdevice.cpp" line="916" />
         <source>[RDevice] Dialing Telnet %1:%2...</source>
-        <translation>[RDevice] Appel de Telnet %1&#xa0;:&#xa0;%2...</translation>
+        <translation>[RDevice] Appel de Telnet %1 : %2...</translation>
     </message>
 </context>
 <context>
     <name>SectorEditDialog</name>
     <message>
-        <location filename="../../src/sectoreditdialog.ui" line="6"/>
+        <location filename="../../src/sectoreditdialog.ui" line="6" />
         <source>Edit Sector</source>
         <translation>Modifier le secteur</translation>
     </message>
     <message>
-        <location filename="../../src/sectoreditdialog.ui" line="19"/>
+        <location filename="../../src/sectoreditdialog.ui" line="19" />
         <source>Inject Text...</source>
         <translation>Injecter du texte...</translation>
     </message>
     <message>
-        <location filename="../../src/sectoreditdialog.ui" line="31"/>
+        <location filename="../../src/sectoreditdialog.ui" line="31" />
         <source>Select a cell...</source>
         <translation>Sélectionnez une cellule...</translation>
     </message>
     <message>
-        <location filename="../../src/sectoreditdialog.cpp" line="88"/>
+        <location filename="../../src/sectoreditdialog.cpp" line="88" />
         <source>Invalid Data</source>
         <translation>Données invalides</translation>
     </message>
     <message>
-        <location filename="../../src/sectoreditdialog.cpp" line="89"/>
-        <source>Invalid hex value &apos;%1&apos; at row %2, col %3. Please use 00-FF.</source>
-        <translation>Valeur hexadécimale &apos;%1&apos; non valide à la ligne %2, colonne %3. Veuillez utiliser 00-FF.</translation>
+        <location filename="../../src/sectoreditdialog.cpp" line="89" />
+        <source>Invalid hex value '%1' at row %2, col %3. Please use 00-FF.</source>
+        <translation>Valeur hexadécimale '%1' non valide à la ligne %2, colonne %3. Veuillez utiliser 00-FF.</translation>
     </message>
     <message>
-        <location filename="../../src/sectoreditdialog.cpp" line="101"/>
+        <location filename="../../src/sectoreditdialog.cpp" line="101" />
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../src/sectoreditdialog.cpp" line="101"/>
+        <location filename="../../src/sectoreditdialog.cpp" line="101" />
         <source>Failed to write sector to disk image! Is it write-protected?</source>
-        <translation>Échec de l&apos;écriture du secteur sur l&apos;image disque&#xa0;! Est-il protégé en écriture ?</translation>
+        <translation>Échec de l'écriture du secteur sur l'image disque ! Est-il protégé en écriture ?</translation>
     </message>
     <message>
-        <location filename="../../src/sectoreditdialog.cpp" line="138"/>
+        <location filename="../../src/sectoreditdialog.cpp" line="138" />
         <source>Inject ATASCII Text</source>
         <translation>Injecter du texte ATASCII</translation>
     </message>
     <message>
-        <location filename="../../src/sectoreditdialog.cpp" line="139"/>
+        <location filename="../../src/sectoreditdialog.cpp" line="139" />
         <source>Enter text to write into the sector:</source>
-        <translation>Saisissez le texte à écrire dans le secteur&#xa0;:</translation>
+        <translation>Saisissez le texte à écrire dans le secteur :</translation>
     </message>
 </context>
 <context>
     <name>SectorInspectorDialog</name>
     <message>
-        <location filename="../../src/sectorinspectordialog.ui" line="14"/>
+        <location filename="../../src/sectorinspectordialog.ui" line="14" />
         <source>Sector Inspector</source>
         <translation>Inspecteur de secteur</translation>
     </message>
     <message>
-        <location filename="../../src/sectorinspectordialog.ui" line="22"/>
+        <location filename="../../src/sectorinspectordialog.ui" line="22" />
         <source>Sector:</source>
         <translation>Secteur:</translation>
     </message>
     <message>
-        <location filename="../../src/sectorinspectordialog.ui" line="32"/>
+        <location filename="../../src/sectorinspectordialog.ui" line="32" />
         <source>Reload</source>
         <translation>Recharger</translation>
     </message>
     <message>
-        <location filename="../../src/sectorinspectordialog.ui" line="39"/>
+        <location filename="../../src/sectorinspectordialog.ui" line="39" />
         <source>Edit Sector...</source>
         <translation>Modifier le secteur...</translation>
     </message>
     <message>
-        <location filename="../../src/sectorinspectordialog.ui" line="67"/>
+        <location filename="../../src/sectorinspectordialog.ui" line="67" />
         <source>Find:</source>
         <translation>Trouver:</translation>
     </message>
     <message>
-        <location filename="../../src/sectorinspectordialog.ui" line="85"/>
+        <location filename="../../src/sectorinspectordialog.ui" line="85" />
         <source>Text</source>
         <translation>Texte</translation>
     </message>
     <message>
-        <location filename="../../src/sectorinspectordialog.ui" line="90"/>
+        <location filename="../../src/sectorinspectordialog.ui" line="90" />
         <source>Hex</source>
         <translation>Hex</translation>
     </message>
     <message>
-        <location filename="../../src/sectorinspectordialog.ui" line="98"/>
+        <location filename="../../src/sectorinspectordialog.ui" line="98" />
         <source>Find Next</source>
         <translation>Rechercher suivant</translation>
     </message>
     <message>
-        <location filename="../../src/sectorinspectordialog.cpp" line="31"/>
+        <location filename="../../src/sectorinspectordialog.cpp" line="31" />
         <source>Sector Inspector - %1</source>
         <translation>Inspecteur de secteur - %1</translation>
     </message>
@@ -12444,361 +12652,361 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
 <context>
     <name>SimpleDiskImage</name>
     <message>
-        <location filename="../../src/diskimage.cpp" line="276"/>
-        <location filename="../../src/diskimage.cpp" line="285"/>
-        <location filename="../../src/diskimage.cpp" line="295"/>
-        <location filename="../../src/diskimage.cpp" line="309"/>
-        <location filename="../../src/diskimage.cpp" line="321"/>
-        <location filename="../../src/diskimage.cpp" line="329"/>
-        <location filename="../../src/diskimage.cpp" line="353"/>
-        <location filename="../../src/diskimage.cpp" line="402"/>
-        <location filename="../../src/diskimage.cpp" line="414"/>
-        <location filename="../../src/diskimage.cpp" line="429"/>
-        <location filename="../../src/diskimage.cpp" line="464"/>
-        <location filename="../../src/diskimage.cpp" line="471"/>
-        <location filename="../../src/diskimage.cpp" line="482"/>
-        <location filename="../../src/diskimage.cpp" line="489"/>
-        <location filename="../../src/diskimage.cpp" line="500"/>
-        <location filename="../../src/diskimage.cpp" line="523"/>
-        <location filename="../../src/diskimage.cpp" line="529"/>
-        <location filename="../../src/diskimage.cpp" line="535"/>
-        <location filename="../../src/diskimage.cpp" line="806"/>
-        <source>Cannot open &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;ouvrir &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="276" />
+        <location filename="../../src/diskimage.cpp" line="285" />
+        <location filename="../../src/diskimage.cpp" line="295" />
+        <location filename="../../src/diskimage.cpp" line="309" />
+        <location filename="../../src/diskimage.cpp" line="321" />
+        <location filename="../../src/diskimage.cpp" line="329" />
+        <location filename="../../src/diskimage.cpp" line="353" />
+        <location filename="../../src/diskimage.cpp" line="402" />
+        <location filename="../../src/diskimage.cpp" line="414" />
+        <location filename="../../src/diskimage.cpp" line="429" />
+        <location filename="../../src/diskimage.cpp" line="464" />
+        <location filename="../../src/diskimage.cpp" line="471" />
+        <location filename="../../src/diskimage.cpp" line="482" />
+        <location filename="../../src/diskimage.cpp" line="489" />
+        <location filename="../../src/diskimage.cpp" line="500" />
+        <location filename="../../src/diskimage.cpp" line="523" />
+        <location filename="../../src/diskimage.cpp" line="529" />
+        <location filename="../../src/diskimage.cpp" line="535" />
+        <location filename="../../src/diskimage.cpp" line="806" />
+        <source>Cannot open '%1': %2</source>
+        <translation>Impossible d'ouvrir '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="287"/>
+        <location filename="../../src/diskimage.cpp" line="287" />
         <source>Cannot read the header: %1.</source>
-        <translation>Impossible de lire l&apos;en-tête&#xa0;: %1.</translation>
+        <translation>Impossible de lire l'en-tête : %1.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="295"/>
+        <location filename="../../src/diskimage.cpp" line="295" />
         <source>Not a valid ATR file.</source>
-        <translation>Il ne s&apos;agit pas d&apos;un fichier ATR valide.</translation>
+        <translation>Il ne s'agit pas d'un fichier ATR valide.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="311"/>
-        <location filename="../../src/diskimage.cpp" line="473"/>
-        <source>Cannot create temporary file &apos;%1&apos;: %2</source>
-        <translation>Impossible de créer le fichier temporaire &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="311" />
+        <location filename="../../src/diskimage.cpp" line="473" />
+        <source>Cannot create temporary file '%1': %2</source>
+        <translation>Impossible de créer le fichier temporaire '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="323"/>
-        <location filename="../../src/diskimage.cpp" line="484"/>
+        <location filename="../../src/diskimage.cpp" line="323" />
+        <location filename="../../src/diskimage.cpp" line="484" />
         <source>Cannot read from file: %1.</source>
-        <translation>Impossible de lire à partir du fichier&#xa0;: %1.</translation>
+        <translation>Impossible de lire à partir du fichier : %1.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="331"/>
-        <location filename="../../src/diskimage.cpp" line="491"/>
-        <source>Cannot write to temporary file &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;écrire dans le fichier temporaire &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="331" />
+        <location filename="../../src/diskimage.cpp" line="491" />
+        <source>Cannot write to temporary file '%1': %2</source>
+        <translation>Impossible d'écrire dans le fichier temporaire '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="343"/>
-        <source>Image size of &apos;%1&apos; is reported as %2 bytes in the header but it&apos;s actually %3.</source>
-        <translation>La taille de l&apos;image «&#xa0;%1&#xa0;» est indiquée comme %2 octets dans l&apos;en-tête, mais elle est en réalité %3.</translation>
+        <location filename="../../src/diskimage.cpp" line="343" />
+        <source>Image size of '%1' is reported as %2 bytes in the header but it's actually %3.</source>
+        <translation>La taille de l'image « %1 » est indiquée comme %2 octets dans l'en-tête, mais elle est en réalité %3.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="353"/>
+        <location filename="../../src/diskimage.cpp" line="353" />
         <source>Unknown sector size (%1).</source>
         <translation>Taille du secteur inconnue (%1).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="404"/>
-        <location filename="../../src/diskimage.cpp" line="502"/>
+        <location filename="../../src/diskimage.cpp" line="404" />
+        <location filename="../../src/diskimage.cpp" line="502" />
         <source>Invalid image size (%1).</source>
-        <translation>Taille d&apos;image non valide (%1).</translation>
+        <translation>Taille d'image non valide (%1).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="416"/>
+        <location filename="../../src/diskimage.cpp" line="416" />
         <source>Too many sectors in the image (%1).</source>
-        <translation>Trop de secteurs dans l&apos;image (%1).</translation>
+        <translation>Trop de secteurs dans l'image (%1).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="424"/>
-        <source>The file &apos;%1&apos; has some unrecognized fields in its header.</source>
-        <translation>Le fichier &apos;%1&apos; contient des champs non reconnus dans son en-tête.</translation>
+        <location filename="../../src/diskimage.cpp" line="424" />
+        <source>The file '%1' has some unrecognized fields in its header.</source>
+        <translation>Le fichier '%1' contient des champs non reconnus dans son en-tête.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="431"/>
-        <source>Cannot resize temporary file &apos;%1&apos;: %2</source>
-        <translation>Impossible de redimensionner le fichier temporaire &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="431" />
+        <source>Cannot resize temporary file '%1': %2</source>
+        <translation>Impossible de redimensionner le fichier temporaire '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="523"/>
+        <location filename="../../src/diskimage.cpp" line="523" />
         <source>DCM images are not supported yet.</source>
         <translation>Les images DCM ne sont pas encore prises en charge.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="529"/>
+        <location filename="../../src/diskimage.cpp" line="529" />
         <source>SCP images are not supported yet.</source>
         <translation>Les images SCP ne sont pas encore prises en charge.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="535"/>
+        <location filename="../../src/diskimage.cpp" line="535" />
         <source>DI images are not supported yet.</source>
         <translation>Les images DI ne sont pas encore prises en charge.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="570"/>
-        <location filename="../../src/diskimage.cpp" line="579"/>
-        <location filename="../../src/diskimage.cpp" line="595"/>
-        <location filename="../../src/diskimage.cpp" line="609"/>
-        <location filename="../../src/diskimage.cpp" line="616"/>
-        <location filename="../../src/diskimage.cpp" line="659"/>
-        <location filename="../../src/diskimage.cpp" line="667"/>
-        <location filename="../../src/diskimage.cpp" line="680"/>
-        <location filename="../../src/diskimage.cpp" line="686"/>
-        <location filename="../../src/diskimage.cpp" line="706"/>
-        <location filename="../../src/diskimage.cpp" line="712"/>
-        <location filename="../../src/diskimage.cpp" line="718"/>
-        <location filename="../../src/diskimage.cpp" line="746"/>
-        <location filename="../../src/diskimage.cpp" line="775"/>
-        <source>Cannot save &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;enregistrer &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="570" />
+        <location filename="../../src/diskimage.cpp" line="579" />
+        <location filename="../../src/diskimage.cpp" line="595" />
+        <location filename="../../src/diskimage.cpp" line="609" />
+        <location filename="../../src/diskimage.cpp" line="616" />
+        <location filename="../../src/diskimage.cpp" line="659" />
+        <location filename="../../src/diskimage.cpp" line="667" />
+        <location filename="../../src/diskimage.cpp" line="680" />
+        <location filename="../../src/diskimage.cpp" line="686" />
+        <location filename="../../src/diskimage.cpp" line="706" />
+        <location filename="../../src/diskimage.cpp" line="712" />
+        <location filename="../../src/diskimage.cpp" line="718" />
+        <location filename="../../src/diskimage.cpp" line="746" />
+        <location filename="../../src/diskimage.cpp" line="775" />
+        <source>Cannot save '%1': %2</source>
+        <translation>Impossible d'enregistrer '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="597"/>
-        <location filename="../../src/diskimage.cpp" line="669"/>
-        <source>Cannot rewind temporary file &apos;%1&apos;: %2</source>
-        <translation>Impossible de rembobiner le fichier temporaire &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/diskimage.cpp" line="597" />
+        <location filename="../../src/diskimage.cpp" line="669" />
+        <source>Cannot rewind temporary file '%1': %2</source>
+        <translation>Impossible de rembobiner le fichier temporaire '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="611"/>
-        <location filename="../../src/diskimage.cpp" line="682"/>
+        <location filename="../../src/diskimage.cpp" line="611" />
+        <location filename="../../src/diskimage.cpp" line="682" />
         <source>Cannot read from temporay file %1: %2</source>
-        <translation>Impossible de lire à partir du fichier temporaire %1&#xa0;: %2</translation>
+        <translation>Impossible de lire à partir du fichier temporaire %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="628"/>
-        <source>Detailed geometry information will be lost when reopening &apos;%1&apos; due to ATR file format limitations.</source>
-        <translation>Les informations détaillées sur la géométrie seront perdues lors de la réouverture de «&#xa0;%1&#xa0;» en raison des limitations du format de fichier ATR.</translation>
+        <location filename="../../src/diskimage.cpp" line="628" />
+        <source>Detailed geometry information will be lost when reopening '%1' due to ATR file format limitations.</source>
+        <translation>Les informations détaillées sur la géométrie seront perdues lors de la réouverture de « %1 » en raison des limitations du format de fichier ATR.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="648"/>
-        <source>Detailed disk geometry information will be lost when reopening &apos;%1&apos; due to XFD file format limitations.</source>
-        <translation>Les informations détaillées sur la géométrie du disque seront perdues lors de la réouverture de «&#xa0;%1&#xa0;» en raison des limitations du format de fichier XFD.</translation>
+        <location filename="../../src/diskimage.cpp" line="648" />
+        <source>Detailed disk geometry information will be lost when reopening '%1' due to XFD file format limitations.</source>
+        <translation>Les informations détaillées sur la géométrie du disque seront perdues lors de la réouverture de « %1 » en raison des limitations du format de fichier XFD.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="651"/>
-        <source>XFD file format cannot handle this disk geometry. Try saving &apos;%1&apos; as ATR.</source>
-        <translation>Le format de fichier XFD ne peut pas gérer cette géométrie de disque. Essayez d&apos;enregistrer &apos;%1&apos; en tant qu&apos;ATR.</translation>
+        <location filename="../../src/diskimage.cpp" line="651" />
+        <source>XFD file format cannot handle this disk geometry. Try saving '%1' as ATR.</source>
+        <translation>Le format de fichier XFD ne peut pas gérer cette géométrie de disque. Essayez d'enregistrer '%1' en tant qu'ATR.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="706"/>
+        <location filename="../../src/diskimage.cpp" line="706" />
         <source>Saving DCM images is not supported yet.</source>
-        <translation>L&apos;enregistrement des images DCM n&apos;est pas encore pris en charge.</translation>
+        <translation>L'enregistrement des images DCM n'est pas encore pris en charge.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="712"/>
+        <location filename="../../src/diskimage.cpp" line="712" />
         <source>Saving SCP images is not supported yet.</source>
-        <translation>L&apos;enregistrement des images SCP n&apos;est pas encore pris en charge.</translation>
+        <translation>L'enregistrement des images SCP n'est pas encore pris en charge.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="718"/>
+        <location filename="../../src/diskimage.cpp" line="718" />
         <source>Saving DI images is not supported yet.</source>
-        <translation>L&apos;enregistrement des images DI n&apos;est pas encore pris en charge.</translation>
+        <translation>L'enregistrement des images DI n'est pas encore pris en charge.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="746"/>
+        <location filename="../../src/diskimage.cpp" line="746" />
         <source>Unknown file extension.</source>
         <translation>Extension de fichier inconnue.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="775"/>
-        <location filename="../../src/diskimage.cpp" line="806"/>
+        <location filename="../../src/diskimage.cpp" line="775" />
+        <location filename="../../src/diskimage.cpp" line="806" />
         <source>Unknown file type.</source>
         <translation>Type de fichier inconnu.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="815"/>
-        <source>Cannot create new image: Cannot create temporary file &apos;%2&apos;: %3.</source>
-        <translation>Impossible de créer une nouvelle image&#xa0;: Impossible de créer le fichier temporaire &apos;%2&apos;&#xa0;: %3.</translation>
+        <location filename="../../src/diskimage.cpp" line="815" />
+        <source>Cannot create new image: Cannot create temporary file '%2': %3.</source>
+        <translation>Impossible de créer une nouvelle image : Impossible de créer le fichier temporaire '%2' : %3.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="825"/>
+        <location filename="../../src/diskimage.cpp" line="825" />
         <source>Untitled image %1</source>
         <translation>Image sans titre %1</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="858"/>
+        <location filename="../../src/diskimage.cpp" line="858" />
         <source>[%1] Format ED denied.</source>
         <translation>[%1] Format ED refusé.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="867"/>
+        <location filename="../../src/diskimage.cpp" line="867" />
         <source>[%1] Format ED.</source>
         <translation>[%1] Formater ED.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="870"/>
+        <location filename="../../src/diskimage.cpp" line="870" />
         <source>[%1] Format ED failed.</source>
         <translation>[%1] Le formatage ED a échoué.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="883"/>
+        <location filename="../../src/diskimage.cpp" line="883" />
         <source>[%1] Speed poll.</source>
         <translation>[%1] Sondage rapide.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="894"/>
+        <location filename="../../src/diskimage.cpp" line="894" />
         <source>[%1] Get PERCOM block (%2).</source>
         <translation>[%1] Obtenez le bloc PERCOM (%2).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="911"/>
+        <location filename="../../src/diskimage.cpp" line="911" />
         <source>[%1] Happy ID Query - Rev 7.</source>
         <translation>[%1] Requête Happy ID - Rév. 7.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="915"/>
+        <location filename="../../src/diskimage.cpp" line="915" />
         <source>[%1] Happy ID Query - NAKed (Standard Mode).</source>
         <translation>[%1] Requête Happy ID - NAKed (mode standard).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="935"/>
+        <location filename="../../src/diskimage.cpp" line="935" />
         <source>[%1] Set PERCOM block (%2).</source>
         <translation>[%1] Définissez le bloc PERCOM (%2).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="954"/>
+        <location filename="../../src/diskimage.cpp" line="954" />
         <source>[%1] Format with custom sector skewing failed.</source>
         <translation>[%1] Le formatage avec inclinaison de secteur personnalisée a échoué.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="959"/>
+        <location filename="../../src/diskimage.cpp" line="959" />
         <source>[%1] Format with custom sector skewing (%2).</source>
         <translation>[%1] Format avec inclinaison de secteur personnalisée (%2).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="964"/>
+        <location filename="../../src/diskimage.cpp" line="964" />
         <source>[%1] Format with custom sector skewing denied.</source>
         <translation>[%1] Format avec asymétrie de secteur personnalisée refusé.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="981"/>
+        <location filename="../../src/diskimage.cpp" line="981" />
         <source>[%1] Format.</source>
         <translation>[%1] Formater.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="984"/>
+        <location filename="../../src/diskimage.cpp" line="984" />
         <source>[%1] Format denied.</source>
         <translation>[%1] Format refusé.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1006"/>
+        <location filename="../../src/diskimage.cpp" line="1006" />
         <source>[%1] Happy Warp Speed Handshake Successful.</source>
         <translation>[%1] Bonne poignée de main Warp Speed ​​réussie.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1021"/>
+        <location filename="../../src/diskimage.cpp" line="1021" />
         <source>[%1] Write sector %2 denied.</source>
         <translation>[%1] Ecriture du secteur %2 refusée.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1026"/>
+        <location filename="../../src/diskimage.cpp" line="1026" />
         <source>[%1] Write sector %2 (%3 bytes).</source>
         <translation>[%1] Écrivez le secteur %2 (%3 octets).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1029"/>
+        <location filename="../../src/diskimage.cpp" line="1029" />
         <source>[%1] Write sector %2 failed.</source>
-        <translation>[%1] L&apos;écriture du secteur %2 a échoué.</translation>
+        <translation>[%1] L'écriture du secteur %2 a échoué.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1034"/>
+        <location filename="../../src/diskimage.cpp" line="1034" />
         <source>[%1] Write sector %2 data frame failed.</source>
-        <translation>[%1] Échec de la trame de données d&apos;écriture du secteur %2.</translation>
+        <translation>[%1] Échec de la trame de données d'écriture du secteur %2.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1041"/>
+        <location filename="../../src/diskimage.cpp" line="1041" />
         <source>[%1] Write sector %2 NAKed.</source>
         <translation>[%1] Écrivez le secteur %2 NAKed.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1057"/>
+        <location filename="../../src/diskimage.cpp" line="1057" />
         <source>[%1] Read sector %2 (%3 bytes).</source>
         <translation>[%1] Lire le secteur %2 (%3 octets).</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1062"/>
+        <location filename="../../src/diskimage.cpp" line="1062" />
         <source>[%1] Read sector %2 failed.</source>
         <translation>[%1] La lecture du secteur %2 a échoué.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1069"/>
+        <location filename="../../src/diskimage.cpp" line="1069" />
         <source>[%1] Read sector %2 NAKed.</source>
         <translation>[%1] Lire le secteur %2 NAKed.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1086"/>
+        <location filename="../../src/diskimage.cpp" line="1086" />
         <source>[%1] Get status.</source>
         <translation>[%1] Obtenez le statut.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1092"/>
+        <location filename="../../src/diskimage.cpp" line="1092" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation>Commande [%1]&#xa0;:&#xa0;$%2, aux&#xa0;:&#xa0;$%3 NAKed.</translation>
+        <translation>Commande [%1] : $%2, aux : $%3 NAKed.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1110"/>
+        <location filename="../../src/diskimage.cpp" line="1110" />
         <source>[%1] Cannot format: %2</source>
-        <translation>[%1] Impossible de formater&#xa0;: %2</translation>
+        <translation>[%1] Impossible de formater : %2</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1125"/>
-        <location filename="../../src/diskimage.cpp" line="1149"/>
+        <location filename="../../src/diskimage.cpp" line="1125" />
+        <location filename="../../src/diskimage.cpp" line="1149" />
         <source>[%1] Cannot seek to sector %2: %3</source>
-        <translation>[%1] Impossible de rechercher le secteur %2&#xa0;: %3</translation>
+        <translation>[%1] Impossible de rechercher le secteur %2 : %3</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1128"/>
+        <location filename="../../src/diskimage.cpp" line="1128" />
         <source>Sector number is out of bounds.</source>
         <translation>Le numéro de secteur est hors limites.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1168"/>
+        <location filename="../../src/diskimage.cpp" line="1168" />
         <source>[%1] Cannot read from sector %2: %3.</source>
-        <translation>[%1] Impossible de lire à partir du secteur %2&#xa0;: %3.</translation>
+        <translation>[%1] Impossible de lire à partir du secteur %2 : %3.</translation>
     </message>
     <message>
-        <location filename="../../src/diskimage.cpp" line="1189"/>
+        <location filename="../../src/diskimage.cpp" line="1189" />
         <source>[%1] Cannot write to sector %2: %3.</source>
-        <translation>[%1] Impossible d&apos;écrire dans le secteur %2&#xa0;: %3.</translation>
+        <translation>[%1] Impossible d'écrire dans le secteur %2 : %3.</translation>
     </message>
 </context>
 <context>
     <name>SioPacketDialog</name>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="109"/>
+        <location filename="../../src/siopacketdialog.cpp" line="109" />
         <source>SIO Packet Sniffer &amp; Inspector</source>
         <translation>Renifleur et inspecteur de paquets SIO</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="149"/>
+        <location filename="../../src/siopacketdialog.cpp" line="149" />
         <source>e.g. R1: or NAK...</source>
         <translation>par ex. R1 : ou NAK...</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="156"/>
+        <location filename="../../src/siopacketdialog.cpp" line="156" />
         <source>🔍 Filter:</source>
-        <translation>🔍 Filtre&#xa0;:</translation>
+        <translation>🔍 Filtre :</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="166"/>
+        <location filename="../../src/siopacketdialog.cpp" line="166" />
         <source>Packet Inspector Details</source>
-        <translation>Détails de l&apos;inspecteur de paquets</translation>
+        <translation>Détails de l'inspecteur de paquets</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="169"/>
-        <location filename="../../src/siopacketdialog.cpp" line="269"/>
+        <location filename="../../src/siopacketdialog.cpp" line="169" />
+        <location filename="../../src/siopacketdialog.cpp" line="269" />
         <source>Collapse Details ▼</source>
         <translation>Réduire les détails ▼</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="212"/>
-        <location filename="../../src/siopacketdialog.cpp" line="259"/>
+        <location filename="../../src/siopacketdialog.cpp" line="212" />
+        <location filename="../../src/siopacketdialog.cpp" line="259" />
         <source>🔴 Recording</source>
         <translation>🔴 Enregistrement</translation>
     </message>
@@ -12807,12 +13015,12 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
         <translation type="vanished">▶ Lecture automatique</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="218"/>
+        <location filename="../../src/siopacketdialog.cpp" line="218" />
         <source>Clear</source>
         <translation>Clair</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="219"/>
+        <location filename="../../src/siopacketdialog.cpp" line="219" />
         <source>Save CSV...</source>
         <translation>Enregistrer au format CSV...</translation>
     </message>
@@ -12825,7 +13033,7 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
         <translation type="vanished">Retard:</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="259"/>
+        <location filename="../../src/siopacketdialog.cpp" line="259" />
         <source>⏸ Paused</source>
         <translation>⏸ En pause</translation>
     </message>
@@ -12834,17 +13042,17 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
         <translation type="vanished">⏹ Arrêter la lecture</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="266"/>
+        <location filename="../../src/siopacketdialog.cpp" line="266" />
         <source>Expand Details ▲</source>
         <translation>Développer les détails ▲</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="366"/>
+        <location filename="../../src/siopacketdialog.cpp" line="366" />
         <source>No Selection</source>
         <translation>Aucune sélection</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="366"/>
+        <location filename="../../src/siopacketdialog.cpp" line="366" />
         <source>Please select a packet row to inject.</source>
         <translation>Veuillez sélectionner une ligne de paquet à injecter.</translation>
     </message>
@@ -12854,74 +13062,74 @@ La version Direct2D minimale requise est %1. La version Direct2D courante est %2
     </message>
     <message>
         <source>You can only inject RX packets (traffic originating from the Atari).</source>
-        <translation type="vanished">Vous ne pouvez injecter que des paquets RX (trafic provenant de l&apos;Atari).</translation>
+        <translation type="vanished">Vous ne pouvez injecter que des paquets RX (trafic provenant de l'Atari).</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="221"/>
+        <location filename="../../src/siopacketdialog.cpp" line="221" />
         <source>Inject Selected</source>
         <translation>Injecter la sélection</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="224"/>
+        <location filename="../../src/siopacketdialog.cpp" line="224" />
         <source>Safe Mode (TX Only)</source>
         <translation>Mode sans échec (TX uniquement)</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="226"/>
+        <location filename="../../src/siopacketdialog.cpp" line="226" />
         <source>Prevents injecting RX packets to avoid hardware collisions with a physical Atari.</source>
-        <translation>Empêche l&apos;injection de paquets RX pour éviter les collisions matérielles avec un Atari physique.</translation>
+        <translation>Empêche l'injection de paquets RX pour éviter les collisions matérielles avec un Atari physique.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="376"/>
+        <location filename="../../src/siopacketdialog.cpp" line="376" />
         <source>Safe Mode Block</source>
         <translation>Blocage du mode sans échec</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="377"/>
+        <location filename="../../src/siopacketdialog.cpp" line="377" />
         <source>You are trying to inject an RX (Atari Command) packet while Safe Mode is enabled.
 
 This is blocked to prevent TX/RX collisions on the bus. Uncheck Safe Mode if you are purely testing virtual components without a physical Atari connected.</source>
-        <translation>Vous essayez d&apos;injecter un paquet RX (Atari Command) alors que le mode sans échec est activé.
+        <translation>Vous essayez d'injecter un paquet RX (Atari Command) alors que le mode sans échec est activé.
 
 Celui-ci est bloqué pour éviter les collisions TX/RX sur le bus. Décochez Mode sans échec si vous testez uniquement des composants virtuels sans Atari physique connecté.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="533"/>
+        <location filename="../../src/siopacketdialog.cpp" line="533" />
         <source>Empty</source>
         <translation>Vide</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="533"/>
+        <location filename="../../src/siopacketdialog.cpp" line="533" />
         <source>No packets to save.</source>
         <translation>Aucun paquet à sauvegarder.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="537"/>
+        <location filename="../../src/siopacketdialog.cpp" line="537" />
         <source>Save SIO Trace</source>
         <translation>Enregistrer la trace SIO</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="537"/>
+        <location filename="../../src/siopacketdialog.cpp" line="537" />
         <source>CSV Files (*.csv);;All Files (*)</source>
         <translation>Fichiers CSV (*.csv);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="542"/>
+        <location filename="../../src/siopacketdialog.cpp" line="542" />
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="542"/>
+        <location filename="../../src/siopacketdialog.cpp" line="542" />
         <source>Could not open file for writing.</source>
-        <translation>Impossible d&apos;ouvrir le fichier en écriture.</translation>
+        <translation>Impossible d'ouvrir le fichier en écriture.</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="588"/>
+        <location filename="../../src/siopacketdialog.cpp" line="588" />
         <source>Saved</source>
         <translation>Enregistré</translation>
     </message>
     <message>
-        <location filename="../../src/siopacketdialog.cpp" line="588"/>
+        <location filename="../../src/siopacketdialog.cpp" line="588" />
         <source>SIO Trace saved successfully.</source>
         <translation>SIO Trace a été enregistré avec succès.</translation>
     </message>
@@ -12929,57 +13137,57 @@ Celui-ci est bloqué pour éviter les collisions TX/RX sur le bus. Décochez Mod
 <context>
     <name>SioWorker</name>
     <message>
-        <location filename="../../src/sioworker.cpp" line="216"/>
+        <location filename="../../src/sioworker.cpp" line="216" />
         <source>Cannot read command frame.</source>
         <translation>Impossible de lire le cadre de commande.</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="233"/>
+        <location filename="../../src/sioworker.cpp" line="233" />
         <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
-        <translation>Commande [%1]&#xa0;: $%2, aux&#xa0;: $%3 ignorée car l&apos;explorateur d&apos;images est ouvert.</translation>
+        <translation>Commande [%1] : $%2, aux : $%3 ignorée car l'explorateur d'images est ouvert.</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="239"/>
+        <location filename="../../src/sioworker.cpp" line="239" />
         <source>[%1] command: $%2, aux: $%3 ignored.</source>
-        <translation>Commande [%1]&#xa0;: $%2, aux&#xa0;: $%3 ignorée.</translation>
+        <translation>Commande [%1] : $%2, aux : $%3 ignorée.</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="361"/>
+        <location filename="../../src/sioworker.cpp" line="361" />
         <source>Disk 1 (below autoboot)</source>
         <translation>Disque 1 (sous le démarrage automatique)</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="378"/>
+        <location filename="../../src/sioworker.cpp" line="378" />
         <source>Disk %1</source>
         <translation>Disque %1</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="384"/>
+        <location filename="../../src/sioworker.cpp" line="384" />
         <source>Printer %1</source>
         <translation>Imprimante %1</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="387"/>
+        <location filename="../../src/sioworker.cpp" line="387" />
         <source>Smart device (APE time + URL)</source>
         <translation>Appareil intelligent (heure APE + URL)</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="390"/>
+        <location filename="../../src/sioworker.cpp" line="390" />
         <source>AspeQt Client</source>
         <translation>Client AspeQt</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="396"/>
+        <location filename="../../src/sioworker.cpp" line="396" />
         <source>RS232 %1</source>
         <translation>RS232 %1</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="399"/>
+        <location filename="../../src/sioworker.cpp" line="399" />
         <source>PCLINK</source>
         <translation>PCLINK</translation>
     </message>
     <message>
-        <location filename="../../src/sioworker.cpp" line="402"/>
+        <location filename="../../src/sioworker.cpp" line="402" />
         <source>Device $%1</source>
         <translation>Appareil $%1</translation>
     </message>
@@ -12987,7 +13195,7 @@ Celui-ci est bloqué pour éviter les collisions TX/RX sur le bus. Décochez Mod
 <context>
     <name>SmartDevice</name>
     <message>
-        <location filename="../../src/miscdevices.cpp" line="70"/>
+        <location filename="../../src/miscdevices.cpp" line="70" />
         <source>[%1] Read date/time (%2).</source>
         <translation>[%1] Lire la date/heure (%2).</translation>
     </message>
@@ -12995,573 +13203,550 @@ Celui-ci est bloqué pour éviter les collisions TX/RX sur le bus. Décochez Mod
 <context>
     <name>SpartaDosFileSystem</name>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="1256"/>
-        <location filename="../../src/atarifilesystem.cpp" line="1285"/>
+        <location filename="../../src/atarifilesystem.cpp" line="1256" />
+        <location filename="../../src/atarifilesystem.cpp" line="1285" />
         <source>Atari file system error</source>
         <translation>Erreur du système de fichiers Atari</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="1256"/>
-        <source>Cannot create file &apos;%1&apos;.</source>
-        <translation>Impossible de créer le fichier &apos;%1&apos;.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="1256" />
+        <source>Cannot create file '%1'.</source>
+        <translation>Impossible de créer le fichier '%1'.</translation>
     </message>
     <message>
-        <location filename="../../src/atarifilesystem.cpp" line="1285"/>
-        <source>Cannot write to &apos;%1&apos;.</source>
-        <translation>Impossible d&apos;écrire dans &apos;%1&apos;.</translation>
+        <location filename="../../src/atarifilesystem.cpp" line="1285" />
+        <source>Cannot write to '%1'.</source>
+        <translation>Impossible d'écrire dans '%1'.</translation>
     </message>
 </context>
 <context>
     <name>StandardSerialPortBackend</name>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="82"/>
-        <location filename="../../src/serialport-windows.cpp" line="70"/>
-        <location filename="../../src/serialport-windows.cpp" line="86"/>
-        <source>Cannot open serial port &apos;%1&apos;: %2</source>
-        <translation>Impossible d&apos;ouvrir le port série &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="82" />
+        <location filename="../../src/serialport-windows.cpp" line="70" />
+        <location filename="../../src/serialport-windows.cpp" line="86" />
+        <source>Cannot open serial port '%1': %2</source>
+        <translation>Impossible d'ouvrir le port série '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="91"/>
+        <location filename="../../src/serialport-unix.cpp" line="91" />
         <source>Cannot get serial port status</source>
-        <translation>Impossible d&apos;obtenir l&apos;état du port série</translation>
+        <translation>Impossible d'obtenir l'état du port série</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="96"/>
-        <source>Cannot set DTR and RTS lines in serial port &apos;%1&apos;: %2</source>
-        <translation>Impossible de définir les lignes DTR et RTS sur le port série &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/serialport-unix.cpp" line="96" />
+        <source>Cannot set DTR and RTS lines in serial port '%1': %2</source>
+        <translation>Impossible de définir les lignes DTR et RTS sur le port série '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="128"/>
-        <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking.</source>
-        <translation>L&apos;émulation a démarré via le backend du port série standard sur &apos;%1&apos; avec l&apos;établissement de liaison %2.</translation>
+        <location filename="../../src/serialport-unix.cpp" line="128" />
+        <source>Emulation started through standard serial port backend on '%1' with %2 handshaking.</source>
+        <translation>L'émulation a démarré via le backend du port série standard sur '%1' avec l'établissement de liaison %2.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="144"/>
-        <location filename="../../src/serialport-windows.cpp" line="147"/>
+        <location filename="../../src/serialport-unix.cpp" line="144" />
+        <location filename="../../src/serialport-windows.cpp" line="147" />
         <source>Cannot close serial port: %1</source>
-        <translation>Impossible de fermer le port série&#xa0;: %1</translation>
+        <translation>Impossible de fermer le port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="271"/>
-        <location filename="../../src/serialport-unix.cpp" line="287"/>
-        <location filename="../../src/serialport-windows.cpp" line="267"/>
+        <location filename="../../src/serialport-unix.cpp" line="271" />
+        <location filename="../../src/serialport-unix.cpp" line="287" />
+        <location filename="../../src/serialport-windows.cpp" line="267" />
         <source>Cannot set serial port speed to %1: %2</source>
-        <translation>Impossible de définir la vitesse du port série sur %1&#xa0;: %2</translation>
+        <translation>Impossible de définir la vitesse du port série sur %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="271"/>
+        <location filename="../../src/serialport-unix.cpp" line="271" />
         <source>Closest possible speed is %2.</source>
         <translation>La vitesse la plus proche possible est %2.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="293"/>
-        <location filename="../../src/serialport-unix.cpp" line="374"/>
-        <location filename="../../src/serialport-windows.cpp" line="298"/>
+        <location filename="../../src/serialport-unix.cpp" line="293" />
+        <location filename="../../src/serialport-unix.cpp" line="374" />
+        <location filename="../../src/serialport-windows.cpp" line="298" />
         <source>%1 bits/sec</source>
         <translation>%1 bits/s</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="294"/>
-        <location filename="../../src/serialport-unix.cpp" line="375"/>
-        <location filename="../../src/serialport-windows.cpp" line="299"/>
+        <location filename="../../src/serialport-unix.cpp" line="294" />
+        <location filename="../../src/serialport-unix.cpp" line="375" />
+        <location filename="../../src/serialport-windows.cpp" line="299" />
         <source>Serial port speed set to %1.</source>
         <translation>Vitesse du port série définie sur %1.</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="309"/>
+        <location filename="../../src/serialport-unix.cpp" line="309" />
         <source>Cannot get serial port attributes</source>
-        <translation>Impossible d&apos;obtenir les attributs du port série</translation>
+        <translation>Impossible d'obtenir les attributs du port série</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="350"/>
+        <location filename="../../src/serialport-unix.cpp" line="350" />
         <source>Cannot set standard serial port speed to %1: %2</source>
-        <translation>Impossible de définir la vitesse du port série standard sur %1&#xa0;: %2</translation>
+        <translation>Impossible de définir la vitesse du port série standard sur %1 : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="361"/>
+        <location filename="../../src/serialport-unix.cpp" line="361" />
         <source>Cannot set baseline serial port speed: %1</source>
-        <translation>Impossible de définir la vitesse de base du port série&#xa0;: %1</translation>
+        <translation>Impossible de définir la vitesse de base du port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="368"/>
+        <location filename="../../src/serialport-unix.cpp" line="368" />
         <source>Failed to set custom serial port speed to %1</source>
         <translation>Échec de la définition de la vitesse du port série personnalisé sur %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="424"/>
-        <location filename="../../src/serialport-unix.cpp" line="541"/>
-        <location filename="../../src/serialport-windows.cpp" line="318"/>
-        <location filename="../../src/serialport-windows.cpp" line="447"/>
+        <location filename="../../src/serialport-unix.cpp" line="424" />
+        <location filename="../../src/serialport-unix.cpp" line="541" />
+        <location filename="../../src/serialport-windows.cpp" line="318" />
+        <location filename="../../src/serialport-windows.cpp" line="447" />
         <source>Cannot clear serial port read buffer: %1</source>
-        <translation>Impossible d&apos;effacer le tampon de lecture du port série&#xa0;: %1</translation>
+        <translation>Impossible d'effacer le tampon de lecture du port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="517"/>
-        <location filename="../../src/serialport-unix.cpp" line="531"/>
-        <location filename="../../src/serialport-unix.cpp" line="559"/>
+        <location filename="../../src/serialport-unix.cpp" line="517" />
+        <location filename="../../src/serialport-unix.cpp" line="531" />
+        <location filename="../../src/serialport-unix.cpp" line="559" />
         <source>Cannot retrieve serial port status: %1</source>
-        <translation>Impossible de récupérer l&apos;état du port série&#xa0;: %1</translation>
+        <translation>Impossible de récupérer l'état du port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="608"/>
-        <location filename="../../src/serialport-windows.cpp" line="594"/>
+        <location filename="../../src/serialport-unix.cpp" line="608" />
+        <location filename="../../src/serialport-windows.cpp" line="594" />
         <source>Data frame checksum error, expected: %1, got: %2. (%3)</source>
-        <translation>Erreur de somme de contrôle de trame de données, attendue&#xa0;:&#xa0;%1, obtenue&#xa0;:&#xa0;%2. (%3)</translation>
+        <translation>Erreur de somme de contrôle de trame de données, attendue : %1, obtenue : %2. (%3)</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="715"/>
-        <location filename="../../src/serialport-unix.cpp" line="779"/>
+        <location filename="../../src/serialport-unix.cpp" line="715" />
+        <location filename="../../src/serialport-unix.cpp" line="779" />
         <source>Cannot read from serial port: %1</source>
-        <translation>Impossible de lire depuis le port série&#xa0;: %1</translation>
+        <translation>Impossible de lire depuis le port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="793"/>
+        <location filename="../../src/serialport-unix.cpp" line="793" />
         <source>Serial port write timeout. %1 of %2 written in %3 ms</source>
-        <translation>Délai d&apos;écriture du port série. %1 sur %2 écrit en %3 ms</translation>
+        <translation>Délai d'écriture du port série. %1 sur %2 écrit en %3 ms</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-unix.cpp" line="798"/>
-        <location filename="../../src/serialport-windows.cpp" line="727"/>
+        <location filename="../../src/serialport-unix.cpp" line="798" />
+        <location filename="../../src/serialport-windows.cpp" line="727" />
         <source>Cannot flush serial port write buffer: %1</source>
-        <translation>Impossible de vider le tampon d&apos;écriture du port série&#xa0;: %1</translation>
+        <translation>Impossible de vider le tampon d'écriture du port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="90"/>
-        <source>Cannot set DTR line in serial port &apos;%1&apos;: %2</source>
-        <translation>Impossible de définir la ligne DTR dans le port série &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/serialport-windows.cpp" line="90" />
+        <source>Cannot set DTR line in serial port '%1': %2</source>
+        <translation>Impossible de définir la ligne DTR dans le port série '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="94"/>
-        <source>Cannot set RTS line in serial port &apos;%1&apos;: %2</source>
-        <translation>Impossible de définir la ligne RTS sur le port série &apos;%1&apos;&#xa0;: %2</translation>
+        <location filename="../../src/serialport-windows.cpp" line="94" />
+        <source>Cannot set RTS line in serial port '%1': %2</source>
+        <translation>Impossible de définir la ligne RTS sur le port série '%1' : %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="129"/>
-        <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking</source>
-        <translation>L&apos;émulation a démarré via le backend du port série standard sur &apos;%1&apos; avec l&apos;établissement de liaison %2</translation>
+        <location filename="../../src/serialport-windows.cpp" line="129" />
+        <source>Emulation started through standard serial port backend on '%1' with %2 handshaking</source>
+        <translation>L'émulation a démarré via le backend du port série standard sur '%1' avec l'établissement de liaison %2</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="294"/>
+        <location filename="../../src/serialport-windows.cpp" line="294" />
         <source>Cannot set serial port timeouts: %1</source>
-        <translation>Impossible de définir les délais d&apos;expiration du port série&#xa0;: %1</translation>
+        <translation>Impossible de définir les délais d'expiration du port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="393"/>
+        <location filename="../../src/serialport-windows.cpp" line="393" />
         <source>Cannot set serial port event mask: %1</source>
-        <translation>Impossible de définir le masque d&apos;événement du port série&#xa0;: %1</translation>
+        <translation>Impossible de définir le masque d'événement du port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="418"/>
-        <location filename="../../src/serialport-windows.cpp" line="424"/>
+        <location filename="../../src/serialport-windows.cpp" line="418" />
+        <location filename="../../src/serialport-windows.cpp" line="424" />
         <source>Cannot wait for serial port event: %1</source>
-        <translation>Impossible d&apos;attendre l&apos;événement du port série&#xa0;: %1</translation>
+        <translation>Impossible d'attendre l'événement du port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="566"/>
+        <location filename="../../src/serialport-windows.cpp" line="566" />
         <source>Serial port read timeout. %1 of %2 read in %3 ms</source>
         <translation>Expiration du délai de lecture du port série. %1 sur %2 lu en %3 ms</translation>
     </message>
     <message>
         <source>Cannot create event: %1</source>
-        <translation type="vanished">Impossible de créer l&apos;événement&#xa0;: %1</translation>
+        <translation type="vanished">Impossible de créer l'événement : %1</translation>
     </message>
     <message>
         <source>Cannot clear serial port write buffer: %1</source>
-        <translation type="vanished">Impossible d&apos;effacer le tampon d&apos;écriture du port série&#xa0;: %1</translation>
+        <translation type="vanished">Impossible d'effacer le tampon d'écriture du port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="694"/>
-        <location filename="../../src/serialport-windows.cpp" line="707"/>
-        <location filename="../../src/serialport-windows.cpp" line="712"/>
+        <location filename="../../src/serialport-windows.cpp" line="694" />
+        <location filename="../../src/serialport-windows.cpp" line="707" />
+        <location filename="../../src/serialport-windows.cpp" line="712" />
         <source>Cannot write to serial port: %1</source>
-        <translation>Impossible d&apos;écrire sur le port série&#xa0;: %1</translation>
+        <translation>Impossible d'écrire sur le port série : %1</translation>
     </message>
     <message>
-        <location filename="../../src/serialport-windows.cpp" line="720"/>
+        <location filename="../../src/serialport-windows.cpp" line="720" />
         <source>Serial port write timeout.</source>
-        <translation>Délai d&apos;écriture du port série.</translation>
+        <translation>Délai d'écriture du port série.</translation>
     </message>
 </context>
 <context>
     <name>TextPrinterWindow</name>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="14"/>
+        <location filename="../../src/textprinterwindow.ui" line="14" />
         <source>AspeQt - Printer text output</source>
-        <translation>AspeQt - Sortie texte de l&apos;imprimante</translation>
+        <translation>AspeQt - Sortie texte de l'imprimante</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="47"/>
-        <location filename="../../src/textprinterwindow.ui" line="50"/>
+        <location filename="../../src/textprinterwindow.ui" line="47" />
+        <location filename="../../src/textprinterwindow.ui" line="50" />
         <source>Atari Output (Atascii)</source>
         <translation>Sortie Atari (Atascii)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="69"/>
-        <location filename="../../src/textprinterwindow.ui" line="72"/>
+        <location filename="../../src/textprinterwindow.ui" line="69" />
+        <location filename="../../src/textprinterwindow.ui" line="72" />
         <source>Atari Output (Ascii)</source>
         <translation>Sortie Atari (Ascii)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="118"/>
+        <location filename="../../src/textprinterwindow.ui" line="118" />
         <source>toolBar</source>
-        <translation>Barre d&apos;outils</translation>
+        <translation>Barre d'outils</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="154"/>
+        <location filename="../../src/textprinterwindow.ui" line="154" />
         <source>Save to a file...</source>
         <translation>Enregistrer dans un fichier...</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="157"/>
+        <location filename="../../src/textprinterwindow.ui" line="157" />
         <source>Save contents to a file (Ctrl+S)</source>
         <translation>Enregistrer le contenu dans un fichier (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="160"/>
+        <location filename="../../src/textprinterwindow.ui" line="160" />
         <source>Save contents to a file</source>
         <translation>Enregistrer le contenu dans un fichier</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="163"/>
-        <location filename="../../src/textprinterwindow.ui" line="350"/>
+        <location filename="../../src/textprinterwindow.ui" line="163" />
+        <location filename="../../src/textprinterwindow.ui" line="350" />
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="172"/>
+        <location filename="../../src/textprinterwindow.ui" line="172" />
         <source>Clear</source>
         <translation>Clair</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="175"/>
+        <location filename="../../src/textprinterwindow.ui" line="175" />
         <source>Clear contents (Ctrl+C)</source>
         <translation>Effacer le contenu (Ctrl+C)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="178"/>
+        <location filename="../../src/textprinterwindow.ui" line="178" />
         <source>Clear contents</source>
         <translation>Effacer le contenu</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="181"/>
+        <location filename="../../src/textprinterwindow.ui" line="181" />
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="196"/>
+        <location filename="../../src/textprinterwindow.ui" line="196" />
         <source>Word wrap</source>
         <translation>Retour à la ligne</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="199"/>
+        <location filename="../../src/textprinterwindow.ui" line="199" />
         <source>Toggle word wrapping (Ctrl+W)</source>
         <translation>Activer le retour à la ligne (Ctrl+W)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="202"/>
+        <location filename="../../src/textprinterwindow.ui" line="202" />
         <source>Toggle word wrapping</source>
         <translation>Activer le retour à la ligne des mots</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="205"/>
+        <location filename="../../src/textprinterwindow.ui" line="205" />
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="214"/>
+        <location filename="../../src/textprinterwindow.ui" line="214" />
         <source>Print</source>
         <translation>Imprimer</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="217"/>
+        <location filename="../../src/textprinterwindow.ui" line="217" />
         <source>Send contents to printer (Ctrl+P)</source>
-        <translation>Envoyer le contenu à l&apos;imprimante (Ctrl+P)</translation>
+        <translation>Envoyer le contenu à l'imprimante (Ctrl+P)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="220"/>
+        <location filename="../../src/textprinterwindow.ui" line="220" />
         <source>Send contents to printer</source>
-        <translation>Envoyer le contenu à l&apos;imprimante</translation>
+        <translation>Envoyer le contenu à l'imprimante</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="223"/>
+        <location filename="../../src/textprinterwindow.ui" line="223" />
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="233"/>
+        <location filename="../../src/textprinterwindow.ui" line="233" />
         <source>Atascii Font</source>
         <translation>Police Atascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="236"/>
+        <location filename="../../src/textprinterwindow.ui" line="236" />
         <source>Toggle ATASCII fonts (Alt+F)</source>
         <translation>Basculer les polices ATASCII (Alt+F)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="239"/>
+        <location filename="../../src/textprinterwindow.ui" line="239" />
         <source>Toggle ATASCII fonts</source>
         <translation>Basculer les polices ATASCII</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="242"/>
+        <location filename="../../src/textprinterwindow.ui" line="242" />
         <source>Alt+F</source>
         <translation>Alt+F</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="258"/>
+        <location filename="../../src/textprinterwindow.ui" line="258" />
         <source>Font Size</source>
         <translation>Taille de la police</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="261"/>
+        <location filename="../../src/textprinterwindow.ui" line="261" />
         <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
         <translation>Basculer la taille de la police (6, 9, 12 pt) (Alt+Maj+F)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="264"/>
+        <location filename="../../src/textprinterwindow.ui" line="264" />
         <source>Toggle Font Size (6, 9, 12 pt)</source>
         <translation>Basculer la taille de la police (6, 9, 12 pt)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="267"/>
+        <location filename="../../src/textprinterwindow.ui" line="267" />
         <source>Alt+Shift+F</source>
         <translation>Alt+Maj+F</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="286"/>
+        <location filename="../../src/textprinterwindow.ui" line="286" />
         <source>Hide/Show Ascii</source>
         <translation>Masquer/Afficher Ascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="289"/>
+        <location filename="../../src/textprinterwindow.ui" line="289" />
         <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
-        <translation>Masquer/Afficher la sortie de l&apos;imprimante Ascii (Alt+Maj+H)</translation>
+        <translation>Masquer/Afficher la sortie de l'imprimante Ascii (Alt+Maj+H)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="292"/>
+        <location filename="../../src/textprinterwindow.ui" line="292" />
         <source>Hide/Show Ascii Printer Output</source>
-        <translation>Masquer/Afficher la sortie de l&apos;imprimante Ascii</translation>
+        <translation>Masquer/Afficher la sortie de l'imprimante Ascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="295"/>
+        <location filename="../../src/textprinterwindow.ui" line="295" />
         <source>Alt+Shift+H</source>
         <translation>Alt+Maj+H</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="317"/>
+        <location filename="../../src/textprinterwindow.ui" line="317" />
         <source>HideShow_Atascii</source>
         <translation>HideShow_Atascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="320"/>
+        <location filename="../../src/textprinterwindow.ui" line="320" />
         <source> Hide/Show Atascii Printer Output (Alt+H)</source>
-        <translation>Masquer/Afficher la sortie de l&apos;imprimante Atascii (Alt+H)</translation>
+        <translation>Masquer/Afficher la sortie de l'imprimante Atascii (Alt+H)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="323"/>
+        <location filename="../../src/textprinterwindow.ui" line="323" />
         <source>Hide/Show Atascii Printer Output</source>
-        <translation>Masquer/Afficher la sortie de l&apos;imprimante Atascii</translation>
+        <translation>Masquer/Afficher la sortie de l'imprimante Atascii</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="326"/>
+        <location filename="../../src/textprinterwindow.ui" line="326" />
         <source>Alt+H</source>
         <translation>Alt+H</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="341"/>
+        <location filename="../../src/textprinterwindow.ui" line="341" />
         <source>Strip Line Numbers</source>
         <translation>Numéros de ligne de bande</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="344"/>
+        <location filename="../../src/textprinterwindow.ui" line="344" />
         <source>Strip Line numbers from the text output (Ctrl-S)</source>
         <translation>Supprimer les numéros de ligne de la sortie texte (Ctrl-S)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.ui" line="347"/>
+        <location filename="../../src/textprinterwindow.ui" line="347" />
         <source>Strip Line numbers from the text output</source>
         <translation>Supprimer les numéros de ligne de la sortie de texte</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="225"/>
+        <location filename="../../src/textprinterwindow.cpp" line="225" />
         <source>Save printer text output</source>
-        <translation>Enregistrer la sortie de texte de l&apos;imprimante</translation>
+        <translation>Enregistrer la sortie de texte de l'imprimante</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="226"/>
+        <location filename="../../src/textprinterwindow.cpp" line="226" />
         <source>Text files (*.txt);;All files (*)</source>
         <translation>Fichiers texte (*.txt);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="254"/>
+        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>Stripping Line Numbers..</source>
         <translation>Suppression des numéros de ligne.</translation>
     </message>
     <message>
-        <location filename="../../src/textprinterwindow.cpp" line="254"/>
+        <location filename="../../src/textprinterwindow.cpp" line="254" />
         <source>The text does not seem to contain any line numbers!</source>
-        <translation>Le texte ne semble contenir aucun numéro de ligne&#xa0;!</translation>
+        <translation>Le texte ne semble contenir aucun numéro de ligne !</translation>
     </message>
 </context>
 <context>
     <name>TnfsBrowser</name>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="19"/>
         <source>TNFS Network Browser</source>
-        <translation>Navigateur réseau TNFS</translation>
+        <translation type="vanished">Navigateur réseau TNFS</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="47"/>
         <source>Connect</source>
-        <translation>Connecter</translation>
+        <translation type="vanished">Connecter</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="48"/>
         <source>Clear</source>
-        <translation>Clair</translation>
+        <translation type="vanished">Clair</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="49"/>
         <source>Clear saved host history</source>
-        <translation>Effacer l&apos;historique de l&apos;hôte enregistré</translation>
+        <translation type="vanished">Effacer l'historique de l'hôte enregistré</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="51"/>
         <source>TNFS Host:</source>
-        <translation>Hôte TNFS&#xa0;:</translation>
+        <translation type="vanished">Hôte TNFS :</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="59"/>
         <source>.. (Up)</source>
-        <translation>.. (En haut)</translation>
+        <translation type="vanished">.. (En haut)</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="64"/>
         <source>Sort A-Z / Z-A</source>
-        <translation>Trier de A à Z / de Z à A</translation>
+        <translation type="vanished">Trier de A à Z / de Z à A</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="67"/>
         <source>Not Connected</source>
-        <translation>Non connecté</translation>
+        <translation type="vanished">Non connecté</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="87"/>
-        <location filename="../../src/tnfsbrowser.cpp" line="258"/>
-        <location filename="../../src/tnfsbrowser.cpp" line="341"/>
         <source>More...</source>
-        <translation>Plus...</translation>
+        <translation type="vanished">Plus...</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="89"/>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="vanished">Annuler</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="99"/>
         <source>Double-click a file (.ATR/.XEX) to Mount it.</source>
-        <translation>Double-cliquez sur un fichier (.ATR/.XEX) pour le monter.</translation>
+        <translation type="vanished">Double-cliquez sur un fichier (.ATR/.XEX) pour le monter.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="185"/>
         <source>Connecting to %1...</source>
-        <translation>Connexion à %1...</translation>
+        <translation type="vanished">Connexion à %1...</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="200"/>
-        <location filename="../../src/tnfsbrowser.cpp" line="232"/>
         <source>Connected: %1</source>
-        <translation>Connecté&#xa0;: %1</translation>
+        <translation type="vanished">Connecté : %1</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="215"/>
-        <location filename="../../src/tnfsbrowser.cpp" line="246"/>
         <source>Connection Failed.</source>
-        <translation>Échec de la connexion.</translation>
+        <translation type="vanished">Échec de la connexion.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="216"/>
-        <location filename="../../src/tnfsbrowser.cpp" line="247"/>
         <source>Connection Error</source>
-        <translation>Erreur de connexion</translation>
+        <translation type="vanished">Erreur de connexion</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="217"/>
-        <location filename="../../src/tnfsbrowser.cpp" line="248"/>
-        <source>Could not reach host &apos;%1&apos;.
+        <source>Could not reach host '%1'.
 Check internet or hostname.</source>
-        <translation>Impossible d&apos;atteindre l&apos;hôte &apos;%1&apos;.
-Vérifiez Internet ou le nom d&apos;hôte.</translation>
+        <translation type="vanished">Impossible d'atteindre l'hôte '%1'.
+Vérifiez Internet ou le nom d'hôte.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="260"/>
-        <location filename="../../src/tnfsbrowser.cpp" line="287"/>
         <source>Fetching %1...</source>
-        <translation>Récupération de %1...</translation>
+        <translation type="vanished">Récupération de %1...</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="274"/>
         <source>Error opening directory.</source>
-        <translation>Erreur lors de l&apos;ouverture du répertoire.</translation>
+        <translation type="vanished">Erreur lors de l'ouverture du répertoire.</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="337"/>
         <source>No more items</source>
-        <translation>Plus d&apos;articles</translation>
+        <translation type="vanished">Plus d'articles</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="349"/>
-        <location filename="../../src/tnfsbrowser.cpp" line="377"/>
         <source>Browsing: %1</source>
-        <translation>Navigation&#xa0;: %1</translation>
+        <translation type="vanished">Navigation : %1</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="392"/>
         <source>Clear History</source>
-        <translation>Effacer l&apos;historique</translation>
+        <translation type="vanished">Effacer l'historique</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="393"/>
         <source>Clear all saved hosts?</source>
-        <translation>Effacer tous les hôtes enregistrés&#xa0;?</translation>
+        <translation type="vanished">Effacer tous les hôtes enregistrés ?</translation>
     </message>
     <message>
-        <location filename="../../src/tnfsbrowser.cpp" line="397"/>
         <source>History cleared.</source>
-        <translation>L&apos;histoire effacée.</translation>
+        <translation type="vanished">L'histoire effacée.</translation>
     </message>
 </context>
 <context>
     <name>WebBridge</name>
     <message>
-        <location filename="../../src/webbridge.cpp" line="67"/>
+        <location filename="../../src/webbridge.cpp" line="68" />
         <source>Cannot access directory: %1</source>
-        <translation>Impossible d&apos;accéder au répertoire&#xa0;: %1</translation>
+        <translation>Impossible d'accéder au répertoire : %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="128"/>
+        <location filename="../../src/webbridge.cpp" line="129" />
         <source>Phonebook XML is corrupted or invalid!</source>
-        <translation>Le répertoire XML est corrompu ou invalide&#xa0;!</translation>
+        <translation>Le répertoire XML est corrompu ou invalide !</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="132"/>
+        <location filename="../../src/webbridge.cpp" line="133" />
         <source>No phonebook found at: %1</source>
-        <translation>Aucun répertoire trouvé à&#xa0;:&#xa0;%1</translation>
+        <translation>Aucun répertoire trouvé à : %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="179"/>
+        <location filename="../../src/webbridge.cpp" line="223" />
+        <source>Path not found or access denied: %1</source>
+        <translation>Chemin introuvable ou accès refusé : %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/webbridge.cpp" line="229" />
+        <source>Failed to connect to host: %1</source>
+        <translation>Échec de la connexion à l'hôte : %1</translation>
+    </message>
+    <message>
         <source>TNFS path not found: %1</source>
-        <translation>Chemin TNFS introuvable&#xa0;: %1</translation>
+        <translation type="vanished">Chemin TNFS introuvable : %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="184"/>
+        <location filename="../../src/webbridge.cpp" line="213" />
         <source>Failed to mount TNFS host: %1</source>
-        <translation>Échec du montage de l&apos;hôte TNFS&#xa0;: %1</translation>
+        <translation>Échec du montage de l'hôte TNFS : %1</translation>
     </message>
     <message>
-        <location filename="../../src/webbridge.cpp" line="190"/>
         <source>Failed to connect to TNFS host: %1</source>
-        <translation>Échec de la connexion à l&apos;hôte TNFS&#xa0;: %1</translation>
+        <translation type="vanished">Échec de la connexion à l'hôte TNFS : %1</translation>
     </message>
 </context>
 </TS>

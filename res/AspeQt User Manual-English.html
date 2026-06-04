@@ -193,7 +193,7 @@
             <a href="#intro">Introduction</a>
             <a href="#sio">High-Speed SIO</a>
             <a href="#usage">Disk & Folder</a>
-            <a href="#tnfs">TNFS Client</a>
+            <a href="#network">Network Streaming</a>
             <a href="#modem">Modem Bridge</a>
             <a href="#wiring">Wiring Diagram</a>
             <a href="#raspberrypi">R: Device Emulation</a>
@@ -211,12 +211,12 @@
         <p>Using a standard SIO2PC cable (USB or Serial), AspeQt can emulate:</p>
         <ul>
             <li><b>Disk Drives (D1:-D8:)</b> - Supports ATR, XFD, PRO images, and direct Folder Mounting.</li>
-            <li><b>TNFS Client</b> - Mount and stream disk images directly from the internet (FujiNet protocol).</li>
+            <li><b>Universal Network Client</b> - Mount and stream disk images directly from remote servers using TNFS (FujiNet), FTP, or secure SFTP.</li>
             <li><b>Modem Bridge</b> - Connect physical Atari modems to Telnet BBSs via the PC.</li>
             <li><b>R: Device (850 Emulation)</b> - A hardware-free virtual modem that intercepts SIO commands directly (Supports USB FTDI and Raspberry Pi).</li>
             <li><b>Printers (P:)</b> - Captures printed output to text or graphical view.</li>
             <li><b>Clipboard Bridge (Y:)</b> - Bi-directional copy/paste between PC and Atari.</li>
-            <li><b>Web Pipe (W:)</b> - Multi-channel gateway for Python scripts and AI.</li>
+            <li><b>Web Pipe (W:)</b> - Multi-channel gateway for HTTP Python scripts, AI, and direct FTP/SFTP file access.</li>
             <li><b>Web Dashboard</b> - Remote control your Atari peripherals from any browser or smartphone.</li>
         </ul>
 
@@ -239,9 +239,24 @@
         <h3>Virtual DOS (Folder Images)</h3>
         <p>You can mount a local PC directory as a writable disk. To boot from a folder, right-click the slot and select <b>Mount Folder</b>.</p>
 
-        <a name="tnfs"></a>
-        <h2>TNFS Client</h2>
-        <p>AspeQt-2k26 includes native support for TNFS (The Network File System), allowing you to mount and stream disk images directly from the internet using the FujiNet protocol. Access this by clicking the <b>Network / World icon</b> directly on any disk drive slot, or by right-clicking a slot to access the context menu.</p>
+        <a name="network"></a>
+        <h2>Universal Network Streaming (TNFS, FTP, SFTP)</h2>
+        <p>AspeQt-2k26 includes a native Universal Network Client, allowing you to mount and stream disk images directly from remote servers or the internet without needing to download them first. Access this by clicking the <b>Network / Globe icon</b> on any drive slot.</p>
+
+        <h3>Supported Protocols</h3>
+        <ul>
+            <li><b>TNFS (The Network File System):</b> The standard FujiNet protocol for retro gaming over UDP.</li>
+            <li><b>FTP:</b> Standard File Transfer Protocol, ideal for older NAS devices and local network shares.</li>
+            <li><b>SFTP (Secure Shell):</b> Fully encrypted (Curve25519, AES) file transfer. Perfect for accessing files securely from a modern Raspberry Pi or Linux home server.</li>
+        </ul>
+
+        <h3>Connecting and Authentication</h3>
+        <p>In the Universal Network Browser, simply select your desired protocol using the radio buttons. For FTP and SFTP connections, click the <b>Padlock Icon</b> to securely save your server credentials (username and password). AspeQt supports dynamic URL parsing, meaning you can type custom ports or credentials directly into the address bar to override saved settings:</p>
+        <div class="code-block">
+Standard:   192.168.1.50
+With Port:  192.168.1.50:2222
+Full URL:   sftp://admin:mypass@192.168.1.50:2222/Atari/
+        </div>
 
         <a name="modem"></a>
         <h2>Modem Bridge (Internet Adapter via PC)</h2>
@@ -574,7 +589,7 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
 
         <a name="wdevice"></a>
         <h2>The W: Device (Web Pipe)</h2>
-        <p>The <b>W:</b> device transforms the Atari 8-bit into a "Thin Client" capable of interacting with modern web services. It acts as a transparent proxy, forwarding standard BASIC text commands to a backend script running on your PC via HTTP.</p>
+        <p>The <b>W:</b> device transforms the Atari 8-bit into a "Thin Client" capable of interacting with modern web services. It acts as a transparent proxy, forwarding standard SIO commands to HTTP Python scripts, FTP servers, or secure SFTP endpoints.</p>
 
         <h3>1. Multi-Channel Support (W1: - W4:)</h3>
         <p>AspeQt-2k26 supports up to <b>4 simultaneous connections</b>. This allows for complex "Full Duplex" applications where one channel reads data while another writes data.</p>
@@ -584,16 +599,6 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
             <li><b>W3:</b> - Tertiary Channel (Device $55)</li>
             <li><b>W4:</b> - Quaternary Channel (Device $54)</li>
         </ul>
-        <div class="code-block">
-10 REM -- QUAD CHANNEL EXAMPLE --
-20 OPEN #1,8,0,"W1:http://192.168.1.5:5000/cmd"  :REM Command Channel
-30 OPEN #2,4,0,"W2:http://192.168.1.5:5000/data" :REM Data Stream
-40 OPEN #3,4,0,"W3:http://192.168.1.5:5000/status":REM Background Poll
-50 PRINT #1;"GET STATUS"
-60 INPUT #3,STATUS$
-70 IF STATUS$="READY" THEN INPUT #2,DATA$
-80 CLOSE #1 : CLOSE #2 : CLOSE #3
-        </div>
 
         <h3>2. Configuration: Text vs. Binary Mode</h3>
         <p>The W: device can be configured globally via <b>Options &gt; Emulation</b>, or overridden per-connection using the command parameters.</p>
@@ -611,59 +616,36 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
             </li>
         </ul>
 
-        <h3>3. Application Examples Library</h3>
-        <p>This library contains a collection of "Hybrid Computing" examples:</p>
+        <h3>3. HTTP Python Scripting Examples</h3>
+        <p>You can use the <code>W:</code> device to interact with Python scripts running on your PC (acting as local HTTP servers) for "Hybrid Computing":</p>
+        <div class="code-block">
+10 REM -- QUAD CHANNEL HTTP EXAMPLE --
+20 OPEN #1,8,0,"W1:http://192.168.1.5:5000/cmd"  :REM Command Channel
+30 OPEN #2,4,0,"W2:http://192.168.1.5:5000/data" :REM Data Stream
+40 OPEN #3,4,0,"W3:http://192.168.1.5:5000/status":REM Background Poll
+50 PRINT #1;"GET STATUS"
+60 INPUT #3,STATUS$
+70 IF STATUS$="READY" THEN INPUT #2,DATA$
+80 CLOSE #1 : CLOSE #2 : CLOSE #3
+        </div>
 
-        <h4>1. Gemini AI Chatbot</h4>
-        <p>Turns the Atari into a client for Google's Gemini Large Language Model. You can type natural language questions and receive summarized answers on the Atari screen.</p>
+        <h4>Popular HTTP Python Scripts:</h4>
         <ul>
-            <li><b>BASIC File:</b> GEMINI_AI.LST</li>
-            <li><b>Python Script:</b> gemini_ai.py</li>
-            <li><b>Dependencies:</b> <span class="code-snippet">pip install google-generativeai</span></li>
+            <li><b>Gemini AI Chatbot:</b> Turns the Atari into an AI client using Google's Gemini LLM (<span class="code-snippet">GEMINI_AI.LST</span>).</li>
+            <li><b>Graphical Weather Station:</b> Fetches open-meteo API data and renders it in GRAPHICS 5 (<span class="code-snippet">WEATHER.LST</span>).</li>
+            <li><b>Text-to-Speech:</b> Sends typed text to the PC's espeak engine (<span class="code-snippet">TTS_SERVER.LST</span>).</li>
         </ul>
 
-        <h4>2. Basic Graphical Weather Station</h4>
-        <p>Fetches live weather data from the Open-Meteo API and displays it on the Atari using GRAPHICS 5.</p>
-        <ul>
-            <li><b>BASIC File:</b> WEATHER.LST</li>
-            <li><b>Python Script:</b> weather.py</li>
-            <li><b>Dependencies:</b> <span class="code-snippet">pip install requests</span></li>
-        </ul>
-
-        <h4>3. Cloud Notepad</h4>
-        <p>Demonstrates Reading and Writing to the PC's hard drive. It acts as a "Cloud Drive" for text.</p>
-        <ul>
-            <li><b>BASIC File:</b> CLOUD_NOTE.LST</li>
-            <li><b>Python Script:</b> cloud_note.py</li>
-        </ul>
-
-        <h4>4. Text-to-Speech Synthesizer</h4>
-        <p>The "Talking Atari". Any text typed on the Atari is sent to the PC, where it is read aloud using the Linux espeak engine.</p>
-        <ul>
-            <li><b>BASIC File:</b> TTS_SERVER.LST</li>
-            <li><b>Python Script:</b> tts_server.py</li>
-        </ul>
-
-        <h4>5. Web News Scraper</h4>
-        <p>Connects to a news website, scrapes HTML, and delivers a plain-text headline summary to the Atari.</p>
-        <ul>
-            <li><b>BASIC File:</b> SCRAPER.LST</li>
-            <li><b>Python Script:</b> scraper.py</li>
-        </ul>
-
-        <h4>6. Remote Execution (Linux & Windows)</h4>
-        <p>Allows the Atari to execute shell commands or launch GUI applications on the Host PC.</p>
-        <ul>
-            <li><b>BASIC Files:</b> EXEC_LINUX.LST / EXEC_WIN.LST</li>
-            <li><b>Python Scripts:</b> exec_linux.py / exec_win.py</li>
-        </ul>
-
-        <h4>7. File Upload / Telemetry</h4>
-        <p>A utility to upload raw data or text files from the Atari to the PC.</p>
-        <ul>
-            <li><b>BASIC File:</b> FILE_UPLOAD.LST</li>
-            <li><b>Python Script:</b> file_upload.py</li>
-        </ul>
+        <h3>4. Native FTP and SFTP Transfers</h3>
+        <p>In addition to HTTP bridges, the <code>W:</code> device now natively supports FTP and secure SFTP file transfers directly from Atari BASIC. The underlying AspeQt cryptography engine handles the SSH tunneling transparently, making your modern Linux NAS or Raspberry Pi look like a standard Atari disk drive!</p>
+        <div class="code-block">
+10 REM -- NATIVE SFTP W: DEMO --
+20 OPEN #1,6,0,"W:SFTP://admin:mypass@192.168.1.50:22/AtariFiles/"
+30 INPUT #1,A$ : PRINT A$ : GOTO 30 : REM READ DIRECTORY
+40 CLOSE #1
+50 OPEN #1,4,0,"W:SFTP://admin:mypass@192.168.1.50:22/AtariFiles/README.TXT"
+60 INPUT #1,A$ : PRINT A$ : GOTO 60 : REM READ TEXT FILE
+        </div>
 
         <a name="webui"></a>
         <h2>Interactive Web Dashboard (Remote UI)</h2>
@@ -677,7 +659,7 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
         <h3>Available Features</h3>
         <ul>
             <li><b>Full Drive Management:</b> Mount local disk/folder images, eject, toggle write-protection, and enable "Happy Mode" directly from your browser.</li>
-            <li><b>TNFS Network Streaming:</b> Browse TNFS servers and mount streaming disk images headlessly over the air. You can sort directories dynamically.</li>
+            <li><b>Universal Network Streaming:</b> Open the Universal Network Browser modal, input your FTP, SFTP, or TNFS credentials, and mount streaming disk images headlessly over the air.</li>
             <li><b>Create Blank Disks:</b> Instantly format and mount new .ATR images to any drive slot.</li>
             <li><b>Cassette Deck:</b> Control the virtual cassette player (Insert, Play, Pause, Rewind, Eject).</li>
             <li><b>BBS Auto-Dialer:</b> Access your XML Phonebook to one-tap dial BBSes and trigger User/Password macros.</li>

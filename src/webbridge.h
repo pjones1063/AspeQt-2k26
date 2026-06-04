@@ -6,7 +6,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QFutureWatcher>
-#include "tnfsclient.h"
+#include "inetworkclient.h" // <--- NEW: Universal Interface
 
 class MainWindow; // Forward declaration
 
@@ -45,8 +45,8 @@ public slots:
     void requestPhonebookList();
     void dialBbsUi(const QString &name, const QString &ip, int port, const QString &protocol, const QString &login, const QString &password);
 
-    // --- TNFS SLOTS ---
-    void requestTnfsDirectoryList(int slot, const QString &host, const QString &path);
+    // --- UNIVERSAL NETWORK SLOTS ---
+    void requestNetworkDirectoryList(int slot, const QString &urlString); // <--- NEW: Accepts full URL
     void mountTnfsSilentUi(int slot, const QString &url);
 
     // --- CAS SLOTS ---
@@ -59,7 +59,7 @@ public slots:
     void swapDiskUi(int slot);
 
 private slots:
-    void onTnfsBatchFetched(); // --- [NEW] Async Result Handler ---
+    void onNetBatchFetched(); // --- [NEW] Universal Async Handler ---
 
 signals:
     void diskStatusChanged(int slot, const QString &filename, const QString &properties, const QString &fullPath, bool autoSave, bool happyMode, bool writeProtected);
@@ -68,8 +68,11 @@ signals:
     void phonebookListReceived(const QJsonArray &entries);
     void globalStatusChanged(bool emulationRunning, bool printerRunning);
     void logTextReceived(const QString &logText);
+
+    // Kept original signal names so the JS frontend doesn't break
     void tnfsDirectoryListReceived(int slot, const QString &host, const QString &path, const QJsonArray &files, bool isFinished);
     void tnfsHostHistoryReceived(const QStringList &history);
+
     void casStatusChanged(QString filename, bool isPlaying);
     void notificationReceived(QString message, bool isError);
     void printerImageReceived(const QString &base64Data);
@@ -78,15 +81,15 @@ signals:
 private:
     MainWindow *mainWindow;
 
-    // --- TNFS Streaming State ---
-    TnfsClient *m_tnfsClient;
-    int m_tnfsSlot;
-    QString m_tnfsHost;
-    QString m_tnfsPath;
+    // --- Universal Network Streaming State ---
+    INetworkClient *m_netClient;
+    int m_netSlot;
+    QString m_netHost;
+    QString m_netPath;
 
-    // --- [NEW] Async Background Threading ---
-    void triggerNextTnfsBatch();
-    QFutureWatcher<QList<TnfsClient::DirectoryEntry>> *m_tnfsWatcher;
+    // --- Async Background Threading ---
+    void triggerNextNetBatch();
+    QFutureWatcher<QList<INetworkClient::DirectoryEntry>> *m_netWatcher;
 };
 
 #endif // WEBBRIDGE_H

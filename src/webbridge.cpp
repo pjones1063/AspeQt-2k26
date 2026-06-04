@@ -6,24 +6,25 @@
 #include <QFile>
 #include <QSettings>
 #include <QtConcurrent>
+#include <QUrl>
 
 #include "webbridge.h"
 #include "mainwindow.h"
 #include "aspeqtsettings.h"
+#include "tnfsclient.h"  // <--- NEW: Include all 3 clients
+#include "ftpclient.h"
+#include "sftpclient.h"
 
 // Grab AspeQt's global variables so we can find the phonebook
 extern AspeQtSettings *aspeqtSettings;
 extern QString g_aspeQtAppPath;
 
 WebBridge::WebBridge(MainWindow *mainWin, QObject *parent)
-    : QObject(parent), mainWindow(mainWin)
+    : QObject(parent), mainWindow(mainWin), m_netClient(nullptr)
 {
-    // Setup TNFS Background Streamer
-    m_tnfsClient = new TnfsClient(this);
-
-    // --- [NEW] Setup the Async Watcher instead of a QTimer ---
-    m_tnfsWatcher = new QFutureWatcher<QList<TnfsClient::DirectoryEntry>>(this);
-    connect(m_tnfsWatcher, &QFutureWatcherBase::finished, this, &WebBridge::onTnfsBatchFetched);
+    // --- [NEW] Setup the Universal Async Watcher ---
+    m_netWatcher = new QFutureWatcher<QList<INetworkClient::DirectoryEntry>>(this);
+    connect(m_netWatcher, &QFutureWatcherBase::finished, this, &WebBridge::onNetBatchFetched);
 }
 
 // -----------------------------------------------------------------
@@ -153,16 +154,51 @@ void WebBridge::requestLogTextUi() {
 }
 
 // -----------------------------------------------------------------
-// WEB TNFS BROWSER LOGIC (Async Background Streamer)
+// UNIVERSAL NETWORK BROWSER LOGIC (Async Background Streamer)
 // -----------------------------------------------------------------
 
-void WebBridge::requestTnfsDirectoryList(int slot, const QString &host, const QString &path) {
-    m_tnfsSlot = slot;
-    m_tnfsHost = host;
-    m_tnfsPath = path;
+void WebBridge::requestNetworkDirectoryList(int slot, const QString &urlString) {
+    // 1. Clean up stale connections
+    if (m_netClient) {
+        m_netClient->deleteLater();
+        m_netClient = nullptr;
+    }
 
-    if (m_tnfsClient->connectToHost(host)) {
+    // 2. Parse the URL
+    QUrl qurl(urlString);
+    QString scheme = qurl.scheme().toLower();
+    QString host = qurl.host();
+    quint16 port = qurl.port(0);
 
+    // Force decode so special characters in passwords survive the web transfer
+    QString user = qurl.userName(QUrl::FullyDecoded);
+    QString pass = qurl.password(QUrl::FullyDecoded);
+
+    QString path = qurl.path(QUrl::ComponentFormattingOption::FullyDecoded);
+    if (!path.endsWith("/")) path += "/";
+    if (path.isEmpty()) path = "/";
+
+    m_netSlot = slot;
+    m_netHost = host;
+    m_netPath = path;
+
+    // 3. Spin up the specific client
+    if (scheme == "ftp") {
+        FtpClient* ftp = new FtpClient(this);
+        ftp->setCredentials(user, pass);
+        m_netClient = ftp;
+    } else if (scheme == "sftp") {
+        SftpClient* sftp = new SftpClient(this);
+        sftp->setCredentials(user, pass);
+        m_netClient = sftp;
+    } else {
+        m_netClient = new TnfsClient(this);
+    }
+
+    // 4. Connect and Fetch
+    if (m_netClient->connectToHost(host, port)) {
+
+        // Save history
         QSettings settings("AspeQt", "TNFS");
         QStringList savedHosts = settings.value("hostHistory").toStringList();
         if (!savedHosts.contains(host)) {
@@ -171,35 +207,40 @@ void WebBridge::requestTnfsDirectoryList(int slot, const QString &host, const QS
             emit tnfsHostHistoryReceived(savedHosts);
         }
 
-        if (m_tnfsClient->mount("/")) {
-            if (m_tnfsClient->beginListing(path)) {
-                triggerNextTnfsBatch();
-                return;
-            } else {
-                emit notificationReceived(tr("TNFS path not found: %1").arg(path), true);
+        // TNFS requires a root mount
+        if (scheme != "ftp" && scheme != "sftp") {
+            if (!static_cast<TnfsClient*>(m_netClient)->mount("/")) {
+                emit notificationReceived(tr("Failed to mount TNFS host: %1").arg(host), true);
                 emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
                 return;
             }
+        }
+
+        if (m_netClient->beginListing(path)) {
+            triggerNextNetBatch();
+            return;
         } else {
-            emit notificationReceived(tr("Failed to mount TNFS host: %1").arg(host), true);
+            emit notificationReceived(tr("Path not found or access denied: %1").arg(path), true);
             emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
             return;
         }
     }
 
-    emit notificationReceived(tr("Failed to connect to TNFS host: %1").arg(host), true);
+    emit notificationReceived(tr("Failed to connect to host: %1").arg(host), true);
     emit tnfsDirectoryListReceived(slot, host, path, QJsonArray(), true);
 }
 
-void WebBridge::triggerNextTnfsBatch() {
-    QFuture<QList<TnfsClient::DirectoryEntry>> future = QtConcurrent::run([this]() {
-        return m_tnfsClient->fetchNextBatch(20);
+void WebBridge::triggerNextNetBatch() {
+    if (m_netWatcher->isRunning()) return;
+
+    QFuture<QList<INetworkClient::DirectoryEntry>> future = QtConcurrent::run([this]() {
+        return m_netClient->fetchNextBatch(50); // Fetch in 50-file batches
     });
-    m_tnfsWatcher->setFuture(future);
+    m_netWatcher->setFuture(future);
 }
 
-void WebBridge::onTnfsBatchFetched() {
-    auto batch = m_tnfsWatcher->result();
+void WebBridge::onNetBatchFetched() {
+    auto batch = m_netWatcher->result();
 
     QJsonArray list;
     for (const auto &entry : batch) {
@@ -209,12 +250,12 @@ void WebBridge::onTnfsBatchFetched() {
         list.append(item);
     }
 
-    bool finished = m_tnfsClient->isListingFinished();
+    bool finished = m_netClient->isListingFinished();
 
-    emit tnfsDirectoryListReceived(m_tnfsSlot, m_tnfsHost, m_tnfsPath, list, finished);
+    emit tnfsDirectoryListReceived(m_netSlot, m_netHost, m_netPath, list, finished);
 
     if (!finished) {
-        triggerNextTnfsBatch();
+        triggerNextNetBatch();
     }
 }
 
