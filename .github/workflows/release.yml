@@ -93,21 +93,23 @@ jobs:
           $Msys2Path = "C:/msys64"
           $ToolsDir = $env:IQTA_TOOLS.Replace('\', '/')
           
-          # [FIXED] Force selection of the 64-bit MinGW toolchain (e.g., mingw1310_64) to avoid GCC 4.7.2
+          # Force selection of the 64-bit MinGW toolchain
           $MinGWDir = Get-ChildItem -Path "$ToolsDir" -Directory | Where-Object { $_.Name -match "mingw.*64" } | Select-Object -First 1
           if (-not $MinGWDir) { Write-Error "Failed to find 64-bit MinGW directory!"; exit 1 }
           
           $CompilerBin = $MinGWDir.FullName.Replace('\', '/') + "/bin"
-          $env:PATH = "$CompilerBin;" + $env:PATH
+          
+          # Put MinGW AND MSYS2 bins in the PATH so CMake can find all required DLLs during config tests
+          $env:PATH = "$CompilerBin;$Msys2Path/ucrt64/bin;" + $env:PATH
+          
+          # [THE FIX] Use Environment Variable to completely bypass PowerShell semicolon argument parsing bugs
+          $env:CMAKE_PREFIX_PATH = "$QtRoot;$Msys2Path/ucrt64;$Msys2Path/mingw64"
 
           if (!(Test-Path "build")) { mkdir build }
           cd build
           
-          $PrefixPath = "$QtRoot;$Msys2Path/ucrt64;$Msys2Path/mingw64"
-          
           cmake .. -G "MinGW Makefiles" `
               -DCMAKE_BUILD_TYPE=Release `
-              -DCMAKE_PREFIX_PATH="$PrefixPath" `
               -DCMAKE_MAKE_PROGRAM="$CompilerBin/mingw32-make.exe" `
               -DCMAKE_CXX_COMPILER="$CompilerBin/g++.exe" `
               -DCMAKE_C_COMPILER="$CompilerBin/gcc.exe" `
@@ -139,7 +141,7 @@ jobs:
           $Dest = "release\win-temp\"
           $Dlls = @("libssh.dll", "zlib1.dll", "libcrypto-*.dll", "libssl-*.dll", "libgcc_s_seh-1.dll", "libstdc++-6.dll", "libwinpthread-1.dll")
           
-          # Safely search both folders using wildcard logic just like local deployment
+          # Safely search both folders using wildcard logic
           foreach ($spec in $Dlls) {
             $found_dll = Get-ChildItem -Path "$Msys2Path\ucrt64\bin", "$Msys2Path\mingw64\bin" -Filter $spec -ErrorAction SilentlyContinue | Select-Object -First 1
             if ($found_dll) {
@@ -153,7 +155,6 @@ jobs:
       - name: Build Inno Setup Installer
         shell: pwsh
         run: |
-          # ISCC will now find ..\res\Atari.ico because we staged it above
           iscc (Get-ChildItem -Path . -Filter "AspeQt-Installer.iss" -Recurse | Select-Object -First 1).FullName
 
       - name: Upload Windows Artifacts
@@ -262,4 +263,3 @@ jobs:
         with:
           name: RaspberryPi-Release
           path: AspeQt-2K26-pi.64.deb
-          
