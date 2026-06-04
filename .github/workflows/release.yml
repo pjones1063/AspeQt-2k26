@@ -93,8 +93,9 @@ jobs:
           $Msys2Path = "C:/msys64"
           $ToolsDir = $env:IQTA_TOOLS.Replace('\', '/')
           
-          $MinGWDir = Get-ChildItem -Path "$ToolsDir" -Directory -Filter "mingw*" | Select-Object -First 1
-          if (-not $MinGWDir) { exit 1 }
+          # [FIXED] Force selection of the 64-bit MinGW toolchain (e.g., mingw1310_64) to avoid GCC 4.7.2
+          $MinGWDir = Get-ChildItem -Path "$ToolsDir" -Directory | Where-Object { $_.Name -match "mingw.*64" } | Select-Object -First 1
+          if (-not $MinGWDir) { Write-Error "Failed to find 64-bit MinGW directory!"; exit 1 }
           
           $CompilerBin = $MinGWDir.FullName.Replace('\', '/') + "/bin"
           $env:PATH = "$CompilerBin;" + $env:PATH
@@ -102,7 +103,7 @@ jobs:
           if (!(Test-Path "build")) { mkdir build }
           cd build
           
-          $PrefixPath = "$QtRoot;$Msys2Path/ucrt64"
+          $PrefixPath = "$QtRoot;$Msys2Path/ucrt64;$Msys2Path/mingw64"
           
           cmake .. -G "MinGW Makefiles" `
               -DCMAKE_BUILD_TYPE=Release `
@@ -131,15 +132,23 @@ jobs:
           Copy-Item -Path "doc", "atari", "python_w_samples" -Destination "release/win-temp/" -Recurse -Force
           Copy-Item -Path "res\*" -Destination "res\" -Recurse -Force
 
-      - name: Copy MSYS2 Dependencies
+      - name: Copy MSYS2 Dependencies & Create ZIP
         shell: pwsh 
         run: |
-          $BinPath = "C:\msys64\ucrt64\bin"
+          $Msys2Path = "C:\msys64"
           $Dest = "release\win-temp\"
           $Dlls = @("libssh.dll", "zlib1.dll", "libcrypto-*.dll", "libssl-*.dll", "libgcc_s_seh-1.dll", "libstdc++-6.dll", "libwinpthread-1.dll")
+          
+          # Safely search both folders using wildcard logic just like local deployment
           foreach ($spec in $Dlls) {
-            Copy-Item "$BinPath\$spec" -Destination $Dest -Force -ErrorAction SilentlyContinue
+            $found_dll = Get-ChildItem -Path "$Msys2Path\ucrt64\bin", "$Msys2Path\mingw64\bin" -Filter $spec -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($found_dll) {
+                Copy-Item $found_dll.FullName -Destination $Dest -Force
+            }
           }
+          
+          # Create Portable ZIP
+          Compress-Archive -Path "release\win-temp\*" -DestinationPath "release\AspeQt-2K26-Portable.zip" -Force
 
       - name: Build Inno Setup Installer
         shell: pwsh
@@ -253,3 +262,4 @@ jobs:
         with:
           name: RaspberryPi-Release
           path: AspeQt-2K26-pi.64.deb
+          
