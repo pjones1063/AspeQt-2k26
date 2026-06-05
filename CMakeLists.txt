@@ -35,8 +35,29 @@ endif()
 # Find Qt 6 Components
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml WebSockets WebChannel HttpServer LinguistTools)
 
-# Find LibSSH
-find_package(libssh REQUIRED)
+# --- Find LibSSH Safely (Cross-Platform) ---
+# 1. Try pkg-config first (Best for MSYS2 / GitHub Actions)
+find_package(PkgConfig QUIET)
+if(PKG_CONFIG_FOUND)
+    pkg_check_modules(LIBSSH QUIET libssh)
+endif()
+
+# 2. Try manual path search (Great for local Windows builds)
+if(NOT LIBSSH_FOUND)
+    find_path(LIBSSH_INCLUDE_DIR NAMES libssh/libssh.h)
+    find_library(LIBSSH_LIBRARY NAMES ssh libssh)
+    
+    if(LIBSSH_INCLUDE_DIR AND LIBSSH_LIBRARY)
+        set(LIBSSH_FOUND TRUE)
+        set(LIBSSH_INCLUDE_DIRS ${LIBSSH_INCLUDE_DIR})
+        set(LIBSSH_LIBRARIES ${LIBSSH_LIBRARY})
+    endif()
+endif()
+
+# 3. Ultimate fallback (Preserves your existing Mac/Linux local setups)
+if(NOT LIBSSH_FOUND)
+    find_package(libssh REQUIRED)
+endif()
 
 # --- 3. Find ALL source files in src/ ---
 file(GLOB_RECURSE PROJECT_SOURCES
@@ -66,7 +87,6 @@ qt_add_executable(AspeQt
     "res/webui.qrc"
 )
 
-# --- 5.5 Compile and Embed Translations ---
 # --- 5.5 Compile and Embed Translations ---
 set(TS_FILES
     "res/i18n/aspeqt_de.ts"
@@ -101,6 +121,11 @@ target_include_directories(AspeQt PRIVATE
     "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
+# Safely add libssh includes if the new methods found them
+if(LIBSSH_INCLUDE_DIRS)
+    target_include_directories(AspeQt PRIVATE ${LIBSSH_INCLUDE_DIRS})
+endif()
+
 # --- 7. Link Libraries ---
 target_link_libraries(AspeQt PRIVATE
     Qt6::Core
@@ -115,8 +140,15 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::WebChannel    
     Qt6::HttpServer
     ZLIB::ZLIB
-    ssh 
 )
+
+# Link LibSSH based on how it was found
+if(LIBSSH_LIBRARIES)
+    target_link_libraries(AspeQt PRIVATE ${LIBSSH_LIBRARIES})
+else()
+    # Fallback for original Mac/Linux behavior
+    target_link_libraries(AspeQt PRIVATE ssh)
+endif()
 
 # REQUIRED FIX: Link Windows Multimedia API for timing functions
 if(WIN32)

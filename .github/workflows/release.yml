@@ -71,11 +71,11 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Setup MSYS2 and libssh
+      - name: Setup MSYS2, libssh, and pkgconf
         uses: msys2/setup-msys2@v2
         with:
           msystem: UCRT64
-          install: mingw-w64-ucrt-x86_64-libssh
+          install: mingw-w64-ucrt-x86_64-libssh mingw-w64-ucrt-x86_64-pkgconf
 
       - name: Install Qt
         id: qt-install
