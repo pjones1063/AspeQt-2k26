@@ -35,28 +35,41 @@ endif()
 # Find Qt 6 Components
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml WebSockets WebChannel HttpServer LinguistTools)
 
-# --- Find LibSSH Safely (Cross-Platform) ---
-# 1. Try pkg-config first (Best for MSYS2 / GitHub Actions)
-find_package(PkgConfig QUIET)
-if(PKG_CONFIG_FOUND)
-    pkg_check_modules(LIBSSH QUIET libssh)
-endif()
+# --- 2.5 Find LibSSH Safely (Bulletproof Cross-Platform) ---
+# Instead of relying on missing Findlibssh.cmake files or pkg-config wrappers,
+# we manually locate the header and library, then create a standard CMake target.
+find_path(LIBSSH_INCLUDE_DIR NAMES libssh/libssh.h
+    HINTS
+        ENV MSYSTEM_PREFIX
+        /opt/homebrew      # macOS Apple Silicon
+        /usr/local         # macOS Intel / Standard Linux
+        /usr               # General Linux
+        C:/msys64/ucrt64   # Windows GitHub Actions (UCRT64)
+        C:/msys64/mingw64  # Windows MSYS2 MinGW64
+    PATH_SUFFIXES include
+)
 
-# 2. Try manual path search (Great for local Windows builds)
-if(NOT LIBSSH_FOUND)
-    find_path(LIBSSH_INCLUDE_DIR NAMES libssh/libssh.h)
-    find_library(LIBSSH_LIBRARY NAMES ssh libssh)
-    
-    if(LIBSSH_INCLUDE_DIR AND LIBSSH_LIBRARY)
-        set(LIBSSH_FOUND TRUE)
-        set(LIBSSH_INCLUDE_DIRS ${LIBSSH_INCLUDE_DIR})
-        set(LIBSSH_LIBRARIES ${LIBSSH_LIBRARY})
-    endif()
-endif()
+find_library(LIBSSH_LIBRARY NAMES ssh libssh
+    HINTS
+        ENV MSYSTEM_PREFIX
+        /opt/homebrew
+        /usr/local
+        /usr
+        C:/msys64/ucrt64
+        C:/msys64/mingw64
+    PATH_SUFFIXES lib lib64
+)
 
-# 3. Ultimate fallback (Preserves your existing Mac/Linux local setups)
-if(NOT LIBSSH_FOUND)
-    find_package(libssh REQUIRED)
+if(LIBSSH_INCLUDE_DIR AND LIBSSH_LIBRARY)
+    message(STATUS "Found LibSSH: ${LIBSSH_LIBRARY}")
+    # Create a modern CMake target. This forces the linker to use absolute paths.
+    add_library(LibSSH::LibSSH UNKNOWN IMPORTED)
+    set_target_properties(LibSSH::LibSSH PROPERTIES
+        IMPORTED_LOCATION "${LIBSSH_LIBRARY}"
+        INTERFACE_INCLUDE_DIRECTORIES "${LIBSSH_INCLUDE_DIR}"
+    )
+else()
+    message(FATAL_ERROR "Could NOT find libssh. Please ensure it is installed.")
 endif()
 
 # --- 3. Find ALL source files in src/ ---
@@ -114,17 +127,11 @@ qt_add_translations(AspeQt
     RESOURCE_PREFIX "/translations/i18n"
 )
 
-
 # --- 6. Include Directories ---
 target_include_directories(AspeQt PRIVATE
     "${CMAKE_SOURCE_DIR}/src"
     "${CMAKE_CURRENT_BINARY_DIR}"
 )
-
-# Safely add libssh includes if the new methods found them
-if(LIBSSH_INCLUDE_DIRS)
-    target_include_directories(AspeQt PRIVATE ${LIBSSH_INCLUDE_DIRS})
-endif()
 
 # --- 7. Link Libraries ---
 target_link_libraries(AspeQt PRIVATE
@@ -140,15 +147,8 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::WebChannel    
     Qt6::HttpServer
     ZLIB::ZLIB
+    LibSSH::LibSSH
 )
-
-# Link LibSSH based on how it was found
-if(LIBSSH_LIBRARIES)
-    target_link_libraries(AspeQt PRIVATE ${LIBSSH_LIBRARIES})
-else()
-    # Fallback for original Mac/Linux behavior
-    target_link_libraries(AspeQt PRIVATE ssh)
-endif()
 
 # REQUIRED FIX: Link Windows Multimedia API for timing functions
 if(WIN32)
@@ -229,3 +229,4 @@ if(UNIX AND NOT APPLE)
 endif()
 
 include(CPack)
+
