@@ -71,11 +71,10 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Setup MSYS2, libssh, and pkgconf
+      - name: Setup MSYS2
         uses: msys2/setup-msys2@v2
         with:
           msystem: UCRT64
-          install: mingw-w64-ucrt-x86_64-libssh mingw-w64-ucrt-x86_64-pkgconf
 
       - name: Install Qt
         id: qt-install
@@ -102,7 +101,7 @@ jobs:
           # Put MinGW AND MSYS2 bins in the PATH so CMake can find all required DLLs during config tests
           $env:PATH = "$CompilerBin;$Msys2Path/ucrt64/bin;" + $env:PATH
           
-          # [THE FIX] Use Environment Variable to completely bypass PowerShell semicolon argument parsing bugs
+          # Use Environment Variable to completely bypass PowerShell semicolon argument parsing bugs
           $env:CMAKE_PREFIX_PATH = "$QtRoot;$Msys2Path/ucrt64;$Msys2Path/mingw64"
 
           if (!(Test-Path "build")) { mkdir build }
@@ -139,7 +138,12 @@ jobs:
         run: |
           $Msys2Path = "C:\msys64"
           $Dest = "release\win-temp\"
-          $Dlls = @("libssh.dll", "zlib1.dll", "libcrypto-*.dll", "libssl-*.dll", "libgcc_s_seh-1.dll", "libstdc++-6.dll", "libwinpthread-1.dll")
+          
+          # 1. Safely copy the vendored DLL first
+          Copy-Item "vendor\windows\libssh\bin\libssh.dll" -Destination $Dest -Force
+          
+          # 2. Copy the rest of the MSYS2 dependencies
+          $Dlls = @("zlib1.dll", "libcrypto-*.dll", "libssl-*.dll", "libgcc_s_seh-1.dll", "libstdc++-6.dll", "libwinpthread-1.dll")
           
           # Safely search both folders using wildcard logic
           foreach ($spec in $Dlls) {
@@ -263,3 +267,4 @@ jobs:
         with:
           name: RaspberryPi-Release
           path: AspeQt-2K26-pi.64.deb
+          
