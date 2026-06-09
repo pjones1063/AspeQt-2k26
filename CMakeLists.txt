@@ -35,23 +35,8 @@ endif()
 # Find Qt 6 Components
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml WebSockets WebChannel HttpServer LinguistTools)
 
-# --- 2.5 Find LibSSH ---
-if(WIN32)
-    # Use the vendored binaries strictly for Windows
-    set(LIBSSH_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/vendor/windows/libssh/include")
-    set(LIBSSH_LIBRARY "${CMAKE_SOURCE_DIR}/vendor/windows/libssh/lib/libssh.dll.a")
-
-    add_library(LibSSH::LibSSH UNKNOWN IMPORTED)
-    set_target_properties(LibSSH::LibSSH PROPERTIES
-        IMPORTED_LOCATION "${LIBSSH_LIBRARY}"
-        INTERFACE_INCLUDE_DIRECTORIES "${LIBSSH_INCLUDE_DIR}"
-    )
-    message(STATUS "Using VENDORED libssh for Windows.")
-else()
-    # macOS, Linux, and Pi continue using their native package managers flawlessly
-    find_package(libssh REQUIRED)
-endif()
-
+# Find LibSSH
+find_package(libssh REQUIRED)
 
 # --- 3. Find ALL source files in src/ ---
 file(GLOB_RECURSE PROJECT_SOURCES
@@ -82,6 +67,7 @@ qt_add_executable(AspeQt
 )
 
 # --- 5.5 Compile and Embed Translations ---
+# --- 5.5 Compile and Embed Translations ---
 set(TS_FILES
     "res/i18n/aspeqt_de.ts"
     "res/i18n/aspeqt_es.ts"
@@ -108,17 +94,12 @@ qt_add_translations(AspeQt
     RESOURCE_PREFIX "/translations/i18n"
 )
 
+
 # --- 6. Include Directories ---
 target_include_directories(AspeQt PRIVATE
     "${CMAKE_SOURCE_DIR}/src"
     "${CMAKE_CURRENT_BINARY_DIR}"
 )
-
-# Apply libssh includes appropriately
-if(WIN32)
-    target_include_directories(AspeQt PRIVATE "${CMAKE_SOURCE_DIR}/vendor/windows/libssh/include")
-endif()
-
 
 # --- 7. Link Libraries ---
 target_link_libraries(AspeQt PRIVATE
@@ -134,15 +115,14 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::WebChannel    
     Qt6::HttpServer
     ZLIB::ZLIB
+    ssh 
 )
 
-# Link libssh appropriately
+# REQUIRED FIX: Link Windows Multimedia API for timing functions
 if(WIN32)
-    target_link_libraries(AspeQt PRIVATE LibSSH::LibSSH)
-else()
-    target_link_libraries(AspeQt PRIVATE ssh) # Original working Unix method
+    target_link_libraries(AspeQt PRIVATE winmm)
+    set_property(TARGET AspeQt PROPERTY WIN32_EXECUTABLE ON)
 endif()
-
 
 # --- 8. MacOS Bundle & Icon Settings ---
 if(APPLE)
@@ -217,4 +197,3 @@ if(UNIX AND NOT APPLE)
 endif()
 
 include(CPack)
-

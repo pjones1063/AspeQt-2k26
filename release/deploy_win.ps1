@@ -7,9 +7,10 @@ $WinTemp    = "$ReleaseDir\win-temp"
 $CompilerPath = "C:/Qt/Tools/mingw1310_64/bin"
 $QtBinPath    = "C:/Qt/6.10.2/mingw_64/bin"
 $ISCC         = "C:\Program Files (x86)\Inno\ISCC.exe"
-$Msys2Path    = "C:\Qt\msys2"
+$Msys2Path    = "C:\Qt\msys2" # <--- Added MSYS2 Base Path
 
 # 2. Hard Clean
+# Remove the build directory to clear the Linux-based CMakeCache.txt
 if (Test-Path $BuildDir) {
     Write-Host "Cleaning old build directory..." -ForegroundColor Cyan
     Remove-Item -Recurse -Force $BuildDir
@@ -19,9 +20,9 @@ mkdir -p $WinTemp
 
 # 3. Configure and Build
 Write-Host "Configuring with MinGW..." -ForegroundColor Cyan
-
-# CMake will automatically use the vendored paths defined in CMakeLists.txt
+# <--- Added CMAKE_PREFIX_PATH so CMake can find libssh
 & cmake -S .. -B $BuildDir -G "MinGW Makefiles" `
+    -DCMAKE_PREFIX_PATH="$Msys2Path/ucrt64;$Msys2Path/mingw64" `
     -DCMAKE_BUILD_TYPE=Release `
     -DCMAKE_MAKE_PROGRAM="$CompilerPath/mingw32-make.exe" `
     -DCMAKE_CXX_COMPILER="$CompilerPath/g++.exe" `
@@ -31,6 +32,7 @@ Write-Host "Configuring with MinGW..." -ForegroundColor Cyan
 Write-Host "Building AspeQt..." -ForegroundColor Cyan
 & cmake --build $BuildDir --config Release -j ($env:NUMBER_OF_PROCESSORS)
 
+# Stop the script if the build failed
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Build failed with exit code $LASTEXITCODE. Check the errors above."
     exit $LASTEXITCODE
@@ -41,19 +43,12 @@ Write-Host "Running windeployqt..." -ForegroundColor Cyan
 Copy-Item "$BuildDir\AspeQt.exe" "$WinTemp\"
 & "$QtBinPath\windeployqt.exe" --dir "$WinTemp" "$WinTemp\AspeQt.exe"
 
-# 5. Bundle Dependencies
-Write-Host "Bundling Dependencies..." -ForegroundColor Cyan
+# <--- NEW: Copy ALL required MSYS2 dependencies so the app actually launches
+Write-Host "Bundling MSYS2 Dependencies..." -ForegroundColor Cyan
 
-# Grab the vendored libssh from your repo
-if (Test-Path "..\vendor\windows\libssh\bin\libssh.dll") {
-    Copy-Item "..\vendor\windows\libssh\bin\libssh.dll" "$WinTemp\" -Force
-    Write-Host " -> Copied VENDORED libssh.dll" -ForegroundColor Green
-} else {
-    Write-Warning "Could not find vendored libssh.dll. Did you commit it to the repo?"
-}
-
-# Grab the standard runtime DLLs from MSYS2
+# List all the non-Qt MSYS2 DLLs your app needs here
 $MsysDlls = @(
+    "libssh.dll",
     "libcrypto-3-x64.dll",
     "libssl-3-x64.dll",
     "zlib1.dll",
@@ -68,14 +63,16 @@ foreach ($dll in $MsysDlls) {
     if ($found_dll) {
         Copy-Item $found_dll.FullName "$WinTemp\"
         Write-Host " -> Copied $($found_dll.Name)" -ForegroundColor Green
+    } else {
+        Write-Warning "Could not find $dll in $Msys2Path. You may need to copy it manually!"
     }
 }
 
-# 6. Create Portable ZIP
+# 5. Create Portable ZIP
 Write-Host "Creating Portable ZIP..." -ForegroundColor Cyan
 Compress-Archive -Path "$WinTemp\*" -DestinationPath "$ReleaseDir\AspeQt-2K26-Portable.zip" -Force
 
-# 7. Create Installer (Inno Setup)
+# 6. Create Installer (Inno Setup)
 if (Test-Path $ISCC) {
     Write-Host "Compiling Inno Setup Installer..." -ForegroundColor Cyan
     & $ISCC "$ReleaseDir\AspeQt-Installer.iss"
