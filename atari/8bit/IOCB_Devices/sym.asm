@@ -38,6 +38,8 @@ icpth	equ $0347
 icblen	equ $0348
 icaux1	equ $034A
 icaux2	equ $034B
+ICBLL   equ $0348   
+ICBLH   equ $0349    
 
 ciov	equ $E456
 portb	equ $D301

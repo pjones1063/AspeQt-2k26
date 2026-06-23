@@ -105,7 +105,7 @@ AspeQtSettings::AspeQtSettings()
     mTranslateEolOnGet = mSettings->value("PipeNetwork/TranslateEolOnGet", false).toBool();
     mUseURLSubmit = mSettings->value("URLSubmit", false).toBool();
 
-    // --- 6. Image / File Management Arrays ---
+    // --- Image / File Management Arrays ---
     mSettings->beginReadArray("MountedImageSettings");
     for (int i = 0; i < 15; i++) {
         mSettings->setArrayIndex(i);
@@ -131,13 +131,18 @@ AspeQtSettings::AspeQtSettings()
     mLastPrinterTextDir = mSettings->value("LastPrinterTextDir", "").toString();
     mLastCasDir = mSettings->value("LastCasDir", "").toString();
 
-    // 7 - printer
+    // printer
     mPrinterAutoPop = mSettings->value("Printer/AutoPop", false).toBool();
     mPrinterFeedMode = mSettings->value("Printer/FeedMode", 0).toInt();
     mPrinterStyle = mSettings->value("Printer/Style", 0).toInt();
     mPrinterMarginTop = mSettings->value("Printer/MarginTop", 108).toInt();
     mPrinterMarginLeft = mSettings->value("Printer/MarginLeft", 60).toInt();
     mPrinterMarginLength = mSettings->value("Printer/MarginLength", 2376).toInt();
+
+    // Voice
+    mVoiceVolume = mSettings->value("Voice/Volume", 10).toInt();
+    mVoiceRate   = mSettings->value("Voice/Rate", 5).toInt();
+    mVoicePitch  = mSettings->value("Voice/Pitch", 5).toInt();
 
 }
 
@@ -733,6 +738,10 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
     s.setValue("ModemBridge/PhonebookPath", mModemBridgePhonebookPath);
     s.setValue("ShowRDeviceWarning", mShowRDeviceWarning);
 
+    s.setValue("Voice/Volume", mVoiceVolume);
+    s.setValue("Voice/Rate", mVoiceRate);
+    s.setValue("Voice/Pitch", mVoicePitch);
+
     for (int i = 0; i < 4; i++) {
         QString pfx = QString("ModemBridge/R%1/").arg(i + 1);
         s.setValue(pfx + "LocalEcho", mModemBridgeLocalEcho[i]);
@@ -744,6 +753,7 @@ void AspeQtSettings::saveSessionToFile(const QString &fileName)
         s.setValue(pfx + "InvertCts", mInvertCtsLogic[i]);
         s.setValue(pfx + "StreamGuardDelay", mStreamGuardDelay[i]);
     }
+
 
 
     s.setValue("WebUI/Enabled", mWebUiEnabled);
@@ -818,6 +828,10 @@ void AspeQtSettings::loadSessionFromFile(const QString &fileName)
     mDisablePicoHiSpeed = s.value("DisablePicoHiSpeed", false).toBool();
     mTranslateEolOnPost = s.value("TranslateEolOnPost", true).toBool();
     mTranslateEolOnGet = s.value("TranslateEolOnGet", false).toBool();
+
+    mVoiceVolume = mSettings->value("Voice/Volume", 10).toInt();
+    mVoiceRate   = mSettings->value("Voice/Rate", 5).toInt();
+    mVoicePitch  = mSettings->value("Voice/Pitch", 5).toInt();
 
     // --- Modem Bridge Matrix Loading ---
     mModemTransportMode = s.value("ModemBridge/TransportMode", 0).toInt();
@@ -908,4 +922,22 @@ int AspeQtSettings::printerMarginLength() const { return mPrinterMarginLength; }
 void AspeQtSettings::setPrinterMarginLength(int length) {
     mPrinterMarginLength = length;
     if(mSessionFileName == "") mSettings->setValue("Printer/MarginLength", length);
+}
+
+int AspeQtSettings::voiceVolume() { return mVoiceVolume; }
+void AspeQtSettings::setVoiceVolume(int vol) {
+    mVoiceVolume = vol;
+    if(mSessionFileName == "") mSettings->setValue("Voice/Volume", vol);
+}
+
+int AspeQtSettings::voiceRate() { return mVoiceRate; }
+void AspeQtSettings::setVoiceRate(int rate) {
+    mVoiceRate = rate;
+    if(mSessionFileName == "") mSettings->setValue("Voice/Rate", rate);
+}
+
+int AspeQtSettings::voicePitch() { return mVoicePitch; }
+void AspeQtSettings::setVoicePitch(int pitch) {
+    mVoicePitch = pitch;
+    if(mSessionFileName == "") mSettings->setValue("Voice/Pitch", pitch);
 }

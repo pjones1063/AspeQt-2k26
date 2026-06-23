@@ -1,9 +1,8 @@
 ; ==================================================================
-; AspeQt Dual Device Handler (Y: & W:) - PLATINUM FIX (PATCHED)
+; AspeQt Triple Device Handler (Y: , W: , A:) 
 ; -----------------------------------------------------------------
 ; TARGET: Atari 8-bit (MADS Assembler) - Atari Dos 2.x
-; MEMORY: Code at $2800, Data at $0600 (Page 6)
-; FIXES:  SetupDCB_Open now preserves DAUX1/DAUX2 for ALL Ops
+; MEMORY: Code at $4500
 ; =================================================================
 
     icl "sym.asm"
@@ -46,405 +45,104 @@ TableW
     .word HandlerGet-1
     .word HandlerPut-1
     .word HandlerStat-1
-    .word HandlerSpec-1 
+    .word HandlerSpec-1
+
+TableA
+    .word HandlerOpenA-1
+    .word HandlerClose-1
+    .word HandlerGet-1
+    .word HandlerPut-1
+    .word HandlerStat-1
+    .word HandlerSpec-1
 
 ; =================================================================
-; 1. OPEN ROUTINES
+; DEVICE SPECIFIC OPEN ROUTINES
 ; =================================================================
-
-; --- OPEN Y: (CLIPBOARD) ---
 HandlerOpenY
-    lda #$59        ; 'Y' (Fixed ID)
+    lda #$59
     sta CurrentDev
-    
-    jsr CommonReset
-    lda #0          ; Y: is always Text Mode
-    sta TransMode   
-    
     jsr SetupDCB_Open
-    
-    ; Check Mode (Read/Write)
-    lda $2A         ; ICAX1
-    and #$08
-    bne DoOpenY
-    
-    ; Read Mode -> Refill Immediately
-    jsr SIOV
-    bmi OpenFail
-    jsr RefillBuffer
-    jmp OpenSuccess
+    rts
 
-DoOpenY
-    jsr SIOV
-    bmi OpenFail
-    jmp OpenSuccess
-
-
-; --- OPEN W: (WWW Pipe) ---
 HandlerOpenW
-    ; 1. GET EFFECTIVE UNIT NUMBER
-    lda $0341,x     
-    bne UnitOK_O    
-    lda #1          ; Default to Unit 1
-UnitOK_O
-    sta DBYTLO      ; Save to Safe Temp
-    
-    ; 2. CALCULATE REVERSE ID
-    lda #$58        
-    sec
-    sbc DBYTLO      
-    sta CurrentDev  
- 
-    lda $2A            
-    sta CurrentMode   
-    
-    jsr CommonReset
-
-    ; 3. Base Setup
-    ; (This now auto-fills DAUX1/DAUX2 from $2A/$2B)
+    lda #$57
+    sta CurrentDev
     jsr SetupDCB_Open
-    
-    ; Save Mode for Handler Logic
-    lda $2B         ; Load ICAX2
-    sta TransMode   ; SAVE MODE (0=Def, 1=Text, 2=Bin)
-    
-    ; 4. WE MUST SEND THE URL
-    stx SaveX       
-    lda $0344,x     ; ICBAL
-    sta DBUFLO
-    lda $0345,x     ; ICBAH
-    sta DBUFHI
-    
-    ; 5. Force Write Mode for OPEN (Sending URL)
-    lda #$80        
-    sta DSTATS
-    lda #$00
-    sta DBYTLO      
-    lda #$01        ; Length 256
-    sta DBYTHI
-    
-    ; 6. Send Command
+    rts
+
+HandlerOpenA
+    lda #$41        ; Hardcode Device ID to 'A' ($41)
+    sta CurrentDev
+    jsr SetupDCB_Open
+    rts
+
+; =================================================================
+; 2. SHARED HANDLER ROUTINES 
+; =================================================================
+HandlerClose
+    jsr SetupDCB_Open  ; CLOSE is basically an OPEN DCB with Cmd $43
+    lda #$43
+    sta DCOMND
     jsr SIOV
-    bmi OpenFail
-    
-    ; 7. If Read Mode, Refill Now
-    lda $2A         
-    and #$04
-    beq OpenSuccess
-    jsr RefillBuffer
-
-OpenSuccess
-    ldx SaveX
+    lda #1
     ldy #1
-    clc
     rts
-
-OpenFail
-    ldx SaveX
-    ldy #144        
-    sec
-    rts
-
-CommonReset
-    lda #0
-    sta BufPtr
-    sta EOF_Flag
-    rts
-
-; =================================================================
-; 2. SHARED ROUTINES
-; =================================================================
 
 HandlerGet
-    stx SaveX
-    lda EOF_Flag
-    beq FetchByte
-    ldy #136        ; EOF Error
-    sec             
-    rts
-
-FetchByte
-    ldx BufPtr
-    lda IOBuf,x
-    
-    ; --- BINARY SAFETY CHECK ---
-    pha             ; Save Byte
-    lda TransMode
-    cmp #2          ; Is it Binary Mode?
-    beq IsBinary    ; Yes -> Skip NULL check
-    
-    pla             ; Restore Byte (Text Mode)
-    cmp #0          ; Is it NULL (EOF)?
-    beq FoundNull   ; Yes -> Stop
-    jmp GotByte
-
-IsBinary
-    pla             ; Restore Byte (Binary Mode)
-    ; Fall through: 0x00 is valid data here
-
-GotByte
-    inc BufPtr
-    bne GetDone
-
-    ; Refill if page boundary hit
-    pha
-    jsr RefillBuffer
-    pla
-    
-GetDone
-    ldx SaveX
-    ldy #1
-    clc
-    rts
-
-FoundNull
     lda #1
-    sta EOF_Flag
-    ldx SaveX
-    ldy #136        ; EOF
-    sec
+    ldy #1
     rts
-
 
 HandlerPut
     stx SaveX
-    ldx BufPtr
-    sta IOBuf,x       ; Drop character into buffer
-    
-    ; --- THE LINE BUFFER HACK ---
-    cmp #$9B          ; Was the character a Return?
-    bne SkipFlush     ; No? Skip down to normal block buffering
-    
-    lda CurrentMode   ; Yes! Were we opened in Mode 12?
-    cmp #12
-    bne SkipFlush     ; No? Skip down to normal block buffering
-    
-    ; We have a Return in Mode 12. Force the flush!
-    inc BufPtr        ; Move the pointer forward so the Return is included
-    jsr FlushBuffer   ; Fire the SIO bus instantly to send the command!
-    
-    cpy #1            ; Did the flush succeed?
-    bne PutCheckErr   ; If network error, bail out immediately
-    
-    lda #0
-    sta EOF_Flag      ; Clear EOF flag from any previous reads
-    
-    jsr RefillBuffer  ; FETCH THE FRESH SERVER RESPONSE INTO IOBUF!
-    
-    jmp PutCheckErr   ; Check for SIO errors and exit
-    ; ----------------------------
-    
-SkipFlush
-    inc BufPtr        ; Normal block buffering: increment pointer
-    bne PutSuccess    ; If it didn't wrap to 0, exit successfully
-    jsr FlushBuffer   ; If it hit 256, flush it
-    
-PutCheckErr
-    cpy #1
-    bne PutError
-PutSuccess
+    pha
+    jsr SetupDCB_Write
+    pla
+    sta IOBuf
+    jsr SIOV
     ldx SaveX
+    lda #1
     ldy #1
-    clc
-    rts
-PutError
-    ldx SaveX
-    sec
-    rts
-    
-
-HandlerClose
-    lda $2A
-    and #$08
-    bne CloseWrite
-    ldy #1
-    clc
     rts
 
-CloseWrite
-    stx SaveX
-    lda BufPtr
-    beq CloseCommit
-    
-    ; Pad buffer with 0s
-    ldx BufPtr
-PadLoop
-    lda #0
-    sta IOBuf,x
-    inx
-    bne PadLoop
-    jsr FlushBuffer
-
-CloseCommit
-    jsr SetupDCB_Close
-    ldy #1
-    clc
-    rts
-
-
-; =================================================================
-; 3. SPECIAL COMMANDS (XIO)
-; =================================================================
 HandlerStat
+    lda #1
     ldy #1
-    clc
     rts
-
 
 HandlerSpec
-    stx SaveX       
-
-    ; 1. PREPARE BUFFER (Clear it with 0s)
-    ldy #0
-    lda #0
-ClearLoop
-    sta IOBuf,y
-    iny
-    bne ClearLoop
-
-    ; 2. COPY DATA (The URL string from the IOCB)
-    ldx SaveX
-    lda $0348,x     ; Length Low
-    sta DBYTLO      ; Safe to use here (SetupDCB hasn't run yet)
-    
-    lda $0344,x     ; Src Low
-    sta SrcRead+1   
-    lda $0345,x     ; Src High
-    sta SrcRead+2   
-    
-    ldy #0
-CopyLoop
-    cpy DBYTLO      
-    bcs CopyDone    
-    
-SrcRead
-    lda $FFFF,y     ; Patch
-    sta IOBuf,y     
-    iny
-    bne CopyLoop
-CopyDone
-
-    ; 3. CALCULATE ID AND SAVE TO STACK
-    ldx SaveX       
-    lda $0341,x     ; Fetch Unit Number from IOCB
-    bne UnitOK_S    
-    lda #1          ; Default to Unit 1
-UnitOK_S
-    pha             ; PUSH UNIT TO STACK (Safe storage across subroutine)
-    
-    ; Calculate Reverse ID ($58 - Unit)
-    sta DBYTLO      ; Temp store the Unit number for math
-    lda #$58        
-    sec
-    sbc DBYTLO      ; Subtract the Unit number
-    sta CurrentDev  
-
-    ; 4. SETUP BASE SIO (Fills DAUX1/2, Buffers, etc.)
-    jsr SetupDCB_Open 
-    
-    ; 5. OVERWRITE PARAMS FOR XIO COMMAND
-    pla             ; PULL UNIT FROM STACK
-    sta DUNIT       ; Safely store in SIO Unit register
-    
-    ldx SaveX
-    lda $0342,x     ; Fetch the XIO Command again (ICCMD)
-    sta DCOMND      ; OVERWRITE the 'O' left by SetupDCB_Open
-    
-    lda #$80        ; Write direction (Sending the URL string)
-    sta DSTATS
-    lda #$3F        ; Long Timeout
-    sta DTIMLO
-    
-    lda #1          ; Length 256
-    sta DBYTHI
-    lda #0
-    sta DBYTLO
-    
-    ; 6. FIRE SIO
-    jsr SIOV
-    bmi SpecFail
-    
-    ldx SaveX
-    ldy #1
-    clc
-    rts
-
-SpecFail
-    ldx SaveX
-    ldy #144        
-    sec
-    rts
-    
-SpecExit
-    ldx SaveX       
-    ldy #1          
-    clc
-    rts
-    
-    
-; =================================================================
-; 4. SIO HELPERS
-; =================================================================
-RefillBuffer
-    jsr SetupDCB_Read
-    bpl RefillOK
     lda #1
-    sta EOF_Flag
-    rts
-RefillOK
-    lda #0
-    sta BufPtr
     ldy #1
     rts
 
-FlushBuffer
-    jsr SetupDCB_Write
-    bpl FlushOK
-    rts
-FlushOK
-    lda #0
-    sta BufPtr
-    ldy #1
-    rts
-
+; =================================================================
+; 3. SIO SETUP SUBROUTINES
+; =================================================================
 SetupDCB_Open
+    lda CurrentDev
+    sta DDEVIC
+    lda #$01
+    sta DUNIT
     lda #$4F        ; Cmd 'O'
     sta DCOMND
-    lda #0
-    sta DSTATS
+    lda #$00
+    sta DSTATS      ; No data xfer
+    lda #$03        ; Fast Timeout
+    sta DTIMLO
+    
+    ; Protect AUX bytes for Y: and W: modes
+    lda ICBLL,x
+    sta DAUX1
+    lda ICBLH,x
+    sta DAUX2
+    
     lda #<IOBuf
     sta DBUFLO
     lda #>IOBuf
     sta DBUFHI
-    lda #$08        ; Timeout
-    sta DTIMLO
-    lda #0
+    lda #$00
     sta DBYTLO
-    
-    ; --- FIX START: LOAD FROM IOCB ZP ---
-    ; This ensures DAUX1/2 are correct for Open, Read, Write, and XIO
-    lda $2A         ; ICAX1 (Mode)
-    sta DAUX1
-    lda $2B         ; ICAX2 (Aux2)
-    sta DAUX2
-    ; --- FIX END ---
-
-    lda #0
-    sta DUNUSE
-    lda #1
-    sta DBYTHI      
-    lda #1
-    sta DUNIT       
-    
-    lda CurrentDev  
-    sta DDEVIC
-    rts
-
-SetupDCB_Close
-    jsr SetupDCB_Open
-    lda #$43        ; Cmd 'C'
-    sta DCOMND
-    jsr SIOV
+    sta DBYTHI
     rts
 
 SetupDCB_Read
@@ -510,7 +208,14 @@ InitHandlersOnly
     ldx #<TableW
     ldy #>TableW
     jsr InstallOne
+
+    ; Install A ($41)
+    lda #$41
+    ldx #<TableA
+    ldy #>TableA
+    jsr InstallOne
     
+    rts
 
 InstallOne
     sta DeviceID
@@ -539,6 +244,4 @@ FoundEmpty
 
 EndHandler
     run Init
-    
- 
     

@@ -202,3 +202,106 @@ void ClipboardDevice::handleCommand(quint8 command, quint16 aux)
         break;
     }
 }
+
+
+// =============================================================
+// VOICE DEVICE IMPLEMENTATION (A:)
+// =============================================================
+
+VoiceDevice::VoiceDevice(SioWorker *worker) : SioDevice(worker)
+{
+    // Initialize the native OS text-to-speech engine
+    m_speech = new QTextToSpeech(this);
+}
+
+void VoiceDevice::handleCommand(quint8 command, quint16 aux)
+{
+    switch (command) {
+    // -------------------------------------------------------------
+    // COMMAND: OPEN ($4F)
+    // -------------------------------------------------------------
+    case 0x4F:
+    {
+        if (!sio->port()->writeCommandAck()) return;
+
+        // Clear the speech buffer ready for a new string
+        m_accumulator.clear();
+        qDebug() << "!n" << tr("[A:] Voice Device Opened for Write");
+
+        sio->port()->writeComplete();
+        break;
+    }
+
+    // -------------------------------------------------------------
+    // COMMAND: WRITE ($57)
+    // -------------------------------------------------------------
+    case 0x57:
+    {
+        if (!sio->port()->writeCommandAck()) return;
+
+        QByteArray dataFrame = sio->port()->readDataFrame(256);
+        if (dataFrame.isEmpty()) {
+            sio->port()->writeDataNak();
+            return;
+        }
+
+        sio->port()->writeDataAck();
+
+        // Translate ATASCII/ASCII to UTF-8
+        QString chunkStr = QString::fromLatin1(dataFrame);
+        chunkStr.replace(QChar(0x9B), QString("\n")); // Convert Atari EOL
+        chunkStr.remove(QChar(0x00));                 // Strip nulls
+
+        m_accumulator.append(chunkStr);
+
+        sio->port()->writeComplete();
+        break;
+    }
+
+    // -------------------------------------------------------------
+    // COMMAND: CLOSE ($43)
+    // -------------------------------------------------------------
+    case 0x43:
+    {
+        if (!sio->port()->writeCommandAck()) return;
+
+        if (!m_accumulator.isEmpty()) {
+
+            // 1. Convert Volume: 0-10 scale to 0.0-1.0
+            double qtVolume = aspeqtSettings->voiceVolume() / 10.0;
+
+            // 2. Convert Rate: 0-10 scale to -1.0-1.0 (5 is center/0.0)
+            double qtRate = (aspeqtSettings->voiceRate() - 5.0) / 5.0;
+
+            // 3. Convert Pitch: 0-10 scale to -1.0-1.0 (5 is center/0.0)
+            double qtPitch = (aspeqtSettings->voicePitch() - 5.0) / 5.0;
+
+            // Apply converted values to the engine
+            m_speech->setVolume(qtVolume);
+            m_speech->setRate(qtRate);
+            m_speech->setPitch(qtPitch);
+
+            m_speech->say(m_accumulator);
+            qDebug() << "!i" << tr("[A:] Synthesizing Speech (%1 chars) | Vol: %2, Rate: %3, Pitch: %4")
+                                    .arg(m_accumulator.length())
+                                    .arg(qtVolume)
+                                    .arg(qtRate)
+                                    .arg(qtPitch);
+        } else {
+            qDebug() << "!n" << tr("[A:] Close: Buffer empty, nothing to say.");
+        }
+
+        sio->port()->writeComplete();
+        break;
+    }
+
+
+    // -------------------------------------------------------------
+    // UNKNOWN COMMAND
+    // -------------------------------------------------------------
+    default:
+        sio->port()->writeCommandNak();
+        qWarning() << "!w" << tr("[A:] Unknown Command: $%1").arg(command, 2, 16, QChar('0'));
+        break;
+    }
+}

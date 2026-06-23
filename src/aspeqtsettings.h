@@ -202,6 +202,15 @@ public:
     void loadSessionFromFile(const QString &fileName);
     void setMainWindowTitle(const QString &g_mainWindowTitle);
 
+    // --- 9. Voice Synthesizer (A:) ---
+    int voiceVolume();
+    void setVoiceVolume(int vol);
+    int voiceRate();
+    void setVoiceRate(int rate);
+    int voicePitch();
+    void setVoicePitch(int pitch);
+
+
 private:
     QSettings *mSettings;
     void writeRecentImageSettings();
@@ -293,6 +302,12 @@ private:
     QString mSessionFileName;
     QString mSessionFilePath;
     QString mMainWindowTitle;
+
+    // --- 9. Voice Synthesizer (A:) ---
+    int mVoiceVolume;
+    int mVoiceRate;
+    int mVoicePitch;
+
 };
 
 extern AspeQtSettings *aspeqtSettings;

@@ -33,7 +33,7 @@ endif()
 
 # --- 2. Find Dependencies ---
 # Find Qt 6 Components
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml WebSockets WebChannel HttpServer LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network SerialPort PrintSupport Concurrent Xml WebSockets WebChannel HttpServer LinguistTools TextToSpeech)
 
 # Find LibSSH
 find_package(libssh REQUIRED)
@@ -114,6 +114,7 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::WebSockets   
     Qt6::WebChannel    
     Qt6::HttpServer
+    Qt6::TextToSpeech
     ZLIB::ZLIB
     ssh 
 )

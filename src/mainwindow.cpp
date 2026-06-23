@@ -503,7 +503,13 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-
+    // -------------------------------------------------------
+    // DEVICE $41: Voice Synthesizer (A:)
+    // -------------------------------------------------------
+    VoiceDevice *voice = new VoiceDevice(sio);
+    voice->setParent(nullptr);
+    voice->moveToThread(sio);
+    sio->installDevice(0x41, voice);
 
     // -------------------------------------------------------
     // DEVICE $45: PCLINK

@@ -198,6 +198,10 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->sbHttpPort->setValue(aspeqtSettings->webUiPort());
     m_ui->sbWsPort->setValue(aspeqtSettings->webUiWsPort());
 
+    m_ui->spinVoiceVolume->setValue(aspeqtSettings->voiceVolume());
+    m_ui->spinVoiceRate->setValue(aspeqtSettings->voiceRate());
+    m_ui->spinVoicePitch->setValue(aspeqtSettings->voicePitch());
+
     // --- Backend Tree Mapping ---
     switch (aspeqtSettings->backend()) {
     case SERIAL_BACKEND_STANDARD:
@@ -251,6 +255,14 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     } else {
         m_ui->emulationHighSpeedExeLoaderBox->setVisible(true);
     }
+
+    m_ui->spinVoiceVolume->setRange(0, 10);
+    m_ui->spinVoiceRate->setRange(0, 10);
+    m_ui->spinVoicePitch->setRange(0, 10);
+
+    m_ui->spinVoiceVolume->setValue(aspeqtSettings->voiceVolume());
+    m_ui->spinVoiceRate->setValue(aspeqtSettings->voiceRate());
+    m_ui->spinVoicePitch->setValue(aspeqtSettings->voicePitch());
 
     // Initialize state
     on_transportModeChanged();
@@ -502,6 +514,10 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setWebUiEnabled(m_ui->cbEnableWebUi->isChecked());
     aspeqtSettings->setWebUiPort(m_ui->sbHttpPort->value());
     aspeqtSettings->setWebUiWsPort(m_ui->sbWsPort->value());
+
+    aspeqtSettings->setVoiceVolume(m_ui->spinVoiceVolume->value());
+    aspeqtSettings->setVoiceRate(m_ui->spinVoiceRate->value());
+    aspeqtSettings->setVoicePitch(m_ui->spinVoicePitch->value());
 
     int backend = SERIAL_BACKEND_STANDARD;
     if (itemAtariSio->checkState(0) == Qt::Checked) {
