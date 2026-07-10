@@ -1013,6 +1013,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::hideEvent(QHideEvent *event)
 {
+#ifndef Q_OS_MACOS
+    // The "Minimize to Tray" paradigm is strictly for Windows/Linux.
+    // On macOS, we disable this to allow native AppKit Dock minimization to work normally.
     if (aspeqtSettings->minimizeToTray()) {
         trayIcon.show();
         oldWindowFlags = windowFlags();
@@ -1022,8 +1025,12 @@ void MainWindow::hideEvent(QHideEvent *event)
         event->ignore();
         return;
     }
+#endif
+
     QMainWindow::hideEvent(event);
 }
+
+
 
 void MainWindow::show()
 {
@@ -2536,10 +2543,15 @@ void MainWindow::on_actionQuit_triggered()
     close();
 }
 
+
 void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if (reason == QSystemTrayIcon::DoubleClick) {
+
+#ifndef Q_OS_MACOS
         setWindowFlags(oldWindowFlags);
+#endif
+
         setWindowState(oldWindowStates);
         show();
         activateWindow();

@@ -1157,22 +1157,33 @@ bool SimpleDiskImage::seekToSector(quint16 sector)
 
 bool SimpleDiskImage::readSector(quint16 sector, QByteArray &data)
 {
-
     QMutexLocker locker(&m_ioMutex);
 
     if (!seekToSector(sector)) {
+        // DEFENSIVE FIX:
+        // If seek fails, fill the data array with zeros to match the expected sector size.
+        // This prevents fatal QByteArray asserts if the calling FileSystem ignores the 'false' return value.
+        data.fill(0, m_geometry.bytesPerSector(sector));
         return false;
     }
+
     data = file.read(m_geometry.bytesPerSector(sector));
+
     if (data.size() != m_geometry.bytesPerSector(sector)) {
+        // DEFENSIVE FIX:
+        // If a partial read occurs, resize the array to the expected size so callers don't crash.
+        data.resize(m_geometry.bytesPerSector(sector));
+
         qCritical() << "!e" << tr("[%1] Cannot read from sector %2: %3.")
-                       .arg(deviceName())
-                       .arg(sector)
-                       .arg(file.errorString());
+                                   .arg(deviceName())
+                                   .arg(sector)
+                                   .arg(file.errorString());
         return false;
     }
+
     return true;
 }
+
 
 bool SimpleDiskImage::writeSector(quint16 sector, const QByteArray &data)
 {
