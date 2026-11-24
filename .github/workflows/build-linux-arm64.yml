@@ -1,0 +1,63 @@
+name: Build & Package Linux (ARM64 / Pi)
+
+on:
+  push:
+    branches:
+      - development
+  workflow_dispatch:
+
+jobs:
+  build-linux-arm64:
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install system and Qt 6 ARM64 dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            ninja-build \
+            pkg-config \
+            libssh-dev \
+            libgpiod-dev \
+            libgl1-mesa-dev \
+            libxkbcommon-x11-0 \
+            libxcb-cursor0 \
+            qt6-base-dev \
+            qt6-base-dev-tools \
+            qt6-serialport-dev \
+            qt6-websockets-dev \
+            qt6-webchannel-dev \
+            qt6-httpserver-dev \
+            qt6-tools-dev \
+            qt6-tools-dev-tools \
+            qt6-l10n-tools
+
+      - name: Configure with CMake
+        run: |
+          cmake -S . -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build AspeQt
+        run: |
+          cmake --build build --parallel
+
+      - name: Package (.deb and portable .tar.gz)
+        run: |
+          mkdir -p release
+          cd build
+          cpack -G DEB
+          mv *.deb ../release/
+          tar -cvzf ../release/AspeQt-2K26-pi.64-portable.tar.gz AspeQt
+
+      - name: Upload Linux ARM64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AspeQt-2K26-linux-arm64
+          path: release/*
+          if-no-files-found: error
+
