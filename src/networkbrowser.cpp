@@ -19,7 +19,15 @@
 /* networkbrowser.cpp - Constructor */
 
 NetworkBrowser::NetworkBrowser(QWidget *parent, const QString &initialUrl)
-    : QDialog(parent), m_client(nullptr)
+    : QDialog(parent),
+    m_client(nullptr),
+    m_sortAscending(true),
+    currentPath("/"),
+    m_activeHost(""),
+    m_activePort(0),
+    m_activeProtocol("tnfs"),
+    m_isFirstBatch(true),
+    m_operationGen(0)
 {
     setWindowTitle(tr("Universal Network Browser"));
     resize(600, 480);
@@ -29,9 +37,6 @@ NetworkBrowser::NetworkBrowser(QWidget *parent, const QString &initialUrl)
     m_savedUser = settings.value("ftpUser", "").toString();
     m_savedPass = settings.value("ftpPass", "").toString();
     // ----------------------------------------------------
-
-    connectWatcher = new QFutureWatcher<bool>(this);
-    connect(connectWatcher, &QFutureWatcherBase::finished, this, &NetworkBrowser::onConnectionFinished);
 
     fetchWatcher = new QFutureWatcher<QList<INetworkClient::DirectoryEntry>>(this);
     connect(fetchWatcher, &QFutureWatcherBase::finished, this, &NetworkBrowser::onFetchFinished);
@@ -133,11 +138,6 @@ NetworkBrowser::NetworkBrowser(QWidget *parent, const QString &initialUrl)
     connect(radioFtp, &QRadioButton::toggled, this, &NetworkBrowser::onProtocolChanged);
     connect(radioSftp, &QRadioButton::toggled, this, &NetworkBrowser::onProtocolChanged);
 
-    currentPath = "/";
-    m_activeHost = "";
-    m_activePort = 0;
-    m_activeProtocol = "tnfs";
-
     // --- Sanitize UI and set initial padlock state BEFORE auto-navigating ---
     onProtocolChanged();
 
@@ -184,11 +184,10 @@ NetworkBrowser::NetworkBrowser(QWidget *parent, const QString &initialUrl)
 
 NetworkBrowser::~NetworkBrowser()
 {
+    ++m_operationGen;
+
     if (fetchWatcher->isRunning()) {
         fetchWatcher->waitForFinished();
-    }
-    if (connectWatcher->isRunning()) {
-        connectWatcher->waitForFinished();
     }
 
     if (m_client) {
@@ -197,9 +196,22 @@ NetworkBrowser::~NetworkBrowser()
     }
 }
 
+void NetworkBrowser::setControlsEnabled(bool enabled)
+{
+    hostCombo->setEnabled(enabled);
+    btnConnect->setEnabled(enabled);
+    fileList->setEnabled(enabled);
+    radioTnfs->setEnabled(enabled);
+    radioFtp->setEnabled(enabled);
+    radioSftp->setEnabled(enabled);
+    btnLogin->setEnabled(enabled && (radioFtp->isChecked() || radioSftp->isChecked()));
+}
+
 // --- Dynamic Padlock & State Sanitizer ---
 void NetworkBrowser::onProtocolChanged()
 {
+    ++m_operationGen;
+
     // 1. Enable Padlock for BOTH FTP and SFTP
     if (radioFtp->isChecked() || radioSftp->isChecked()) {
         btnLogin->setEnabled(true);
@@ -216,6 +228,8 @@ void NetworkBrowser::onProtocolChanged()
     // 3. Sanitize the UI to prevent interacting with stale data
     fileList->clear();
     statusLabel->setText(tr("Not Connected"));
+    progressBar->setVisible(false);
+    unsetCursor();
 
     // 4. Reset internal state so the next "Connect" click starts fresh
     currentPath = "/";
@@ -318,9 +332,13 @@ QIcon NetworkBrowser::getIcon(const QString &name)
 
 void NetworkBrowser::onConnect()
 {
+    if (fetchWatcher->isRunning()) return;
+
     QString rawInput = hostCombo->currentText().trimmed();
+    if (rawInput.isEmpty()) return;
+
     QString host = rawInput;
-    quint16 port = 0; // Default port initialization
+    quint16 port = 0;
 
     if (m_client) {
         delete m_client;
@@ -373,23 +391,17 @@ void NetworkBrowser::onConnect()
         currentPath = "/";
     }
     m_activeHost = host;
-    m_activePort = port; // Save the port for later file transfers!
+    m_activePort = port;
 
-    hostCombo->setEnabled(false);
-    btnConnect->setEnabled(false);
-    btnLogin->setEnabled(false);
-    radioTnfs->setEnabled(false);
-    radioFtp->setEnabled(false);
-    radioSftp->setEnabled(false);
-    fileList->setEnabled(false);
+    ++m_operationGen;
 
+    setControlsEnabled(false);
     fileList->clear();
+    hostCombo->setEditText(rawInput);
 
-    hostCombo->setEditText(rawInput); // Keep what the user actually typed in the box
-
+    setCursor(Qt::WaitCursor);
     progressBar->setVisible(true);
 
-    // UI Feedback for custom ports
     if (port != 0) {
         statusLabel->setText(tr("Connecting to %1 on port %2...").arg(host).arg(port));
     } else {
@@ -400,13 +412,12 @@ void NetworkBrowser::onConnect()
 
     bool success = false;
 
-    // Inject credentials and connect based on Protocol, using the dynamic activeUser/activePass
     if (m_activeProtocol == "ftp") {
-        FtpClient* ftp = static_cast<FtpClient*>(m_client);
+        FtpClient *ftp = static_cast<FtpClient*>(m_client);
         ftp->setCredentials(activeUser, activePass);
         success = ftp->connectToHost(host, port);
     } else if (m_activeProtocol == "sftp") {
-        SftpClient* sftp = static_cast<SftpClient*>(m_client);
+        SftpClient *sftp = static_cast<SftpClient*>(m_client);
         sftp->setCredentials(activeUser, activePass);
         success = sftp->connectToHost(host, port);
     } else {
@@ -416,15 +427,7 @@ void NetworkBrowser::onConnect()
         }
     }
 
-    hostCombo->setEnabled(true);
-    btnConnect->setEnabled(true);
-    fileList->setEnabled(true);
-    progressBar->setVisible(false);
-    radioTnfs->setEnabled(true);
-    radioFtp->setEnabled(true);
-    radioSftp->setEnabled(true);
-    btnLogin->setEnabled(radioFtp->isChecked() || radioSftp->isChecked());
-    progressBar->setVisible(false);
+    setControlsEnabled(true);
 
     if (success) {
         statusLabel->setText(tr("Connected: %1").arg(currentPath));
@@ -442,62 +445,38 @@ void NetworkBrowser::onConnect()
 
         refreshList();
     } else {
+        progressBar->setVisible(false);
+        unsetCursor();
         statusLabel->setText(tr("Connection Failed."));
         QMessageBox::critical(this, tr("Connection Error"),
                               tr("Could not reach host '%1'.\nCheck credentials, hostname, or port.").arg(host));
     }
 }
 
-void NetworkBrowser::onConnectionFinished()
-{
-    hostCombo->setEnabled(true);
-    btnConnect->setEnabled(true);
-    fileList->setEnabled(true);
-    progressBar->setVisible(false);
-
-    bool success = connectWatcher->result();
-
-    if (success) {
-        statusLabel->setText(tr("Connected: %1").arg(currentPath));
-
-        if (hostCombo->findText(m_activeHost) == -1) {
-            hostCombo->addItem(m_activeHost);
-        }
-        hostCombo->setEditText(m_activeHost);
-
-        QSettings settings("AspeQt", "TNFS");
-        QStringList history;
-        for (int i = 0; i < hostCombo->count(); ++i) {
-            history << hostCombo->itemText(i);
-        }
-        settings.setValue("hostHistory", history);
-
-        refreshList();
-    } else {
-        statusLabel->setText(tr("Connection Failed."));
-        QMessageBox::critical(this, tr("Connection Error"),
-                              tr("Could not reach host '%1'.\nCheck credentials or hostname.").arg(m_activeHost));
-    }
-}
-
 void NetworkBrowser::refreshList()
 {
-    fileList->clear();
+    if (!m_client || fetchWatcher->isRunning()) return;
 
+    ++m_operationGen;
+
+    fileList->clear();
     statusLabel->setText(tr("Fetching %1...").arg(currentPath));
 
     m_sortAscending = true;
-
     QIcon icon = QIcon::fromTheme("view-sort-ascending");
     if (icon.isNull()) btnSort->setText("A-Z");
     else btnSort->setIcon(icon);
 
+    setCursor(Qt::WaitCursor);
+    progressBar->setVisible(true);
     QApplication::processEvents();
 
-    if (m_client && m_client->beginListing(currentPath)) {
+    if (m_client->beginListing(currentPath)) {
         m_isFirstBatch = true;
         loadNextBatch();
     } else {
+        progressBar->setVisible(false);
+        unsetCursor();
         statusLabel->setText(tr("Error opening directory."));
     }
 }
@@ -505,6 +484,8 @@ void NetworkBrowser::refreshList()
 void NetworkBrowser::loadNextBatch()
 {
     if (fetchWatcher->isRunning() || !m_client) return;
+
+    const quint64 opGen = m_operationGen;
 
     setCursor(Qt::WaitCursor);
     progressBar->setVisible(true);
@@ -514,14 +495,16 @@ void NetworkBrowser::loadNextBatch()
     QFuture<QList<INetworkClient::DirectoryEntry>> future = QtConcurrent::run([client]() {
         return client->fetchNextBatch(50);
     });
+    fetchWatcher->setProperty("opGen", QVariant::fromValue(opGen));
     fetchWatcher->setFuture(future);
 }
 
 void NetworkBrowser::onFetchFinished()
 {
+    const quint64 opGen = fetchWatcher->property("opGen").toULongLong();
     auto newItems = fetchWatcher->result();
 
-    if (!m_client) {
+    if (opGen != m_operationGen || !m_client) {
         progressBar->setVisible(false);
         unsetCursor();
         return;

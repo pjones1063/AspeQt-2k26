@@ -29,7 +29,6 @@ public:
 
 private slots:
     void onConnect();
-    void onConnectionFinished();
     void onItemDoubleClicked(QListWidgetItem *item);
     void onBackClicked();
     void onClearHistory();
@@ -56,10 +55,7 @@ private:
     QToolButton *btnSort;
     QProgressBar *progressBar;
 
-    // Async Connection Handling
-    QFutureWatcher<bool> *connectWatcher;
-
-    // Async Directory Fetching
+    // Async Directory Batch Fetching
     QFutureWatcher<QList<INetworkClient::DirectoryEntry>> *fetchWatcher;
 
     bool m_sortAscending;
@@ -69,11 +65,13 @@ private:
     quint16 m_activePort;
     QString m_activeProtocol;
     bool m_isFirstBatch;
+    quint64 m_operationGen;
 
     // Credential Storage
     QString m_savedUser;
     QString m_savedPass;
 
+    void setControlsEnabled(bool enabled);
     void refreshList();
     void loadNextBatch();
     QIcon getIcon(const QString &name);
