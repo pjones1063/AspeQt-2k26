@@ -1,0 +1,61 @@
+name: Build & Package Linux (AMD64)
+
+on:
+  push:
+    branches:
+      - development
+  workflow_dispatch:
+
+jobs:
+  build-linux-amd64:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            ninja-build \
+            pkg-config \
+            libssh-dev \
+            libgl1-mesa-dev \
+            libxkbcommon-x11-0 \
+            libxcb-cursor0
+
+      - name: Install Qt 6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.3'
+          host: 'linux'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
+
+      - name: Configure with CMake
+        run: |
+          cmake -S . -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build AspeQt
+        run: |
+          cmake --build build --parallel
+
+      - name: Package (.deb and portable .tar.gz)
+        run: |
+          mkdir -p release
+          cd build
+          cpack -G DEB
+          mv *.deb ../release/
+          tar -cvzf ../release/AspeQt-2K26-linux-amd64-portable.tar.gz AspeQt
+
+      - name: Upload Linux AMD64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AspeQt-2K26-linux-amd64
+          path: release/*
+          if-no-files-found: error
