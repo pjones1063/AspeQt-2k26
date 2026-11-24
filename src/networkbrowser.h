@@ -35,7 +35,6 @@ private slots:
     void onClearHistory();
     void onCancelClicked();
     void onSortClicked();
-    void onMoreClicked();
     void onFetchFinished();
     void onLoginClicked();
     void onProtocolChanged();
@@ -54,7 +53,6 @@ private:
     QPushButton *btnClear;
     QPushButton *btnLogin;
     QPushButton *btnCancel;
-    QPushButton *btnMore;
     QToolButton *btnSort;
     QProgressBar *progressBar;
 

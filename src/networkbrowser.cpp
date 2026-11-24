@@ -107,11 +107,8 @@ NetworkBrowser::NetworkBrowser(QWidget *parent, const QString &initialUrl)
 
     // 5. Bottom Button Bar
     QHBoxLayout *bottomLayout = new QHBoxLayout();
-    btnMore = new QPushButton(tr("More..."), this);
-    btnMore->setVisible(false);
     btnCancel = new QPushButton(tr("Cancel"), this);
 
-    bottomLayout->addWidget(btnMore);
     bottomLayout->addStretch();
     bottomLayout->addWidget(btnCancel);
 
@@ -128,7 +125,6 @@ NetworkBrowser::NetworkBrowser(QWidget *parent, const QString &initialUrl)
     connect(btnBack, &QPushButton::clicked, this, &NetworkBrowser::onBackClicked);
     connect(fileList, &QListWidget::itemDoubleClicked, this, &NetworkBrowser::onItemDoubleClicked);
     connect(btnClear, &QPushButton::clicked, this, &NetworkBrowser::onClearHistory);
-    connect(btnMore, &QPushButton::clicked, this, &NetworkBrowser::onMoreClicked);
     connect(btnCancel, &QPushButton::clicked, this, &NetworkBrowser::onCancelClicked);
     connect(btnSort, &QToolButton::clicked, this, &NetworkBrowser::onSortClicked);
 
@@ -188,16 +184,16 @@ NetworkBrowser::NetworkBrowser(QWidget *parent, const QString &initialUrl)
 
 NetworkBrowser::~NetworkBrowser()
 {
-    if (m_client) {
-        delete m_client;
-        m_client = nullptr;
+    if (fetchWatcher->isRunning()) {
+        fetchWatcher->waitForFinished();
     }
-
     if (connectWatcher->isRunning()) {
         connectWatcher->waitForFinished();
     }
-    if (fetchWatcher->isRunning()) {
-        fetchWatcher->waitForFinished();
+
+    if (m_client) {
+        delete m_client;
+        m_client = nullptr;
     }
 }
 
@@ -220,7 +216,6 @@ void NetworkBrowser::onProtocolChanged()
     // 3. Sanitize the UI to prevent interacting with stale data
     fileList->clear();
     statusLabel->setText(tr("Not Connected"));
-    btnMore->setVisible(false);
 
     // 4. Reset internal state so the next "Connect" click starts fresh
     currentPath = "/";
@@ -488,9 +483,6 @@ void NetworkBrowser::onConnectionFinished()
 void NetworkBrowser::refreshList()
 {
     fileList->clear();
-    btnMore->setVisible(false);
-    btnMore->setEnabled(true);
-    btnMore->setText(tr("More..."));
 
     statusLabel->setText(tr("Fetching %1...").arg(currentPath));
 
@@ -502,7 +494,7 @@ void NetworkBrowser::refreshList()
 
     QApplication::processEvents();
 
-    if (m_client->beginListing(currentPath)) {
+    if (m_client && m_client->beginListing(currentPath)) {
         m_isFirstBatch = true;
         loadNextBatch();
     } else {
@@ -512,15 +504,15 @@ void NetworkBrowser::refreshList()
 
 void NetworkBrowser::loadNextBatch()
 {
-    if (fetchWatcher->isRunning()) return;
+    if (fetchWatcher->isRunning() || !m_client) return;
 
     setCursor(Qt::WaitCursor);
-    btnMore->setEnabled(false);
     progressBar->setVisible(true);
     statusLabel->setText(tr("Fetching %1...").arg(currentPath));
 
-    QFuture<QList<INetworkClient::DirectoryEntry>> future = QtConcurrent::run([this]() {
-        return m_client->fetchNextBatch(20);
+    INetworkClient *client = m_client;
+    QFuture<QList<INetworkClient::DirectoryEntry>> future = QtConcurrent::run([client]() {
+        return client->fetchNextBatch(50);
     });
     fetchWatcher->setFuture(future);
 }
@@ -528,6 +520,13 @@ void NetworkBrowser::loadNextBatch()
 void NetworkBrowser::onFetchFinished()
 {
     auto newItems = fetchWatcher->result();
+
+    if (!m_client) {
+        progressBar->setVisible(false);
+        unsetCursor();
+        return;
+    }
+
     bool finished = m_client->isListingFinished();
 
     if (m_isFirstBatch && finished) {
@@ -561,19 +560,12 @@ void NetworkBrowser::onFetchFinished()
         fileList->addItem(item);
     }
 
-    if (finished) {
-        btnMore->setEnabled(false);
-        if (m_isFirstBatch) btnMore->setVisible(false);
-        else btnMore->setText(tr("No more items"));
-    } else {
-        btnMore->setVisible(true);
-        btnMore->setEnabled(true);
-        btnMore->setText(tr("More..."));
-    }
-
-    if (!m_isFirstBatch && !newItems.isEmpty()) fileList->scrollToBottom();
-
     m_isFirstBatch = false;
+
+    if (!finished) {
+        loadNextBatch();
+        return;
+    }
 
     statusLabel->setText(tr("Browsing: %1").arg(currentPath));
     progressBar->setVisible(false);
@@ -642,7 +634,6 @@ void NetworkBrowser::onClearHistory()
 }
 
 void NetworkBrowser::onCancelClicked() { reject(); }
-void NetworkBrowser::onMoreClicked() { loadNextBatch(); }
 
 void NetworkBrowser::onSortClicked()
 {
