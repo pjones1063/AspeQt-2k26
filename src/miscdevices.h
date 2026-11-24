@@ -9,7 +9,7 @@
 #include <QAction>
 #include <QSerialPort>
 #include <QTcpSocket>
-#include <QTextToSpeech> // <-- ADD THIS FOR THE A: DEVICE
+
 
 class SmartDevice: public SioDevice
 {
@@ -18,6 +18,8 @@ public:
     SmartDevice(SioWorker *worker): SioDevice(worker) {}
     void handleCommand(quint8 command, quint16 aux);
 };
+
+
 
 class ClipboardDevice : public SioDevice
 {
@@ -31,24 +33,9 @@ private:
     QString    m_writeAccumulator;
     int m_clipPos;
 
-signals:
-    void requestClipSet(QString text);
+signals: // Define these signals
+     void requestClipSet(QString text); // The "Commit" signal
 
-};
-
-// ==========================================
-// VOICE DEVICE (A:)
-// ==========================================
-class VoiceDevice : public SioDevice
-{
-    Q_OBJECT
-public:
-    VoiceDevice(SioWorker *worker);
-    void handleCommand(quint8 command, quint16 aux) override;
-
-private:
-    QTextToSpeech *m_speech;
-    QString m_accumulator;
 };
 
 #endif // MISCDEVICES_H

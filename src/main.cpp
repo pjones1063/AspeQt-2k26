@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     qputenv("QT_QPA_PLATFORMTHEME", "generic");
 #endif
     QApplication a(argc, argv);
-
+    a.setStyle("Fusion");
     // 2. Parse command-line arguments for the power-user override
     QStringList args = QCoreApplication::arguments();
     bool allowMultiple = args.contains("--multi") || args.contains("-m");
