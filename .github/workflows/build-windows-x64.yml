@@ -1,0 +1,112 @@
+name: Build & Package Windows (x64)
+
+on:
+  push:
+    branches:
+      - development
+  workflow_dispatch:
+
+jobs:
+  build-windows-x64:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2 (UCRT64) with Qt 6 and libssh
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-libssh
+            mingw-w64-ucrt-x86_64-zlib
+            mingw-w64-ucrt-x86_64-qt6-base
+            mingw-w64-ucrt-x86_64-qt6-serialport
+            mingw-w64-ucrt-x86_64-qt6-websockets
+            mingw-w64-ucrt-x86_64-qt6-webchannel
+            mingw-w64-ucrt-x86_64-qt6-httpserver
+            mingw-w64-ucrt-x86_64-qt6-tools
+            mingw-w64-ucrt-x86_64-qt6-translations
+
+      - name: Configure with CMake
+        run: |
+          cmake -S . -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build AspeQt
+        run: |
+          cmake --build build --parallel
+
+      - name: Stage with windeployqt and bundle runtime DLLs
+        shell: pwsh
+        run: |
+          $UcrtBin = "D:\a\_temp\msys64\ucrt64\bin"
+          if (-not (Test-Path $UcrtBin)) { $UcrtBin = "C:\msys64\ucrt64\bin" }
+          $env:PATH = "$UcrtBin;$env:PATH"
+
+          New-Item -ItemType Directory -Force -Path "release\win-temp" | Out-Null
+          Copy-Item "build\AspeQt.exe" "release\win-temp\"
+
+          & "$UcrtBin\windeployqt.exe" --dir "release\win-temp" "release\win-temp\AspeQt.exe"
+
+          $RuntimeDlls = @(
+            "libssh.dll",
+            "libcrypto-3-x64.dll",
+            "libssl-3-x64.dll",
+            "zlib1.dll",
+            "libgcc_s_seh-1.dll",
+            "libstdc++-6.dll",
+            "libwinpthread-1.dll"
+          )
+
+          foreach ($dll in $RuntimeDlls) {
+            $src = Join-Path $UcrtBin $dll
+            if (Test-Path $src) {
+              Copy-Item $src "release\win-temp\"
+            } else {
+              Write-Warning "Optional/missing DLL not found at $src"
+            }
+          }
+
+          Compress-Archive -Path "release\win-temp\*" -DestinationPath "release\AspeQt-2K26-Portable.zip" -Force
+
+      - name: Build Inno Setup Installer
+        shell: pwsh
+        run: |
+          $IssFile = Get-ChildItem -Recurse -Filter "AspeQt-Installer.iss" | Select-Object -First 1
+          if (-not $IssFile) {
+            Write-Error "Could not find AspeQt-Installer.iss in repository."
+            exit 1
+          }
+
+          $Iscc = Get-Command "ISCC.exe" -ErrorAction SilentlyContinue
+          if (-not $Iscc) {
+            $DefaultIscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+            if (Test-Path $DefaultIscc) {
+              $Iscc = $DefaultIscc
+            } else {
+              choco install innosetup -y
+              $Iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+            }
+          }
+
+          & $Iscc $IssFile.FullName
+
+      - name: Upload Windows x64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AspeQt-2K26-windows-x64
+          path: |
+            release/AspeQt-2K26-Portable.zip
+            release/*.exe
+          if-no-files-found: error
