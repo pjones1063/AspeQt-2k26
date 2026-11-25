@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install system and Qt 6 dependencies
+      - name: Install system, libgpiod v2, and Qt 6 ARM64 dependencies
         run: |
           apt-get update
           DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -24,7 +24,10 @@ jobs:
             cmake \
             ninja-build \
             pkg-config \
+            file \
+            dpkg-dev \
             libssh-dev \
+            libgpiod-dev \
             libgl1-mesa-dev \
             libxkbcommon-x11-0 \
             libxcb-cursor0 \
