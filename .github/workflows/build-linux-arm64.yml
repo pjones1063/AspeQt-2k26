@@ -14,16 +14,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install system and Qt 6 ARM64 dependencies
+      - name: Install system, libgpiod v2 build tools, and Qt 6 ARM64 dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             build-essential \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
             cmake \
             ninja-build \
-            pkg-config \
+            libkmod-dev \
+            libudev-dev \
             libssh-dev \
-            libgpiod-dev \
             libgl1-mesa-dev \
             libxkbcommon-x11-0 \
             libxcb-cursor0 \
@@ -37,8 +41,21 @@ jobs:
             qt6-tools-dev-tools \
             qt6-l10n-tools
 
+      - name: Build and install libgpiod v2 (with C++ bindings)
+        run: |
+          git clone --depth 1 --branch v2.2.1 https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git /tmp/libgpiod
+          cd /tmp/libgpiod
+          ./autogen.sh \
+            --enable-tools \
+            --enable-bindings-cxx \
+            --prefix=/usr/local
+          make -j"$(nproc)"
+          sudo make install
+          sudo ldconfig
+
       - name: Configure with CMake
         run: |
+          export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
           cmake -S . -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release
 
