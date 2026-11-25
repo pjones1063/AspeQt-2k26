@@ -38,6 +38,10 @@ jobs:
             qt6-tools-dev-tools \
             qt6-l10n-tools
 
+      - name: Normalize timestamps to prevent clock-skew loops
+        run: |
+          find . -not -path '*/.git/*' -exec touch -m {} +
+
       - name: Configure with CMake
         run: |
           cmake -S . -B build -G Ninja \
