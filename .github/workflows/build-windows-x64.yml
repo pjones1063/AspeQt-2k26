@@ -47,37 +47,22 @@ jobs:
         run: |
           cmake --build build --parallel
 
-      - name: Stage with windeployqt and bundle runtime DLLs
+      - name: Stage with windeployqt and bundle all UCRT64 DLLs
+        run: |
+          mkdir -p release/win-temp
+          cp build/AspeQt.exe release/win-temp/
+
+          windeployqt --dir release/win-temp release/win-temp/AspeQt.exe
+
+          find release/win-temp -type f \( -name "*.exe" -o -name "*.dll" \) -print0 \
+            | xargs -0 ldd \
+            | awk '/=> \/ucrt64\/bin\// { print $3 }' \
+            | sort -u \
+            | xargs -r -I{} cp -u "{}" release/win-temp/
+
+      - name: Create Portable ZIP
         shell: pwsh
         run: |
-          $UcrtBin = "D:\a\_temp\msys64\ucrt64\bin"
-          if (-not (Test-Path $UcrtBin)) { $UcrtBin = "C:\msys64\ucrt64\bin" }
-          $env:PATH = "$UcrtBin;$env:PATH"
-
-          New-Item -ItemType Directory -Force -Path "release\win-temp" | Out-Null
-          Copy-Item "build\AspeQt.exe" "release\win-temp\"
-
-          & "$UcrtBin\windeployqt.exe" --dir "release\win-temp" "release\win-temp\AspeQt.exe"
-
-          $RuntimeDlls = @(
-            "libssh.dll",
-            "libcrypto-3-x64.dll",
-            "libssl-3-x64.dll",
-            "zlib1.dll",
-            "libgcc_s_seh-1.dll",
-            "libstdc++-6.dll",
-            "libwinpthread-1.dll"
-          )
-
-          foreach ($dll in $RuntimeDlls) {
-            $src = Join-Path $UcrtBin $dll
-            if (Test-Path $src) {
-              Copy-Item $src "release\win-temp\"
-            } else {
-              Write-Warning "Optional/missing DLL not found at $src"
-            }
-          }
-
           Compress-Archive -Path "release\win-temp\*" -DestinationPath "release\AspeQt-2K26-Portable.zip" -Force
 
       - name: Build Inno Setup Installer
