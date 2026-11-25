@@ -20,6 +20,7 @@ jobs:
           sudo apt-get install -y \
             build-essential \
             autoconf \
+            autoconf-archive \
             automake \
             libtool \
             pkg-config \
@@ -77,4 +78,3 @@ jobs:
           name: AspeQt-2K26-linux-arm64
           path: release/*
           if-no-files-found: error
-
