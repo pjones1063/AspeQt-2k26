@@ -9,26 +9,23 @@ on:
 jobs:
   build-linux-arm64:
     runs-on: ubuntu-24.04-arm
+    container:
+      image: debian:trixie
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install system, libgpiod v2 build tools, and Qt 6 ARM64 dependencies
+      - name: Install system, libgpiod v2, and Qt 6 ARM64 dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
             build-essential \
-            autoconf \
-            autoconf-archive \
-            automake \
-            libtool \
-            pkg-config \
             cmake \
             ninja-build \
-            libkmod-dev \
-            libudev-dev \
+            pkg-config \
             libssh-dev \
+            libgpiod-dev \
             libgl1-mesa-dev \
             libxkbcommon-x11-0 \
             libxcb-cursor0 \
@@ -42,21 +39,8 @@ jobs:
             qt6-tools-dev-tools \
             qt6-l10n-tools
 
-      - name: Build and install libgpiod v2 (with C++ bindings)
-        run: |
-          git clone --depth 1 --branch v2.2.1 https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git /tmp/libgpiod
-          cd /tmp/libgpiod
-          ./autogen.sh \
-            --enable-tools \
-            --enable-bindings-cxx \
-            --prefix=/usr/local
-          make -j"$(nproc)"
-          sudo make install
-          sudo ldconfig
-
       - name: Configure with CMake
         run: |
-          export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
           cmake -S . -B build -G Ninja \
             -DCMAKE_BUILD_TYPE=Release
 
