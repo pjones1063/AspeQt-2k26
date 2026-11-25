@@ -3,7 +3,7 @@ name: Build & Package Linux (AMD64)
 on:
   push:
     branches:
-      - development
+      - main
   workflow_dispatch:
 
 jobs:

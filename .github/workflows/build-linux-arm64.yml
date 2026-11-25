@@ -3,7 +3,7 @@ name: Build & Package Linux (ARM64 / Pi)
 on:
   push:
     branches:
-      - development
+      - main
   workflow_dispatch:
 
 jobs:

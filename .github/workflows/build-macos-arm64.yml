@@ -3,7 +3,7 @@ name: Build & Package macOS (ARM64)
 on:
   push:
     branches:
-      - development
+      - main
   workflow_dispatch:
 
 jobs:

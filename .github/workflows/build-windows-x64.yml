@@ -3,7 +3,7 @@ name: Build & Package Windows (x64)
 on:
   push:
     branches:
-      - development
+      - main
   workflow_dispatch:
 
 jobs:
