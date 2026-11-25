@@ -40,15 +40,21 @@ jobs:
 
       - name: Bundle, sign, and create DMG
         run: |
-          mkdir -p release
+          rm -rf release stage
+          mkdir -p release stage/doc stage/atari
+
           macdeployqt build/AspeQt.app -executable=build/AspeQt.app/Contents/MacOS/AspeQt -always-overwrite
           codesign --force --deep --sign - build/AspeQt.app
-          hdiutil create -volname "AspeQt-2K26" -srcfolder build/AspeQt.app -ov -format UDZO release/AspeQt-2K26-macOS.dmg
+
+          cp -R build/AspeQt.app stage/
+          cp -R doc/* stage/doc/
+          cp atari/*.atr atari/*.car stage/atari/
+
+          hdiutil create -volname "AspeQt-2K26" -srcfolder stage -ov -format UDZO release/AspeQt-2K26-macOS.dmg
 
       - name: Upload macOS ARM64 artifact
         uses: actions/upload-artifact@v4
         with:
           name: AspeQt-2K26-macos-arm64
-          path: release/*
+          path: release/AspeQt-2K26-macOS.dmg
           if-no-files-found: error
-

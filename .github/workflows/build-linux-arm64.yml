@@ -66,15 +66,25 @@ jobs:
 
       - name: Package (.deb and portable .tar.gz)
         run: |
-          mkdir -p release
+          rm -rf release stage
+          mkdir -p release stage/doc stage/atari
+
+          cp build/AspeQt stage/
+          cp -r doc/* stage/doc/
+          cp atari/*.atr atari/*.car stage/atari/
+
           cd build
           cpack -G DEB
           mv *.deb ../release/
-          tar -cvzf ../release/AspeQt-2K26-pi.64-portable.tar.gz AspeQt
+          cd ..
+
+          tar -cvzf release/AspeQt-2K26-pi.64-portable.tar.gz -C stage .
 
       - name: Upload Linux ARM64 artifacts
         uses: actions/upload-artifact@v4
         with:
           name: AspeQt-2K26-linux-arm64
-          path: release/*
+          path: |
+            release/*.deb
+            release/AspeQt-2K26-pi.64-portable.tar.gz
           if-no-files-found: error

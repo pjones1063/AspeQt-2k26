@@ -47,10 +47,13 @@ jobs:
         run: |
           cmake --build build --parallel
 
-      - name: Stage with windeployqt and bundle all UCRT64 DLLs
+      - name: Stage with windeployqt, DLLs, docs, and Atari files
         run: |
-          mkdir -p release/win-temp
+          rm -rf release/win-temp
+          mkdir -p release/win-temp/doc release/win-temp/atari
           cp build/AspeQt.exe release/win-temp/
+          cp -r doc/* release/win-temp/doc/
+          cp atari/*.atr atari/*.car release/win-temp/atari/
 
           windeployqt --dir release/win-temp release/win-temp/AspeQt.exe
 
