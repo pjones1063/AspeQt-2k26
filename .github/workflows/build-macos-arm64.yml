@@ -1,0 +1,54 @@
+name: Build & Package macOS (ARM64)
+
+on:
+  push:
+    branches:
+      - development
+  workflow_dispatch:
+
+jobs:
+  build-macos-arm64:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install libssh via Homebrew
+        run: |
+          brew update
+          brew install libssh
+
+      - name: Install Qt 6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.3'
+          host: 'mac'
+          target: 'desktop'
+          arch: 'clang_64'
+          modules: 'qtserialport qtwebsockets qtwebchannel qthttpserver'
+
+      - name: Configure with CMake
+        run: |
+          cmake -S . -B build -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES=arm64
+
+      - name: Build AspeQt
+        run: |
+          cmake --build build --parallel
+
+      - name: Bundle, sign, and create DMG
+        run: |
+          mkdir -p release
+          macdeployqt build/AspeQt.app -executable=build/AspeQt.app/Contents/MacOS/AspeQt -always-overwrite
+          codesign --force --deep --sign - build/AspeQt.app
+          hdiutil create -volname "AspeQt-2K26" -srcfolder build/AspeQt.app -ov -format UDZO release/AspeQt-2K26-macOS.dmg
+
+      - name: Upload macOS ARM64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AspeQt-2K26-macos-arm64
+          path: release/*
+          if-no-files-found: error
+
