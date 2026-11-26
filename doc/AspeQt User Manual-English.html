@@ -199,6 +199,7 @@
             <a href="#raspberrypi">R: Device Emulation</a>
             <a href="#timesync">Time Sync</a>
             <a href="#printer">Printer (P:)</a>
+            <a href="#adevice">Voice Synth (A:)</a>
             <a href="#wdevice">Web Pipe (W:)</a>
             <a href="#webui">Web Dashboard (UI)</a>
         </div>
@@ -215,6 +216,7 @@
             <li><b>Modem Bridge</b> - Connect physical Atari modems to Telnet BBSs via the PC.</li>
             <li><b>R: Device (850 Emulation)</b> - A hardware-free virtual modem that intercepts SIO commands directly (Supports USB FTDI and Raspberry Pi).</li>
             <li><b>Printers (P:)</b> - Captures printed output to text or graphical view.</li>
+            <li><b>Voice Synthesizer (A:)</b> - Native PC Text-to-Speech engine driven directly from Atari BASIC.</li>
             <li><b>Clipboard Bridge (Y:)</b> - Bi-directional copy/paste between PC and Atari.</li>
             <li><b>Web Pipe (W:)</b> - Multi-channel gateway for HTTP Python scripts, AI, and direct FTP/SFTP file access.</li>
             <li><b>Web Dashboard</b> - Remote control your Atari peripherals from any browser or smartphone.</li>
@@ -579,6 +581,26 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
         <h3>Mobile Viewing</h3>
         <p>You can also view a live, auto-updating snapshot of your printout directly from your smartphone by tapping the <b>Receipt Icon</b> in the Web Dashboard.</p>
 
+        <a name="adevice"></a>
+        <h2>Voice Synthesizer (A:)</h2>
+        <p>The <b>A: Device</b> transforms your Atari into a speaking computer by bridging the SIO bus directly to your modern PC's native Text-to-Speech (TTS) engine (Windows SAPI, macOS Speech, or Linux speech-dispatcher) using Qt6 Multimedia.</p>
+        
+        <h3>Usage in BASIC</h3>
+        <p>Writing text to the A: device is as simple as printing to a file. The PC will accumulate the text in a buffer and speak it the moment the device is closed.</p>
+        <div class="code-block">
+10 OPEN #1,8,0,"A:"
+20 PRINT #1;"HELLO FROM THE YEAR 2026."
+30 CLOSE #1
+        </div>
+        
+        <h3>Voice Settings</h3>
+        <p>You can customize the voice output by navigating to <b>Tools &gt; Options &gt; Emulation</b> (or wherever you placed the new Voice settings). All parameters use a simple 0 to 10 integer scale:</p>
+        <ul>
+            <li><b>Volume:</b> 0 (Mute) to 10 (Maximum). Default is 10.</li>
+            <li><b>Rate (Speed):</b> 0 (Slowest) to 10 (Fastest). Default is 5 (Normal).</li>
+            <li><b>Pitch:</b> 0 (Deepest/Robotic) to 10 (Highest). Default is 5 (Normal).</li>
+        </ul>
+
         <a name="clipboard"></a>
         <h2>The Y: Device (Clipboard Bridge)</h2>
         <p>The <b>Y: Device</b> bridges your Atari 8-bit and your modern PC's system clipboard. It allows you to "Paste" code from your PC directly into Atari BASIC, or "Copy" listings from the Atari back to your PC.</p>
@@ -633,7 +655,6 @@ sudo apt install qt6-base-dev qt6-base-private-dev libqt6gui6 libqt6widgets6 lib
         <ul>
             <li><b>Gemini AI Chatbot:</b> Turns the Atari into an AI client using Google's Gemini LLM (<span class="code-snippet">GEMINI_AI.LST</span>).</li>
             <li><b>Graphical Weather Station:</b> Fetches open-meteo API data and renders it in GRAPHICS 5 (<span class="code-snippet">WEATHER.LST</span>).</li>
-            <li><b>Text-to-Speech:</b> Sends typed text to the PC's espeak engine (<span class="code-snippet">TTS_SERVER.LST</span>).</li>
         </ul>
 
         <h3>4. Native FTP and SFTP Transfers</h3>
