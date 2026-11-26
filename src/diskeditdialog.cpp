@@ -531,7 +531,6 @@ void DiskEditDialog::go(SimpleDiskImage *image, int fileSystem)
     }
 }
 
-
 void DiskEditDialog::fileSystemChanged(int index)
 {
     AtariFileSystem *a = 0;
@@ -553,28 +552,6 @@ void DiskEditDialog::fileSystemChanged(int index)
         break;
     }
 
-    // --- NEW VALIDATION BLOCK ---
-    // Verify the file system's root sector is within the disk's physical boundaries
-    if (a && m_disk) {
-        int rootSector = a->rootDir();
-
-        // Correctly accessing sectorCount() through the geometry() object
-        if (rootSector > m_disk->geometry().sectorCount()) {
-            QMessageBox::warning(this,
-                                 tr("Incompatible File System"),
-                                 tr("The selected file system geometry exceeds the bounds of the mounted disk image."));
-
-            delete a;
-            a = 0;
-
-            // Reset the combobox to "No file system" (index 0) cleanly
-            m_fileSystemBox->blockSignals(true);
-            m_fileSystemBox->setCurrentIndex(0);
-            m_fileSystemBox->blockSignals(false);
-        }
-    }
-    // ----------------------------
-
     model->setFileSystem(a);
     m_ui->aView->resizeColumnToContents(0);
     m_ui->aView->resizeColumnToContents(1);
@@ -594,15 +571,9 @@ void DiskEditDialog::fileSystemChanged(int index)
         m_ui->actionTextConversion->setEnabled(true);
     }
 
-    if (a) {
-        setWindowTitle(tr("AspeQt - Exploring %1").arg(model->currentPath()));
-    } else {
-        setWindowTitle(tr("AspeQt - Exploring (No File System)"));
-    }
-
+    setWindowTitle(tr("AspeQt - Exploring %1").arg(model->currentPath()));
     m_ui->actionToParent->setEnabled(false);
 }
-
 
 void DiskEditDialog::currentChanged(const QModelIndex &/*current*/, const QModelIndex &/*previous*/)
 {

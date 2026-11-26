@@ -7,14 +7,6 @@ include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# --- macOS Target Architecture (Apple Silicon arm64 default) ---
-if(APPLE)
-    if(NOT CMAKE_OSX_ARCHITECTURES)
-        set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "macOS target architectures" FORCE)
-    endif()
-    message(STATUS "Configuring AspeQt for macOS architectures: ${CMAKE_OSX_ARCHITECTURES}")
-endif()
-
 # --- Enable Qt Automation ---
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -75,6 +67,7 @@ qt_add_executable(AspeQt
 )
 
 # --- 5.5 Compile and Embed Translations ---
+# --- 5.5 Compile and Embed Translations ---
 set(TS_FILES
     "res/i18n/aspeqt_de.ts"
     "res/i18n/aspeqt_es.ts"
@@ -101,6 +94,7 @@ qt_add_translations(AspeQt
     RESOURCE_PREFIX "/translations/i18n"
 )
 
+
 # --- 6. Include Directories ---
 target_include_directories(AspeQt PRIVATE
     "${CMAKE_SOURCE_DIR}/src"
@@ -117,11 +111,11 @@ target_link_libraries(AspeQt PRIVATE
     Qt6::PrintSupport
     Qt6::Concurrent
     Qt6::Xml
-    Qt6::WebSockets
-    Qt6::WebChannel
+    Qt6::WebSockets   
+    Qt6::WebChannel    
     Qt6::HttpServer
     ZLIB::ZLIB
-    ssh
+    ssh 
 )
 
 # REQUIRED FIX: Link Windows Multimedia API for timing functions
@@ -139,8 +133,6 @@ if(APPLE)
         MACOSX_BUNDLE ON
         MACOSX_BUNDLE_GUI_IDENTIFIER "net.13leader.AspeQt"
         MACOSX_BUNDLE_BUNDLE_NAME "AspeQt"
-        MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
         MACOSX_BUNDLE_ICON_FILE "icons.icns"
     )
 endif()

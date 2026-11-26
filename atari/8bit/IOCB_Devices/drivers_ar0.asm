@@ -1,5 +1,5 @@
 ; ==================================================================
-; THE MASTER LOADER: 850 INTERFACE + Y: , W: & A: HANDLERS
+; THE MASTER LOADER: 850 INTERFACE + Y: & W: HANDLERS
 ; Assembler: MADS and MyDos 4.53/4
 ; Features: $6000 Safe Haven, Internalized Buffer, MyDOS Proof
 ; ==================================================================
@@ -32,10 +32,6 @@ TableY
 
 TableW
     .word HandlerOpenW-1, HandlerClose-1, HandlerGet-1
-    .word HandlerPut-1, HandlerStat-1, HandlerSpec-1 
-
-TableA
-    .word HandlerOpenA-1, HandlerClose-1, HandlerGet-1
     .word HandlerPut-1, HandlerStat-1, HandlerSpec-1 
 
 HandlerOpenY
@@ -102,19 +98,6 @@ OpenFail
     ldy #144        
     sec
     rts
-
-HandlerOpenA
-    lda #$41
-    sta CurrentDev
-    jsr CommonReset
-    lda #0
-    sta TransMode   
-    jsr SetupDCB_Open
-    
-    stx SaveX         ; Save X register for CIO
-    jsr SIOV          ; Send $4F (OPEN) to AspeQt so it clears its buffer
-    bmi OpenFail      ; If SIO error, jump to failure
-    jmp OpenSuccess   ; Return Y=1 (Success) to the Atari OS!
 
 CommonReset
     lda #0
@@ -207,6 +190,7 @@ PutError
     sec
     rts
         
+
 HandlerClose
     lda $2A
     and #$08
@@ -235,6 +219,7 @@ HandlerStat
     ldy #1
     clc
     rts
+
 
 HandlerSpec
     stx SaveX       
@@ -326,6 +311,7 @@ SpecExit
     clc
     rts     
    
+    
 RefillBuffer
     jsr SetupDCB_Read
     bpl RefillOK
@@ -404,11 +390,9 @@ SetupDCB_Write
     jsr SIOV
     rts
 
-; =================================================================
-; INIT & RESET HOOKS
-; =================================================================
 OnReset
     jsr CallOldDOSINI   
+
     jsr InitHandlersOnly 
     
     ; BUMP MEMLO
@@ -447,18 +431,10 @@ InitHandlersOnly
     ldx #<TableY
     ldy #>TableY
     jsr InstallOne
-    
     lda #$57
     ldx #<TableW
     ldy #>TableW
     jsr InstallOne
-    
-    ; --- THE A: HANDLER WAS MISSING HERE ---
-    lda #$41
-    ldx #<TableA
-    ldy #>TableA
-    jsr InstallOne
-    ; ---------------------------------------
     rts
 
 InstallOne
@@ -539,21 +515,14 @@ exit_850
     org $6900
 
 MasterStart
-    jsr Boot850           ; 1. Fire up the 850 interface
-    jsr InitHandlersOnly  ; 2. Install Y:, W:, and A: into HATABS immediately
-    jsr Init              ; 3. Hook the Reset vector so they survive a system reset
-    
-    ; 4. Bump MEMLO for the current session safely
-    lda #<EndHandler
-    sta MEMLO
-    lda #>EndHandler
-    sta MEMLO+1
-    
-    rts                   ; 5. MUST BE AN RTS! Returns control to OS Loader.
+    jsr Boot850     
+    jsr Init        
+    jmp (DOSINI_V)  
 
 ; =================================================================
 ; 4. MYDOS AUTORUN HEADER
 ; =================================================================
     org $02E2
     .word MasterStart
+
     
