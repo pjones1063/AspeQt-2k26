@@ -1,5 +1,5 @@
 ; ==================================================================
-; THE MASTER LOADER: Y: , W: & A: HANDLERS (No 850/R: Interface)
+; THE MASTER LOADER: Y: & W: HANDLERS (No 850/R: Interface)
 ; awy_drivers.asm
 ; Assembler: MADS 
 ; Features: $4000 Safe Haven, Internalized Buffer
@@ -33,10 +33,6 @@ TableY
 
 TableW
     .word HandlerOpenW-1, HandlerClose-1, HandlerGet-1
-    .word HandlerPut-1, HandlerStat-1, HandlerSpec-1 
-
-TableA
-    .word HandlerOpenA-1, HandlerClose-1, HandlerGet-1
     .word HandlerPut-1, HandlerStat-1, HandlerSpec-1 
 
 HandlerOpenY
@@ -103,19 +99,6 @@ OpenFail
     ldy #144        
     sec
     rts
-
-HandlerOpenA
-    lda #$41
-    sta CurrentDev
-    jsr CommonReset
-    lda #0
-    sta TransMode   
-    jsr SetupDCB_Open
-    
-    stx SaveX         ; Save X register for CIO
-    jsr SIOV          ; Send $4F (OPEN) to AspeQt so it clears its buffer
-    bmi OpenFail      ; If SIO error, jump to failure
-    jmp OpenSuccess   ; Return Y=1 (Success) to the Atari OS!
 
 CommonReset
     lda #0
@@ -453,11 +436,6 @@ InitHandlersOnly
     ldx #<TableW
     ldy #>TableW
     jsr InstallOne
-    
-    lda #$41
-    ldx #<TableA
-    ldy #>TableA
-    jsr InstallOne
     rts
 
 InstallOne
@@ -493,7 +471,7 @@ EndHandler
     org $4800 
 
 MasterStart
-    jsr InitHandlersOnly  ; 1. Install Y:, W:, and A: into HATABS immediately
+    jsr InitHandlersOnly  ; 1. Install Y: and W: into HATABS immediately
     jsr Init              ; 2. Hook the Reset vector so they survive a system reset
     
     ; 3. Bump MEMLO for the current session safely
@@ -509,3 +487,5 @@ MasterStart
 ; =================================================================
     org $02E2
     .word MasterStart
+
+
